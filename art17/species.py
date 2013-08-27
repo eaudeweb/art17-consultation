@@ -102,6 +102,7 @@ class BioRegionRender(object):
             'conclusion': self._get_conclusion('population'),
             'trend_short': self._get_population_trend(),
             'trend_long': self._get_population_trend('_long'),
+            'reference_value': self._get_reference_value('population'),
         }
 
 
