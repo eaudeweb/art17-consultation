@@ -35,6 +35,14 @@ class BioRegionRender(object):
         else:
             return ""
 
+    def _get_conclusion(self, name):
+        assessment = getattr(self.row, 'conclusion_%s' % name)
+        trend = getattr(self.row, 'conclusion_%s_trend' % name)
+        if trend:
+            return "%s (%s)" % (assessment, trend)
+        else:
+            return assessment
+
     @cached_property
     def range(self):
         return {
@@ -44,10 +52,7 @@ class BioRegionRender(object):
                 'trend': self.row.range_trend,
                 'period': self._split_period(self.row.range_trend_period),
             },
-            'conclusion': {
-                'assessment': self.row.conclusion_range,
-                'trend': self.row.conclusion_range_trend,
-            },
+            'conclusion': self._get_conclusion('range'),
             'reference_value': self._get_range_reference_value(),
         }
 
