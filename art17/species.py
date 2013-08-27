@@ -13,4 +13,8 @@ def species_view():
     return flask.render_template('species/view.html', **{
         'code': species.speciescode,
         'name': checklist[0].species_name,
+        'bio_regions': [c.bio_region for c in checklist],
+        'annex_II': checklist[0].annex_II == 'Y',
+        'annex_IV': checklist[0].annex_IV == 'Y',
+        'annex_V': checklist[0].annex_V == 'Y',
     })
