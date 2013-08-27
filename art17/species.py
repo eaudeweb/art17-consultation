@@ -85,7 +85,7 @@ class BioRegionRender(object):
 @species.route('/specii/<speciescode>')
 def species_view(speciescode):
     species = models.DataSpecies.query.filter_by(
-        speciescode=speciescode).first()
+        speciescode=speciescode).first_or_404()
     checklist = models.DataSpeciesCheckList.query.filter_by(
         natura_2000_code=species.speciescode,
         member_state=species.country)
