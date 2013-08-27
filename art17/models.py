@@ -425,7 +425,8 @@ class DataSpeciesRegion(Base):
     validated = Column(Integer, nullable=False)
     validation_date = Column(DateTime)
 
-    sr_species = relationship(u'DataSpecies')
+    sr_species = relationship(u'DataSpecies',
+        backref=db.backref('regions', lazy='dynamic'))
 
 
 class SysImport(Base):

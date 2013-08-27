@@ -4,3 +4,13 @@ Regiuni: {{ bio_regions }}<br>
 Anexa II: {{ annex_II }}<br>
 Anexa IV: {{ annex_IV }}<br>
 Anexa V: {{ annex_V }}<br>
+
+<hr>
+
+{% for row in records %}
+<p>
+  Bio-regiunea: {{ row.region }}<br>
+  Range:<br>
+  -- surface: {{ row.range_surface_area }}<br>
+</p>
+{% endfor %}

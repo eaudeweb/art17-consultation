@@ -17,4 +17,5 @@ def species_view():
         'annex_II': checklist[0].annex_II == 'Y',
         'annex_IV': checklist[0].annex_IV == 'Y',
         'annex_V': checklist[0].annex_V == 'Y',
+        'records': list(species.regions),
     })
