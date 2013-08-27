@@ -313,13 +313,6 @@ class DataSpecies(Base):
     export = Column(Integer, nullable=False)
     import_id = Column(Integer, index=True)
 
-    checklist = relationship(
-            'DataSpeciesCheckList',
-            primaryjoin=('DataSpecies.speciescode=='
-                         'foreign(DataSpeciesCheckList.natura_2000_code)'),
-            uselist=False,
-            lazy='eager')
-
 
 class DataSpeciesCheckList(Base):
     __tablename__ = u'data_species_check_list'
