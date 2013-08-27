@@ -15,15 +15,25 @@ class BioRegionRender(object):
     def region(self):
         return self.row.region
 
-    def _get_range_reference_value(self):
-        if self.row.complementary_favourable_range:
-          return self.row.complementary_favourable_range
+    def _get_reference_value(self, name):
+        if name == 'range':
+            ideal = self.row.range_surface_area
+        elif name == 'population':
+            ideal = (self.row.population_minimum_size or
+                     self.row.population_alt_minimum_size)
+        else:
+            raise RuntimeError("Unknown name %r" % name)
 
-        elif self.row.complementary_favourable_range_op:
-          return (self.row.complementary_favourable_range_op
-                  + self.row.range_surface_area)
+        favourable = getattr(self.row, 'complementary_favourable_%s' % name)
+        favourable_op = getattr(self.row, 'complementary_favourable_%s_op' % name)
+        favourable_x = getattr(self.row, 'complementary_favourable_%s_x' % name)
+        if favourable:
+          return favourable
 
-        elif self.row.complementary_favourable_range_x:
+        elif favourable_op:
+          return "%s %s" % (favourable_op, ideal)
+
+        elif favourable_x:
           return "Unknown"
 
         else:
@@ -53,7 +63,7 @@ class BioRegionRender(object):
                 'period': self._split_period(self.row.range_trend_period),
             },
             'conclusion': self._get_conclusion('range'),
-            'reference_value': self._get_range_reference_value(),
+            'reference_value': self._get_reference_value('range'),
         }
 
     def _get_population_size_and_unit(self):
