@@ -78,6 +78,7 @@ class BioRegionRender(object):
     def population(self):
         return {
             'size_and_unit': self._get_population_size_and_unit(),
+            'conclusion': self._get_conclusion('population'),
         }
 
 
