@@ -73,12 +73,25 @@ class BioRegionRender(object):
         else:
             return "%s-%s %s" % (min_size, max_size, unit)
 
+    def _get_population_trend(self, name=''):
+        period = getattr(self.row, 'population_trend%s_period' % name)
+        trend = getattr(self.row, 'population_trend%s' % name)
+        magnitude_min = getattr(self.row, 'population_trend%s_magnitude_min' % name)
+        magnitude_max = getattr(self.row, 'population_trend%s_magnitude_max' % name)
+        magnitude_ci = getattr(self.row, 'population_trend%s_magnitude_ci' % name)
+        method = getattr(self.row, 'population_trend%s_method' % name)
+        return "%s %s method=%s magnitude=(min=%s max=%s ci=%s)" % (
+            trend, self._split_period(period), method,
+            magnitude_min, magnitude_max, magnitude_ci)
+
 
     @cached_property
     def population(self):
         return {
             'size_and_unit': self._get_population_size_and_unit(),
             'conclusion': self._get_conclusion('population'),
+            'trend_short': self._get_population_trend(),
+            'trend_long': self._get_population_trend('_long'),
         }
 
 
