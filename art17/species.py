@@ -51,6 +51,30 @@ class BioRegionRender(object):
             'reference_value': self._get_range_reference_value(),
         }
 
+    def _get_population_size_and_unit(self):
+        if self.row.population_size_unit:
+            min_size = self.row.population_minimum_size
+            max_size = self.row.population_minimum_size
+            unit = self.row.population_size_unit
+
+        else:
+            min_size = self.row.population_alt_minimum_size
+            max_size = self.row.population_alt_minimum_size
+            unit = self.row.population_alt_size_unit
+
+        if min_size == max_size:
+            return "%s %s" % (min_size, unit)
+
+        else:
+            return "%s-%s %s" % (min_size, max_size, unit)
+
+
+    @cached_property
+    def population(self):
+        return {
+            'size_and_unit': self._get_population_size_and_unit(),
+        }
+
 
 @species.route('/specii/<speciescode>')
 def species_view(speciescode):

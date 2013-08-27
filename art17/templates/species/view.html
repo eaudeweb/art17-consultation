@@ -10,6 +10,7 @@ Anexa V: {{ annex_V }}<br>
 {% for row in records %}
 <p>
   Bio-regiunea: {{ row.region }}<br>
+
   Range:<br>
   {% set range = row.range %}
   -- method: {{ range.method }}<br>
@@ -17,5 +18,10 @@ Anexa V: {{ annex_V }}<br>
   -- assessment: {{ range.conclusion.assessment }} {{ range.conclusion.trend }}<br>
   -- trend: {{ range.trend.trend }} {{ range.trend.period }}<br>
   -- reference value: {{ range.reference_value }}<br>
+
+  Population:<br>
+  {% set population = row.population %}
+  -- size &amp; unit: {{ population.size_and_unit }}<br>
+
 </p>
 {% endfor %}
