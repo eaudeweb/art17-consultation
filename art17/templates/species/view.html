@@ -1,22 +1,3 @@
-{% macro split_period(year_string) %}
-  {%- if year_string -%}
-    ({{ year_string[:4] }}-{{ year_string[4:] }})
-  {%- endif -%}
-{% endmacro %}
-
-
-{% macro ref_value(row) %}
-  {%- if row.complementary_favourable_range -%}
-    {{ row.complementary_favourable_range }}
-  {%- elif row.complementary_favourable_range_op -%}
-    {{ row.complementary_favourable_range_op }}{{ row.range_surface_area }}
-  {%- elif row.complementary_favourable_range_x -%}
-    Unknown
-  {%- else -%}
-    N/A
-  {%- endif -%}
-{%- endmacro %}
-
 Cod: {{ code }}<br>
 Nume: {{ name }}<br>
 Regiuni: {{ bio_regions }}<br>
@@ -30,10 +11,11 @@ Anexa V: {{ annex_V }}<br>
 <p>
   Bio-regiunea: {{ row.region }}<br>
   Range:<br>
-  -- method: {{ row.range_method }}<br>
-  -- surface: {{ row.range_surface_area }}<br>
-  -- assessment: {{ row.conclusion_range }} {{ row.conclusion_range_trend }}<br>
-  -- trend: {{ row.range_trend }} {{ split_period(row.range_trend_period) }}<br>
-  -- reference value: {{ ref_value(row) }}<br>
+  {% set range = row.range %}
+  -- method: {{ range.method }}<br>
+  -- surface: {{ range.surface_area }}<br>
+  -- assessment: {{ range.conclusion.assessment }} {{ range.conclusion.trend }}<br>
+  -- trend: {{ range.trend.trend }} {{ range.trend.period }}<br>
+  -- reference value: {{ range.reference_value }}<br>
 </p>
 {% endfor %}
