@@ -1,5 +1,6 @@
 import flask
 from flask.ext.script import Manager
+from art17.models import db
 
 views = flask.Blueprint('views', __name__)
 
@@ -12,7 +13,9 @@ def home():
 def craete_app():
     app = flask.Flask(__name__)
     app.config['DEBUG'] = True
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///art17_mdb'
     app.register_blueprint(views)
+    db.init_app(app)
     return app
 
 

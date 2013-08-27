@@ -1,11 +1,12 @@
-# coding: utf-8
-from sqlalchemy import Column, DateTime, ForeignKey, Index, Integer, String, Table, Text
+from sqlalchemy import (Column, DateTime, ForeignKey, Index,
+                        Integer, String, Table, Text)
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+from flask.ext.sqlalchemy import SQLAlchemy
 
-
-Base = declarative_base()
-metadata = Base.metadata
+db = SQLAlchemy()
+Base = db.Model
+metadata = db.metadata
 
 
 class DataGmeasure(Base):
@@ -26,7 +27,7 @@ class DataGmeasure(Base):
     gmeasure_greport = relationship(u'DataGreport')
 
 
-class DataGreintroductionOfSpecy(Base):
+class DataGreintroductionOfSpecies(Base):
     __tablename__ = u'data_greintroduction_of_species'
 
     greintr_species_id = Column(Integer, primary_key=True)
@@ -194,7 +195,7 @@ class DataHabitattypeRegion(Base):
     hr_habitat = relationship(u'DataHabitat')
 
 
-class DataHtypicalSpecy(Base):
+class DataHtypicalSpecies(Base):
     __tablename__ = u'data_htypical_species'
     __table_args__ = (
         Index(u'data_htypical_species_unique_idx', u'species_hr_id', u'speciesname'),
@@ -285,7 +286,7 @@ class DataPressuresThreatsPol(Base):
     pollution_pressure = relationship(u'DataPressuresThreat')
 
 
-class DataSpecy(Base):
+class DataSpecies(Base):
     __tablename__ = u'data_species'
     __table_args__ = (
         Index(u'data_species_unique_report_idx', u'speciescode', u'country', u'sys_creator_id'),
@@ -424,7 +425,7 @@ class DataSpeciesRegion(Base):
     validated = Column(Integer, nullable=False)
     validation_date = Column(DateTime)
 
-    sr_species = relationship(u'DataSpecy')
+    sr_species = relationship(u'DataSpecies')
 
 
 class SysImport(Base):
