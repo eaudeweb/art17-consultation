@@ -1,7 +1,18 @@
 import flask
+from werkzeug.utils import cached_property
 from art17 import models
 
 habitat = flask.Blueprint('habitat', __name__)
+
+
+class HabitatRecord(object):
+
+    def __init__(self, row):
+        self.row = row
+
+    @cached_property
+    def region(self):
+        return self.row.region
 
 
 @habitat.route('/habitate/')
@@ -23,4 +34,5 @@ def habitat_view(habitatcode):
         'code': habitat.habitatcode,
         'name': checklist[0].valid_name,
         'bio_regions': [c.bio_region for c in checklist],
+        'records': [HabitatRecord(r) for r in habitat.regions],
     })

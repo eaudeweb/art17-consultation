@@ -3,3 +3,10 @@ Nume: {{ name }}<br>
 Regiuni: {{ bio_regions }}<br>
 
 <hr>
+
+{% for row in records %}
+<p>
+  Bio-regiunea: {{ row.region }}<br>
+
+</p>
+{% endfor %}
