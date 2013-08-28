@@ -94,6 +94,11 @@ class BioRegionRender(object):
             trend, self._split_period(period), method,
             magnitude_min, magnitude_max, magnitude_ci)
 
+    def _get_habitat_trend(self, name=''):
+        period = getattr(self.row, 'habitat_trend%s_period' % name)
+        trend = getattr(self.row, 'habitat_trend%s' % name)
+        return "%s %s" % (trend, self._split_period(period))
+
 
     @cached_property
     def population(self):
@@ -103,6 +108,17 @@ class BioRegionRender(object):
             'trend_short': self._get_population_trend(),
             'trend_long': self._get_population_trend('_long'),
             'reference_value': self._get_reference_value('population'),
+        }
+
+    @cached_property
+    def habitat(self):
+        return {
+            'surface_area': self.row.habitat_surface_area,
+            'method': self.row.habitat_method,
+            'conclusion': self._get_conclusion('habitat'),
+            'trend_short': self._get_habitat_trend(),
+            'trend_long': self._get_habitat_trend('_long'),
+            'area_suitable': self.row.habitat_area_suitable,
         }
 
 

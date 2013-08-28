@@ -27,5 +27,14 @@ Anexa V: {{ annex_V }}<br>
   -- long term trend: {{ population.trend_long }}<br>
   -- reference value: {{ population.reference_value }}<br>
 
+  Habitat:<br>
+  {% set habitat = row.habitat %}
+  -- method: {{ habitat.method }}<br>
+  -- surface: {{ habitat.surface_area }}<br>
+  -- assessment: {{ habitat.conclusion }}<br>
+  -- short term trend: {{ habitat.trend_short }}<br>
+  -- long term trend: {{ habitat.trend_long }}<br>
+  -- suitable: {{ habitat.area_suitable }}<br>
+
 </p>
 {% endfor %}
