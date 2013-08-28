@@ -95,6 +95,7 @@ class SpeciesRecord(GenericRecord):
 @species.route('/specii/')
 def species_index():
     return flask.render_template('species/index.html', **{
+        'species_groups': list(models.LuGrupSpecie.query),
         'records': list(models.DataSpecies.query.order_by('speciescode')),
     })
 

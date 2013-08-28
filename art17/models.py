@@ -464,3 +464,11 @@ class SysUser(Base):
     species_report = Column(Numeric, nullable=False)
     habitats_report = Column(Numeric, nullable=False)
     using_fe_version = Column(Numeric)
+
+
+class LuGrupSpecie(Base):
+    __tablename__ = u'lu_grup_specie'
+
+    oid = Column(Numeric, primary_key=True)
+    code = Column(String)
+    description = Column(String)

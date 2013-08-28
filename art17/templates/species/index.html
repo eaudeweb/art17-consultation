@@ -1,3 +1,19 @@
+<form>
+  <fieldset>
+    <legend>Filtrare specii</legend>
+
+    <label>
+      Grup
+      <select>
+        <option>--</option>
+        {% for group in species_groups %}
+          <option value="{{ group.code }}">{{ group.description }}</option>
+        {% endfor %}
+      </select>
+    </label>
+  </fieldset>
+</form>
+
 <ul>
 {% for row in records %}
   {% set speciescode = row.speciescode %}
