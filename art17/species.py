@@ -103,6 +103,13 @@ class BioRegionRender(object):
         trend = getattr(self.row, 'habitat_trend%s' % name)
         return "%s %s" % (trend, self._split_period(period))
 
+    def _get_habitat_quality(self):
+        value = self.row.habitat_quality
+        explanation = self.row.habitat_quality_explanation
+        if explanation:
+            return "%s (%s)" % (value, explanation)
+        else:
+            return "%s" % value
 
     @cached_property
     def population(self):
@@ -123,6 +130,7 @@ class BioRegionRender(object):
             'trend_short': self._get_habitat_trend(),
             'trend_long': self._get_habitat_trend('_long'),
             'area_suitable': self.row.habitat_area_suitable,
+            'quality': self._get_habitat_quality(),
         }
 
     @cached_property
