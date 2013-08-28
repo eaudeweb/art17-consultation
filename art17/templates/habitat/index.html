@@ -1,0 +1,7 @@
+<ul>
+{% for row in records %}
+  {% set habitatcode = row.habitatcode %}
+  {% set url = url_for('.habitat_view', habitatcode=habitatcode) %}
+  <li><a href="{{ url }}">{{ habitatcode }}</a></li>
+{% endfor %}
+</ul>

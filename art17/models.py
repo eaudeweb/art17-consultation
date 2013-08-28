@@ -87,7 +87,7 @@ class DataHabitat(Base):
         Index(u'data_habitats_unique_habitat_idx', u'habitatcode', u'country', u'sys_creator_id'),
     )
 
-    habitat_id = Column(Numeric, primary_key=True)
+    habitat_id = Column('objectid', Numeric, primary_key=True)
     country = Column(String(4), index=True)
     habitatcode = Column(String(510), index=True)
     distribution_map = Column(Numeric, nullable=False)
@@ -127,7 +127,7 @@ class DataHabitattypeRegion(Base):
     )
 
     hr_id = Column(Numeric, primary_key=True)
-    hr_habitat_id = Column(ForeignKey(u'data_habitats.habitat_id'), index=True)
+    hr_habitat_id = Column(ForeignKey(u'data_habitats.objectid'), index=True)
     region = Column(String(510))
     published = Column(Text)
     range_surface_area = Column(Text)
