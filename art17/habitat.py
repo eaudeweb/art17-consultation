@@ -13,4 +13,14 @@ def habitats_index():
 
 @habitat.route('/habitate/<habitatcode>')
 def habitat_view(habitatcode):
-    return "not implemented"
+    habitat = models.DataHabitat.query.filter_by(
+        habitatcode=habitatcode).first_or_404()
+    checklist = models.DataHabitatsCheckList.query.filter_by(
+        natura_2000_code=habitat.habitatcode,
+        ms=habitat.country,
+        presence="1")
+    return flask.render_template('habitat/view.html', **{
+        'code': habitat.habitatcode,
+        'name': checklist[0].valid_name,
+        'bio_regions': [c.bio_region for c in checklist],
+    })
