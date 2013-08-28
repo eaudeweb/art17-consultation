@@ -12,7 +12,7 @@ def home():
     return 'hello art17'
 
 
-def craete_app():
+def create_app():
     app = flask.Flask(__name__, instance_relative_config=True)
     app.config.from_pyfile('settings.py', silent=True)
     app.register_blueprint(views)
@@ -22,7 +22,7 @@ def craete_app():
     return app
 
 
-manager = Manager(craete_app)
+manager = Manager(create_app)
 
 
 if __name__ == '__main__':
