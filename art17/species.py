@@ -153,8 +153,8 @@ def species_view(speciescode):
         'code': species.speciescode,
         'name': checklist[0].species_name,
         'bio_regions': [c.bio_region for c in checklist],
-        'annex_II': checklist[0].annex_II == 'Y',
-        'annex_IV': checklist[0].annex_IV == 'Y',
-        'annex_V': checklist[0].annex_V == 'Y',
+        'annex_II': checklist[0].annex_ii == 'Y',
+        'annex_IV': checklist[0].annex_iv == 'Y',
+        'annex_V': checklist[0].annex_v == 'Y',
         'records': [BioRegionRender(r) for r in species.regions],
     })
