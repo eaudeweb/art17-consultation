@@ -12,9 +12,8 @@ def home():
 
 
 def craete_app():
-    app = flask.Flask(__name__)
-    app.config['DEBUG'] = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///art17_mdb'
+    app = flask.Flask(__name__, instance_relative_config=True)
+    app.config.from_pyfile('settings.py', silent=True)
     app.register_blueprint(views)
     app.register_blueprint(species)
     db.init_app(app)
