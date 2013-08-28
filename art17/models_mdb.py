@@ -415,7 +415,7 @@ class DataSpeciesRegion(Base):
     conclusion_habitat = Column(String(510))
     conclusion_habitat_trend = Column(String(510))
     conclusion_future = Column(String(510))
-    conclusion_future_trends = Column(String(510))
+    conclusion_future_trend = Column('conclusion_future_trends', String(510))
     conclusion_assessment = Column(String(510))
     conclusion_assessment_trend = Column(String(510))
     natura2000_population_unit = Column(String(510))
