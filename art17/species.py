@@ -26,12 +26,12 @@ class SpeciesRecord(GenericRecord):
     def _get_population_size_and_unit(self):
         if self.row.population_size_unit:
             min_size = self.row.population_minimum_size
-            max_size = self.row.population_minimum_size
+            max_size = self.row.population_maximum_size
             unit = self.row.population_size_unit
 
         else:
             min_size = self.row.population_alt_minimum_size
-            max_size = self.row.population_alt_minimum_size
+            max_size = self.row.population_alt_maximum_size
             unit = self.row.population_alt_size_unit
 
         if min_size == max_size:
