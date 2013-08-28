@@ -46,8 +46,12 @@ class BioRegionRender(object):
             return ""
 
     def _get_conclusion(self, name):
-        assessment = getattr(self.row, 'conclusion_%s' % name)
-        trend = getattr(self.row, 'conclusion_%s_trend' % name)
+        assessment_col = 'conclusion_%s' % name
+        trend_col = 'conclusion_%s_trend' % name
+        if name == 'future':
+            trend_col += 's'
+        assessment = getattr(self.row, assessment_col)
+        trend = getattr(self.row, trend_col)
         if trend:
             return "%s (%s)" % (assessment, trend)
         else:
@@ -120,6 +124,14 @@ class BioRegionRender(object):
             'trend_long': self._get_habitat_trend('_long'),
             'area_suitable': self.row.habitat_area_suitable,
         }
+
+    @cached_property
+    def future_prospects(self):
+        return self._get_conclusion('future')
+
+    @cached_property
+    def overall_assessment(self):
+        return self._get_conclusion('assessment')
 
 
 @species.route('/specii/<speciescode>')
