@@ -192,7 +192,8 @@ class DataHabitattypeRegion(Base):
     validated = Column(Integer, nullable=False)
     validation_date = Column(DateTime)
 
-    hr_habitat = relationship(u'DataHabitat')
+    hr_habitat = relationship(u'DataHabitat',
+        backref=db.backref('regions', lazy='dynamic'))
 
 
 class DataHtypicalSpecies(Base):
