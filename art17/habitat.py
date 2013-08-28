@@ -32,6 +32,18 @@ class HabitatRecord(GenericRecord):
             'reference_value': self._get_reference_value('area', surface_area),
         }
 
+    @cached_property
+    def structure(self):
+        return self._get_conclusion('structure')
+
+    @cached_property
+    def future_prospects(self):
+        return self._get_conclusion('future')
+
+    @cached_property
+    def overall_assessment(self):
+        return self._get_conclusion('assessment')
+
 
 @habitat.route('/habitate/')
 def habitats_index():
