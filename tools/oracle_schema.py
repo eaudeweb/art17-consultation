@@ -556,6 +556,14 @@ t_lu_favourable_range_operator = Table(
 )
 
 
+t_lu_grup_specie = Table(
+    u'lu_grup_specie', metadata,
+    Column(u'oid', Numeric(scale=0, asdecimal=False), nullable=False, index=True),
+    Column(u'code', Unicode(255)),
+    Column(u'description', Unicode(255))
+)
+
+
 t_lu_habitattype_codes = Table(
     u'lu_habitattype_codes', metadata,
     Column(u'objectid', Numeric(scale=0, asdecimal=False), nullable=False, index=True),
