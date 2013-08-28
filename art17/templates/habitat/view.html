@@ -15,5 +15,12 @@ Regiuni: {{ bio_regions }}<br>
   -- trend: {{ range.trend }}<br>
   -- reference value: {{ range.reference_value }}<br>
 
+  Area:<br>
+  {% set area = row.area %}
+  -- surface: {{ area.surface_area }}<br>
+  -- assessment: {{ area.conclusion }}<br>
+  -- trend: {{ area.trend }}<br>
+  -- reference value: {{ area.reference_value }}<br>
+
 </p>
 {% endfor %}

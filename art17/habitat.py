@@ -21,6 +21,15 @@ class HabitatRecord(GenericRecord):
             'reference_value': self._get_reference_value('range'),
         }
 
+    @cached_property
+    def area(self):
+        return {
+            'surface_area': self.row.coverage_surface_area,
+            'trend': self._get_trend('coverage'),
+            'conclusion': self._get_conclusion('area'),
+            'reference_value': self._get_reference_value('area'),
+        }
+
 
 @habitat.route('/habitate/')
 def habitats_index():

@@ -32,6 +32,8 @@ class GenericRecord(object):
         elif name == 'population':
             ideal = (self.row.population_minimum_size or
                      self.row.population_alt_minimum_size)
+        elif name == 'area':
+            ideal = self.row.coverage_surface_area
         else:
             raise RuntimeError("Unknown name %r" % name)
 
