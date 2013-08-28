@@ -9,6 +9,11 @@ class GenericRecord(object):
         else:
             return ""
 
+    def _get_trend(self, name, qualifier=''):
+        period = getattr(self.row, '%s_trend%s_period' % (name, qualifier))
+        trend = getattr(self.row, '%s_trend%s' % (name, qualifier))
+        return "%s %s" % (trend, self._split_period(period))
+
     def _get_conclusion(self, name):
         assessment_col = 'conclusion_%s' % name
         trend_col = 'conclusion_%s_trend' % name

@@ -54,11 +54,6 @@ class SpeciesRecord(GenericRecord):
             trend, self._split_period(period), method,
             magnitude_min, magnitude_max, magnitude_ci)
 
-    def _get_habitat_trend(self, name=''):
-        period = getattr(self.row, 'habitat_trend%s_period' % name)
-        trend = getattr(self.row, 'habitat_trend%s' % name)
-        return "%s %s" % (trend, self._split_period(period))
-
     def _get_habitat_quality(self):
         value = self.row.habitat_quality
         explanation = self.row.habitat_quality_explanation
@@ -83,8 +78,8 @@ class SpeciesRecord(GenericRecord):
             'surface_area': self.row.habitat_surface_area,
             'method': self.row.habitat_method,
             'conclusion': self._get_conclusion('habitat'),
-            'trend_short': self._get_habitat_trend(),
-            'trend_long': self._get_habitat_trend('_long'),
+            'trend_short': self._get_trend('habitat'),
+            'trend_long': self._get_trend('habitat', '_long'),
             'area_suitable': self.row.habitat_area_suitable,
             'quality': self._get_habitat_quality(),
         }

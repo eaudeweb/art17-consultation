@@ -12,17 +12,12 @@ class HabitatRecord(GenericRecord):
     def region(self):
         return self.row.region
 
-    def _get_range_trend(self):
-        period = getattr(self.row, 'range_trend_period')
-        trend = getattr(self.row, 'range_trend')
-        return "%s %s" % (trend, self._split_period(period))
-
     @cached_property
     def range(self):
         return {
             'surface_area': self.row.range_surface_area,
             'conclusion': self._get_conclusion('range'),
-            'trend': self._get_range_trend(),
+            'trend': self._get_trend('range'),
             'reference_value': self._get_reference_value('range'),
         }
 
