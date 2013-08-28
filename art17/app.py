@@ -1,6 +1,9 @@
 import flask
 from flask.ext.script import Manager
-from art17.models import db
+from werkzeug.local import LocalProxy
+
+models = LocalProxy(lambda: flask.current_app.extensions['art17_models'])
+
 from art17.species import species
 from art17.habitat import habitat
 
@@ -18,7 +21,14 @@ def create_app():
     app.register_blueprint(views)
     app.register_blueprint(species)
     app.register_blueprint(habitat)
-    db.init_app(app)
+
+    if app.config.get('USE_MDB_MODELS'):
+        from art17 import models_mdb as _models
+    else:
+        from art17 import models as _models
+    app.extensions['art17_models'] = _models
+    _models.db.init_app(app)
+
     return app
 
 

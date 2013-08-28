@@ -1,6 +1,6 @@
 import flask
 from werkzeug.utils import cached_property
-from art17 import models
+from art17.app import models
 
 
 species = flask.Blueprint('species', __name__)

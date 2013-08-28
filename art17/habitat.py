@@ -1,6 +1,6 @@
 import flask
 from werkzeug.utils import cached_property
-from art17 import models
+from art17.app import models
 
 habitat = flask.Blueprint('habitat', __name__)
 
