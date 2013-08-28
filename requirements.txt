@@ -1,3 +1,4 @@
+cx-Oracle==5.1.2
 Flask-Script==0.6.2
 Flask-SQLAlchemy==1.0
 Flask==0.10.1
