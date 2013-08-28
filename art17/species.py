@@ -142,6 +142,13 @@ class BioRegionRender(object):
         return self._get_conclusion('assessment')
 
 
+@species.route('/specii/')
+def species_index():
+    return flask.render_template('species/index.html', **{
+        'records': list(models.DataSpecies.query.order_by('speciescode')),
+    })
+
+
 @species.route('/specii/<speciescode>')
 def species_view(speciescode):
     species = models.DataSpecies.query.filter_by(

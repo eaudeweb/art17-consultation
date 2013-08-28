@@ -1,0 +1,7 @@
+<ul>
+{% for row in records %}
+  {% set speciescode = row.speciescode %}
+  {% set url = url_for('.species_view', speciescode=speciescode) %}
+  <li><a href="{{ url }}">{{ speciescode }}</a></li>
+{% endfor %}
+</ul>
