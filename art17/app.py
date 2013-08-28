@@ -2,6 +2,7 @@ import flask
 from flask.ext.script import Manager
 from art17.models import db
 from art17.species import species
+from art17.habitat import habitat
 
 views = flask.Blueprint('views', __name__)
 
@@ -16,6 +17,7 @@ def craete_app():
     app.config.from_pyfile('settings.py', silent=True)
     app.register_blueprint(views)
     app.register_blueprint(species)
+    app.register_blueprint(habitat)
     db.init_app(app)
     return app
 
