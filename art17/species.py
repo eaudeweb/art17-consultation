@@ -37,12 +37,6 @@ class SpeciesRecord(GenericRecord):
         else:
           return "N/A"
 
-    def _split_period(self, year_string):
-        if year_string:
-            return "(%s-%s)" % (year_string[:4], year_string[4:])
-        else:
-            return ""
-
     @cached_property
     def range(self):
         return {
