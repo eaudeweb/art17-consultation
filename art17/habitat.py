@@ -1,14 +1,12 @@
 import flask
 from werkzeug.utils import cached_property
 from art17.app import models
+from art17.common import GenericRecord
 
 habitat = flask.Blueprint('habitat', __name__)
 
 
-class HabitatRecord(object):
-
-    def __init__(self, row):
-        self.row = row
+class HabitatRecord(GenericRecord):
 
     @cached_property
     def region(self):

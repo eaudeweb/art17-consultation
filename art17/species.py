@@ -1,15 +1,13 @@
 import flask
 from werkzeug.utils import cached_property
 from art17.app import models
+from art17.common import GenericRecord
 
 
 species = flask.Blueprint('species', __name__)
 
 
-class SpeciesRecord(object):
-
-    def __init__(self, row):
-        self.row = row
+class SpeciesRecord(GenericRecord):
 
     @cached_property
     def region(self):
@@ -44,18 +42,6 @@ class SpeciesRecord(object):
             return "(%s-%s)" % (year_string[:4], year_string[4:])
         else:
             return ""
-
-    def _get_conclusion(self, name):
-        assessment_col = 'conclusion_%s' % name
-        trend_col = 'conclusion_%s_trend' % name
-        if name == 'future':
-            trend_col += 's'
-        assessment = getattr(self.row, assessment_col)
-        trend = getattr(self.row, trend_col)
-        if trend:
-            return "%s (%s)" % (assessment, trend)
-        else:
-            return assessment
 
     @cached_property
     def range(self):
