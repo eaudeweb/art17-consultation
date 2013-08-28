@@ -15,12 +15,13 @@ class SpeciesRecord(GenericRecord):
 
     @cached_property
     def range(self):
+        surface_area = self.row.range_surface_area
         return {
             'method': self.row.range_method,
-            'surface_area': self.row.range_surface_area,
+            'surface_area': surface_area,
             'trend': self._get_trend('range'),
             'conclusion': self._get_conclusion('range'),
-            'reference_value': self._get_reference_value('range'),
+            'reference_value': self._get_reference_value('range', surface_area),
         }
 
     def _get_population_size_and_unit(self):
@@ -59,12 +60,15 @@ class SpeciesRecord(GenericRecord):
 
     @cached_property
     def population(self):
+        ref_value_ideal = (self.row.population_minimum_size or
+                           self.row.population_alt_minimum_size)
         return {
             'size_and_unit': self._get_population_size_and_unit(),
             'conclusion': self._get_conclusion('population'),
             'trend_short': self._get_population_trend(),
             'trend_long': self._get_population_trend('_long'),
-            'reference_value': self._get_reference_value('population'),
+            'reference_value': self._get_reference_value('population',
+                                                         ref_value_ideal),
         }
 
     @cached_property

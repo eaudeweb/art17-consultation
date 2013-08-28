@@ -14,20 +14,22 @@ class HabitatRecord(GenericRecord):
 
     @cached_property
     def range(self):
+        surface_area = self.row.range_surface_area
         return {
-            'surface_area': self.row.range_surface_area,
+            'surface_area': surface_area,
             'conclusion': self._get_conclusion('range'),
             'trend': self._get_trend('range'),
-            'reference_value': self._get_reference_value('range'),
+            'reference_value': self._get_reference_value('range', surface_area),
         }
 
     @cached_property
     def area(self):
+        surface_area = self.row.coverage_surface_area
         return {
-            'surface_area': self.row.coverage_surface_area,
+            'surface_area': surface_area,
             'trend': self._get_trend('coverage'),
             'conclusion': self._get_conclusion('area'),
-            'reference_value': self._get_reference_value('area'),
+            'reference_value': self._get_reference_value('area', surface_area),
         }
 
 
