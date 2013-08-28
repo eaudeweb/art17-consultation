@@ -6,7 +6,7 @@ from art17 import models
 species = flask.Blueprint('species', __name__)
 
 
-class BioRegionRender(object):
+class SpeciesRecord(object):
 
     def __init__(self, row):
         self.row = row
@@ -163,5 +163,5 @@ def species_view(speciescode):
         'annex_II': checklist[0].annex_ii == 'Y',
         'annex_IV': checklist[0].annex_iv == 'Y',
         'annex_V': checklist[0].annex_v == 'Y',
-        'records': [BioRegionRender(r) for r in species.regions],
+        'records': [SpeciesRecord(r) for r in species.regions],
     })
