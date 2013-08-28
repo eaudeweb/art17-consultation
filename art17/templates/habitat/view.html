@@ -8,5 +8,12 @@ Regiuni: {{ bio_regions }}<br>
 <p>
   Bio-regiunea: {{ row.region }}<br>
 
+  Range:<br>
+  {% set range = row.range %}
+  -- surface: {{ range.surface_area }}<br>
+  -- assessment: {{ range.conclusion }}<br>
+  -- trend: {{ range.trend }}<br>
+  -- reference value: {{ range.reference_value }}<br>
+
 </p>
 {% endfor %}
