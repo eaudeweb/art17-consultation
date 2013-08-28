@@ -13,30 +13,6 @@ class SpeciesRecord(GenericRecord):
     def region(self):
         return self.row.region
 
-    def _get_reference_value(self, name):
-        if name == 'range':
-            ideal = self.row.range_surface_area
-        elif name == 'population':
-            ideal = (self.row.population_minimum_size or
-                     self.row.population_alt_minimum_size)
-        else:
-            raise RuntimeError("Unknown name %r" % name)
-
-        favourable = getattr(self.row, 'complementary_favourable_%s' % name)
-        favourable_op = getattr(self.row, 'complementary_favourable_%s_op' % name)
-        favourable_x = getattr(self.row, 'complementary_favourable_%s_x' % name)
-        if favourable:
-          return favourable
-
-        elif favourable_op:
-          return "%s %s" % (favourable_op, ideal)
-
-        elif favourable_x:
-          return "Unknown"
-
-        else:
-          return "N/A"
-
     @cached_property
     def range(self):
         return {
