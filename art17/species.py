@@ -25,22 +25,23 @@ class SpeciesRecord(GenericRecord):
                                                          surface_area),
         }
 
-    def _get_population_size_and_unit(self):
-        if self.row.population_size_unit:
-            min_size = self.row.population_minimum_size
-            max_size = self.row.population_maximum_size
-            unit = self.row.population_size_unit
+    def _get_population_size(self):
+        rv = []
+        for qualifier in ['', '_alt']:
+            min_size = getattr(self.row, 'population%s_minimum_size'
+                                         % qualifier)
+            max_size = getattr(self.row, 'population%s_maximum_size'
+                                         % qualifier)
+            unit = getattr(self.row, 'population%s_size_unit' % qualifier)
 
-        else:
-            min_size = self.row.population_alt_minimum_size
-            max_size = self.row.population_alt_maximum_size
-            unit = self.row.population_alt_size_unit
+            if unit:
+                rv.append({
+                    'min': min_size,
+                    'max': max_size,
+                    'unit': unit,
+                })
 
-        if min_size == max_size:
-            return "%s %s" % (min_size, unit)
-
-        else:
-            return "%s-%s %s" % (min_size, max_size, unit)
+        return rv
 
     def _get_population_trend(self, qualifier=''):
         base_info = self._get_trend('population', qualifier)
@@ -67,7 +68,7 @@ class SpeciesRecord(GenericRecord):
         ref_value_ideal = (self.row.population_minimum_size or
                            self.row.population_alt_minimum_size)
         return {
-            'size_and_unit': self._get_population_size_and_unit(),
+            'size': self._get_population_size(),
             'conclusion': self._get_conclusion('population'),
             'trend_short': self._get_population_trend(),
             'trend_long': self._get_population_trend('_long'),

@@ -25,8 +25,21 @@
 
 {% macro trend_td(trend) -%}
   {%- set tooltip = trend_name[trend.trend] %}
-  <td class="trend" title="{{ tooltip }}">
+  <td title="{{ tooltip }}">
     {{- trend.trend }}<br>{{ trend.period -}}
+  </td>
+{%- endmacro %}
+
+
+{% macro population_size_td(size) -%}
+  <td>
+    {%- for item in size %}
+      {%- if item.min == item.max %}
+        {{- item.min }} {{ item.unit }}
+      {%- else %}
+        {{- item.min }}-{{ item.max }} {{ item.unit }}
+      {%- endif %}
+    {%- endfor %}
   </td>
 {%- endmacro %}
 
@@ -145,7 +158,7 @@
 
       {#- population: 5 cols #}
       {%- set population = row.population %}
-      <td>{{ population.size_and_unit }}</td>
+      {{ population_size_td(population.size) }}
       {{ conclusion_td(population.conclusion) }}
       {{ trend_td(population.trend_short) }}
       {{ trend_td(population.trend_long) }}
