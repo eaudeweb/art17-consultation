@@ -118,9 +118,9 @@ def species_index():
     if group:
         species_list = species_list.filter_by(group_code=group.code)
 
-    records = models.DataSpeciesRegion.query
     if species:
-        records = records.filter_by(sr_species=species.data)
+        records = (models.DataSpeciesRegion.query
+                        .filter_by(sr_species=species.data))
 
     return flask.render_template('species/index.html', **{
         'species_groups': models.LuGrupSpecie.query.all(),
@@ -128,11 +128,12 @@ def species_index():
         'species_list': species_list.all(),
         'current_species': species,
 
-        'code': species.speciescode,
-        'name': species.speciesname,
-        'annex_II': species.annexii == 'Y',
-        'annex_IV': species.annexiv == 'Y',
-        'annex_V': species.annexv == 'Y',
-
-        'records': [SpeciesRecord(r) for r in records],
+        'species': None if species is None else {
+            'code': species.speciescode,
+            'name': species.speciesname,
+            'annex_II': species.annexii == 'Y',
+            'annex_IV': species.annexiv == 'Y',
+            'annex_V': species.annexv == 'Y',
+            'records': [SpeciesRecord(r) for r in records],
+        },
     })
