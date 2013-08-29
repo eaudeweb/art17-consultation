@@ -6,6 +6,15 @@
 {%- endmacro %}
 
 
+{% macro reference_value_td(refval) -%}
+  <td {% if refval.method -%}
+        title="Metoda utilizată: {{ refval.method }}"
+      {%- endif %}>
+    {{- refval.value -}}
+  </td>
+{%- endmacro %}
+
+
 {% block content %}
   <form class="speciesfilter">
     <fieldset>
@@ -116,7 +125,7 @@
       <td>{{ range.surface_area }}</td>
       {{ conclusion_td(range.conclusion) }}
       <td>{{ range.trend }}</td>
-      <td>{{ range.reference_value }}</td>
+      {{ reference_value_td(range.reference_value) }}
 
       {#- population: 5 cols #}
       {%- set population = row.population %}
@@ -124,7 +133,7 @@
       {{ conclusion_td(population.conclusion) }}
       <td>{{ population.trend_short }}</td>
       <td>{{ population.trend_long }}</td>
-      <td>{{ population.reference_value }}</td>
+      {{ reference_value_td(population.reference_value) }}
 
       {#- habitat: 7 cols #}
       {%- set habitat = row.habitat %}

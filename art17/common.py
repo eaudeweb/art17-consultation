@@ -24,19 +24,18 @@ class GenericRecord(object):
         method = getattr(self.row, 'complementary_favourable_%s_method' % name)
 
         if favourable:
-          rv = favourable
+            value = favourable
 
         elif favourable_op:
-          rv = "%s %s" % (favourable_op, ideal)
+            value = "%s %s" % (favourable_op, ideal)
 
         elif favourable_x:
-          rv = "Unknown"
+            value = "Necunoscut"
 
         else:
-          rv = "N/A"
+            value = "N/A"
 
-        if method:
-            return "%s (method: %s)" % (rv, method)
-
-        else:
-            return rv
+        return {
+            'value': value,
+            'method': method,
+        }
