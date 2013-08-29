@@ -21,7 +21,8 @@ class SpeciesRecord(GenericRecord):
             'surface_area': surface_area,
             'trend': self._get_trend('range'),
             'conclusion': self._get_conclusion('range'),
-            'reference_value': self._get_reference_value('range', surface_area),
+            'reference_value': self._get_reference_value('range',
+                                                         surface_area),
         }
 
     def _get_population_size_and_unit(self):
@@ -43,9 +44,12 @@ class SpeciesRecord(GenericRecord):
 
     def _get_population_trend(self, qualifier=''):
         base_info = self._get_trend('population', qualifier)
-        magnitude_min = getattr(self.row, 'population_trend%s_magnitude_min' % qualifier)
-        magnitude_max = getattr(self.row, 'population_trend%s_magnitude_max' % qualifier)
-        magnitude_ci = getattr(self.row, 'population_trend%s_magnitude_ci' % qualifier)
+        magnitude_min = getattr(self.row,
+                'population_trend%s_magnitude_min' % qualifier)
+        magnitude_max = getattr(self.row,
+                'population_trend%s_magnitude_max' % qualifier)
+        magnitude_ci = getattr(self.row,
+                'population_trend%s_magnitude_ci' % qualifier)
         method = getattr(self.row, 'population_trend%s_method' % qualifier)
         return "%s method=%s magnitude=(min=%s max=%s ci=%s)" % (
             base_info, method, magnitude_min, magnitude_max, magnitude_ci)
