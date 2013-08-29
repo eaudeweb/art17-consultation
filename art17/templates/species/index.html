@@ -37,11 +37,16 @@
   </form>
 
  {% if species %}
-  Cod: {{ species.code }}<br>
-  Nume: {{ species.name }}<br>
-  Anexa II: {{ species.annex_II }}<br>
-  Anexa IV: {{ species.annex_IV }}<br>
-  Anexa V: {{ species.annex_V }}<br>
+  <p>
+    {%- set annex_list =
+      (["II"] if species.annex_II else []) +
+      (["IV"] if species.annex_IV else []) +
+      (["V"] if species.annex_V else []) %}
+
+    <strong>{{ species.name }}</strong>,
+    cod: {{ species.code }},
+    anexe: {{ ", ".join(annex_list) if annex_list else "--" }}
+  </p>
  {% endif %}
 
   <hr>
