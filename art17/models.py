@@ -295,7 +295,9 @@ class DataSpecies(Base):
 
     species_id = Column('objectid', Numeric, primary_key=True, index=True)
     country = Column(String(510))
-    speciescode = Column(String(510), index=True)
+    speciescode = Column(String(510),
+                        ForeignKey('lu_hd_species.speciescode'),
+                        index=True)
     alternative_speciesname = Column(String(510))
     common_speciesname = Column(String(510))
     distribution_map = Column(Numeric, nullable=False)
@@ -313,6 +315,8 @@ class DataSpecies(Base):
     sys_modifier_id = Column(String(510), index=True)
     export = Column(Numeric, nullable=False)
     import_id = Column(Numeric, index=True)
+
+    species = relationship('LuHdSpecies', lazy='eager', uselist=False)
 
 
 class DataSpeciesCheckList(Base):

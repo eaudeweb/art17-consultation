@@ -133,17 +133,14 @@ def species_index():
 
 @species.route('/specii/<speciescode>')
 def species_view(speciescode):
-    species = models.DataSpecies.query.filter_by(
+    species_data = models.DataSpecies.query.filter_by(
         speciescode=speciescode).first_or_404()
-    checklist = models.DataSpeciesCheckList.query.filter_by(
-        natura_2000_code=species.speciescode,
-        member_state=species.country)
+    species = species_data.species
     return flask.render_template('species/view.html', **{
         'code': species.speciescode,
-        'name': checklist[0].species_name,
-        'bio_regions': [c.bio_region for c in checklist],
-        'annex_II': checklist[0].annex_ii == 'Y',
-        'annex_IV': checklist[0].annex_iv == 'Y',
-        'annex_V': checklist[0].annex_v == 'Y',
-        'records': [SpeciesRecord(r) for r in species.regions],
+        'name': species.speciesname,
+        'annex_II': species.annexii == 'Y',
+        'annex_IV': species.annexiv == 'Y',
+        'annex_V': species.annexv == 'Y',
+        'records': [SpeciesRecord(r) for r in species_data.regions],
     })
