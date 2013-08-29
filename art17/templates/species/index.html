@@ -22,7 +22,7 @@
 
     <label>
       Specie
-      <select name="specie">
+      <select name="species">
         <option value="">--</option>
         {% for species in species_list %}
           <option value="{{ species.speciescode }}">
@@ -44,9 +44,17 @@
 {% endblock content %}
 
 
+{% block styles %}
+  {% from 'bits.html' import link %}
+  {{ link('lib/select2-3.4.2/select2.css') }}
+{% endblock styles %}
+
+
 {% block script %}
   {% from 'bits.html' import script %}
   {{ script('lib/jquery-1.10.2/jquery.min.js') }}
+  {{ script('lib/select2-3.4.2/select2.min.js') }}
+  {{ script('lib/select2-3.4.2/select2_locale_ro.js') }}
 
   <script>
     (function() {
@@ -55,6 +63,8 @@
       speciesfilter.find('select').change(function() {
         speciesfilter.submit();
       });
+
+      speciesfilter.find('select[name=species]').select2({width: '25em'});
     })();
   </script>
 {% endblock script %}
