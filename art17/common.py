@@ -12,7 +12,10 @@ class GenericRecord(object):
     def _get_trend(self, name, qualifier=''):
         period = getattr(self.row, '%s_trend%s_period' % (name, qualifier))
         trend = getattr(self.row, '%s_trend%s' % (name, qualifier))
-        return "%s %s" % (trend, self._split_period(period))
+        return {
+            'trend': trend,
+            'period': self._split_period(period),
+        }
 
     def _get_conclusion(self, name):
         return getattr(self.row, 'conclusion_%s' % name)

@@ -15,6 +15,22 @@
 {%- endmacro %}
 
 
+{% set trend_name = {
+    "+": "În creștere",
+    "-": "În scădere",
+    "0": "Stabil",
+    "x": "Necunoscut",
+  } %}
+
+
+{% macro trend_td(trend) -%}
+  {%- set tooltip = trend_name[trend.trend] %}
+  <td class="trend" title="{{ tooltip }}">
+    {{- trend.trend }}<br>{{ trend.period -}}
+  </td>
+{%- endmacro %}
+
+
 {% block content %}
   <form class="speciesfilter">
     <fieldset>
@@ -124,15 +140,15 @@
       <td>{{ range.method }}</td>
       <td>{{ range.surface_area }}</td>
       {{ conclusion_td(range.conclusion) }}
-      <td>{{ range.trend }}</td>
+      {{ trend_td(range.trend) }}
       {{ reference_value_td(range.reference_value) }}
 
       {#- population: 5 cols #}
       {%- set population = row.population %}
       <td>{{ population.size_and_unit }}</td>
       {{ conclusion_td(population.conclusion) }}
-      <td>{{ population.trend_short }}</td>
-      <td>{{ population.trend_long }}</td>
+      {{ trend_td(population.trend_short) }}
+      {{ trend_td(population.trend_long) }}
       {{ reference_value_td(population.reference_value) }}
 
       {#- habitat: 7 cols #}
@@ -140,8 +156,8 @@
       <td>{{ habitat.method }}</td>
       <td>{{ habitat.surface_area }}</td>
       {{ conclusion_td(habitat.conclusion) }}
-      <td>{{ habitat.trend_short }}</td>
-      <td>{{ habitat.trend_long }}</td>
+      {{ trend_td(habitat.trend_short) }}
+      {{ trend_td(habitat.trend_long) }}
       <td>{{ habitat.area_suitable }}</td>
       <td>{{ habitat.quality }}</td>
 
