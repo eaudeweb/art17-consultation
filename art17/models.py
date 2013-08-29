@@ -492,3 +492,23 @@ class LuHdSpecies(Base):
     annexiv_commet = Column(Text)
     annexv_comment = Column(Text)
     etc_comments = Column(String)
+
+
+class LuCountriesRegions(Base):
+    __tablename__ = u'lu_countries_regions'
+
+    objectid = Column(Numeric, primary_key=True)
+    country = Column(String)
+    region_code = Column('region', String, ForeignKey('lu_biogeoreg.code'))
+    order = Column('order_', Numeric)
+
+    region = relationship('LuBiogeoreg', lazy='eager')
+
+
+class LuBiogeoreg(Base):
+    __tablename__ = u'lu_biogeoreg'
+
+    objectid = Column(Numeric, primary_key=True)
+    code = Column(String)
+    name = Column(String)
+    order = Column('order_', Numeric)
