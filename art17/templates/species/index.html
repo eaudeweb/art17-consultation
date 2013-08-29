@@ -2,13 +2,13 @@
 
 
 {% block content %}
-<form>
+<form class="speciesfilter">
   <fieldset>
     <legend>Filtrare specii</legend>
 
     <label>
       Grup
-      <select>
+      <select name="group">
         <option>--</option>
         {% for group in species_groups %}
           <option value="{{ group.code }}">{{ group.description }}</option>
@@ -26,3 +26,19 @@
 {% endfor %}
 </ul>
 {% endblock content %}
+
+
+{% block script %}
+  {% from 'bits.html' import script_lib %}
+  {{ script_lib('jquery-1.10.2/jquery.min.js') }}
+
+  <script>
+    (function() {
+      var speciesfilter = $('.speciesfilter');
+
+      speciesfilter.find('select').change(function() {
+        speciesfilter.submit();
+      });
+    })();
+  </script>
+{% endblock script %}

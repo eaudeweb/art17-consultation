@@ -1,0 +1,3 @@
+{% macro script_lib(name) -%}
+  <script src="{{ url_for('static', filename='lib/' + name) }}"></script>
+{%- endmacro %}
