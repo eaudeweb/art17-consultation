@@ -184,10 +184,10 @@
       {{ habitat_quality_td(habitat.quality) }}
 
       {#- future prospects #}
-      <td>{{ row.future_prospects }}</td>
+      {{ conclusion_td(row.future_prospects) }}
 
       {#- overall assessment #}
-      <td>{{ row.overall_assessment }}</td>
+      {{ conclusion_td(row.overall_assessment) }}
     </tr>
    {% endfor %}
   </table>
