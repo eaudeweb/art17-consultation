@@ -106,14 +106,23 @@ def species_index():
     else:
         group = None
 
-    species = models.LuHdSpecies.query.order_by('speciesname')
+    species_code = flask.request.args.get('species')
+    if species_code:
+        species = (models.LuHdSpecies.query
+                    .filter_by(speciescode=species_code)
+                    .first_or_404())
+    else:
+        species = None
+
+    species_list = models.LuHdSpecies.query.order_by('speciesname')
     if group:
-        species = species.filter_by(group_code=group.code)
+        species_list = species_list.filter_by(group_code=group.code)
 
     return flask.render_template('species/index.html', **{
         'species_groups': models.LuGrupSpecie.query.all(),
         'current_group': group,
-        'species_list': species.all(),
+        'species_list': species_list.all(),
+        'current_species': species,
         'records': models.DataSpecies.query.order_by('speciescode').all(),
     })
 

@@ -25,7 +25,9 @@
       <select name="species">
         <option value="">--</option>
         {% for species in species_list %}
-          <option value="{{ species.speciescode }}">
+          {% set selected = (species == current_species) %}
+          <option value="{{ species.speciescode }}"
+                  {%- if selected %} selected{% endif %}>
             {{- species.speciesname -}}
           </option>
         {% endfor %}
