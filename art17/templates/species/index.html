@@ -19,6 +19,18 @@
         {% endfor %}
       </select>
     </label>
+
+    <label>
+      Specie
+      <select name="specie">
+        <option value="">--</option>
+        {% for species in species_list %}
+          <option value="{{ species.speciescode }}">
+            {{- species.speciesname -}}
+          </option>
+        {% endfor %}
+      </select>
+    </label>
   </fieldset>
 </form>
 

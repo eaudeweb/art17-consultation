@@ -106,9 +106,14 @@ def species_index():
     else:
         group = None
 
+    species = models.LuHdSpecies.query.order_by('speciesname')
+    if group:
+        species = species.filter_by(group_code=group.code)
+
     return flask.render_template('species/index.html', **{
         'species_groups': models.LuGrupSpecie.query.all(),
         'current_group': group,
+        'species_list': species.all(),
         'records': models.DataSpecies.query.order_by('speciescode').all(),
     })
 
