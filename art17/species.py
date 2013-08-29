@@ -107,9 +107,9 @@ def species_index():
         group = None
 
     return flask.render_template('species/index.html', **{
-        'species_groups': list(models.LuGrupSpecie.query),
+        'species_groups': models.LuGrupSpecie.query.all(),
         'current_group': group,
-        'records': list(models.DataSpecies.query.order_by('speciescode')),
+        'records': models.DataSpecies.query.order_by('speciescode').all(),
     })
 
 
