@@ -6,10 +6,12 @@
     <fieldset>
       <legend>Filtrare specii</legend>
 
-      <label>
-        Grup
-        <select name="group">
+      <div class="form-group">
+        <label for="speciesfilter-group">Grup</label>
+
+        <select name="group" id="speciesfilter-group">
           <option value="">--</option>
+
           {% for group in species_groups %}
             {% set selected = (group == current_group) %}
             <option value="{{ group.code }}"
@@ -18,12 +20,14 @@
             </option>
           {% endfor %}
         </select>
-      </label>
+      </div>
 
-      <label>
-        Specie
-        <select name="species">
+      <div class="form-group">
+        <label for="speciesfilter-species">Specie</label>
+
+        <select name="species" id="speciesfilter-species">
           <option value="">--</option>
+
           {% for species in species_list %}
             {% set selected = (species == current_species) %}
             <option value="{{ species.speciescode }}"
@@ -32,7 +36,11 @@
             </option>
           {% endfor %}
         </select>
-      </label>
+      </div>
+
+      <div class="form-group">
+        <button type="submit">filtrează</button>
+      </div>
     </fieldset>
   </form>
 
@@ -145,10 +153,6 @@
   <script>
     (function() {
       var speciesfilter = $('.speciesfilter');
-
-      speciesfilter.find('select').change(function() {
-        speciesfilter.submit();
-      });
 
       speciesfilter.find('select[name=species]').select2({width: '25em'});
     })();
