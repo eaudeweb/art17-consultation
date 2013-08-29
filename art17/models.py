@@ -472,3 +472,23 @@ class LuGrupSpecie(Base):
     oid = Column(Numeric, primary_key=True)
     code = Column(String)
     description = Column(String)
+
+
+class LuHdSpecies(Base):
+    __tablename__ = u'lu_hd_species'
+
+    objectid = Column(Numeric, primary_key=True)
+    speciescode = Column(Numeric)
+    hdname = Column(String)
+    speciesname = Column(String)
+    alternativenames = Column(String)
+    reserve = Column(String)
+    group_code = Column('group_', String)
+    annexii = Column(String)
+    annexpriority = Column(String)
+    annexiv = Column(String)
+    annexv = Column(String)
+    annexii_comment = Column(String)
+    annexiv_commet = Column(Text)
+    annexv_comment = Column(Text)
+    etc_comments = Column(String)
