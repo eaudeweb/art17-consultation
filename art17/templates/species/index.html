@@ -9,9 +9,13 @@
     <label>
       Grup
       <select name="group">
-        <option>--</option>
+        <option value="">--</option>
         {% for group in species_groups %}
-          <option value="{{ group.code }}">{{ group.description }}</option>
+          {% set selected = (group == current_group) %}
+          <option value="{{ group.code }}"
+                  {%- if selected %} selected{% endif %}>
+            {{- group.description -}}
+          </option>
         {% endfor %}
       </select>
     </label>
