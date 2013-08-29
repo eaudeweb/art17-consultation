@@ -51,40 +51,81 @@
 
   <hr>
 
- {% for row in records %}
-  <p>
-    Bio-regiunea: {{ row.region }}<br>
+  <table class="records">
+    <tr>
+      <td rowspan=2>Bio-regiune</td>
+      <td colspan=5>Range</td>
+      <td colspan=5>Population</td>
+      <td colspan=7>Habitat</td>
+      <td rowspan=2>Future prospects</td>
+      <td rowspan=2>Overall assessment</td>
+    </tr>
 
-    Range:<br>
-    {% set range = row.range %}
-    -- method: {{ range.method }}<br>
-    -- surface: {{ range.surface_area }}<br>
-    -- assessment: {{ range.conclusion }}<br>
-    -- trend: {{ range.trend }}<br>
-    -- reference value: {{ range.reference_value }}<br>
+    <tr>
+      {#- bio-regiune #}
+      {#- range: 5 cols #}
+      <td>method</td>
+      <td>surface</td>
+      <td>assessment</td>
+      <td>trend</td>
+      <td>reference value</td>
+      {#- population: 5 cols #}
+      <td>size &amp; unit</td>
+      <td>assessment</td>
+      <td>short term trend</td>
+      <td>long term trend</td>
+      <td>reference value</td>
+      {#- habitat: 7 cols #}
+      <td>method</td>
+      <td>surface</td>
+      <td>assessment</td>
+      <td>short term trend</td>
+      <td>long term trend</td>
+      <td>suitable</td>
+      <td>quality</td>
+      {#- future prospects #}
+      {#- overall assessment #}
+    </tr>
 
-    Population:<br>
-    {% set population = row.population %}
-    -- size &amp; unit: {{ population.size_and_unit }}<br>
-    -- assessment: {{ population.conclusion }}<br>
-    -- short term trend: {{ population.trend_short }}<br>
-    -- long term trend: {{ population.trend_long }}<br>
-    -- reference value: {{ population.reference_value }}<br>
+   {% for row in species.records %}
+    <tr>
+      {#- bio-regiune #}
+      <td>{{ row.region }}</td>
 
-    Habitat:<br>
-    {% set habitat = row.habitat %}
-    -- method: {{ habitat.method }}<br>
-    -- surface: {{ habitat.surface_area }}<br>
-    -- assessment: {{ habitat.conclusion }}<br>
-    -- short term trend: {{ habitat.trend_short }}<br>
-    -- long term trend: {{ habitat.trend_long }}<br>
-    -- suitable: {{ habitat.area_suitable }}<br>
-    -- quality: {{ habitat.quality }}<br>
+      {#- range: 5 cols #}
+      {%- set range = row.range %}
+      <td>{{ range.method }}</td>
+      <td>{{ range.surface_area }}</td>
+      <td>{{ range.conclusion }}</td>
+      <td>{{ range.trend }}</td>
+      <td>{{ range.reference_value }}</td>
 
-    Future prospects: {{ row.future_prospects }}<br>
-    Overall assessment: {{ row.overall_assessment }}<br>
-  </p>
- {% endfor %}
+      {#- population: 5 cols #}
+      {%- set population = row.population %}
+      <td>{{ population.size_and_unit }}</td>
+      <td>{{ population.conclusion }}</td>
+      <td>{{ population.trend_short }}</td>
+      <td>{{ population.trend_long }}</td>
+      <td>{{ population.reference_value }}</td>
+
+      {#- habitat: 7 cols #}
+      {%- set habitat = row.habitat %}
+      <td>{{ habitat.method }}</td>
+      <td>{{ habitat.surface_area }}</td>
+      <td>{{ habitat.conclusion }}</td>
+      <td>{{ habitat.trend_short }}</td>
+      <td>{{ habitat.trend_long }}</td>
+      <td>{{ habitat.area_suitable }}</td>
+      <td>{{ habitat.quality }}</td>
+
+      {#- future prospects #}
+      <td>{{ row.future_prospects }}</td>
+
+      {#- overall assessment #}
+      <td>{{ row.overall_assessment }}</td>
+    </tr>
+   {% endfor %}
+  </table>
 {% endblock content %}
 
 
