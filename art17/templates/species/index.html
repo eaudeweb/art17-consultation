@@ -2,85 +2,84 @@
 
 
 {% block content %}
-<form class="speciesfilter">
-  <fieldset>
-    <legend>Filtrare specii</legend>
+  <form class="speciesfilter">
+    <fieldset>
+      <legend>Filtrare specii</legend>
 
-    <label>
-      Grup
-      <select name="group">
-        <option value="">--</option>
-        {% for group in species_groups %}
-          {% set selected = (group == current_group) %}
-          <option value="{{ group.code }}"
-                  {%- if selected %} selected{% endif %}>
-            {{- group.description -}}
-          </option>
-        {% endfor %}
-      </select>
-    </label>
+      <label>
+        Grup
+        <select name="group">
+          <option value="">--</option>
+          {% for group in species_groups %}
+            {% set selected = (group == current_group) %}
+            <option value="{{ group.code }}"
+                    {%- if selected %} selected{% endif %}>
+              {{- group.description -}}
+            </option>
+          {% endfor %}
+        </select>
+      </label>
 
-    <label>
-      Specie
-      <select name="species">
-        <option value="">--</option>
-        {% for species in species_list %}
-          {% set selected = (species == current_species) %}
-          <option value="{{ species.speciescode }}"
-                  {%- if selected %} selected{% endif %}>
-            {{- species.speciesname -}}
-          </option>
-        {% endfor %}
-      </select>
-    </label>
-  </fieldset>
-</form>
+      <label>
+        Specie
+        <select name="species">
+          <option value="">--</option>
+          {% for species in species_list %}
+            {% set selected = (species == current_species) %}
+            <option value="{{ species.speciescode }}"
+                    {%- if selected %} selected{% endif %}>
+              {{- species.speciesname -}}
+            </option>
+          {% endfor %}
+        </select>
+      </label>
+    </fieldset>
+  </form>
 
-{% if species %}
-Cod: {{ species.code }}<br>
-Nume: {{ species.name }}<br>
-Anexa II: {{ species.annex_II }}<br>
-Anexa IV: {{ species.annex_IV }}<br>
-Anexa V: {{ species.annex_V }}<br>
-{% endif %}
+ {% if species %}
+  Cod: {{ species.code }}<br>
+  Nume: {{ species.name }}<br>
+  Anexa II: {{ species.annex_II }}<br>
+  Anexa IV: {{ species.annex_IV }}<br>
+  Anexa V: {{ species.annex_V }}<br>
+ {% endif %}
 
-<hr>
+  <hr>
 
-{% for row in records %}
-<p>
-  Bio-regiunea: {{ row.region }}<br>
+ {% for row in records %}
+  <p>
+    Bio-regiunea: {{ row.region }}<br>
 
-  Range:<br>
-  {% set range = row.range %}
-  -- method: {{ range.method }}<br>
-  -- surface: {{ range.surface_area }}<br>
-  -- assessment: {{ range.conclusion }}<br>
-  -- trend: {{ range.trend }}<br>
-  -- reference value: {{ range.reference_value }}<br>
+    Range:<br>
+    {% set range = row.range %}
+    -- method: {{ range.method }}<br>
+    -- surface: {{ range.surface_area }}<br>
+    -- assessment: {{ range.conclusion }}<br>
+    -- trend: {{ range.trend }}<br>
+    -- reference value: {{ range.reference_value }}<br>
 
-  Population:<br>
-  {% set population = row.population %}
-  -- size &amp; unit: {{ population.size_and_unit }}<br>
-  -- assessment: {{ population.conclusion }}<br>
-  -- short term trend: {{ population.trend_short }}<br>
-  -- long term trend: {{ population.trend_long }}<br>
-  -- reference value: {{ population.reference_value }}<br>
+    Population:<br>
+    {% set population = row.population %}
+    -- size &amp; unit: {{ population.size_and_unit }}<br>
+    -- assessment: {{ population.conclusion }}<br>
+    -- short term trend: {{ population.trend_short }}<br>
+    -- long term trend: {{ population.trend_long }}<br>
+    -- reference value: {{ population.reference_value }}<br>
 
-  Habitat:<br>
-  {% set habitat = row.habitat %}
-  -- method: {{ habitat.method }}<br>
-  -- surface: {{ habitat.surface_area }}<br>
-  -- assessment: {{ habitat.conclusion }}<br>
-  -- short term trend: {{ habitat.trend_short }}<br>
-  -- long term trend: {{ habitat.trend_long }}<br>
-  -- suitable: {{ habitat.area_suitable }}<br>
-  -- quality: {{ habitat.quality }}<br>
+    Habitat:<br>
+    {% set habitat = row.habitat %}
+    -- method: {{ habitat.method }}<br>
+    -- surface: {{ habitat.surface_area }}<br>
+    -- assessment: {{ habitat.conclusion }}<br>
+    -- short term trend: {{ habitat.trend_short }}<br>
+    -- long term trend: {{ habitat.trend_long }}<br>
+    -- suitable: {{ habitat.area_suitable }}<br>
+    -- quality: {{ habitat.quality }}<br>
 
-  Future prospects: {{ row.future_prospects }}<br>
-  Overall assessment: {{ row.overall_assessment }}<br>
-
-</p>
-{% endfor %}
+    Future prospects: {{ row.future_prospects }}<br>
+    Overall assessment: {{ row.overall_assessment }}<br>
+  </p>
+ {% endfor %}
 {% endblock content %}
 
 
