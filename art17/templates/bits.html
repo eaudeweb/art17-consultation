@@ -3,6 +3,6 @@
 {%- endmacro %}
 
 
-{% macro link(filename) -%}
-  <link rel="stylesheet" href="{{ url_for('static', filename=filename) }}">
+{% macro link(filename, rel='stylesheet') -%}
+  <link rel="{{ rel }}" href="{{ url_for('static', filename=filename) }}">
 {%- endmacro %}

@@ -1,4 +1,8 @@
+{% from 'bits.html' import script, link %}
+
 {% block styles %}
+  {{ link('style.less', rel='stylesheet/less') }}
+  {{ script('lib/less-1.4.1/less.min.js') }}
 {% endblock %}
 
 
