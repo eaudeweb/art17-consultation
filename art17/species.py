@@ -118,29 +118,21 @@ def species_index():
     if group:
         species_list = species_list.filter_by(group_code=group.code)
 
-    records = models.DataSpecies.query.order_by('speciescode')
+    records = models.DataSpeciesRegion.query
     if species:
-        records = records.filter_by(speciescode=str(species.speciescode))
+        records = records.filter_by(sr_species=species.data)
 
     return flask.render_template('species/index.html', **{
         'species_groups': models.LuGrupSpecie.query.all(),
         'current_group': group,
         'species_list': species_list.all(),
         'current_species': species,
-        'records': records.all(),
-    })
 
-
-@species.route('/specii/<speciescode>')
-def species_view(speciescode):
-    species_data = models.DataSpecies.query.filter_by(
-        speciescode=speciescode).first_or_404()
-    species = species_data.species
-    return flask.render_template('species/view.html', **{
         'code': species.speciescode,
         'name': species.speciesname,
         'annex_II': species.annexii == 'Y',
         'annex_IV': species.annexiv == 'Y',
         'annex_V': species.annexv == 'Y',
-        'records': [SpeciesRecord(r) for r in species_data.regions],
+
+        'records': [SpeciesRecord(r) for r in records],
     })

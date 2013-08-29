@@ -1,6 +1,6 @@
 from sqlalchemy import (Column, DateTime, ForeignKey, Index,
-                        String, Table, Text, Numeric)
-from sqlalchemy.orm import relationship
+                        String, Table, Text, Numeric, cast)
+from sqlalchemy.orm import relationship, foreign
 from sqlalchemy.ext.declarative import declarative_base
 from flask.ext.sqlalchemy import SQLAlchemy
 
@@ -295,9 +295,7 @@ class DataSpecies(Base):
 
     species_id = Column('objectid', Numeric, primary_key=True, index=True)
     country = Column(String(510))
-    speciescode = Column(String(510),
-                        ForeignKey('lu_hd_species.speciescode'),
-                        index=True)
+    speciescode = Column(String(510), index=True)
     alternative_speciesname = Column(String(510))
     common_speciesname = Column(String(510))
     distribution_map = Column(Numeric, nullable=False)
@@ -315,8 +313,6 @@ class DataSpecies(Base):
     sys_modifier_id = Column(String(510), index=True)
     export = Column(Numeric, nullable=False)
     import_id = Column(Numeric, index=True)
-
-    species = relationship('LuHdSpecies', lazy='eager', uselist=False)
 
 
 class DataSpeciesCheckList(Base):
@@ -496,6 +492,11 @@ class LuHdSpecies(Base):
     annexiv_commet = Column(Text)
     annexv_comment = Column(Text)
     etc_comments = Column(String)
+
+    data = relationship(DataSpecies,
+                        primaryjoin=(cast(speciescode, String(255)) ==
+                                     foreign(DataSpecies.speciescode)),
+                        lazy='eager', uselist=False)
 
 
 class LuCountriesRegions(Base):
