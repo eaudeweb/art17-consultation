@@ -15,12 +15,7 @@ class GenericRecord(object):
         return "%s %s" % (trend, self._split_period(period))
 
     def _get_conclusion(self, name):
-        assessment = getattr(self.row, 'conclusion_%s' % name)
-        trend = getattr(self.row, 'conclusion_%s_trend' % name)
-        if trend:
-            return "%s (%s)" % (assessment, trend)
-        else:
-            return assessment
+        return getattr(self.row, 'conclusion_%s' % name)
 
     def _get_reference_value(self, name, ideal):
         favourable = getattr(self.row, 'complementary_favourable_%s' % name)

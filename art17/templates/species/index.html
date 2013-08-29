@@ -1,6 +1,11 @@
 {% extends "layout.html" %}
 
 
+{% macro conclusion_td(conclusion) -%}
+  <td class="conclusion-{{ conclusion }}">{{ conclusion }}</td>
+{%- endmacro %}
+
+
 {% block content %}
   <form class="speciesfilter">
     <fieldset>
@@ -109,14 +114,14 @@
       {%- set range = row.range %}
       <td>{{ range.method }}</td>
       <td>{{ range.surface_area }}</td>
-      <td>{{ range.conclusion }}</td>
+      {{ conclusion_td(range.conclusion) }}
       <td>{{ range.trend }}</td>
       <td>{{ range.reference_value }}</td>
 
       {#- population: 5 cols #}
       {%- set population = row.population %}
       <td>{{ population.size_and_unit }}</td>
-      <td>{{ population.conclusion }}</td>
+      {{ conclusion_td(population.conclusion) }}
       <td>{{ population.trend_short }}</td>
       <td>{{ population.trend_long }}</td>
       <td>{{ population.reference_value }}</td>
@@ -125,7 +130,7 @@
       {%- set habitat = row.habitat %}
       <td>{{ habitat.method }}</td>
       <td>{{ habitat.surface_area }}</td>
-      <td>{{ habitat.conclusion }}</td>
+      {{ conclusion_td(habitat.conclusion) }}
       <td>{{ habitat.trend_short }}</td>
       <td>{{ habitat.trend_long }}</td>
       <td>{{ habitat.area_suitable }}</td>
