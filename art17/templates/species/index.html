@@ -1,3 +1,7 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
 <form>
   <fieldset>
     <legend>Filtrare specii</legend>
@@ -21,3 +25,4 @@
   <li><a href="{{ url }}">{{ speciescode }}</a></li>
 {% endfor %}
 </ul>
+{% endblock content %}

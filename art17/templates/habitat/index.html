@@ -1,3 +1,7 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
 <ul>
 {% for row in records %}
   {% set habitatcode = row.habitatcode %}
@@ -5,3 +9,4 @@
   <li><a href="{{ url }}">{{ habitatcode }}</a></li>
 {% endfor %}
 </ul>
+{% endblock content %}
