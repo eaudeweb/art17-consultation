@@ -44,6 +44,15 @@
 {%- endmacro %}
 
 
+{% macro habitat_quality_td(quality) -%}
+  <td {% if quality.explanation -%}
+        title="Metoda utilizată: {{ quality.explanation }}"
+      {%- endif %}>
+    {{- quality.value -}}
+  </td>
+{%- endmacro %}
+
+
 {% block content %}
   <form class="speciesfilter">
     <fieldset>
@@ -172,7 +181,7 @@
       {{ trend_td(habitat.trend_short) }}
       {{ trend_td(habitat.trend_long) }}
       <td>{{ habitat.area_suitable }}</td>
-      <td>{{ habitat.quality }}</td>
+      {{ habitat_quality_td(habitat.quality) }}
 
       {#- future prospects #}
       <td>{{ row.future_prospects }}</td>

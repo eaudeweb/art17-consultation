@@ -58,10 +58,10 @@ class SpeciesRecord(GenericRecord):
     def _get_habitat_quality(self):
         value = self.row.habitat_quality
         explanation = self.row.habitat_quality_explanation
-        if explanation:
-            return "%s (%s)" % (value, explanation)
-        else:
-            return "%s" % value
+        return {
+            'value': value,
+            'explanation': explanation,
+        }
 
     @cached_property
     def population(self):
