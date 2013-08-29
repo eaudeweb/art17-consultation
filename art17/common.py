@@ -33,7 +33,7 @@ class GenericRecord(object):
             value = "%s%s" % (favourable_op, ideal)
 
         elif favourable_x:
-            value = "Necunoscut"
+            value = "Unknown"
 
         else:
             value = "N/A"
