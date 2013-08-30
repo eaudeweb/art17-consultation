@@ -81,6 +81,17 @@ class DataGreport(Base):
     validation_date = Column(DateTime)
 
 
+class LuHabitattypeCodes(Base):
+    __tablename__ = u'lu_habitattype_codes'
+
+    objectid = Column(Numeric, primary_key=True)
+    code = Column(String)
+    hd_name = Column(String)
+    valide_name = Column(String)
+    priority = Column(Numeric)
+    priority_comment = Column(String)
+
+
 class DataHabitat(Base):
     __tablename__ = u'data_habitats'
     __table_args__ = (
@@ -104,6 +115,11 @@ class DataHabitat(Base):
     validation_date = Column(DateTime)
     export = Column(Numeric, nullable=False)
     import_id = Column(Numeric, index=True)
+
+    lu = relationship(u'LuHabitattypeCodes',
+                      primaryjoin=(habitatcode ==
+                                   foreign(LuHabitattypeCodes.code)),
+                      uselist=False, lazy='eager')
 
 
 class DataHabitatsCheckList(Base):

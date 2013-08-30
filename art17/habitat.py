@@ -47,8 +47,16 @@ class HabitatRecord(GenericRecord):
 
 @habitat.route('/habitate/')
 def index():
+    habitat_list = (models.DataHabitat.query
+                        .join(models.DataHabitattypeRegion)
+                        .order_by('habitatcode'))
+
+    habitat_code = flask.request.args.get('habitat', type=int)
+
     return flask.render_template('habitat/index.html', **{
-        'records': models.DataHabitat.query.order_by('habitatcode').all(),
+        'habitat_list': [{'id': h.habitatcode, 'text': h.lu.hd_name}
+                         for h in habitat_list],
+        'current_habitat_code': habitat_code,
     })
 
 

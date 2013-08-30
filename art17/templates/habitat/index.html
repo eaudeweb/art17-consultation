@@ -2,11 +2,38 @@
 
 
 {% block content %}
-<ul>
-{% for row in records %}
-  {% set habitatcode = row.habitatcode %}
-  {% set url = url_for('.habitat_view', habitatcode=habitatcode) %}
-  <li><a href="{{ url }}">{{ habitatcode }}</a></li>
-{% endfor %}
-</ul>
+  <form class="habitatfilter">
+    <fieldset>
+      <legend>Filtrare habitate</legend>
+
+      <div class="form-group">
+        <label for="habitatfilter-group">Habitat</label>
+        <input name="habitat" value="{{ current_habitat_code }}"
+               type="hidden" id="habitatfilter-group">
+      </div>
+
+      <div class="form-group">
+        <button type="submit">filtrează</button>
+      </div>
+    </fieldset>
+  </form>
 {% endblock content %}
+
+
+{% block script %}
+  {{ super() }}
+
+  <script>
+    (function() {
+      "use strict";
+
+      var habitatfilter = $('.habitatfilter');
+      var habitat_list = {{ habitat_list|tojson|safe }};
+
+      habitatfilter.find('[name=habitat]').select2({
+        data: habitat_list,
+        width: '40em'
+      });
+    })();
+  </script>
+{% endblock script %}
