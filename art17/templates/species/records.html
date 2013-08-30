@@ -19,6 +19,7 @@
   </tr>
 
   <tr class="records-header">
+    {#- detail #}
     {#- bio-regiune #}
     {#- range: 5 cols #}
     <td>Metodă</td>
@@ -46,10 +47,12 @@
 
  {% for row in species.records %}
   <tr>
+    {#- detail #}
     <td>
       {%- set url = url_for('.species_record', record_id=row.id) %}
-      <a href="{{ url }}">info</a>
+      <a class="records-detailbtn" href="{{ url }}">info</a>
     </td>
+
     {#- bio-regiune #}
     <td>{{ row.region }}</td>
 
@@ -87,3 +90,48 @@
   </tr>
  {% endfor %}
 </table>
+
+
+<div id="recorddetail-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="recorddetail-content">
+      <div class="recorddetail-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="recorddetail-title">Modal title</h4>
+      </div>
+      <div class="recorddetail-body">
+        ...
+      </div>
+      <div class="recorddetail-footer">
+        <button type="button" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{%- macro records_script() %}
+<script>
+(function() {
+  "use strict";
+
+  var recorddetail = $('#recorddetail-modal');
+
+  $('.records-detailbtn').click(function(evt) {
+    evt.preventDefault();
+    var url = $(this).attr('href');
+
+    recorddetail.modal('hide');
+    set_html("Se încarcă...");
+    $.get(url).done(set_html);
+    recorddetail.modal();
+  });
+
+  function set_html(html) {
+    recorddetail.find('.recorddetail-body').html(html);
+  }
+})();
+</script>
+{%- endmacro %}
+
+{%- do script_later(records_script()) %}
