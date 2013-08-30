@@ -1,0 +1,15 @@
+<table class="records">
+  <tr class="records-header">
+    <td>something</td>
+  </tr>
+
+  <tr class="records-header">
+    <td>regiune</td>
+  </tr>
+
+ {% for row in habitat.records %}
+  <tr>
+    <td>{{ row.region }}</td>
+  </tr>
+ {% endfor %}
+</table>

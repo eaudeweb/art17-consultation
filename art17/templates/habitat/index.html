@@ -23,6 +23,8 @@
     <strong>{{ habitat.name }}</strong>,
     cod: {{ habitat.code }}
   </p>
+
+  {%- include 'habitat/records.html' with context %}
  {% endif %}
 {% endblock content %}
 
