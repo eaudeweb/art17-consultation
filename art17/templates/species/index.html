@@ -77,9 +77,18 @@
 
   <script>
     (function() {
+      "use strict";
+
       var speciesfilter = $('.speciesfilter');
 
-      speciesfilter.find('select[name=species]').select2({width: '25em'});
+      speciesfilter.find('select[name=group]').select2({
+        minimumResultsForSearch: -1,  // disable search field
+        width: '10em'
+      });
+
+      speciesfilter.find('select[name=species]').select2({
+        width: '25em'
+      });
     })();
   </script>
 {% endblock script %}
