@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+<div class="home">
+  <div class="container">
+    <h1>Art17</h1>
+
+    <p>
+      <a href="{{ url_for('species.index') }}">Specii</a>
+      <a href="{{ url_for('habitat.index') }}">Habitate</a>
+    </p>
+  </div>
+</div>
+{% endblock content %}

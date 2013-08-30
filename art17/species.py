@@ -121,7 +121,7 @@ class SpeciesRecord(GenericRecord):
 
 
 @species.route('/specii/')
-def species_index():
+def index():
     group_code = flask.request.args.get('group')
     species_code = flask.request.args.get('species', type=int)
     if species_code:

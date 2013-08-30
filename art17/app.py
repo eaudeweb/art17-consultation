@@ -13,7 +13,7 @@ views = flask.Blueprint('views', __name__)
 
 @views.route('/')
 def home():
-    return 'hello art17'
+    return flask.render_template('home.html')
 
 
 @views.app_url_defaults
