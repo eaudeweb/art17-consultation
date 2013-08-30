@@ -20,11 +20,14 @@ class SpeciesRecord(GenericRecord):
     @cached_property
     def range(self):
         surface_area = self.row.range_surface_area
+
         return {
             'method': self.row.range_method,
             'surface_area': surface_area,
             'trend_short': self._get_trend('range'),
             'trend_long': self._get_trend('range', '_long'),
+            'magnitude_short': self._get_magnitude('range'),
+            'magnitude_long': self._get_magnitude('range', '_long'),
             'conclusion': self._get_conclusion('range'),
             'reference_value': self._get_reference_value('range',
                                                          surface_area),

@@ -17,6 +17,14 @@ class GenericRecord(object):
             'period': self._split_period(period),
         }
 
+    def _get_magnitude(self, name, qualifier=''):
+        mag_min = getattr(self.row, '%s_trend%s_magnitude_min' % (name, qualifier))
+        mag_max = getattr(self.row, '%s_trend%s_magnitude_max' % (name, qualifier))
+        return {
+            'min': mag_min,
+            'max': mag_max,
+        }
+
     def _get_conclusion(self, name):
         return getattr(self.row, 'conclusion_%s' % name)
 
