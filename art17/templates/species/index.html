@@ -35,10 +35,9 @@
     cod: {{ species.code }},
     anexe: {{ ", ".join(annex_list) if annex_list else "--" }}
   </p>
- {% endif %}
 
   {%- include 'species/records.html' with context %}
-
+ {% endif %}
 {% endblock content %}
 
 
