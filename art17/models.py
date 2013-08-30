@@ -496,7 +496,8 @@ class LuHdSpecies(Base):
     data = relationship(DataSpecies,
                         primaryjoin=(cast(speciescode, String(255)) ==
                                      foreign(DataSpecies.speciescode)),
-                        lazy='eager', uselist=False)
+                        lazy='eager', uselist=False,
+                        backref=db.backref('lu'))
 
 
 class LuCountriesRegions(Base):

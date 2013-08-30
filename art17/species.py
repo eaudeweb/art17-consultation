@@ -10,6 +10,10 @@ species = flask.Blueprint('species', __name__)
 class SpeciesRecord(GenericRecord):
 
     @cached_property
+    def id(self):
+        return self.row.sr_id
+
+    @cached_property
     def region(self):
         return self.row.region
 
@@ -133,4 +137,13 @@ def species_index():
             'annex_V': species.annexv == 'Y',
             'records': [SpeciesRecord(r) for r in records],
         },
+    })
+
+
+@species.route('/specii/detalii/<int:record_id>')
+def species_record(record_id):
+    record = models.DataSpeciesRegion.query.get_or_404(record_id)
+    return flask.render_template('species/detail.html', **{
+        'species': record.sr_species,
+        'record': SpeciesRecord(record),
     })

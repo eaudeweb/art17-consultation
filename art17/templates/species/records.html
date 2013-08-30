@@ -4,6 +4,7 @@
 
 <table class="records">
   <tr class="records-header">
+    <td rowspan=2></td>
     <td rowspan=2 title="Regiunea biogeografică">Regiune</td>
     <td colspan=5>Areal (km<sup>2</sup>)</td>
     <td colspan=5>Populație</td>
@@ -45,6 +46,10 @@
 
  {% for row in species.records %}
   <tr>
+    <td>
+      {%- set url = url_for('.species_record', record_id=row.id) %}
+      <a href="{{ url }}">info</a>
+    </td>
     {#- bio-regiune #}
     <td>{{ row.region }}</td>
 
