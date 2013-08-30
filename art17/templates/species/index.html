@@ -42,18 +42,8 @@
 {% endblock content %}
 
 
-{% block styles %}
-  {{ super() }}
-  {% from 'bits.html' import link %}
-  {{ link('lib/select2-3.4.2/select2.css') }}
-{% endblock styles %}
-
-
 {% block script %}
   {{ super() }}
-  {% from 'bits.html' import script %}
-  {{ script('lib/select2-3.4.2/select2.min.js') }}
-  {{ script('lib/select2-3.4.2/select2_locale_ro.js') }}
 
   <script>
     (function() {

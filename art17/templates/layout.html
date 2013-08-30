@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     {%- block styles %}
+      {{ link('lib/select2-3.4.2/select2.css') }}
       {{ link('style.less', rel='stylesheet/less') }}
       {{ script('lib/less-1.4.1/less.min.js') }}
     {% endblock %}
@@ -29,6 +30,8 @@
       {{ script('lib/jquery-1.10.2/jquery.min.js') }}
       {{ script('lib/underscore-1.5.1/underscore-min.js') }}
       {{ script('lib/bootstrap-3.0.0/js/bootstrap.min.js') }}
+      {{ script('lib/select2-3.4.2/select2.min.js') }}
+      {{ script('lib/select2-3.4.2/select2_locale_ro.js') }}
       {{ g.get('script_later') or '' }}
     {% endblock %}
   </body>
