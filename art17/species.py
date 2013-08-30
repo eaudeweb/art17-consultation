@@ -23,7 +23,8 @@ class SpeciesRecord(GenericRecord):
         return {
             'method': self.row.range_method,
             'surface_area': surface_area,
-            'trend': self._get_trend('range'),
+            'trend_short': self._get_trend('range'),
+            'trend_long': self._get_trend('range', '_long'),
             'conclusion': self._get_conclusion('range'),
             'reference_value': self._get_reference_value('range',
                                                          surface_area),
