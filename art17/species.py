@@ -100,7 +100,7 @@ class SpeciesRecord(GenericRecord):
 @species.route('/specii/')
 def species_index():
     group_code = flask.request.args.get('group')
-    species_code = flask.request.args.get('species')
+    species_code = flask.request.args.get('species', type=int)
     if species_code:
         species = (models.LuHdSpecies.query
                     .filter_by(speciescode=species_code)
