@@ -38,6 +38,7 @@ def inject_script_tools():
 
 def create_app():
     app = flask.Flask(__name__, instance_relative_config=True)
+    app.jinja_options['extensions'].append('jinja2.ext.do')
     app.config.from_pyfile('settings.py', silent=True)
     app.register_blueprint(views)
     app.register_blueprint(species)
