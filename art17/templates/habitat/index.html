@@ -17,6 +17,13 @@
       </div>
     </fieldset>
   </form>
+
+ {% if habitat %}
+  <p>
+    <strong>{{ habitat.name }}</strong>,
+    cod: {{ habitat.code }}
+  </p>
+ {% endif %}
 {% endblock content %}
 
 

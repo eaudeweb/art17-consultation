@@ -52,11 +52,22 @@ def index():
                         .order_by('habitatcode'))
 
     habitat_code = flask.request.args.get('habitat', type=int)
+    if habitat_code:
+        habitat = (models.DataHabitat.query
+                    .filter_by(habitatcode=habitat_code)
+                    .first_or_404())
+    else:
+        habitat = None
 
     return flask.render_template('habitat/index.html', **{
         'habitat_list': [{'id': h.habitatcode, 'text': h.lu.hd_name}
                          for h in habitat_list],
         'current_habitat_code': habitat_code,
+        'habitat': None if habitat is None else {
+            'name': habitat.lu.hd_name,
+            'code': habitat.habitatcode,
+            'records': [HabitatRecord(r) for r in habitat.regions],
+        },
     })
 
 
