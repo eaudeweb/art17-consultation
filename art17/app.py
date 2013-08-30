@@ -27,6 +27,15 @@ def bust_cache(endpoint, values):
             values['t'] = key
 
 
+def script_later(code):
+    flask.g.script_later = (flask.g.get('script_later') or '') + code
+
+
+@views.app_context_processor
+def inject_script_tools():
+    return {'script_later': script_later}
+
+
 def create_app():
     app = flask.Flask(__name__, instance_relative_config=True)
     app.config.from_pyfile('settings.py', silent=True)
