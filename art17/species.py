@@ -100,13 +100,6 @@ class SpeciesRecord(GenericRecord):
 @species.route('/specii/')
 def species_index():
     group_code = flask.request.args.get('group')
-    if group_code:
-        group = (models.LuGrupSpecie.query
-                    .filter_by(code=group_code)
-                    .first_or_404())
-    else:
-        group = None
-
     species_code = flask.request.args.get('species')
     if species_code:
         species = (models.LuHdSpecies.query
@@ -116,18 +109,21 @@ def species_index():
         species = None
 
     species_list = models.LuHdSpecies.query.order_by('speciesname')
-    if group:
-        species_list = species_list.filter_by(group_code=group.code)
 
     if species:
         records = (models.DataSpeciesRegion.query
                         .filter_by(sr_species=species.data))
 
     return flask.render_template('species/index.html', **{
-        'species_groups': models.LuGrupSpecie.query.all(),
-        'current_group': group,
-        'species_list': species_list.all(),
-        'current_species': species,
+        'species_groups': [{'id': g.code,
+                            'text': g.description}
+                           for g in models.LuGrupSpecie.query],
+        'current_group_code': group_code,
+        'species_list': [{'id': str(int(s.speciescode)),
+                          'group_id': s.group_code,
+                          'text': s.speciesname}
+                         for s in species_list],
+        'current_species_code': species_code,
 
         'species': None if species is None else {
             'code': species.speciescode,

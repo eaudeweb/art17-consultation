@@ -8,34 +8,14 @@
 
       <div class="form-group">
         <label for="speciesfilter-group">Grup</label>
-
-        <select name="group" id="speciesfilter-group">
-          <option value="">--</option>
-
-          {% for group in species_groups %}
-            {% set selected = (group == current_group) %}
-            <option value="{{ group.code }}"
-                    {%- if selected %} selected{% endif %}>
-              {{- group.description -}}
-            </option>
-          {% endfor %}
-        </select>
+        <input name="group" value="{{ current_group_code }}"
+               type="hidden" id="speciesfilter-group">
       </div>
 
       <div class="form-group">
         <label for="speciesfilter-species">Specie</label>
-
-        <select name="species" id="speciesfilter-species">
-          <option value="">--</option>
-
-          {% for species in species_list %}
-            {% set selected = (species == current_species) %}
-            <option value="{{ species.speciescode }}"
-                    {%- if selected %} selected{% endif %}>
-              {{- species.speciesname -}}
-            </option>
-          {% endfor %}
-        </select>
+        <input name="species" value="{{ current_species_code }}"
+               type="hidden" id="speciesfilter-species">
       </div>
 
       <div class="form-group">
@@ -80,14 +60,34 @@
       "use strict";
 
       var speciesfilter = $('.speciesfilter');
+      var species_groups = {{ species_groups|tojson|safe }};
+      var species_list = {{ species_list|tojson|safe }};
 
-      speciesfilter.find('select[name=group]').select2({
+      var group_select = speciesfilter.find('[name=group]').select2({
+        data: species_groups,
         minimumResultsForSearch: -1,  // disable search field
         width: '10em'
       });
 
-      speciesfilter.find('select[name=species]').select2({
-        width: '25em'
+
+      var species_select = speciesfilter.find('[name=species]');
+
+      function update_species_select(group_id) {
+        var group_id = group_select.select2('val');
+        var species_in_group = _(species_list).filter(
+            function(sp){return sp.group_id == group_id});
+
+        species_select.select2('destroy').select2({
+          data: species_in_group,
+          multiple: false,
+          width: '25em'
+        });
+      }
+
+      update_species_select();
+
+      speciesfilter.change(function() {
+        update_species_select();
       });
     })();
   </script>
