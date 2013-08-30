@@ -16,36 +16,50 @@
 <p>detalii despre: {{ species.lu.speciesname }}</p>
 <p>regiune: {{ record.region }}</p>
 
-<!-- <ul class="nav nav-tabs">
-  <li><a href="#range" data-toggle="tab">Areal</a></li>
-  <li><a href="#population" data-toggle="tab">Populație</a></li>
-  <li><a href="#habitat" data-toggle="tab">Habitat</a></li>
-</ul> -->
+<ul class="recorddetail-tabs">
+  <li class="active"><a href="#recorddetail-range" data-toggle="tab">Areal</a></li>
+  <li><a href="#recorddetail-population" data-toggle="tab">Populație</a></li>
+  <li><a href="#recorddetail-habitat" data-toggle="tab">Habitat</a></li>
+</ul>
 
-<!-- Range tab content -->
-<dl class="dl-horizontal">
-  <dt>Suprafață(km<sup>2</sup>)</dt>
-  <dd>{{ record.range.surface_area }}</dd>
+<div class="tab-content">
+  <div class="tab-pane active" id="recorddetail-range">
+    <dl class="dl-horizontal">
+      <dt>Suprafață(km<sup>2</sup>)</dt>
+      <dd>{{ record.range.surface_area }}</dd>
 
-  <dt>Metodă</dt>
-  <dd>{{ record.range.method }}</dd>
+      <dt>Metodă</dt>
+      <dd>{{ record.range.method }}</dd>
 
-  <dt>Tendință pe termen scurt</dt>
-  <dd>
-    {{ trend_dd(record.range.trend_short) }}<br />
-    Magnitudinea: {{ record.range.magnitude_short.min }} {{ record.range.magnitude_short.max }}
-  </dd>
+      <dt>Tendință pe termen scurt</dt>
+      <dd>
+        {{ trend_dd(record.range.trend_short) }}<br />
+        Magnitudinea:
+          {{ record.range.magnitude_short.min }}
+          {{ record.range.magnitude_short.max }}
+      </dd>
 
-  <dt>Tendință pe termen lung</dt>
-  <dd>{{ trend_dd(record.range.trend_long) }}<br />
-    Magnitudinea: {{ record.range.magnitude_long.min }} {{ record.range.magnitude_long.max }}</dd>
+      <dt>Tendință pe termen lung</dt>
+      <dd>{{ trend_dd(record.range.trend_long) }}<br />
+        Magnitudinea:
+          {{ record.range.magnitude_long.min }}
+          {{ record.range.magnitude_long.max }}</dd>
 
-  <dt>Arealul favorabil de referință</dt>
-  <dd>
-    {{ record.range.reference_value.value }} <br />
-    {%- if record.range.reference_value.method %}
-      Metoda utilizată: {{ record.range.reference_value.method }}
-    {% endif -%}
-  </dd>
+      <dt>Arealul favorabil de referință</dt>
+      <dd>
+        {{ record.range.reference_value.value }} <br />
+        {%- if record.range.reference_value.method %}
+          Metoda utilizată: {{ record.range.reference_value.method }}
+        {% endif -%}
+      </dd>
+    </dl>
+  </div>
 
-</dl>
+  <div class="tab-pane" id="recorddetail-population">
+    [[ population ]]
+  </div>
+
+  <div class="tab-pane" id="recorddetail-habitat">
+    [[ habitat ]]
+  </div>
+</div>
