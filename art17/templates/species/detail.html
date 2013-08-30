@@ -13,8 +13,10 @@
   {% endif -%}
 {%- endmacro %}
 
-<p>detalii despre: {{ species.lu.speciesname }}</p>
-<p>regiune: {{ record.region }}</p>
+<h1>
+  {{ species.lu.speciesname }}
+  ({{ record.region }})
+</h1>
 
 <ul class="recorddetail-tabs">
   <li class="active"><a href="#recorddetail-range" data-toggle="tab">Areal</a></li>
