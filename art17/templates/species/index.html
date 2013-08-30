@@ -1,58 +1,6 @@
 {% extends "layout.html" %}
 
 
-{% macro conclusion_td(conclusion) -%}
-  <td class="conclusion-{{ conclusion }}">{{ conclusion }}</td>
-{%- endmacro %}
-
-
-{% macro reference_value_td(refval) -%}
-  <td {% if refval.method -%}
-        title="Metoda utilizată: {{ refval.method }}"
-      {%- endif %}>
-    {{- refval.value -}}
-  </td>
-{%- endmacro %}
-
-
-{% set trend_name = {
-    "+": "În creștere",
-    "-": "În scădere",
-    "0": "Stabil",
-    "x": "Necunoscut",
-  } %}
-
-
-{% macro trend_td(trend) -%}
-  {%- set tooltip = trend_name[trend.trend] %}
-  <td title="{{ tooltip }}">
-    {{- trend.trend }}<br>{{ trend.period -}}
-  </td>
-{%- endmacro %}
-
-
-{% macro population_size_td(size) -%}
-  <td>
-    {%- for item in size %}
-      {%- if item.min == item.max %}
-        {{- item.min }} {{ item.unit }}
-      {%- else %}
-        {{- item.min }}-{{ item.max }} {{ item.unit }}
-      {%- endif %}
-    {%- endfor %}
-  </td>
-{%- endmacro %}
-
-
-{% macro habitat_quality_td(quality) -%}
-  <td {% if quality.explanation -%}
-        title="Metoda utilizată: {{ quality.explanation }}"
-      {%- endif %}>
-    {{- quality.value -}}
-  </td>
-{%- endmacro %}
-
-
 {% block content %}
   <form class="speciesfilter">
     <fieldset>
@@ -110,6 +58,10 @@
  {% endif %}
 
   <hr>
+
+  {%- from 'species/td.html'
+      import conclusion_td, reference_value_td, trend_td,
+             population_size_td, habitat_quality_td %}
 
   <table class="records">
     <tr class="records-header">
