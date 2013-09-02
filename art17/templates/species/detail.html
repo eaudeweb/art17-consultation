@@ -32,8 +32,8 @@
     <div class="table-responsive">
       <table class="table table-bordered recorddetail-table">
         <tr>
-          <th>Suprafață(km<sup>2</sup>)</th>
-          <td>{{ record.range.surface_area }}</td>
+          <th>Suprafață</th>
+          <td>{%- if record.range.surface_area -%} {{ record.range.surface_area }} km<sup>2</sup> {%- endif -%}</td>
         </tr>
 
         <tr>
@@ -76,12 +76,18 @@
         <tr>
           <th>Arealul favorabil de referință</th>
           <td>
-            {{ record.range.reference_value.value }} <br />
+            {%- if record.range.reference_value.value -%} {{ record.range.reference_value.value }} km<sup>2</sup> {%- endif -%} <br />
             {%- if record.range.reference_value.method %}
               Metoda utilizată: {{ record.range.reference_value.method }}
             {% endif -%}
           </td>
         </tr>
+
+        <tr>
+          <th>Concluzie</th>
+          {{ conclusion_td(record.range.conclusion) }}
+        </tr>
+
       </table>
     </div>
   </div>
@@ -140,6 +146,12 @@
             {% endif -%}
           </td>
         </tr>
+
+        <tr>
+          <th>Concluzie</th>
+          {{ conclusion_td(record.population.conclusion) }}
+        </tr>
+
       </table>
     </div>
   </div>
@@ -148,8 +160,8 @@
     <div class="table-responsive">
       <table class="table table-bordered recorddetail-table">
         <tr>
-          <th>Estimarea suprafeţei (km<sup>2</sup>)</th>
-          <td>{{ record.habitat.surface_area }}</td>
+          <th>Estimarea suprafeţei</th>
+          <td>{%- if record.habitat.surface_area -%} {{ record.habitat.surface_area }} km<sup>2</sup> {%- endif -%}</td>
         </tr>
 
         <tr>
@@ -193,10 +205,14 @@
 
         <tr>
           <th>Suprafața de habitat adecvată pentru specie</th>
-          <td>
-            {{ record.habitat.area_suitable.value }}
-          </td>
+          <td>{%- if record.habitat.area_suitable.value -%} {{ record.habitat.area_suitable.value }} km<sup>2</sup> {%- endif -%}</td>
         </tr>
+
+        <tr>
+          <th>Concluzie</th>
+          {{ conclusion_td(record.habitat.conclusion) }}
+        </tr>
+
       </table>
     </div>
   </div>
