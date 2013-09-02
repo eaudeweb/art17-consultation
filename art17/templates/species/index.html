@@ -44,7 +44,7 @@
 {% block script %}
   {%- from 'bits.html' import script %}
   {{ super() }}
-  {{ script('modal.js') }}
+  {{ script('detail.js') }}
   <script>
     App.species_groups = {{ species_groups|tojson|safe }};
     App.species_list = {{ species_list|tojson|safe }};
