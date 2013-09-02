@@ -6,16 +6,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script>window.App = {};</script>
 
     {%- block styles %}
       {{ link('lib/select2-3.4.2/select2.css') }}
-      {{ link('style.less', rel='stylesheet/less') }}
-      {{ script('lib/less-1.4.1/less.min.js') }}
-
       {{ link('lib/font-awesome-3.2.1/css/font-awesome.min.css') }}
       <!--[if IE 7]>
         {{ link('lib/font-awesome-3.2.1/css/font-awesome-ie7.min.css') }}
       <![endif]-->
+
+      {%- if config.USE_LESS %}
+        {{ link('style.less', rel='stylesheet/less') }}
+        {{ script('lib/less-1.4.1/less.min.js') }}
+      {%- else %}
+        {{ link('style.css') }}
+      {%- endif %}
     {% endblock %}
 
     <!--[if lt IE 9]>
