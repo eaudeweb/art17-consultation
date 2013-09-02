@@ -40,3 +40,15 @@
     {{- quality.value -}}
   </td>
 {%- endmacro %}
+
+
+{% macro conclusion_td_input(name) %}
+  <td>
+    <select name="{{ name }}">
+      <option>FV</option>
+      <option>U1</option>
+      <option>U2</option>
+      <option>XX</option>
+    </select>
+  </td>
+{%- endmacro %}

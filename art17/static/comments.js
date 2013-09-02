@@ -17,6 +17,7 @@ table.on('click', '.records-commentbtn', function(evt) {
   var saveurl = button.data('saveurl');
   comment_tr.removeClass('comment-template');
   comment_tr.data('saveurl', saveurl);
+  comment_tr.find('input').attr('size', 1);  // so they have a small min width
   comment_tr.insertAfter(tr);
 });
 
