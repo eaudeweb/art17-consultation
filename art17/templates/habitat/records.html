@@ -45,6 +45,7 @@
     <td>
       {%- set url = url_for('.detail', record_id=row.id) %}
       <a class="records-detailbtn" href="{{ url }}">info</a>
+      <a class="records-commentbtn">comentariu</a>
     </td>
 
     {#- bio-regiune #}
@@ -74,6 +75,15 @@
     {{ conclusion_td(row.overall_assessment) }}
   </tr>
  {% endfor %}
+
+  <tr class="comment comment-template">
+    <td>
+      <a class="comment-cancel">anluează</a>
+      <a class="comment-save">salvează</a>
+    </td>
+
+    <td colspan=12 style="text-align: center">comment stuff</td>
+  </tr>
 </table>
 
 
