@@ -43,6 +43,8 @@
   <tr>
     {#- detail #}
     <td>
+      {%- set url = url_for('.detail', record_id=row.id) %}
+      <a class="records-detailbtn" href="{{ url }}">info</a>
     </td>
 
     {#- bio-regiune #}
@@ -73,3 +75,6 @@
   </tr>
  {% endfor %}
 </table>
+
+
+{% include 'common/recorddetail.html' %}

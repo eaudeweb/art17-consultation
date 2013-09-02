@@ -9,6 +9,10 @@ habitat = flask.Blueprint('habitat', __name__)
 class HabitatRecord(GenericRecord):
 
     @cached_property
+    def id(self):
+        return self.row.hr_id
+
+    @cached_property
     def region(self):
         return self.row.region
 
@@ -68,4 +72,13 @@ def index():
             'code': habitat.habitatcode,
             'records': [HabitatRecord(r) for r in habitat.regions],
         },
+    })
+
+
+@habitat.route('/habitate/detalii/<int:record_id>')
+def detail(record_id):
+    record = models.DataHabitattypeRegion.query.get_or_404(record_id)
+    return flask.render_template('habitat/detail.html', **{
+        'habitat': record.hr_habitat,
+        'record': HabitatRecord(record),
     })
