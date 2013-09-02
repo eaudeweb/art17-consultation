@@ -61,6 +61,43 @@ table.on('click', '.comment-save', function(evt) {
 
 
 var recordcomment = $('#recordcomment-modal');
+var recordcomment_save = recordcomment.find('.recordcomment-save');
+
+
+recordcomment_save.click(function() {
+  recordcomment.find('form').submit();
+});
+
+
+function show_comment_form(html, url) {
+  set_html(html);
+  var form = recordcomment.find('form');
+  form.submit(function(evt) {
+    evt.preventDefault();
+    var form = $(evt.target);
+    var pairs = form.serializeArray();
+    var data = _.object(_(pairs).pluck('name'),
+                        _(pairs).pluck('value'));
+
+    var request = $.ajax({
+      type: 'POST',
+      url: url,
+      data: JSON.stringify(data),
+      contentType: 'application/json'
+    });
+
+    request.done(function(resp) {
+      if(resp['saved']) {
+        recordcomment.modal('hide');
+      }
+      else {
+        show_comment_form(resp['html'], url);
+      }
+    });
+
+  });
+}
+
 
 $('.records-commentbtn').click(function(evt) {
   evt.preventDefault();
@@ -69,7 +106,7 @@ $('.records-commentbtn').click(function(evt) {
   recordcomment.modal('hide');
   set_html("<h1>Se încarcă...</h1>");
   $.get(url).done(function(resp) {
-    set_html(resp['html']);
+    show_comment_form(resp['html'], url);
   });
   recordcomment.modal();
 });
