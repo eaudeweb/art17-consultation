@@ -84,7 +84,19 @@ def detail(record_id):
     })
 
 
-@habitat.route('/habitate/detalii/<int:record_id>/comment', methods=['POST'])
+@habitat.route('/habitate/detalii/<int:record_id>/comment',
+               methods=['GET', 'POST'])
 def comment(record_id):
-    print flask.request.json
-    return flask.jsonify(status='ok')
+    record = models.DataHabitattypeRegion.query.get_or_404(record_id)
+
+    if flask.request.method == 'POST':
+        data = flask.request.json
+        if data:
+            if data.get('range-surface-area'):
+                return flask.jsonify(saved=True)
+
+    html = flask.render_template('habitat/comment.html', **{
+        'habitat': record.hr_habitat,
+        'record': HabitatRecord(record),
+    })
+    return flask.jsonify(html=html)
