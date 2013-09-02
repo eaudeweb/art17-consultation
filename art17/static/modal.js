@@ -6,7 +6,7 @@ var recorddetail = $('#recorddetail-modal');
 
 $('.records-detailbtn').click(function(evt) {
   evt.preventDefault();
-  var url = $(this).attr('href');
+  var url = $(this).data('url');
 
   recorddetail.modal('hide');
   set_html("<h1>Se încarcă...</h1>");

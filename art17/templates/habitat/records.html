@@ -44,8 +44,8 @@
     {#- detail #}
     <td>
       {%- set url = url_for('.detail', record_id=row.id) %}
-      <a class="records-detailbtn" href="{{ url }}">info</a>
-      <a class="records-commentbtn">comentariu</a>
+      <button class="records-detailbtn" data-url="{{ url }}">info</button>
+      <button class="records-commentbtn">comentariu</button>
     </td>
 
     {#- bio-regiune #}
@@ -78,8 +78,8 @@
 
   <tr class="comment comment-template">
     <td>
-      <a class="comment-cancel">anluează</a>
-      <a class="comment-save">salvează</a>
+      <button class="comment-cancel">anluează</button>
+      <button class="comment-save">salvează</button>
     </td>
 
     <td colspan=12 style="text-align: center">comment stuff</td>
