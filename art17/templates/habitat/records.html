@@ -45,7 +45,10 @@
     <td>
       {%- set url = url_for('.detail', record_id=row.id) %}
       <button class="records-detailbtn" data-url="{{ url }}">info</button>
-      <button class="records-commentbtn">comentariu</button>
+
+      {%- set url = url_for('.comment', record_id=row.id) %}
+      <button class="records-commentbtn"
+              data-saveurl="{{ url }}">comentariu</button>
     </td>
 
     {#- bio-regiune #}

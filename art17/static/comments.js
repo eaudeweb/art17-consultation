@@ -5,10 +5,18 @@
 var table = $('table.records');
 
 
+function icon(cls) {
+  return $('<i>', {class: cls});
+}
+
+
 table.on('click', '.records-commentbtn', function(evt) {
-  var tr = $(evt.target).parents('table.records tr');
-  var comment_tr = (table.find('.comment-template')
-                    .clone().removeClass('comment-template'));
+  var button = $(evt.target);
+  var tr = button.parents('table.records tr');
+  var comment_tr = table.find('.comment-template').clone();
+  var saveurl = button.data('saveurl');
+  comment_tr.removeClass('comment-template');
+  comment_tr.data('saveurl', saveurl);
   comment_tr.insertAfter(tr);
 });
 
@@ -23,15 +31,31 @@ table.on('click', '.comment-save', function(evt) {
   var data = {};
   _(comment_tr.find(':input')).forEach(function(el) {
     var input = $(el);
-    data[input.attr('name')] = input.val();
+    var name = input.attr('name');
+    if(name) {
+      data[name] = input.val();
+    }
   });
 
   var save_button = comment_tr.find('.comment-save');
   save_button.attr('disabled', 'disabled');
-  save_button.empty().append("salvez ",
-                             $('<i>', {class: 'icon-spinner icon-spin'}));
+  save_button.empty().append("salvez ", icon('icon-spinner icon-spin'));
 
-  console.log(data);
+  var request = $.ajax({
+    type: 'POST',
+    url: comment_tr.data('saveurl'),
+    data: JSON.stringify(data),
+    contentType: 'application/json'
+  });
+
+  request.done(function() {
+    save_button.empty().append("ok ", icon('icon-check'));
+    setTimeout(function() {
+      comment_tr.fadeOut(500, function() {
+        comment_tr.remove();
+      });
+    }, 500);
+  });
 });
 
 })();

@@ -82,3 +82,9 @@ def detail(record_id):
         'habitat': record.hr_habitat,
         'record': HabitatRecord(record),
     })
+
+
+@habitat.route('/habitate/detalii/<int:record_id>/comment', methods=['POST'])
+def comment(record_id):
+    print flask.request.json
+    return flask.jsonify(status='ok')
