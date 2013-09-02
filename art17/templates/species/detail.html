@@ -4,10 +4,7 @@
     with context %}
 
 {% macro trend_td(trend) -%}
-  {{ trend.trend }} ({{ TREND_NAME[trend.trend] }})
-  {%- if trend.period %}
-    Perioada: {{ trend.period }}
-  {% endif -%}
+  {{ TREND_NAME[trend.trend] }} ({{ trend.trend }})
 {%- endmacro %}
 
 
@@ -51,11 +48,21 @@
         </tr>
 
         <tr>
+          <th>Tendinţa pe termen scurt - perioada</th>
+          <td>{{ record.range.trend_short.period }}</td>
+        </tr>
+
+        <tr>
           <th>Tendință pe termen lung</th>
           <td>
             {{ trend_td(record.range.trend_long) }}<br />
            {{ magnitude_td(record.range.magnitude_long) }}
           </td>
+        </tr>
+
+        <tr>
+          <th>Tendință pe termen lung - perioada</th>
+          <td>{{ record.range.trend_long.period }}</td>
         </tr>
 
         <tr>
@@ -93,11 +100,21 @@
         </tr>
 
         <tr>
+          <th>Tendință pe termen scurt - perioada</th>
+          <td>{{ record.population.trend_short.period }}</td>
+        </tr>
+
+        <tr>
           <th>Tendință pe termen lung</th>
           <td>
             {{ trend_td(record.population.trend_long) }}<br />
            {{ magnitude_td(record.population.magnitude_long) }}
           </td>
+        </tr>
+
+        <tr>
+          <th>Tendință pe termen lung - perioada</th>
+          <td>{{ record.population.trend_long.period }}</td>
         </tr>
 
         <tr>
@@ -144,10 +161,20 @@
         </tr>
 
         <tr>
+          <th>Tendință pe termen scurt - perioada</th>
+          <td>{{ record.habitat.trend_short.period }}</td>
+        </tr>
+
+        <tr>
           <th>Tendință pe termen lung</th>
           <td>
             {{ trend_td(record.habitat.trend_long) }}
           </td>
+        </tr>
+
+        <tr>
+          <th>Tendință pe termen lung - perioada</th>
+          <td>{{ record.habitat.trend_long.period }}</td>
         </tr>
 
         <tr>
