@@ -42,7 +42,9 @@
 
 
 {% block script %}
+  {%- from 'bits.html' import script %}
   {{ super() }}
+  {{ script('modal.js') }}
 
   <script>
     (function() {
