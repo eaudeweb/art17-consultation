@@ -1,25 +1,9 @@
-# encoding: utf-8
-
 import flask
 from werkzeug.utils import cached_property
 from art17.app import models
 from art17.common import GenericRecord
 
-
 species = flask.Blueprint('species', __name__)
-
-
-TREND_NAME = {
-    "+": u"În creștere",
-    "-": u"În scădere",
-    "0": u"Stabil",
-    "x": u"Necunoscut",
-}
-
-
-@species.app_context_processor
-def inject_constants():
-    return {'TREND_NAME': TREND_NAME}
 
 
 class SpeciesRecord(GenericRecord):

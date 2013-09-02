@@ -1,3 +1,22 @@
+# encoding: utf-8
+
+import flask
+
+TREND_NAME = {
+    "+": u"În creștere",
+    "-": u"În scădere",
+    "0": u"Stabil",
+    "x": u"Necunoscut",
+}
+
+common = flask.Blueprint('common', __name__)
+
+
+@common.app_context_processor
+def inject_constants():
+    return {'TREND_NAME': TREND_NAME}
+
+
 class GenericRecord(object):
 
     def __init__(self, row):

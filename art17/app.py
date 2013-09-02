@@ -5,6 +5,7 @@ from path import path
 
 models = LocalProxy(lambda: flask.current_app.extensions['art17_models'])
 
+from art17.common import common
 from art17.species import species
 from art17.habitat import habitat
 
@@ -32,6 +33,7 @@ def create_app():
     app.jinja_options['extensions'].append('jinja2.ext.do')
     app.config.from_pyfile('settings.py', silent=True)
     app.register_blueprint(views)
+    app.register_blueprint(common)
     app.register_blueprint(species)
     app.register_blueprint(habitat)
 
