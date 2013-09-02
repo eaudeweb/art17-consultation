@@ -1,15 +1,75 @@
+{%- from 'species/td.html'
+    import conclusion_td, reference_value_td, trend_td
+    with context %}
+
 <table class="records">
   <tr class="records-header">
-    <td>something</td>
+    <td rowspan=2></td>
+    <td rowspan=2 title="Regiunea biogeografică">Regiune</td>
+    <td colspan=4>Areal (km<sup>2</sup>)</td>
+    <td colspan=4>??</td>
+    <td rowspan=2>??</td>
+    <td rowspan=2
+        title="Perspective (referitoare la populație, areal și
+               disponibilitatea habitatului)"
+        >Perspective</td>
+    <td rowspan=2
+        title="Evaluare generală a statutului de conservare"
+        >Evaluare generală</td>
   </tr>
 
   <tr class="records-header">
-    <td>regiune</td>
+    {#- detail #}
+    {#- bio-regiune #}
+
+    {#- range: 4 cols #}
+    <td>Suprafață</td>
+    <td>Concluzie</td>
+    <td>Tendință</td>
+    <td title="Arealul favorabil de referință">Referință</td>
+
+    {#- area: 4 cols #}
+    <td>Suprafață</td>
+    <td>Concluzie</td>
+    <td>Tendință</td>
+    <td>Referință</td>
+
+    {#- structure #}
+    {#- future prospects #}
+    {#- overall assessment #}
   </tr>
 
  {% for row in habitat.records %}
   <tr>
+    {#- detail #}
+    <td>
+    </td>
+
+    {#- bio-regiune #}
     <td>{{ row.region }}</td>
+
+    {#- range: 4 cols #}
+    {%- set range = row.range %}
+    <td>{{ range.surface_area }}</td>
+    {{ conclusion_td(range.conclusion) }}
+    {{ trend_td(range.trend) }}
+    {{ reference_value_td(range.reference_value) }}
+
+    {#- area: 4 cols #}
+    {%- set area = row.area %}
+    <td>{{ area.surface_area }}</td>
+    {{ conclusion_td(area.conclusion) }}
+    {{ trend_td(area.trend) }}
+    {{ reference_value_td(area.reference_value) }}
+
+    {#- structure #}
+    {{ conclusion_td(row.structure) }}
+
+    {#- future prospects #}
+    {{ conclusion_td(row.future_prospects) }}
+
+    {#- overall assessment #}
+    {{ conclusion_td(row.overall_assessment) }}
   </tr>
  {% endfor %}
 </table>
