@@ -78,37 +78,6 @@
     {{ conclusion_td(row.overall_assessment) }}
   </tr>
  {% endfor %}
-
-  <tr class="comment comment-template">
-    <td>
-      <button class="comment-cancel">anluează</button>
-      <button class="comment-save">salvează</button>
-    </td>
-
-    {#- bio-regiune #}
-    <td></td>
-
-    {#- range: 4 cols #}
-    <td><input name="range-surface-area"></td>
-    {{ conclusion_td_input('range-conclusion') }}
-    <td><input name="range-trend"></td>
-    <td><input name="range-reference-value"></td>
-
-    {#- area: 4 cols #}
-    <td><input name="area-surface-area"></td>
-    {{ conclusion_td_input('area-conclusion') }}
-    <td><input name="area-trend"></td>
-    <td><input name="area-reference-value"></td>
-
-    {#- structure #}
-    {{ conclusion_td_input('structure') }}
-
-    {#- future prospects #}
-    {{ conclusion_td_input('future-prospects') }}
-
-    {#- overall assessment #}
-    {{ conclusion_td_input('overall-assessment') }}
-  </tr>
 </table>
 
 
