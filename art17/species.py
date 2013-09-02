@@ -152,3 +152,13 @@ def detail(record_id):
         'species': record.sr_species,
         'record': SpeciesRecord(record),
     })
+
+
+@species.route('/specii/detalii/<int:record_id>/comentariu')
+def comment(record_id):
+    record = models.DataSpeciesRegion.query.get_or_404(record_id)
+    html = flask.render_template('species/comment.html', **{
+        'species': record.sr_species,
+        'record': SpeciesRecord(record),
+    })
+    return flask.jsonify(html=html)

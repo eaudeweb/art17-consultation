@@ -59,4 +59,27 @@ table.on('click', '.comment-save', function(evt) {
   });
 });
 
+
+var recordcomment = $('#recordcomment-modal');
+
+$('.records-commentbtn').click(function(evt) {
+  evt.preventDefault();
+  var url = $(this).data('url');
+
+  recordcomment.modal('hide');
+  set_html("<h1>Se încarcă...</h1>");
+  $.get(url).done(function(resp) {
+    set_html(resp['html']);
+  });
+  recordcomment.modal();
+});
+
+function set_html(html) {
+  var title = recordcomment.find('.recordcomment-title');
+  var body = recordcomment.find('.recordcomment-body');
+  body.html(html);
+  var h1 = body.find('h1').remove();
+  title.empty().append(h1.html());
+}
+
 })();
