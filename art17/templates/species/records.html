@@ -50,7 +50,7 @@
   <tr>
     {#- detail #}
     <td>
-      {%- set url = url_for('.species_record', record_id=row.id) %}
+      {%- set url = url_for('.detail', record_id=row.id) %}
       <a class="records-detailbtn" href="{{ url }}">info</a>
     </td>
 

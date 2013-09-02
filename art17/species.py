@@ -162,7 +162,7 @@ def index():
 
 
 @species.route('/specii/detalii/<int:record_id>')
-def species_record(record_id):
+def detail(record_id):
     record = models.DataSpeciesRegion.query.get_or_404(record_id)
     return flask.render_template('species/detail.html', **{
         'species': record.sr_species,
