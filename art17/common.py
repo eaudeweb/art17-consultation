@@ -24,7 +24,8 @@ class GenericRecord(object):
 
     def _split_period(self, year_string):
         if year_string:
-            return "(%s-%s)" % (year_string[:4], year_string[4:])
+            # u2011: non-breaking hyphen
+            return u"(%s\u2011%s)" % (year_string[:4], year_string[4:])
         else:
             return ""
 

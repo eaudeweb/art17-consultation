@@ -15,7 +15,7 @@
 {% macro trend_td(trend) -%}
   {%- set tooltip = TREND_NAME[trend.trend] %}
   <td title="{{ tooltip }}">
-    {{- trend.trend }}<br>{{ trend.period -}}
+    {{- trend.trend }} {{ trend.period -}}
   </td>
 {%- endmacro %}
 
