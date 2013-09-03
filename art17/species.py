@@ -109,8 +109,8 @@ class SpeciesRecord(GenericRecord):
 @species.route('/specii/')
 def index():
     group_code = flask.request.args.get('group')
+
     species_code = flask.request.args.get('species', type=int)
-    region_code = flask.request.args.get('region', '')
     if species_code:
         species = (models.LuHdSpecies.query
                     .filter_by(speciescode=species_code)
@@ -118,6 +118,7 @@ def index():
     else:
         species = None
 
+    region_code = flask.request.args.get('region', '')
     if region_code:
         region = (models.LuBiogeoreg.query
                     .filter_by(code=region_code)
@@ -127,13 +128,13 @@ def index():
 
     species_list = models.DataSpecies.query.join(models.DataSpeciesRegion)
 
+    region_list = models.LuBiogeoreg.query.order_by('order_')
+
     if species:
         records = (models.DataSpeciesRegion.query
                         .filter_by(sr_species=species.data))
         if region:
             records = records.filter_by(region=region.code)
-
-    region_list = models.LuBiogeoreg.query.order_by('order_')
 
     return flask.render_template('species/index.html', **{
         'species_groups': [{'id': g.code,
