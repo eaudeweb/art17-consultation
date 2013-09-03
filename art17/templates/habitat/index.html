@@ -44,6 +44,7 @@
 {% block script %}
   {%- from 'bits.html' import script %}
   {{ super() }}
+  {{ script('recordfilter.js') }}
   {{ script('detail.js') }}
   {{ script('comments.js') }}
 
@@ -54,33 +55,22 @@
       var habitatfilter = $('.habitatfilter');
       var habitat_list = {{ habitat_list|tojson|safe }};
 
-      habitatfilter.find('[name=habitat]').select2({
+      var habitat_select = habitatfilter.find('[name=habitat]').select2({
         data: habitat_list,
         width: '40em'
       });
 
-      var region_select = habitatfilter.find('[name=region]');
+      App.region_select = new App.RegionSelect({
+        el: habitatfilter.find('[name=region]'),
+        get_data_url: function() {
+           var habitat_code = habitat_select.val();
+           return habitat_code ? 'regiuni/' + habitat_code : null;
+        },
+        width: '15em'
+      });
 
-      function update_region_select() {
-        var habitat_code = habitatfilter.find('[name=habitat]').select2('val');
-        if(! habitat_code) {
-          region_select.select2('destroy');
-          return;
-        }
-        region_select.select2('val', '');
-        var url = 'regiuni/' + habitat_code;
-        $.get(url, function(resp) {
-          region_select.select2('destroy').select2({
-            data: [{id: '', text: "toate"}].concat(resp.regions),
-            width: '15em'
-          });
-        });
-      };
-
-      update_region_select();
-
-      habitatfilter.on('change', '[name=habitat]', function() {
-        update_region_select();
+      habitat_select.change(function() {
+        App.region_select.update();
       });
     })();
   </script>
