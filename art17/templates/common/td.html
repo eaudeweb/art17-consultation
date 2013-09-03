@@ -3,17 +3,39 @@
 {%- endmacro %}
 
 
-{% macro reference_value_html(refval) %}
-  {{- refval.value }}
+{% macro reference_value_html(refval, unit='') %}
+{%- if refval.value %}
+  {{- refval.value }} {{ unit }}
+{%- endif %}
 {%- endmacro %}
 
 
-{% macro reference_value_td(refval) -%}
+{% macro reference_value_td(refval, unit='') -%}
   <td {% if refval.method -%}
         title="Metoda utilizată: {{ refval.method }}"
       {%- endif %}>
-    {{- reference_value_html(refval) -}}
+    {{- reference_value_html(refval, unit='') -}}
   </td>
+{%- endmacro %}
+
+{% macro range_html(range) %}
+{%- if range.surface_area -%}
+  {{ range.surface_area }} km<sup>2</sup>
+{%- endif -%}
+{%- endmacro %}
+
+
+{% macro magnitude_html(magnitude) -%}
+{% if magnitude.min or magnitude.max %}
+    {{ magnitude.min }} - {{ magnitude.max }} km<sup>2</sup>
+{% endif %}
+{%- endmacro %}
+
+
+{% macro trend_detail_html(trend) %}
+{%- if trend.trend %}
+  {{- trend.trend }} - {{ TREND_NAME[trend.trend] -}}
+{% endif %}
 {%- endmacro %}
 
 

@@ -1,6 +1,170 @@
+{%- from 'common/td.html'
+    import conclusion_td, range_html, trend_html, trend_detail_html,
+    magnitude_html, population_size_td, reference_value_html
+    with context %}
+
+
 <h1>
   {{ habitat.lu.hd_name }}
   ({{ record.region }})
 </h1>
 
-detail
+<ul class="recorddetail-tabs">
+  <li class="active">
+    <a href="#recorddetail-range" data-toggle="tab">Proporția</a></li>
+  <li>
+    <a href="#recorddetail-area" data-toggle="tab">Suprafața</a></li>
+  <li>
+    <a href="#recorddetail-conclusions" data-toggle="tab">Concluzii</a></li>
+</ul>
+
+
+<div class="tab-content">
+  <div class="tab-pane active" id="recorddetail-range">
+    <div class="table-responsive">
+      <table class="table table-bordered recorddetail-table">
+        <tr>
+          <th>Suprafață</th>
+          <td>{{ range_html(record.range) }}</td>
+        </tr>
+
+        <tr>
+          <th>Metoda utilizată - suprafața arealului</th>
+          <td>{{ record.range.method }}</td>
+        </tr>
+
+        <tr>
+          <th>Tendință pe termen scurt</th>
+          <td>{{ trend_detail_html(record.range.trend_short) }}</td>
+        </tr>
+
+        <tr>
+          <th>Tendinţa pe termen scurt - perioada</th>
+          <td>{{ record.range.trend_short.period }}</td>
+        </tr>
+
+        <tr>
+          <th>Tendinţa pe termen scurt - magnitudinea</th>
+          <td>{{ magnitude_html(record.range.magnitude_short) }}</td>
+        </tr>
+
+        <tr>
+          <th>Tendință pe termen lung</th>
+          <td>
+            {{ trend_detail_html(record.range.trend_long) }}</td>
+        </tr>
+
+        <tr>
+          <th>Tendință pe termen lung - perioada</th>
+          <td>{{ record.range.trend_long.period }}</td>
+        </tr>
+
+        <tr>
+          <th>Tendinţa pe termen lung - magnitudinea</th>
+          <td>{{ magnitude_html(record.range.magnitude_long) }}</td>
+        </tr>
+
+        <tr>
+          <th>Arealul favorabil de referință</th>
+          <td>{{ reference_value_html(record.range.reference_value,
+                  unit='km<sup>2</sup>'|safe) }} <br />
+            {%- if record.range.reference_value.method %}
+              Metoda utilizată: {{ record.range.reference_value.method }}
+            {% endif -%}
+          </td>
+        </tr>
+
+        <tr>
+          <th>Concluzie</th>
+          {{ conclusion_td(record.range.conclusion) }}
+        </tr>
+
+      </table>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="recorddetail-area">
+    <div class="table-responsive">
+      <table class="table table-bordered recorddetail-table">
+        <tr>
+          <th>Suprafață</th>
+          <td>{{ range_html(record.area) }}</td>
+        </tr>
+
+        <tr>
+          <th>Metoda utilizată</th>
+          <td>{{ record.area.method }}</td>
+        </tr>
+
+        <tr>
+          <th>Tendință pe termen scurt</th>
+          <td>{{ trend_detail_html(record.area.trend_short) }}</td>
+        </tr>
+
+        <tr>
+          <th>Tendinţa pe termen scurt - perioada</th>
+          <td>{{ record.area.trend_short.period }}</td>
+        </tr>
+
+        <tr>
+          <th>Tendinţa pe termen scurt - magnitudinea</th>
+          <td>{{ magnitude_html(record.area.magnitude_short) }}</td>
+        </tr>
+
+        <tr>
+          <th>Tendință pe termen lung</th>
+          <td>
+            {{ trend_detail_html(record.area.trend_long) }}</td>
+        </tr>
+
+        <tr>
+          <th>Tendință pe termen lung - perioada</th>
+          <td>{{ record.area.trend_long.period }}</td>
+        </tr>
+
+        <tr>
+          <th>Tendinţa pe termen lung - magnitudinea</th>
+          <td>{{ magnitude_html(record.area.magnitude_long) }}</td>
+        </tr>
+
+        <tr>
+          <th>Arealul favorabil de referință</th>
+          <td>{{ reference_value_html(record.area.reference_value,
+                  unit='km<sup>2</sup>'|safe) }} <br />
+            {%- if record.area.reference_value.method %}
+              Metoda utilizată: {{ record.area.reference_value.method }}
+            {% endif -%}
+          </td>
+        </tr>
+
+        <tr>
+          <th>Concluzie</th>
+          {{ conclusion_td(record.area.conclusion) }}
+        </tr>
+
+      </table>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="recorddetail-conclusions">
+    <div class="table-responsive">
+      <table class="table table-bordered recorddetail-table">
+
+        <tr>
+          <th>Structura și funcțiile specifice</th>
+          {{ conclusion_td(record.structure) }}
+        </tr>
+
+        <tr>
+          <th>Perspective viitoare</th>
+          {{ conclusion_td(record.future_prospects) }}
+        </tr>
+
+        <tr>
+          <th>Evaluare generală a stării de conservare</th>
+          {{ conclusion_td(record.overall_assessment) }}
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

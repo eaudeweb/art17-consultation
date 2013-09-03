@@ -6,15 +6,14 @@
   <tr class="records-header">
     <td rowspan=2></td>
     <td rowspan=2 title="Regiunea biogeografică">Regiune</td>
-    <td colspan=4>Areal (km<sup>2</sup>)</td>
-    <td colspan=4>??</td>
-    <td rowspan=2>??</td>
+    <td colspan=4>Proporția habitatului din regiunea biogeografică</td>
+    <td colspan=4>Suprafața acoperită de habitat (km<sup>2</sup>)</td>
+    <td rowspan=2>Structura și <br /> funcțiile specifice</td>
     <td rowspan=2
-        title="Perspective (referitoare la populație, areal și
-               disponibilitatea habitatului)"
+        title="Perspective viitoare"
         >Perspective</td>
     <td rowspan=2
-        title="Evaluare generală a statutului de conservare"
+        title="Evaluare generală a stării de conservare"
         >Evaluare generală</td>
   </tr>
 
@@ -57,14 +56,14 @@
     {%- set range = row.range %}
     <td>{{ range.surface_area }}</td>
     {{ conclusion_td(range.conclusion) }}
-    {{ trend_td(range.trend) }}
+    {{ trend_td(range.trend_short) }}
     {{ reference_value_td(range.reference_value) }}
 
     {#- area: 4 cols #}
     {%- set area = row.area %}
     <td>{{ area.surface_area }}</td>
     {{ conclusion_td(area.conclusion) }}
-    {{ trend_td(area.trend) }}
+    {{ trend_td(area.trend_short) }}
     {{ reference_value_td(area.reference_value) }}
 
     {#- structure #}

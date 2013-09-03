@@ -8,14 +8,13 @@
     <td rowspan=2></td>
     <td rowspan=2 title="Regiunea biogeografică">Regiune</td>
     <td colspan=5>Areal (km<sup>2</sup>)</td>
-    <td colspan=5>Populație</td>
-    <td colspan=7>Habitat pentru specie (km<sup>2</sup>)</td>
+    <td colspan=4>Populație</td>
+    <td colspan=6>Habitat pentru specie (km<sup>2</sup>)</td>
     <td rowspan=2
-        title="Perspective (referitoare la populație, areal și
-               disponibilitatea habitatului)"
+        title="Perspective viitoare"
         >Perspective</td>
     <td rowspan=2
-        title="Evaluare generală a statutului de conservare"
+        title="Evaluare generală a stării de conservare"
         >Evaluare generală</td>
   </tr>
 
@@ -31,15 +30,13 @@
     {#- population: 5 cols #}
     <td title="Mărimea populației și unitatea de măsură">Mărime</td>
     <td>Concluzie</td>
-    <td>Tendință pe termen scurt</td>
-    <td>Tendință pe termen lung</td>
+    <td title="Tendința pe termen scurt">Tendință</td>
     <td title="Populația favorabilă de referință">Referință</td>
     {#- habitat: 7 cols #}
     <td>Metodă</td>
     <td>Suprafață</td>
     <td>Concluzie</td>
-    <td>Tendință pe termen scurt</td>
-    <td>Tendință pe termen lung</td>
+    <td title="Tendința pe termen scurt">Tendință</td>
     <td title="Zona de referință favorabilă">Referință</td>
     <td>Calitate</td>
     {#- future prospects #}
@@ -73,7 +70,6 @@
     {{ population_size_td(population.size) }}
     {{ conclusion_td(population.conclusion) }}
     {{ trend_td(population.trend_short) }}
-    {{ trend_td(population.trend_long) }}
     {{ reference_value_td(population.reference_value) }}
 
     {#- habitat: 7 cols #}
@@ -82,7 +78,6 @@
     <td>{{ habitat.surface_area }}</td>
     {{ conclusion_td(habitat.conclusion) }}
     {{ trend_td(habitat.trend_short) }}
-    {{ trend_td(habitat.trend_long) }}
     <td>{{ habitat.area_suitable }}</td>
     {{ habitat_quality_td(habitat.quality) }}
 
