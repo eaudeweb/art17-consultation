@@ -2,7 +2,7 @@
 "use strict";
 
 
-App.RegionSelect = Backbone.View.extend({
+App.AjaxSelect = Backbone.View.extend({
     initialize: function() {
         this.update();
     },
@@ -13,7 +13,7 @@ App.RegionSelect = Backbone.View.extend({
         var url = this.options.get_data_url();
         if(url) {
             $.get(url, function(resp) {
-                rv.resolve(resp.regions);
+                rv.resolve(resp.options);
             });
         }
         else {
@@ -23,17 +23,17 @@ App.RegionSelect = Backbone.View.extend({
         return rv;
     },
 
-    render_regions: function(regions) {
+    render_options: function(options) {
         this.$el.select2('destroy');
         this.$el.select2({
-            data: [{id: '', text: "toate"}].concat(regions),
+            data: [{id: '', text: "toate"}].concat(options),
             width: this.options.width
         });
     },
 
     update: function() {
         this.$el.select2('val', '');
-        this.get_options().done(_.bind(this.render_regions, this));
+        this.get_options().done(_.bind(this.render_options, this));
     }
 });
 

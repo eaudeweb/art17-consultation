@@ -113,7 +113,7 @@ def lookup_regions(species_code):
                 .first_or_404())
     regions = [{'id': r.lu.code, 'text': r.lu.name_ro}
                for r in species.regions.join(models.DataSpeciesRegion.lu)]
-    return flask.jsonify(regions=regions)
+    return flask.jsonify(options=regions)
 
 
 @species.route('/specii/')

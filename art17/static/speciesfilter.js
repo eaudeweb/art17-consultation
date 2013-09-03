@@ -27,7 +27,7 @@ function update_species_select(group_id) {
   App.region_select.update();
 }
 
-App.region_select = new App.RegionSelect({
+App.region_select = new App.AjaxSelect({
   el: speciesfilter.find('[name=region]'),
   get_data_url: function() {
      var species_code = species_select.val();

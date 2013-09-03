@@ -60,7 +60,7 @@
         width: '40em'
       });
 
-      App.region_select = new App.RegionSelect({
+      App.region_select = new App.AjaxSelect({
         el: habitatfilter.find('[name=region]'),
         get_data_url: function() {
            var habitat_code = habitat_select.val();

@@ -62,7 +62,7 @@ def lookup_regions(habitat_code):
                 .first_or_404())
     regions = [{'id': r.lu.code, 'text': r.lu.name_ro}
                for r in habitat.regions.join(models.DataHabitattypeRegion.lu)]
-    return flask.jsonify(regions=regions)
+    return flask.jsonify(options=regions)
 
 
 @habitat.route('/habitate/')
