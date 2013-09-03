@@ -117,7 +117,7 @@ def index():
     else:
         species = None
 
-    species_list = models.LuHdSpecies.query.order_by('speciesname')
+    species_list = models.DataSpecies.query.join(models.DataSpeciesRegion)
 
     if species:
         records = (models.DataSpeciesRegion.query
@@ -128,9 +128,9 @@ def index():
                             'text': g.description}
                            for g in models.LuGrupSpecie.query],
         'current_group_code': group_code,
-        'species_list': [{'id': str(int(s.speciescode)),
-                          'group_id': s.group_code,
-                          'text': s.speciesname}
+        'species_list': [{'id': s.speciescode,
+                          'group_id': s.lu.group_code,
+                          'text': s.lu.speciesname}
                          for s in species_list],
         'current_species_code': species_code,
 
