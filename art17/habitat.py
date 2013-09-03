@@ -22,7 +22,10 @@ class HabitatRecord(GenericRecord):
         return {
             'surface_area': surface_area,
             'conclusion': self._get_conclusion('range'),
-            'trend': self._get_trend('range'),
+            'trend_short': self._get_trend('range'),
+            'trend_long': self._get_trend('range', '_long'),
+            'magnitude_short': self._get_magnitude('range'),
+            'magnitude_long': self._get_magnitude('range', '_long'),
             'reference_value': self._get_reference_value('range', surface_area),
         }
 
@@ -31,7 +34,10 @@ class HabitatRecord(GenericRecord):
         surface_area = self.row.coverage_surface_area
         return {
             'surface_area': surface_area,
-            'trend': self._get_trend('coverage'),
+            'trend_short': self._get_trend('coverage'),
+            'trend_long': self._get_trend('coverage', '_long'),
+            'magnitude_short': self._get_magnitude('coverage'),
+            'magnitude_long': self._get_magnitude('coverage', '_long'),
             'conclusion': self._get_conclusion('area'),
             'reference_value': self._get_reference_value('area', surface_area),
         }

@@ -57,14 +57,14 @@
     {%- set range = row.range %}
     <td>{{ range.surface_area }}</td>
     {{ conclusion_td(range.conclusion) }}
-    {{ trend_td(range.trend) }}
+    {{ trend_td(range.trend_short) }}
     {{ reference_value_td(range.reference_value) }}
 
     {#- area: 4 cols #}
     {%- set area = row.area %}
     <td>{{ area.surface_area }}</td>
     {{ conclusion_td(area.conclusion) }}
-    {{ trend_td(area.trend) }}
+    {{ trend_td(area.trend_short) }}
     {{ reference_value_td(area.reference_value) }}
 
     {#- structure #}
