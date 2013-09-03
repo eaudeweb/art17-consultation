@@ -60,10 +60,13 @@
         width: '40em'
       });
 
-
       var region_select = habitatfilter.find('[name=region]').select2({
-        data: [{id: null, text: "toate"}].concat(region_list),
+        data: [{id: '', text: "toate"}].concat(region_list),
         width: '15em'
+      });
+
+      habitatfilter.on('change', '[name=habitat]', function() {
+          region_select.select2('val', '');
       });
     })();
   </script>

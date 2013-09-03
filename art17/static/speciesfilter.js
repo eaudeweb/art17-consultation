@@ -27,14 +27,20 @@ function update_species_select(group_id) {
 
 update_species_select();
 
-group_select.change(function() {
+
+var region_select = speciesfilter.find('[name=region]').select2({
+  data: [{id: '', text: "toate"}].concat(App.region_list),
+  width: '15em'
+});
+
+speciesfilter.on('change', '[name=group]', function() {
+  species_select.select2('val', '');
+  region_select.select2('val', '');
   update_species_select();
 });
 
-
-var region_select = speciesfilter.find('[name=region]').select2({
-  data: [{id: null, text: "toate"}].concat(App.region_list),
-  width: '15em'
+speciesfilter.on('change', '[name=species]', function() {
+  region_select.select2('val', '');
 });
 
 })();
