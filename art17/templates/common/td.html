@@ -3,33 +3,49 @@
 {%- endmacro %}
 
 
+{% macro reference_value_html(refval) %}
+  {{- refval.value }}
+{%- endmacro %}
+
+
 {% macro reference_value_td(refval) -%}
   <td {% if refval.method -%}
         title="Metoda utilizată: {{ refval.method }}"
       {%- endif %}>
-    {{- refval.value -}}
+    {{- reference_value_html(refval) -}}
   </td>
+{%- endmacro %}
+
+
+{% macro trend_html(trend) %}
+  {{- trend.trend }} {{ trend.period }}
 {%- endmacro %}
 
 
 {% macro trend_td(trend) -%}
   {%- set tooltip = TREND_NAME[trend.trend] %}
-  <td title="{{ tooltip }}">
-    {{- trend.trend }} {{ trend.period -}}
-  </td>
+  <td title="{{ tooltip }}">{{ trend_html(trend) }}</td>
+{%- endmacro %}
+
+
+{% macro population_size_html(size) %}
+  {%- for item in size %}
+    {%- if item.min == item.max %}
+      {{- item.min }} {{ item.unit }}
+    {%- else %}
+      {{- item.min }}-{{ item.max }} {{ item.unit }}
+    {%- endif %}
+  {%- endfor %}
 {%- endmacro %}
 
 
 {% macro population_size_td(size) -%}
-  <td>
-    {%- for item in size %}
-      {%- if item.min == item.max %}
-        {{- item.min }} {{ item.unit }}
-      {%- else %}
-        {{- item.min }}-{{ item.max }} {{ item.unit }}
-      {%- endif %}
-    {%- endfor %}
-  </td>
+  <td>{{ population_size_html(size) }}</td>
+{%- endmacro %}
+
+
+{% macro habitat_quality_html(quality) %}
+  {{- quality.value }}
 {%- endmacro %}
 
 
@@ -37,7 +53,7 @@
   <td {% if quality.explanation -%}
         title="Metoda utilizată: {{ quality.explanation }}"
       {%- endif %}>
-    {{- quality.value -}}
+    {{- habitat_quality_html(quality) -}}
   </td>
 {%- endmacro %}
 
