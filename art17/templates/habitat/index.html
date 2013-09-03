@@ -14,18 +14,18 @@
 
       <div class="form-group">
         <label for="habitatfilter-group">Habitat</label>
-        <input name="habitat" value="{{ current_habitat_code }}"
+        <input name="habitat" value="{{ current_habitat_code or '' }}"
                type="hidden" id="habitatfilter-group">
-      </div>
-
-      <div class="form-group">
-        <button type="submit">filtrează</button>
       </div>
 
       <div class="form-group">
         <label for="habitatfilter-region">Regiune</label>
         <input name="region" value="{{ current_region_code }}"
                type="hidden" id="habitatfilter-region">
+      </div>
+
+      <div class="form-group">
+        <button type="submit">filtrează</button>
       </div>
     </fieldset>
   </form>
@@ -44,6 +44,7 @@
 {% block script %}
   {%- from 'bits.html' import script %}
   {{ super() }}
+  {{ script('recordfilter.js') }}
   {{ script('detail.js') }}
   {{ script('comments.js') }}
 
@@ -53,20 +54,23 @@
 
       var habitatfilter = $('.habitatfilter');
       var habitat_list = {{ habitat_list|tojson|safe }};
-      var region_list = {{ region_list|tojson|safe }};
 
-      habitatfilter.find('[name=habitat]').select2({
+      var habitat_select = habitatfilter.find('[name=habitat]').select2({
         data: habitat_list,
         width: '40em'
       });
 
-      var region_select = habitatfilter.find('[name=region]').select2({
-        data: [{id: '', text: "toate"}].concat(region_list),
+      App.region_select = new App.AjaxSelect({
+        el: habitatfilter.find('[name=region]'),
+        get_data_url: function() {
+           var habitat_code = habitat_select.val();
+           return habitat_code ? 'regiuni/' + habitat_code : null;
+        },
         width: '15em'
       });
 
-      habitatfilter.on('change', '[name=habitat]', function() {
-          region_select.select2('val', '');
+      habitat_select.change(function() {
+        App.region_select.update();
       });
     })();
   </script>

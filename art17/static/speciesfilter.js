@@ -23,24 +23,29 @@ function update_species_select(group_id) {
     multiple: false,
     width: '25em'
   });
+
+  App.region_select.update();
 }
 
-update_species_select();
-
-
-var region_select = speciesfilter.find('[name=region]').select2({
-  data: [{id: '', text: "toate"}].concat(App.region_list),
+App.region_select = new App.AjaxSelect({
+  el: speciesfilter.find('[name=region]'),
+  get_data_url: function() {
+     var species_code = species_select.val();
+     return species_code ? 'regiuni/' + species_code : null;
+  },
   width: '15em'
 });
 
+
+update_species_select();
+
 speciesfilter.on('change', '[name=group]', function() {
   species_select.select2('val', '');
-  region_select.select2('val', '');
   update_species_select();
 });
 
 speciesfilter.on('change', '[name=species]', function() {
-  region_select.select2('val', '');
+  App.region_select.update();
 });
 
 })();
