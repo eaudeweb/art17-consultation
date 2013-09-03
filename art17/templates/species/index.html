@@ -56,6 +56,7 @@
 {% block script %}
   {%- from 'bits.html' import script %}
   {{ super() }}
+  {{ script('recordfilter.js') }}
   {{ script('detail.js') }}
   <script>
     App.species_groups = {{ species_groups|tojson|safe }};
