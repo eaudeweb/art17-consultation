@@ -1,6 +1,12 @@
 {% extends "layout.html" %}
 
 
+{% block title %}
+{%- if species %}{{ species.name }} &mdash; {% endif %}
+{{- super() }}
+{%- endblock title %}
+
+
 {% block content %}
   <form class="speciesfilter">
     <fieldset>

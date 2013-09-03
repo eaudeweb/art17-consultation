@@ -1,6 +1,12 @@
 {% extends "layout.html" %}
 
 
+{% block title %}
+{%- if habitat %}{{ habitat.name }} &mdash; {% endif %}
+{{- super() }}
+{%- endblock title %}
+
+
 {% block content %}
   <form class="habitatfilter">
     <fieldset>
