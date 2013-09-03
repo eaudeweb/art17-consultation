@@ -1,6 +1,6 @@
 {%- from 'common/td.html'
     import conclusion_td, range_html, trend_html, trend_detail_html,
-    magnitude_html, population_size_td
+    magnitude_html, population_size_td, reference_value_html
     with context %}
 
 
@@ -63,8 +63,8 @@
 
         <tr>
           <th>Arealul favorabil de referință</th>
-          <td>
-            {%- if record.range.reference_value.value -%} {{ record.range.reference_value.value }} km<sup>2</sup> {%- endif -%} <br />
+          <td>{{ reference_value_html(record.range.reference_value,
+                  unit='km<sup>2</sup>'|safe) }} <br />
             {%- if record.range.reference_value.method %}
               Metoda utilizată: {{ record.range.reference_value.method }}
             {% endif -%}
@@ -128,7 +128,7 @@
         <tr>
           <th>Populația favorabilă de referință</th>
           <td>
-            {{ record.population.reference_value.value }} <br />
+            {{ reference_value_html(record.population.reference_value) }} <br />
             {%- if record.population.reference_value.method %}
               Metoda utilizată: {{ record.population.reference_value.method }}
             {% endif -%}
@@ -149,7 +149,7 @@
       <table class="table table-bordered recorddetail-table">
         <tr>
           <th>Estimarea suprafeţei</th>
-          <td>{%- if record.habitat.surface_area -%} {{ record.habitat.surface_area }} km<sup>2</sup> {%- endif -%}</td>
+          <td>{{ range_html(record.habitat.surface_area) }}</td>
         </tr>
 
         <tr>
@@ -193,7 +193,10 @@
 
         <tr>
           <th>Suprafața de habitat adecvată pentru specie</th>
-          <td>{%- if record.habitat.area_suitable.value -%} {{ record.habitat.area_suitable.value }} km<sup>2</sup> {%- endif -%}</td>
+          <td>
+            {{ reference_value_html(record.habitat.area_suitable,
+                  unit='km<sup>2</sup>'|safe) }}
+          </td>
         </tr>
 
         <tr>

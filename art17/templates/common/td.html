@@ -3,16 +3,18 @@
 {%- endmacro %}
 
 
-{% macro reference_value_html(refval) %}
-  {{- refval.value }}
+{% macro reference_value_html(refval, unit='') %}
+{%- if refval.value %}
+  {{- refval.value }} {{ unit }}
+{%- endif %}
 {%- endmacro %}
 
 
-{% macro reference_value_td(refval) -%}
+{% macro reference_value_td(refval, unit='') -%}
   <td {% if refval.method -%}
         title="Metoda utilizată: {{ refval.method }}"
       {%- endif %}>
-    {{- reference_value_html(refval) -}}
+    {{- reference_value_html(refval, unit='') -}}
   </td>
 {%- endmacro %}
 
