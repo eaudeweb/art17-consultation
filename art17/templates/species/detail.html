@@ -1,20 +1,8 @@
 {%- from 'common/td.html'
-    import conclusion_td, reference_value_td, trend_td,
-           population_size_td, habitat_quality_td
+    import conclusion_td, range_html, trend_html, trend_detail_html,
+    magnitude_html, population_size_td
     with context %}
 
-{% macro trend_td(trend) -%}
-{% if trend.trend %}
-  {{ trend.trend }} - {{ TREND_NAME[trend.trend] }}
-{% endif %}
-{%- endmacro %}
-
-
-{% macro magnitude_td(magnitude) -%}
-{% if magnitude.min or magnitude.max %}
-    {{ magnitude.min }} - {{ magnitude.max }} km<sup>2</sup>
-{% endif %}
-{%- endmacro %}
 
 <h1>
   {{ species.lu.speciesname }}
@@ -33,7 +21,7 @@
       <table class="table table-bordered recorddetail-table">
         <tr>
           <th>Suprafață</th>
-          <td>{%- if record.range.surface_area -%} {{ record.range.surface_area }} km<sup>2</sup> {%- endif -%}</td>
+          <td>{{ range_html(record.range) }}</td>
         </tr>
 
         <tr>
@@ -43,7 +31,7 @@
 
         <tr>
           <th>Tendință pe termen scurt</th>
-          <td>{{ trend_td(record.range.trend_short) }}
+          <td>{{ trend_detail_html(record.range.trend_short) }}
           </td>
         </tr>
 
@@ -54,13 +42,13 @@
 
         <tr>
           <th>Tendinţa pe termen scurt - magnitudinea</th>
-          <td>{{ magnitude_td(record.range.magnitude_short) }}</td>
+          <td>{{ magnitude_html(record.range.magnitude_short) }}</td>
         </tr>
 
         <tr>
           <th>Tendință pe termen lung</th>
           <td>
-            {{ trend_td(record.range.trend_long) }}</td>
+            {{ trend_detail_html(record.range.trend_long) }}</td>
         </tr>
 
         <tr>
@@ -70,7 +58,7 @@
 
         <tr>
           <th>Tendinţa pe termen lung - magnitudinea</th>
-          <td>{{ magnitude_td(record.range.magnitude_long) }}</td>
+          <td>{{ magnitude_html(record.range.magnitude_long) }}</td>
         </tr>
 
         <tr>
@@ -108,7 +96,7 @@
         <tr>
           <th>Tendință pe termen scurt</th>
           <td>
-            {{ trend_td(record.population.trend_short) }}</td>
+            {{ trend_detail_html(record.population.trend_short) }}</td>
         </tr>
 
         <tr>
@@ -118,13 +106,13 @@
 
         <tr>
           <th>Tendinţa pe termen scurt - magnitudinea</th>
-          <td>{{ magnitude_td(record.population.magnitude_short) }}</td>
+          <td>{{ magnitude_html(record.population.magnitude_short) }}</td>
         </tr>
 
         <tr>
           <th>Tendință pe termen lung</th>
           <td>
-            {{ trend_td(record.population.trend_long) }}</td>
+            {{ trend_detail_html(record.population.trend_long) }}</td>
         </tr>
 
         <tr>
@@ -134,7 +122,7 @@
 
         <tr>
           <th>Tendinţa pe termen lung - magnitudinea</th>
-          <td>{{ magnitude_td(record.population.magnitude_long) }}</td>
+          <td>{{ magnitude_html(record.population.magnitude_long) }}</td>
         </tr>
 
         <tr>
@@ -182,7 +170,7 @@
         <tr>
           <th>Tendință pe termen scurt</th>
           <td>
-            {{ trend_td(record.habitat.trend_short) }}
+            {{ trend_detail_html(record.habitat.trend_short) }}
           </td>
         </tr>
 
@@ -194,7 +182,7 @@
         <tr>
           <th>Tendință pe termen lung</th>
           <td>
-            {{ trend_td(record.habitat.trend_long) }}
+            {{ trend_detail_html(record.habitat.trend_long) }}
           </td>
         </tr>
 
