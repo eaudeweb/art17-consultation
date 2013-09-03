@@ -14,7 +14,7 @@
 
       <div class="form-group">
         <label for="habitatfilter-group">Habitat</label>
-        <input name="habitat" value="{{ current_habitat_code }}"
+        <input name="habitat" value="{{ current_habitat_code or '' }}"
                type="hidden" id="habitatfilter-group">
       </div>
 
@@ -53,20 +53,34 @@
 
       var habitatfilter = $('.habitatfilter');
       var habitat_list = {{ habitat_list|tojson|safe }};
-      var region_list = {{ region_list|tojson|safe }};
 
       habitatfilter.find('[name=habitat]').select2({
         data: habitat_list,
         width: '40em'
       });
 
-      var region_select = habitatfilter.find('[name=region]').select2({
-        data: [{id: '', text: "toate"}].concat(region_list),
-        width: '15em'
-      });
+      var region_select = habitatfilter.find('[name=region]');
+
+      function update_region_select() {
+        var habitat_code = habitatfilter.find('[name=habitat]').select2('val');
+        if(! habitat_code) {
+          region_select.select2('destroy');
+          return;
+        }
+        region_select.select2('val', '');
+        var url = 'regiuni/' + habitat_code;
+        $.get(url, function(resp) {
+          region_select.select2('destroy').select2({
+            data: [{id: '', text: "toate"}].concat(resp.regions),
+            width: '15em'
+          });
+        });
+      };
+
+      update_region_select();
 
       habitatfilter.on('change', '[name=habitat]', function() {
-          region_select.select2('val', '');
+        update_region_select();
       });
     })();
   </script>

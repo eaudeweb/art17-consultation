@@ -260,6 +260,10 @@ class DataHabitattypeRegion(Base):
     hr_habitat = relationship(u'DataHabitat',
         backref=db.backref('regions', lazy='dynamic'))
 
+    lu = relationship(LuBiogeoreg,
+                      primaryjoin=(region == foreign(LuBiogeoreg.code)),
+                      innerjoin=True, uselist=False)
+
 
 class DataHtypicalSpecies(Base):
     __tablename__ = u'data_htypical_species'

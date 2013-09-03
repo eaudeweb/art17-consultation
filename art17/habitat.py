@@ -55,6 +55,16 @@ class HabitatRecord(GenericRecord):
         return self._get_conclusion('assessment')
 
 
+@habitat.route('/habitate/regiuni/<int:habitat_code>')
+def lookup_regions(habitat_code):
+    habitat = (models.DataHabitat.query
+                .filter_by(habitatcode=habitat_code)
+                .first_or_404())
+    regions = [{'id': r.lu.code, 'text': r.lu.name_ro}
+               for r in habitat.regions.join(models.DataHabitattypeRegion.lu)]
+    return flask.jsonify(regions=regions)
+
+
 @habitat.route('/habitate/')
 def index():
     habitat_code = flask.request.args.get('habitat', type=int)
@@ -77,8 +87,6 @@ def index():
                         .join(models.DataHabitattypeRegion)
                         .order_by('habitatcode'))
 
-    region_list = models.LuBiogeoreg.query.order_by('order_')
-
     if habitat:
         records = habitat.regions
         if region:
@@ -88,9 +96,6 @@ def index():
         'habitat_list': [{'id': h.habitatcode, 'text': h.lu.hd_name}
                          for h in habitat_list],
         'current_habitat_code': habitat_code,
-        'region_list': [{'id': r.code,
-                         'text': r.name_ro}
-                        for r in region_list],
         'current_region_code': region_code,
 
         'habitat': None if habitat is None else {
