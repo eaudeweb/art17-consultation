@@ -508,6 +508,10 @@ class DataSpeciesRegion(Base):
     sr_species = relationship(u'DataSpecies',
         backref=db.backref('regions', lazy='dynamic'))
 
+    lu = relationship(LuBiogeoreg,
+                      primaryjoin=(region == foreign(LuBiogeoreg.code)),
+                      innerjoin=True, uselist=False)
+
 
 class SysImport(Base):
     __tablename__ = u'sys_import'

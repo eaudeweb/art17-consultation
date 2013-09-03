@@ -106,6 +106,16 @@ class SpeciesRecord(GenericRecord):
         return self._get_conclusion('assessment')
 
 
+@species.route('/specii/regiuni/<int:species_code>')
+def lookup_regions(species_code):
+    species = (models.DataSpecies.query
+                .filter_by(speciescode=species_code)
+                .first_or_404())
+    regions = [{'id': r.lu.code, 'text': r.lu.name_ro}
+               for r in species.regions.join(models.DataSpeciesRegion.lu)]
+    return flask.jsonify(regions=regions)
+
+
 @species.route('/specii/')
 def index():
     group_code = flask.request.args.get('group')
