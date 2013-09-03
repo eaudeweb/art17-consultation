@@ -27,8 +27,14 @@ function update_species_select(group_id) {
 
 update_species_select();
 
-speciesfilter.change(function() {
+group_select.change(function() {
   update_species_select();
+});
+
+
+var region_select = speciesfilter.find('[name=region]').select2({
+  data: [{id: null, text: "toate"}].concat(App.region_list),
+  width: '15em'
 });
 
 })();

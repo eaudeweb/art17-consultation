@@ -535,4 +535,5 @@ class LuBiogeoreg(Base):
     objectid = Column(Numeric, primary_key=True)
     code = Column(String)
     name = Column(String)
+    name_ro = Column('nume', String)
     order = Column('order_', Numeric)
