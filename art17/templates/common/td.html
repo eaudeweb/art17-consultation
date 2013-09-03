@@ -16,6 +16,26 @@
   </td>
 {%- endmacro %}
 
+{% macro range_html(range) %}
+{%- if range.surface_area -%}
+  {{ range.surface_area }} km<sup>2</sup>
+{%- endif -%}
+{%- endmacro %}
+
+
+{% macro magnitude_html(magnitude) -%}
+{% if magnitude.min or magnitude.max %}
+    {{ magnitude.min }} - {{ magnitude.max }} km<sup>2</sup>
+{% endif %}
+{%- endmacro %}
+
+
+{% macro trend_detail_html(trend) %}
+{%- if trend.trend %}
+  {{- trend.trend }} - {{ TREND_NAME[trend.trend] -}}
+{% endif %}
+{%- endmacro %}
+
 
 {% macro trend_html(trend) %}
   {{- trend.trend }} {{ trend.period }}
