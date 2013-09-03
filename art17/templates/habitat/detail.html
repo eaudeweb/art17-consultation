@@ -14,6 +14,8 @@
     <a href="#recorddetail-range" data-toggle="tab">Proporția</a></li>
   <li>
     <a href="#recorddetail-area" data-toggle="tab">Suprafața</a></li>
+  <li>
+    <a href="#recorddetail-conclusions" data-toggle="tab">Concluzii</a></li>
 </ul>
 
 
@@ -140,6 +142,28 @@
           {{ conclusion_td(record.area.conclusion) }}
         </tr>
 
+      </table>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="recorddetail-conclusions">
+    <div class="table-responsive">
+      <table class="table table-bordered recorddetail-table">
+
+        <tr>
+          <th>Structura și funcțiile specifice</th>
+          {{ conclusion_td(record.structure) }}
+        </tr>
+
+        <tr>
+          <th>Perspective viitoare</th>
+          {{ conclusion_td(record.future_prospects) }}
+        </tr>
+
+        <tr>
+          <th>Evaluare generală a stării de conservare</th>
+          {{ conclusion_td(record.overall_assessment) }}
+        </tr>
       </table>
     </div>
   </div>

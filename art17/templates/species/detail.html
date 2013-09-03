@@ -13,6 +13,7 @@
   <li class="active"><a href="#recorddetail-range" data-toggle="tab">Areal</a></li>
   <li><a href="#recorddetail-population" data-toggle="tab">Populație</a></li>
   <li><a href="#recorddetail-habitat" data-toggle="tab">Habitat</a></li>
+  <li><a href="#recorddetail-conclusions" data-toggle="tab">Concluzii</a></li>
 </ul>
 
 <div class="tab-content">
@@ -204,6 +205,23 @@
           {{ conclusion_td(record.habitat.conclusion) }}
         </tr>
 
+      </table>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="recorddetail-conclusions">
+    <div class="table-responsive">
+      <table class="table table-bordered recorddetail-table">
+
+        <tr>
+          <th>Perspective viitoare</th>
+          {{ conclusion_td(record.future_prospects) }}
+        </tr>
+
+        <tr>
+          <th>Evaluare generală a stării de conservare</th>
+          {{ conclusion_td(record.overall_assessment) }}
+        </tr>
       </table>
     </div>
   </div>
