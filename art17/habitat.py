@@ -51,10 +51,6 @@ class HabitatRecord(GenericRecord):
 
 @habitat.route('/habitate/')
 def index():
-    habitat_list = (models.DataHabitat.query
-                        .join(models.DataHabitattypeRegion)
-                        .order_by('habitatcode'))
-
     habitat_code = flask.request.args.get('habitat', type=int)
     if habitat_code:
         habitat = (models.DataHabitat.query
@@ -63,14 +59,38 @@ def index():
     else:
         habitat = None
 
+    region_code = flask.request.args.get('region', '')
+    if region_code:
+        region = (models.LuBiogeoreg.query
+                    .filter_by(code=region_code)
+                    .first_or_404())
+    else:
+        region = None
+
+    habitat_list = (models.DataHabitat.query
+                        .join(models.DataHabitattypeRegion)
+                        .order_by('habitatcode'))
+
+    region_list = models.LuBiogeoreg.query.order_by('order_')
+
+    if habitat:
+        records = habitat.regions
+        if region:
+            records = records.filter_by(region=region.code)
+
     return flask.render_template('habitat/index.html', **{
         'habitat_list': [{'id': h.habitatcode, 'text': h.lu.hd_name}
                          for h in habitat_list],
         'current_habitat_code': habitat_code,
+        'region_list': [{'id': r.code,
+                         'text': r.name_ro}
+                        for r in region_list],
+        'current_region_code': region_code,
+
         'habitat': None if habitat is None else {
             'name': habitat.lu.hd_name,
             'code': habitat.habitatcode,
-            'records': [HabitatRecord(r) for r in habitat.regions],
+            'records': [HabitatRecord(r) for r in records],
         },
     })
 
