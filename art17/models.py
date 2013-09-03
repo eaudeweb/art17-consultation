@@ -9,6 +9,66 @@ Base = db.Model
 metadata = db.metadata
 
 
+class LuHabitattypeCodes(Base):
+    __tablename__ = u'lu_habitattype_codes'
+
+    objectid = Column(Numeric, primary_key=True)
+    code = Column(String)
+    hd_name = Column(String)
+    valide_name = Column(String)
+    priority = Column(Numeric)
+    priority_comment = Column(String)
+
+
+class LuGrupSpecie(Base):
+    __tablename__ = u'lu_grup_specie'
+
+    oid = Column(Numeric, primary_key=True)
+    code = Column(String)
+    description = Column(String)
+
+
+class LuHdSpecies(Base):
+    __tablename__ = u'lu_hd_species'
+
+    objectid = Column(Numeric, primary_key=True)
+    speciescode = Column(Numeric)
+    hdname = Column(String)
+    speciesname = Column(String)
+    alternativenames = Column(String)
+    reserve = Column(String)
+    group_code = Column('group_', String)
+    annexii = Column(String)
+    annexpriority = Column(String)
+    annexiv = Column(String)
+    annexv = Column(String)
+    annexii_comment = Column(String)
+    annexiv_commet = Column(Text)
+    annexv_comment = Column(Text)
+    etc_comments = Column(String)
+
+
+class LuCountriesRegions(Base):
+    __tablename__ = u'lu_countries_regions'
+
+    objectid = Column(Numeric, primary_key=True)
+    country = Column(String)
+    region_code = Column('region', String, ForeignKey('lu_biogeoreg.code'))
+    order = Column('order_', Numeric)
+
+    region = relationship('LuBiogeoreg', lazy='eager')
+
+
+class LuBiogeoreg(Base):
+    __tablename__ = u'lu_biogeoreg'
+
+    objectid = Column(Numeric, primary_key=True)
+    code = Column(String)
+    name = Column(String)
+    name_ro = Column('nume', String)
+    order = Column('order_', Numeric)
+
+
 class DataGmeasure(Base):
     __tablename__ = u'data_gmeasures'
 
@@ -79,17 +139,6 @@ class DataGreport(Base):
     sys_modifier_id = Column(String(510), index=True)
     validated = Column(Numeric, nullable=False)
     validation_date = Column(DateTime)
-
-
-class LuHabitattypeCodes(Base):
-    __tablename__ = u'lu_habitattype_codes'
-
-    objectid = Column(Numeric, primary_key=True)
-    code = Column(String)
-    hd_name = Column(String)
-    valide_name = Column(String)
-    priority = Column(Numeric)
-    priority_comment = Column(String)
 
 
 class DataHabitat(Base):
@@ -330,6 +379,16 @@ class DataSpecies(Base):
     export = Column(Numeric, nullable=False)
     import_id = Column(Numeric, index=True)
 
+    lu = relationship(LuHdSpecies,
+                      primaryjoin=(speciescode ==
+                                   cast(foreign(LuHdSpecies.speciescode),
+                                        String(255))),
+                      lazy='joined', innerjoin=True, uselist=False,
+                      backref=db.backref('data',
+                                         lazy='joined',
+                                         uselist=False,
+                                         innerjoin=True))
+
 
 class DataSpeciesCheckList(Base):
     __tablename__ = u'data_species_check_list'
@@ -480,60 +539,3 @@ class SysUser(Base):
     species_report = Column(Numeric, nullable=False)
     habitats_report = Column(Numeric, nullable=False)
     using_fe_version = Column(Numeric)
-
-
-class LuGrupSpecie(Base):
-    __tablename__ = u'lu_grup_specie'
-
-    oid = Column(Numeric, primary_key=True)
-    code = Column(String)
-    description = Column(String)
-
-
-class LuHdSpecies(Base):
-    __tablename__ = u'lu_hd_species'
-
-    objectid = Column(Numeric, primary_key=True)
-    speciescode = Column(Numeric)
-    hdname = Column(String)
-    speciesname = Column(String)
-    alternativenames = Column(String)
-    reserve = Column(String)
-    group_code = Column('group_', String)
-    annexii = Column(String)
-    annexpriority = Column(String)
-    annexiv = Column(String)
-    annexv = Column(String)
-    annexii_comment = Column(String)
-    annexiv_commet = Column(Text)
-    annexv_comment = Column(Text)
-    etc_comments = Column(String)
-
-    data = relationship(DataSpecies,
-                        primaryjoin=(cast(speciescode, String(255)) ==
-                                     foreign(DataSpecies.speciescode)),
-                        lazy='eager', uselist=False,
-                        backref=db.backref('lu',
-                                           lazy='joined',
-                                           innerjoin=True))
-
-
-class LuCountriesRegions(Base):
-    __tablename__ = u'lu_countries_regions'
-
-    objectid = Column(Numeric, primary_key=True)
-    country = Column(String)
-    region_code = Column('region', String, ForeignKey('lu_biogeoreg.code'))
-    order = Column('order_', Numeric)
-
-    region = relationship('LuBiogeoreg', lazy='eager')
-
-
-class LuBiogeoreg(Base):
-    __tablename__ = u'lu_biogeoreg'
-
-    objectid = Column(Numeric, primary_key=True)
-    code = Column(String)
-    name = Column(String)
-    name_ro = Column('nume', String)
-    order = Column('order_', Numeric)
