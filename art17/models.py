@@ -1,5 +1,6 @@
+import uuid
 from sqlalchemy import (Column, DateTime, ForeignKey, Index,
-                        String, Table, Text, Numeric, cast)
+                        String, Table, Text, Numeric, cast, Binary)
 from sqlalchemy.orm import relationship, foreign
 from sqlalchemy.ext.declarative import declarative_base
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -7,6 +8,10 @@ from flask.ext.sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 Base = db.Model
 metadata = db.metadata
+
+
+def create_uuid():
+    return str(uuid.uuid4()).replace('-', '')
 
 
 class LuHabitattypeCodes(Base):
@@ -511,6 +516,101 @@ class DataSpeciesRegion(Base):
     lu = relationship(LuBiogeoreg,
                       primaryjoin=(region == foreign(LuBiogeoreg.code)),
                       innerjoin=True, uselist=False)
+
+
+class DataSpeciesComment(Base):
+    __tablename__ = u'data_species_comments'
+
+    sr_id = Column('objectid', Binary, primary_key=True, index=True,
+                               default=create_uuid)
+    sr_species_id = Column(ForeignKey(u'data_species.objectid'), index=True)
+    region = Column(String(510))
+    published = Column(Text)
+    range_surface_area = Column('rsurface_area', Numeric)
+    range_method = Column(String(510))
+    range_trend_period = Column(String(510))
+    range_trend = Column(String(510))
+    range_trend_magnitude_min = Column('range_trend_mag_min', Numeric)
+    range_trend_magnitude_max = Column('range_trend_mag_max', Numeric)
+    range_trend_long_period = Column(String(510))
+    range_trend_long = Column(String(510))
+    range_trend_long_magnitude_min = Column('range_trend_long_mag_min', Numeric)
+    range_trend_long_magnitude_max = Column('range_trend_long_mag_max', Numeric)
+    complementary_favourable_range = Column('comp_favourable_range', Numeric)
+    complementary_favourable_range_op = Column('comp_favourable_range_op', String(510))
+    complementary_favourable_range_x = Column('comp_favourable_range_x', Numeric, nullable=False)
+    complementary_favourable_range_method = Column('comp_favourable_range_met', Text)
+    range_reasons_for_change_a = Column('r_reasons_for_change_a', Numeric, nullable=False)
+    range_reasons_for_change_b = Column('r_reasons_for_change_b', Numeric, nullable=False)
+    range_reasons_for_change_c = Column('r_reasons_for_change_c', Numeric, nullable=False)
+    population_size_unit = Column('pop_size_unit', String(510))
+    population_minimum_size = Column('pop_minimum_size', Numeric)
+    population_maximum_size = Column('pop_maximum_size', Numeric)
+    population_alt_size_unit = Column('pop_alt_size_unit', String(510))
+    population_alt_minimum_size = Column('pop_alt_minimum_size', Numeric)
+    population_alt_maximum_size = Column('pop_alt_maximum_size', Numeric)
+    population_additional_locality = Column('pop_additional_locality', Text)
+    population_additional_method = Column('pop_additional_method', Text)
+    population_additional_problems = Column('pop_additional_problems', Text)
+    population_date = Column('pop_date', String(510))
+    population_method = Column('pop_method', String(510))
+    population_trend_period = Column('pop_trend_period', String(510))
+    population_trend = Column('pop_trend', String(510))
+    population_trend_magnitude_min = Column('pop_trend_mag_min', Numeric)
+    population_trend_magnitude_max = Column('pop_trend_mag_max', Numeric)
+    population_trend_magnitude_ci = Column('pop_trend_magnitude_ci', Numeric)
+    population_trend_method = Column('pop_trend_method', String(510))
+    population_trend_long_period = Column('pop_trend_long_period', String(510))
+    population_trend_long = Column(String(510))
+    population_trend_long_magnitude_min = Column('pop_trend_long_mag_min', Numeric)
+    population_trend_long_magnitude_max = Column('pop_trend_long_mag_max', Numeric)
+    population_trend_long_magnitude_ci = Column('pop_trend_long_mag_ci', Numeric)
+    population_trend_long_method = Column('pop_trend_long_method', String(510))
+    complementary_favourable_population = Column('comp_favourable_pop', Numeric)
+    complementary_favourable_population_op = Column('comp_favourable_pop_op', String(510))
+    complementary_favourable_population_x = Column('comp_favourable_pop_x', Numeric, nullable=False)
+    complementary_favourable_population_method = Column('comp_favourable_pop_met', Text)
+    population_reasons_for_change_a = Column('pop_reasons_for_change_a', Numeric, nullable=False)
+    population_reasons_for_change_b = Column('pop_reasons_for_change_b', Numeric, nullable=False)
+    population_reasons_for_change_c = Column('pop_reasons_for_change_c', Numeric, nullable=False)
+    habitat_surface_area = Column(Numeric)
+    habitat_date = Column(String(510))
+    habitat_method = Column(String(510))
+    habitat_quality = Column(String(510))
+    habitat_quality_explanation = Column(Text)
+    habitat_trend_period = Column(String(510))
+    habitat_trend = Column(String(510))
+    habitat_trend_long_period = Column(String(510))
+    habitat_trend_long = Column(String(510))
+    habitat_area_suitable = Column(Numeric)
+    habitat_reasons_for_change_a = Column('habitat_reasons_for_change__61', Numeric, nullable=False)
+    habitat_reasons_for_change_b = Column('habitat_reasons_for_change__62', Numeric, nullable=False)
+    habitat_reasons_for_change_c = Column('habitat_reasons_for_change__63', Numeric, nullable=False)
+    pressures_method = Column(String(510))
+    threats_method = Column(String(510))
+    justification = Column(Text)
+    other_relevant_information = Column(Text)
+    transboundary_assessment = Column(Text)
+    conclusion_range = Column(String(510))
+    conclusion_range_trend = Column(String(510))
+    conclusion_population = Column(String(510))
+    conclusion_population_trend = Column(String(510))
+    conclusion_habitat = Column(String(510))
+    conclusion_habitat_trend = Column(String(510))
+    conclusion_future = Column(String(510))
+    conclusion_future_trend = Column('conclusion_future_trends', String(510))
+    conclusion_assessment = Column(String(510))
+    conclusion_assessment_trend = Column(String(510))
+    natura2000_population_unit = Column(String(510))
+    natura2000_population_min = Column(Numeric)
+    natura2000_population_max = Column(Numeric)
+    natura2000_population_method = Column('natura2000_population_metho_82', String(510))
+    natura2000_population_trend = Column(String(510))
+    validated = Column(Numeric, nullable=False)
+    validation_date = Column(DateTime)
+
+    sr_species = relationship(u'DataSpecies',
+        backref=db.backref('comments', lazy='dynamic'))
 
 
 class SysImport(Base):
