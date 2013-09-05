@@ -1,9 +1,6 @@
 import flask
 from flask.ext.script import Manager
-from werkzeug.local import LocalProxy
 from path import path
-
-models = LocalProxy(lambda: flask.current_app.extensions['art17_models'])
 
 views = flask.Blueprint('views', __name__)
 
@@ -28,6 +25,7 @@ def create_app():
     from art17.common import common
     from art17.species import species
     from art17.habitat import habitat
+    from art17 import models
 
     app = flask.Flask(__name__, instance_relative_config=True)
     app.jinja_options['extensions'].append('jinja2.ext.do')
@@ -36,13 +34,7 @@ def create_app():
     app.register_blueprint(common)
     app.register_blueprint(species)
     app.register_blueprint(habitat)
-
-    if app.config.get('USE_MDB_MODELS'):
-        from art17 import models_mdb as _models
-    else:
-        from art17 import models as _models
-    app.extensions['art17_models'] = _models
-    _models.db.init_app(app)
+    models.db.init_app(app)
 
     return app
 

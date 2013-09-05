@@ -4,7 +4,7 @@ import flask
 from werkzeug.utils import cached_property
 from wtforms import Form, DecimalField
 from wtforms.validators import Required
-from art17.app import models
+from art17 import models
 from art17.common import GenericRecord
 
 species = flask.Blueprint('species', __name__)

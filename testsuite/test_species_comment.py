@@ -13,16 +13,15 @@ def species_app():
     app = flask.Flask('art17.app')
     app.config['TESTING'] = True
     app.register_blueprint(species)
-    from art17 import models as _models
-    app.extensions['art17_models'] = _models
-    _models.db.init_app(app)
+    from art17.models import db
+    db.init_app(app)
     with app.app_context():
-        _models.db.create_all()
+        db.create_all()
     return app
 
 
 def _create_species_record(species_app):
-    from art17.app import models
+    from art17 import models
     with species_app.app_context():
         species = models.DataSpecies(species_id=1, speciescode='1234')
         species.lu = models.LuHdSpecies(objectid=1, speciescode=1234)
@@ -40,7 +39,7 @@ def test_load_comments_view(species_app):
 
 
 def test_save_comment_record(species_app):
-    from art17.app import models
+    from art17.models import DataSpeciesComment
     _create_species_record(species_app)
     client = species_app.test_client()
     resp = client.post('/specii/detalii/1/comentariu',
@@ -48,13 +47,13 @@ def test_save_comment_record(species_app):
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
-        assert models.DataSpeciesComment.query.count() == 1
-        comment = models.DataSpeciesComment.query.first()
+        assert DataSpeciesComment.query.count() == 1
+        comment = DataSpeciesComment.query.first()
         assert comment.range_surface_area == 50
 
 
 def test_error_on_required_record(species_app):
-    from art17.app import models
+    from art17.models import DataSpeciesComment
     _create_species_record(species_app)
     client = species_app.test_client()
     resp = client.post('/specii/detalii/1/comentariu',
@@ -63,4 +62,4 @@ def test_error_on_required_record(species_app):
     assert COMMENT_SAVED_TXT not in resp.data
     assert MISSING_FIELD_TXT in resp.data
     with species_app.app_context():
-        assert models.DataSpeciesComment.query.count() == 0
+        assert DataSpeciesComment.query.count() == 0
