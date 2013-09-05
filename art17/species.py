@@ -1,5 +1,9 @@
+# encoding: utf-8
+
 import flask
 from werkzeug.utils import cached_property
+from wtforms import Form, DecimalField
+from wtforms.validators import Required
 from art17.app import models
 from art17.common import GenericRecord
 
@@ -181,18 +185,23 @@ def detail(record_id):
     })
 
 
+class SpeciesCommentForm(Form):
+
+    range_surface_area = DecimalField(u"Suprafață (km²)", [Required()])
+
+
 @species.route('/specii/detalii/<int:record_id>/comentariu',
                methods=['GET', 'POST'])
 def comment(record_id):
     record = models.DataSpeciesRegion.query.get_or_404(record_id)
+    form = SpeciesCommentForm(flask.request.form)
 
-    if flask.request.method == 'POST':
+    if flask.request.method == 'POST' and form.validate():
         comment = models.DataSpeciesComment(
             sr_species_id=record.sr_species_id,
             region=record.region)
 
-        form = flask.request.form
-        comment.range_surface_area = form.get('range_surface_area')
+        comment.range_surface_area = form.range_surface_area.data
 
         models.db.session.add(comment)
         models.db.session.commit()
