@@ -26,6 +26,7 @@ def create_app():
     from art17.species import species
     from art17.habitat import habitat
     from art17 import models
+    from art17.admin import admin
 
     app = flask.Flask(__name__, instance_relative_config=True)
     app.jinja_options['extensions'].append('jinja2.ext.do')
@@ -35,6 +36,7 @@ def create_app():
     app.register_blueprint(species)
     app.register_blueprint(habitat)
     models.db.init_app(app)
+    admin.init_app(app)
 
     return app
 

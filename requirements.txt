@@ -1,6 +1,8 @@
 cx-Oracle==5.1.2
+Flask-Admin==1.0.6
 Flask-Script==0.6.2
 Flask-SQLAlchemy==1.0
+Flask-WTF==0.9.1
 Flask==0.10.1
 inflect==0.2.4
 itsdangerous==0.23
