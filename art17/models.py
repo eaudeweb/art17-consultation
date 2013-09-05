@@ -148,9 +148,6 @@ class DataGreport(Base):
 
 class DataHabitat(Base):
     __tablename__ = u'data_habitats'
-    __table_args__ = (
-        Index(u'data_habitats_unique_habitat_idx', u'habitatcode', u'country', u'sys_creator_id'),
-    )
 
     habitat_id = Column('objectid', Numeric, primary_key=True)
     country = Column(String(4), index=True)
@@ -192,9 +189,6 @@ class DataHabitatsCheckList(Base):
 
 class DataHabitattypeRegion(Base):
     __tablename__ = u'data_habitattype_reg'
-    __table_args__ = (
-        Index(u'data_habitattype_regions_unique_idx', u'hr_habitat_id', u'region'),
-    )
 
     hr_id = Column('objectid', Numeric, primary_key=True)
     hr_habitat_id = Column(ForeignKey(u'data_habitats.objectid'), index=True)
@@ -272,9 +266,6 @@ class DataHabitattypeRegion(Base):
 
 class DataHtypicalSpecies(Base):
     __tablename__ = u'data_htypical_species'
-    __table_args__ = (
-        Index(u'data_htypical_species_unique_idx', u'species_hr_id', u'speciesname'),
-    )
 
     typical_species_id = Column(Numeric, primary_key=True)
     species_hr_id = Column(ForeignKey(u'data_habitattype_reg.objectid'), index=True)
@@ -288,9 +279,6 @@ class DataHtypicalSpecies(Base):
 
 class DataMeasure(Base):
     __tablename__ = u'data_measures'
-    __table_args__ = (
-        Index(u'data_measures_unique_idx', u'measurecode', u'measure_hr_id'),
-    )
 
     measure_id = Column(Numeric, primary_key=True)
     measurecode = Column(String(20), index=True)
@@ -331,10 +319,6 @@ class DataNote(Base):
 
 class DataPressuresThreat(Base):
     __tablename__ = u'data_pressures_threats'
-    __table_args__ = (
-        Index(u'data_pressures_threats_uniqueSr_idx', u'pressure_sr_id', u'pressure', u'type'),
-        Index(u'data_pressures_threats_uniqueHr_idx', u'pressure_hr_id', u'pressure', u'type')
-    )
 
     pressure_id = Column(Numeric, primary_key=True)
     pressure_hr_id = Column(ForeignKey(u'data_habitattype_reg.objectid'), index=True)
@@ -363,9 +347,6 @@ class DataPressuresThreatsPol(Base):
 
 class DataSpecies(Base):
     __tablename__ = u'data_species'
-    __table_args__ = (
-        Index(u'data_species_unique_report_idx', u'speciescode', u'country', u'sys_creator_id'),
-    )
 
     species_id = Column('objectid', Numeric, primary_key=True, index=True)
     country = Column(String(510))
@@ -419,9 +400,6 @@ class DataSpeciesCheckList(Base):
 
 class DataSpeciesRegion(Base):
     __tablename__ = u'data_species_regions'
-    __table_args__ = (
-        Index(u'data_species_regions_region_unique_idx', u'sr_species_id', u'region'),
-    )
 
     sr_id = Column('objectid', Numeric, primary_key=True, index=True)
     sr_species_id = Column(ForeignKey(u'data_species.objectid'), index=True)
