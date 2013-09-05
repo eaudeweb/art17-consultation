@@ -499,7 +499,7 @@ class DataSpeciesRegion(Base):
 class DataSpeciesComment(Base):
     __tablename__ = u'data_species_comments'
 
-    sr_id = Column('objectid', Binary, primary_key=True, index=True,
+    sr_id = Column('objectid', String, primary_key=True, index=True,
                                default=create_uuid)
     sr_species_id = Column(ForeignKey(u'data_species.objectid'), index=True)
     region = Column(String)
