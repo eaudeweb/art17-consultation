@@ -4,7 +4,6 @@ import pytest
 @pytest.fixture
 def species_app():
     import flask
-    import art17.app
     from art17.species import species
     app = flask.Flask('art17.app')
     app.config['TESTING'] = True
