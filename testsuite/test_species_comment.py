@@ -40,9 +40,11 @@ def test_save_comment_record(species_app):
     from art17.app import models
     _create_species_record(species_app)
     client = species_app.test_client()
-    resp = client.post('/specii/detalii/1/comentariu')
+    resp = client.post('/specii/detalii/1/comentariu',
+                       data={'range_surface_area': '50'})
     assert resp.status_code == 200
     assert "Comentariul a fost înregistrat" in resp.data
     with species_app.app_context():
         comments = models.DataSpeciesComment.query.all()
         assert len(comments) == 1
+        assert comments[0].range_surface_area == 50

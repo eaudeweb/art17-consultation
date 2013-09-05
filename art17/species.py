@@ -190,8 +190,13 @@ def comment(record_id):
         comment = models.DataSpeciesComment(
             sr_species_id=record.sr_species_id,
             region=record.region)
+
+        form = flask.request.form
+        comment.range_surface_area = form.get('range_surface_area')
+
         models.db.session.add(comment)
         models.db.session.commit()
+
         return flask.render_template('species/comment-saved.html', **{
             'species': record.sr_species,
             'record': SpeciesRecord(record),
