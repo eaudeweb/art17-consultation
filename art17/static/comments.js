@@ -15,14 +15,7 @@ function show_comment_form(html, url) {
     var data = _.object(_(pairs).pluck('name'),
                         _(pairs).pluck('value'));
 
-    var request = $.ajax({
-      type: 'POST',
-      url: url,
-      data: JSON.stringify(data),
-      contentType: 'application/json'
-    });
-
-    request.done(function(html) {
+    $.post(url, data).done(function(html) {
       show_comment_form(html, url);
     });
 
