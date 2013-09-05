@@ -17,9 +17,14 @@
   </div>
 
   <div class="panel-body">
-    <div class="form-group">
+    {% set errors = form.range_surface_area.errors %}
+    <div class="form-group {%- if errors %} has-error{% endif %}">
       <label for="range.surface_area">
         Suprafață (km<sup>2</sup>)</label>
+
+      {%- for error in errors %}
+        <span class="help-block">{{ error }}</span>
+      {%- endfor %}
 
       <div class="row">
         <div class="col-lg-4">

@@ -3,6 +3,7 @@
 import pytest
 
 COMMENT_SAVED_TXT = "Comentariul a fost înregistrat"
+MISSING_FIELD_TXT = "Suprafața este obligatorie"
 
 
 @pytest.fixture
@@ -60,5 +61,6 @@ def test_error_on_required_record(species_app):
                        data={'range_surface_area': ''})
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT not in resp.data
+    assert MISSING_FIELD_TXT in resp.data
     with species_app.app_context():
         assert models.DataSpeciesComment.query.count() == 0

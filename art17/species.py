@@ -187,7 +187,8 @@ def detail(record_id):
 
 class SpeciesCommentForm(Form):
 
-    range_surface_area = DecimalField(u"Suprafață (km²)", [Required()])
+    range_surface_area = DecimalField(u"Suprafață (km²)",
+            [Required(u"Suprafața este obligatorie")])
 
 
 @species.route('/specii/detalii/<int:record_id>/comentariu',
@@ -214,4 +215,5 @@ def comment(record_id):
     return flask.render_template('species/comment.html', **{
         'species': record.sr_species,
         'record': SpeciesRecord(record),
+        'form': form,
     })
