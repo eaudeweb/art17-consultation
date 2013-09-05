@@ -51,7 +51,7 @@ function set_html(html) {
   title.empty().append(h1.html());
   var footer = recordcomment.find('.recordcomment-footer');
   footer.find('.recordcomment-save').remove();
-  footer.append(body.find('.recordcomment-save').click(function() {
+  footer.append(body.find('.recordcomment-save').clone().click(function() {
     body.find('form').submit();
   }));
 }
