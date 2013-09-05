@@ -187,13 +187,12 @@ def comment(record_id):
     record = models.DataSpeciesRegion.query.get_or_404(record_id)
 
     if flask.request.method == 'POST':
-        data = flask.request.json
-        if data:
-            if data.get('range-surface-area'):
-                return flask.jsonify(saved=True)
+        return flask.render_template('species/comment-saved.html', **{
+            'species': record.sr_species,
+            'record': SpeciesRecord(record),
+        })
 
-    html = flask.render_template('species/comment.html', **{
+    return flask.render_template('species/comment.html', **{
         'species': record.sr_species,
         'record': SpeciesRecord(record),
     })
-    return flask.jsonify(html=html)

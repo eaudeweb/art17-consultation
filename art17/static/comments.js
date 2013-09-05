@@ -22,13 +22,8 @@ function show_comment_form(html, url) {
       contentType: 'application/json'
     });
 
-    request.done(function(resp) {
-      if(resp['saved']) {
-        recordcomment.modal('hide');
-      }
-      else {
-        show_comment_form(resp['html'], url);
-      }
+    request.done(function(html) {
+      show_comment_form(html, url);
     });
 
   });
@@ -41,8 +36,8 @@ $('.records-commentbtn').click(function(evt) {
 
   recordcomment.modal('hide');
   set_html("<h1>Se încarcă...</h1>");
-  $.get(url).done(function(resp) {
-    show_comment_form(resp['html'], url);
+  $.get(url).done(function(html) {
+    show_comment_form(html, url);
   });
   recordcomment.modal();
 });
