@@ -1,5 +1,5 @@
-{%- from 'common/td.html'
-    import range_html, trend_detail_html, reference_value_html
+{%- from 'common/td.html' import
+    range_html, trend_detail_html, reference_value_html
     with context %}
 
 
@@ -13,47 +13,65 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Areal</h3></div>
-  <div class="panel-body">
+    <h3 class="panel-title">Areal</h3>
+  </div>
 
+  <div class="panel-body">
     <div class="form-group">
-      <label for="range.surface_area">Suprafață (km<sup>2</sup>)</label>
+      <label for="range.surface_area">
+        Suprafață (km<sup>2</sup>)</label>
+
       <div class="row">
         <div class="col-lg-4">
           <input type="text" class="form-control"
             nume="range_surface_area" id="range.surface_area">
         </div>
+
         <div class="col-lg-2"></div>
-        <div class="col-lg-6 text-primary">{{ range_html(record.range) }}</div>
+
+        <div class="col-lg-6 text-primary">
+          {{- range_html(record.range) }}</div>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="range.method">Metoda utilizată - suprafața arealului</label>
+      <label for="range.method">
+        Metoda utilizată - suprafața arealului</label>
+
       <div class="row">
         <div class="col-lg-6">
           <input type="text" class="form-control"
             nume="range_method" id="range.method">
         </div>
-        <div class="col-lg-6 text-primary">{{ record.range.method }}</div>
+
+        <div class="col-lg-6 text-primary">
+          {{- record.range.method }}</div>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="range.trend_short">Tendință pe termen scurt</label>
+      <label for="range.trend_short">
+        Tendință pe termen scurt</label>
+
       <div class="row">
         <div class="col-lg-2">
           <input type="text" class="form-control"
-            nume="range_trend_short" id="range.trend_short">
+            nume="range_trend_short"
+            id="range.trend_short">
         </div>
+
         <div class="col-lg-2">
           <input type="text" class="form-control"
-            nume="range_trend_period_min" id="range.trend_period.min">
+            nume="range_trend_period_min"
+            id="range.trend_period.min">
         </div>
+
         <div class="col-lg-2">
           <input type="text" class="form-control"
-            nume="range_trend_period_max" id="range.trend_period.max">
+            nume="range_trend_period_max"
+            id="range.trend_period.max">
         </div>
+
         <div class="col-lg-6 text-primary">
           {{- trend_detail_html(record.range.trend_short) }}
           {{ record.range.trend_short.period }}</div>
@@ -61,20 +79,27 @@
     </div>
 
     <div class="form-group">
-      <label for="range.trend_long">Tendință pe termen lung</label>
+      <label for="range.trend_long">
+        Tendință pe termen lung</label>
+
       <div class="row">
         <div class="col-lg-2">
           <input type="text" class="form-control"
             nume="range_trend_long" id="range.trend_long">
         </div>
+
         <div class="col-lg-2">
           <input type="text" class="form-control"
-            nume="range_trend_long_period_min" id="range.trend_long_period.min">
+            nume="range_trend_long_period_min"
+            id="range.trend_long_period.min">
         </div>
+
         <div class="col-lg-2">
           <input type="text" class="form-control"
-            nume="range_trend_long_period_max" id="range.trend_long_period.max">
+            nume="range_trend_long_period_max"
+            id="range.trend_long_period.max">
         </div>
+
         <div class="col-lg-6 text-primary">
           {{- trend_detail_html(record.range.trend_long) }}
           {{ record.range.trend_long.period }}</div>
@@ -82,16 +107,22 @@
     </div>
 
     <div class="form-group">
-      <label for="range.reference_value">Arealul favorabil de referință</label>
+      <label for="range.reference_value">
+        Arealul favorabil de referință</label>
+
       <div class="row">
         <div class="col-lg-2">
           <input type="text" class="form-control"
-            nume="complementary_favourable_range_op" id="range.reference_value.operator">
+            nume="complementary_favourable_range_op"
+            id="range.reference_value.operator">
         </div>
+
         <div class="col-lg-4">
           <input type="text" class="form-control"
-            nume="complementary_favourable_range" id="range.reference_value">
+            nume="complementary_favourable_range"
+            id="range.reference_value">
         </div>
+
         <div class="col-lg-6 text-primary">
           {{- reference_value_html(record.range.reference_value,
                     unit='km<sup>2</sup>'|safe) -}}
@@ -100,13 +131,16 @@
     </div>
 
     <div class="form-group">
-      <label for="range.reference_value">Arealul favorabil de referință - Metoda</label>
+      <label for="range.reference_value">
+        Arealul favorabil de referință - Metoda</label>
+
       <div class="row">
         <div class="col-lg-6">
           <textarea class="form-control" rows=2
             nume="complementary_favourable_range_method"
             id="range.reference_value.method"></textarea>
         </div>
+
         <div class="col-lg-6 text-primary">
           {{ record.range.reference_value.method }}</div>
       </div>
@@ -114,16 +148,21 @@
 
     <div class="form-group">
       <label for="range.conclusion">Concluzie</label>
+
       <div class="row">
         <div class="col-lg-3">
           <input type="text" class="form-control"
             nume="conclusion_range" id="range.conclusion">
         </div>
+
         <div class="col-lg-3">
           <input type="text" class="form-control"
-            nume="conclusion_range_trend" id="range.conclusion.trend">
+            nume="conclusion_range_trend"
+            id="range.conclusion.trend">
         </div>
-        <div class="col-lg-6 text-primary">{{ record.range.conclusion }}</div>
+
+        <div class="col-lg-6 text-primary">
+          {{- record.range.conclusion }}</div>
       </div>
     </div>
   </div>
