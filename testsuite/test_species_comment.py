@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 import pytest
 
 
@@ -32,3 +34,15 @@ def test_load_comments_view(species_app):
     client = species_app.test_client()
     resp = client.get('/specii/detalii/1/comentariu')
     assert resp.status_code == 200
+
+
+def test_save_comment_record(species_app):
+    from art17.app import models
+    _create_species_record(species_app)
+    client = species_app.test_client()
+    resp = client.post('/specii/detalii/1/comentariu')
+    assert resp.status_code == 200
+    assert "Comentariul a fost înregistrat" in resp.data
+    with species_app.app_context():
+        comments = models.DataSpeciesComment.query.all()
+        assert len(comments) == 1

@@ -187,6 +187,11 @@ def comment(record_id):
     record = models.DataSpeciesRegion.query.get_or_404(record_id)
 
     if flask.request.method == 'POST':
+        comment = models.DataSpeciesComment(
+            sr_species_id=record.sr_species_id,
+            region=record.region)
+        models.db.session.add(comment)
+        models.db.session.commit()
         return flask.render_template('species/comment-saved.html', **{
             'species': record.sr_species,
             'record': SpeciesRecord(record),
