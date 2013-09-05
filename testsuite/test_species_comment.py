@@ -2,6 +2,8 @@
 
 import pytest
 
+COMMENT_SAVED_TXT = "Comentariul a fost înregistrat"
+
 
 @pytest.fixture
 def species_app():
@@ -43,8 +45,8 @@ def test_save_comment_record(species_app):
     resp = client.post('/specii/detalii/1/comentariu',
                        data={'range_surface_area': '50'})
     assert resp.status_code == 200
-    assert "Comentariul a fost înregistrat" in resp.data
+    assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
-        comments = models.DataSpeciesComment.query.all()
-        assert len(comments) == 1
-        assert comments[0].range_surface_area == 50
+        assert models.DataSpeciesComment.query.count() == 1
+        comment = models.DataSpeciesComment.query.first()
+        assert comment.range_surface_area == 50
