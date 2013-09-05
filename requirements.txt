@@ -8,6 +8,9 @@ Jinja2==2.7.1
 MarkupSafe==0.18
 path.py==4.3
 psycopg2==2.5.1
+py==1.4.15
+pytest==2.3.5
 sqlacodegen==1.1.1
 SQLAlchemy==0.8.2
 Werkzeug==0.9.4
+WTForms==1.0.4

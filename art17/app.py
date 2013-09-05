@@ -5,10 +5,6 @@ from path import path
 
 models = LocalProxy(lambda: flask.current_app.extensions['art17_models'])
 
-from art17.common import common
-from art17.species import species
-from art17.habitat import habitat
-
 views = flask.Blueprint('views', __name__)
 
 
@@ -29,6 +25,10 @@ def bust_cache(endpoint, values):
 
 
 def create_app():
+    from art17.common import common
+    from art17.species import species
+    from art17.habitat import habitat
+
     app = flask.Flask(__name__, instance_relative_config=True)
     app.jinja_options['extensions'].append('jinja2.ext.do')
     app.config.from_pyfile('settings.py', silent=True)

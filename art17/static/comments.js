@@ -3,12 +3,6 @@
 "use strict";
 
 var recordcomment = $('#recordcomment-modal');
-var recordcomment_save = recordcomment.find('.recordcomment-save');
-
-
-recordcomment_save.click(function() {
-  recordcomment.find('form').submit();
-});
 
 
 function show_comment_form(html, url) {
@@ -28,13 +22,8 @@ function show_comment_form(html, url) {
       contentType: 'application/json'
     });
 
-    request.done(function(resp) {
-      if(resp['saved']) {
-        recordcomment.modal('hide');
-      }
-      else {
-        show_comment_form(resp['html'], url);
-      }
+    request.done(function(html) {
+      show_comment_form(html, url);
     });
 
   });
@@ -47,11 +36,12 @@ $('.records-commentbtn').click(function(evt) {
 
   recordcomment.modal('hide');
   set_html("<h1>Se încarcă...</h1>");
-  $.get(url).done(function(resp) {
-    show_comment_form(resp['html'], url);
+  $.get(url).done(function(html) {
+    show_comment_form(html, url);
   });
   recordcomment.modal();
 });
+
 
 function set_html(html) {
   var title = recordcomment.find('.recordcomment-title');
@@ -59,6 +49,11 @@ function set_html(html) {
   body.html(html);
   var h1 = body.find('h1').remove();
   title.empty().append(h1.html());
+  var footer = recordcomment.find('.recordcomment-footer');
+  footer.find('.recordcomment-save').remove();
+  footer.append(body.find('.recordcomment-save').clone().click(function() {
+    body.find('form').submit();
+  }));
 }
 
 })();
