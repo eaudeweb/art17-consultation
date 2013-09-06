@@ -19,7 +19,7 @@ class Trend(Form):
 class ReferenceValue(Form):
 
     op = TextField()
-    number = DecimalField()
+    number = DecimalField(validators=[Optional()])
 
 
 class Conclusion(Form):
