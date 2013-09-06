@@ -2,12 +2,14 @@
 
 import flask
 
-TREND_NAME = {
-    "+": u"În creștere",
-    "-": u"În scădere",
-    "0": u"Stabil",
-    "x": u"Necunoscut",
-}
+TREND_OPTIONS = [
+    ('+', u"În creștere"),
+    ('-', u"În scădere"),
+    ('0', u"Stabil"),
+    ('x', u"Necunoscut"),
+]
+
+TREND_NAME = dict(TREND_OPTIONS)
 
 CONCLUSION_OPTIONS = [
     ('FV', u"FV"),

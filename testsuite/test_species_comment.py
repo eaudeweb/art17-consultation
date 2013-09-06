@@ -73,10 +73,10 @@ def test_save_all_form_fields():
     form_data = MultiDict({
         'range.surface_area': '123',
         'range.method': 'foo range method',
-        'range.trend_short.trend': 'foo range trend short',
+        'range.trend_short.trend': '+',
         'range.trend_short.period_min': 'foomin',
         'range.trend_short.period_max': 'foomax',
-        'range.trend_long.trend': 'bar range trend long',
+        'range.trend_long.trend': '-',
         'range.trend_long.period_min': 'barmin',
         'range.trend_long.period_max': 'barmax',
         'range.reference_value.op': 'foo op',
@@ -94,9 +94,9 @@ def test_save_all_form_fields():
 
     assert comment.range_surface_area == 123
     assert comment.range_method == 'foo range method'
-    assert comment.range_trend == 'foo range trend short'
+    assert comment.range_trend == '+'
     assert comment.range_trend_period == 'foomin-foomax'
-    assert comment.range_trend_long == 'bar range trend long'
+    assert comment.range_trend_long == '-'
     assert comment.range_trend_long_period == 'barmin-barmax'
     assert comment.complementary_favourable_range_op == 'foo op'
     assert comment.complementary_favourable_range == 456

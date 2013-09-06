@@ -3,12 +3,15 @@
 from wtforms import (Form, FormField,
                      TextField, TextAreaField, DecimalField, SelectField)
 from wtforms.validators import Required, Optional
-from art17.common import CONCLUSION_OPTIONS
+from art17.common import TREND_OPTIONS, CONCLUSION_OPTIONS
+
+EMPTY_CHOICE = [('', "--")]
 
 
 class Trend(Form):
 
-    trend = TextField()
+    trend = SelectField(choices=EMPTY_CHOICE + TREND_OPTIONS,
+                        validators=[Optional()])
     period_min = TextField()
     period_max = TextField()
 
@@ -21,7 +24,7 @@ class FavourableValue(Form):
 
 class Conclusion(Form):
 
-    value = SelectField(choices=[('', "--")] + CONCLUSION_OPTIONS,
+    value = SelectField(choices=EMPTY_CHOICE + CONCLUSION_OPTIONS,
                         validators=[Optional()])
     trend = TextField()
 
