@@ -1,26 +1,26 @@
 # encoding: utf-8
 
-from wtforms import Form, Field, DecimalField, FormField
+from wtforms import Form, TextField, DecimalField, FormField
 from wtforms.validators import Required
 
 
 class Trend(Form):
 
-    trend = Field()
-    period_min = Field()
-    period_max = Field()
+    trend = TextField()
+    period_min = TextField()
+    period_max = TextField()
 
 
 class FavourableValue(Form):
 
-    op = Field()
+    op = TextField()
     number = DecimalField()
 
 
 class Conclusion(Form):
 
-    value = Field()
-    trend = Field()
+    value = TextField()
+    trend = TextField()
 
 
 class Range(Form):
@@ -28,11 +28,11 @@ class Range(Form):
     surface_area = DecimalField(
             u"Suprafață (km²)",
             [Required(u"Suprafața este obligatorie")])
-    method = Field(u"Metoda utilizată - suprafața arealului")
+    method = TextField(u"Metoda utilizată - suprafața arealului")
     trend_short = FormField(Trend, separator='.')
     trend_long = FormField(Trend, separator='.')
     favourable_value = FormField(FavourableValue, separator='.')
-    favourable_method = Field(u"Arealul favorabil de referință - Metoda")
+    favourable_method = TextField(u"Arealul favorabil de referință - Metoda")
     conclusion = FormField(Conclusion, separator='.')
 
 
