@@ -16,7 +16,7 @@ class Trend(Form):
     period_max = TextField()
 
 
-class FavourableValue(Form):
+class ReferenceValue(Form):
 
     op = TextField()
     number = DecimalField()
@@ -36,7 +36,7 @@ class Range(Form):
     method = TextField(u"Metoda utilizată - suprafața arealului")
     trend_short = FormField(Trend, separator='.')
     trend_long = FormField(Trend, separator='.')
-    reference_value = FormField(FavourableValue, separator='.')
+    reference_value = FormField(ReferenceValue, separator='.')
     reference_method = TextAreaField()
     conclusion = FormField(Conclusion, separator='.')
 
