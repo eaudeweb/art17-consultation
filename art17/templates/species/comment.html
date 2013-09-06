@@ -27,8 +27,8 @@
       <div class="panel-body">
         {% set errors = form.range.surface_area.errors %}
         <div class="form-group {%- if errors %} has-error{% endif %}">
-          <label for="range.surface_area">
-            Suprafață (km<sup>2</sup>)</label>
+          <label for="range-surface_area">
+            {{- form.range.surface_area.label }}</label>
 
           {%- for error in errors %}
             <span class="help-block">{{ error }}</span>
@@ -36,9 +36,7 @@
 
           <div class="row">
             <div class="col-lg-4">
-              <input type="text" class="form-control"
-                value="{{ form.range.surface_area._value() }}"
-                name="range-surface_area" id="range.surface_area">
+              {{ form.range.surface_area(type="text", class="form-control") }}
             </div>
 
             <div class="col-lg-2"></div>
