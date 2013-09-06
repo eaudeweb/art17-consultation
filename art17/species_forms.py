@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-from wtforms import Form, TextField, DecimalField, FormField
+from wtforms import Form, TextField, TextAreaField, DecimalField, FormField
 from wtforms.validators import Required
 
 
@@ -32,7 +32,8 @@ class Range(Form):
     trend_short = FormField(Trend, separator='.')
     trend_long = FormField(Trend, separator='.')
     favourable_value = FormField(FavourableValue, separator='.')
-    favourable_method = TextField(u"Arealul favorabil de referință - Metoda")
+    favourable_method = TextAreaField(
+            u"Arealul favorabil de referință - Metoda")
     conclusion = FormField(Conclusion, separator='.')
 
 

@@ -36,7 +36,7 @@
 
           <div class="row">
             <div class="col-lg-4">
-              {{ form.range.surface_area(type="text", class="form-control") }}
+              {{ form.range.surface_area(class='form-control') }}
             </div>
 
             <div class="col-lg-2"></div>
@@ -52,8 +52,7 @@
 
           <div class="row">
             <div class="col-lg-6">
-              <input type="text" class="form-control"
-                name="range_method" id="range.method">
+              {{ form.range.method(class='form-control') }}
             </div>
 
             <div class="col-lg-6 text-primary">
@@ -62,26 +61,20 @@
         </div>
 
         <div class="form-group">
-          <label for="range.trend_short">
+          <label for="range.trend_short.trend">
             Tendință pe termen scurt</label>
 
           <div class="row">
             <div class="col-lg-2">
-              <input type="text" class="form-control"
-                name="range_trend_short"
-                id="range.trend_short">
+              {{ form.range.trend_short.trend(class='form-control') }}
             </div>
 
             <div class="col-lg-2">
-              <input type="text" class="form-control"
-                name="range_trend_period_min"
-                id="range.trend_period.min">
+              {{ form.range.trend_short.period_min(class='form-control') }}
             </div>
 
             <div class="col-lg-2">
-              <input type="text" class="form-control"
-                name="range_trend_period_max"
-                id="range.trend_period.max">
+              {{ form.range.trend_short.period_max(class='form-control') }}
             </div>
 
             <div class="col-lg-6 text-primary">
@@ -91,25 +84,20 @@
         </div>
 
         <div class="form-group">
-          <label for="range.trend_long">
+          <label for="range.trend_long.trend">
             Tendință pe termen lung</label>
 
           <div class="row">
             <div class="col-lg-2">
-              <input type="text" class="form-control"
-                name="range_trend_long" id="range.trend_long">
+              {{ form.range.trend_long.trend(class='form-control') }}
             </div>
 
             <div class="col-lg-2">
-              <input type="text" class="form-control"
-                name="range_trend_long_period_min"
-                id="range.trend_long_period.min">
+              {{ form.range.trend_long.period_min(class='form-control') }}
             </div>
 
             <div class="col-lg-2">
-              <input type="text" class="form-control"
-                name="range_trend_long_period_max"
-                id="range.trend_long_period.max">
+              {{ form.range.trend_long.period_max(class='form-control') }}
             </div>
 
             <div class="col-lg-6 text-primary">
@@ -119,20 +107,16 @@
         </div>
 
         <div class="form-group">
-          <label for="range.reference_value">
+          <label for="range.favourable_value.op">
             Arealul favorabil de referință</label>
 
           <div class="row">
             <div class="col-lg-2">
-              <input type="text" class="form-control"
-                name="complementary_favourable_range_op"
-                id="range.reference_value.operator">
+              {{ form.range.favourable_value.op(class='form-control') }}
             </div>
 
             <div class="col-lg-4">
-              <input type="text" class="form-control"
-                name="complementary_favourable_range"
-                id="range.reference_value">
+              {{ form.range.favourable_value.number(class='form-control') }}
             </div>
 
             <div class="col-lg-6 text-primary">
@@ -143,14 +127,12 @@
         </div>
 
         <div class="form-group">
-          <label for="range.reference_value">
+          <label for="range.favourable_method">
             Arealul favorabil de referință - Metoda</label>
 
           <div class="row">
             <div class="col-lg-6">
-              <textarea class="form-control" rows=2
-                name="complementary_favourable_range_method"
-                id="range.reference_value.method"></textarea>
+              {{ form.range.favourable_method(class='form-control', rows=2) }}
             </div>
 
             <div class="col-lg-6 text-primary">
@@ -159,18 +141,15 @@
         </div>
 
         <div class="form-group">
-          <label for="range.conclusion">Concluzie</label>
+          <label for="range.conclusion.value">Concluzie</label>
 
           <div class="row">
             <div class="col-lg-3">
-              <input type="text" class="form-control"
-                name="conclusion_range" id="range.conclusion">
+              {{ form.range.conclusion.value(class='form-control') }}
             </div>
 
             <div class="col-lg-3">
-              <input type="text" class="form-control"
-                name="conclusion_range_trend"
-                id="range.conclusion.trend">
+              {{ form.range.conclusion.trend(class='form-control') }}
             </div>
 
             <div class="col-lg-6 text-primary">
