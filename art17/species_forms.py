@@ -37,7 +37,7 @@ class Range(Form):
     trend_short = FormField(Trend, separator='.')
     trend_long = FormField(Trend, separator='.')
     reference_value = FormField(FavourableValue, separator='.')
-    favourable_method = TextAreaField()
+    reference_method = TextAreaField()
     conclusion = FormField(Conclusion, separator='.')
 
 
@@ -61,6 +61,6 @@ class SpeciesComment(Form):
         obj.complementary_favourable_range = \
             self.range.reference_value.data['number']
         obj.complementary_favourable_range_method = \
-            self.range.favourable_method.data
+            self.range.reference_method.data
         obj.conclusion_range = self.range.conclusion.data['value']
         obj.conclusion_range_trend = self.range.conclusion.data['trend']

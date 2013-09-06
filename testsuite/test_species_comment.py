@@ -81,7 +81,7 @@ def test_save_all_form_fields():
         'range.trend_long.period_max': 'barmax',
         'range.reference_value.op': 'foo op',
         'range.reference_value.number': '456',
-        'range.favourable_method': 'foo method',
+        'range.reference_method': 'foo method',
         'range.conclusion.value': 'U1',
         'range.conclusion.trend': 'foo conclusion trend',
     })
