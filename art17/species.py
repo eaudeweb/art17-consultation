@@ -142,8 +142,6 @@ def index():
 
     species_list = models.DataSpecies.query.join(models.DataSpeciesRegion)
 
-    region_list = models.LuBiogeoreg.query.order_by('order_')
-
     if species:
         records = (models.DataSpeciesRegion.query
                         .filter_by(sr_species=species.data))
@@ -160,9 +158,6 @@ def index():
                           'text': s.lu.speciesname}
                          for s in species_list],
         'current_species_code': species_code,
-        'region_list': [{'id': r.code,
-                         'text': r.name_ro}
-                        for r in region_list],
         'current_region_code': region_code,
 
         'species': None if species is None else {
