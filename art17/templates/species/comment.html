@@ -27,7 +27,7 @@
       <div class="panel-body">
         {% set errors = form.range.surface_area.errors %}
         <div class="form-group {%- if errors %} has-error{% endif %}">
-          <label for="range-surface_area">
+          <label for="range.surface_area">
             {{- form.range.surface_area.label }}</label>
 
           {%- for error in errors %}
