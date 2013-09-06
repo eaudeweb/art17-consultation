@@ -26,14 +26,12 @@ class Conclusion(Form):
 class Range(Form):
 
     surface_area = DecimalField(
-            u"Suprafață (km²)",
-            [Required(u"Suprafața este obligatorie")])
+            validators=[Required(u"Suprafața este obligatorie")])
     method = TextField(u"Metoda utilizată - suprafața arealului")
     trend_short = FormField(Trend, separator='.')
     trend_long = FormField(Trend, separator='.')
     reference_value = FormField(FavourableValue, separator='.')
-    favourable_method = TextAreaField(
-            u"Arealul favorabil de referință - Metoda")
+    favourable_method = TextAreaField()
     conclusion = FormField(Conclusion, separator='.')
 
 
