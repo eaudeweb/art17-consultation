@@ -87,6 +87,8 @@ def test_save_all_form_fields():
     })
 
     form = species_forms.SpeciesComment(form_data)
+    assert form.validate()
+
     comment = models.DataSpeciesComment()
     form.populate_obj(comment)
 
