@@ -1,11 +1,8 @@
-# encoding: utf-8
-
 import flask
 from werkzeug.utils import cached_property
-from wtforms import Form, DecimalField
-from wtforms.validators import Required
 from art17 import models
 from art17.common import GenericRecord
+from art17.species_form import SpeciesCommentForm
 
 species = flask.Blueprint('species', __name__)
 
@@ -178,12 +175,6 @@ def detail(record_id):
         'species': record.sr_species,
         'record': SpeciesRecord(record),
     })
-
-
-class SpeciesCommentForm(Form):
-
-    range_surface_area = DecimalField(u"Suprafață (km²)",
-            [Required(u"Suprafața este obligatorie")])
 
 
 @species.route('/specii/detalii/<int:record_id>/comentariu',
