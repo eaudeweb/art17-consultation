@@ -1,180 +1,186 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+  {%- if species %}{{ species.name }} &mdash; {% endif %}
+  {{- super() }}
+{%- endblock title %}
+
+
+{% block content %}
 {%- from 'common/td.html' import
     range_html, trend_detail_html, reference_value_html
     with context %}
 
+  <h1>
+    Comentariu pentru
+    {{ species.lu.speciesname }}
+    ({{ record.region }})
+  </h1>
 
-<h1>
-  Comentariu pentru
-  {{ species.lu.speciesname }}
-  ({{ record.region }})
-</h1>
+  <form method="post">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Areal</h3>
+      </div>
 
-<form role="form">
+      <div class="panel-body">
+        {% set errors = form.range_surface_area.errors %}
+        <div class="form-group {%- if errors %} has-error{% endif %}">
+          <label for="range.surface_area">
+            Suprafață (km<sup>2</sup>)</label>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Areal</h3>
-  </div>
+          {%- for error in errors %}
+            <span class="help-block">{{ error }}</span>
+          {%- endfor %}
 
-  <div class="panel-body">
-    {% set errors = form.range_surface_area.errors %}
-    <div class="form-group {%- if errors %} has-error{% endif %}">
-      <label for="range.surface_area">
-        Suprafață (km<sup>2</sup>)</label>
+          <div class="row">
+            <div class="col-lg-4">
+              <input type="text" class="form-control"
+                name="range_surface_area" id="range.surface_area">
+            </div>
 
-      {%- for error in errors %}
-        <span class="help-block">{{ error }}</span>
-      {%- endfor %}
+            <div class="col-lg-2"></div>
 
-      <div class="row">
-        <div class="col-lg-4">
-          <input type="text" class="form-control"
-            name="range_surface_area" id="range.surface_area">
+            <div class="col-lg-6 text-primary">
+              {{- range_html(record.range) }}</div>
+          </div>
         </div>
 
-        <div class="col-lg-2"></div>
+        <div class="form-group">
+          <label for="range.method">
+            Metoda utilizată - suprafața arealului</label>
 
-        <div class="col-lg-6 text-primary">
-          {{- range_html(record.range) }}</div>
+          <div class="row">
+            <div class="col-lg-6">
+              <input type="text" class="form-control"
+                name="range_method" id="range.method">
+            </div>
+
+            <div class="col-lg-6 text-primary">
+              {{- record.range.method }}</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="range.trend_short">
+            Tendință pe termen scurt</label>
+
+          <div class="row">
+            <div class="col-lg-2">
+              <input type="text" class="form-control"
+                name="range_trend_short"
+                id="range.trend_short">
+            </div>
+
+            <div class="col-lg-2">
+              <input type="text" class="form-control"
+                name="range_trend_period_min"
+                id="range.trend_period.min">
+            </div>
+
+            <div class="col-lg-2">
+              <input type="text" class="form-control"
+                name="range_trend_period_max"
+                id="range.trend_period.max">
+            </div>
+
+            <div class="col-lg-6 text-primary">
+              {{- trend_detail_html(record.range.trend_short) }}
+              {{ record.range.trend_short.period }}</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="range.trend_long">
+            Tendință pe termen lung</label>
+
+          <div class="row">
+            <div class="col-lg-2">
+              <input type="text" class="form-control"
+                name="range_trend_long" id="range.trend_long">
+            </div>
+
+            <div class="col-lg-2">
+              <input type="text" class="form-control"
+                name="range_trend_long_period_min"
+                id="range.trend_long_period.min">
+            </div>
+
+            <div class="col-lg-2">
+              <input type="text" class="form-control"
+                name="range_trend_long_period_max"
+                id="range.trend_long_period.max">
+            </div>
+
+            <div class="col-lg-6 text-primary">
+              {{- trend_detail_html(record.range.trend_long) }}
+              {{ record.range.trend_long.period }}</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="range.reference_value">
+            Arealul favorabil de referință</label>
+
+          <div class="row">
+            <div class="col-lg-2">
+              <input type="text" class="form-control"
+                name="complementary_favourable_range_op"
+                id="range.reference_value.operator">
+            </div>
+
+            <div class="col-lg-4">
+              <input type="text" class="form-control"
+                name="complementary_favourable_range"
+                id="range.reference_value">
+            </div>
+
+            <div class="col-lg-6 text-primary">
+              {{- reference_value_html(record.range.reference_value,
+                        unit='km<sup>2</sup>'|safe) -}}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="range.reference_value">
+            Arealul favorabil de referință - Metoda</label>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <textarea class="form-control" rows=2
+                name="complementary_favourable_range_method"
+                id="range.reference_value.method"></textarea>
+            </div>
+
+            <div class="col-lg-6 text-primary">
+              {{ record.range.reference_value.method }}</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="range.conclusion">Concluzie</label>
+
+          <div class="row">
+            <div class="col-lg-3">
+              <input type="text" class="form-control"
+                name="conclusion_range" id="range.conclusion">
+            </div>
+
+            <div class="col-lg-3">
+              <input type="text" class="form-control"
+                name="conclusion_range_trend"
+                id="range.conclusion.trend">
+            </div>
+
+            <div class="col-lg-6 text-primary">
+              {{- record.range.conclusion }}</div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="range.method">
-        Metoda utilizată - suprafața arealului</label>
-
-      <div class="row">
-        <div class="col-lg-6">
-          <input type="text" class="form-control"
-            name="range_method" id="range.method">
-        </div>
-
-        <div class="col-lg-6 text-primary">
-          {{- record.range.method }}</div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="range.trend_short">
-        Tendință pe termen scurt</label>
-
-      <div class="row">
-        <div class="col-lg-2">
-          <input type="text" class="form-control"
-            name="range_trend_short"
-            id="range.trend_short">
-        </div>
-
-        <div class="col-lg-2">
-          <input type="text" class="form-control"
-            name="range_trend_period_min"
-            id="range.trend_period.min">
-        </div>
-
-        <div class="col-lg-2">
-          <input type="text" class="form-control"
-            name="range_trend_period_max"
-            id="range.trend_period.max">
-        </div>
-
-        <div class="col-lg-6 text-primary">
-          {{- trend_detail_html(record.range.trend_short) }}
-          {{ record.range.trend_short.period }}</div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="range.trend_long">
-        Tendință pe termen lung</label>
-
-      <div class="row">
-        <div class="col-lg-2">
-          <input type="text" class="form-control"
-            name="range_trend_long" id="range.trend_long">
-        </div>
-
-        <div class="col-lg-2">
-          <input type="text" class="form-control"
-            name="range_trend_long_period_min"
-            id="range.trend_long_period.min">
-        </div>
-
-        <div class="col-lg-2">
-          <input type="text" class="form-control"
-            name="range_trend_long_period_max"
-            id="range.trend_long_period.max">
-        </div>
-
-        <div class="col-lg-6 text-primary">
-          {{- trend_detail_html(record.range.trend_long) }}
-          {{ record.range.trend_long.period }}</div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="range.reference_value">
-        Arealul favorabil de referință</label>
-
-      <div class="row">
-        <div class="col-lg-2">
-          <input type="text" class="form-control"
-            name="complementary_favourable_range_op"
-            id="range.reference_value.operator">
-        </div>
-
-        <div class="col-lg-4">
-          <input type="text" class="form-control"
-            name="complementary_favourable_range"
-            id="range.reference_value">
-        </div>
-
-        <div class="col-lg-6 text-primary">
-          {{- reference_value_html(record.range.reference_value,
-                    unit='km<sup>2</sup>'|safe) -}}
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="range.reference_value">
-        Arealul favorabil de referință - Metoda</label>
-
-      <div class="row">
-        <div class="col-lg-6">
-          <textarea class="form-control" rows=2
-            name="complementary_favourable_range_method"
-            id="range.reference_value.method"></textarea>
-        </div>
-
-        <div class="col-lg-6 text-primary">
-          {{ record.range.reference_value.method }}</div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="range.conclusion">Concluzie</label>
-
-      <div class="row">
-        <div class="col-lg-3">
-          <input type="text" class="form-control"
-            name="conclusion_range" id="range.conclusion">
-        </div>
-
-        <div class="col-lg-3">
-          <input type="text" class="form-control"
-            name="conclusion_range_trend"
-            id="range.conclusion.trend">
-        </div>
-
-        <div class="col-lg-6 text-primary">
-          {{- record.range.conclusion }}</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="recordcomment-submitbox">
-  <button type="submit" class="recordcomment-save">Save</button>
-</div>
-
-</form>
+    <button type="submit" class="recordcomment-save">Save</button>
+  </form>
+{% endblock content %}
