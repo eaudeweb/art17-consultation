@@ -17,6 +17,12 @@ class FavourableValue(Form):
     number = DecimalField()
 
 
+class Conclusion(Form):
+
+    value = Field()
+    trend = Field()
+
+
 class Range(Form):
 
     surface_area = DecimalField(
@@ -27,6 +33,7 @@ class Range(Form):
     trend_long = FormField(Trend, separator='.')
     favourable_value = FormField(FavourableValue, separator='.')
     favourable_method = Field(u"Arealul favorabil de referință - Metoda")
+    conclusion = FormField(Conclusion, separator='.')
 
 
 class SpeciesComment(Form):
@@ -50,3 +57,5 @@ class SpeciesComment(Form):
             self.range.favourable_value.data['number']
         obj.complementary_favourable_range_method = \
             self.range.favourable_method.data
+        obj.conclusion_range = self.range.conclusion.data['value']
+        obj.conclusion_range_trend = self.range.conclusion.data['trend']
