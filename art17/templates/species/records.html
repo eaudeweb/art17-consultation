@@ -51,7 +51,7 @@
       <button class="records-detailbtn" data-url="{{ url }}">info</button>
 
       {%- set url = url_for('.comment', record_id=row.id) %}
-      <button class="records-commentbtn" data-url="{{ url }}">comentariu</button>
+      <a class="records-commentbtn" href="{{ url }}">comentariu</a>
     </td>
 
     {#- bio-regiune #}
@@ -92,5 +92,3 @@
 
 
 {% include 'common/recorddetail.html' %}
-
-{% include 'common/recordcomment.html' %}
