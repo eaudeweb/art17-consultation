@@ -3,10 +3,10 @@
 import flask
 
 TREND_OPTIONS = [
-    ('+', u"În creștere"),
-    ('-', u"În scădere"),
-    ('0', u"Stabil"),
-    ('x', u"Necunoscut"),
+    ('+', u"+ (În creștere)"),
+    ('-', u"- (În scădere)"),
+    ('0', u"0 (Stabil)"),
+    ('x', u"x (Necunoscut)"),
 ]
 
 TREND_NAME = dict(TREND_OPTIONS)

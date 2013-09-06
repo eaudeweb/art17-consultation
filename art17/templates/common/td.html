@@ -34,7 +34,7 @@
 
 {% macro trend_detail_html(trend) %}
 {%- if trend.trend %}
-  {{- trend.trend }} - {{ TREND_NAME[trend.trend] -}}
+  {{ TREND_NAME[trend.trend] -}}
 {% endif %}
 {%- endmacro %}
 
