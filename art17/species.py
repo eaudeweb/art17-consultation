@@ -188,7 +188,7 @@ def comment(record_id):
             sr_species_id=record.sr_species_id,
             region=record.region)
 
-        comment.range_surface_area = form.range_surface_area.data
+        comment.range_surface_area = form.range.data['surface_area']
 
         models.db.session.add(comment)
         models.db.session.commit()
