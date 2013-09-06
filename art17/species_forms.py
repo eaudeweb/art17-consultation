@@ -1,7 +1,9 @@
 # encoding: utf-8
 
-from wtforms import Form, TextField, TextAreaField, DecimalField, FormField
-from wtforms.validators import Required
+from wtforms import (Form, FormField,
+                     TextField, TextAreaField, DecimalField, SelectField)
+from wtforms.validators import Required, Optional
+from art17.common import CONCLUSION_OPTIONS
 
 
 class Trend(Form):
@@ -19,7 +21,8 @@ class FavourableValue(Form):
 
 class Conclusion(Form):
 
-    value = TextField()
+    value = SelectField(choices=[('', "--")] + CONCLUSION_OPTIONS,
+                        validators=[Optional()])
     trend = TextField()
 
 

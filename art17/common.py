@@ -9,6 +9,13 @@ TREND_NAME = {
     "x": u"Necunoscut",
 }
 
+CONCLUSION_OPTIONS = [
+    ('FV', u"FV"),
+    ('U1', u"U1"),
+    ('U2', u"U2"),
+    ('XX', u"XX"),
+]
+
 common = flask.Blueprint('common', __name__)
 
 

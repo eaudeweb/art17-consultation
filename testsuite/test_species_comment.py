@@ -82,7 +82,7 @@ def test_save_all_form_fields():
         'range.reference_value.op': 'foo op',
         'range.reference_value.number': '456',
         'range.favourable_method': 'foo method',
-        'range.conclusion.value': 'foo conclusion range',
+        'range.conclusion.value': 'U1',
         'range.conclusion.trend': 'foo conclusion trend',
     })
 
@@ -99,5 +99,5 @@ def test_save_all_form_fields():
     assert comment.complementary_favourable_range_op == 'foo op'
     assert comment.complementary_favourable_range == 456
     assert comment.complementary_favourable_range_method == 'foo method'
-    assert comment.conclusion_range == 'foo conclusion range'
+    assert comment.conclusion_range == 'U1'
     assert comment.conclusion_range_trend == 'foo conclusion trend'
