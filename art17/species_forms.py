@@ -1,7 +1,12 @@
 # encoding: utf-8
 
-from wtforms import Form, DecimalField, FormField
+from wtforms import Form, Field, DecimalField, FormField
 from wtforms.validators import Required
+
+
+class Trend(Form):
+
+    trend = Field()
 
 
 class Range(Form):
@@ -9,6 +14,8 @@ class Range(Form):
     surface_area = DecimalField(
             u"Suprafață (km²)",
             [Required(u"Suprafața este obligatorie")])
+    method = Field(u"Metoda utilizată - suprafața arealului")
+    trend_short = FormField(Trend, separator='.')
 
 
 class SpeciesComment(Form):
@@ -17,3 +24,5 @@ class SpeciesComment(Form):
 
     def populate_obj(self, obj):
         obj.range_surface_area = self.range.data['surface_area']
+        obj.range_method = self.range.data['method']
+        obj.range_trend = self.range.trend_short.data['trend']

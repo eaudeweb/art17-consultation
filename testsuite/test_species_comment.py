@@ -72,6 +72,8 @@ def test_save_all_form_fields():
 
     form_data = MultiDict({
         'range.surface_area': '123',
+        'range.method': 'foo range method',
+        'range.trend_short.trend': 'foo range trend short',
     })
 
     form = species_forms.SpeciesComment(form_data)
@@ -79,3 +81,5 @@ def test_save_all_form_fields():
     form.populate_obj(comment)
 
     assert comment.range_surface_area == 123
+    assert comment.range_method == 'foo range method'
+    assert comment.range_trend == 'foo range trend short'
