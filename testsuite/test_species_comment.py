@@ -76,6 +76,9 @@ def test_save_all_form_fields():
         'range.trend_short.trend': 'foo range trend short',
         'range.trend_short.period_min': 'foomin',
         'range.trend_short.period_max': 'foomax',
+        'range.trend_long.trend': 'bar range trend long',
+        'range.trend_long.period_min': 'barmin',
+        'range.trend_long.period_max': 'barmax',
     })
 
     form = species_forms.SpeciesComment(form_data)
@@ -86,3 +89,5 @@ def test_save_all_form_fields():
     assert comment.range_method == 'foo range method'
     assert comment.range_trend == 'foo range trend short'
     assert comment.range_trend_period == 'foomin-foomax'
+    assert comment.range_trend_long == 'bar range trend long'
+    assert comment.range_trend_long_period == 'barmin-barmax'

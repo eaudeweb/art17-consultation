@@ -18,6 +18,7 @@ class Range(Form):
             [Required(u"Suprafața este obligatorie")])
     method = Field(u"Metoda utilizată - suprafața arealului")
     trend_short = FormField(Trend, separator='.')
+    trend_long = FormField(Trend, separator='.')
 
 
 class SpeciesComment(Form):
@@ -31,3 +32,7 @@ class SpeciesComment(Form):
         obj.range_trend_period = '%s-%s' % (
             self.range.trend_short.data['period_min'],
             self.range.trend_short.data['period_max'])
+        obj.range_trend_long = self.range.trend_long.data['trend']
+        obj.range_trend_long_period = '%s-%s' % (
+            self.range.trend_long.data['period_min'],
+            self.range.trend_long.data['period_max'])
