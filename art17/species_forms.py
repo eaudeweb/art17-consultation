@@ -7,6 +7,8 @@ from wtforms.validators import Required
 class Trend(Form):
 
     trend = Field()
+    period_min = Field()
+    period_max = Field()
 
 
 class Range(Form):
@@ -26,3 +28,6 @@ class SpeciesComment(Form):
         obj.range_surface_area = self.range.data['surface_area']
         obj.range_method = self.range.data['method']
         obj.range_trend = self.range.trend_short.data['trend']
+        obj.range_trend_period = '%s-%s' % (
+            self.range.trend_short.data['period_min'],
+            self.range.trend_short.data['period_max'])

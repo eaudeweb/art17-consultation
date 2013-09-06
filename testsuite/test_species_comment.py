@@ -74,6 +74,8 @@ def test_save_all_form_fields():
         'range.surface_area': '123',
         'range.method': 'foo range method',
         'range.trend_short.trend': 'foo range trend short',
+        'range.trend_short.period_min': 'foomin',
+        'range.trend_short.period_max': 'foomax',
     })
 
     form = species_forms.SpeciesComment(form_data)
@@ -83,3 +85,4 @@ def test_save_all_form_fields():
     assert comment.range_surface_area == 123
     assert comment.range_method == 'foo range method'
     assert comment.range_trend == 'foo range trend short'
+    assert comment.range_trend_period == 'foomin-foomax'
