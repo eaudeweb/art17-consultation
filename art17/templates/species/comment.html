@@ -7,6 +7,29 @@
 {%- endblock title %}
 
 
+{% macro error_cls(field) %}
+  {%- if field.errors %} has-error{% endif %}
+{%- endmacro %}
+
+
+{% macro _error_list(errlist) %}
+  {%- if errlist is mapping %}
+    {%- for sub_list in errlist.values() %}
+      {{- _error_list(sub_list) }}
+    {%- endfor %}
+  {%- else %}
+    {%- for e in errlist %}
+      <span class="has-error"><span class="help-block">{{ e }}</span></span>
+    {%- endfor %}
+  {%- endif %}
+{%- endmacro %}
+
+
+{% macro errors(field) %}
+  {{- _error_list(field.errors) }}
+{%- endmacro %}
+
+
 {% block content %}
 {%- from 'common/td.html' import
     range_html, trend_detail_html, reference_value_html
@@ -25,18 +48,15 @@
       </div>
 
       <div class="panel-body">
-        {% set errors = form.range.surface_area.errors %}
-        <div class="form-group {%- if errors %} has-error{% endif %}">
+        <div class="form-group">
           <label for="range.surface_area">
             Suprafață (km²)
           </label>
 
-          {%- for error in errors %}
-            <span class="help-block">{{ error }}</span>
-          {%- endfor %}
+          {{ errors(form.range.surface_area) }}
 
           <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-4 {{- error_cls(form.range.surface_area) }}">
               {{ form.range.surface_area(class='form-control') }}
             </div>
 
@@ -53,8 +73,10 @@
             Metoda utilizată - suprafața arealului
           </label>
 
+          {{ errors(form.range.method) }}
+
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 {{- error_cls(form.range.method) }}">
               {{ form.range.method(class='form-control') }}
             </div>
 
@@ -65,21 +87,24 @@
         </div>
 
         <div class="form-group">
+          {%- set trend_short = form.range.trend_short %}
           <label for="range.trend_short.trend">
             Tendință pe termen scurt
           </label>
 
+          {{ errors(trend_short) }}
+
           <div class="row">
-            <div class="col-lg-2">
-              {{ form.range.trend_short.trend(class='form-control') }}
+            <div class="col-lg-2 {{- error_cls(trend_short.trend) }}">
+              {{ trend_short.trend(class='form-control') }}
             </div>
 
-            <div class="col-lg-2">
-              {{ form.range.trend_short.period_min(class='form-control') }}
+            <div class="col-lg-2 {{- error_cls(trend_short.period_min) }}">
+              {{ trend_short.period_min(class='form-control') }}
             </div>
 
-            <div class="col-lg-2">
-              {{ form.range.trend_short.period_max(class='form-control') }}
+            <div class="col-lg-2 {{- error_cls(trend_short.period_max) }}">
+              {{ trend_short.period_max(class='form-control') }}
             </div>
 
             <div class="col-lg-6 text-primary">
@@ -90,21 +115,24 @@
         </div>
 
         <div class="form-group">
+          {%- set trend_long = form.range.trend_long %}
           <label for="range.trend_long.trend">
             Tendință pe termen lung
           </label>
 
+          {{ errors(trend_long) }}
+
           <div class="row">
-            <div class="col-lg-2">
-              {{ form.range.trend_long.trend(class='form-control') }}
+            <div class="col-lg-2 {{- error_cls(trend_long.trend) }}">
+              {{ trend_long.trend(class='form-control') }}
             </div>
 
-            <div class="col-lg-2">
-              {{ form.range.trend_long.period_min(class='form-control') }}
+            <div class="col-lg-2 {{- error_cls(trend_long.period_min) }}">
+              {{ trend_long.period_min(class='form-control') }}
             </div>
 
-            <div class="col-lg-2">
-              {{ form.range.trend_long.period_max(class='form-control') }}
+            <div class="col-lg-2 {{- error_cls(trend_long.period_max) }}">
+              {{ trend_long.period_max(class='form-control') }}
             </div>
 
             <div class="col-lg-6 text-primary">
@@ -115,17 +143,20 @@
         </div>
 
         <div class="form-group">
+          {%- set reference_value = form.range.reference_value %}
           <label for="range.reference_value.op">
             Arealul favorabil de referință
           </label>
 
+          {{ errors(reference_value) }}
+
           <div class="row">
-            <div class="col-lg-2">
-              {{ form.range.reference_value.op(class='form-control') }}
+            <div class="col-lg-2 {{- error_cls(reference_value.op) }}">
+              {{ reference_value.op(class='form-control') }}
             </div>
 
-            <div class="col-lg-4">
-              {{ form.range.reference_value.number(class='form-control') }}
+            <div class="col-lg-4 {{- error_cls(reference_value.number) }}">
+              {{ reference_value.number(class='form-control') }}
             </div>
 
             <div class="col-lg-6 text-primary">
@@ -140,8 +171,10 @@
             Arealul favorabil de referință - Metoda
           </label>
 
+          {{ errors(form.range.favourable_method) }}
+
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 {{- error_cls(form.range.favourable_method) }}">
               {{ form.range.favourable_method(class='form-control', rows=2) }}
             </div>
 
@@ -152,17 +185,20 @@
         </div>
 
         <div class="form-group">
+          {%- set conclusion = form.range.conclusion %}
           <label for="range.conclusion.value">
             Concluzie
           </label>
 
+          {{ errors(conclusion) }}
+
           <div class="row">
-            <div class="col-lg-3">
-              {{ form.range.conclusion.value(class='form-control') }}
+            <div class="col-lg-3 {{- error_cls(conclusion.value) }}">
+              {{ conclusion.value(class='form-control') }}
             </div>
 
-            <div class="col-lg-3">
-              {{ form.range.conclusion.trend(class='form-control') }}
+            <div class="col-lg-3 {{- error_cls(conclusion.trend) }}">
+              {{ conclusion.trend(class='form-control') }}
             </div>
 
             <div class="col-lg-6 text-primary">
