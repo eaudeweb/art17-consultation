@@ -63,3 +63,19 @@ def test_error_on_required_record(species_app):
     assert MISSING_FIELD_TXT in resp.data
     with species_app.app_context():
         assert DataSpeciesComment.query.count() == 0
+
+
+def test_save_all_form_fields():
+    from art17 import species_forms
+    from art17 import models
+    from werkzeug.datastructures import MultiDict
+
+    form_data = MultiDict({
+        'range-surface_area': '123',
+    })
+
+    form = species_forms.SpeciesComment(form_data)
+    comment = models.DataSpeciesComment()
+    form.populate_obj(comment)
+
+    assert comment.range_surface_area == 123
