@@ -31,7 +31,7 @@ class Range(Form):
     method = TextField(u"Metoda utilizată - suprafața arealului")
     trend_short = FormField(Trend, separator='.')
     trend_long = FormField(Trend, separator='.')
-    favourable_value = FormField(FavourableValue, separator='.')
+    reference_value = FormField(FavourableValue, separator='.')
     favourable_method = TextAreaField(
             u"Arealul favorabil de referință - Metoda")
     conclusion = FormField(Conclusion, separator='.')
@@ -53,9 +53,9 @@ class SpeciesComment(Form):
             self.range.trend_long.data['period_min'],
             self.range.trend_long.data['period_max'])
         obj.complementary_favourable_range_op = \
-            self.range.favourable_value.data['op']
+            self.range.reference_value.data['op']
         obj.complementary_favourable_range = \
-            self.range.favourable_value.data['number']
+            self.range.reference_value.data['number']
         obj.complementary_favourable_range_method = \
             self.range.favourable_method.data
         obj.conclusion_range = self.range.conclusion.data['value']
