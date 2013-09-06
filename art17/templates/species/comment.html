@@ -28,7 +28,8 @@
         {% set errors = form.range.surface_area.errors %}
         <div class="form-group {%- if errors %} has-error{% endif %}">
           <label for="range.surface_area">
-            {{- form.range.surface_area.label }}</label>
+            {{ form.range.surface_area.label }}
+          </label>
 
           {%- for error in errors %}
             <span class="help-block">{{ error }}</span>
@@ -42,7 +43,8 @@
             <div class="col-lg-2"></div>
 
             <div class="col-lg-6 text-primary">
-              {{- range_html(record.range) }}</div>
+              {{ range_html(record.range) }}
+            </div>
           </div>
         </div>
 
@@ -56,7 +58,8 @@
             </div>
 
             <div class="col-lg-6 text-primary">
-              {{- record.range.method }}</div>
+              {{ record.range.method }}
+            </div>
           </div>
         </div>
 
@@ -78,8 +81,9 @@
             </div>
 
             <div class="col-lg-6 text-primary">
-              {{- trend_detail_html(record.range.trend_short) }}
-              {{ record.range.trend_short.period }}</div>
+              {{ trend_detail_html(record.range.trend_short) }}
+              {{ record.range.trend_short.period }}
+            </div>
           </div>
         </div>
 
@@ -101,8 +105,9 @@
             </div>
 
             <div class="col-lg-6 text-primary">
-              {{- trend_detail_html(record.range.trend_long) }}
-              {{ record.range.trend_long.period }}</div>
+              {{ trend_detail_html(record.range.trend_long) }}
+              {{ record.range.trend_long.period }}
+            </div>
           </div>
         </div>
 
@@ -120,8 +125,8 @@
             </div>
 
             <div class="col-lg-6 text-primary">
-              {{- reference_value_html(record.range.reference_value,
-                        unit='km<sup>2</sup>'|safe) -}}
+              {{ reference_value_html(record.range.reference_value,
+                        unit='km<sup>2</sup>'|safe) }}
             </div>
           </div>
         </div>
@@ -136,7 +141,8 @@
             </div>
 
             <div class="col-lg-6 text-primary">
-              {{ record.range.reference_value.method }}</div>
+              {{ record.range.reference_value.method }}
+            </div>
           </div>
         </div>
 
@@ -153,7 +159,8 @@
             </div>
 
             <div class="col-lg-6 text-primary">
-              {{- record.range.conclusion }}</div>
+              {{ record.range.conclusion }}
+            </div>
           </div>
         </div>
       </div>
