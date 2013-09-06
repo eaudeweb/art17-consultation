@@ -4,13 +4,13 @@ from wtforms import Form, DecimalField, FormField
 from wtforms.validators import Required
 
 
-class RangeForm(Form):
+class Range(Form):
 
     surface_area = DecimalField(
             u"Suprafață (km²)",
             [Required(u"Suprafața este obligatorie")])
 
 
-class SpeciesCommentForm(Form):
+class SpeciesComment(Form):
 
-    range = FormField(RangeForm)
+    range = FormField(Range)

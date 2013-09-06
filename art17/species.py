@@ -2,7 +2,7 @@ import flask
 from werkzeug.utils import cached_property
 from art17 import models
 from art17.common import GenericRecord
-from art17.species_form import SpeciesCommentForm
+from art17 import species_forms
 
 species = flask.Blueprint('species', __name__)
 
@@ -181,7 +181,7 @@ def detail(record_id):
                methods=['GET', 'POST'])
 def comment(record_id):
     record = models.DataSpeciesRegion.query.get_or_404(record_id)
-    form = SpeciesCommentForm(flask.request.form)
+    form = species_forms.SpeciesComment(flask.request.form)
 
     if flask.request.method == 'POST' and form.validate():
         comment = models.DataSpeciesComment(
