@@ -14,3 +14,6 @@ class Range(Form):
 class SpeciesComment(Form):
 
     range = FormField(Range)
+
+    def populate_obj(self, obj):
+        obj.range_surface_area = self.range.data['surface_area']
