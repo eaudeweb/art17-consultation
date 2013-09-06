@@ -33,7 +33,7 @@ class Range(Form):
 
     surface_area = DecimalField(
             validators=[Required(u"Suprafața este obligatorie")])
-    method = TextField(u"Metoda utilizată - suprafața arealului")
+    method = TextField()
     trend_short = FormField(Trend, separator='.')
     trend_long = FormField(Trend, separator='.')
     reference_value = FormField(ReferenceValue, separator='.')
