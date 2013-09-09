@@ -21,6 +21,12 @@ def bust_cache(endpoint, values):
             values['t'] = key
 
 
+def none_as_blank(value):
+    if value is None:
+        value = ''
+    return value
+
+
 def create_app():
     from art17.common import common
     from art17.species import species
@@ -29,7 +35,10 @@ def create_app():
     from art17.admin import admin
 
     app = flask.Flask(__name__, instance_relative_config=True)
-    app.jinja_options['extensions'].append('jinja2.ext.do')
+    app.jinja_options = dict(
+        app.jinja_options,
+        extensions=app.jinja_options['extensions'] + ['jinja2.ext.do'],
+        finalize=none_as_blank)
     app.config.from_pyfile('settings.py', silent=True)
     app.register_blueprint(views)
     app.register_blueprint(common)
