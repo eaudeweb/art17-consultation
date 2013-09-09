@@ -90,8 +90,10 @@ def index():
 
     if habitat:
         records = habitat.regions
+        comments = habitat.comments
         if region:
             records = records.filter_by(region=region.code)
+            comments = comments.filter_by(region=region.code)
 
     return flask.render_template('habitat/index.html', **{
         'habitat_list': [{'id': h.habitatcode, 'text': h.lu.hd_name}
@@ -103,6 +105,7 @@ def index():
             'name': habitat.lu.hd_name,
             'code': habitat.habitatcode,
             'records': [HabitatRecord(r) for r in records],
+            'comments': [HabitatRecord(r) for r in comments],
         },
     })
 

@@ -2,6 +2,36 @@
     import conclusion_td, reference_value_td, trend_td, conclusion_td_input
     with context %}
 
+
+{% macro record_cells(row) %}
+  {#- bio-regiune #}
+  <td>{{ row.region }}</td>
+
+  {#- range #}
+  {%- set range = row.range %}
+  <td>{{ range.surface_area }}</td>
+  {{ conclusion_td(range.conclusion) }}
+  {{ trend_td(range.trend_short) }}
+  {{ reference_value_td(range.reference_value) }}
+
+  {#- area #}
+  {%- set area = row.area %}
+  <td>{{ area.surface_area }}</td>
+  {{ conclusion_td(area.conclusion) }}
+  {{ trend_td(area.trend_short) }}
+  {{ reference_value_td(area.reference_value) }}
+
+  {#- structure #}
+  {{ conclusion_td(row.structure) }}
+
+  {#- future prospects #}
+  {{ conclusion_td(row.future_prospects) }}
+
+  {#- overall assessment #}
+  {{ conclusion_td(row.overall_assessment) }}
+{%- endmacro %}
+
+
 <table class="records">
   <tr class="records-header">
     <td rowspan=2></td>
@@ -21,13 +51,13 @@
     {#- detail #}
     {#- bio-regiune #}
 
-    {#- range: 4 cols #}
+    {#- range #}
     <td>Suprafață</td>
     <td>Concluzie</td>
     <td>Tendință</td>
     <td title="Arealul favorabil de referință">Referință</td>
 
-    {#- area: 4 cols #}
+    {#- area #}
     <td>Suprafață</td>
     <td>Concluzie</td>
     <td>Tendință</td>
@@ -52,31 +82,20 @@
       <a class="records-commentbtn" href="{{ url }}">comentariu</a>
     </td>
 
-    {#- bio-regiune #}
-    <td>{{ row.region }}</td>
+    {{ record_cells(row) }}
+  </tr>
+ {% endfor %}
 
-    {#- range: 4 cols #}
-    {%- set range = row.range %}
-    <td>{{ range.surface_area }}</td>
-    {{ conclusion_td(range.conclusion) }}
-    {{ trend_td(range.trend_short) }}
-    {{ reference_value_td(range.reference_value) }}
+  <tr class="records-header">
+    <td colspan="19">Comentarii</td>
+  </tr>
 
-    {#- area: 4 cols #}
-    {%- set area = row.area %}
-    <td>{{ area.surface_area }}</td>
-    {{ conclusion_td(area.conclusion) }}
-    {{ trend_td(area.trend_short) }}
-    {{ reference_value_td(area.reference_value) }}
+ {% for row in habitat.comments %}
+  <tr>
+    {#- detail #}
+    <td></td>
 
-    {#- structure #}
-    {{ conclusion_td(row.structure) }}
-
-    {#- future prospects #}
-    {{ conclusion_td(row.future_prospects) }}
-
-    {#- overall assessment #}
-    {{ conclusion_td(row.overall_assessment) }}
+    {{ record_cells(row) }}
   </tr>
  {% endfor %}
 </table>
