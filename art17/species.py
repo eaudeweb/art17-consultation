@@ -142,10 +142,12 @@ def index():
     if species:
         records = (models.DataSpeciesRegion.query
                         .filter_by(sr_species=species.data))
-        comments = models.DataSpeciesComment.query
+        comments = (models.DataSpeciesComment.query
+                        .filter_by(sr_species=species.data))
 
         if region:
             records = records.filter_by(region=region.code)
+            comments = comments.filter_by(region=region.code)
 
     return flask.render_template('species/index.html', **{
         'species_groups': [{'id': g.code,
