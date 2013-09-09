@@ -123,8 +123,9 @@ def index():
 
     species_code = flask.request.args.get('species', type=int)
     if species_code:
-        species = (models.LuHdSpecies.query
+        species = (models.DataSpecies.query
                     .filter_by(speciescode=species_code)
+                    .join(models.DataSpecies.lu)
                     .first_or_404())
     else:
         species = None
@@ -140,10 +141,8 @@ def index():
     species_list = models.DataSpecies.query.join(models.DataSpeciesRegion)
 
     if species:
-        records = (models.DataSpeciesRegion.query
-                        .filter_by(sr_species=species.data))
-        comments = (models.DataSpeciesComment.query
-                        .filter_by(sr_species=species.data))
+        records = species.regions
+        comments = species.comments
 
         if region:
             records = records.filter_by(region=region.code)
@@ -163,10 +162,10 @@ def index():
 
         'species': None if species is None else {
             'code': species.speciescode,
-            'name': species.speciesname,
-            'annex_II': species.annexii == 'Y',
-            'annex_IV': species.annexiv == 'Y',
-            'annex_V': species.annexv == 'Y',
+            'name': species.lu.speciesname,
+            'annex_II': species.lu.annexii == 'Y',
+            'annex_IV': species.lu.annexiv == 'Y',
+            'annex_V': species.lu.annexv == 'Y',
             'records': [SpeciesRecord(r) for r in records],
             'comments': [SpeciesRecord(r) for r in comments],
         },

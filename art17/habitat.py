@@ -72,6 +72,7 @@ def index():
     if habitat_code:
         habitat = (models.DataHabitat.query
                     .filter_by(habitatcode=habitat_code)
+                    .join(models.DataSpecies.lu)
                     .first_or_404())
     else:
         habitat = None
