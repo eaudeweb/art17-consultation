@@ -115,7 +115,7 @@ def detail(record_id):
     })
 
 
-@habitat.route('/habitate/detalii/<int:record_id>/comment',
+@habitat.route('/habitate/detalii/<int:record_id>/comentariu',
                methods=['GET', 'POST'])
 def comment(record_id):
     record = models.DataHabitattypeRegion.query.get_or_404(record_id)
