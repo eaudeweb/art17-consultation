@@ -182,6 +182,7 @@ def detail(record_id):
 def comment(record_id):
     record = models.DataSpeciesRegion.query.get_or_404(record_id)
     form = forms.SpeciesComment(flask.request.form)
+    next_url = flask.request.args.get('next')
 
     if flask.request.method == 'POST' and form.validate():
         comment = models.DataSpeciesComment(
@@ -196,10 +197,12 @@ def comment(record_id):
         return flask.render_template('species/comment-saved.html', **{
             'species': record.sr_species,
             'record': SpeciesRecord(record),
+            'next_url': next_url,
         })
 
     return flask.render_template('species/comment.html', **{
         'species': record.sr_species,
         'record': SpeciesRecord(record),
         'form': form,
+        'next_url': next_url,
     })

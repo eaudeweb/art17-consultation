@@ -209,6 +209,10 @@
       </div>
     </div>
 
+    {%- if next_url %}
+      <input type="hidden" name="next" value="{{ next_url }}">
+    {%- endif %}
+
     <button type="submit" class="recordcomment-save">Save</button>
   </form>
 {% endblock content %}
