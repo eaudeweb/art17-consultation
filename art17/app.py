@@ -28,6 +28,7 @@ def none_as_blank(value):
 
 
 def create_app():
+    from art17.auth import auth
     from art17.common import common
     from art17.species import species
     from art17.habitat import habitat
@@ -40,6 +41,7 @@ def create_app():
         extensions=app.jinja_options['extensions'] + ['jinja2.ext.do'],
         finalize=none_as_blank)
     app.config.from_pyfile('settings.py', silent=True)
+    app.register_blueprint(auth)
     app.register_blueprint(views)
     app.register_blueprint(common)
     app.register_blueprint(species)
