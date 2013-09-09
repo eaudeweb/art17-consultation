@@ -1,5 +1,6 @@
 import flask
-from flask.ext.principal import Principal, Permission, RoleNeed, Identity
+from flask.ext.principal import (Principal, Permission, Identity,
+                                 RoleNeed, UserNeed)
 
 auth = flask.Blueprint('auth', __name__)
 
@@ -37,5 +38,6 @@ def debug_load_user():
                             auth_type='session')
         principals.set_identity(identity)
 
+        identity.provides.add(UserNeed(identity.id))
         for role_name in auth_data.get('roles', []):
             identity.provides.add(RoleNeed(role_name))
