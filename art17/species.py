@@ -142,6 +142,8 @@ def index():
     if species:
         records = (models.DataSpeciesRegion.query
                         .filter_by(sr_species=species.data))
+        comments = models.DataSpeciesComment.query
+
         if region:
             records = records.filter_by(region=region.code)
 
@@ -164,6 +166,7 @@ def index():
             'annex_IV': species.annexiv == 'Y',
             'annex_V': species.annexv == 'Y',
             'records': [SpeciesRecord(r) for r in records],
+            'comments': [SpeciesRecord(r) for r in comments],
         },
     })
 

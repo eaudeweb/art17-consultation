@@ -3,6 +3,43 @@
            population_size_td, habitat_quality_td
     with context %}
 
+
+{% macro record_cells(row) %}
+  {#- bio-regiune #}
+  <td>{{ row.region }}</td>
+
+  {#- range #}
+  {%- set range = row.range %}
+  <td>{{ range.method }}</td>
+  <td>{{ range.surface_area }}</td>
+  {{ conclusion_td(range.conclusion) }}
+  {{ trend_td(range.trend_short) }}
+  {{ reference_value_td(range.reference_value) }}
+
+  {#- population #}
+  {%- set population = row.population %}
+  {{ population_size_td(population.size) }}
+  {{ conclusion_td(population.conclusion) }}
+  {{ trend_td(population.trend_short) }}
+  {{ reference_value_td(population.reference_value) }}
+
+  {#- habitat #}
+  {%- set habitat = row.habitat %}
+  <td>{{ habitat.method }}</td>
+  <td>{{ habitat.surface_area }}</td>
+  {{ conclusion_td(habitat.conclusion) }}
+  {{ trend_td(habitat.trend_short) }}
+  <td>{{ habitat.area_suitable }}</td>
+  {{ habitat_quality_td(habitat.quality) }}
+
+  {#- future prospects #}
+  {{ conclusion_td(row.future_prospects) }}
+
+  {#- overall assessment #}
+  {{ conclusion_td(row.overall_assessment) }}
+{%- endmacro %}
+
+
 <table class="records">
   <tr class="records-header">
     <td rowspan=2></td>
@@ -57,38 +94,20 @@
       <a class="records-commentbtn" href="{{ url }}">comentariu</a>
     </td>
 
-    {#- bio-regiune #}
-    <td>{{ row.region }}</td>
+    {{ record_cells(row) }}
+  </tr>
+ {% endfor %}
 
-    {#- range #}
-    {%- set range = row.range %}
-    <td>{{ range.method }}</td>
-    <td>{{ range.surface_area }}</td>
-    {{ conclusion_td(range.conclusion) }}
-    {{ trend_td(range.trend_short) }}
-    {{ reference_value_td(range.reference_value) }}
+  <tr class="records-header">
+    <td colspan="19">Comentarii</td>
+  </tr>
 
-    {#- population #}
-    {%- set population = row.population %}
-    {{ population_size_td(population.size) }}
-    {{ conclusion_td(population.conclusion) }}
-    {{ trend_td(population.trend_short) }}
-    {{ reference_value_td(population.reference_value) }}
+ {% for row in species.comments %}
+  <tr>
+    {#- detail #}
+    <td></td>
 
-    {#- habitat #}
-    {%- set habitat = row.habitat %}
-    <td>{{ habitat.method }}</td>
-    <td>{{ habitat.surface_area }}</td>
-    {{ conclusion_td(habitat.conclusion) }}
-    {{ trend_td(habitat.trend_short) }}
-    <td>{{ habitat.area_suitable }}</td>
-    {{ habitat_quality_td(habitat.quality) }}
-
-    {#- future prospects #}
-    {{ conclusion_td(row.future_prospects) }}
-
-    {#- overall assessment #}
-    {{ conclusion_td(row.overall_assessment) }}
+    {{ record_cells(row) }}
   </tr>
  {% endfor %}
 </table>
