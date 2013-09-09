@@ -1,0 +1,21 @@
+{% macro error_cls(field) %}
+  {%- if field.errors %} has-error{% endif %}
+{%- endmacro %}
+
+
+{% macro _error_list(errlist) %}
+  {%- if errlist is mapping %}
+    {%- for sub_list in errlist.values() %}
+      {{- _error_list(sub_list) }}
+    {%- endfor %}
+  {%- else %}
+    {%- for e in errlist %}
+      <span class="has-error"><span class="help-block">{{ e }}</span></span>
+    {%- endfor %}
+  {%- endif %}
+{%- endmacro %}
+
+
+{% macro errors(field) %}
+  {{- _error_list(field.errors) }}
+{%- endmacro %}
