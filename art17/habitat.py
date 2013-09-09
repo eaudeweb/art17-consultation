@@ -119,15 +119,24 @@ def detail(record_id):
                methods=['GET', 'POST'])
 def comment(record_id):
     record = models.DataHabitattypeRegion.query.get_or_404(record_id)
+    next_url = flask.request.args.get('next')
 
     if flask.request.method == 'POST':
-        data = flask.request.json
-        if data:
-            if data.get('range-surface-area'):
-                return flask.jsonify(saved=True)
+        comment = models.DataHabitattypeComment(
+            hr_habitat_id=record.hr_habitat_id,
+            region=record.region)
 
-    html = flask.render_template('habitat/comment.html', **{
+        models.db.session.add(comment)
+        models.db.session.commit()
+
+        return flask.render_template('habitat/comment-saved.html', **{
+            'habitat': record.hr_habitat,
+            'record': HabitatRecord(record),
+            'next_url': next_url,
+        })
+
+    return flask.render_template('habitat/comment.html', **{
         'habitat': record.hr_habitat,
         'record': HabitatRecord(record),
+        'next_url': next_url,
     })
-    return flask.jsonify(html=html)

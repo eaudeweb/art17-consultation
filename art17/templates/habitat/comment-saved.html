@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+  {%- if habitat %}{{ habitat.name }} &mdash; {% endif %}
+  {{- super() }}
+{%- endblock title %}
+
+
+{% block content %}
+<h1>
+  Comentariu pentru
+  {{ habitat.lu.habitatname }}
+  ({{ record.region }})
+</h1>
+
+<p class="text-success">Comentariul a fost înregistrat.</p>
+
+<p>
+  <a class="btn btn-primary" href="{{ next_url }}">Înapoi</a>
+</p>
+{% endblock content %}

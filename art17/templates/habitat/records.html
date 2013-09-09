@@ -45,7 +45,10 @@
       {%- set url = url_for('.detail', record_id=row.id) %}
       <button class="records-detailbtn" data-url="{{ url }}">info</button>
 
-      {%- set url = url_for('.comment', record_id=row.id) %}
+      {%- set next = url_for('.index', group=current_group_code,
+                                       species=current_species_code,
+                                       region=current_region_code) %}
+      {%- set url = url_for('.comment', record_id=row.id, next=next) %}
       <a class="records-commentbtn" href="{{ url }}">comentariu</a>
     </td>
 
