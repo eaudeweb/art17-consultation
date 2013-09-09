@@ -53,17 +53,6 @@ class LuHdSpecies(Base):
     etc_comments = Column(String)
 
 
-class LuCountriesRegions(Base):
-    __tablename__ = u'lu_countries_regions'
-
-    objectid = Column(Numeric, primary_key=True)
-    country = Column(String)
-    region_code = Column('region', String, ForeignKey('lu_biogeoreg.code'))
-    order = Column('order_', Numeric)
-
-    region = relationship('LuBiogeoreg', lazy='eager')
-
-
 class LuBiogeoreg(Base):
     __tablename__ = u'lu_biogeoreg'
 
@@ -74,40 +63,15 @@ class LuBiogeoreg(Base):
     order = Column('order_', Numeric)
 
 
-class DataGmeasure(Base):
-    __tablename__ = u'data_gmeasures'
+class LuCountriesRegions(Base):
+    __tablename__ = u'lu_countries_regions'
 
-    gmeasure_id = Column(Numeric, primary_key=True)
-    gmeasure_greport_id = Column(ForeignKey(u'data_greport.greport_id'), index=True)
-    sitecode = Column(String, index=True)
-    sitename = Column(String)
-    project_year = Column(Numeric)
-    project_title = Column(String)
-    impact = Column(String)
-    commission_opinion = Column(String)
-    project_impact = Column(Text)
-    validated = Column(Numeric)
-    validation_date = Column(DateTime)
+    objectid = Column(Numeric, primary_key=True)
+    country = Column(String)
+    region_code = Column('region', String, ForeignKey(LuBiogeoreg.code))
+    order = Column('order_', Numeric)
 
-    gmeasure_greport = relationship(u'DataGreport')
-
-
-class DataGreintroductionOfSpecies(Base):
-    __tablename__ = u'data_greintroduction_of_species'
-
-    greintr_species_id = Column(Numeric, primary_key=True)
-    greintr_species_greport_id = Column(ForeignKey(u'data_greport.greport_id'))
-    speciescode = Column(String)
-    speciesname = Column(String)
-    reintro_period_since = Column(String)
-    reintro_period = Column(String)
-    location_number = Column(String)
-    successful = Column(String)
-    additional_information = Column(Text)
-    validated = Column(Numeric)
-    validation_date = Column(DateTime)
-
-    greintr_species_greport = relationship(u'DataGreport')
+    region = relationship('LuBiogeoreg', lazy='eager')
 
 
 class DataGreport(Base):
@@ -144,6 +108,42 @@ class DataGreport(Base):
     sys_modifier_id = Column(String, index=True)
     validated = Column(Numeric)
     validation_date = Column(DateTime)
+
+
+class DataGmeasure(Base):
+    __tablename__ = u'data_gmeasures'
+
+    gmeasure_id = Column(Numeric, primary_key=True)
+    gmeasure_greport_id = Column(ForeignKey(DataGreport.greport_id), index=True)
+    sitecode = Column(String, index=True)
+    sitename = Column(String)
+    project_year = Column(Numeric)
+    project_title = Column(String)
+    impact = Column(String)
+    commission_opinion = Column(String)
+    project_impact = Column(Text)
+    validated = Column(Numeric)
+    validation_date = Column(DateTime)
+
+    gmeasure_greport = relationship(u'DataGreport')
+
+
+class DataGreintroductionOfSpecies(Base):
+    __tablename__ = u'data_greintroduction_of_species'
+
+    greintr_species_id = Column(Numeric, primary_key=True)
+    greintr_species_greport_id = Column(ForeignKey(DataGreport.greport_id))
+    speciescode = Column(String)
+    speciesname = Column(String)
+    reintro_period_since = Column(String)
+    reintro_period = Column(String)
+    location_number = Column(String)
+    successful = Column(String)
+    additional_information = Column(Text)
+    validated = Column(Numeric)
+    validation_date = Column(DateTime)
+
+    greintr_species_greport = relationship(u'DataGreport')
 
 
 class DataHabitat(Base):
@@ -191,7 +191,7 @@ class DataHabitattypeRegion(Base):
     __tablename__ = u'data_habitattype_reg'
 
     hr_id = Column('objectid', Numeric, primary_key=True)
-    hr_habitat_id = Column(ForeignKey(u'data_habitats.objectid'), index=True)
+    hr_habitat_id = Column(ForeignKey(DataHabitat.habitat_id), index=True)
     region = Column(String)
     published = Column(Text)
     range_surface_area = Column(Numeric)
@@ -269,7 +269,7 @@ class DataHabitattypeComment(Base):
 
     hr_id = Column('objectid', String, primary_key=True, index=True,
                                default=create_uuid)
-    hr_habitat_id = Column(ForeignKey(u'data_habitats.objectid'), index=True)
+    hr_habitat_id = Column(ForeignKey(DataHabitat.habitat_id), index=True)
     region = Column(String)
     published = Column(Text)
     range_surface_area = Column(Numeric)
@@ -342,42 +342,13 @@ class DataHtypicalSpecies(Base):
     __tablename__ = u'data_htypical_species'
 
     typical_species_id = Column(Numeric, primary_key=True)
-    species_hr_id = Column(ForeignKey(u'data_habitattype_reg.objectid'), index=True)
+    species_hr_id = Column(ForeignKey(DataHabitattypeRegion.hr_id), index=True)
     speciescode = Column(String, index=True)
     speciesname = Column(String)
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
     species_hr = relationship(u'DataHabitattypeRegion')
-
-
-class DataMeasure(Base):
-    __tablename__ = u'data_measures'
-
-    measure_id = Column(Numeric, primary_key=True)
-    measurecode = Column(String, index=True)
-    measure_sr_id = Column(ForeignKey(u'data_species_regions.objectid'), index=True)
-    measure_hr_id = Column(ForeignKey(u'data_habitattype_reg.objectid'), index=True)
-    type_legal = Column(Numeric)
-    type_administrative = Column(Numeric)
-    type_contractual = Column(Numeric)
-    type_recurrent = Column(Numeric)
-    type_oneoff = Column(Numeric)
-    rankingcode = Column(String, index=True)
-    location_inside = Column(Numeric)
-    location_outside = Column(Numeric)
-    location_both = Column(Numeric)
-    broad_evaluation_maintain = Column(Numeric)
-    broad_evaluation_enhance = Column(Numeric)
-    broad_evaluation_longterm = Column(Numeric)
-    broad_evaluation_noeffect = Column(Numeric)
-    broad_evaluation_unknown = Column(Numeric)
-    broad_evaluation_notevaluated = Column(Numeric)
-    validated = Column(Numeric)
-    validation_date = Column(DateTime)
-
-    measure_hr = relationship(u'DataHabitattypeRegion')
-    measure_sr = relationship(u'DataSpeciesRegion')
 
 
 class DataNote(Base):
@@ -389,34 +360,6 @@ class DataNote(Base):
     field_label = Column(String)
     note = Column(Text)
     username = Column(String)
-
-
-class DataPressuresThreat(Base):
-    __tablename__ = u'data_pressures_threats'
-
-    pressure_id = Column(Numeric, primary_key=True)
-    pressure_hr_id = Column(ForeignKey(u'data_habitattype_reg.objectid'), index=True)
-    pressure_sr_id = Column(ForeignKey(u'data_species_regions.objectid'), index=True)
-    pressure = Column(String)
-    ranking = Column(String)
-    type = Column(String)
-    validated = Column(Numeric)
-    validation_Date = Column(DateTime)
-
-    pressure_hr = relationship(u'DataHabitattypeRegion')
-    pressure_sr = relationship(u'DataSpeciesRegion')
-
-
-class DataPressuresThreatsPol(Base):
-    __tablename__ = u'data_pressures_threats_pol'
-
-    pollution_id = Column(Numeric, primary_key=True)
-    pollution_pressure_id = Column(ForeignKey(u'data_pressures_threats.pressure_id'), index=True)
-    pollution_qualifier = Column(String)
-    validated = Column(Numeric)
-    validation_date = Column(DateTime)
-
-    pollution_pressure = relationship(u'DataPressuresThreat')
 
 
 class DataSpecies(Base):
@@ -476,7 +419,7 @@ class DataSpeciesRegion(Base):
     __tablename__ = u'data_species_regions'
 
     sr_id = Column('objectid', Numeric, primary_key=True, index=True)
-    sr_species_id = Column(ForeignKey(u'data_species.objectid'), index=True)
+    sr_species_id = Column(ForeignKey(DataSpecies.species_id), index=True)
     region = Column(String)
     published = Column(Text)
     range_surface_area = Column('rsurface_area', Numeric)
@@ -575,7 +518,7 @@ class DataSpeciesComment(Base):
 
     sr_id = Column('objectid', String, primary_key=True, index=True,
                                default=create_uuid)
-    sr_species_id = Column(ForeignKey(u'data_species.objectid'), index=True)
+    sr_species_id = Column(ForeignKey(DataSpecies.species_id), index=True)
     region = Column(String)
     published = Column(Text)
     range_surface_area = Column('rsurface_area', Numeric)
@@ -663,6 +606,63 @@ class DataSpeciesComment(Base):
 
     sr_species = relationship(u'DataSpecies',
         backref=db.backref('comments', lazy='dynamic'))
+
+
+class DataPressuresThreat(Base):
+    __tablename__ = u'data_pressures_threats'
+
+    pressure_id = Column(Numeric, primary_key=True)
+    pressure_hr_id = Column(ForeignKey(DataHabitattypeRegion.hr_id), index=True)
+    pressure_sr_id = Column(ForeignKey(DataSpeciesRegion.sr_id), index=True)
+    pressure = Column(String)
+    ranking = Column(String)
+    type = Column(String)
+    validated = Column(Numeric)
+    validation_Date = Column(DateTime)
+
+    pressure_hr = relationship(u'DataHabitattypeRegion')
+    pressure_sr = relationship(u'DataSpeciesRegion')
+
+
+class DataPressuresThreatsPol(Base):
+    __tablename__ = u'data_pressures_threats_pol'
+
+    pollution_id = Column(Numeric, primary_key=True)
+    pollution_pressure_id = Column(ForeignKey(DataPressuresThreat.pressure_id), index=True)
+    pollution_qualifier = Column(String)
+    validated = Column(Numeric)
+    validation_date = Column(DateTime)
+
+    pollution_pressure = relationship(u'DataPressuresThreat')
+
+
+class DataMeasure(Base):
+    __tablename__ = u'data_measures'
+
+    measure_id = Column(Numeric, primary_key=True)
+    measurecode = Column(String, index=True)
+    measure_sr_id = Column(ForeignKey(DataSpeciesRegion.sr_id), index=True)
+    measure_hr_id = Column(ForeignKey(DataHabitattypeRegion.hr_id), index=True)
+    type_legal = Column(Numeric)
+    type_administrative = Column(Numeric)
+    type_contractual = Column(Numeric)
+    type_recurrent = Column(Numeric)
+    type_oneoff = Column(Numeric)
+    rankingcode = Column(String, index=True)
+    location_inside = Column(Numeric)
+    location_outside = Column(Numeric)
+    location_both = Column(Numeric)
+    broad_evaluation_maintain = Column(Numeric)
+    broad_evaluation_enhance = Column(Numeric)
+    broad_evaluation_longterm = Column(Numeric)
+    broad_evaluation_noeffect = Column(Numeric)
+    broad_evaluation_unknown = Column(Numeric)
+    broad_evaluation_notevaluated = Column(Numeric)
+    validated = Column(Numeric)
+    validation_date = Column(DateTime)
+
+    measure_hr = relationship(u'DataHabitattypeRegion')
+    measure_sr = relationship(u'DataSpeciesRegion')
 
 
 class SysImport(Base):
