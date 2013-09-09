@@ -7,7 +7,17 @@
 {%- endblock title %}
 
 
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('home', url_for('views.home')),
+          ('specii', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
 {% block content %}
+
   <form class="speciesfilter">
     <fieldset>
       <legend>Filtrare specii</legend>

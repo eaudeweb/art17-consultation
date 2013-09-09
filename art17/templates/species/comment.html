@@ -30,6 +30,16 @@
 {%- endmacro %}
 
 
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('home', url_for('views.home')),
+          ('specii', next_url or url_for('.index')),
+          ('comentariu', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
 {% block content %}
 {%- from 'common/td.html' import
     range_html, trend_detail_html, reference_value_html

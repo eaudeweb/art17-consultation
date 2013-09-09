@@ -6,3 +6,18 @@
 {% macro link(filename, rel='stylesheet') -%}
   <link rel="{{ rel }}" href="{{ url_for('static', filename=filename) }}">
 {%- endmacro %}
+
+
+{% macro breadcrumbs(links) %}
+<ol class="breadcrumb">
+{%- for label, url in links %}
+  <li {%- if loop.last %} class="active" {%- endif %}>
+    {%- if url -%}
+      <a href="{{ url }}">{{ label }}</a>
+    {%- else -%}
+      {{ label }}
+    {%- endif -%}
+  </li>
+{%- endfor %}
+</ol>
+{%- endmacro %}

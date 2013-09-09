@@ -33,9 +33,12 @@
 
   <body>
     <div class="container">
-     {% block content %}
-      <h1>Hello, world!</h1>
-     {% endblock %}
+      {%- if not config.TESTING %}
+        {% block breadcrumbs %}{% endblock %}
+      {%- endif %}
+      {% block content %}
+        <h1>Hello, world!</h1>
+      {% endblock %}
     </div>
 
     {% block script %}
