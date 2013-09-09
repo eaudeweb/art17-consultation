@@ -1,11 +1,18 @@
 # encoding: utf-8
 
-from wtforms import (Form, FormField,
+from wtforms import (Form, FormField as FormField_base,
                      TextField, TextAreaField, DecimalField, SelectField)
 from wtforms.validators import Required, Optional
 from art17.common import TREND_OPTIONS, CONCLUSION_OPTIONS
 
 EMPTY_CHOICE = [('', "--")]
+
+
+class FormField(FormField_base):
+
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('separator', '.')
+        super(FormField, self).__init__(*args, **kwargs)
 
 
 class Trend(Form):
@@ -34,16 +41,16 @@ class Range(Form):
     surface_area = DecimalField(
             validators=[Required(u"Suprafața este obligatorie")])
     method = TextField()
-    trend_short = FormField(Trend, separator='.')
-    trend_long = FormField(Trend, separator='.')
-    reference_value = FormField(ReferenceValue, separator='.')
+    trend_short = FormField(Trend)
+    trend_long = FormField(Trend)
+    reference_value = FormField(ReferenceValue)
     reference_method = TextAreaField()
-    conclusion = FormField(Conclusion, separator='.')
+    conclusion = FormField(Conclusion)
 
 
 class SpeciesComment(Form):
 
-    range = FormField(Range, separator='.')
+    range = FormField(Range)
 
     def populate_obj(self, obj):
         obj.range_surface_area = self.range.data['surface_area']
