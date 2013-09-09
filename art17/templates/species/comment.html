@@ -56,13 +56,13 @@
           {{ errors(form.range.surface_area) }}
 
           <div class="row">
-            <div class="col-lg-4 {{- error_cls(form.range.surface_area) }}">
+            <div class="col-sm-4 {{- error_cls(form.range.surface_area) }}">
               {{ form.range.surface_area(class='form-control') }}
             </div>
 
-            <div class="col-lg-2"></div>
+            <div class="col-sm-2"></div>
 
-            <div class="col-lg-6 text-primary">
+            <div class="col-sm-6 text-primary">
               {{ range_html(record.range) }}
             </div>
           </div>
@@ -76,11 +76,11 @@
           {{ errors(form.range.method) }}
 
           <div class="row">
-            <div class="col-lg-6 {{- error_cls(form.range.method) }}">
+            <div class="col-sm-6 {{- error_cls(form.range.method) }}">
               {{ form.range.method(class='form-control') }}
             </div>
 
-            <div class="col-lg-6 text-primary">
+            <div class="col-sm-6 text-primary">
               {{ record.range.method }}
             </div>
           </div>
@@ -95,19 +95,19 @@
           {{ errors(trend_short) }}
 
           <div class="row">
-            <div class="col-lg-2 {{- error_cls(trend_short.trend) }}">
+            <div class="col-sm-2 {{- error_cls(trend_short.trend) }}">
               {{ trend_short.trend(class='form-control') }}
             </div>
 
-            <div class="col-lg-2 {{- error_cls(trend_short.period_min) }}">
+            <div class="col-sm-2 {{- error_cls(trend_short.period_min) }}">
               {{ trend_short.period_min(class='form-control') }}
             </div>
 
-            <div class="col-lg-2 {{- error_cls(trend_short.period_max) }}">
+            <div class="col-sm-2 {{- error_cls(trend_short.period_max) }}">
               {{ trend_short.period_max(class='form-control') }}
             </div>
 
-            <div class="col-lg-6 text-primary">
+            <div class="col-sm-6 text-primary">
               {{ trend_detail_html(record.range.trend_short) }}
               {{ record.range.trend_short.period }}
             </div>
@@ -123,19 +123,19 @@
           {{ errors(trend_long) }}
 
           <div class="row">
-            <div class="col-lg-2 {{- error_cls(trend_long.trend) }}">
+            <div class="col-sm-2 {{- error_cls(trend_long.trend) }}">
               {{ trend_long.trend(class='form-control') }}
             </div>
 
-            <div class="col-lg-2 {{- error_cls(trend_long.period_min) }}">
+            <div class="col-sm-2 {{- error_cls(trend_long.period_min) }}">
               {{ trend_long.period_min(class='form-control') }}
             </div>
 
-            <div class="col-lg-2 {{- error_cls(trend_long.period_max) }}">
+            <div class="col-sm-2 {{- error_cls(trend_long.period_max) }}">
               {{ trend_long.period_max(class='form-control') }}
             </div>
 
-            <div class="col-lg-6 text-primary">
+            <div class="col-sm-6 text-primary">
               {{ trend_detail_html(record.range.trend_long) }}
               {{ record.range.trend_long.period }}
             </div>
@@ -151,15 +151,15 @@
           {{ errors(reference_value) }}
 
           <div class="row">
-            <div class="col-lg-2 {{- error_cls(reference_value.op) }}">
+            <div class="col-sm-2 {{- error_cls(reference_value.op) }}">
               {{ reference_value.op(class='form-control') }}
             </div>
 
-            <div class="col-lg-4 {{- error_cls(reference_value.number) }}">
+            <div class="col-sm-4 {{- error_cls(reference_value.number) }}">
               {{ reference_value.number(class='form-control') }}
             </div>
 
-            <div class="col-lg-6 text-primary">
+            <div class="col-sm-6 text-primary">
               {{ reference_value_html(record.range.reference_value,
                         unit='km<sup>2</sup>'|safe) }}
             </div>
@@ -174,11 +174,11 @@
           {{ errors(form.range.reference_method) }}
 
           <div class="row">
-            <div class="col-lg-6 {{- error_cls(form.range.reference_method) }}">
+            <div class="col-sm-6 {{- error_cls(form.range.reference_method) }}">
               {{ form.range.reference_method(class='form-control', rows=2) }}
             </div>
 
-            <div class="col-lg-6 text-primary">
+            <div class="col-sm-6 text-primary">
               {{ record.range.reference_value.method }}
             </div>
           </div>
@@ -193,15 +193,15 @@
           {{ errors(conclusion) }}
 
           <div class="row">
-            <div class="col-lg-3 {{- error_cls(conclusion.value) }}">
+            <div class="col-sm-3 {{- error_cls(conclusion.value) }}">
               {{ conclusion.value(class='form-control') }}
             </div>
 
-            <div class="col-lg-3 {{- error_cls(conclusion.trend) }}">
+            <div class="col-sm-3 {{- error_cls(conclusion.trend) }}">
               {{ conclusion.trend(class='form-control') }}
             </div>
 
-            <div class="col-lg-6 text-primary">
+            <div class="col-sm-6 text-primary">
               {{ record.range.conclusion }}
             </div>
           </div>
