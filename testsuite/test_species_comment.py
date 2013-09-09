@@ -66,7 +66,7 @@ def test_error_on_required_record(species_app):
 
 
 def test_save_all_form_fields():
-    from art17 import species_forms
+    from art17 import forms
     from art17 import models
     from werkzeug.datastructures import MultiDict
 
@@ -86,7 +86,7 @@ def test_save_all_form_fields():
         'range.conclusion.trend': 'foo conclusion trend',
     })
 
-    form = species_forms.SpeciesComment(form_data)
+    form = forms.SpeciesComment(form_data)
     assert form.validate()
 
     comment = models.DataSpeciesComment()
