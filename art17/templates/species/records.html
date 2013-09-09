@@ -21,18 +21,18 @@
   <tr class="records-header">
     {#- detail #}
     {#- bio-regiune #}
-    {#- range: 5 cols #}
+    {#- range #}
     <td>Metodă</td>
     <td>Suprafață</td>
     <td>Concluzie</td>
     <td>Tendință</td>
     <td title="Arealul favorabil de referință">Referință</td>
-    {#- population: 5 cols #}
+    {#- population #}
     <td title="Mărimea populației și unitatea de măsură">Mărime</td>
     <td>Concluzie</td>
     <td title="Tendința pe termen scurt">Tendință</td>
     <td title="Populația favorabilă de referință">Referință</td>
-    {#- habitat: 7 cols #}
+    {#- habitat #}
     <td>Metodă</td>
     <td>Suprafață</td>
     <td>Concluzie</td>
@@ -60,7 +60,7 @@
     {#- bio-regiune #}
     <td>{{ row.region }}</td>
 
-    {#- range: 5 cols #}
+    {#- range #}
     {%- set range = row.range %}
     <td>{{ range.method }}</td>
     <td>{{ range.surface_area }}</td>
@@ -68,14 +68,14 @@
     {{ trend_td(range.trend_short) }}
     {{ reference_value_td(range.reference_value) }}
 
-    {#- population: 5 cols #}
+    {#- population #}
     {%- set population = row.population %}
     {{ population_size_td(population.size) }}
     {{ conclusion_td(population.conclusion) }}
     {{ trend_td(population.trend_short) }}
     {{ reference_value_td(population.reference_value) }}
 
-    {#- habitat: 7 cols #}
+    {#- habitat #}
     {%- set habitat = row.habitat %}
     <td>{{ habitat.method }}</td>
     <td>{{ habitat.surface_area }}</td>
