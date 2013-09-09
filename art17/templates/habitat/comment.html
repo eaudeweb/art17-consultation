@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% from 'common/comment_bits.html' import error_cls, errors %}
 
 
 {% block title %}
@@ -18,6 +19,10 @@
 
 
 {% block content %}
+{%- from 'common/td.html' import
+    range_html, trend_detail_html, reference_value_html
+    with context %}
+
   <h1>
     Comentariu pentru
     {{ habitat.lu.hd_name }}
@@ -25,14 +30,171 @@
   </h1>
 
   <form method="post">
-    <div class="table-responsive">
-      <table class="table table-bordered recorddetail-table">
-        <tr>
-          <th>Suprafață (km<sup>2</sup>)</th>
-          <td>{{ record.range.surface_area }}</td>
-          <td><input name="range-surface-area"></td>
-        </tr>
-      </table>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Areal</h3>
+      </div>
+
+      <div class="panel-body">
+        <div class="form-group">
+          <label for="range.surface_area">
+            Suprafață (km²)
+          </label>
+
+          {{ errors(form.range.surface_area) }}
+
+          <div class="row">
+            <div class="col-sm-4 {{- error_cls(form.range.surface_area) }}">
+              {{ form.range.surface_area(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2"></div>
+
+            <div class="col-sm-6 text-primary">
+              {{ range_html(record.range) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="range.method">
+            Metoda utilizată - suprafața arealului
+          </label>
+
+          {{ errors(form.range.method) }}
+
+          <div class="row">
+            <div class="col-sm-6 {{- error_cls(form.range.method) }}">
+              {{ form.range.method(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ record.range.method }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          {%- set trend_short = form.range.trend_short %}
+          <label for="range.trend_short.trend">
+            Tendință pe termen scurt
+          </label>
+
+          {{ errors(trend_short) }}
+
+          <div class="row">
+            <div class="col-sm-2 {{- error_cls(trend_short.trend) }}">
+              {{ trend_short.trend(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(trend_short.period_min) }}">
+              {{ trend_short.period_min(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(trend_short.period_max) }}">
+              {{ trend_short.period_max(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ trend_detail_html(record.range.trend_short) }}
+              {{ record.range.trend_short.period }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          {%- set trend_long = form.range.trend_long %}
+          <label for="range.trend_long.trend">
+            Tendință pe termen lung
+          </label>
+
+          {{ errors(trend_long) }}
+
+          <div class="row">
+            <div class="col-sm-2 {{- error_cls(trend_long.trend) }}">
+              {{ trend_long.trend(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(trend_long.period_min) }}">
+              {{ trend_long.period_min(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(trend_long.period_max) }}">
+              {{ trend_long.period_max(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ trend_detail_html(record.range.trend_long) }}
+              {{ record.range.trend_long.period }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          {%- set reference_value = form.range.reference_value %}
+          <label for="range.reference_value.op">
+            Arealul favorabil de referință
+          </label>
+
+          {{ errors(reference_value) }}
+
+          <div class="row">
+            <div class="col-sm-2 {{- error_cls(reference_value.op) }}">
+              {{ reference_value.op(class='form-control') }}
+            </div>
+
+            <div class="col-sm-4 {{- error_cls(reference_value.number) }}">
+              {{ reference_value.number(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ reference_value_html(record.range.reference_value,
+                        unit='km<sup>2</sup>'|safe) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="range.reference_method">
+            Arealul favorabil de referință - Metoda
+          </label>
+
+          {{ errors(form.range.reference_method) }}
+
+          <div class="row">
+            <div class="col-sm-6 {{- error_cls(form.range.reference_method) }}">
+              {{ form.range.reference_method(class='form-control', rows=2) }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ record.range.reference_value.method }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          {%- set conclusion = form.range.conclusion %}
+          <label for="range.conclusion.value">
+            Concluzie
+          </label>
+
+          {{ errors(conclusion) }}
+
+          <div class="row">
+            <div class="col-sm-3 {{- error_cls(conclusion.value) }}">
+              {{ conclusion.value(class='form-control') }}
+            </div>
+
+            <div class="col-sm-3 {{- error_cls(conclusion.trend) }}">
+              {{ conclusion.trend(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ record.range.conclusion }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     {%- if next_url %}

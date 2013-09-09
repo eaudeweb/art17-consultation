@@ -2,6 +2,7 @@ import flask
 from werkzeug.utils import cached_property
 from art17 import models
 from art17.common import GenericRecord
+from art17 import forms
 
 habitat = flask.Blueprint('habitat', __name__)
 
@@ -119,12 +120,15 @@ def detail(record_id):
                methods=['GET', 'POST'])
 def comment(record_id):
     record = models.DataHabitattypeRegion.query.get_or_404(record_id)
+    form = forms.SpeciesComment(flask.request.form)
     next_url = flask.request.args.get('next')
 
-    if flask.request.method == 'POST':
+    if flask.request.method == 'POST' and form.validate():
         comment = models.DataHabitattypeComment(
             hr_habitat_id=record.hr_habitat_id,
             region=record.region)
+
+        form.populate_obj(comment)
 
         models.db.session.add(comment)
         models.db.session.commit()
@@ -138,5 +142,6 @@ def comment(record_id):
     return flask.render_template('habitat/comment.html', **{
         'habitat': record.hr_habitat,
         'record': HabitatRecord(record),
+        'form': form,
         'next_url': next_url,
     })
