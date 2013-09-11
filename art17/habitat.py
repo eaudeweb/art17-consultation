@@ -1,7 +1,7 @@
 import flask
 from werkzeug.utils import cached_property
 from art17 import models
-from art17.common import GenericRecord
+from art17.common import GenericRecord, CommentView
 from art17 import forms
 
 habitat = flask.Blueprint('habitat', __name__)
@@ -120,32 +120,24 @@ def detail(record_id):
     })
 
 
-@habitat.route('/habitate/detalii/<int:record_id>/comentariu',
-               methods=['GET', 'POST'])
-def comment(record_id):
-    record = models.DataHabitattypeRegion.query.get_or_404(record_id)
-    form = forms.SpeciesComment(flask.request.form)
-    next_url = flask.request.args.get('next')
+class HabitatCommentView(CommentView):
 
-    if flask.request.method == 'POST' and form.validate():
-        comment = models.DataHabitattypeComment(
-            hr_habitat_id=record.hr_habitat_id,
-            region=record.region)
+    form_cls = forms.HabitatComment
+    record_cls = models.DataHabitattypeRegion
+    comment_cls = models.DataHabitattypeComment
+    template = 'habitat/comment.html'
+    template_saved = 'habitat/comment-saved.html'
 
-        form.populate_obj(comment)
+    def link_comment_to_record(self):
+        self.comment.hr_habitat_id = self.record.hr_habitat_id
+        self.comment.region = self.record.region
 
-        models.db.session.add(comment)
-        models.db.session.commit()
+    def setup_template_context(self):
+        self.template_ctx = {
+            'habitat': self.record.hr_habitat,
+            'record': HabitatRecord(self.record),
+        }
 
-        return flask.render_template('habitat/comment-saved.html', **{
-            'habitat': record.hr_habitat,
-            'record': HabitatRecord(record),
-            'next_url': next_url,
-        })
 
-    return flask.render_template('habitat/comment.html', **{
-        'habitat': record.hr_habitat,
-        'record': HabitatRecord(record),
-        'form': form,
-        'next_url': next_url,
-    })
+habitat.add_url_rule('/habitate/detalii/<int:record_id>/comentariu',
+                     view_func=HabitatCommentView.as_view('comment'))
