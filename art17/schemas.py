@@ -55,7 +55,9 @@ class GenericRecord(object):
         }
 
     def _get_conclusion(self, name):
-        return getattr(self.row, 'conclusion_%s' % name)
+        return {
+            'value': getattr(self.row, 'conclusion_%s' % name),
+        }
 
     def _get_reference_value(self, name, ideal):
         favourable = getattr(self.row, 'complementary_favourable_%s' % name)
