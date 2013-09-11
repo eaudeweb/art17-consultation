@@ -61,17 +61,18 @@ def parse_population_trend(obj, prefix):
     return rv
 
 
+def parse_conclusion(obj, prefix):
+    return {
+        'value': getattr(obj, prefix),
+        'trend': getattr(obj, prefix + '_trend'),
+    }
+
+
 class GenericRecord(object):
 
     def __init__(self, row, is_comment=False):
         self.row = row
         self.is_comment = is_comment
-
-    def _get_conclusion(self, name):
-        return {
-            'value': getattr(self.row, 'conclusion_%s' % name),
-            'trend': getattr(self.row, 'conclusion_%s_trend' % name),
-        }
 
     def _get_reference_value(self, name, ideal):
         return {
@@ -107,7 +108,7 @@ class SpeciesRecord(GenericRecord):
             'method': self.row.range_method,
             'trend_short': parse_trend(self.row, 'range_trend'),
             'trend_long': parse_trend(self.row, 'range_trend_long'),
-            'conclusion': self._get_conclusion('range'),
+            'conclusion': parse_conclusion(self.row, 'conclusion_range'),
             'reference_value': self._get_reference_value('range',
                                                          surface_area),
         }
@@ -144,7 +145,7 @@ class SpeciesRecord(GenericRecord):
                            self.row.population_alt_minimum_size)
         return {
             'size': self._get_population_size(),
-            'conclusion': self._get_conclusion('population'),
+            'conclusion': parse_conclusion(self.row, 'conclusion_population'),
             'trend_short': parse_population_trend(self.row,
                                                   'population_trend'),
             'trend_long': parse_population_trend(self.row,
@@ -158,7 +159,7 @@ class SpeciesRecord(GenericRecord):
         return {
             'surface_area': self.row.habitat_surface_area,
             'method': self.row.habitat_method,
-            'conclusion': self._get_conclusion('habitat'),
+            'conclusion': parse_conclusion(self.row, 'conclusion_habitat'),
             'trend_short': parse_habitat_trend(self.row, 'habitat_trend'),
             'trend_long': parse_habitat_trend(self.row, 'habitat_trend_long'),
             'area_suitable': self.row.habitat_area_suitable,
@@ -167,11 +168,11 @@ class SpeciesRecord(GenericRecord):
 
     @cached_property
     def future_prospects(self):
-        return self._get_conclusion('future')
+        return parse_conclusion(self.row, 'conclusion_future')
 
     @cached_property
     def overall_assessment(self):
-        return self._get_conclusion('assessment')
+        return parse_conclusion(self.row, 'conclusion_assessment')
 
 
 class HabitatRecord(GenericRecord):
@@ -192,7 +193,7 @@ class HabitatRecord(GenericRecord):
             'method': self.row.range_method,
             'trend_short': parse_trend(self.row, 'range_trend'),
             'trend_long': parse_trend(self.row, 'range_trend_long'),
-            'conclusion': self._get_conclusion('range'),
+            'conclusion': parse_conclusion(self.row, 'conclusion_range'),
             'reference_value': self._get_reference_value('range',
                                                          surface_area),
         }
@@ -204,21 +205,21 @@ class HabitatRecord(GenericRecord):
             'surface_area': surface_area,
             'trend_short': parse_trend(self.row, 'coverage_trend'),
             'trend_long': parse_trend(self.row, 'coverage_trend_long'),
-            'conclusion': self._get_conclusion('area'),
+            'conclusion': parse_conclusion(self.row, 'conclusion_area'),
             'reference_value': self._get_reference_value('area', surface_area),
         }
 
     @cached_property
     def structure(self):
-        return self._get_conclusion('structure')
+        return parse_conclusion(self.row, 'conclusion_structure')
 
     @cached_property
     def future_prospects(self):
-        return self._get_conclusion('future')
+        return parse_conclusion(self.row, 'conclusion_future')
 
     @cached_property
     def overall_assessment(self):
-        return self._get_conclusion('assessment')
+        return parse_conclusion(self.row, 'conclusion_assessment')
 
 
 def flatten_period(period_struct, obj, prefix):
