@@ -78,6 +78,32 @@ def parse_reference_value(obj, prefix, ideal):
     }
 
 
+def _get_population_size(obj):
+    rv = []
+    for qualifier in ['', '_alt']:
+        min_size = getattr(obj, 'population%s_minimum_size' % qualifier)
+        max_size = getattr(obj, 'population%s_maximum_size' % qualifier)
+        unit = getattr(obj, 'population%s_size_unit' % qualifier)
+
+        if unit:
+            rv.append({
+                'min': min_size,
+                'max': max_size,
+                'unit': unit,
+            })
+
+    return rv
+
+
+def _get_habitat_quality(obj):
+    value = obj.habitat_quality
+    explanation = obj.habitat_quality_explanation
+    return {
+        'value': value,
+        'explanation': explanation,
+    }
+
+
 class GenericRecord(object):
 
     def __init__(self, row, is_comment=False):
@@ -114,38 +140,12 @@ class SpeciesRecord(GenericRecord):
                                     surface_area),
         }
 
-    def _get_population_size(self):
-        rv = []
-        for qualifier in ['', '_alt']:
-            min_size = getattr(self.row, 'population%s_minimum_size'
-                                         % qualifier)
-            max_size = getattr(self.row, 'population%s_maximum_size'
-                                         % qualifier)
-            unit = getattr(self.row, 'population%s_size_unit' % qualifier)
-
-            if unit:
-                rv.append({
-                    'min': min_size,
-                    'max': max_size,
-                    'unit': unit,
-                })
-
-        return rv
-
-    def _get_habitat_quality(self):
-        value = self.row.habitat_quality
-        explanation = self.row.habitat_quality_explanation
-        return {
-            'value': value,
-            'explanation': explanation,
-        }
-
     @cached_property
     def population(self):
         ref_value_ideal = (self.row.population_minimum_size or
                            self.row.population_alt_minimum_size)
         return {
-            'size': self._get_population_size(),
+            'size': _get_population_size(self.row),
             'conclusion': parse_conclusion(self.row, 'conclusion_population'),
             'trend_short': parse_population_trend(self.row,
                                                   'population_trend'),
@@ -165,7 +165,7 @@ class SpeciesRecord(GenericRecord):
             'trend_short': parse_habitat_trend(self.row, 'habitat_trend'),
             'trend_long': parse_habitat_trend(self.row, 'habitat_trend_long'),
             'area_suitable': self.row.habitat_area_suitable,
-            'quality': self._get_habitat_quality(),
+            'quality': _get_habitat_quality(self.row),
         }
 
     @cached_property
