@@ -97,6 +97,7 @@ class CommentView(flask.views.View):
         if flask.request.method == 'POST' and form.validate():
             self.comment = self.comment_cls()
             self.link_comment_to_record()
+            self.comment.user_id = flask.g.identity.id
 
             form.populate_obj(self.comment)
 
