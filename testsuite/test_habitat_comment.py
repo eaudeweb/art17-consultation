@@ -149,3 +149,12 @@ def test_save_all_form_fields():
 
     for k, v in HABITAT_MODEL_DATA.items():
         assert getattr(comment, k) == v
+
+
+def test_flatten():
+    class Obj(object): pass
+    from art17.schemas import flatten_habitat
+    obj = Obj()
+    flatten_habitat(HABITAT_STRUCT_DATA, obj)
+    for k, v in HABITAT_MODEL_DATA.items():
+        assert getattr(obj, k) == v
