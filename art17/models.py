@@ -339,7 +339,7 @@ class DataHabitattypeComment(Base):
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    user_id = Column(Numeric)
+    user_id = Column(Text)
 
     hr_habitat = relationship(u'DataHabitat',
         backref=db.backref('comments', lazy='dynamic'))
@@ -611,7 +611,7 @@ class DataSpeciesComment(Base):
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    user_id = Column(Numeric)
+    user_id = Column(Text)
 
     sr_species = relationship(u'DataSpecies',
         backref=db.backref('comments', lazy='dynamic'))

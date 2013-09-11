@@ -7,10 +7,10 @@ import sqlalchemy as sa
 
 def upgrade():
     op.add_column('data_species_comments',
-        sa.Column('user_id', sa.Numeric(38, 8), nullable=True),
+        sa.Column('user_id', sa.UnicodeText, nullable=True),
         schema='reportdata_owner')
     op.add_column('data_habitattype_comments',
-        sa.Column('user_id', sa.Numeric(38, 8), nullable=True),
+        sa.Column('user_id', sa.UnicodeText, nullable=True),
         schema='reportdata_owner')
 
 
