@@ -240,20 +240,20 @@ def flatten_conclusion(conclusion_struct, obj, prefix):
     setattr(obj, prefix + '_trend', conclusion_struct['trend'])
 
 
+def flatten_refval(refval_struct, obj, prefix):
+    setattr(obj, prefix + '_op', refval_struct['op'])
+    setattr(obj, prefix, refval_struct['number'])
+    setattr(obj, prefix + '_method', refval_struct['method'])
+
+
 def flatten_species(struct, obj):
     obj.range_surface_area = struct['range']['surface_area']
     obj.range_method = struct['range']['method']
 
     flatten_trend(struct['range']['trend_short'], obj, 'range_trend')
     flatten_trend(struct['range']['trend_long'], obj, 'range_trend_long')
-
-    obj.complementary_favourable_range_op = \
-        struct['range']['reference_value']['op']
-    obj.complementary_favourable_range = \
-        struct['range']['reference_value']['number']
-    obj.complementary_favourable_range_method = \
-        struct['range']['reference_value']['method']
-
+    flatten_refval(struct['range']['reference_value'], obj,
+                   'complementary_favourable_range')
     flatten_conclusion(struct['range']['conclusion'], obj, 'conclusion_range')
 
 
@@ -264,12 +264,6 @@ def flatten_habitat(struct, obj):
 
     flatten_trend(struct['range']['trend_short'], obj, 'range_trend')
     flatten_trend(struct['range']['trend_long'], obj, 'range_trend_long')
-
-    obj.complementary_favourable_range_op = \
-        struct['range']['reference_value']['op']
-    obj.complementary_favourable_range = \
-        struct['range']['reference_value']['number']
-    obj.complementary_favourable_range_method = \
-        struct['range']['reference_value']['method']
-
+    flatten_refval(struct['range']['reference_value'], obj,
+                   'complementary_favourable_range')
     flatten_conclusion(struct['range']['conclusion'], obj, 'conclusion_range')
