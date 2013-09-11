@@ -97,14 +97,25 @@ class CommentView(flask.views.View):
 
     methods = ['GET', 'POST']
 
-    def dispatch_request(self, record_id):
-        self.record = self.record_cls.query.get_or_404(record_id)
+    def dispatch_request(self, record_id=None, comment_id=None):
         form = self.form_cls(flask.request.form)
+
+        if record_id:
+            self.record = self.record_cls.query.get_or_404(record_id)
+            self.comment = self.comment_cls()
+
+        elif comment_id:
+            self.comment = self.comment_cls.query.get_or_404(comment_id)
+            self.record = self.record_for_comment(self.comment)
+            form.range.surface_area.data = self.comment.range_surface_area
+
+        else:
+            raise RuntimeError("Need at least one of record_id and comment_id")
+
         self.setup_template_context()
         self.template_ctx['next_url'] = flask.request.args.get('next')
 
         if flask.request.method == 'POST' and form.validate():
-            self.comment = self.comment_cls()
             self.link_comment_to_record()
             self.comment.user_id = flask.g.identity.id
 

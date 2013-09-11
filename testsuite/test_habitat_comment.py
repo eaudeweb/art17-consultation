@@ -54,6 +54,24 @@ def test_error_on_required_record(habitat_app):
         assert DataHabitattypeComment.query.count() == 0
 
 
+def test_edit_comment_form(habitat_app):
+    from art17.models import DataHabitattypeComment, db
+    _create_habitat_record(habitat_app)
+    with habitat_app.app_context():
+        comment = DataHabitattypeComment(hr_id='4f799fdd6f5a',
+                                         hr_habitat_id=1,
+                                         region='ALP',
+                                         range_surface_area=1337)
+        db.session.add(comment)
+        db.session.commit()
+    client = habitat_app.test_client()
+    resp1 = client.get('/habitate/comentariu/f3b4c23bcb88')
+    assert resp1.status_code == 404
+    resp2 = client.get('/habitate/comentariu/4f799fdd6f5a')
+    assert resp2.status_code == 200
+    assert '1337' in resp2.data
+
+
 def test_save_all_form_fields():
     from art17 import forms
     from art17 import models

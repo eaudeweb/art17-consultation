@@ -138,6 +138,18 @@ class HabitatCommentView(CommentView):
             'record': HabitatRecord(self.record),
         }
 
+    def record_for_comment(self, comment):
+        records = (models.DataHabitattypeRegion.query
+                            .filter_by(hr_habitat_id=comment.hr_habitat_id)
+                            .filter_by(region=comment.region)
+                            .all())
+        assert len(records) == 1, "Expected exactly one record for the comment"
+        return records[0]
+
 
 habitat.add_url_rule('/habitate/detalii/<int:record_id>/comentariu',
                      view_func=HabitatCommentView.as_view('comment'))
+
+
+habitat.add_url_rule('/habitate/comentariu/<comment_id>',
+                     view_func=HabitatCommentView.as_view('comment_edit'))
