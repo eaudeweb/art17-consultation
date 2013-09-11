@@ -99,7 +99,7 @@ def comment_info(row):
     }
 
 
-def SpeciesRecord(row, is_comment=False):
+def parse_species(row, is_comment=False):
     rv = {}
     if is_comment:
         rv['comment'] = comment_info(row)
@@ -142,7 +142,7 @@ def SpeciesRecord(row, is_comment=False):
     return rv
 
 
-def HabitatRecord(row, is_comment=False):
+def parse_habitat(row, is_comment=False):
     rv = {}
     if is_comment:
         rv['comment'] = comment_info(row)
@@ -225,31 +225,29 @@ def flatten_habitat(struct, obj):
     flatten_conclusion(struct['range']['conclusion'], obj, 'conclusion_range')
 
 
-def parse_species(obj):
-    record = SpeciesRecord(obj)
-    rv = {}
-    rv['range'] = record['range']
-    return rv
-
-
 def parse_species_comment(obj):
     rv = parse_species(obj)
+    del rv['id']
+    del rv['region']
     del rv['range']['reference_value']['_ideal']
     del rv['range']['trend_short']['magnitude']
     del rv['range']['trend_long']['magnitude']
-    return rv
-
-
-def parse_habitat(obj):
-    record = HabitatRecord(obj)
-    rv = {}
-    rv['range'] = record['range']
+    del rv['population']
+    del rv['habitat']
+    del rv['future_prospects']
+    del rv['overall_assessment']
     return rv
 
 
 def parse_habitat_comment(obj):
     rv = parse_habitat(obj)
+    del rv['id']
+    del rv['region']
     del rv['range']['reference_value']['_ideal']
     del rv['range']['trend_short']['magnitude']
     del rv['range']['trend_long']['magnitude']
+    del rv['area']
+    del rv['structure']
+    del rv['future_prospects']
+    del rv['overall_assessment']
     return rv

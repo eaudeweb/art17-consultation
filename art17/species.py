@@ -1,7 +1,7 @@
 import flask
 from art17 import models
 from art17.common import CommentView
-from art17.schemas import SpeciesRecord
+from art17.schemas import parse_species
 from art17 import forms
 
 species = flask.Blueprint('species', __name__)
@@ -66,8 +66,8 @@ def index():
             'annex_II': species.lu.annexii == 'Y',
             'annex_IV': species.lu.annexiv == 'Y',
             'annex_V': species.lu.annexv == 'Y',
-            'records': [SpeciesRecord(r) for r in records],
-            'comments': [SpeciesRecord(r, is_comment=True) for r in comments],
+            'records': [parse_species(r) for r in records],
+            'comments': [parse_species(r, is_comment=True) for r in comments],
         },
     })
 
@@ -77,7 +77,7 @@ def detail(record_id):
     record = models.DataSpeciesRegion.query.get_or_404(record_id)
     return flask.render_template('species/detail.html', **{
         'species': record.sr_species,
-        'record': SpeciesRecord(record),
+        'record': parse_species(record),
     })
 
 
@@ -96,7 +96,7 @@ class SpeciesCommentView(CommentView):
     def setup_template_context(self):
         self.template_ctx = {
             'species': self.record.sr_species,
-            'record': SpeciesRecord(self.record),
+            'record': parse_species(self.record),
         }
 
     def record_for_comment(self, comment):

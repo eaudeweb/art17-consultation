@@ -1,7 +1,7 @@
 import flask
 from art17 import models
 from art17.common import CommentView
-from art17.schemas import HabitatRecord
+from art17.schemas import parse_habitat
 from art17 import forms
 
 habitat = flask.Blueprint('habitat', __name__)
@@ -56,8 +56,8 @@ def index():
         'habitat': None if habitat is None else {
             'name': habitat.lu.hd_name,
             'code': habitat.habitatcode,
-            'records': [HabitatRecord(r) for r in records],
-            'comments': [HabitatRecord(r, is_comment=True) for r in comments],
+            'records': [parse_habitat(r) for r in records],
+            'comments': [parse_habitat(r, is_comment=True) for r in comments],
         },
     })
 
@@ -67,7 +67,7 @@ def detail(record_id):
     record = models.DataHabitattypeRegion.query.get_or_404(record_id)
     return flask.render_template('habitat/detail.html', **{
         'habitat': record.hr_habitat,
-        'record': HabitatRecord(record),
+        'record': parse_habitat(record),
     })
 
 
@@ -86,7 +86,7 @@ class HabitatCommentView(CommentView):
     def setup_template_context(self):
         self.template_ctx = {
             'habitat': self.record.hr_habitat,
-            'record': HabitatRecord(self.record),
+            'record': parse_habitat(self.record),
         }
 
     def record_for_comment(self, comment):
