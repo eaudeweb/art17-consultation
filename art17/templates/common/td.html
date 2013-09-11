@@ -3,11 +3,11 @@
 {%- endmacro %}
 
 
-{% macro reference_value_html(refval, unit='') %}
+{% macro reference_value_html(refval, unit='', ideal='') %}
   {%- if refval.number -%}
     {{ refval.number }} {{ unit }}
   {%- elif refval.op -%}
-    {{ refval.op }}{{ refval._ideal }} {{ unit }}
+    {{ refval.op }}{{ ideal }} {{ unit }}
   {%- elif refval.x -%}
     Unknown
   {%- else -%}
@@ -20,7 +20,7 @@
   <td {% if refval.method -%}
         title="Metoda utilizată: {{ refval.method }}"
       {%- endif %}>
-    {{- reference_value_html(refval, unit='') -}}
+    {{- reference_value_html(refval, unit='', ideal='') -}}
   </td>
 {%- endmacro %}
 

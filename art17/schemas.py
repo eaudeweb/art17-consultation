@@ -44,9 +44,8 @@ def parse_conclusion(obj, prefix):
     }
 
 
-def parse_reference_value(obj, prefix, ideal):
+def parse_reference_value(obj, prefix):
     return {
-        '_ideal': ideal,
         'number': getattr(obj, prefix),
         'op': getattr(obj, prefix + '_op'),
         'x': getattr(obj, prefix + '_x'),
@@ -112,8 +111,8 @@ def parse_species(row, is_comment=False):
             'trend_long': parse_trend(row, 'range_trend_long'),
             'conclusion': parse_conclusion(row, 'conclusion_range'),
             'reference_value': parse_reference_value(row,
-                                    'complementary_favourable_range',
-                                    row.range_surface_area),
+                                    'complementary_favourable_range')
+                                # ideal: row.range_surface_area
         }
     ref_value_ideal = (row.population_minimum_size or
                        row.population_alt_minimum_size)
@@ -125,8 +124,8 @@ def parse_species(row, is_comment=False):
             'trend_long': parse_population_trend(row,
                                                  'population_trend_long'),
             'reference_value': parse_reference_value(row,
-                                    'complementary_favourable_population',
-                                    ref_value_ideal),
+                                    'complementary_favourable_population')
+                                # ideal: ref_value_ideal
         }
     rv['habitat'] = {
             'surface_area': row.habitat_surface_area,
@@ -148,26 +147,24 @@ def parse_habitat(row, is_comment=False):
         rv['comment'] = comment_info(row)
     rv['id'] = row.hr_id
     rv['region'] = row.region
-    range_surface_area = row.range_surface_area
     rv['range'] = {
-            'surface_area': range_surface_area,
+            'surface_area': row.range_surface_area,
             'method': row.range_method,
             'trend_short': parse_trend(row, 'range_trend'),
             'trend_long': parse_trend(row, 'range_trend_long'),
             'conclusion': parse_conclusion(row, 'conclusion_range'),
             'reference_value': parse_reference_value(row,
-                                    'complementary_favourable_range',
-                                    range_surface_area),
+                                    'complementary_favourable_range')
+                                # ideal: row.range_surface_area
         }
-    area_surface_area = row.coverage_surface_area
     rv['area'] = {
-            'surface_area': area_surface_area,
+            'surface_area': row.coverage_surface_area,
             'trend_short': parse_trend(row, 'coverage_trend'),
             'trend_long': parse_trend(row, 'coverage_trend_long'),
             'conclusion': parse_conclusion(row, 'conclusion_area'),
             'reference_value': parse_reference_value(row,
-                                    'complementary_favourable_area',
-                                    area_surface_area),
+                                    'complementary_favourable_area')
+                                # ideal: row.coverage_surface_area
         }
     rv['structure'] = parse_conclusion(row, 'conclusion_structure')
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
@@ -229,7 +226,6 @@ def parse_species_comment(obj):
     rv = parse_species(obj)
     del rv['id']
     del rv['region']
-    del rv['range']['reference_value']['_ideal']
     del rv['range']['trend_short']['magnitude']
     del rv['range']['trend_long']['magnitude']
     del rv['population']
@@ -243,7 +239,6 @@ def parse_habitat_comment(obj):
     rv = parse_habitat(obj)
     del rv['id']
     del rv['region']
-    del rv['range']['reference_value']['_ideal']
     del rv['range']['trend_short']['magnitude']
     del rv['range']['trend_long']['magnitude']
     del rv['area']
