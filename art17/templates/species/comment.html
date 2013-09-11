@@ -20,7 +20,7 @@
 
 {% block content %}
 {%- from 'common/td.html' import
-    range_html, trend_detail_html, reference_value_html
+    range_html, trend_detail_html, reference_value_html, period_html
     with context %}
 
   <h1>
@@ -97,7 +97,7 @@
 
             <div class="col-sm-6 text-primary">
               {{ trend_detail_html(record.range.trend_short) }}
-              {{ record.range.trend_short.period }}
+              {{ period_html(record.range.trend_short.period) }}
             </div>
           </div>
         </div>
@@ -125,7 +125,7 @@
 
             <div class="col-sm-6 text-primary">
               {{ trend_detail_html(record.range.trend_long) }}
-              {{ record.range.trend_long.period }}
+              {{ period_html(record.range.trend_long.period) }}
             </div>
           </div>
         </div>

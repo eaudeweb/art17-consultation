@@ -1,6 +1,6 @@
 {%- from 'common/td.html'
     import conclusion_td, range_html, trend_html, trend_detail_html,
-    magnitude_html, population_size_td, reference_value_html
+    magnitude_html, population_size_td, reference_value_html, period_html
     with context %}
 
 
@@ -40,7 +40,7 @@
 
         <tr>
           <th>Tendinţa pe termen scurt - perioada</th>
-          <td>{{ record.range.trend_short.period }}</td>
+          <td>{{ period_html(record.range.trend_short.period) }}</td>
         </tr>
 
         <tr>
@@ -56,7 +56,7 @@
 
         <tr>
           <th>Tendință pe termen lung - perioada</th>
-          <td>{{ record.range.trend_long.period }}</td>
+          <td>{{ period_html(record.range.trend_long.period) }}</td>
         </tr>
 
         <tr>
@@ -103,7 +103,7 @@
 
         <tr>
           <th>Tendinţa pe termen scurt - perioada</th>
-          <td>{{ record.area.trend_short.period }}</td>
+          <td>{{ period_html(record.area.trend_short.period) }}</td>
         </tr>
 
         <tr>
@@ -119,7 +119,7 @@
 
         <tr>
           <th>Tendință pe termen lung - perioada</th>
-          <td>{{ record.area.trend_long.period }}</td>
+          <td>{{ period_html(record.area.trend_long.period) }}</td>
         </tr>
 
         <tr>

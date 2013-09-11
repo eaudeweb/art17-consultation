@@ -32,6 +32,11 @@
 {%- endmacro %}
 
 
+{% macro period_html(period) %}
+  {{ period }}
+{%- endmacro %}
+
+
 {% macro trend_detail_html(trend) %}
 {%- if trend.trend %}
   {{ TREND_NAME[trend.trend] -}}
@@ -40,7 +45,7 @@
 
 
 {% macro trend_html(trend) %}
-  {{- trend.trend }} {{ trend.period }}
+  {{- trend.trend }} {{ period_html(trend.period) }}
 {%- endmacro %}
 
 
