@@ -3,6 +3,7 @@ from art17 import models
 from art17.common import CommentView
 from art17.schemas import parse_species
 from art17 import forms
+from art17 import schemas
 
 species = flask.Blueprint('species', __name__)
 
@@ -86,6 +87,7 @@ class SpeciesCommentView(CommentView):
     form_cls = forms.SpeciesComment
     record_cls = models.DataSpeciesRegion
     comment_cls = models.DataSpeciesComment
+    parse_commentform = staticmethod(schemas.parse_species_commentform)
     template = 'species/comment.html'
     template_saved = 'species/comment-saved.html'
 

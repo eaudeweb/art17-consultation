@@ -2,6 +2,7 @@
 
 import flask
 import flask.views
+from werkzeug.datastructures import MultiDict
 from art17 import models
 
 
@@ -29,22 +30,36 @@ def inject_constants():
     return {'TREND_NAME': TREND_NAME}
 
 
+def flatten_dict(data):
+    rv = {}
+    for k, v in data.items():
+        if isinstance(v, dict):
+            for kx, vx in flatten_dict(v).items():
+                rv[k + '.' + kx] = vx
+        else:
+            rv[k] = unicode(v)
+    return rv
+
+
 class CommentView(flask.views.View):
 
     methods = ['GET', 'POST']
 
     def dispatch_request(self, record_id=None, comment_id=None):
-        form = self.form_cls(flask.request.form)
-
         if record_id:
             self.record = self.record_cls.query.get_or_404(record_id)
             self.comment = self.comment_cls()
+            form = self.form_cls(flask.request.form)
 
         elif comment_id:
             self.comment = self.comment_cls.query.get_or_404(comment_id)
             self.record = self.record_for_comment(self.comment)
-            if not flask.request.form:
-                form.range.surface_area.data = self.comment.range_surface_area
+            if flask.request.method == 'POST':
+                form_data = flask.request.form
+            else:
+                struct = self.parse_commentform(self.comment)
+                form_data = MultiDict(flatten_dict(struct))
+            form = self.form_cls(form_data)
 
         else:
             raise RuntimeError("Need at least one of record_id and comment_id")

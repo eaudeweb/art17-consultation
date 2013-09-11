@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 import pytest
-from conftest import flatten_dict
 
 COMMENT_SAVED_TXT = "Comentariul a fost înregistrat"
 MISSING_FIELD_TXT = "Suprafața este obligatorie"
@@ -142,6 +141,7 @@ def test_edit_comment_submit(habitat_app):
 def test_save_all_form_fields():
     from art17 import forms
     from art17 import models
+    from art17.common import flatten_dict
     from werkzeug.datastructures import MultiDict
 
     form_data = MultiDict(flatten_dict(HABITAT_STRUCT_DATA))
