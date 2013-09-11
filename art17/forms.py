@@ -16,12 +16,17 @@ class FormField(FormField_base):
         super(FormField, self).__init__(*args, **kwargs)
 
 
+class Period(Form):
+
+    start = TextField()
+    end = TextField()
+
+
 class Trend(Form):
 
     trend = SelectField(choices=EMPTY_CHOICE + TREND_OPTIONS,
                         validators=[Optional()])
-    period_min = TextField()
-    period_max = TextField()
+    period = FormField(Period)
 
 
 class ReferenceValue(Form):

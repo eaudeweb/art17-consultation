@@ -224,10 +224,14 @@ class HabitatRecord(GenericRecord):
         return self._get_conclusion('assessment')
 
 
+def flatten_period(period_struct, obj, prefix):
+    setattr(obj, prefix, '%s%s' % (period_struct['start'],
+                                   period_struct['end']))
+
+
 def flatten_trend(trend_struct, obj, prefix):
     setattr(obj, prefix, trend_struct['trend'])
-    setattr(obj, prefix + '_period', '%s%s' % (trend_struct['period_min'],
-                                               trend_struct['period_max']))
+    flatten_period(trend_struct['period'], obj, prefix + '_period')
 
 
 def flatten_conclusion(conclusion_struct, obj, prefix):

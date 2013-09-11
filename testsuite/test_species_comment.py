@@ -12,13 +12,17 @@ SPECIES_STRUCT_DATA = {
         'method': 'foo range method',
         'trend_short': {
             'trend': '+',
-            'period_min': 'amin',
-            'period_max': 'amax',
+            'period': {
+                'start': 'amin',
+                'end': 'amax',
+            },
         },
         'trend_long': {
             'trend': '-',
-            'period_min': 'bmin',
-            'period_max': 'bmax',
+            'period': {
+                'start': 'bmin',
+                'end': 'bmax',
+            },
         },
         'reference_value': {
             'op': 'foo op',
