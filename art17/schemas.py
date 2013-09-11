@@ -226,8 +226,8 @@ class HabitatRecord(GenericRecord):
 
 def flatten_trend(trend_struct, obj, prefix):
     setattr(obj, prefix, trend_struct['trend'])
-    setattr(obj, prefix + '_period', '%s-%s' % (trend_struct['period_min'],
-                                                trend_struct['period_max']))
+    setattr(obj, prefix + '_period', '%s%s' % (trend_struct['period_min'],
+                                               trend_struct['period_max']))
 
 
 def flatten_conclusion(conclusion_struct, obj, prefix):
