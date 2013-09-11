@@ -72,6 +72,26 @@ def test_edit_comment_form(habitat_app):
     assert '1337' in resp2.data
 
 
+def test_edit_comment_submit(habitat_app):
+    from art17.models import DataHabitattypeComment, db
+    _create_habitat_record(habitat_app)
+    with habitat_app.app_context():
+        comment = DataHabitattypeComment(hr_id='4f799fdd6f5a',
+                                         hr_habitat_id=1,
+                                         region='ALP',
+                                         range_surface_area=1337)
+        db.session.add(comment)
+        db.session.commit()
+    client = habitat_app.test_client()
+    resp = client.post('/habitate/comentariu/4f799fdd6f5a',
+                       data={'range.surface_area': '50'})
+    assert resp.status_code == 200
+    assert COMMENT_SAVED_TXT in resp.data
+    with habitat_app.app_context():
+        comment = DataHabitattypeComment.query.get('4f799fdd6f5a')
+        assert comment.range_surface_area == 50
+
+
 def test_save_all_form_fields():
     from art17 import forms
     from art17 import models

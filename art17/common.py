@@ -107,7 +107,8 @@ class CommentView(flask.views.View):
         elif comment_id:
             self.comment = self.comment_cls.query.get_or_404(comment_id)
             self.record = self.record_for_comment(self.comment)
-            form.range.surface_area.data = self.comment.range_surface_area
+            if not flask.request.form:
+                form.range.surface_area.data = self.comment.range_surface_area
 
         else:
             raise RuntimeError("Need at least one of record_id and comment_id")
