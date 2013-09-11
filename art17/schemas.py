@@ -141,6 +141,22 @@ def parse_species(row, is_comment=False):
     return rv
 
 
+def parse_species_comment(row):
+    rv = {}
+    rv['range'] = {
+            'surface_area': row.range_surface_area,
+            'method': row.range_method,
+            'trend_short': parse_trend(row, 'range_trend'),
+            'trend_long': parse_trend(row, 'range_trend_long'),
+            'conclusion': parse_conclusion(row, 'conclusion_range'),
+            'reference_value': parse_reference_value(row,
+                                    'complementary_favourable_range')
+        }
+    del rv['range']['trend_short']['magnitude']
+    del rv['range']['trend_long']['magnitude']
+    return rv
+
+
 def parse_habitat(row, is_comment=False):
     rv = {}
     if is_comment:
@@ -169,6 +185,22 @@ def parse_habitat(row, is_comment=False):
     rv['structure'] = parse_conclusion(row, 'conclusion_structure')
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
+    return rv
+
+
+def parse_habitat_comment(row):
+    rv = {}
+    rv['range'] = {
+            'surface_area': row.range_surface_area,
+            'method': row.range_method,
+            'trend_short': parse_trend(row, 'range_trend'),
+            'trend_long': parse_trend(row, 'range_trend_long'),
+            'conclusion': parse_conclusion(row, 'conclusion_range'),
+            'reference_value': parse_reference_value(row,
+                                    'complementary_favourable_range')
+        }
+    del rv['range']['trend_short']['magnitude']
+    del rv['range']['trend_long']['magnitude']
     return rv
 
 
@@ -220,29 +252,3 @@ def flatten_habitat(struct, obj):
     flatten_refval(struct['range']['reference_value'], obj,
                    'complementary_favourable_range')
     flatten_conclusion(struct['range']['conclusion'], obj, 'conclusion_range')
-
-
-def parse_species_comment(obj):
-    rv = parse_species(obj)
-    del rv['id']
-    del rv['region']
-    del rv['range']['trend_short']['magnitude']
-    del rv['range']['trend_long']['magnitude']
-    del rv['population']
-    del rv['habitat']
-    del rv['future_prospects']
-    del rv['overall_assessment']
-    return rv
-
-
-def parse_habitat_comment(obj):
-    rv = parse_habitat(obj)
-    del rv['id']
-    del rv['region']
-    del rv['range']['trend_short']['magnitude']
-    del rv['range']['trend_long']['magnitude']
-    del rv['coverage']
-    del rv['structure']
-    del rv['future_prospects']
-    del rv['overall_assessment']
-    return rv
