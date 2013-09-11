@@ -28,7 +28,8 @@ class GenericRecord(object):
         self.row = row
         self.is_comment = is_comment
 
-    def _split_period(self, year_string):
+    @staticmethod
+    def _split_period(year_string):
         if year_string:
             return {
                 'start': year_string[:4],
@@ -227,8 +228,14 @@ class HabitatRecord(GenericRecord):
 
 
 def flatten_period(period_struct, obj, prefix):
-    setattr(obj, prefix, '%s%s' % (period_struct['start'],
-                                   period_struct['end']))
+    if period_struct is None:
+        value = None
+    elif not (period_struct['start'] or period_struct['end']):
+        value = None
+    else:
+        assert period_struct['start'] and period_struct['end']
+        value = '%s%s' % (period_struct['start'], period_struct['end'])
+    setattr(obj, prefix, value)
 
 
 def flatten_trend(trend_struct, obj, prefix):
