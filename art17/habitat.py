@@ -1,59 +1,10 @@
 import flask
-from werkzeug.utils import cached_property
 from art17 import models
-from art17.common import GenericRecord, CommentView
+from art17.common import CommentView
+from art17.schemas import HabitatRecord
 from art17 import forms
 
 habitat = flask.Blueprint('habitat', __name__)
-
-
-class HabitatRecord(GenericRecord):
-
-    @cached_property
-    def id(self):
-        return self.row.hr_id
-
-    @cached_property
-    def region(self):
-        return self.row.region
-
-    @cached_property
-    def range(self):
-        surface_area = self.row.range_surface_area
-        return {
-            'surface_area': surface_area,
-            'conclusion': self._get_conclusion('range'),
-            'trend_short': self._get_trend('range'),
-            'trend_long': self._get_trend('range', '_long'),
-            'magnitude_short': self._get_magnitude('range'),
-            'magnitude_long': self._get_magnitude('range', '_long'),
-            'reference_value': self._get_reference_value('range', surface_area),
-        }
-
-    @cached_property
-    def area(self):
-        surface_area = self.row.coverage_surface_area
-        return {
-            'surface_area': surface_area,
-            'trend_short': self._get_trend('coverage'),
-            'trend_long': self._get_trend('coverage', '_long'),
-            'magnitude_short': self._get_magnitude('coverage'),
-            'magnitude_long': self._get_magnitude('coverage', '_long'),
-            'conclusion': self._get_conclusion('area'),
-            'reference_value': self._get_reference_value('area', surface_area),
-        }
-
-    @cached_property
-    def structure(self):
-        return self._get_conclusion('structure')
-
-    @cached_property
-    def future_prospects(self):
-        return self._get_conclusion('future')
-
-    @cached_property
-    def overall_assessment(self):
-        return self._get_conclusion('assessment')
 
 
 @habitat.route('/habitate/regiuni/<int:habitat_code>')
