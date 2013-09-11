@@ -35,18 +35,17 @@ def parse_period(obj, prefix):
         return None
 
 
-def parse_trend(obj, prefix):
-    return {
+def parse_trend(obj, prefix, magnitude=True):
+    rv = {
         'trend': getattr(obj, prefix),
         'period': parse_period(obj, prefix + '_period')
     }
-
-
-def parse_magnitude(obj, prefix):
-    return {
-        'min': getattr(obj, prefix + '_min'),
-        'max': getattr(obj, prefix + '_max'),
-    }
+    if magnitude:
+        rv['magnitude'] = {
+            'min': getattr(obj, prefix + '_magnitude_min'),
+            'max': getattr(obj, prefix + '_magnitude_max'),
+        }
+    return rv
 
 
 class GenericRecord(object):
@@ -95,8 +94,6 @@ class SpeciesRecord(GenericRecord):
             'method': self.row.range_method,
             'trend_short': parse_trend(self.row, 'range_trend'),
             'trend_long': parse_trend(self.row, 'range_trend_long'),
-            'magnitude_short': parse_magnitude(self.row, 'range_trend_magnitude'),
-            'magnitude_long': parse_magnitude(self.row, 'range_trend_long_magnitude'),
             'conclusion': self._get_conclusion('range'),
             'reference_value': self._get_reference_value('range',
                                                          surface_area),
@@ -147,8 +144,6 @@ class SpeciesRecord(GenericRecord):
             'conclusion': self._get_conclusion('population'),
             'trend_short': self._get_population_trend(),
             'trend_long': self._get_population_trend('_long'),
-            'magnitude_short': parse_magnitude(self.row, 'population_trend_magnitude'),
-            'magnitude_long': parse_magnitude(self.row, 'population_trend_long_magnitude'),
             'reference_value': self._get_reference_value('population',
                                                          ref_value_ideal),
         }
@@ -159,8 +154,10 @@ class SpeciesRecord(GenericRecord):
             'surface_area': self.row.habitat_surface_area,
             'method': self.row.habitat_method,
             'conclusion': self._get_conclusion('habitat'),
-            'trend_short': parse_trend(self.row, 'habitat_trend'),
-            'trend_long': parse_trend(self.row, 'habitat_trend_long'),
+            'trend_short': parse_trend(self.row, 'habitat_trend',
+                                       magnitude=False),
+            'trend_long': parse_trend(self.row, 'habitat_trend_long',
+                                      magnitude=False),
             'area_suitable': self.row.habitat_area_suitable,
             'quality': self._get_habitat_quality(),
         }
@@ -192,8 +189,6 @@ class HabitatRecord(GenericRecord):
             'method': self.row.range_method,
             'trend_short': parse_trend(self.row, 'range_trend'),
             'trend_long': parse_trend(self.row, 'range_trend_long'),
-            'magnitude_short': parse_magnitude(self.row, 'range_trend_magnitude'),
-            'magnitude_long': parse_magnitude(self.row, 'range_trend_long_magnitude'),
             'conclusion': self._get_conclusion('range'),
             'reference_value': self._get_reference_value('range',
                                                          surface_area),
@@ -206,8 +201,6 @@ class HabitatRecord(GenericRecord):
             'surface_area': surface_area,
             'trend_short': parse_trend(self.row, 'coverage_trend'),
             'trend_long': parse_trend(self.row, 'coverage_trend_long'),
-            'magnitude_short': parse_magnitude(self.row, 'coverage_trend_magnitude'),
-            'magnitude_long': parse_magnitude(self.row, 'coverage_trend_long_magnitude'),
             'conclusion': self._get_conclusion('area'),
             'reference_value': self._get_reference_value('area', surface_area),
         }
@@ -285,8 +278,8 @@ def parse_species(obj):
 def parse_species_comment(obj):
     rv = parse_species(obj)
     del rv['range']['reference_value']['_ideal']
-    del rv['range']['magnitude_short']
-    del rv['range']['magnitude_long']
+    del rv['range']['trend_short']['magnitude']
+    del rv['range']['trend_long']['magnitude']
     return rv
 
 
@@ -300,6 +293,6 @@ def parse_habitat(obj):
 def parse_habitat_comment(obj):
     rv = parse_habitat(obj)
     del rv['range']['reference_value']['_ideal']
-    del rv['range']['magnitude_short']
-    del rv['range']['magnitude_long']
+    del rv['range']['trend_short']['magnitude']
+    del rv['range']['trend_long']['magnitude']
     return rv

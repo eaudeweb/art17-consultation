@@ -43,7 +43,7 @@
 
         <tr>
           <th>Tendinţa pe termen scurt - magnitudinea</th>
-          <td>{{ magnitude_html(record.range.magnitude_short) }}</td>
+          <td>{{ magnitude_html(record.range.trend_short.magnitude) }}</td>
         </tr>
 
         <tr>
@@ -59,7 +59,7 @@
 
         <tr>
           <th>Tendinţa pe termen lung - magnitudinea</th>
-          <td>{{ magnitude_html(record.range.magnitude_long) }}</td>
+          <td>{{ magnitude_html(record.range.trend_long.magnitude) }}</td>
         </tr>
 
         <tr>
@@ -107,7 +107,7 @@
 
         <tr>
           <th>Tendinţa pe termen scurt - magnitudinea</th>
-          <td>{{ magnitude_html(record.population.magnitude_short) }}</td>
+          <td>{{ magnitude_html(record.population.trend_short.magnitude) }}</td>
         </tr>
 
         <tr>
@@ -123,7 +123,7 @@
 
         <tr>
           <th>Tendinţa pe termen lung - magnitudinea</th>
-          <td>{{ magnitude_html(record.population.magnitude_long) }}</td>
+          <td>{{ magnitude_html(record.population.trend_long.magnitude) }}</td>
         </tr>
 
         <tr>
