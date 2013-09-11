@@ -65,7 +65,7 @@
         <tr>
           <th>Arealul favorabil de referință</th>
           <td>{{ reference_value_html(record.range.reference_value,
-                  unit='km<sup>2</sup>'|safe) }} <br />
+                  unit='km²') }} <br />
             {%- if record.range.reference_value.method %}
               Metoda utilizată: {{ record.range.reference_value.method }}
             {% endif -%}
@@ -196,7 +196,7 @@
           <th>Suprafața de habitat adecvată pentru specie</th>
           <td>
             {{ reference_value_html(record.habitat.area_suitable,
-                  unit='km<sup>2</sup>'|safe) }}
+                  unit='km²') }}
           </td>
         </tr>
 

@@ -26,14 +26,14 @@
 
 {% macro range_html(range) %}
 {%- if range.surface_area -%}
-  {{ range.surface_area }} km<sup>2</sup>
+  {{ range.surface_area }} km²
 {%- endif -%}
 {%- endmacro %}
 
 
 {% macro magnitude_html(magnitude) -%}
 {% if magnitude.min or magnitude.max %}
-    {{ magnitude.min }} - {{ magnitude.max }} km<sup>2</sup>
+    {{ magnitude.min }} - {{ magnitude.max }} km²
 {% endif %}
 {%- endmacro %}
 
