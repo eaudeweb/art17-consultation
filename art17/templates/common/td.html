@@ -33,7 +33,10 @@
 
 
 {% macro period_html(period) %}
-  {{ period }}
+{%- if period -%}
+  {#- unicode character 2011: non-breaking hyphen -#}
+  ({{ period.start }}&#x2011;{{ period.end }})
+{%- endif %}
 {%- endmacro %}
 
 

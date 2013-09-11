@@ -30,10 +30,13 @@ class GenericRecord(object):
 
     def _split_period(self, year_string):
         if year_string:
-            # u2011: non-breaking hyphen
-            return u"(%s\u2011%s)" % (year_string[:4], year_string[4:])
+            return {
+                'start': year_string[:4],
+                'end': year_string[4:],
+            }
+
         else:
-            return ""
+            return None
 
     def _get_trend(self, name, qualifier=''):
         period = getattr(self.row, '%s_trend%s_period' % (name, qualifier))
