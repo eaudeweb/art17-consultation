@@ -33,3 +33,14 @@ def habitat_app(app):
     from art17.habitat import habitat
     app.register_blueprint(habitat)
     return app
+
+
+def flatten_dict(data):
+    rv = {}
+    for k, v in data.items():
+        if isinstance(v, dict):
+            for kx, vx in flatten_dict(v).items():
+                rv[k + '.' + kx] = vx
+        else:
+            rv[k] = unicode(v)
+    return rv

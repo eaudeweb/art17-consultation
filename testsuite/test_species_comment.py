@@ -1,9 +1,51 @@
 # encoding: utf-8
 
 import pytest
+from conftest import flatten_dict
 
 COMMENT_SAVED_TXT = "Comentariul a fost înregistrat"
 MISSING_FIELD_TXT = "Suprafața este obligatorie"
+
+SPECIES_STRUCT_DATA = {
+    'range': {
+        'surface_area': 123,
+        'method': 'foo range method',
+        'trend_short': {
+            'trend': '+',
+            'period_min': 'foomin',
+            'period_max': 'foomax',
+        },
+        'trend_long': {
+            'trend': '-',
+            'period_min': 'barmin',
+            'period_max': 'barmax',
+        },
+        'reference_value': {
+            'op': 'foo op',
+            'number': 456,
+        },
+        'reference_method': 'foo method',
+        'conclusion': {
+            'value': 'U1',
+            'trend': 'foo conclusion trend',
+        },
+    },
+}
+
+
+SPECIES_MODEL_DATA = {
+    'range_surface_area': 123,
+    'range_method': 'foo range method',
+    'range_trend': '+',
+    'range_trend_period': 'foomin-foomax',
+    'range_trend_long': '-',
+    'range_trend_long_period': 'barmin-barmax',
+    'complementary_favourable_range_op': 'foo op',
+    'complementary_favourable_range': 456,
+    'complementary_favourable_range_method': 'foo method',
+    'conclusion_range': 'U1',
+    'conclusion_range_trend': 'foo conclusion trend',
+}
 
 
 def _create_species_record(species_app):
@@ -97,21 +139,7 @@ def test_save_all_form_fields():
     from art17 import models
     from werkzeug.datastructures import MultiDict
 
-    form_data = MultiDict({
-        'range.surface_area': '123',
-        'range.method': 'foo range method',
-        'range.trend_short.trend': '+',
-        'range.trend_short.period_min': 'foomin',
-        'range.trend_short.period_max': 'foomax',
-        'range.trend_long.trend': '-',
-        'range.trend_long.period_min': 'barmin',
-        'range.trend_long.period_max': 'barmax',
-        'range.reference_value.op': 'foo op',
-        'range.reference_value.number': '456',
-        'range.reference_method': 'foo method',
-        'range.conclusion.value': 'U1',
-        'range.conclusion.trend': 'foo conclusion trend',
-    })
+    form_data = MultiDict(flatten_dict(SPECIES_STRUCT_DATA))
 
     form = forms.SpeciesComment(form_data)
     assert form.validate()
@@ -119,14 +147,5 @@ def test_save_all_form_fields():
     comment = models.DataSpeciesComment()
     form.populate_obj(comment)
 
-    assert comment.range_surface_area == 123
-    assert comment.range_method == 'foo range method'
-    assert comment.range_trend == '+'
-    assert comment.range_trend_period == 'foomin-foomax'
-    assert comment.range_trend_long == '-'
-    assert comment.range_trend_long_period == 'barmin-barmax'
-    assert comment.complementary_favourable_range_op == 'foo op'
-    assert comment.complementary_favourable_range == 456
-    assert comment.complementary_favourable_range_method == 'foo method'
-    assert comment.conclusion_range == 'U1'
-    assert comment.conclusion_range_trend == 'foo conclusion trend'
+    for k, v in SPECIES_MODEL_DATA.items():
+        assert getattr(comment, k) == v
