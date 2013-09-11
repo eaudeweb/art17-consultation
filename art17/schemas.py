@@ -57,6 +57,7 @@ class GenericRecord(object):
     def _get_conclusion(self, name):
         return {
             'value': getattr(self.row, 'conclusion_%s' % name),
+            'trend': getattr(self.row, 'conclusion_%s_trend' % name),
         }
 
     def _get_reference_value(self, name, ideal):
@@ -267,3 +268,23 @@ def flatten_habitat(struct, obj):
     flatten_refval(struct['range']['reference_value'], obj,
                    'complementary_favourable_range')
     flatten_conclusion(struct['range']['conclusion'], obj, 'conclusion_range')
+
+
+def parse_species(obj):
+    record = SpeciesRecord(obj)
+    rv = {}
+    rv['range'] = record.range
+    del rv['range']['reference_value']['_ideal']
+    del rv['range']['magnitude_short']
+    del rv['range']['magnitude_long']
+    return rv
+
+
+def parse_habitat(obj):
+    record = HabitatRecord(obj)
+    rv = {}
+    rv['range'] = record.range
+    del rv['range']['reference_value']['_ideal']
+    del rv['range']['magnitude_short']
+    del rv['range']['magnitude_long']
+    return rv
