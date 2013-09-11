@@ -54,6 +54,44 @@ def test_error_on_required_record(species_app):
         assert DataSpeciesComment.query.count() == 0
 
 
+def test_edit_comment_form(species_app):
+    from art17.models import DataSpeciesComment, db
+    _create_species_record(species_app)
+    with species_app.app_context():
+        comment = DataSpeciesComment(sr_id='4f799fdd6f5a',
+                                     sr_species_id=1,
+                                     region='ALP',
+                                     range_surface_area=1337)
+        db.session.add(comment)
+        db.session.commit()
+    client = species_app.test_client()
+    resp1 = client.get('/specii/comentariu/f3b4c23bcb88')
+    assert resp1.status_code == 404
+    resp2 = client.get('/specii/comentariu/4f799fdd6f5a')
+    assert resp2.status_code == 200
+    assert '1337' in resp2.data
+
+
+def test_edit_comment_submit(species_app):
+    from art17.models import DataSpeciesComment, db
+    _create_species_record(species_app)
+    with species_app.app_context():
+        comment = DataSpeciesComment(sr_id='4f799fdd6f5a',
+                                     sr_species_id=1,
+                                     region='ALP',
+                                     range_surface_area=1337)
+        db.session.add(comment)
+        db.session.commit()
+    client = species_app.test_client()
+    resp = client.post('/specii/comentariu/4f799fdd6f5a',
+                       data={'range.surface_area': '50'})
+    assert resp.status_code == 200
+    assert COMMENT_SAVED_TXT in resp.data
+    with species_app.app_context():
+        comment = DataSpeciesComment.query.get('4f799fdd6f5a')
+        assert comment.range_surface_area == 50
+
+
 def test_save_all_form_fields():
     from art17 import forms
     from art17 import models

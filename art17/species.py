@@ -199,6 +199,18 @@ class SpeciesCommentView(CommentView):
             'record': SpeciesRecord(self.record),
         }
 
+    def record_for_comment(self, comment):
+        records = (models.DataSpeciesRegion.query
+                            .filter_by(sr_species_id=comment.sr_species_id)
+                            .filter_by(region=comment.region)
+                            .all())
+        assert len(records) == 1, "Expected exactly one record for the comment"
+        return records[0]
+
 
 species.add_url_rule('/specii/detalii/<int:record_id>/comentariu',
                      view_func=SpeciesCommentView.as_view('comment'))
+
+
+species.add_url_rule('/specii/comentariu/<comment_id>',
+                     view_func=SpeciesCommentView.as_view('comment_edit'))
