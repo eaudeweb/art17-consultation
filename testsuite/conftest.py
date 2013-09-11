@@ -44,3 +44,7 @@ def flatten_dict(data):
         else:
             rv[k] = unicode(v)
     return rv
+
+
+class Obj(object):
+    """ A blank class. Useful sometimes. """

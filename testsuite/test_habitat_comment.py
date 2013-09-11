@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 import pytest
-from conftest import flatten_dict
+from conftest import flatten_dict, Obj
 
 COMMENT_SAVED_TXT = "Comentariul a fost înregistrat"
 MISSING_FIELD_TXT = "Suprafața este obligatorie"
@@ -157,7 +157,6 @@ def test_save_all_form_fields():
 
 
 def test_flatten():
-    class Obj(object): pass
     from art17.schemas import flatten_habitat
     obj = Obj()
     flatten_habitat(HABITAT_STRUCT_DATA, obj)
@@ -167,7 +166,6 @@ def test_flatten():
 
 def test_parse():
     from art17.schemas import parse_habitat
-    class Obj(object): pass
     obj = Obj()
     for k, v in HABITAT_MODEL_DATA.items():
         setattr(obj, k, v)
