@@ -35,26 +35,25 @@ def parse_period(obj, prefix):
         return None
 
 
+def parse_trend(obj, prefix):
+    return {
+        'trend': getattr(obj, prefix),
+        'period': parse_period(obj, prefix + '_period')
+    }
+
+
+def parse_magnitude(obj, prefix):
+    return {
+        'min': getattr(obj, prefix + '_min'),
+        'max': getattr(obj, prefix + '_max'),
+    }
+
+
 class GenericRecord(object):
 
     def __init__(self, row, is_comment=False):
         self.row = row
         self.is_comment = is_comment
-
-    def _get_trend(self, name, qualifier=''):
-        return {
-            'trend': getattr(self.row, '%s_trend%s' % (name, qualifier)),
-            'period': parse_period(self.row,
-                                   '%s_trend%s_period' % (name, qualifier)),
-        }
-
-    def _get_magnitude(self, name, qualifier=''):
-        mag_min = getattr(self.row, '%s_trend%s_magnitude_min' % (name, qualifier))
-        mag_max = getattr(self.row, '%s_trend%s_magnitude_max' % (name, qualifier))
-        return {
-            'min': mag_min,
-            'max': mag_max,
-        }
 
     def _get_conclusion(self, name):
         return {
@@ -94,10 +93,10 @@ class SpeciesRecord(GenericRecord):
         return {
             'surface_area': surface_area,
             'method': self.row.range_method,
-            'trend_short': self._get_trend('range'),
-            'trend_long': self._get_trend('range', '_long'),
-            'magnitude_short': self._get_magnitude('range'),
-            'magnitude_long': self._get_magnitude('range', '_long'),
+            'trend_short': parse_trend(self.row, 'range_trend'),
+            'trend_long': parse_trend(self.row, 'range_trend_long'),
+            'magnitude_short': parse_magnitude(self.row, 'range_trend_magnitude'),
+            'magnitude_long': parse_magnitude(self.row, 'range_trend_long_magnitude'),
             'conclusion': self._get_conclusion('range'),
             'reference_value': self._get_reference_value('range',
                                                          surface_area),
@@ -122,14 +121,12 @@ class SpeciesRecord(GenericRecord):
         return rv
 
     def _get_population_trend(self, qualifier=''):
-        base_info = self._get_trend('population', qualifier)
-        magnitude_min = getattr(self.row,
-                'population_trend%s_magnitude_min' % qualifier)
-        magnitude_max = getattr(self.row,
-                'population_trend%s_magnitude_max' % qualifier)
-        magnitude_ci = getattr(self.row,
-                'population_trend%s_magnitude_ci' % qualifier)
-        method = getattr(self.row, 'population_trend%s_method' % qualifier)
+        prefix = 'population_trend' + qualifier
+        base_info = parse_trend(self.row, prefix)
+        magnitude_min = getattr(self.row, prefix + '_magnitude_min' % qualifier)
+        magnitude_max = getattr(self.row, prefix + '_magnitude_max' % qualifier)
+        magnitude_ci = getattr(self.row, prefix + '_magnitude_ci' % qualifier)
+        method = getattr(self.row, prefix + '_method' % qualifier)
         return "%s method=%s magnitude=(min=%s max=%s ci=%s)" % (
             base_info, method, magnitude_min, magnitude_max, magnitude_ci)
 
@@ -150,8 +147,8 @@ class SpeciesRecord(GenericRecord):
             'conclusion': self._get_conclusion('population'),
             'trend_short': self._get_population_trend(),
             'trend_long': self._get_population_trend('_long'),
-            'magnitude_short': self._get_magnitude('population'),
-            'magnitude_long': self._get_magnitude('population', '_long'),
+            'magnitude_short': parse_magnitude(self.row, 'population_trend_magnitude'),
+            'magnitude_long': parse_magnitude(self.row, 'population_trend_long_magnitude'),
             'reference_value': self._get_reference_value('population',
                                                          ref_value_ideal),
         }
@@ -162,8 +159,8 @@ class SpeciesRecord(GenericRecord):
             'surface_area': self.row.habitat_surface_area,
             'method': self.row.habitat_method,
             'conclusion': self._get_conclusion('habitat'),
-            'trend_short': self._get_trend('habitat'),
-            'trend_long': self._get_trend('habitat', '_long'),
+            'trend_short': parse_trend(self.row, 'habitat_trend'),
+            'trend_long': parse_trend(self.row, 'habitat_trend_long'),
             'area_suitable': self.row.habitat_area_suitable,
             'quality': self._get_habitat_quality(),
         }
@@ -193,10 +190,10 @@ class HabitatRecord(GenericRecord):
         return {
             'surface_area': surface_area,
             'method': self.row.range_method,
-            'trend_short': self._get_trend('range'),
-            'trend_long': self._get_trend('range', '_long'),
-            'magnitude_short': self._get_magnitude('range'),
-            'magnitude_long': self._get_magnitude('range', '_long'),
+            'trend_short': parse_trend(self.row, 'range_trend'),
+            'trend_long': parse_trend(self.row, 'range_trend_long'),
+            'magnitude_short': parse_magnitude(self.row, 'range_trend_magnitude'),
+            'magnitude_long': parse_magnitude(self.row, 'range_trend_long_magnitude'),
             'conclusion': self._get_conclusion('range'),
             'reference_value': self._get_reference_value('range',
                                                          surface_area),
@@ -207,10 +204,10 @@ class HabitatRecord(GenericRecord):
         surface_area = self.row.coverage_surface_area
         return {
             'surface_area': surface_area,
-            'trend_short': self._get_trend('coverage'),
-            'trend_long': self._get_trend('coverage', '_long'),
-            'magnitude_short': self._get_magnitude('coverage'),
-            'magnitude_long': self._get_magnitude('coverage', '_long'),
+            'trend_short': parse_trend(self.row, 'coverage_trend'),
+            'trend_long': parse_trend(self.row, 'coverage_trend_long'),
+            'magnitude_short': parse_magnitude(self.row, 'coverage_trend_magnitude'),
+            'magnitude_long': parse_magnitude(self.row, 'coverage_trend_long_magnitude'),
             'conclusion': self._get_conclusion('area'),
             'reference_value': self._get_reference_value('area', surface_area),
         }
