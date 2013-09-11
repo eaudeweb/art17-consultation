@@ -11,27 +11,21 @@ def parse_period(obj, prefix):
         return None
 
 
-def parse_trend(obj, prefix):
-    return {
+def parse_trend(obj, prefix, magnitude=False):
+    rv = {
         'trend': getattr(obj, prefix),
         'period': parse_period(obj, prefix + '_period'),
-        'magnitude': {
+    }
+    if magnitude:
+        rv['magnitude'] = {
             'min': getattr(obj, prefix + '_magnitude_min'),
             'max': getattr(obj, prefix + '_magnitude_max'),
         }
-    }
-
-
-def parse_habitat_trend(obj, prefix):
-    """ habitat trend has no magnitude """
-    return {
-        'trend': getattr(obj, prefix),
-        'period': parse_period(obj, prefix + '_period'),
-    }
+    return rv
 
 
 def parse_population_trend(obj, prefix):
-    rv = parse_trend(obj, prefix)
+    rv = parse_trend(obj, prefix, magnitude=True)
     rv['magnitude']['ci'] = getattr(obj, prefix + '_magnitude_ci')
     rv['method'] = getattr(obj, prefix + '_method')
     return rv
@@ -107,8 +101,8 @@ def parse_species(row, is_comment=False):
     rv['range'] = {
             'surface_area': row.range_surface_area,
             'method': row.range_method,
-            'trend_short': parse_trend(row, 'range_trend'),
-            'trend_long': parse_trend(row, 'range_trend_long'),
+            'trend_short': parse_trend(row, 'range_trend', magnitude=True),
+            'trend_long': parse_trend(row, 'range_trend_long', magnitude=True),
             'conclusion': parse_conclusion(row, 'conclusion_range'),
             'reference_value': parse_reference_value(row,
                                     'complementary_favourable_range')
@@ -131,8 +125,8 @@ def parse_species(row, is_comment=False):
             'surface_area': row.habitat_surface_area,
             'method': row.habitat_method,
             'conclusion': parse_conclusion(row, 'conclusion_habitat'),
-            'trend_short': parse_habitat_trend(row, 'habitat_trend'),
-            'trend_long': parse_habitat_trend(row, 'habitat_trend_long'),
+            'trend_short': parse_trend(row, 'habitat_trend'),
+            'trend_long': parse_trend(row, 'habitat_trend_long'),
             'area_suitable': row.habitat_area_suitable,
             'quality': _get_habitat_quality(row),
         }
@@ -152,8 +146,6 @@ def parse_species_comment(row):
             'reference_value': parse_reference_value(row,
                                     'complementary_favourable_range')
         }
-    del rv['range']['trend_short']['magnitude']
-    del rv['range']['trend_long']['magnitude']
     return rv
 
 
@@ -166,8 +158,8 @@ def parse_habitat(row, is_comment=False):
     rv['range'] = {
             'surface_area': row.range_surface_area,
             'method': row.range_method,
-            'trend_short': parse_trend(row, 'range_trend'),
-            'trend_long': parse_trend(row, 'range_trend_long'),
+            'trend_short': parse_trend(row, 'range_trend', magnitude=True),
+            'trend_long': parse_trend(row, 'range_trend_long', magnitude=True),
             'conclusion': parse_conclusion(row, 'conclusion_range'),
             'reference_value': parse_reference_value(row,
                                     'complementary_favourable_range')
@@ -175,8 +167,8 @@ def parse_habitat(row, is_comment=False):
         }
     rv['coverage'] = {
             'surface_area': row.coverage_surface_area,
-            'trend_short': parse_trend(row, 'coverage_trend'),
-            'trend_long': parse_trend(row, 'coverage_trend_long'),
+            'trend_short': parse_trend(row, 'coverage_trend', magnitude=True),
+            'trend_long': parse_trend(row, 'coverage_trend_long', magnitude=True),
             'conclusion': parse_conclusion(row, 'conclusion_area'),
             'reference_value': parse_reference_value(row,
                                     'complementary_favourable_area')
@@ -199,8 +191,6 @@ def parse_habitat_comment(row):
             'reference_value': parse_reference_value(row,
                                     'complementary_favourable_range')
         }
-    del rv['range']['trend_short']['magnitude']
-    del rv['range']['trend_long']['magnitude']
     return rv
 
 
