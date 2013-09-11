@@ -1,4 +1,5 @@
 import flask
+import flask.views
 from werkzeug.utils import cached_property
 from art17 import models
 from art17.common import GenericRecord
@@ -181,32 +182,47 @@ def detail(record_id):
     })
 
 
-@species.route('/specii/detalii/<int:record_id>/comentariu',
-               methods=['GET', 'POST'])
-def comment(record_id):
-    record = models.DataSpeciesRegion.query.get_or_404(record_id)
-    form = forms.SpeciesComment(flask.request.form)
-    next_url = flask.request.args.get('next')
+class SpeciesCommentView(flask.views.View):
 
-    if flask.request.method == 'POST' and form.validate():
-        comment = models.DataSpeciesComment(
-            sr_species_id=record.sr_species_id,
-            region=record.region)
+    methods = ['GET', 'POST']
+    form_cls = forms.SpeciesComment
+    record_cls = models.DataSpeciesRegion
+    comment_cls = models.DataSpeciesComment
+    template = 'species/comment.html'
+    template_saved = 'species/comment-saved.html'
 
-        form.populate_obj(comment)
+    def link_comment_to_record(self):
+        self.comment.sr_species_id = self.record.sr_species_id
+        self.comment.region = self.record.region
 
-        models.db.session.add(comment)
-        models.db.session.commit()
+    def setup_template_context(self):
+        self.template_ctx = {
+            'species': self.record.sr_species,
+            'record': SpeciesRecord(self.record),
+        }
 
-        return flask.render_template('species/comment-saved.html', **{
-            'species': record.sr_species,
-            'record': SpeciesRecord(record),
-            'next_url': next_url,
-        })
+    def dispatch_request(self, record_id):
+        self.record = self.record_cls.query.get_or_404(record_id)
+        form = self.form_cls(flask.request.form)
+        self.setup_template_context()
+        self.template_ctx['next_url'] = flask.request.args.get('next')
 
-    return flask.render_template('species/comment.html', **{
-        'species': record.sr_species,
-        'record': SpeciesRecord(record),
-        'form': form,
-        'next_url': next_url,
-    })
+        if flask.request.method == 'POST' and form.validate():
+            self.comment = self.comment_cls()
+            self.link_comment_to_record()
+
+            form.populate_obj(self.comment)
+
+            models.db.session.add(self.comment)
+            models.db.session.commit()
+
+            return flask.render_template('species/comment-saved.html',
+                                         **self.template_ctx)
+
+        self.template_ctx['form'] = form
+        return flask.render_template('species/comment.html',
+                                     **self.template_ctx)
+
+
+species.add_url_rule('/specii/detalii/<int:record_id>/comentariu',
+                     view_func=SpeciesCommentView.as_view('comment'))
