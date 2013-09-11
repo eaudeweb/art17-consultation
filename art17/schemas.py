@@ -191,6 +191,7 @@ class HabitatRecord(GenericRecord):
         return {
             'surface_area': surface_area,
             'conclusion': self._get_conclusion('range'),
+            'method': self.row.range_method,
             'trend_short': self._get_trend('range'),
             'trend_long': self._get_trend('range', '_long'),
             'magnitude_short': self._get_magnitude('range'),
