@@ -1,5 +1,6 @@
 import uuid
 import argparse
+import logging
 from sqlalchemy import (Column, DateTime, ForeignKey, Index,
                         String, Table, Text, Numeric, cast, Binary)
 from sqlalchemy.orm import relationship, foreign
@@ -712,6 +713,8 @@ class SysUser(Base):
 @db_manager.option('alembic_args', nargs=argparse.REMAINDER)
 def alembic(alembic_args):
     from alembic.config import CommandLine
+    logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+    logging.getLogger('alembic').setLevel(logging.INFO)
     CommandLine().main(argv=alembic_args)
 
 
