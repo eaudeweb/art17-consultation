@@ -1,13 +1,17 @@
 import uuid
+import argparse
 from sqlalchemy import (Column, DateTime, ForeignKey, Index,
                         String, Table, Text, Numeric, cast, Binary)
 from sqlalchemy.orm import relationship, foreign
 from sqlalchemy.ext.declarative import declarative_base
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.script import Manager
 
 db = SQLAlchemy()
 Base = db.Model
 metadata = db.metadata
+
+db_manager = Manager()
 
 
 def create_uuid():
@@ -699,3 +703,26 @@ class SysUser(Base):
     species_report = Column(Numeric)
     habitats_report = Column(Numeric)
     using_fe_version = Column(Numeric)
+
+
+@db_manager.option('alembic_args', nargs=argparse.REMAINDER)
+def alembic(alembic_args):
+    from alembic.config import CommandLine
+    CommandLine().main(argv=alembic_args)
+
+
+@db_manager.command
+def revision(message=None):
+    if message is None:
+        message = raw_input('revision name: ')
+    return alembic(['revision', '-m', message])
+
+
+@db_manager.command
+def upgrade(revision='head'):
+    return alembic(['upgrade', revision])
+
+
+@db_manager.command
+def downgrade(revision):
+    return alembic(['downgrade', revision])

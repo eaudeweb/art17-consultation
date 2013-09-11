@@ -53,7 +53,9 @@ def create_app():
 
 
 def create_manager():
+    from art17.models import db_manager
     manager = Manager(create_app)
+    manager.add_command('db', db_manager)
     return manager
 
 
