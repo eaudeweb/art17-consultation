@@ -52,7 +52,9 @@ def create_app():
     return app
 
 
-manager = Manager(create_app)
+def create_manager():
+    manager = Manager(create_app)
+    return manager
 
 
 if __name__ == '__main__':
