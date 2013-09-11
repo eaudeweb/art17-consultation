@@ -1,9 +1,11 @@
 from conftest import Obj
+from mock import Mock
+
 
 def test_parse_blank_period():
-    from art17 import schemas
-    split_period = schemas.GenericRecord._split_period
-    assert split_period(None) is None
+    from art17.schemas import parse_period
+    obj = Mock(foo_period=None)
+    assert parse_period(obj, 'foo_period') is None
 
 
 def test_flatten_blank_period():

@@ -22,29 +22,30 @@ class RecordComment(object):
         return False
 
 
+def parse_period(obj, prefix):
+    year_string = getattr(obj, prefix)
+
+    if year_string:
+        return {
+            'start': year_string[:4],
+            'end': year_string[4:],
+        }
+
+    else:
+        return None
+
+
 class GenericRecord(object):
 
     def __init__(self, row, is_comment=False):
         self.row = row
         self.is_comment = is_comment
 
-    @staticmethod
-    def _split_period(year_string):
-        if year_string:
-            return {
-                'start': year_string[:4],
-                'end': year_string[4:],
-            }
-
-        else:
-            return None
-
     def _get_trend(self, name, qualifier=''):
-        period = getattr(self.row, '%s_trend%s_period' % (name, qualifier))
-        trend = getattr(self.row, '%s_trend%s' % (name, qualifier))
         return {
-            'trend': trend,
-            'period': self._split_period(period),
+            'trend': getattr(self.row, '%s_trend%s' % (name, qualifier)),
+            'period': parse_period(self.row,
+                                   '%s_trend%s_period' % (name, qualifier)),
         }
 
     def _get_magnitude(self, name, qualifier=''):
