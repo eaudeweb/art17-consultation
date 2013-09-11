@@ -1,4 +1,3 @@
-from conftest import Obj
 from mock import Mock
 
 
@@ -10,7 +9,7 @@ def test_parse_blank_period():
 
 def test_flatten_blank_period():
     from art17.schemas import flatten_period
-    obj = Obj()
+    obj = Mock()
     flatten_period(None, obj, 'foo_period')
     assert obj.foo_period is None
     flatten_period({'start': None, 'end': None}, obj, 'foo_period')

@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 import pytest
-from conftest import flatten_dict, Obj
+from conftest import flatten_dict
 
 COMMENT_SAVED_TXT = "Comentariul a fost înregistrat"
 MISSING_FIELD_TXT = "Suprafața este obligatorie"
@@ -158,7 +158,8 @@ def test_save_all_form_fields():
 
 def test_flatten():
     from art17.schemas import flatten_species
-    obj = Obj()
+    from art17 import models
+    obj = models.DataSpeciesComment()
     flatten_species(SPECIES_STRUCT_DATA, obj)
     for k, v in SPECIES_MODEL_DATA.items():
         assert getattr(obj, k) == v
@@ -166,13 +167,7 @@ def test_flatten():
 
 def test_parse():
     from art17.schemas import parse_species_comment
-    obj = Obj()
-    for k, v in SPECIES_MODEL_DATA.items():
-        setattr(obj, k, v)
-    obj.range_trend_magnitude_min = None
-    obj.range_trend_magnitude_max = None
-    obj.range_trend_long_magnitude_min = None
-    obj.range_trend_long_magnitude_max = None
-    obj.complementary_favourable_range_x = None
+    from art17 import models
+    obj = models.DataSpeciesComment(**SPECIES_MODEL_DATA)
     data = parse_species_comment(obj)
     assert data == SPECIES_STRUCT_DATA
