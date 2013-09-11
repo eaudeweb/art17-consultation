@@ -281,6 +281,11 @@ def parse_species(obj):
     record = SpeciesRecord(obj)
     rv = {}
     rv['range'] = record.range
+    return rv
+
+
+def parse_species_comment(obj):
+    rv = parse_species(obj)
     del rv['range']['reference_value']['_ideal']
     del rv['range']['magnitude_short']
     del rv['range']['magnitude_long']
@@ -291,6 +296,11 @@ def parse_habitat(obj):
     record = HabitatRecord(obj)
     rv = {}
     rv['range'] = record.range
+    return rv
+
+
+def parse_habitat_comment(obj):
+    rv = parse_habitat(obj)
     del rv['range']['reference_value']['_ideal']
     del rv['range']['magnitude_short']
     del rv['range']['magnitude_long']

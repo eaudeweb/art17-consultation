@@ -165,7 +165,7 @@ def test_flatten():
 
 
 def test_parse():
-    from art17.schemas import parse_habitat
+    from art17.schemas import parse_habitat_comment
     obj = Obj()
     for k, v in HABITAT_MODEL_DATA.items():
         setattr(obj, k, v)
@@ -174,5 +174,5 @@ def test_parse():
     obj.range_trend_long_magnitude_min = None
     obj.range_trend_long_magnitude_max = None
     obj.complementary_favourable_range_x = None
-    data = parse_habitat(obj)
+    data = parse_habitat_comment(obj)
     assert data == HABITAT_STRUCT_DATA
