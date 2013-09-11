@@ -4,9 +4,15 @@
 
 
 {% macro reference_value_html(refval, unit='') %}
-{%- if refval.value %}
-  {{- refval.value }} {{ unit }}
-{%- endif %}
+  {%- if refval.number -%}
+    {{ refval.number }} {{ unit }}
+  {%- elif refval.op -%}
+    {{ refval.op }}{{ refval._ideal }} {{ unit }}
+  {%- elif refval.x -%}
+    Unknown
+  {%- else -%}
+    N/A
+  {%- endif -%}
 {%- endmacro %}
 
 

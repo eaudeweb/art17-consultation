@@ -60,26 +60,13 @@ class GenericRecord(object):
         }
 
     def _get_reference_value(self, name, ideal):
-        favourable = getattr(self.row, 'complementary_favourable_%s' % name)
-        favourable_op = getattr(self.row, 'complementary_favourable_%s_op' % name)
-        favourable_x = getattr(self.row, 'complementary_favourable_%s_x' % name)
-        method = getattr(self.row, 'complementary_favourable_%s_method' % name)
-
-        if favourable:
-            value = favourable
-
-        elif favourable_op:
-            value = "%s%s" % (favourable_op, ideal)
-
-        elif favourable_x:
-            value = "Unknown"
-
-        else:
-            value = "N/A"
-
         return {
-            'value': value,
-            'method': method,
+            '_ideal': ideal,
+            'number': getattr(self.row, 'complementary_favourable_%s' % name),
+            'op': getattr(self.row, 'complementary_favourable_%s_op' % name),
+            'x': getattr(self.row, 'complementary_favourable_%s_x' % name),
+            'method': getattr(self.row, 'complementary_favourable_%s_method'
+                                        % name),
         }
 
     @cached_property
