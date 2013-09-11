@@ -68,21 +68,21 @@ def parse_conclusion(obj, prefix):
     }
 
 
+def parse_reference_value(obj, prefix, ideal):
+    return {
+        '_ideal': ideal,
+        'number': getattr(obj, prefix),
+        'op': getattr(obj, prefix + '_op'),
+        'x': getattr(obj, prefix + '_x'),
+        'method': getattr(obj, prefix + '_method'),
+    }
+
+
 class GenericRecord(object):
 
     def __init__(self, row, is_comment=False):
         self.row = row
         self.is_comment = is_comment
-
-    def _get_reference_value(self, name, ideal):
-        return {
-            '_ideal': ideal,
-            'number': getattr(self.row, 'complementary_favourable_%s' % name),
-            'op': getattr(self.row, 'complementary_favourable_%s_op' % name),
-            'x': getattr(self.row, 'complementary_favourable_%s_x' % name),
-            'method': getattr(self.row, 'complementary_favourable_%s_method'
-                                        % name),
-        }
 
     @cached_property
     def comment(self):
@@ -109,8 +109,9 @@ class SpeciesRecord(GenericRecord):
             'trend_short': parse_trend(self.row, 'range_trend'),
             'trend_long': parse_trend(self.row, 'range_trend_long'),
             'conclusion': parse_conclusion(self.row, 'conclusion_range'),
-            'reference_value': self._get_reference_value('range',
-                                                         surface_area),
+            'reference_value': parse_reference_value(self.row,
+                                    'complementary_favourable_range',
+                                    surface_area),
         }
 
     def _get_population_size(self):
@@ -150,8 +151,9 @@ class SpeciesRecord(GenericRecord):
                                                   'population_trend'),
             'trend_long': parse_population_trend(self.row,
                                                  'population_trend_long'),
-            'reference_value': self._get_reference_value('population',
-                                                         ref_value_ideal),
+            'reference_value': parse_reference_value(self.row,
+                                    'complementary_favourable_population',
+                                    ref_value_ideal),
         }
 
     @cached_property
@@ -194,8 +196,9 @@ class HabitatRecord(GenericRecord):
             'trend_short': parse_trend(self.row, 'range_trend'),
             'trend_long': parse_trend(self.row, 'range_trend_long'),
             'conclusion': parse_conclusion(self.row, 'conclusion_range'),
-            'reference_value': self._get_reference_value('range',
-                                                         surface_area),
+            'reference_value': parse_reference_value(self.row,
+                                    'complementary_favourable_range',
+                                    surface_area),
         }
 
     @cached_property
@@ -206,7 +209,9 @@ class HabitatRecord(GenericRecord):
             'trend_short': parse_trend(self.row, 'coverage_trend'),
             'trend_long': parse_trend(self.row, 'coverage_trend_long'),
             'conclusion': parse_conclusion(self.row, 'conclusion_area'),
-            'reference_value': self._get_reference_value('area', surface_area),
+            'reference_value': parse_reference_value(self.row,
+                                    'complementary_favourable_area',
+                                    surface_area),
         }
 
     @cached_property
