@@ -6,20 +6,6 @@ COMMENT_SAVED_TXT = "Comentariul a fost înregistrat"
 MISSING_FIELD_TXT = "Suprafața este obligatorie"
 
 
-@pytest.fixture
-def habitat_app():
-    import flask
-    from art17.habitat import habitat
-    app = flask.Flask('art17.app')
-    app.config['TESTING'] = True
-    app.register_blueprint(habitat)
-    from art17.models import db
-    db.init_app(app)
-    with app.app_context():
-        db.create_all()
-    return app
-
-
 def _create_habitat_record(habitat_app):
     from art17 import models
     with habitat_app.app_context():
