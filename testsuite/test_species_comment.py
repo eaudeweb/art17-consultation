@@ -157,17 +157,17 @@ def test_save_all_form_fields():
 
 
 def test_flatten():
-    from art17.schemas import flatten_species
+    from art17.schemas import flatten_species_commentform
     from art17 import models
     obj = models.DataSpeciesComment()
-    flatten_species(SPECIES_STRUCT_DATA, obj)
+    flatten_species_commentform(SPECIES_STRUCT_DATA, obj)
     for k, v in SPECIES_MODEL_DATA.items():
         assert getattr(obj, k) == v
 
 
 def test_parse():
-    from art17.schemas import parse_species_comment
+    from art17.schemas import parse_species_commentform
     from art17 import models
     obj = models.DataSpeciesComment(**SPECIES_MODEL_DATA)
-    data = parse_species_comment(obj)
+    data = parse_species_commentform(obj)
     assert data == SPECIES_STRUCT_DATA

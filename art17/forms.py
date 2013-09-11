@@ -59,7 +59,7 @@ class SpeciesComment(Form):
     range = FormField(Range)
 
     def populate_obj(self, obj):
-        schemas.flatten_species(self.data, obj)
+        schemas.flatten_species_commentform(self.data, obj)
 
 
 class HabitatComment(Form):
@@ -67,4 +67,4 @@ class HabitatComment(Form):
     range = FormField(Range)
 
     def populate_obj(self, obj):
-        schemas.flatten_habitat(self.data, obj)
+        schemas.flatten_habitat_commentform(self.data, obj)

@@ -135,7 +135,7 @@ def parse_species(row, is_comment=False):
     return rv
 
 
-def parse_species_comment(row):
+def parse_species_commentform(row):
     rv = {}
     rv['range'] = {
             'surface_area': row.range_surface_area,
@@ -180,7 +180,7 @@ def parse_habitat(row, is_comment=False):
     return rv
 
 
-def parse_habitat_comment(row):
+def parse_habitat_commentform(row):
     rv = {}
     rv['range'] = {
             'surface_area': row.range_surface_area,
@@ -221,7 +221,7 @@ def flatten_refval(refval_struct, obj, prefix):
     setattr(obj, prefix + '_method', refval_struct['method'])
 
 
-def flatten_species(struct, obj):
+def flatten_species_commentform(struct, obj):
     obj.range_surface_area = struct['range']['surface_area']
     obj.range_method = struct['range']['method']
 
@@ -233,7 +233,7 @@ def flatten_species(struct, obj):
 
 
 
-def flatten_habitat(struct, obj):
+def flatten_habitat_commentform(struct, obj):
     obj.range_surface_area = struct['range']['surface_area']
     obj.range_method = struct['range']['method']
 
