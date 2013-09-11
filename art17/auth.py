@@ -9,6 +9,10 @@ principals = Principal(use_sessions=False)
 admin_permission = Permission(RoleNeed('admin'))
 
 
+def user_permission(user_id):
+    return Permission(UserNeed(user_id))
+
+
 @auth.record
 def register_principals(state):
     app = state.app

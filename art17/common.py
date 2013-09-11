@@ -4,6 +4,7 @@ import flask
 import flask.views
 from werkzeug.utils import cached_property
 from art17 import models
+from art17 import auth
 
 
 TREND_OPTIONS = [
@@ -28,6 +29,26 @@ common = flask.Blueprint('common', __name__)
 @common.app_context_processor
 def inject_constants():
     return {'TREND_NAME': TREND_NAME}
+
+
+class RecordComment(object):
+
+    def __init__(self, row):
+        self.row = row
+
+    @cached_property
+    def user_id(self):
+        return self.row.user_id
+
+    def can_edit(self):
+        if auth.admin_permission.can():
+            return True
+
+        if self.user_id:
+            if auth.user_permission(self.user_id).can():
+                return True
+
+        return False
 
 
 class GenericRecord(object):
@@ -88,9 +109,7 @@ class GenericRecord(object):
     @cached_property
     def comment(self):
         assert self.is_comment
-        return {
-            'user_id': self.row.user_id,
-        }
+        return RecordComment(self.row)
 
 
 class CommentView(flask.views.View):

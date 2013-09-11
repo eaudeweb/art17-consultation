@@ -31,6 +31,8 @@
   {{ conclusion_td(row.overall_assessment) }}
 {%- endmacro %}
 
+{%- set comment_next = url_for('.index', habitat=current_habitat_code,
+                                         region=current_region_code) %}
 
 <table class="records">
   <tr class="records-header">
@@ -45,7 +47,7 @@
     <td rowspan=2
         title="Evaluare generală a stării de conservare"
         >Evaluare generală</td>
-    <td rowspan=2></td>  {#- comment (author, etc) #}
+    <td rowspan=2 colspan=2></td>  {#- comment (author, etc) #}
   </tr>
 
   <tr class="records-header">
@@ -76,21 +78,18 @@
       {%- set url = url_for('.detail', record_id=row.id) %}
       <button class="records-detailbtn" data-url="{{ url }}">info</button>
 
-      {%- set next = url_for('.index', group=current_group_code,
-                                       species=current_species_code,
-                                       region=current_region_code) %}
-      {%- set url = url_for('.comment', record_id=row.id, next=next) %}
+      {%- set url = url_for('.comment', record_id=row.id, next=comment_next) %}
       <a class="records-commentbtn" href="{{ url }}">comentariu</a>
     </td>
 
     {{ record_cells(row) }}
 
-    <td></td>  {#- comment (author, etc) #}
+    <td colspan=2></td>  {#- comment (author, etc) #}
   </tr>
  {% endfor %}
 
   <tr class="records-header">
-    <td colspan="19">Comentarii</td>
+    <td colspan="15">Comentarii</td>
   </tr>
 
  {% for row in habitat.comments %}
@@ -101,6 +100,13 @@
     {{ record_cells(row) }}
 
     <td>{{ row.comment.user_id }}</td>  {#- comment author, etc #}
+    <td>
+      {%- if row.comment.can_edit() %}
+        {%- set url = url_for('.comment_edit', comment_id=row.id,
+                                               next=comment_next) %}
+        <a href="{{ url }}" class="records-editcommentbtn">edit</a>
+      {%- endif %}
+    </td>
   </tr>
  {% endfor %}
 </table>
