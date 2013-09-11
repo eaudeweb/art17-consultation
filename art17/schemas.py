@@ -1,27 +1,3 @@
-from werkzeug.utils import cached_property
-
-
-class RecordComment(object):
-
-    def __init__(self, row):
-        self.row = row
-
-    @cached_property
-    def user_id(self):
-        return self.row.user_id
-
-    def can_edit(self):
-        from art17 import auth
-        if auth.admin_permission.can():
-            return True
-
-        if self.user_id:
-            if auth.user_permission(self.user_id).can():
-                return True
-
-        return False
-
-
 def parse_period(obj, prefix):
     year_string = getattr(obj, prefix)
 
@@ -104,20 +80,33 @@ def _get_habitat_quality(obj):
     }
 
 
+def can_edit_comment(row):
+    from art17 import auth
+    if auth.admin_permission.can():
+        return True
+
+    if user_id:
+        if auth.user_permission(user_id).can():
+            return True
+
+    return False
+
+
+def comment_info(row):
+    return {
+        'user_id': row.user_id,
+        'can_edit': can_edit_comment(row),
+    }
+
+
 class GenericRecord(object):
-
-    def __init__(self, row, is_comment=False):
-        self.row = row
-        self.is_comment = is_comment
-
-    @cached_property
-    def comment(self):
-        assert self.is_comment
-        return RecordComment(self.row)
+    pass
 
 
 def SpeciesRecord(row, is_comment=False):
-    rv = GenericRecord(row, is_comment)
+    rv = GenericRecord()
+    if is_comment:
+        rv.comment = comment_info(row)
     rv.id = row.sr_id
     rv.region = row.region
     rv.range = {
@@ -158,7 +147,9 @@ def SpeciesRecord(row, is_comment=False):
 
 
 def HabitatRecord(row, is_comment=False):
-    rv = GenericRecord(row, is_comment)
+    rv = GenericRecord()
+    if is_comment:
+        rv.comment = comment_info(row)
     rv.id = row.hr_id
     rv.region = row.region
     range_surface_area = row.range_surface_area

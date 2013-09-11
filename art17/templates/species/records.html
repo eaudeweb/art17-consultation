@@ -115,7 +115,7 @@
 
     <td>{{ row.comment.user_id }}</td>  {#- comment author, etc #}
     <td>
-      {%- if row.comment.can_edit() %}
+      {%- if row.comment.can_edit %}
         {%- set url = url_for('.comment_edit', comment_id=row.id,
                                                next=comment_next) %}
         <a href="{{ url }}" class="records-editcommentbtn">edit</a>
