@@ -33,6 +33,7 @@ class ReferenceValue(Form):
 
     op = TextField()
     number = DecimalField(validators=[Optional()])
+    method = TextAreaField()
 
 
 class Conclusion(Form):
@@ -50,7 +51,6 @@ class Range(Form):
     trend_short = FormField(Trend)
     trend_long = FormField(Trend)
     reference_value = FormField(ReferenceValue)
-    reference_method = TextAreaField()
     conclusion = FormField(Conclusion)
 
 

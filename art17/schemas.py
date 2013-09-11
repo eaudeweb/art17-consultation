@@ -252,7 +252,7 @@ def flatten_species(struct, obj):
     obj.complementary_favourable_range = \
         struct['range']['reference_value']['number']
     obj.complementary_favourable_range_method = \
-        struct['range']['reference_method']
+        struct['range']['reference_value']['method']
 
     flatten_conclusion(struct['range']['conclusion'], obj, 'conclusion_range')
 
@@ -270,6 +270,6 @@ def flatten_habitat(struct, obj):
     obj.complementary_favourable_range = \
         struct['range']['reference_value']['number']
     obj.complementary_favourable_range_method = \
-        struct['range']['reference_method']
+        struct['range']['reference_value']['method']
 
     flatten_conclusion(struct['range']['conclusion'], obj, 'conclusion_range')

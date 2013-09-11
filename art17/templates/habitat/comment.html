@@ -155,15 +155,15 @@
         </div>
 
         <div class="form-group">
-          <label for="range.reference_method">
+          <label for="range.reference_value.method">
             Arealul favorabil de referință - Metoda
           </label>
 
-          {{ errors(form.range.reference_method) }}
+          {{ errors(form.range.reference_value.method) }}
 
           <div class="row">
-            <div class="col-sm-6 {{- error_cls(form.range.reference_method) }}">
-              {{ form.range.reference_method(class='form-control', rows=2) }}
+            <div class="col-sm-6 {{- error_cls(form.range.reference_value.method) }}">
+              {{ form.range.reference_value.method(class='form-control', rows=2) }}
             </div>
 
             <div class="col-sm-6 text-primary">

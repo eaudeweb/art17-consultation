@@ -25,10 +25,11 @@ SPECIES_STRUCT_DATA = {
             },
         },
         'reference_value': {
-            'op': 'foo op',
+            'method': 'foo method',
             'number': 456,
+            'op': 'foo op',
+            'x': None,
         },
-        'reference_method': 'foo method',
         'conclusion': {
             'value': 'U1',
             'trend': 'foo conclusion trend',
