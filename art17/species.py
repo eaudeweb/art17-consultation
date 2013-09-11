@@ -1,8 +1,7 @@
 import flask
-import flask.views
 from werkzeug.utils import cached_property
 from art17 import models
-from art17.common import GenericRecord
+from art17.common import GenericRecord, CommentView
 from art17 import forms
 
 species = flask.Blueprint('species', __name__)
@@ -182,9 +181,8 @@ def detail(record_id):
     })
 
 
-class SpeciesCommentView(flask.views.View):
+class SpeciesCommentView(CommentView):
 
-    methods = ['GET', 'POST']
     form_cls = forms.SpeciesComment
     record_cls = models.DataSpeciesRegion
     comment_cls = models.DataSpeciesComment
@@ -200,28 +198,6 @@ class SpeciesCommentView(flask.views.View):
             'species': self.record.sr_species,
             'record': SpeciesRecord(self.record),
         }
-
-    def dispatch_request(self, record_id):
-        self.record = self.record_cls.query.get_or_404(record_id)
-        form = self.form_cls(flask.request.form)
-        self.setup_template_context()
-        self.template_ctx['next_url'] = flask.request.args.get('next')
-
-        if flask.request.method == 'POST' and form.validate():
-            self.comment = self.comment_cls()
-            self.link_comment_to_record()
-
-            form.populate_obj(self.comment)
-
-            models.db.session.add(self.comment)
-            models.db.session.commit()
-
-            return flask.render_template('species/comment-saved.html',
-                                         **self.template_ctx)
-
-        self.template_ctx['form'] = form
-        return flask.render_template('species/comment.html',
-                                     **self.template_ctx)
 
 
 species.add_url_rule('/specii/detalii/<int:record_id>/comentariu',

@@ -1,6 +1,9 @@
 # encoding: utf-8
 
 import flask
+import flask.views
+from art17 import models
+
 
 TREND_OPTIONS = [
     ('+', u"+ (În creștere)"),
@@ -79,3 +82,29 @@ class GenericRecord(object):
             'value': value,
             'method': method,
         }
+
+
+class CommentView(flask.views.View):
+
+    methods = ['GET', 'POST']
+
+    def dispatch_request(self, record_id):
+        self.record = self.record_cls.query.get_or_404(record_id)
+        form = self.form_cls(flask.request.form)
+        self.setup_template_context()
+        self.template_ctx['next_url'] = flask.request.args.get('next')
+
+        if flask.request.method == 'POST' and form.validate():
+            self.comment = self.comment_cls()
+            self.link_comment_to_record()
+
+            form.populate_obj(self.comment)
+
+            models.db.session.add(self.comment)
+            models.db.session.commit()
+
+            return flask.render_template(self.template_saved,
+                                         **self.template_ctx)
+
+        self.template_ctx['form'] = form
+        return flask.render_template(self.template, **self.template_ctx)
