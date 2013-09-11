@@ -106,7 +106,7 @@ def index():
             'name': habitat.lu.hd_name,
             'code': habitat.habitatcode,
             'records': [HabitatRecord(r) for r in records],
-            'comments': [HabitatRecord(r) for r in comments],
+            'comments': [HabitatRecord(r, is_comment=True) for r in comments],
         },
     })
 

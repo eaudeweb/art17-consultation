@@ -167,7 +167,7 @@ def index():
             'annex_IV': species.lu.annexiv == 'Y',
             'annex_V': species.lu.annexv == 'Y',
             'records': [SpeciesRecord(r) for r in records],
-            'comments': [SpeciesRecord(r) for r in comments],
+            'comments': [SpeciesRecord(r, is_comment=True) for r in comments],
         },
     })
 

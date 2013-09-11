@@ -2,6 +2,7 @@
 
 import flask
 import flask.views
+from werkzeug.utils import cached_property
 from art17 import models
 
 
@@ -31,8 +32,9 @@ def inject_constants():
 
 class GenericRecord(object):
 
-    def __init__(self, row):
+    def __init__(self, row, is_comment=False):
         self.row = row
+        self.is_comment = is_comment
 
     def _split_period(self, year_string):
         if year_string:
@@ -81,6 +83,13 @@ class GenericRecord(object):
         return {
             'value': value,
             'method': method,
+        }
+
+    @cached_property
+    def comment(self):
+        assert self.is_comment
+        return {
+            'user_id': self.row.user_id,
         }
 
 
