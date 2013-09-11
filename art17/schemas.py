@@ -1,14 +1,16 @@
+def flatten_trend(trend_struct, obj, prefix):
+    setattr(obj, prefix, trend_struct['trend'])
+    setattr(obj, prefix + '_period', '%s-%s' % (trend_struct['period_min'],
+                                                trend_struct['period_max']))
+
+
 def flatten_species(struct, obj):
     obj.range_surface_area = struct['range']['surface_area']
     obj.range_method = struct['range']['method']
-    obj.range_trend = struct['range']['trend_short']['trend']
-    obj.range_trend_period = '%s-%s' % (
-        struct['range']['trend_short']['period_min'],
-        struct['range']['trend_short']['period_max'])
-    obj.range_trend_long = struct['range']['trend_long']['trend']
-    obj.range_trend_long_period = '%s-%s' % (
-        struct['range']['trend_long']['period_min'],
-        struct['range']['trend_long']['period_max'])
+
+    flatten_trend(struct['range']['trend_short'], obj, 'range_trend')
+    flatten_trend(struct['range']['trend_long'], obj, 'range_trend_long')
+
     obj.complementary_favourable_range_op = \
         struct['range']['reference_value']['op']
     obj.complementary_favourable_range = \
@@ -23,14 +25,10 @@ def flatten_species(struct, obj):
 def flatten_habitat(struct, obj):
     obj.range_surface_area = struct['range']['surface_area']
     obj.range_method = struct['range']['method']
-    obj.range_trend = struct['range']['trend_short']['trend']
-    obj.range_trend_period = '%s-%s' % (
-        struct['range']['trend_short']['period_min'],
-        struct['range']['trend_short']['period_max'])
-    obj.range_trend_long = struct['range']['trend_long']['trend']
-    obj.range_trend_long_period = '%s-%s' % (
-        struct['range']['trend_long']['period_min'],
-        struct['range']['trend_long']['period_max'])
+
+    flatten_trend(struct['range']['trend_short'], obj, 'range_trend')
+    flatten_trend(struct['range']['trend_long'], obj, 'range_trend_long')
+
     obj.complementary_favourable_range_op = \
         struct['range']['reference_value']['op']
     obj.complementary_favourable_range = \
