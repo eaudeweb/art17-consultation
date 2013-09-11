@@ -14,12 +14,12 @@
   {{ trend_td(range.trend_short) }}
   {{ reference_value_td(range.reference_value) }}
 
-  {#- area #}
-  {%- set area = row.area %}
-  <td>{{ area.surface_area }}</td>
-  {{ conclusion_td(area.conclusion) }}
-  {{ trend_td(area.trend_short) }}
-  {{ reference_value_td(area.reference_value) }}
+  {#- coverage #}
+  {%- set coverage = row.coverage %}
+  <td>{{ coverage.surface_area }}</td>
+  {{ conclusion_td(coverage.conclusion) }}
+  {{ trend_td(coverage.trend_short) }}
+  {{ reference_value_td(coverage.reference_value) }}
 
   {#- structure #}
   {{ conclusion_td(row.structure) }}
@@ -60,7 +60,7 @@
     <td>Tendință</td>
     <td title="Arealul favorabil de referință">Referință</td>
 
-    {#- area #}
+    {#- coverage #}
     <td>Suprafață</td>
     <td>Concluzie</td>
     <td>Tendință</td>

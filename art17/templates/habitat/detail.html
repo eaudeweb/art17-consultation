@@ -88,58 +88,58 @@
       <table class="table table-bordered recorddetail-table">
         <tr>
           <th>Suprafață</th>
-          <td>{{ range_html(record.area) }}</td>
+          <td>{{ range_html(record.coverage) }}</td>
         </tr>
 
         <tr>
           <th>Metoda utilizată</th>
-          <td>{{ record.area.method }}</td>
+          <td>{{ record.coverage.method }}</td>
         </tr>
 
         <tr>
           <th>Tendință pe termen scurt</th>
-          <td>{{ trend_detail_html(record.area.trend_short) }}</td>
+          <td>{{ trend_detail_html(record.coverage.trend_short) }}</td>
         </tr>
 
         <tr>
           <th>Tendinţa pe termen scurt - perioada</th>
-          <td>{{ period_html(record.area.trend_short.period) }}</td>
+          <td>{{ period_html(record.coverage.trend_short.period) }}</td>
         </tr>
 
         <tr>
           <th>Tendinţa pe termen scurt - magnitudinea</th>
-          <td>{{ magnitude_html(record.area.trend_short.magnitude) }}</td>
+          <td>{{ magnitude_html(record.coverage.trend_short.magnitude) }}</td>
         </tr>
 
         <tr>
           <th>Tendință pe termen lung</th>
           <td>
-            {{ trend_detail_html(record.area.trend_long) }}</td>
+            {{ trend_detail_html(record.coverage.trend_long) }}</td>
         </tr>
 
         <tr>
           <th>Tendință pe termen lung - perioada</th>
-          <td>{{ period_html(record.area.trend_long.period) }}</td>
+          <td>{{ period_html(record.coverage.trend_long.period) }}</td>
         </tr>
 
         <tr>
           <th>Tendinţa pe termen lung - magnitudinea</th>
-          <td>{{ magnitude_html(record.area.trend_long.magnitude) }}</td>
+          <td>{{ magnitude_html(record.coverage.trend_long.magnitude) }}</td>
         </tr>
 
         <tr>
           <th>Arealul favorabil de referință</th>
-          <td>{{ reference_value_html(record.area.reference_value,
+          <td>{{ reference_value_html(record.coverage.reference_value,
                   unit='km²') }} <br />
-            {%- if record.area.reference_value.method %}
-              Metoda utilizată: {{ record.area.reference_value.method }}
+            {%- if record.coverage.reference_value.method %}
+              Metoda utilizată: {{ record.coverage.reference_value.method }}
             {% endif -%}
           </td>
         </tr>
 
         <tr>
           <th>Concluzie</th>
-          {{ conclusion_td(record.area.conclusion) }}
+          {{ conclusion_td(record.coverage.conclusion) }}
         </tr>
 
       </table>

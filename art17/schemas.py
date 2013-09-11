@@ -157,7 +157,7 @@ def parse_habitat(row, is_comment=False):
                                     'complementary_favourable_range')
                                 # ideal: row.range_surface_area
         }
-    rv['area'] = {
+    rv['coverage'] = {
             'surface_area': row.coverage_surface_area,
             'trend_short': parse_trend(row, 'coverage_trend'),
             'trend_long': parse_trend(row, 'coverage_trend_long'),
@@ -241,7 +241,7 @@ def parse_habitat_comment(obj):
     del rv['region']
     del rv['range']['trend_short']['magnitude']
     del rv['range']['trend_long']['magnitude']
-    del rv['area']
+    del rv['coverage']
     del rv['structure']
     del rv['future_prospects']
     del rv['overall_assessment']
