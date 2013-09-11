@@ -99,17 +99,13 @@ def comment_info(row):
     }
 
 
-class GenericRecord(object):
-    pass
-
-
 def SpeciesRecord(row, is_comment=False):
-    rv = GenericRecord()
+    rv = {}
     if is_comment:
-        rv.comment = comment_info(row)
-    rv.id = row.sr_id
-    rv.region = row.region
-    rv.range = {
+        rv['comment'] = comment_info(row)
+    rv['id'] = row.sr_id
+    rv['region'] = row.region
+    rv['range'] = {
             'surface_area': row.range_surface_area,
             'method': row.range_method,
             'trend_short': parse_trend(row, 'range_trend'),
@@ -121,7 +117,7 @@ def SpeciesRecord(row, is_comment=False):
         }
     ref_value_ideal = (row.population_minimum_size or
                        row.population_alt_minimum_size)
-    rv.population = {
+    rv['population'] = {
             'size': _get_population_size(row),
             'conclusion': parse_conclusion(row, 'conclusion_population'),
             'trend_short': parse_population_trend(row,
@@ -132,7 +128,7 @@ def SpeciesRecord(row, is_comment=False):
                                     'complementary_favourable_population',
                                     ref_value_ideal),
         }
-    rv.habitat = {
+    rv['habitat'] = {
             'surface_area': row.habitat_surface_area,
             'method': row.habitat_method,
             'conclusion': parse_conclusion(row, 'conclusion_habitat'),
@@ -141,19 +137,19 @@ def SpeciesRecord(row, is_comment=False):
             'area_suitable': row.habitat_area_suitable,
             'quality': _get_habitat_quality(row),
         }
-    rv.future_prospects = parse_conclusion(row, 'conclusion_future')
-    rv.overall_assessment = parse_conclusion(row, 'conclusion_assessment')
+    rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
+    rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
     return rv
 
 
 def HabitatRecord(row, is_comment=False):
-    rv = GenericRecord()
+    rv = {}
     if is_comment:
-        rv.comment = comment_info(row)
-    rv.id = row.hr_id
-    rv.region = row.region
+        rv['comment'] = comment_info(row)
+    rv['id'] = row.hr_id
+    rv['region'] = row.region
     range_surface_area = row.range_surface_area
-    rv.range = {
+    rv['range'] = {
             'surface_area': range_surface_area,
             'method': row.range_method,
             'trend_short': parse_trend(row, 'range_trend'),
@@ -164,7 +160,7 @@ def HabitatRecord(row, is_comment=False):
                                     range_surface_area),
         }
     area_surface_area = row.coverage_surface_area
-    rv.area = {
+    rv['area'] = {
             'surface_area': area_surface_area,
             'trend_short': parse_trend(row, 'coverage_trend'),
             'trend_long': parse_trend(row, 'coverage_trend_long'),
@@ -173,9 +169,9 @@ def HabitatRecord(row, is_comment=False):
                                     'complementary_favourable_area',
                                     area_surface_area),
         }
-    rv.structure = parse_conclusion(row, 'conclusion_structure')
-    rv.future_prospects = parse_conclusion(row, 'conclusion_future')
-    rv.overall_assessment = parse_conclusion(row, 'conclusion_assessment')
+    rv['structure'] = parse_conclusion(row, 'conclusion_structure')
+    rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
+    rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
     return rv
 
 
@@ -232,7 +228,7 @@ def flatten_habitat(struct, obj):
 def parse_species(obj):
     record = SpeciesRecord(obj)
     rv = {}
-    rv['range'] = record.range
+    rv['range'] = record['range']
     return rv
 
 
@@ -247,7 +243,7 @@ def parse_species_comment(obj):
 def parse_habitat(obj):
     record = HabitatRecord(obj)
     rv = {}
-    rv['range'] = record.range
+    rv['range'] = record['range']
     return rv
 
 
