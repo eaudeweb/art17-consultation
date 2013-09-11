@@ -35,16 +35,29 @@ def parse_period(obj, prefix):
         return None
 
 
-def parse_trend(obj, prefix, magnitude=True):
-    rv = {
+def parse_trend(obj, prefix):
+    return {
         'trend': getattr(obj, prefix),
-        'period': parse_period(obj, prefix + '_period')
-    }
-    if magnitude:
-        rv['magnitude'] = {
+        'period': parse_period(obj, prefix + '_period'),
+        'magnitude': {
             'min': getattr(obj, prefix + '_magnitude_min'),
             'max': getattr(obj, prefix + '_magnitude_max'),
         }
+    }
+
+
+def parse_habitat_trend(obj, prefix):
+    """ habitat trend has no magnitude """
+    return {
+        'trend': getattr(obj, prefix),
+        'period': parse_period(obj, prefix + '_period'),
+    }
+
+
+def parse_population_trend(obj, prefix):
+    rv = parse_trend(obj, prefix)
+    rv['magnitude']['ci'] = getattr(obj, prefix + '_magnitude_ci')
+    rv['method'] = getattr(obj, prefix + '_method')
     return rv
 
 
@@ -117,16 +130,6 @@ class SpeciesRecord(GenericRecord):
 
         return rv
 
-    def _get_population_trend(self, qualifier=''):
-        prefix = 'population_trend' + qualifier
-        base_info = parse_trend(self.row, prefix)
-        magnitude_min = getattr(self.row, prefix + '_magnitude_min' % qualifier)
-        magnitude_max = getattr(self.row, prefix + '_magnitude_max' % qualifier)
-        magnitude_ci = getattr(self.row, prefix + '_magnitude_ci' % qualifier)
-        method = getattr(self.row, prefix + '_method' % qualifier)
-        return "%s method=%s magnitude=(min=%s max=%s ci=%s)" % (
-            base_info, method, magnitude_min, magnitude_max, magnitude_ci)
-
     def _get_habitat_quality(self):
         value = self.row.habitat_quality
         explanation = self.row.habitat_quality_explanation
@@ -142,8 +145,10 @@ class SpeciesRecord(GenericRecord):
         return {
             'size': self._get_population_size(),
             'conclusion': self._get_conclusion('population'),
-            'trend_short': self._get_population_trend(),
-            'trend_long': self._get_population_trend('_long'),
+            'trend_short': parse_population_trend(self.row,
+                                                  'population_trend'),
+            'trend_long': parse_population_trend(self.row,
+                                                 'population_trend_long'),
             'reference_value': self._get_reference_value('population',
                                                          ref_value_ideal),
         }
@@ -154,10 +159,8 @@ class SpeciesRecord(GenericRecord):
             'surface_area': self.row.habitat_surface_area,
             'method': self.row.habitat_method,
             'conclusion': self._get_conclusion('habitat'),
-            'trend_short': parse_trend(self.row, 'habitat_trend',
-                                       magnitude=False),
-            'trend_long': parse_trend(self.row, 'habitat_trend_long',
-                                      magnitude=False),
+            'trend_short': parse_habitat_trend(self.row, 'habitat_trend'),
+            'trend_long': parse_habitat_trend(self.row, 'habitat_trend_long'),
             'area_suitable': self.row.habitat_area_suitable,
             'quality': self._get_habitat_quality(),
         }
