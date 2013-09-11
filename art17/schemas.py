@@ -116,115 +116,76 @@ class GenericRecord(object):
         return RecordComment(self.row)
 
 
-class SpeciesRecord(GenericRecord):
-
-    @cached_property
-    def id(self):
-        return self.row.sr_id
-
-    @cached_property
-    def region(self):
-        return self.row.region
-
-    @cached_property
-    def range(self):
-        surface_area = self.row.range_surface_area
-        return {
-            'surface_area': surface_area,
-            'method': self.row.range_method,
-            'trend_short': parse_trend(self.row, 'range_trend'),
-            'trend_long': parse_trend(self.row, 'range_trend_long'),
-            'conclusion': parse_conclusion(self.row, 'conclusion_range'),
-            'reference_value': parse_reference_value(self.row,
+def SpeciesRecord(row, is_comment=False):
+    rv = GenericRecord(row, is_comment)
+    rv.id = row.sr_id
+    rv.region = row.region
+    rv.range = {
+            'surface_area': row.range_surface_area,
+            'method': row.range_method,
+            'trend_short': parse_trend(row, 'range_trend'),
+            'trend_long': parse_trend(row, 'range_trend_long'),
+            'conclusion': parse_conclusion(row, 'conclusion_range'),
+            'reference_value': parse_reference_value(row,
                                     'complementary_favourable_range',
-                                    surface_area),
+                                    row.range_surface_area),
         }
-
-    @cached_property
-    def population(self):
-        ref_value_ideal = (self.row.population_minimum_size or
-                           self.row.population_alt_minimum_size)
-        return {
-            'size': _get_population_size(self.row),
-            'conclusion': parse_conclusion(self.row, 'conclusion_population'),
-            'trend_short': parse_population_trend(self.row,
+    ref_value_ideal = (row.population_minimum_size or
+                       row.population_alt_minimum_size)
+    rv.population = {
+            'size': _get_population_size(row),
+            'conclusion': parse_conclusion(row, 'conclusion_population'),
+            'trend_short': parse_population_trend(row,
                                                   'population_trend'),
-            'trend_long': parse_population_trend(self.row,
+            'trend_long': parse_population_trend(row,
                                                  'population_trend_long'),
-            'reference_value': parse_reference_value(self.row,
+            'reference_value': parse_reference_value(row,
                                     'complementary_favourable_population',
                                     ref_value_ideal),
         }
-
-    @cached_property
-    def habitat(self):
-        return {
-            'surface_area': self.row.habitat_surface_area,
-            'method': self.row.habitat_method,
-            'conclusion': parse_conclusion(self.row, 'conclusion_habitat'),
-            'trend_short': parse_habitat_trend(self.row, 'habitat_trend'),
-            'trend_long': parse_habitat_trend(self.row, 'habitat_trend_long'),
-            'area_suitable': self.row.habitat_area_suitable,
-            'quality': _get_habitat_quality(self.row),
+    rv.habitat = {
+            'surface_area': row.habitat_surface_area,
+            'method': row.habitat_method,
+            'conclusion': parse_conclusion(row, 'conclusion_habitat'),
+            'trend_short': parse_habitat_trend(row, 'habitat_trend'),
+            'trend_long': parse_habitat_trend(row, 'habitat_trend_long'),
+            'area_suitable': row.habitat_area_suitable,
+            'quality': _get_habitat_quality(row),
         }
-
-    @cached_property
-    def future_prospects(self):
-        return parse_conclusion(self.row, 'conclusion_future')
-
-    @cached_property
-    def overall_assessment(self):
-        return parse_conclusion(self.row, 'conclusion_assessment')
+    rv.future_prospects = parse_conclusion(row, 'conclusion_future')
+    rv.overall_assessment = parse_conclusion(row, 'conclusion_assessment')
+    return rv
 
 
-class HabitatRecord(GenericRecord):
-
-    @cached_property
-    def id(self):
-        return self.row.hr_id
-
-    @cached_property
-    def region(self):
-        return self.row.region
-
-    @cached_property
-    def range(self):
-        surface_area = self.row.range_surface_area
-        return {
-            'surface_area': surface_area,
-            'method': self.row.range_method,
-            'trend_short': parse_trend(self.row, 'range_trend'),
-            'trend_long': parse_trend(self.row, 'range_trend_long'),
-            'conclusion': parse_conclusion(self.row, 'conclusion_range'),
-            'reference_value': parse_reference_value(self.row,
+def HabitatRecord(row, is_comment=False):
+    rv = GenericRecord(row, is_comment)
+    rv.id = row.hr_id
+    rv.region = row.region
+    range_surface_area = row.range_surface_area
+    rv.range = {
+            'surface_area': range_surface_area,
+            'method': row.range_method,
+            'trend_short': parse_trend(row, 'range_trend'),
+            'trend_long': parse_trend(row, 'range_trend_long'),
+            'conclusion': parse_conclusion(row, 'conclusion_range'),
+            'reference_value': parse_reference_value(row,
                                     'complementary_favourable_range',
-                                    surface_area),
+                                    range_surface_area),
         }
-
-    @cached_property
-    def area(self):
-        surface_area = self.row.coverage_surface_area
-        return {
-            'surface_area': surface_area,
-            'trend_short': parse_trend(self.row, 'coverage_trend'),
-            'trend_long': parse_trend(self.row, 'coverage_trend_long'),
-            'conclusion': parse_conclusion(self.row, 'conclusion_area'),
-            'reference_value': parse_reference_value(self.row,
+    area_surface_area = row.coverage_surface_area
+    rv.area = {
+            'surface_area': area_surface_area,
+            'trend_short': parse_trend(row, 'coverage_trend'),
+            'trend_long': parse_trend(row, 'coverage_trend_long'),
+            'conclusion': parse_conclusion(row, 'conclusion_area'),
+            'reference_value': parse_reference_value(row,
                                     'complementary_favourable_area',
-                                    surface_area),
+                                    area_surface_area),
         }
-
-    @cached_property
-    def structure(self):
-        return parse_conclusion(self.row, 'conclusion_structure')
-
-    @cached_property
-    def future_prospects(self):
-        return parse_conclusion(self.row, 'conclusion_future')
-
-    @cached_property
-    def overall_assessment(self):
-        return parse_conclusion(self.row, 'conclusion_assessment')
+    rv.structure = parse_conclusion(row, 'conclusion_structure')
+    rv.future_prospects = parse_conclusion(row, 'conclusion_future')
+    rv.overall_assessment = parse_conclusion(row, 'conclusion_assessment')
+    return rv
 
 
 def flatten_period(period_struct, obj, prefix):
