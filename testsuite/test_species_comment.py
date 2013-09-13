@@ -52,7 +52,7 @@ SPECIES_MODEL_DATA = {
 }
 
 
-def _create_species_record(species_app):
+def _create_species_record(species_app, comment=False):
     from art17 import models
     with species_app.app_context():
         species = models.DataSpecies(species_id=1, speciescode='1234')
@@ -61,6 +61,14 @@ def _create_species_record(species_app):
                                           region='ALP')
         record.lu = models.LuBiogeoreg(objectid=1)
         models.db.session.add(record)
+
+        if comment:
+            comment = models.DataSpeciesComment(sr_id='4f799fdd6f5a',
+                                                sr_species_id=1,
+                                                region='ALP',
+                                                range_surface_area=1337)
+            models.db.session.add(comment)
+
         models.db.session.commit()
 
 
@@ -102,14 +110,7 @@ def test_error_on_required_record(species_app):
 
 def test_edit_comment_form(species_app):
     from art17.models import DataSpeciesComment, db
-    _create_species_record(species_app)
-    with species_app.app_context():
-        comment = DataSpeciesComment(sr_id='4f799fdd6f5a',
-                                     sr_species_id=1,
-                                     region='ALP',
-                                     range_surface_area=1337)
-        db.session.add(comment)
-        db.session.commit()
+    _create_species_record(species_app, comment=True)
     client = species_app.test_client()
     resp1 = client.get('/specii/comentariu/f3b4c23bcb88')
     assert resp1.status_code == 404
@@ -120,14 +121,7 @@ def test_edit_comment_form(species_app):
 
 def test_edit_comment_submit(species_app):
     from art17.models import DataSpeciesComment, db
-    _create_species_record(species_app)
-    with species_app.app_context():
-        comment = DataSpeciesComment(sr_id='4f799fdd6f5a',
-                                     sr_species_id=1,
-                                     region='ALP',
-                                     range_surface_area=1337)
-        db.session.add(comment)
-        db.session.commit()
+    _create_species_record(species_app, comment=True)
     client = species_app.test_client()
     resp = client.post('/specii/comentariu/4f799fdd6f5a',
                        data={'range.surface_area': '50'})
