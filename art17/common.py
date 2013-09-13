@@ -5,29 +5,20 @@ import flask.views
 from werkzeug.datastructures import MultiDict
 from art17 import models
 
+import lookup
 
-TREND_OPTIONS = [
-    ('+', u"+ (În creștere)"),
-    ('-', u"- (În scădere)"),
-    ('0', u"0 (Stabil)"),
-    ('x', u"x (Necunoscut)"),
-]
 
-TREND_NAME = dict(TREND_OPTIONS)
-
-CONCLUSION_OPTIONS = [
-    ('FV', u"FV"),
-    ('U1', u"U1"),
-    ('U2', u"U2"),
-    ('XX', u"XX"),
-]
 
 common = flask.Blueprint('common', __name__)
 
 
 @common.app_context_processor
 def inject_constants():
-    return {'TREND_NAME': TREND_NAME}
+    return {'TREND_NAME': lookup.TREND_NAME,
+            'METHODS_USED': lookup.METHODS_USED,
+            'LU_FV_RANGE_OP': lookup.LU_FV_RANGE_OP,
+            'LU_FV_RANGE_OP_FUNCT': lookup.LU_FV_RANGE_OP_FUNCT,
+            'LU_POPULATION_NUMBER': lookup.LU_POPULATION_NUMBER,}
 
 
 def flatten_dict(data):

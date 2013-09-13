@@ -3,7 +3,7 @@
 from wtforms import (Form, FormField as FormField_base,
                      TextField, TextAreaField, DecimalField, SelectField)
 from wtforms.validators import Required, Optional
-from art17.common import TREND_OPTIONS, CONCLUSION_OPTIONS
+from art17.lookup import TREND_OPTIONS, CONCLUSION_OPTIONS
 from art17 import schemas
 
 EMPTY_CHOICE = [('', "--")]
