@@ -2,7 +2,9 @@
 
 
 def main():
+    import os
     import logging
+    os.environ['NLS_LANG'] = 'AMERICAN_AMERICA.UTF8'  # encoding for cx_oracle
     logging.basicConfig()
     #logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
     logging.getLogger('werkzeug').setLevel(logging.INFO)
