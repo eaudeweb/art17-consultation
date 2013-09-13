@@ -37,7 +37,7 @@ def flatten_dict(data):
             for kx, vx in flatten_dict(v).items():
                 rv[k + '.' + kx] = vx
         else:
-            rv[k] = unicode(v)
+            rv[k] = '' if v is None else unicode(v)
     return rv
 
 
