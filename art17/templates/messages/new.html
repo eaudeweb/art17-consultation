@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+  <h1>Mesaj nou</h1>
+
+  <form method="post" class="form" id="message-form">
+    <div class="form-group">
+      <textarea name="text" class="form-control"
+                placeholder="... mesaj ..."></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Trimite</button>
+  </form>
+{% endblock content %}

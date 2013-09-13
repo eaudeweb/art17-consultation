@@ -165,3 +165,22 @@ def test_parse():
     obj = models.DataSpeciesComment(**SPECIES_MODEL_DATA)
     data = parse_species_commentform(obj)
     assert data == SPECIES_STRUCT_DATA
+
+
+def test_add_comment_message(species_app):
+    import flask
+    from webtest import TestApp
+    from art17.messages import messages
+    from art17 import models
+
+    species_app.register_blueprint(messages)
+    client = TestApp(species_app)
+    page = client.get('/mesaje/nou')
+    form = page.forms['message-form']
+    form['text'] = "hello world!"
+    form.submit()
+
+    with species_app.app_context():
+        messages = models.CommentMessage.query.all()
+        assert len(messages) == 1
+        assert messages[0].text == "hello world!"

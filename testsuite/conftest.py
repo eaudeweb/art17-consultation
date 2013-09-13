@@ -11,6 +11,7 @@ def app():
     import flask
     app = flask.Flask('art17.app')
     app.config['TESTING'] = True
+    app.config['SECRET_KEY'] = 'foo'
     @app.before_request
     def set_identity():
         flask.g.identity = Mock(id='somewho')
