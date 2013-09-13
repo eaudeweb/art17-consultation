@@ -35,6 +35,8 @@ def inject_constants():
 
 @common.app_template_filter('short_local_date')
 def short_local_date(value):
+    if not value:
+        return ''
     utc = tz.gettz('UTC')
     local_tz = tz.gettz('Europe/Bucharest')
     local_value = value.replace(tzinfo=utc).astimezone(local_tz)
