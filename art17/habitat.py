@@ -114,3 +114,11 @@ habitat.add_url_rule('/habitate/detalii/<int:record_id>/comentariu',
 
 habitat.add_url_rule('/habitate/comentariu/<comment_id>',
                      view_func=HabitatCommentView.as_view('comment_edit'))
+
+
+@habitat.route('/habitate/comentariu/<comment_id>/stare', methods=['POST'])
+def comment_status(comment_id):
+    next_url = flask.request.form['next']
+    new_status = flask.request.form['status']
+    flask.flash('stare: ' + new_status, 'success')
+    return flask.redirect(next_url)

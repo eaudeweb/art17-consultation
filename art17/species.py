@@ -124,3 +124,11 @@ species.add_url_rule('/specii/detalii/<int:record_id>/comentariu',
 
 species.add_url_rule('/specii/comentariu/<comment_id>',
                      view_func=SpeciesCommentView.as_view('comment_edit'))
+
+
+@species.route('/specii/comentariu/<comment_id>/stare', methods=['POST'])
+def comment_status(comment_id):
+    next_url = flask.request.form['next']
+    new_status = flask.request.form['status']
+    flask.flash('stare: ' + new_status, 'success')
+    return flask.redirect(next_url)

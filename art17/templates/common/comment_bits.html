@@ -19,3 +19,12 @@
 {% macro errors(field) %}
   {{- _error_list(field.errors) }}
 {%- endmacro %}
+
+
+{% macro status_menu() %}
+  <select name="status">
+    <option>nou</option>
+    <option>aprobat</option>
+    <option>refuzat</option>
+  </select>
+{%- endmacro %}

@@ -95,7 +95,16 @@
  {% for row in habitat.comments %}
   <tr>
     {#- detail #}
-    <td></td>
+    <td>
+      {%- if admin_permission.can() %}
+        {%- set url = url_for('.comment_status', comment_id=row.id) %}
+        <form method="post" action="{{ url }}" class="records-commentstatus">
+          <input type="hidden" name="next" value="{{ comment_next }}">
+          {%- from 'common/comment_bits.html' import status_menu %}
+          {{ status_menu() }}
+        </form>
+      {%- endif %}
+    </td>
 
     {{ record_cells(row) }}
 
