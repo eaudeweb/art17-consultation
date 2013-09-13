@@ -77,7 +77,7 @@ def index():
 def detail(record_id):
     record = models.DataSpeciesRegion.query.get_or_404(record_id)
     return flask.render_template('species/detail.html', **{
-        'species': record.sr_species,
+        'species': record.species,
         'record': parse_species(record),
     })
 
@@ -92,18 +92,18 @@ class SpeciesCommentView(CommentView):
     template_saved = 'species/comment-saved.html'
 
     def link_comment_to_record(self):
-        self.comment.sr_species_id = self.record.sr_species_id
+        self.comment.species_id = self.record.species_id
         self.comment.region = self.record.region
 
     def setup_template_context(self):
         self.template_ctx = {
-            'species': self.record.sr_species,
+            'species': self.record.species,
             'record': parse_species(self.record),
         }
 
     def record_for_comment(self, comment):
         records = (models.DataSpeciesRegion.query
-                            .filter_by(sr_species_id=comment.sr_species_id)
+                            .filter_by(species_id=comment.species_id)
                             .filter_by(region=comment.region)
                             .all())
         assert len(records) == 1, "Expected exactly one record for the comment"

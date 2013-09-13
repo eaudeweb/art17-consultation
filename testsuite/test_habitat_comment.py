@@ -55,9 +55,9 @@ HABITAT_MODEL_DATA = {
 def _create_habitat_record(habitat_app):
     from art17 import models
     with habitat_app.app_context():
-        habitat = models.DataHabitat(habitat_id=1, habitatcode='1234')
+        habitat = models.DataHabitat(id=1, habitatcode='1234')
         habitat.lu = models.LuHabitattypeCodes(objectid=1, code=1234)
-        record = models.DataHabitattypeRegion(hr_id=1, hr_habitat=habitat,
+        record = models.DataHabitattypeRegion(id=1, hr_habitat=habitat,
                                               region='ALP')
         record.lu = models.LuBiogeoreg(objectid=1)
         models.db.session.add(record)
@@ -104,8 +104,8 @@ def test_edit_comment_form(habitat_app):
     from art17.models import DataHabitattypeComment, db
     _create_habitat_record(habitat_app)
     with habitat_app.app_context():
-        comment = DataHabitattypeComment(hr_id='4f799fdd6f5a',
-                                         hr_habitat_id=1,
+        comment = DataHabitattypeComment(id='4f799fdd6f5a',
+                                         habitat_id=1,
                                          region='ALP',
                                          range_surface_area=1337)
         db.session.add(comment)
@@ -122,8 +122,8 @@ def test_edit_comment_submit(habitat_app):
     from art17.models import DataHabitattypeComment, db
     _create_habitat_record(habitat_app)
     with habitat_app.app_context():
-        comment = DataHabitattypeComment(hr_id='4f799fdd6f5a',
-                                         hr_habitat_id=1,
+        comment = DataHabitattypeComment(id='4f799fdd6f5a',
+                                         habitat_id=1,
                                          region='ALP',
                                          range_surface_area=1337)
         db.session.add(comment)

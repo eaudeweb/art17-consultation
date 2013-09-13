@@ -97,7 +97,7 @@ def parse_species(row, is_comment=False):
     rv = {}
     if is_comment:
         rv['comment'] = comment_info(row)
-    rv['id'] = row.sr_id
+    rv['id'] = row.id
     rv['region'] = row.region
     rv['range'] = {
             'surface_area': row.range_surface_area,
@@ -154,7 +154,7 @@ def parse_habitat(row, is_comment=False):
     rv = {}
     if is_comment:
         rv['comment'] = comment_info(row)
-    rv['id'] = row.hr_id
+    rv['id'] = row.id
     rv['region'] = row.region
     rv['range'] = {
             'surface_area': row.range_surface_area,

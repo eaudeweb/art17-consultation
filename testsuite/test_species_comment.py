@@ -55,16 +55,16 @@ SPECIES_MODEL_DATA = {
 def _create_species_record(species_app, comment=False):
     from art17 import models
     with species_app.app_context():
-        species = models.DataSpecies(species_id=1, speciescode='1234')
+        species = models.DataSpecies(id=1, speciescode='1234')
         species.lu = models.LuHdSpecies(objectid=1, speciescode=1234)
-        record = models.DataSpeciesRegion(sr_id=1, sr_species=species,
+        record = models.DataSpeciesRegion(id=1, species=species,
                                           region='ALP')
         record.lu = models.LuBiogeoreg(objectid=1)
         models.db.session.add(record)
 
         if comment:
-            comment = models.DataSpeciesComment(sr_id='4f799fdd6f5a',
-                                                sr_species_id=1,
+            comment = models.DataSpeciesComment(id='4f799fdd6f5a',
+                                                species_id=1,
                                                 region='ALP',
                                                 range_surface_area=1337)
             models.db.session.add(comment)
@@ -90,7 +90,7 @@ def test_save_comment_record(species_app):
     with species_app.app_context():
         assert DataSpeciesComment.query.count() == 1
         comment = DataSpeciesComment.query.first()
-        assert comment.sr_species.speciescode == '1234'
+        assert comment.species.speciescode == '1234'
         assert comment.region == 'ALP'
         assert comment.range_surface_area == 50
 

@@ -82,7 +82,7 @@ class HabitatCommentView(CommentView):
     template_saved = 'habitat/comment-saved.html'
 
     def link_comment_to_record(self):
-        self.comment.hr_habitat_id = self.record.hr_habitat_id
+        self.comment.habitat_id = self.record.habitat_id
         self.comment.region = self.record.region
 
     def setup_template_context(self):
@@ -93,7 +93,7 @@ class HabitatCommentView(CommentView):
 
     def record_for_comment(self, comment):
         records = (models.DataHabitattypeRegion.query
-                            .filter_by(hr_habitat_id=comment.hr_habitat_id)
+                            .filter_by(habitat_id=comment.habitat_id)
                             .filter_by(region=comment.region)
                             .all())
         assert len(records) == 1, "Expected exactly one record for the comment"

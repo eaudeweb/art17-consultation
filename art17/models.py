@@ -71,7 +71,7 @@ class LuBiogeoreg(Base):
 class DataHabitat(Base):
     __tablename__ = u'data_habitats'
 
-    habitat_id = Column('objectid', Numeric, primary_key=True)
+    id = Column('objectid', Numeric, primary_key=True)
     country = Column(String, index=True)
     habitatcode = Column(String, index=True)
     distribution_map = Column(Numeric)
@@ -112,8 +112,8 @@ class DataHabitatsCheckList(Base):
 class DataHabitattypeRegion(Base):
     __tablename__ = u'data_habitattype_reg'
 
-    hr_id = Column('objectid', Numeric, primary_key=True)
-    hr_habitat_id = Column(ForeignKey(DataHabitat.habitat_id), index=True)
+    id = Column('objectid', Numeric, primary_key=True)
+    habitat_id = Column('hr_habitat_id', ForeignKey(DataHabitat.id), index=True)
     region = Column(String)
     published = Column(Text)
     range_surface_area = Column(Numeric)
@@ -189,9 +189,8 @@ class DataHabitattypeRegion(Base):
 class DataHabitattypeComment(Base):
     __tablename__ = u'data_habitattype_comments'
 
-    hr_id = Column('objectid', String, primary_key=True, index=True,
-                               default=create_uuid)
-    hr_habitat_id = Column(ForeignKey(DataHabitat.habitat_id), index=True)
+    id = Column('objectid', String, primary_key=True, default=create_uuid)
+    habitat_id = Column('hr_habitat_id', ForeignKey(DataHabitat.id), index=True)
     region = Column(String)
     published = Column(Text)
     range_surface_area = Column(Numeric)
@@ -266,7 +265,7 @@ class DataHabitattypeComment(Base):
 class DataSpecies(Base):
     __tablename__ = u'data_species'
 
-    species_id = Column('objectid', Numeric, primary_key=True, index=True)
+    id = Column('objectid', Numeric, primary_key=True, index=True)
     country = Column(String)
     speciescode = Column(String, index=True)
     alternative_speciesname = Column(String)
@@ -319,8 +318,8 @@ class DataSpeciesCheckList(Base):
 class DataSpeciesRegion(Base):
     __tablename__ = u'data_species_regions'
 
-    sr_id = Column('objectid', Numeric, primary_key=True, index=True)
-    sr_species_id = Column(ForeignKey(DataSpecies.species_id), index=True)
+    id = Column('objectid', Numeric, primary_key=True, index=True)
+    species_id = Column('sr_species_id', ForeignKey(DataSpecies.id), index=True)
     region = Column(String)
     published = Column(Text)
     range_surface_area = Column('rsurface_area', Numeric)
@@ -406,7 +405,7 @@ class DataSpeciesRegion(Base):
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    sr_species = relationship(u'DataSpecies',
+    species = relationship(u'DataSpecies',
         backref=db.backref('regions', lazy='dynamic'))
 
     lu = relationship(LuBiogeoreg,
@@ -417,9 +416,8 @@ class DataSpeciesRegion(Base):
 class DataSpeciesComment(Base):
     __tablename__ = u'data_species_comments'
 
-    sr_id = Column('objectid', String, primary_key=True, index=True,
-                               default=create_uuid)
-    sr_species_id = Column(ForeignKey(DataSpecies.species_id), index=True)
+    id = Column('objectid', String, primary_key=True, default=create_uuid)
+    species_id = Column('sr_species_id', ForeignKey(DataSpecies.id), index=True)
     region = Column(String)
     published = Column(Text)
     range_surface_area = Column('rsurface_area', Numeric)
@@ -508,7 +506,7 @@ class DataSpeciesComment(Base):
 
     user_id = Column(Text)
 
-    sr_species = relationship(u'DataSpecies',
+    species = relationship(u'DataSpecies',
         backref=db.backref('comments', lazy='dynamic'))
 
 
