@@ -78,8 +78,8 @@ def can_edit_comment(row):
     if auth.admin_permission.can():
         return True
 
-    if user_id:
-        if auth.user_permission(user_id).can():
+    if row.user_id:
+        if auth.user_permission(row.user_id).can():
             return True
 
     return False
