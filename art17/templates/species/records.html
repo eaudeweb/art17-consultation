@@ -123,8 +123,9 @@
     </td>
     <td>{{ row.comment.comment_date|local_date }}</td>
     <td>
-      {% set url = url_for('messages.index', comment_id=row.comment.id) %}
-      <a href="{{ url }}">mesaje</a>
+      {%- set url = url_for('messages.index', comment_id=row.comment.id) %}
+      {%- set count = species.message_counts[row.comment.id] or 0 %}
+      <a href="{{ url }}">mesaje ({{ count }})</a>
     </td>
   </tr>
  {% endfor %}

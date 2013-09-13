@@ -1,4 +1,5 @@
 import flask
+from sqlalchemy import func
 from art17 import models
 from art17.common import CommentView
 from art17.schemas import parse_species
@@ -49,6 +50,12 @@ def index():
             records = records.filter_by(region=region.code)
             comments = comments.filter_by(region=region.code)
 
+        CommentMessage = models.CommentMessage
+        message_counts = dict(models.db.session.query(
+                                CommentMessage.parent,
+                                func.count(CommentMessage.id)
+                            ).group_by(CommentMessage.parent))
+
     return flask.render_template('species/index.html', **{
         'species_groups': [{'id': g.code,
                             'text': g.description}
@@ -69,6 +76,7 @@ def index():
             'annex_V': species.lu.annexv == 'Y',
             'records': [parse_species(r) for r in records],
             'comments': [parse_species(r, is_comment=True) for r in comments],
+            'message_counts': message_counts,
         },
     })
 

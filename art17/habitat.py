@@ -1,4 +1,5 @@
 import flask
+from sqlalchemy import func
 from art17 import models
 from art17.common import CommentView
 from art17.schemas import parse_habitat
@@ -48,6 +49,12 @@ def index():
             records = records.filter_by(region=region.code)
             comments = comments.filter_by(region=region.code)
 
+        CommentMessage = models.CommentMessage
+        message_counts = dict(models.db.session.query(
+                                CommentMessage.parent,
+                                func.count(CommentMessage.id)
+                            ).group_by(CommentMessage.parent))
+
     return flask.render_template('habitat/index.html', **{
         'habitat_list': [{'id': h.habitatcode, 'text': h.lu.hd_name}
                          for h in habitat_list],
@@ -59,6 +66,7 @@ def index():
             'code': habitat.habitatcode,
             'records': [parse_habitat(r) for r in records],
             'comments': [parse_habitat(r, is_comment=True) for r in comments],
+            'message_counts': message_counts,
         },
     })
 
