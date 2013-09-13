@@ -1,3 +1,4 @@
+from datetime import datetime
 import flask
 from art17 import models
 
@@ -23,9 +24,19 @@ def new(comment_id):
         message = models.CommentMessage(
             text=flask.request.form['text'],
             user_id=flask.g.identity.id,
+            date=datetime.utcnow(),
             parent=comment.id)
         models.db.session.add(message)
         models.db.session.commit()
-        return 'saved'
+        return flask.redirect(flask.url_for('.index', comment_id=comment_id))
 
     return flask.render_template('messages/new.html')
+
+
+@messages.route('/mesaje/<comment_id>')
+def index(comment_id):
+    messages = models.CommentMessage.query.filter_by(parent=comment_id).all()
+    return flask.render_template('messages/index.html', **{
+        'comment_id': comment_id,
+        'messages': messages,
+    })

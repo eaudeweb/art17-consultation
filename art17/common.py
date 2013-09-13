@@ -25,6 +25,11 @@ CONCLUSION_OPTIONS = [
     ('XX', u"XX"),
 ]
 
+DATE_FORMAT = {
+    'day': 'd MMM',
+    'long': 'd MMMM y HH:mm',
+}
+
 common = flask.Blueprint('common', __name__)
 
 
@@ -33,14 +38,14 @@ def inject_constants():
     return {'TREND_NAME': TREND_NAME}
 
 
-@common.app_template_filter('short_local_date')
-def short_local_date(value):
+@common.app_template_filter('local_date')
+def local_date(value, format='day'):
     if not value:
         return ''
     utc = tz.gettz('UTC')
     local_tz = tz.gettz('Europe/Bucharest')
     local_value = value.replace(tzinfo=utc).astimezone(local_tz)
-    return format_datetime(local_value, "d MMM", locale='ro')
+    return format_datetime(local_value, DATE_FORMAT[format], locale='ro')
 
 
 def flatten_dict(data):

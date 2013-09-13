@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+  <h1>Mesaje</h1>
+
+  <p>
+    {% set url = url_for('.new', comment_id=comment_id) %}
+    <a class="btn btn-primary" href="{{ url }}">mesaj nou</a>
+  </p>
+
+  {% for msg in messages %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        {{ msg.user_id }} ({{ msg.date|local_date('long') }})
+      </div>
+
+      <div class="panel-body">{{ msg.text }}</div>
+    </div>
+  {% endfor %}
+{% endblock content %}

@@ -47,7 +47,7 @@
     <td rowspan=2
         title="Evaluare generală a stării de conservare"
         >Evaluare generală</td>
-    <td rowspan=2 colspan=3></td>  {#- comment (author, etc) #}
+    <td rowspan=2 colspan=4></td>  {#- comment (author, etc) #}
   </tr>
 
   <tr class="records-header">
@@ -84,12 +84,12 @@
 
     {{ record_cells(row) }}
 
-    <td colspan=3></td>  {#- comment (author, etc) #}
+    <td colspan=4></td>  {#- comment (author, etc) #}
   </tr>
  {% endfor %}
 
   <tr class="records-header">
-    <td colspan="16">Comentarii</td>
+    <td colspan=17>Comentarii</td>
   </tr>
 
  {% for row in habitat.comments %}
@@ -107,7 +107,11 @@
         <a href="{{ url }}" class="records-editcommentbtn">edit</a>
       {%- endif %}
     </td>
-    <td>{{ row.comment.comment_date|short_local_date }}</td>
+    <td>{{ row.comment.comment_date|local_date }}</td>
+    <td>
+      {% set url = url_for('messages.index', comment_id=row.comment.id) %}
+      <a href="{{ url }}">mesaje</a>
+    </td>
   </tr>
  {% endfor %}
 </table>
