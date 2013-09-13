@@ -22,10 +22,8 @@ def register_principals(state):
 @auth.route('/auth_debug', methods=['GET', 'POST'])
 def debug():
     if flask.request.method == 'POST':
-        flask.session['auth'] = {
-            'user_id': flask.request.form['user_id'],
-            'roles': flask.request.form.getlist('roles'),
-        }
+        set_session_auth(flask.request.form['user_id'],
+                         flask.request.form.getlist('roles'))
         return flask.redirect(flask.url_for('.debug'))
 
     roles = flask.session.get('auth', {}).get('roles', [])
@@ -34,8 +32,12 @@ def debug():
                                  roles=roles)
 
 
+def set_session_auth(user_id=None, roles=[]):
+    flask.session['auth'] = {'user_id': user_id, 'roles': roles}
+
+
 @auth.before_app_request
-def debug_load_user():
+def load_sessoin_auth():
     auth_data = flask.session.get('auth')
     if auth_data and auth_data.get('user_id'):
         identity = Identity(id=auth_data['user_id'],
