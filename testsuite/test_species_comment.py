@@ -173,9 +173,10 @@ def test_add_comment_message(species_app):
     from art17.messages import messages
     from art17 import models
 
+    _create_species_record(species_app, comment=True)
     species_app.register_blueprint(messages)
     client = TestApp(species_app)
-    page = client.get('/mesaje/nou')
+    page = client.get('/mesaje/4f799fdd6f5a/nou')
     form = page.forms['message-form']
     form['text'] = "hello world!"
     form.submit()
@@ -183,4 +184,7 @@ def test_add_comment_message(species_app):
     with species_app.app_context():
         messages = models.CommentMessage.query.all()
         assert len(messages) == 1
-        assert messages[0].text == "hello world!"
+        msg = messages[0]
+        assert msg.text == "hello world!"
+        assert msg.user_id == 'somewho'
+        assert msg.parent == '4f799fdd6f5a'
