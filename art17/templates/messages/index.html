@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% from 'bits.html' import fonticon %}
 
 
 {% block content %}
@@ -13,6 +14,16 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         {{ msg.user_id }} ({{ msg.date|local_date('long') }})
+
+        {% if admin_permission.can() %}
+          {% set url = url_for('.remove', message_id=msg.id,
+                                          next=request.url) %}
+          <form style="display: inline" method="post" action="{{ url }}">
+            <button class="btn btn-xs btn-danger">
+              {{- fonticon('remove', 1.5) -}}
+            </button>
+          </form>
+        {% endif %}
       </div>
 
       <div class="panel-body">{{ msg.text }}</div>

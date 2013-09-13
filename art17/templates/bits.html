@@ -21,3 +21,15 @@
 {%- endfor %}
 </ol>
 {%- endmacro %}
+
+
+{% macro glyphicon(name) -%}
+  <span class="glyphicon glyphicon-{{ name }}"></span>
+{%- endmacro %}
+
+
+{% macro fonticon(name, size=None) -%}
+  <i class="icon-{{ name }}"
+    {%- if size %} style="font-size: {{ size }}em"
+    {%- endif %}></i>
+{%- endmacro %}

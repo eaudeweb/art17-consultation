@@ -1,6 +1,7 @@
 from datetime import datetime
 import flask
 from art17 import models
+from art17.auth import admin_permission
 
 
 messages = flask.Blueprint('messages', __name__)
@@ -31,6 +32,17 @@ def new(comment_id):
         return flask.redirect(flask.url_for('.index', comment_id=comment_id))
 
     return flask.render_template('messages/new.html')
+
+
+@messages.route('/mesaje/sterge', methods=['POST'])
+@admin_permission.require(403)
+def remove():
+    message_id = flask.request.args['message_id']
+    next_url = flask.request.args['next']
+    message = models.CommentMessage.query.get_or_404(message_id)
+    models.db.session.delete(message)
+    models.db.session.commit()
+    return flask.redirect(next_url)
 
 
 @messages.route('/mesaje/<comment_id>')

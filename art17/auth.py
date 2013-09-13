@@ -19,6 +19,13 @@ def register_principals(state):
     principals.init_app(app)
 
 
+@auth.app_context_processor
+def inject_permissions():
+    return {
+        'admin_permission': admin_permission,
+    }
+
+
 @auth.route('/auth_debug', methods=['GET', 'POST'])
 def debug():
     if flask.request.method == 'POST':
