@@ -52,7 +52,7 @@ HABITAT_MODEL_DATA = {
 }
 
 
-def _create_habitat_record(habitat_app):
+def _create_habitat_record(habitat_app, comment=False):
     from art17 import models
     with habitat_app.app_context():
         habitat = models.DataHabitat(id=1, habitatcode='1234')
@@ -61,6 +61,14 @@ def _create_habitat_record(habitat_app):
                                               region='ALP')
         record.lu = models.LuBiogeoreg(objectid=1)
         models.db.session.add(record)
+
+        if comment:
+            comment = models.DataHabitattypeComment(id='4f799fdd6f5a',
+                                                    habitat_id=1,
+                                                    region='ALP',
+                                                    range_surface_area=1337)
+            models.db.session.add(comment)
+
         models.db.session.commit()
 
 
@@ -102,14 +110,7 @@ def test_error_on_required_record(habitat_app):
 
 def test_edit_comment_form(habitat_app):
     from art17.models import DataHabitattypeComment, db
-    _create_habitat_record(habitat_app)
-    with habitat_app.app_context():
-        comment = DataHabitattypeComment(id='4f799fdd6f5a',
-                                         habitat_id=1,
-                                         region='ALP',
-                                         range_surface_area=1337)
-        db.session.add(comment)
-        db.session.commit()
+    _create_habitat_record(habitat_app, comment=True)
     client = habitat_app.test_client()
     resp1 = client.get('/habitate/comentariu/f3b4c23bcb88')
     assert resp1.status_code == 404
@@ -120,14 +121,7 @@ def test_edit_comment_form(habitat_app):
 
 def test_edit_comment_submit(habitat_app):
     from art17.models import DataHabitattypeComment, db
-    _create_habitat_record(habitat_app)
-    with habitat_app.app_context():
-        comment = DataHabitattypeComment(id='4f799fdd6f5a',
-                                         habitat_id=1,
-                                         region='ALP',
-                                         range_surface_area=1337)
-        db.session.add(comment)
-        db.session.commit()
+    _create_habitat_record(habitat_app, comment=True)
     client = habitat_app.test_client()
     resp = client.post('/habitate/comentariu/4f799fdd6f5a',
                        data={'range.surface_area': '50'})
