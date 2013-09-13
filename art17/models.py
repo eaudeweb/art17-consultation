@@ -512,6 +512,16 @@ class DataSpeciesComment(Base):
         backref=db.backref('comments', lazy='dynamic'))
 
 
+class CommentMessage(Base):
+    __tablename__ = u'comment_messages'
+
+    id = Column('objectid', String, primary_key=True, default=create_uuid)
+    parent = Column(String)
+    user_id = Column(Text)
+    date = Column(DateTime)
+    text = Column(Text)
+
+
 @db_manager.option('alembic_args', nargs=argparse.REMAINDER)
 def alembic(alembic_args):
     from alembic.config import CommandLine
