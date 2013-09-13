@@ -338,6 +338,7 @@ class DataHabitattypeComment(Base):
     natura2000_area_trend = Column(String)
     validated = Column(Numeric)
     validation_date = Column(DateTime)
+    comment_date = Column(DateTime)
 
     user_id = Column(Text)
 
@@ -610,6 +611,7 @@ class DataSpeciesComment(Base):
     natura2000_population_trend = Column(String)
     validated = Column(Numeric)
     validation_date = Column(DateTime)
+    comment_date = Column(DateTime)
 
     user_id = Column(Text)
 

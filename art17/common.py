@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+from datetime import datetime
 import flask
 import flask.views
 from werkzeug.datastructures import MultiDict
@@ -48,7 +49,8 @@ class CommentView(flask.views.View):
     def dispatch_request(self, record_id=None, comment_id=None):
         if record_id:
             self.record = self.record_cls.query.get_or_404(record_id)
-            self.comment = self.comment_cls()
+            self.comment = self.comment_cls(user_id=flask.g.identity.id,
+                                            comment_date=datetime.utcnow())
             form = self.form_cls(flask.request.form)
 
         elif comment_id:
@@ -69,7 +71,6 @@ class CommentView(flask.views.View):
 
         if flask.request.method == 'POST' and form.validate():
             self.link_comment_to_record()
-            self.comment.user_id = flask.g.identity.id
 
             form.populate_obj(self.comment)
 
