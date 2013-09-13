@@ -3,7 +3,9 @@
 from wtforms import (Form, FormField as FormField_base,
                      TextField, TextAreaField, DecimalField, SelectField)
 from wtforms.validators import Required, Optional
-from art17.lookup import TREND_OPTIONS, CONCLUSION_OPTIONS
+from art17.lookup import (TREND_OPTIONS,
+                          CONCLUSION_OPTIONS,
+                          METHODS_USED_OPTIONS)
 from art17 import schemas
 
 EMPTY_CHOICE = [('', "--")]
@@ -43,11 +45,17 @@ class Conclusion(Form):
     trend = TextField()
 
 
+class Method(Form):
+
+    value = SelectField(choices=METHODS_USED_OPTIONS,
+                        validators=[Required(u"Metoda utilizată este obligatorie")])
+
+
 class Range(Form):
 
     surface_area = DecimalField(
             validators=[Required(u"Suprafața este obligatorie")])
-    method = TextField()
+    method = FormField(Method)
     trend_short = FormField(Trend)
     trend_long = FormField(Trend)
     reference_value = FormField(ReferenceValue)
