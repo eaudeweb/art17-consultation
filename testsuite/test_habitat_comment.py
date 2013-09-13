@@ -26,7 +26,7 @@ HABITAT_STRUCT_DATA = {
         'reference_value': {
             'method': 'foo method',
             'number': 456,
-            'op': 'foo op',
+            'op': '>',
             'x': None,
         },
         'conclusion': {
@@ -44,7 +44,7 @@ HABITAT_MODEL_DATA = {
     'range_trend_period': 'aminamax',
     'range_trend_long': '-',
     'range_trend_long_period': 'bminbmax',
-    'complementary_favourable_range_op': 'foo op',
+    'complementary_favourable_range_op': '>',
     'complementary_favourable_range': 456,
     'complementary_favourable_range_method': 'foo method',
     'conclusion_range': 'U1',

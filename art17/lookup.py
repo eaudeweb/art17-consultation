@@ -26,19 +26,19 @@ LU_POP_NUMBER_OPTIONS = [
 LU_POP_NUMBER = dict(LU_POP_NUMBER_OPTIONS)
 
 LU_FV_RANGE_OP_FUNCT_OPTIONS =[
-    ('≈', u"approximately equal to"),
-    ('>', u"more than"),
-    ('>>', u"much more than"),
-    ('<', u"less than"),
+    (u'≈', u"≈ approximately equal to"),
+    (u'>', u"> more than"),
+    (u'≫', u"≫ much more than"),
+    (u'<', u"< less than"),
 ]
 
 LU_FV_RANGE_OP_FUNCT = dict(LU_FV_RANGE_OP_FUNCT_OPTIONS)
 
 
 LU_FV_RANGE_OP_OPTIONS =[
-    ('≈', u"approximately equal to"),
-    ('>', u"more than"),
-    ('>>', u"much more than"),
+    (u'≈', u"≈ approximately equal to"),
+    (u'>', u"> more than"),
+    (u'≫', u"≫ much more than"),
 ]
 
 LU_FV_RANGE_OP = dict(LU_FV_RANGE_OP_OPTIONS)

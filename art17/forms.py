@@ -5,7 +5,8 @@ from wtforms import (Form, FormField as FormField_base,
 from wtforms.validators import Required, Optional
 from art17.lookup import (TREND_OPTIONS,
                           CONCLUSION_OPTIONS,
-                          METHODS_USED_OPTIONS)
+                          METHODS_USED_OPTIONS,
+                          LU_FV_RANGE_OP_OPTIONS)
 from art17 import schemas
 
 EMPTY_CHOICE = [('', "--")]
@@ -33,7 +34,8 @@ class Trend(Form):
 
 class ReferenceValue(Form):
 
-    op = TextField()
+    op = SelectField(choices=EMPTY_CHOICE + LU_FV_RANGE_OP_OPTIONS,
+            validators=[Optional()])
     number = DecimalField(validators=[Optional()])
     method = TextAreaField()
 
