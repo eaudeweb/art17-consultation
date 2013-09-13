@@ -1,6 +1,8 @@
 # encoding: utf-8
 
 from datetime import datetime
+from dateutil import tz
+from babel.dates import format_datetime
 import flask
 import flask.views
 from werkzeug.datastructures import MultiDict
@@ -29,6 +31,14 @@ common = flask.Blueprint('common', __name__)
 @common.app_context_processor
 def inject_constants():
     return {'TREND_NAME': TREND_NAME}
+
+
+@common.app_template_filter('short_local_date')
+def short_local_date(value):
+    utc = tz.gettz('UTC')
+    local_tz = tz.gettz('Europe/Bucharest')
+    local_value = value.replace(tzinfo=utc).astimezone(local_tz)
+    return format_datetime(local_value, "d MMM", locale='ro')
 
 
 def flatten_dict(data):

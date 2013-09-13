@@ -57,7 +57,7 @@
     <td rowspan=2
         title="Evaluare generală a stării de conservare"
         >Evaluare generală</td>
-    <td rowspan=2 colspan=2></td>  {#- comment (author, etc) #}
+    <td rowspan=2 colspan=3></td>  {#- comment (author, etc) #}
   </tr>
 
   <tr class="records-header">
@@ -103,7 +103,7 @@
  {% endfor %}
 
   <tr class="records-header">
-    <td colspan="21">Comentarii</td>
+    <td colspan="22">Comentarii</td>
   </tr>
 
  {% for row in species.comments %}
@@ -121,6 +121,7 @@
         <a href="{{ url }}" class="records-editcommentbtn">edit</a>
       {%- endif %}
     </td>
+    <td>{{ row.comment.comment_date|short_local_date }}</td>
   </tr>
  {% endfor %}
 </table>

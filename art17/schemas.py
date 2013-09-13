@@ -89,6 +89,7 @@ def comment_info(row):
     return {
         'user_id': row.user_id,
         'can_edit': can_edit_comment(row),
+        'comment_date': row.comment_date,
     }
 
 
