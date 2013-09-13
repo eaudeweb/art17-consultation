@@ -8,7 +8,7 @@ MISSING_FIELD_TXT = "Suprafața este obligatorie"
 SPECIES_STRUCT_DATA = {
     'range': {
         'surface_area': 123,
-        'method': 'foo range method',
+        'method': '1',
         'trend_short': {
             'trend': '+',
             'period': {
@@ -39,7 +39,7 @@ SPECIES_STRUCT_DATA = {
 
 SPECIES_MODEL_DATA = {
     'range_surface_area': 123,
-    'range_method': 'foo range method',
+    'range_method': '1',
     'range_trend': '+',
     'range_trend_period': 'aminamax',
     'range_trend_long': '-',
@@ -76,7 +76,8 @@ def test_save_comment_record(species_app):
     _create_species_record(species_app)
     client = species_app.test_client()
     resp = client.post('/specii/detalii/1/comentariu',
-                       data={'range.surface_area': '50'})
+                       data={'range.surface_area': '50',
+                             'range.method': '1'})
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
@@ -130,7 +131,8 @@ def test_edit_comment_submit(species_app):
         db.session.commit()
     client = species_app.test_client()
     resp = client.post('/specii/comentariu/4f799fdd6f5a',
-                       data={'range.surface_area': '50'})
+                       data={'range.surface_area': '50',
+                             'range.method': '1'})
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():

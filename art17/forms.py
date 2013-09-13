@@ -45,17 +45,12 @@ class Conclusion(Form):
     trend = TextField()
 
 
-class Method(Form):
-
-    value = SelectField(choices=METHODS_USED_OPTIONS,
-                        validators=[Required(u"Metoda utilizată este obligatorie")])
-
-
 class Range(Form):
 
     surface_area = DecimalField(
             validators=[Required(u"Suprafața este obligatorie")])
-    method = FormField(Method)
+    method = SelectField(choices=METHODS_USED_OPTIONS,
+            validators=[Required(u"Metoda utilizată este obligatorie")])
     trend_short = FormField(Trend)
     trend_long = FormField(Trend)
     reference_value = FormField(ReferenceValue)
