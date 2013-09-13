@@ -18,7 +18,7 @@
         {% if admin_permission.can() %}
           {% set url = url_for('.remove', message_id=msg.id,
                                           next=request.url) %}
-          <form style="display: inline" method="post" action="{{ url }}">
+          <form class="message-remove" method="post" action="{{ url }}">
             <button class="btn btn-xs btn-danger">
               {{- fonticon('remove', 1.5) -}}
             </button>
@@ -30,3 +30,19 @@
     </div>
   {% endfor %}
 {% endblock content %}
+
+
+{% block script %}
+{{- super() }}
+<script>
+(function() {
+  "use strict";
+
+  $('.message-remove').submit(function(evt) {
+    if(! confirm("Șterge comentariul?")) {
+      evt.preventDefault();
+    }
+  });
+})();
+</script>
+{% endblock %}
