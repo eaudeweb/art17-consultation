@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 from datetime import datetime
 import flask
 from art17 import models
@@ -40,8 +42,10 @@ def remove():
     message_id = flask.request.args['message_id']
     next_url = flask.request.args['next']
     message = models.CommentMessage.query.get_or_404(message_id)
+    user_id = message.user_id
     models.db.session.delete(message)
     models.db.session.commit()
+    flask.flash(u"Mesajul lui %s a fost șters." % user_id, 'success')
     return flask.redirect(next_url)
 
 

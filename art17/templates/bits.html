@@ -33,3 +33,13 @@
     {%- if size %} style="font-size: {{ size }}em"
     {%- endif %}></i>
 {%- endmacro %}
+
+
+{% macro flash_messages() %}
+  {%- for category, message in get_flashed_messages(with_categories=True) %}
+    <div class="alert alert-{{ category }}">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ message }}
+    </div>
+  {%- endfor %}
+{%- endmacro %}
