@@ -107,6 +107,35 @@
 }
 
 
+.readbox {
+    .pull-right;
+
+    .readbox-new    { width: 100px; .btn; .btn-xs; .btn-success; }
+    .readbox-read   { width: 100px; .btn; .btn-xs; .btn-default; display: none; }
+    .readbox-mark   { width: 100px; .btn; .btn-xs; .btn-warning; display: none; }
+    .readbox-unmark { width: 100px; .btn; .btn-xs; .btn-warning; display: none; }
+}
+
+
+.message-read .readbox {
+    .readbox-new    { display: none; }
+    .readbox-read   { display: inline-block; }
+}
+
+
+.readbox:hover {
+    .readbox-new    { display: none; }
+    .readbox-mark   { display: inline-block; }
+}
+
+
+.message-read .readbox:hover {
+    .readbox-read   { display: none; }
+    .readbox-mark   { display: none; }
+    .readbox-unmark { display: inline-block; }
+}
+
+
 .message-remove {
      display: inline;
 }

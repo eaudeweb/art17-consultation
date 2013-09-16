@@ -49,10 +49,49 @@ def remove():
     return flask.redirect(next_url)
 
 
+@messages.route('/mesaje/citit', methods=['POST'])
+def set_read_status():
+    message_id = flask.request.form['message_id']
+    read = (flask.request.form.get('read') == 'on')
+    message = models.CommentMessage.query.get_or_404(message_id)
+
+    user_id = flask.g.identity.id
+    if user_id is None:
+        flask.abort(403)
+
+    existing = (models.CommentMessageRead.query
+                                         .filter_by(message_id=message.id,
+                                                    user_id=user_id))
+
+    if read:
+        if not existing.count():
+            row = models.CommentMessageRead(message_id=message.id,
+                                            user_id=user_id)
+            models.db.session.add(row)
+            models.db.session.commit()
+
+    else:
+        existing.delete()
+        models.db.session.commit()
+
+    return flask.jsonify(read=read)
+
+
 @messages.route('/mesaje/<comment_id>')
 def index(comment_id):
     messages = models.CommentMessage.query.filter_by(parent=comment_id).all()
+    user_id = flask.g.identity.id
+
+    if user_id:
+        read_by_user = (models.CommentMessageRead.query
+                                                 .filter_by(user_id=user_id))
+        read_msgs = set(r.message_id for r in read_by_user)
+
+    else:
+        read_msgs = []
+
     return flask.render_template('messages/index.html', **{
         'comment_id': comment_id,
         'messages': messages,
+        'read_msgs': read_msgs,
     })

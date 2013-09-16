@@ -8,10 +8,14 @@
   <p>
     {% set url = url_for('.new', comment_id=comment_id) %}
     <a class="btn btn-primary" href="{{ url }}">mesaj nou</a>
+
+    {{ read_msgs }}
   </p>
 
   {% for msg in messages %}
-    <div class="panel panel-default">
+    <div class="panel panel-default message
+                {%- if msg.id in read_msgs %} message-read{% endif %}"
+         data-id="{{ msg.id }}">
       <div class="panel-heading">
         {{ msg.user_id }} ({{ msg.date|local_date('long') }})
 
@@ -24,6 +28,15 @@
             </button>
           </form>
         {% endif %}
+
+        {% if g.identity.id %}
+          <span class="readbox">
+            <button class="readbox-new">mesaj nou</button>
+            <button class="readbox-read">mesaj văzut</button>
+            <button class="readbox-mark">marchează văzut</button>
+            <button class="readbox-unmark">marchează nou</button>
+          </span>
+        {% endif %}
       </div>
 
       <div class="panel-body">{{ msg.text }}</div>
@@ -33,7 +46,12 @@
 
 
 {% block script %}
+{%- from 'bits.html' import script %}
 {{- super() }}
+
+<script>window.App.set_read_status_url = "{{ url_for('.set_read_status') }}";</script>
+{{ script('messages.js') }}
+
 <script>
 (function() {
   "use strict";
