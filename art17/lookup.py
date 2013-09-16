@@ -65,8 +65,10 @@ TREND_NAME = dict(TREND_OPTIONS)
 
 
 CONCLUSION_OPTIONS = [
-    ('FV', u"FV"),
-    ('U1', u"U1"),
-    ('U2', u"U2"),
-    ('XX', u"XX"),
+    ('FV', u"Favourable"),
+    ('U1', u"Inadequate"),
+    ('U2', u"Bad"),
+    ('XX', u"Unknown"),
 ]
+
+CONCLUSIONS = dict(CONCLUSION_OPTIONS)

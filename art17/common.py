@@ -25,7 +25,8 @@ def inject_constants():
             'METHODS_USED': lookup.METHODS_USED,
             'LU_FV_RANGE_OP': lookup.LU_FV_RANGE_OP,
             'LU_FV_RANGE_OP_FUNCT': lookup.LU_FV_RANGE_OP_FUNCT,
-            'LU_POP_NUMBER': lookup.LU_POP_NUMBER,}
+            'LU_POP_NUMBER': lookup.LU_POP_NUMBER,
+            'CONCLUSIONS': lookup.CONCLUSIONS}
 
 
 @common.app_template_filter('local_date')

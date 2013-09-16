@@ -1,6 +1,7 @@
 {%- from 'common/td.html'
     import conclusion_td, range_html, trend_html, trend_detail_html,
-    magnitude_html, population_size_td, reference_value_html, period_html
+      magnitude_html, population_size_td, reference_value_html,
+      period_html, method_html, conclusions_html
     with context %}
 
 
@@ -27,7 +28,7 @@
 
         <tr>
           <th>Metoda utilizată - suprafața arealului</th>
-          <td>{{ record.range.method }}</td>
+          <td>{{ method_html(record.range.method) }}</td>
         </tr>
 
         <tr>
@@ -65,16 +66,22 @@
         <tr>
           <th>Arealul favorabil de referință</th>
           <td>{{ reference_value_html(record.range.reference_value,
-                  unit='km²') }} <br />
-            {%- if record.range.reference_value.method %}
-              Metoda utilizată: {{ record.range.reference_value.method }}
-            {% endif -%}
+                  unit='km²') }}
+          </td>
+        </tr>
+
+        <tr>
+          <th>Arealul favorabil de referință - metoda</th>
+          <td>
+            {% if record.range.reference_value.method %}
+              {{- record.range.reference_value.method -}}
+            {% endif %}
           </td>
         </tr>
 
         <tr>
           <th>Concluzie</th>
-          {{ conclusion_td(record.range.conclusion) }}
+          <td>{{ conclusions_html(record.range.conclusion)}}</td>
         </tr>
 
       </table>
@@ -91,7 +98,7 @@
 
         <tr>
           <th>Metoda utilizată - mărimea populației</th>
-          <td>{{ record.population.method }}</td>
+          <td>{{ method_html(record.population.method) }}</td>
         </tr>
 
         <tr>
@@ -128,17 +135,21 @@
 
         <tr>
           <th>Populația favorabilă de referință</th>
+          <td>{{ reference_value_html(record.population.reference_value) }}</td>
+        </tr>
+
+        <tr>
+          <th>Populația favorabilă de referință - metoda</th>
           <td>
-            {{ reference_value_html(record.population.reference_value) }} <br />
             {%- if record.population.reference_value.method %}
-              Metoda utilizată: {{ record.population.reference_value.method }}
+              {{ record.population.reference_value.method }}
             {% endif -%}
           </td>
         </tr>
 
         <tr>
           <th>Concluzie</th>
-          {{ conclusion_td(record.population.conclusion) }}
+          <td>{{ conclusions_html(record.population.conclusion)}}</td>
         </tr>
 
       </table>
@@ -155,15 +166,19 @@
 
         <tr>
           <th>Metoda utilizată - habitatul speciei</th>
-          <td>{{ record.habitat.method }}</td>
+          <td>{{ method_html(record.habitat.method) }}</td>
         </tr>
 
         <tr>
           <th>Calitatea habitatului</th>
+          <td>{{ record.habitat.quality.value }}</td>
+        </tr>
+
+        <tr>
+          <th>Calitatea habitatului - metoda</th>
           <td>
-            {{ record.habitat.quality.value }} <br />
             {%- if record.habitat.quality.explanation %}
-              Metoda utilizată: {{ record.habitat.quality.explanation }}
+              {{ record.habitat.quality.explanation }}
             {% endif -%}
           </td>
         </tr>
@@ -202,7 +217,7 @@
 
         <tr>
           <th>Concluzie</th>
-          {{ conclusion_td(record.habitat.conclusion) }}
+          <td>{{ conclusions_html(record.habitat.conclusion)}}</td>
         </tr>
 
       </table>
@@ -215,12 +230,12 @@
 
         <tr>
           <th>Perspective viitoare</th>
-          {{ conclusion_td(record.future_prospects) }}
+          <td>{{ conclusions_html(record.future_prospects)}}</td>
         </tr>
 
         <tr>
           <th>Evaluare generală a stării de conservare</th>
-          {{ conclusion_td(record.overall_assessment) }}
+          <td>{{ conclusions_html(record.overall_assessment)}}</td>
         </tr>
       </table>
     </div>

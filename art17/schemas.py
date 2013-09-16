@@ -48,18 +48,17 @@ def parse_reference_value(obj, prefix):
 
 
 def _get_population_size(obj):
-    rv = []
-    for qualifier in ['', '_alt']:
-        min_size = getattr(obj, 'population%s_minimum_size' % qualifier)
-        max_size = getattr(obj, 'population%s_maximum_size' % qualifier)
-        unit = getattr(obj, 'population%s_size_unit' % qualifier)
+    rv = {}
+    for qualifier in ['population', 'population_alt']:
+        min_size = getattr(obj, '%s_minimum_size' % qualifier)
+        max_size = getattr(obj, '%s_maximum_size' % qualifier)
+        unit = getattr(obj, '%s_size_unit' % qualifier)
 
-        if unit:
-            rv.append({
-                'min': min_size,
-                'max': max_size,
-                'unit': unit,
-            })
+        rv[qualifier] = {
+            'min': min_size,
+            'max': max_size,
+            'unit': unit,
+        }
 
     return rv
 

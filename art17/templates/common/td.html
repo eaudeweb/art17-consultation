@@ -3,6 +3,13 @@
 {%- endmacro %}
 
 
+{% macro method_html(method) %}
+{%- if method %}
+  {{ method }} - {{ METHODS_USED[method] -}}
+{% endif %}
+{%- endmacro %}
+
+
 {% macro reference_value_html(refval, unit='', ideal='') %}
   {%- if refval.number -%}
     {{ refval.number }} {{ unit }}
@@ -65,12 +72,14 @@
 
 
 {% macro population_size_html(size) %}
-  {%- for item in size %}
+  {%- set values_with_unit = [size['population'], size['population_alt']] | selectattr('unit') %}
+  {%- for item in values_with_unit %}
     {%- if item.min == item.max %}
       {{- item.min }} {{ item.unit }}
     {%- else %}
       {{- item.min }}-{{ item.max }} {{ item.unit }}
     {%- endif %}
+    {%- if not loop.last %};{% endif %}
   {%- endfor %}
 {%- endmacro %}
 
@@ -103,4 +112,14 @@
       <option>XX</option>
     </select>
   </td>
+{%- endmacro %}
+
+{% macro conclusions_html(conclusion) %}
+{%- if conclusion.value %}
+  {{ conclusion.value }} ({{ CONCLUSIONS[conclusion.value] }})
+{%- endif %}
+{%- if conclusion.trend %};
+  Trend: {{ TREND_NAME[conclusion.trend] }}
+{% endif %}
+
 {%- endmacro %}
