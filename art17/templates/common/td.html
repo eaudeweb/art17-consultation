@@ -3,6 +3,13 @@
 {%- endmacro %}
 
 
+{% macro method_html(method) %}
+{%- if method %}
+  {{ method }} - {{ METHODS_USED[method] -}}
+{% endif %}
+{%- endmacro %}
+
+
 {% macro reference_value_html(refval, unit='', ideal='') %}
   {%- if refval.number -%}
     {{ refval.number }} {{ unit }}
@@ -103,4 +110,14 @@
       <option>XX</option>
     </select>
   </td>
+{%- endmacro %}
+
+{% macro conclusions_html(conclusion) %}
+{%- if conclusion.value %}
+  {{ conclusion.value }} ({{ CONCLUSIONS[conclusion.value] }})
+{%- endif %}
+{%- if conclusion.trend %};
+  Trend: {{ TREND_NAME[conclusion.trend] }}
+{% endif %}
+
 {%- endmacro %}
