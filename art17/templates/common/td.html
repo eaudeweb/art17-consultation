@@ -72,12 +72,14 @@
 
 
 {% macro population_size_html(size) %}
-  {%- for item in size %}
+  {%- set values_with_unit = [size['population'], size['population_alt']] | selectattr('unit') %}
+  {%- for item in values_with_unit %}
     {%- if item.min == item.max %}
       {{- item.min }} {{ item.unit }}
     {%- else %}
       {{- item.min }}-{{ item.max }} {{ item.unit }}
     {%- endif %}
+    {%- if not loop.last %};{% endif %}
   {%- endfor %}
 {%- endmacro %}
 
