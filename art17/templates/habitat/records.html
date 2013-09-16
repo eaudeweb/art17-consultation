@@ -119,7 +119,8 @@
     <td>
       {%- set url = url_for('messages.index', comment_id=row.id) %}
       {%- set count = habitat.message_counts[row.id] or 0 %}
-      <a href="{{ url }}">mesaje ({{ count }})</a>
+      <a class="records-messagesbtn btn btn-xs btn-default"
+         href="{{ url }}">mesaje ({{ count }})</a>
     </td>
   </tr>
  {% endfor %}
