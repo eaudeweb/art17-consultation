@@ -8,8 +8,6 @@
   <p>
     {% set url = url_for('.new', comment_id=comment_id) %}
     <a class="btn btn-primary" href="{{ url }}">mesaj nou</a>
-
-    {{ read_msgs }}
   </p>
 
   {% for msg in messages %}
