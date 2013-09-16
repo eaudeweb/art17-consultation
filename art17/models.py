@@ -254,9 +254,10 @@ class DataHabitattypeComment(Base):
     natura2000_area_trend = Column(String)
     validated = Column(Numeric)
     validation_date = Column(DateTime)
-    comment_date = Column(DateTime)
 
+    comment_date = Column(DateTime)
     user_id = Column(Text)
+    status = Column(Text)
 
     hr_habitat = relationship(u'DataHabitat',
         backref=db.backref('comments', lazy='dynamic'))
@@ -502,9 +503,10 @@ class DataSpeciesComment(Base):
     natura2000_population_trend = Column(String)
     validated = Column(Numeric)
     validation_date = Column(DateTime)
-    comment_date = Column(DateTime)
 
+    comment_date = Column(DateTime)
     user_id = Column(Text)
+    status = Column(Text)
 
     species = relationship(u'DataSpecies',
         backref=db.backref('comments', lazy='dynamic'))
