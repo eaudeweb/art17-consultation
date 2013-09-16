@@ -257,7 +257,7 @@ class DataHabitattypeComment(Base):
 
     comment_date = Column(DateTime)
     user_id = Column(Text)
-    status = Column(Text)
+    status = Column(Text, default='new')
 
     hr_habitat = relationship(u'DataHabitat',
         backref=db.backref('comments', lazy='dynamic'))
@@ -506,7 +506,7 @@ class DataSpeciesComment(Base):
 
     comment_date = Column(DateTime)
     user_id = Column(Text)
-    status = Column(Text)
+    status = Column(Text, default='new')
 
     species = relationship(u'DataSpecies',
         backref=db.backref('comments', lazy='dynamic'))

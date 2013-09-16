@@ -7,9 +7,11 @@ import sqlalchemy as sa
 
 def upgrade():
     op.add_column('data_species_comments',
-        sa.Column('status', sa.UnicodeText, nullable=True))
+        sa.Column('status', sa.UnicodeText,
+                  nullable=False, server_default='new'))
     op.add_column('data_habitattype_comments',
-        sa.Column('status', sa.UnicodeText, nullable=True))
+        sa.Column('status', sa.UnicodeText,
+                  nullable=False, server_default='new'))
 
 
 def downgrade():
