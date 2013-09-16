@@ -522,6 +522,14 @@ class CommentMessage(Base):
     text = Column(Text)
 
 
+class CommentMessageRead(Base):
+    __tablename__ = u'comment_messages_read'
+
+    id = Column('objectid', String, primary_key=True, default=create_uuid)
+    message_id = Column(String, ForeignKey(CommentMessage.id))
+    user_id = Column(String)
+
+
 @db_manager.option('alembic_args', nargs=argparse.REMAINDER)
 def alembic(alembic_args):
     from alembic.config import CommandLine
