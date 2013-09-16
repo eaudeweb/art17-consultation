@@ -87,7 +87,6 @@ def can_edit_comment(row):
 
 def comment_info(row):
     return {
-        'id': row.id,
         'user_id': row.user_id,
         'can_edit': can_edit_comment(row),
         'comment_date': row.comment_date,
@@ -98,7 +97,7 @@ def comment_info(row):
 def parse_species(row, is_comment=False):
     rv = {}
     if is_comment:
-        rv['comment'] = comment_info(row)
+        rv.update(comment_info(row))
     rv['id'] = row.id
     rv['region'] = row.region
     rv['range'] = {
@@ -155,7 +154,7 @@ def parse_species_commentform(row):
 def parse_habitat(row, is_comment=False):
     rv = {}
     if is_comment:
-        rv['comment'] = comment_info(row)
+        rv.update(comment_info(row))
     rv['id'] = row.id
     rv['region'] = row.region
     rv['range'] = {

@@ -114,25 +114,25 @@
         {%- set url = url_for('.comment_status', comment_id=row.id) %}
         <form method="post" action="{{ url }}" class="records-commentstatus">
           <input type="hidden" name="next" value="{{ comment_next }}">
-          <input type="hidden" name="status" value="{{ row.comment.status }}">
+          <input type="hidden" name="status" value="{{ row.status }}">
         </form>
       {%- endif %}
     </td>
 
     {{ record_cells(row) }}
 
-    <td>{{ row.comment.user_id }}</td>  {#- comment author, etc #}
+    <td>{{ row.user_id }}</td>  {#- comment author, etc #}
     <td>
-      {%- if row.comment.can_edit %}
+      {%- if row.can_edit %}
         {%- set url = url_for('.comment_edit', comment_id=row.id,
                                                next=comment_next) %}
         <a href="{{ url }}" class="records-editcommentbtn">edit</a>
       {%- endif %}
     </td>
-    <td>{{ row.comment.comment_date|local_date }}</td>
+    <td>{{ row.comment_date|local_date }}</td>
     <td>
-      {%- set url = url_for('messages.index', comment_id=row.comment.id) %}
-      {%- set count = species.message_counts[row.comment.id] or 0 %}
+      {%- set url = url_for('messages.index', comment_id=row.id) %}
+      {%- set count = species.message_counts[row.id] or 0 %}
       <a href="{{ url }}">mesaje ({{ count }})</a>
     </td>
   </tr>
