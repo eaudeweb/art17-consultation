@@ -103,5 +103,4 @@ class CommentStateView(flask.views.View):
             flask.abort(403)
         comment.status = new_status
         models.db.session.commit()
-        flask.flash('stare: ' + new_status, 'success')
         return flask.redirect(next_url)

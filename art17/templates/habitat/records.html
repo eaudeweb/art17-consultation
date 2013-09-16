@@ -100,8 +100,7 @@
         {%- set url = url_for('.comment_status', comment_id=row.id) %}
         <form method="post" action="{{ url }}" class="records-commentstatus">
           <input type="hidden" name="next" value="{{ comment_next }}">
-          {%- from 'common/comment_bits.html' import status_menu %}
-          {{ status_menu() }}
+          <input type="hidden" name="status" value="{{ row.comment.status }}">
         </form>
       {%- endif %}
     </td>
