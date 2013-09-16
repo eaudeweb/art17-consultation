@@ -7,15 +7,14 @@ import flask
 import flask.views
 from werkzeug.datastructures import MultiDict
 from art17 import models
-
 import lookup
-
-
 
 DATE_FORMAT = {
     'day': 'd MMM',
     'long': 'd MMMM y HH:mm',
 }
+
+STATUS_VALUES = ['new', 'approved', 'rejected']
 
 common = flask.Blueprint('common', __name__)
 
@@ -90,3 +89,19 @@ class CommentView(flask.views.View):
 
         self.template_ctx['form'] = form
         return flask.render_template(self.template, **self.template_ctx)
+
+
+class CommentStateView(flask.views.View):
+
+    methods = ['POST']
+
+    def dispatch_request(self, comment_id):
+        comment = self.comment_cls.query.get_or_404(comment_id)
+        next_url = flask.request.form['next']
+        new_status = flask.request.form['status']
+        if new_status not in STATUS_VALUES:
+            flask.abort(403)
+        comment.status = new_status
+        models.db.session.commit()
+        flask.flash('stare: ' + new_status, 'success')
+        return flask.redirect(next_url)

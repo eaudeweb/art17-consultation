@@ -1,7 +1,7 @@
 import flask
 from sqlalchemy import func
 from art17 import models
-from art17.common import CommentView
+from art17.common import CommentView, CommentStateView
 from art17.schemas import parse_species
 from art17 import forms
 from art17 import schemas
@@ -126,9 +126,10 @@ species.add_url_rule('/specii/comentariu/<comment_id>',
                      view_func=SpeciesCommentView.as_view('comment_edit'))
 
 
-@species.route('/specii/comentariu/<comment_id>/stare', methods=['POST'])
-def comment_status(comment_id):
-    next_url = flask.request.form['next']
-    new_status = flask.request.form['status']
-    flask.flash('stare: ' + new_status, 'success')
-    return flask.redirect(next_url)
+class SpeciesCommentStateView(CommentStateView):
+
+    comment_cls = models.DataSpeciesComment
+
+
+species.add_url_rule('/specii/comentariu/<comment_id>/stare',
+                view_func=SpeciesCommentStateView.as_view('comment_status'))

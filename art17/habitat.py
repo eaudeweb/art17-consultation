@@ -1,7 +1,7 @@
 import flask
 from sqlalchemy import func
 from art17 import models
-from art17.common import CommentView
+from art17.common import CommentView, CommentStateView
 from art17.schemas import parse_habitat
 from art17 import forms
 from art17 import schemas
@@ -116,9 +116,10 @@ habitat.add_url_rule('/habitate/comentariu/<comment_id>',
                      view_func=HabitatCommentView.as_view('comment_edit'))
 
 
-@habitat.route('/habitate/comentariu/<comment_id>/stare', methods=['POST'])
-def comment_status(comment_id):
-    next_url = flask.request.form['next']
-    new_status = flask.request.form['status']
-    flask.flash('stare: ' + new_status, 'success')
-    return flask.redirect(next_url)
+class HabitatCommentStateView(CommentStateView):
+
+    comment_cls = models.DataHabitattypeComment
+
+
+habitat.add_url_rule('/habitate/comentariu/<comment_id>/stare',
+                view_func=HabitatCommentStateView.as_view('comment_status'))
