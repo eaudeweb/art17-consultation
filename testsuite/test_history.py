@@ -13,6 +13,15 @@ class species_params(object):
     comment_id = '4f799fdd6f5a'
     comment_edit_url = '/specii/comentariu/4f799fdd6f5a'
     comment_status_url = '/specii/comentariu/4f799fdd6f5a/stare'
+    comment_data = {'range.surface_area': '50',
+                    'range.method': '1',
+                    'population.method': '1',
+                    'habitat.surface_area': '100',
+                    'habitat.date': '2000-2001',
+                    'habitat.method': '1',
+                    'habitat.quality': '2',
+                    'habitat.quality_explanation': 'foo explanation',
+                    'habitat.area_suitable': 1000}
 
     @classmethod
     def setup(cls, app, comment=False):
@@ -32,6 +41,8 @@ class habitat_params(object):
     comment_id = '4f799fdd6f5a'
     comment_edit_url = '/habitate/comentariu/4f799fdd6f5a'
     comment_status_url = '/habitate/comentariu/4f799fdd6f5a/stare'
+    comment_data = {'range.surface_area': '50',
+                    'range.method': '1'}
 
     @classmethod
     def setup(cls, app, comment=False):
@@ -47,8 +58,7 @@ def test_comment_add(params, app):
     params.setup(app)
     client = app.test_client()
 
-    resp = client.post(params.comment_create_url,
-                       data={'range.surface_area': '50', 'range.method': '1'})
+    resp = client.post(params.comment_create_url, data=params.comment_data)
     assert resp.status_code == 200
 
     with app.app_context():
@@ -67,9 +77,7 @@ def test_comment_edit(params, app):
     params.setup(app, comment=True)
     client = app.test_client()
 
-    resp = client.post(params.comment_edit_url,
-                       data={'range.surface_area': '50',
-                             'range.method': '1'})
+    resp = client.post(params.comment_edit_url, data=params.comment_data)
     assert resp.status_code == 200
 
     with app.app_context():
