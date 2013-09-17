@@ -59,7 +59,21 @@ def handle_signal(table, action, ob, old_data=None, new_data=None, **extra):
 
 @history.route('/activitate')
 @admin_permission.require(403)
-def activity():
-    return flask.render_template('activity.html', **{
+def index():
+    return flask.render_template('history/index.html', **{
         'history_items': iter(models.History.query),
     })
+
+
+@history.route('/activitate/<item_id>')
+@admin_permission.require(403)
+def detail(item_id):
+    return flask.render_template('history/detail.html', **{
+        'item': models.History.query.get_or_404(item_id),
+    })
+
+
+@history.app_template_filter('pretty_json_data')
+def pretty_json_data(json_data):
+    data = flask.json.loads(json_data)
+    return flask.json.dumps(data, indent=2, sort_keys=True)

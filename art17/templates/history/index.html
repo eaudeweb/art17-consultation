@@ -14,7 +14,9 @@
 
 
 {% set CLASS_FOR_ACTION = {'add': 'success',
-                           'edit': 'warning'} %}
+                           'edit': 'warning',
+                           'remove': 'danger',
+                           'status': 'warning'} %}
 
 
 {% block content %}
@@ -32,7 +34,9 @@
     <tbody>
     {%- for item in history_items %}
       <tr class="{{ CLASS_FOR_ACTION[item.action] }}">
-        <td>{{ item.date|local_date('long') }}</td>
+        {%- set date = item.date|local_date('long') %}
+        {%- set url = url_for('.detail', item_id=item.id) %}
+        <td><a href="{{ url }}">{{ date }}</a></td>
         <td>{{ item.table }}</td>
         <td>{{ item.object_id }}</td>
         <td>{{ item.action }}</td>
