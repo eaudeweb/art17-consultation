@@ -84,3 +84,13 @@ CONCLUSION_OPTIONS = [
 ]
 
 CONCLUSIONS = dict(CONCLUSION_OPTIONS)
+
+
+QUALITY_OPTIONS = [
+    ('1', u"Good"),
+    ('2', u"Moderate"),
+    ('3', u"Bad"),
+    ('4', u"Unknown"),
+]
+
+QUALITY = dict(QUALITY_OPTIONS)

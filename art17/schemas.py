@@ -175,6 +175,7 @@ def parse_species_commentform(row):
     rv['habitat'] = {
             'surface_area': row.habitat_surface_area,
             'method': row.habitat_method,
+            'quality': row.habitat_quality,
     }
     return rv
 
@@ -283,6 +284,7 @@ def flatten_species_commentform(struct, obj):
 
     obj.habitat_surface_area = struct['habitat']['surface_area']
     obj.habitat_method = struct['habitat']['method']
+    obj.habitat_quality = struct['habitat']['quality']
 
 
 def flatten_habitat_commentform(struct, obj):

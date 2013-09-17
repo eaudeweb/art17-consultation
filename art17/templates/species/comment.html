@@ -21,7 +21,7 @@
 {% block content %}
 {%- from 'common/td.html' import
     range_html, trend_detail_html, reference_value_html, period_html,
-    population_size_html, method_html, conclusions_html
+    population_size_html, method_html, conclusions_html, habitat_quality_html
     with context %}
 
   <h1>
@@ -432,6 +432,24 @@
 
             <div class="col-sm-6 text-primary">
               {{ method_html(record.habitat.method) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="habitat.quality">
+            Calitatea habitatului
+          </label>
+
+          {{ errors(form.habitat.quality) }}
+
+          <div class="row">
+            <div class="col-sm-6 {{- error_cls(form.habitat.quality) }}">
+              {{ form.habitat.quality(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ habitat_quality_html(record.habitat.quality) }}
             </div>
           </div>
         </div>

@@ -76,6 +76,7 @@ SPECIES_STRUCT_DATA = {
     'habitat': {
         'surface_area': 100,
         'method': '3',
+        'quality': '2',
     },
 }
 
@@ -112,6 +113,7 @@ SPECIES_MODEL_DATA = {
 
     'habitat_surface_area': 100,
     'habitat_method': '3',
+    'habitat_quality': '2',
 }
 
 
@@ -151,7 +153,8 @@ def test_save_comment_record(species_app):
                              'range.method': '1',
                              'population.method': '1',
                              'habitat.surface_area': '100',
-                             'habitat.method': '1'})
+                             'habitat.method': '1',
+                             'habitat.quality': '2'})
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
@@ -195,7 +198,8 @@ def test_edit_comment_submit(species_app):
                              'range.method': '1',
                              'population.method': '1',
                              'habitat.surface_area': '100',
-                             'habitat.method': '1'})
+                             'habitat.method': '1',
+                             'habitat.quality': '2'})
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():

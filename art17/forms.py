@@ -9,7 +9,8 @@ from art17.lookup import (TREND_OPTIONS,
                           LU_FV_RANGE_OP_OPTIONS,
                           LU_FV_RANGE_OP_FUNCT_OPTIONS,
                           LU_POP_NUMBER_OPTIONS,
-                          LU_POP_NUMBER_RESTRICTED_OPTIONS)
+                          LU_POP_NUMBER_RESTRICTED_OPTIONS,
+                          QUALITY_OPTIONS)
 from art17 import schemas
 
 EMPTY_CHOICE = [('', "--")]
@@ -102,6 +103,8 @@ class Habitat(Form):
             validators=[Required(u"Suprafața este obligatorie")])
     method = SelectField(choices=METHODS_USED_OPTIONS,
             validators=[Required(u"Metoda utilizată este obligatorie")])
+    quality = SelectField(choices=QUALITY_OPTIONS,
+            validators=[Required(u"Valoarea calitǎții este obligatorie")])
 
 class SpeciesComment(Form):
 
