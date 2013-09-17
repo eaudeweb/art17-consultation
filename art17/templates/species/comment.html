@@ -389,6 +389,7 @@
             </div>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -568,6 +569,28 @@
           </div>
         </div>
 
+        <div class="form-group">
+          {%- set conclusion = form.habitat.conclusion %}
+          <label for="habitat.conclusion.value">
+            Concluzie
+          </label>
+
+          {{ errors(conclusion) }}
+
+          <div class="row">
+            <div class="col-sm-3 {{- error_cls(conclusion.value) }}">
+              {{ conclusion.value(class='form-control') }}
+            </div>
+
+            <div class="col-sm-3 {{- error_cls(conclusion.trend) }}">
+              {{ conclusion.trend(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ conclusions_html(record.habitat.conclusion) }}
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>

@@ -182,6 +182,7 @@ def parse_species_commentform(row):
             'trend_short': parse_trend(row, 'habitat_trend'),
             'trend_long': parse_trend(row, 'habitat_trend_long'),
             'area_suitable': row.habitat_area_suitable,
+            'conclusion': parse_conclusion(row, 'conclusion_habitat'),
     }
     return rv
 
@@ -298,6 +299,9 @@ def flatten_species_commentform(struct, obj):
     flatten_trend(struct['habitat']['trend_long'], obj,
                     'habitat_trend_long')
     obj.habitat_area_suitable = struct['habitat']['area_suitable']
+    flatten_conclusion(struct['habitat']['conclusion'], obj,
+                    'conclusion_habitat')
+
 
 def flatten_habitat_commentform(struct, obj):
     obj.range_surface_area = struct['range']['surface_area']

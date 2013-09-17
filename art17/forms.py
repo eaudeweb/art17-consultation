@@ -113,6 +113,7 @@ class Habitat(Form):
     trend_long = FormField(Trend)
     area_suitable = DecimalField(
             validators=[Required(u"Suprafața este obligatorie")])
+    conclusion = FormField(Conclusion)
 
 class SpeciesComment(Form):
 

@@ -94,6 +94,10 @@ SPECIES_STRUCT_DATA = {
             },
         },
         'area_suitable': 1000,
+        'conclusion': {
+            'value': 'U1',
+            'trend': 'foo habitat conclusion trend',
+        },
     },
 }
 
@@ -138,6 +142,8 @@ SPECIES_MODEL_DATA = {
     'habitat_trend_long': '0',
     'habitat_trend_long_period': 'hminhmax',
     'habitat_area_suitable': 1000,
+    'conclusion_habitat': 'U1',
+    'conclusion_habitat_trend': 'foo habitat conclusion trend',
 }
 
 
