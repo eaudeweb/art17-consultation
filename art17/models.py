@@ -1,7 +1,7 @@
 import uuid
 import argparse
 import logging
-from sqlalchemy import (Column, DateTime, ForeignKey, Index,
+from sqlalchemy import (Column, DateTime, ForeignKey, Index, func,
                         String, Table, Text, Numeric, cast, Binary)
 from sqlalchemy.orm import relationship, foreign
 from sqlalchemy.ext.declarative import declarative_base
@@ -528,6 +528,18 @@ class CommentMessageRead(Base):
     id = Column('objectid', String, primary_key=True, default=create_uuid)
     message_id = Column(String, ForeignKey(CommentMessage.id))
     user_id = Column(String)
+
+
+class History(Base):
+    __tablename__ = u'history'
+
+    id = Column('objectid', String, primary_key=True, default=create_uuid)
+    table = Column(String)
+    object_id = Column(String)
+    action = Column(String)
+    date = Column(DateTime, default=func.now())
+    user_id = Column(String)
+    old_data = Column(Text)
 
 
 @db_manager.option('alembic_args', nargs=argparse.REMAINDER)
