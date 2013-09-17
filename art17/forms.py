@@ -109,6 +109,8 @@ class Habitat(Form):
             validators=[Required(u"Metoda este obligatorie")])
     trend_short = FormField(Trend)
     trend_long = FormField(Trend)
+    area_suitable = DecimalField(
+            validators=[Required(u"Suprafața este obligatorie")])
 
 class SpeciesComment(Form):
 

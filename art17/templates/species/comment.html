@@ -528,6 +528,27 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label for="habitat.area_suitable">
+            Suprafața de habitat adecvată pentru specie (km²)
+          </label>
+
+          {{ errors(form.habitat.area_suitable) }}
+
+          <div class="row">
+            <div class="col-sm-4 {{- error_cls(form.habitat.area_suitable) }}">
+              {{ form.habitat.area_suitable(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2"></div>
+
+            <div class="col-sm-6 text-primary">
+              {{ range_html(record.habitat.area_suitable) }}
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
 

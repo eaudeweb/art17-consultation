@@ -92,6 +92,7 @@ SPECIES_STRUCT_DATA = {
                 'end': 'hmax',
             },
         },
+        'area_suitable': 1000,
     },
 }
 
@@ -134,6 +135,7 @@ SPECIES_MODEL_DATA = {
     'habitat_trend_period': 'hminhmax',
     'habitat_trend_long': '0',
     'habitat_trend_long_period': 'hminhmax',
+    'habitat_area_suitable': 1000,
 }
 
 
@@ -175,7 +177,8 @@ def test_save_comment_record(species_app):
                              'habitat.surface_area': '100',
                              'habitat.method': '1',
                              'habitat.quality': '2',
-                             'habitat.quality_explanation': 'foo explanation'})
+                             'habitat.quality_explanation': 'foo explanation',
+                             'habitat.area_suitable': 1000})
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
@@ -221,7 +224,8 @@ def test_edit_comment_submit(species_app):
                              'habitat.surface_area': '100',
                              'habitat.method': '1',
                              'habitat.quality': '2',
-                             'habitat.quality_explanation': 'foo explanation'})
+                             'habitat.quality_explanation': 'foo explanation',
+                             'habitat.area_suitable': 1000})
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
