@@ -96,10 +96,17 @@ class Population(Form):
         super(Population, self).__init__(*args, **kwargs)
         self.reference_value.op.choices=EMPTY_CHOICE + LU_FV_RANGE_OP_FUNCT_OPTIONS
 
+
+class Habitat(Form):
+    surface_area = DecimalField(
+            validators=[Required(u"Suprafața este obligatorie")])
+
+
 class SpeciesComment(Form):
 
     range = FormField(Range)
     population = FormField(Population)
+    habitat = FormField(Habitat)
 
     def populate_obj(self, obj):
         schemas.flatten_species_commentform(self.data, obj)

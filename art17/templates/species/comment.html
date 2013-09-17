@@ -196,7 +196,9 @@
           </div>
         </div>
       </div>
+    </div>
 
+    <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Populație</h3>
       </div>
@@ -246,7 +248,6 @@
             <div class="col-sm-2 {{- error_cls(population_alt.max) }}">
               {{ population_alt.max(class='form-control') }}
             </div>
-
           </div>
         </div>
 
@@ -388,15 +389,45 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
 
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Habitat</h3>
       </div>
 
+      <div class="panel-body">
+        <div class="form-group">
+          <label for="habitat.surface_area">
+            Suprafață (km²)
+          </label>
+
+          {{ errors(form.habitat.surface_area) }}
+
+          <div class="row">
+            <div class="col-sm-4 {{- error_cls(form.habitat.surface_area) }}">
+              {{ form.habitat.surface_area(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2"></div>
+
+            <div class="col-sm-6 text-primary">
+              {{ range_html(record.habitat) }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+      <div class="form-group">
+        <button type="submit" class="recordcomment-save">Save</button>
+      </div>
+
 
     {%- if next_url %}
       <input type="hidden" name="next" value="{{ next_url }}">
     {%- endif %}
 
-    <button type="submit" class="recordcomment-save">Save</button>
   </form>
 {% endblock content %}

@@ -72,7 +72,9 @@ SPECIES_STRUCT_DATA = {
             'value': 'U2',
             'trend': 'foo pop conclusion trend',
         },
-
+    },
+    'habitat': {
+        'surface_area': 100,
     },
 }
 
@@ -107,7 +109,7 @@ SPECIES_MODEL_DATA = {
     'conclusion_population': 'U2',
     'conclusion_population_trend': 'foo pop conclusion trend',
 
-
+    'habitat_surface_area': 100,
 }
 
 
@@ -145,7 +147,8 @@ def test_save_comment_record(species_app):
     resp = client.post('/specii/detalii/1/comentariu',
                        data={'range.surface_area': '50',
                              'range.method': '1',
-                             'population.method': '1'})
+                             'population.method': '1',
+                             'habitat.surface_area': '100'})
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
@@ -187,7 +190,8 @@ def test_edit_comment_submit(species_app):
     resp = client.post('/specii/comentariu/4f799fdd6f5a',
                        data={'range.surface_area': '50',
                              'range.method': '1',
-                             'population.method': '1'})
+                             'population.method': '1',
+                             'habitat.surface_area': '100'})
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
