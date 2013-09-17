@@ -47,7 +47,8 @@ class Conclusion(Form):
 
     value = SelectField(choices=EMPTY_CHOICE + CONCLUSION_OPTIONS,
                         validators=[Optional()])
-    trend = TextField()
+    trend = SelectField(choices=EMPTY_CHOICE + TREND_OPTIONS,
+                        validators=[Optional()])
 
 
 class PopulationValue(Form):
