@@ -63,8 +63,8 @@ class PopulationSize(Form):
 
     def __init__(self, *args, **kwargs):
         super(PopulationSize, self).__init__(*args, **kwargs)
-        self.population.unit.choices = LU_POP_NUMBER_RESTRICTED_OPTIONS
-        self.population_alt.unit.choices = LU_POP_NUMBER_OPTIONS
+        self.population.unit.choices = EMPTY_CHOICE + LU_POP_NUMBER_RESTRICTED_OPTIONS
+        self.population_alt.unit.choices = EMPTY_CHOICE + LU_POP_NUMBER_OPTIONS
 
 class Range(Form):
 
@@ -80,6 +80,8 @@ class Range(Form):
 
 class Population(Form):
     size = FormField(PopulationSize)
+    method = SelectField(choices=METHODS_USED_OPTIONS,
+            validators=[Required(u"Metoda utilizată este obligatorie")])
 
 class SpeciesComment(Form):
 

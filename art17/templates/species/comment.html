@@ -21,7 +21,7 @@
 {% block content %}
 {%- from 'common/td.html' import
     range_html, trend_detail_html, reference_value_html, period_html,
-    population_size_html
+    population_size_html, method_html
     with context %}
 
   <h1>
@@ -70,7 +70,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ record.range.method }}
+              {{ method_html(record.range.method) }}
             </div>
           </div>
         </div>
@@ -249,6 +249,25 @@
 
           </div>
         </div>
+
+        <div class="form-group">
+          <label for="population.method">
+            Metoda utilizată - mărimea populației
+          </label>
+
+          {{ errors(form.population.method) }}
+
+          <div class="row">
+            <div class="col-sm-6 {{- error_cls(form.population.method) }}">
+              {{ form.population.method(class='form-control', rows=2) }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ method_html(record.population.method) }}
+            </div>
+          </div>
+        </div>
+
 
       </div>
 

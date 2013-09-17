@@ -47,6 +47,7 @@ SPECIES_STRUCT_DATA = {
                 'max': 120,
             },
         },
+        'method': '1',
     },
 }
 
@@ -70,6 +71,7 @@ SPECIES_MODEL_DATA = {
     'population_alt_minimum_size': 10,
     'population_alt_maximum_size': 120,
     'population_alt_size_unit': 'grids10x10',
+    'population_method': '1',
 }
 
 
@@ -106,7 +108,8 @@ def test_save_comment_record(species_app):
     client = species_app.test_client()
     resp = client.post('/specii/detalii/1/comentariu',
                        data={'range.surface_area': '50',
-                             'range.method': '1'})
+                             'range.method': '1',
+                             'population.method': '1'})
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
@@ -147,7 +150,8 @@ def test_edit_comment_submit(species_app):
     client = species_app.test_client()
     resp = client.post('/specii/comentariu/4f799fdd6f5a',
                        data={'range.surface_area': '50',
-                             'range.method': '1'})
+                             'range.method': '1',
+                             'population.method': '1'})
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
