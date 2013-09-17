@@ -101,6 +101,7 @@ class SpeciesCommentView(CommentView):
     record_cls = models.DataSpeciesRegion
     comment_cls = models.DataSpeciesComment
     parse_commentform = staticmethod(schemas.parse_species_commentform)
+    flatten_commentform = staticmethod(schemas.flatten_species_commentform)
     template = 'species/comment.html'
     template_saved = 'species/comment-saved.html'
     add_signal = comment_added

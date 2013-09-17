@@ -93,7 +93,7 @@ class CommentView(flask.views.View):
         if flask.request.method == 'POST' and form.validate():
             self.link_comment_to_record()
 
-            form.populate_obj(self.comment)
+            self.flatten_commentform(form.data, self.comment)
             models.db.session.add(self.comment)
 
             app = flask.current_app._get_current_object()
