@@ -105,6 +105,8 @@ class Habitat(Form):
             validators=[Required(u"Metoda utilizată este obligatorie")])
     quality = SelectField(choices=QUALITY_OPTIONS,
             validators=[Required(u"Valoarea calitǎții este obligatorie")])
+    quality_explanation = TextAreaField(
+            validators=[Required(u"Metoda este obligatorie")])
 
 class SpeciesComment(Form):
 

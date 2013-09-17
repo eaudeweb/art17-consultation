@@ -454,6 +454,24 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label for="habitat.quality_explanation">
+            Calitatea habitatului - metoda
+          </label>
+
+          {{ errors(form.habitat.quality_explanation) }}
+
+          <div class="row">
+            <div class="col-sm-6 {{- error_cls(form.habitat.quality_explanation) }}">
+              {{ form.habitat.quality_explanation(class='form-control', rows=2) }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ record.habitat.quality_explanation }}
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
