@@ -12,9 +12,11 @@ def app():
     app = flask.Flask('art17.app')
     app.config['TESTING'] = True
     app.config['SECRET_KEY'] = 'foo'
+    app.config['TESTING_USER_ID'] = 'somewho'
     @app.before_request
     def set_identity():
-        flask.g.identity = Mock(id='somewho')
+        user_id = flask.current_app.config['TESTING_USER_ID']
+        flask.g.identity = Mock(id=user_id)
     from art17.models import db
     db.init_app(app)
     with app.app_context():
