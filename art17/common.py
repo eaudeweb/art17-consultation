@@ -83,6 +83,8 @@ class CommentView(flask.views.View):
             form.populate_obj(self.comment)
 
             models.db.session.add(self.comment)
+            self.signal.send(flask.current_app._get_current_object(),
+                             ob=self.comment)
             models.db.session.commit()
 
             return flask.render_template(self.template_saved,
