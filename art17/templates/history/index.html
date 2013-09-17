@@ -33,7 +33,7 @@
 
     <tbody>
     {%- for item in history_items %}
-      <tr class="{{ CLASS_FOR_ACTION[item.action] }}">
+      <tr class="{{ CLASS_FOR_ACTION[item.action] }} history_row">
         {%- set date = item.date|local_date('long') %}
         {%- set url = url_for('.detail', item_id=item.id) %}
         <td><a href="{{ url }}">{{ date }}</a></td>
@@ -46,3 +46,18 @@
     </tbody>
   </table>
 {% endblock content %}
+
+
+{% block script %}
+{{- super() }}
+<script>
+(function() {
+  "use strict";
+  $('table').on('click', '.history_row', function(evt) {
+    var row = $(this);
+    var link = row.find('a');
+    window.location = link.attr('href');
+  });
+})();
+</script>
+{% endblock script %}
