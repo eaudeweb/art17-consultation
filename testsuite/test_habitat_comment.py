@@ -31,7 +31,7 @@ HABITAT_STRUCT_DATA = {
         },
         'conclusion': {
             'value': 'U1',
-            'trend': 'foo conclusion trend',
+            'trend': '-',
         },
     },
 }
@@ -48,7 +48,7 @@ HABITAT_MODEL_DATA = {
     'complementary_favourable_range': 456,
     'complementary_favourable_range_method': 'foo method',
     'conclusion_range': 'U1',
-    'conclusion_range_trend': 'foo conclusion trend',
+    'conclusion_range_trend': '-',
 }
 
 

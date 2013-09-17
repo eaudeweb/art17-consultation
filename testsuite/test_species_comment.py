@@ -31,7 +31,7 @@ SPECIES_STRUCT_DATA = {
         },
         'conclusion': {
             'value': 'U1',
-            'trend': 'foo conclusion trend',
+            'trend': '-',
         },
     },
     'population': {
@@ -70,7 +70,7 @@ SPECIES_STRUCT_DATA = {
         },
         'conclusion': {
             'value': 'U2',
-            'trend': 'foo pop conclusion trend',
+            'trend': '-',
         },
     },
     'habitat': {
@@ -96,7 +96,7 @@ SPECIES_STRUCT_DATA = {
         'area_suitable': 1000,
         'conclusion': {
             'value': 'U1',
-            'trend': 'foo habitat conclusion trend',
+            'trend': '-',
         },
     },
 }
@@ -113,7 +113,7 @@ SPECIES_MODEL_DATA = {
     'complementary_favourable_range': 456,
     'complementary_favourable_range_method': 'foo method',
     'conclusion_range': 'U1',
-    'conclusion_range_trend': 'foo conclusion trend',
+    'conclusion_range_trend': '-',
 
     'population_minimum_size': 1,
     'population_maximum_size': 12,
@@ -130,7 +130,7 @@ SPECIES_MODEL_DATA = {
     'complementary_favourable_population': 234,
     'complementary_favourable_population_method': 'foo pop method',
     'conclusion_population': 'U2',
-    'conclusion_population_trend': 'foo pop conclusion trend',
+    'conclusion_population_trend': '-',
 
     'habitat_surface_area': 100,
     'habitat_date': '2000-2001',
@@ -143,7 +143,7 @@ SPECIES_MODEL_DATA = {
     'habitat_trend_long_period': 'hminhmax',
     'habitat_area_suitable': 1000,
     'conclusion_habitat': 'U1',
-    'conclusion_habitat_trend': 'foo habitat conclusion trend',
+    'conclusion_habitat_trend': '-',
 }
 
 
