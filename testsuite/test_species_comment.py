@@ -99,6 +99,14 @@ SPECIES_STRUCT_DATA = {
             'trend': '-',
         },
     },
+    'future_prospects': {
+        'value': 'U2',
+        'trend': '+',
+    },
+    'overall_assessment': {
+        'value': 'U2',
+        'trend': '+',
+    },
 }
 
 
@@ -144,6 +152,12 @@ SPECIES_MODEL_DATA = {
     'habitat_area_suitable': 1000,
     'conclusion_habitat': 'U1',
     'conclusion_habitat_trend': '-',
+
+    'conclusion_future': 'U2',
+    'conclusion_future_trend': '+',
+
+    'conclusion_assessment': 'U2',
+    'conclusion_assessment_trend': '+',
 }
 
 

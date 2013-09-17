@@ -133,6 +133,7 @@ def parse_species(row, is_comment=False):
             'area_suitable': row.habitat_area_suitable,
             'quality': _get_habitat_quality(row),
         }
+
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
     return rv
@@ -184,6 +185,10 @@ def parse_species_commentform(row):
             'area_suitable': row.habitat_area_suitable,
             'conclusion': parse_conclusion(row, 'conclusion_habitat'),
     }
+
+    rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
+    rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
+
     return rv
 
 
@@ -302,6 +307,10 @@ def flatten_species_commentform(struct, obj):
     flatten_conclusion(struct['habitat']['conclusion'], obj,
                     'conclusion_habitat')
 
+    flatten_conclusion(struct['future_prospects'], obj,
+                    'conclusion_future')
+    flatten_conclusion(struct['overall_assessment'], obj,
+                    'conclusion_assessment')
 
 def flatten_habitat_commentform(struct, obj):
     obj.range_surface_area = struct['range']['surface_area']

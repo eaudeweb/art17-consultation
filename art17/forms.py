@@ -116,11 +116,14 @@ class Habitat(Form):
             validators=[Required(u"Suprafața este obligatorie")])
     conclusion = FormField(Conclusion)
 
+
 class SpeciesComment(Form):
 
     range = FormField(Range)
     population = FormField(Population)
     habitat = FormField(Habitat)
+    future_prospects = FormField(Conclusion)
+    overall_assessment = FormField(Conclusion)
 
     def populate_obj(self, obj):
         schemas.flatten_species_commentform(self.data, obj)
