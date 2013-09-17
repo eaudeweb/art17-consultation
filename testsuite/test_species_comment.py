@@ -34,6 +34,20 @@ SPECIES_STRUCT_DATA = {
             'trend': 'foo conclusion trend',
         },
     },
+    'population': {
+        'size': {
+            'population': {
+                'unit': 'i',
+                'min': 1,
+                'max': 12,
+            },
+            'population_alt': {
+                'unit': 'grids10x10',
+                'min': 10,
+                'max': 120,
+            },
+        },
+    },
 }
 
 
@@ -49,6 +63,13 @@ SPECIES_MODEL_DATA = {
     'complementary_favourable_range_method': 'foo method',
     'conclusion_range': 'U1',
     'conclusion_range_trend': 'foo conclusion trend',
+
+    'population_minimum_size': 1,
+    'population_maximum_size': 12,
+    'population_size_unit': 'i',
+    'population_alt_minimum_size': 10,
+    'population_alt_maximum_size': 120,
+    'population_alt_size_unit': 'grids10x10',
 }
 
 

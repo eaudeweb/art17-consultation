@@ -6,7 +6,9 @@ from wtforms.validators import Required, Optional
 from art17.lookup import (TREND_OPTIONS,
                           CONCLUSION_OPTIONS,
                           METHODS_USED_OPTIONS,
-                          LU_FV_RANGE_OP_OPTIONS)
+                          LU_FV_RANGE_OP_OPTIONS,
+                          LU_POP_NUMBER_OPTIONS,
+                          LU_POP_NUMBER_RESTRICTED_OPTIONS)
 from art17 import schemas
 
 EMPTY_CHOICE = [('', "--")]
@@ -47,6 +49,23 @@ class Conclusion(Form):
     trend = TextField()
 
 
+class PopulationValue(Form):
+    unit = SelectField(validators=[Optional()])
+    min = DecimalField(
+            validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+    max = DecimalField(
+            validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+
+
+class PopulationSize(Form):
+    population = FormField(PopulationValue)
+    population_alt = FormField(PopulationValue)
+
+    def __init__(self, *args, **kwargs):
+        super(PopulationSize, self).__init__(*args, **kwargs)
+        self.population.unit.choices = LU_POP_NUMBER_RESTRICTED_OPTIONS
+        self.population_alt.unit.choices = LU_POP_NUMBER_OPTIONS
+
 class Range(Form):
 
     surface_area = DecimalField(
@@ -59,9 +78,13 @@ class Range(Form):
     conclusion = FormField(Conclusion)
 
 
+class Population(Form):
+    size = FormField(PopulationSize)
+
 class SpeciesComment(Form):
 
     range = FormField(Range)
+    population = FormField(Population)
 
     def populate_obj(self, obj):
         schemas.flatten_species_commentform(self.data, obj)

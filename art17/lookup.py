@@ -25,6 +25,18 @@ LU_POP_NUMBER_OPTIONS = [
 
 LU_POP_NUMBER = dict(LU_POP_NUMBER_OPTIONS)
 
+LU_POP_NUMBER_RESTRICTED_OPTIONS = [
+    ('i', u"number of individuals"),
+    ('colonies', u"number of colonies"),
+    ('logs', u"number of inhabited logs"),
+    ('trees', u"number of inhabited trees"),
+    ('stones', u"number of inhabited stones/boulders"),
+    ('area', u"area coverd by population in m2"),
+    ('length', u"length of inhabited feature in km"),
+]
+
+LU_POP_NUMBER_RESTRICTED = dict(LU_POP_NUMBER_RESTRICTED_OPTIONS)
+
 LU_FV_RANGE_OP_FUNCT_OPTIONS =[
     (u'≈', u"≈ approximately equal to"),
     (u'>', u"> more than"),

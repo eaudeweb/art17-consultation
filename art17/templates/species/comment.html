@@ -20,7 +20,8 @@
 
 {% block content %}
 {%- from 'common/td.html' import
-    range_html, trend_detail_html, reference_value_html, period_html
+    range_html, trend_detail_html, reference_value_html, period_html,
+    population_size_html
     with context %}
 
   <h1>
@@ -156,7 +157,7 @@
 
         <div class="form-group">
           <label for="range.reference_value.method">
-            Arealul favorabil de referință - Metoda
+            Arealul favorabil de referință - metoda
           </label>
 
           {{ errors(form.range.reference_value.method) }}
@@ -195,6 +196,62 @@
           </div>
         </div>
       </div>
+
+      <div class="panel-heading">
+        <h3 class="panel-title">Populație</h3>
+      </div>
+
+      <div class="panel-body">
+        <div class="form-group">
+          {%- set population = form.population.size.population %}
+          <label for="population.size.population.unit">
+            Estimarea mărimii populației
+          </label>
+
+          {{ errors(population) }}
+
+          <div class="row">
+            <div class="col-sm-2 {{- error_cls(population.unit) }}">
+              {{ population.unit(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(population.min) }}">
+              {{ population.min(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(population.max) }}">
+              {{ population.max(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ population_size_html(record.population.size) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          {%- set population_alt = form.population.size.population_alt %}
+
+          {{ errors(population_alt) }}
+
+          <div class="row">
+            <div class="col-sm-2 {{- error_cls(population_alt.unit) }}">
+              {{ population_alt.unit(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(population_alt.min) }}">
+              {{ population_alt.min(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(population_alt.max) }}">
+              {{ population_alt.max(class='form-control') }}
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
     </div>
 
     {%- if next_url %}

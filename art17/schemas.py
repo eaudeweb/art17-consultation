@@ -136,6 +136,19 @@ def parse_species(row, is_comment=False):
     return rv
 
 
+def parse_trend(obj, prefix, magnitude=False):
+    rv = {
+        'trend': getattr(obj, prefix),
+        'period': parse_period(obj, prefix + '_period'),
+    }
+    if magnitude:
+        rv['magnitude'] = {
+            'min': getattr(obj, prefix + '_magnitude_min'),
+            'max': getattr(obj, prefix + '_magnitude_max'),
+        }
+    return rv
+
+
 def parse_species_commentform(row):
     rv = {}
     rv['range'] = {
@@ -147,6 +160,10 @@ def parse_species_commentform(row):
             'reference_value': parse_reference_value(row,
                                     'complementary_favourable_range')
         }
+
+    rv['population'] = {
+            'size': _get_population_size(row),
+    }
     return rv
 
 
@@ -222,6 +239,16 @@ def flatten_refval(refval_struct, obj, prefix):
     setattr(obj, prefix + '_method', refval_struct['method'])
 
 
+def _set_population_size(pop_size_struct, obj):
+    for qualifier in ['population', 'population_alt']:
+        setattr(obj, '%s_minimum_size' % qualifier,
+                    pop_size_struct[qualifier]['min'])
+        setattr(obj, '%s_maximum_size' % qualifier,
+                    pop_size_struct[qualifier]['max'])
+        setattr(obj, '%s_size_unit' % qualifier,
+                    pop_size_struct[qualifier]['unit'])
+
+
 def flatten_species_commentform(struct, obj):
     obj.range_surface_area = struct['range']['surface_area']
     obj.range_method = struct['range']['method']
@@ -232,7 +259,7 @@ def flatten_species_commentform(struct, obj):
                    'complementary_favourable_range')
     flatten_conclusion(struct['range']['conclusion'], obj, 'conclusion_range')
 
-
+    _set_population_size(struct['population']['size'], obj)
 
 def flatten_habitat_commentform(struct, obj):
     obj.range_surface_area = struct['range']['surface_area']
