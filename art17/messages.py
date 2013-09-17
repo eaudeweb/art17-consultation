@@ -2,11 +2,14 @@
 
 from datetime import datetime
 import flask
+from blinker import Signal
 from art17 import models
 from art17.auth import admin_permission
 
-
 messages = flask.Blueprint('messages', __name__)
+
+message_added = Signal()
+message_removed = Signal()
 
 
 def _get_comment_or_404(comment_id):
@@ -17,6 +20,11 @@ def _get_comment_or_404(comment_id):
 
     else:
         flask.abort(404)
+
+
+def _dump_message_data(message):
+    return {k: getattr(message, k)
+            for k in ['text', 'user_id', 'parent', 'date']}
 
 
 @messages.route('/mesaje/<comment_id>/nou', methods=['GET', 'POST'])
@@ -30,6 +38,9 @@ def new(comment_id):
             date=datetime.utcnow(),
             parent=comment.id)
         models.db.session.add(message)
+        app = flask.current_app._get_current_object()
+        message_added.send(app, ob=message,
+                           new_data=_dump_message_data(message))
         models.db.session.commit()
         return flask.redirect(flask.url_for('.index', comment_id=comment_id))
 
@@ -44,6 +55,8 @@ def remove():
     message = models.CommentMessage.query.get_or_404(message_id)
     user_id = message.user_id
     models.db.session.delete(message)
+    app = flask.current_app._get_current_object()
+    message_removed.send(app, ob=message, old_data=_dump_message_data(message))
     models.db.session.commit()
     flask.flash(u"Mesajul lui %s a fost șters." % user_id, 'success')
     return flask.redirect(next_url)

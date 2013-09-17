@@ -1,5 +1,6 @@
 import flask
 from sqlalchemy import func
+from blinker import Signal
 from art17 import models
 from art17.common import CommentView, CommentStateView
 from art17.schemas import parse_species
@@ -7,6 +8,10 @@ from art17 import forms
 from art17 import schemas
 
 species = flask.Blueprint('species', __name__)
+
+comment_added = Signal()
+comment_edited = Signal()
+comment_status_changed = Signal()
 
 
 @species.route('/specii/regiuni/<int:species_code>')
@@ -96,8 +101,11 @@ class SpeciesCommentView(CommentView):
     record_cls = models.DataSpeciesRegion
     comment_cls = models.DataSpeciesComment
     parse_commentform = staticmethod(schemas.parse_species_commentform)
+    flatten_commentform = staticmethod(schemas.flatten_species_commentform)
     template = 'species/comment.html'
     template_saved = 'species/comment-saved.html'
+    add_signal = comment_added
+    edit_signal = comment_edited
 
     def link_comment_to_record(self):
         self.comment.species_id = self.record.species_id
@@ -129,6 +137,7 @@ species.add_url_rule('/specii/comentariu/<comment_id>',
 class SpeciesCommentStateView(CommentStateView):
 
     comment_cls = models.DataSpeciesComment
+    signal = comment_status_changed
 
 
 species.add_url_rule('/specii/comentariu/<comment_id>/stare',

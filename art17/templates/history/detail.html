@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+
+{% block title %}Activitate &mdash; {{ super() }}{% endblock title %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('home', url_for('views.home')),
+          ('activitate', url_for('.index')),
+          ('detaliu', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
+{% block content %}
+  <h1>Activitate</h1>
+
+  <dl class="dl-horizontal">
+    <dt>dată</dt>
+    <dd>{{ item.date|local_date('long') }}</dd>
+
+    <dt>tabelă</dt>
+    <dd>{{ item.table }}</dd>
+
+    <dt>obiect</dt>
+    <dd>{{ item.object_id }}</dd>
+
+    <dt>acțiune</dt>
+    <dd>{{ item.action }}</dd>
+
+    <dt>user_id</dt>
+    <dd>{{ item.user_id }}</dd>
+  </dl>
+
+  {% if item.old_data %}
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title">Date vechi</h3>
+      </div>
+
+      <div class="panel-body">
+        <pre>{{ item.old_data|pretty_json_data }}</pre>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if item.new_data %}
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title">Date noi</h3>
+      </div>
+
+      <div class="panel-body">
+        <pre>{{ item.new_data|pretty_json_data }}</pre>
+      </div>
+    </div>
+  {% endif %}
+
+{% endblock content %}

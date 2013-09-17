@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from dateutil import tz
+from decimal import Decimal
 from babel.dates import format_datetime
 import flask
 import flask.views
@@ -51,25 +52,37 @@ def flatten_dict(data):
     return rv
 
 
+def json_encode_more(value):
+    if isinstance(value, Decimal):
+        return float(value)
+
+    if isinstance(value, datetime):
+        return value.isoformat()
+
+    raise TypeError
+
+
 class CommentView(flask.views.View):
 
     methods = ['GET', 'POST']
 
     def dispatch_request(self, record_id=None, comment_id=None):
         if record_id:
+            new_comment = True
             self.record = self.record_cls.query.get_or_404(record_id)
             self.comment = self.comment_cls(user_id=flask.g.identity.id,
                                             comment_date=datetime.utcnow())
             form = self.form_cls(flask.request.form)
 
         elif comment_id:
+            new_comment = False
             self.comment = self.comment_cls.query.get_or_404(comment_id)
             self.record = self.record_for_comment(self.comment)
+            old_data = self.parse_commentform(self.comment)
             if flask.request.method == 'POST':
                 form_data = flask.request.form
             else:
-                struct = self.parse_commentform(self.comment)
-                form_data = MultiDict(flatten_dict(struct))
+                form_data = MultiDict(flatten_dict(old_data))
             form = self.form_cls(form_data)
 
         else:
@@ -81,9 +94,16 @@ class CommentView(flask.views.View):
         if flask.request.method == 'POST' and form.validate():
             self.link_comment_to_record()
 
-            form.populate_obj(self.comment)
-
+            self.flatten_commentform(form.data, self.comment)
             models.db.session.add(self.comment)
+
+            app = flask.current_app._get_current_object()
+            if new_comment:
+                self.add_signal.send(app, ob=self.comment, new_data=form.data)
+            else:
+                self.edit_signal.send(app, ob=self.comment,
+                                      old_data=old_data, new_data=form.data)
+
             models.db.session.commit()
 
             return flask.render_template(self.template_saved,
@@ -103,6 +123,10 @@ class CommentStateView(flask.views.View):
         new_status = flask.request.form['status']
         if new_status not in STATUS_VALUES:
             flask.abort(403)
+        old_status = comment.status
         comment.status = new_status
+        app = flask.current_app._get_current_object()
+        self.signal.send(app, ob=comment,
+                         old_data=old_status, new_data=new_status)
         models.db.session.commit()
         return flask.redirect(next_url)

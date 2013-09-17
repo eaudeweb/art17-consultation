@@ -125,13 +125,7 @@ class SpeciesComment(Form):
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)
 
-    def populate_obj(self, obj):
-        schemas.flatten_species_commentform(self.data, obj)
-
 
 class HabitatComment(Form):
 
     range = FormField(Range)
-
-    def populate_obj(self, obj):
-        schemas.flatten_habitat_commentform(self.data, obj)

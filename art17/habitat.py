@@ -1,5 +1,6 @@
 import flask
 from sqlalchemy import func
+from blinker import Signal
 from art17 import models
 from art17.common import CommentView, CommentStateView
 from art17.schemas import parse_habitat
@@ -7,6 +8,10 @@ from art17 import forms
 from art17 import schemas
 
 habitat = flask.Blueprint('habitat', __name__)
+
+comment_added = Signal()
+comment_edited = Signal()
+comment_status_changed = Signal()
 
 
 @habitat.route('/habitate/regiuni/<int:habitat_code>')
@@ -86,8 +91,11 @@ class HabitatCommentView(CommentView):
     record_cls = models.DataHabitattypeRegion
     comment_cls = models.DataHabitattypeComment
     parse_commentform = staticmethod(schemas.parse_habitat_commentform)
+    flatten_commentform = staticmethod(schemas.flatten_habitat_commentform)
     template = 'habitat/comment.html'
     template_saved = 'habitat/comment-saved.html'
+    add_signal = comment_added
+    edit_signal = comment_edited
 
     def link_comment_to_record(self):
         self.comment.habitat_id = self.record.habitat_id
@@ -119,6 +127,7 @@ habitat.add_url_rule('/habitate/comentariu/<comment_id>',
 class HabitatCommentStateView(CommentStateView):
 
     comment_cls = models.DataHabitattypeComment
+    signal = comment_status_changed
 
 
 habitat.add_url_rule('/habitate/comentariu/<comment_id>/stare',

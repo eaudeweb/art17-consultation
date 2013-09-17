@@ -35,6 +35,7 @@ def create_app():
     from art17 import models
     from art17.admin import admin
     from art17.messages import messages
+    from art17.history import history
 
     app = flask.Flask(__name__, instance_relative_config=True)
     app.jinja_options = dict(
@@ -48,6 +49,7 @@ def create_app():
     app.register_blueprint(species)
     app.register_blueprint(habitat)
     app.register_blueprint(messages)
+    app.register_blueprint(history)
     models.db.init_app(app)
     admin.init_app(app)
 
