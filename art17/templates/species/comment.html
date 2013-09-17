@@ -21,7 +21,7 @@
 {% block content %}
 {%- from 'common/td.html' import
     range_html, trend_detail_html, reference_value_html, period_html,
-    population_size_html, method_html
+    population_size_html, method_html, conclusions_html
     with context %}
 
   <h1>
@@ -191,7 +191,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ record.range.conclusion.value }}
+              {{ conclusions_html(record.range.conclusion) }}
             </div>
           </div>
         </div>
@@ -268,6 +268,126 @@
           </div>
         </div>
 
+        <div class="form-group">
+          {%- set trend_short = form.population.trend_short %}
+          <label for="population.trend_short.trend">
+            Tendință pe termen scurt
+          </label>
+
+          {{ errors(trend_short) }}
+
+          <div class="row">
+            <div class="col-sm-2 {{- error_cls(trend_short.trend) }}">
+              {{ trend_short.trend(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(trend_short.period.start) }}">
+              {{ trend_short.period.start(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(trend_short.period.end) }}">
+              {{ trend_short.period.end(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ trend_detail_html(record.population.trend_short) }}
+              {{ period_html(record.population.trend_short.period) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          {%- set trend_long = form.population.trend_long %}
+          <label for="population.trend_long.trend">
+            Tendință pe termen lung
+          </label>
+
+          {{ errors(trend_long) }}
+
+          <div class="row">
+            <div class="col-sm-2 {{- error_cls(trend_long.trend) }}">
+              {{ trend_long.trend(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(trend_long.period.start) }}">
+              {{ trend_long.period.start(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(trend_long.period.end) }}">
+              {{ trend_long.period.end(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ trend_detail_html(record.population.trend_long) }}
+              {{ period_html(record.population.trend_long.period) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          {%- set reference_value = form.population.reference_value %}
+          <label for="population.reference_value.op">
+            Populația favorabilă de referință
+          </label>
+
+          {{ errors(reference_value) }}
+
+          <div class="row">
+            <div class="col-sm-2 {{- error_cls(reference_value.op) }}">
+              {{ reference_value.op(class='form-control') }}
+            </div>
+
+            <div class="col-sm-4 {{- error_cls(reference_value.number) }}">
+              {{ reference_value.number(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ reference_value_html(record.population.reference_value,
+                        unit='km²') }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="population.reference_value.method">
+            Populația favorabilă de referință - metoda
+          </label>
+
+          {{ errors(form.population.reference_value.method) }}
+
+          <div class="row">
+            <div class="col-sm-6 {{- error_cls(form.population.reference_value.method) }}">
+              {{ form.population.reference_value.method(class='form-control', rows=2) }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ record.population.reference_value.method }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          {%- set conclusion = form.population.conclusion %}
+          <label for="population.conclusion.value">
+            Concluzie
+          </label>
+
+          {{ errors(conclusion) }}
+
+          <div class="row">
+            <div class="col-sm-3 {{- error_cls(conclusion.value) }}">
+              {{ conclusion.value(class='form-control') }}
+            </div>
+
+            <div class="col-sm-3 {{- error_cls(conclusion.trend) }}">
+              {{ conclusion.trend(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ conclusions_html(record.population.conclusion) }}
+            </div>
+          </div>
+        </div>
 
       </div>
 

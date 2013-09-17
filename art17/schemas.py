@@ -165,6 +165,11 @@ def parse_species_commentform(row):
     rv['population'] = {
             'size': _get_population_size(row),
             'method': row.population_method,
+            'trend_short': parse_trend(row, 'population_trend'),
+            'trend_long': parse_trend(row, 'population_trend_long'),
+            'conclusion': parse_conclusion(row, 'conclusion_population'),
+            'reference_value': parse_reference_value(row,
+                                    'complementary_favourable_population')
     }
     return rv
 
@@ -263,6 +268,15 @@ def flatten_species_commentform(struct, obj):
 
     _set_population_size(struct['population']['size'], obj)
     obj.population_method = struct['population']['method']
+
+    flatten_trend(struct['population']['trend_short'], obj,
+                    'population_trend')
+    flatten_trend(struct['population']['trend_long'], obj,
+                    'population_trend_long')
+    flatten_refval(struct['population']['reference_value'], obj,
+                    'complementary_favourable_population')
+    flatten_conclusion(struct['population']['conclusion'], obj,
+                    'conclusion_population')
 
 def flatten_habitat_commentform(struct, obj):
     obj.range_surface_area = struct['range']['surface_area']

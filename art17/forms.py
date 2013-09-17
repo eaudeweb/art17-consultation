@@ -7,6 +7,7 @@ from art17.lookup import (TREND_OPTIONS,
                           CONCLUSION_OPTIONS,
                           METHODS_USED_OPTIONS,
                           LU_FV_RANGE_OP_OPTIONS,
+                          LU_FV_RANGE_OP_FUNCT_OPTIONS,
                           LU_POP_NUMBER_OPTIONS,
                           LU_POP_NUMBER_RESTRICTED_OPTIONS)
 from art17 import schemas
@@ -36,8 +37,7 @@ class Trend(Form):
 
 class ReferenceValue(Form):
 
-    op = SelectField(choices=EMPTY_CHOICE + LU_FV_RANGE_OP_OPTIONS,
-            validators=[Optional()])
+    op = SelectField(validators=[Optional()])
     number = DecimalField(validators=[Optional()])
     method = TextAreaField()
 
@@ -66,6 +66,7 @@ class PopulationSize(Form):
         self.population.unit.choices = EMPTY_CHOICE + LU_POP_NUMBER_RESTRICTED_OPTIONS
         self.population_alt.unit.choices = EMPTY_CHOICE + LU_POP_NUMBER_OPTIONS
 
+
 class Range(Form):
 
     surface_area = DecimalField(
@@ -77,11 +78,23 @@ class Range(Form):
     reference_value = FormField(ReferenceValue)
     conclusion = FormField(Conclusion)
 
+    def __init__(self, *args, **kwargs):
+        super(Range, self).__init__(*args, **kwargs)
+        self.reference_value.op.choices=EMPTY_CHOICE + LU_FV_RANGE_OP_OPTIONS
+
 
 class Population(Form):
     size = FormField(PopulationSize)
     method = SelectField(choices=METHODS_USED_OPTIONS,
             validators=[Required(u"Metoda utilizată este obligatorie")])
+    trend_short = FormField(Trend)
+    trend_long = FormField(Trend)
+    reference_value = FormField(ReferenceValue)
+    conclusion = FormField(Conclusion)
+
+    def __init__(self, *args, **kwargs):
+        super(Population, self).__init__(*args, **kwargs)
+        self.reference_value.op.choices=EMPTY_CHOICE + LU_FV_RANGE_OP_FUNCT_OPTIONS
 
 class SpeciesComment(Form):
 

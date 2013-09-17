@@ -48,6 +48,31 @@ SPECIES_STRUCT_DATA = {
             },
         },
         'method': '1',
+        'trend_short': {
+            'trend': '-',
+            'period': {
+                'start': 'pmin',
+                'end': 'pmax',
+            },
+        },
+        'trend_long': {
+            'trend': '+',
+            'period': {
+                'start': 'pmin',
+                'end': 'pmax',
+            },
+        },
+        'reference_value': {
+            'method': 'foo pop method',
+            'number': 234,
+            'op': '<',
+            'x': None,
+        },
+        'conclusion': {
+            'value': 'U2',
+            'trend': 'foo pop conclusion trend',
+        },
+
     },
 }
 
@@ -72,6 +97,17 @@ SPECIES_MODEL_DATA = {
     'population_alt_maximum_size': 120,
     'population_alt_size_unit': 'grids10x10',
     'population_method': '1',
+    'population_trend': '-',
+    'population_trend_period': 'pminpmax',
+    'population_trend_long': '+',
+    'population_trend_long_period': 'pminpmax',
+    'complementary_favourable_population_op': '<',
+    'complementary_favourable_population': 234,
+    'complementary_favourable_population_method': 'foo pop method',
+    'conclusion_population': 'U2',
+    'conclusion_population_trend': 'foo pop conclusion trend',
+
+
 }
 
 
