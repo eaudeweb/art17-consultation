@@ -50,7 +50,9 @@ def remove():
     user_id = message.user_id
     models.db.session.delete(message)
     app = flask.current_app._get_current_object()
-    message_removed.send(app, ob=message)
+    old_data = {k: getattr(message, k)
+                for k in ['text', 'user_id', 'parent', 'date']}
+    message_removed.send(app, ob=message, old_data=old_data)
     models.db.session.commit()
     flask.flash(u"Mesajul lui %s a fost șters." % user_id, 'success')
     return flask.redirect(next_url)

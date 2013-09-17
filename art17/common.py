@@ -55,6 +55,9 @@ def json_encode_more(value):
     if isinstance(value, Decimal):
         return float(value)
 
+    if isinstance(value, datetime):
+        return value.isoformat()
+
     raise TypeError
 
 

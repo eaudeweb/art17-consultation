@@ -151,3 +151,9 @@ def test_message_remove(app):
         assert history_items[0].object_id == message_id
         assert history_items[0].action == 'remove'
         assert history_items[0].user_id == user_id
+        assert json.loads(history_items[0].old_data) == {
+            'text': 'hello foo',
+            'user_id': 'somewho',
+            'parent': '123',
+            'date': datetime(2010, 1, 4).isoformat(),
+        }
