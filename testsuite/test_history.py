@@ -8,6 +8,7 @@ class species_params(object):
     comment_create_url = '/specii/detalii/1/comentariu'
     user_id = 'somebody'
     comment_cls = models.DataSpeciesComment
+    comment_id = '4f799fdd6f5a'
     comment_edit_url = '/specii/comentariu/4f799fdd6f5a'
 
     @classmethod
@@ -77,3 +78,23 @@ def test_comment_edit(params, app):
         assert history[0].user_id == params.user_id
         data = json.loads(history[0].old_data)
         assert data['range']['surface_area'] == 1337
+
+
+def test_message_add(app):
+    from art17.messages import messages
+    params = species_params
+    app.register_blueprint(messages)
+    params.setup(app, comment=True)
+    client = app.test_client()
+    resp = client.post('/mesaje/%s/nou' % params.comment_id,
+                       data={'text': "hello world"})
+    assert resp.status_code == 302
+
+    with app.app_context():
+        history = models.History.query.all()
+        message = models.CommentMessage.query.first()
+        assert len(history) == 1
+        assert history[0].table == 'comment_messages'
+        assert history[0].object_id == message.id
+        assert history[0].action == 'add'
+        assert history[0].user_id == params.user_id

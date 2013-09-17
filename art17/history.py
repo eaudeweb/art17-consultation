@@ -2,6 +2,7 @@ import flask
 from art17 import models
 from art17 import species
 from art17 import habitat
+from art17 import messages
 from art17.common import json_encode_more
 
 history = flask.Blueprint('history', __name__)
@@ -20,6 +21,9 @@ def register_handlers(state):
             table='data_habitattype_comments', action='add')
     connect(habitat.comment_edited, app,
             table='data_habitattype_comments', action='edit')
+
+    connect(messages.message_added, app,
+            table='comment_messages', action='add')
 
 
 def connect(signal, sender, **more_kwargs):

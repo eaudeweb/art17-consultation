@@ -2,11 +2,13 @@
 
 from datetime import datetime
 import flask
+from blinker import Signal
 from art17 import models
 from art17.auth import admin_permission
 
-
 messages = flask.Blueprint('messages', __name__)
+
+message_added = Signal()
 
 
 def _get_comment_or_404(comment_id):
@@ -30,6 +32,8 @@ def new(comment_id):
             date=datetime.utcnow(),
             parent=comment.id)
         models.db.session.add(message)
+        app = flask.current_app._get_current_object()
+        message_added.send(app, ob=message)
         models.db.session.commit()
         return flask.redirect(flask.url_for('.index', comment_id=comment_id))
 
