@@ -472,6 +472,62 @@
           </div>
         </div>
 
+        <div class="form-group">
+          {%- set trend_short = form.habitat.trend_short %}
+          <label for="habitat.trend_short.trend">
+            Tendință pe termen scurt
+          </label>
+
+          {{ errors(trend_short) }}
+
+          <div class="row">
+            <div class="col-sm-2 {{- error_cls(trend_short.trend) }}">
+              {{ trend_short.trend(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(trend_short.period.start) }}">
+              {{ trend_short.period.start(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(trend_short.period.end) }}">
+              {{ trend_short.period.end(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ trend_detail_html(record.habitat.trend_short) }}
+              {{ period_html(record.habitat.trend_short.period) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          {%- set trend_long = form.habitat.trend_long %}
+          <label for="habitat.trend_long.trend">
+            Tendință pe termen lung
+          </label>
+
+          {{ errors(trend_long) }}
+
+          <div class="row">
+            <div class="col-sm-2 {{- error_cls(trend_long.trend) }}">
+              {{ trend_long.trend(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(trend_long.period.start) }}">
+              {{ trend_long.period.start(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(trend_long.period.end) }}">
+              {{ trend_long.period.end(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ trend_detail_html(record.habitat.trend_long) }}
+              {{ period_html(record.habitat.trend_long.period) }}
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 

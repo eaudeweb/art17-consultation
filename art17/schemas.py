@@ -177,6 +177,8 @@ def parse_species_commentform(row):
             'method': row.habitat_method,
             'quality': row.habitat_quality,
             'quality_explanation': row.habitat_quality_explanation,
+            'trend_short': parse_trend(row, 'habitat_trend'),
+            'trend_long': parse_trend(row, 'habitat_trend_long'),
     }
     return rv
 
@@ -287,7 +289,10 @@ def flatten_species_commentform(struct, obj):
     obj.habitat_method = struct['habitat']['method']
     obj.habitat_quality = struct['habitat']['quality']
     obj.habitat_quality_explanation = struct['habitat']['quality_explanation']
-
+    flatten_trend(struct['habitat']['trend_short'], obj,
+                    'habitat_trend')
+    flatten_trend(struct['habitat']['trend_long'], obj,
+                    'habitat_trend_long')
 
 def flatten_habitat_commentform(struct, obj):
     obj.range_surface_area = struct['range']['surface_area']

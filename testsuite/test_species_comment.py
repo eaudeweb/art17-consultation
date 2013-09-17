@@ -78,6 +78,20 @@ SPECIES_STRUCT_DATA = {
         'method': '3',
         'quality': '2',
         'quality_explanation': 'foo explanation',
+        'trend_short': {
+            'trend': '0',
+            'period': {
+                'start': 'hmin',
+                'end': 'hmax',
+            },
+        },
+        'trend_long': {
+            'trend': '0',
+            'period': {
+                'start': 'hmin',
+                'end': 'hmax',
+            },
+        },
     },
 }
 
@@ -116,6 +130,10 @@ SPECIES_MODEL_DATA = {
     'habitat_method': '3',
     'habitat_quality': '2',
     'habitat_quality_explanation': 'foo explanation',
+    'habitat_trend': '0',
+    'habitat_trend_period': 'hminhmax',
+    'habitat_trend_long': '0',
+    'habitat_trend_long_period': 'hminhmax',
 }
 
 

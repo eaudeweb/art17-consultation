@@ -107,6 +107,8 @@ class Habitat(Form):
             validators=[Required(u"Valoarea calitǎții este obligatorie")])
     quality_explanation = TextAreaField(
             validators=[Required(u"Metoda este obligatorie")])
+    trend_short = FormField(Trend)
+    trend_long = FormField(Trend)
 
 class SpeciesComment(Form):
 
