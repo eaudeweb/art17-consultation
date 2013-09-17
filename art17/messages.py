@@ -9,6 +9,7 @@ from art17.auth import admin_permission
 messages = flask.Blueprint('messages', __name__)
 
 message_added = Signal()
+message_removed = Signal()
 
 
 def _get_comment_or_404(comment_id):
@@ -48,6 +49,8 @@ def remove():
     message = models.CommentMessage.query.get_or_404(message_id)
     user_id = message.user_id
     models.db.session.delete(message)
+    app = flask.current_app._get_current_object()
+    message_removed.send(app, ob=message)
     models.db.session.commit()
     flask.flash(u"Mesajul lui %s a fost șters." % user_id, 'success')
     return flask.redirect(next_url)

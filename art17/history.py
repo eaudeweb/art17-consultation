@@ -29,6 +29,8 @@ def register_handlers(state):
 
     connect(messages.message_added, app,
             table='comment_messages', action='add')
+    connect(messages.message_removed, app,
+            table='comment_messages', action='remove')
 
 
 def connect(signal, sender, **more_kwargs):

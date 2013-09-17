@@ -1,3 +1,4 @@
+from datetime import datetime
 import pytest
 from art17 import models, species, habitat, history
 
@@ -104,9 +105,9 @@ def test_comment_update_status(params, app):
 
 
 def test_message_add(app):
-    from art17.messages import messages
+    from art17 import messages
     params = species_params
-    app.register_blueprint(messages)
+    app.register_blueprint(messages.messages)
     params.setup(app, comment=True)
     client = app.test_client()
     resp = client.post('/mesaje/%s/nou' % params.comment_id,
@@ -121,3 +122,32 @@ def test_message_add(app):
         assert history[0].object_id == message.id
         assert history[0].action == 'add'
         assert history[0].user_id == params.user_id
+
+
+def test_message_remove(app):
+    from art17 import messages
+    from flask import json
+    user_id = app.config['TESTING_USER_ID'] = 'somebody'
+    app.register_blueprint(history.history)
+    app.register_blueprint(messages.messages)
+
+    with app.app_context():
+        message = models.CommentMessage(text='hello foo',
+                                        user_id='somewho',
+                                        parent='123',
+                                        date=datetime(2010, 1, 4))
+        models.db.session.add(message)
+        models.db.session.commit()
+        message_id = message.id
+
+    client = app.test_client()
+    resp = client.post('/mesaje/sterge?message_id=%s&next=/' % message_id)
+    assert resp.status_code == 302
+
+    with app.app_context():
+        history_items = models.History.query.all()
+        assert len(history_items) == 1
+        assert history_items[0].table == 'comment_messages'
+        assert history_items[0].object_id == message_id
+        assert history_items[0].action == 'remove'
+        assert history_items[0].user_id == user_id
