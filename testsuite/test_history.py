@@ -37,43 +37,43 @@ class habitat_params(object):
         app.config['TESTING_USER_ID'] = cls.user_id
 
 
-@pytest.mark.parametrize(['spec'], [[species_params], [habitat_params]])
-def test_comment_add(spec, app):
-    spec.setup(app)
+@pytest.mark.parametrize(['params'], [[species_params], [habitat_params]])
+def test_comment_add(params, app):
+    params.setup(app)
     client = app.test_client()
 
-    resp = client.post(spec.comment_create_url,
+    resp = client.post(params.comment_create_url,
                        data={'range.surface_area': '50', 'range.method': '1'})
     assert resp.status_code == 200
 
     with app.app_context():
         history = models.History.query.all()
-        comment = spec.comment_cls.query.first()
+        comment = params.comment_cls.query.first()
         assert len(history) == 1
-        assert history[0].table == spec.comment_table
+        assert history[0].table == params.comment_table
         assert history[0].object_id == comment.id
         assert history[0].action == 'add'
-        assert history[0].user_id == spec.user_id
+        assert history[0].user_id == params.user_id
 
 
-@pytest.mark.parametrize(['spec'], [[species_params], [habitat_params]])
-def test_comment_edit(spec, app):
+@pytest.mark.parametrize(['params'], [[species_params], [habitat_params]])
+def test_comment_edit(params, app):
     from flask import json
-    spec.setup(app, comment=True)
+    params.setup(app, comment=True)
     client = app.test_client()
 
-    resp = client.post(spec.comment_edit_url,
+    resp = client.post(params.comment_edit_url,
                        data={'range.surface_area': '50',
                              'range.method': '1'})
     assert resp.status_code == 200
 
     with app.app_context():
         history = models.History.query.all()
-        comment = spec.comment_cls.query.first()
+        comment = params.comment_cls.query.first()
         assert len(history) == 1
-        assert history[0].table == spec.comment_table
+        assert history[0].table == params.comment_table
         assert history[0].object_id == comment.id
         assert history[0].action == 'edit'
-        assert history[0].user_id == spec.user_id
+        assert history[0].user_id == params.user_id
         data = json.loads(history[0].old_data)
         assert data['range']['surface_area'] == 1337
