@@ -75,6 +75,7 @@ SPECIES_STRUCT_DATA = {
     },
     'habitat': {
         'surface_area': 100,
+        'date': '2000-2001',
         'method': '3',
         'quality': '2',
         'quality_explanation': 'foo explanation',
@@ -128,6 +129,7 @@ SPECIES_MODEL_DATA = {
     'conclusion_population_trend': 'foo pop conclusion trend',
 
     'habitat_surface_area': 100,
+    'habitat_date': '2000-2001',
     'habitat_method': '3',
     'habitat_quality': '2',
     'habitat_quality_explanation': 'foo explanation',
@@ -175,6 +177,7 @@ def test_save_comment_record(species_app):
                              'range.method': '1',
                              'population.method': '1',
                              'habitat.surface_area': '100',
+                             'habitat.date': '2000-2001',
                              'habitat.method': '1',
                              'habitat.quality': '2',
                              'habitat.quality_explanation': 'foo explanation',
@@ -222,6 +225,7 @@ def test_edit_comment_submit(species_app):
                              'range.method': '1',
                              'population.method': '1',
                              'habitat.surface_area': '100',
+                             'habitat.date': '2000-2001',
                              'habitat.method': '1',
                              'habitat.quality': '2',
                              'habitat.quality_explanation': 'foo explanation',

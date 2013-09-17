@@ -125,6 +125,7 @@ def parse_species(row, is_comment=False):
         }
     rv['habitat'] = {
             'surface_area': row.habitat_surface_area,
+            'date': row.habitat_date,
             'method': row.habitat_method,
             'conclusion': parse_conclusion(row, 'conclusion_habitat'),
             'trend_short': parse_trend(row, 'habitat_trend'),
@@ -174,6 +175,7 @@ def parse_species_commentform(row):
 
     rv['habitat'] = {
             'surface_area': row.habitat_surface_area,
+            'date':row.habitat_date,
             'method': row.habitat_method,
             'quality': row.habitat_quality,
             'quality_explanation': row.habitat_quality_explanation,
@@ -287,6 +289,7 @@ def flatten_species_commentform(struct, obj):
                     'conclusion_population')
 
     obj.habitat_surface_area = struct['habitat']['surface_area']
+    obj.habitat_date = struct['habitat']['date']
     obj.habitat_method = struct['habitat']['method']
     obj.habitat_quality = struct['habitat']['quality']
     obj.habitat_quality_explanation = struct['habitat']['quality_explanation']

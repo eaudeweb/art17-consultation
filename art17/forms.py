@@ -101,6 +101,8 @@ class Population(Form):
 class Habitat(Form):
     surface_area = DecimalField(
             validators=[Required(u"Suprafața este obligatorie")])
+    date = TextField(
+            validators=[Required(u"Anul sau perioada sunt obligatorii")])
     method = SelectField(choices=METHODS_USED_OPTIONS,
             validators=[Required(u"Metoda utilizată este obligatorie")])
     quality = SelectField(choices=QUALITY_OPTIONS,
