@@ -100,7 +100,8 @@ class Population(Form):
 class Habitat(Form):
     surface_area = DecimalField(
             validators=[Required(u"Suprafața este obligatorie")])
-
+    method = SelectField(choices=METHODS_USED_OPTIONS,
+            validators=[Required(u"Metoda utilizată este obligatorie")])
 
 class SpeciesComment(Form):
 

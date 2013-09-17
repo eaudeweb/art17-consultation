@@ -75,6 +75,7 @@ SPECIES_STRUCT_DATA = {
     },
     'habitat': {
         'surface_area': 100,
+        'method': '3',
     },
 }
 
@@ -110,6 +111,7 @@ SPECIES_MODEL_DATA = {
     'conclusion_population_trend': 'foo pop conclusion trend',
 
     'habitat_surface_area': 100,
+    'habitat_method': '3',
 }
 
 
@@ -148,7 +150,8 @@ def test_save_comment_record(species_app):
                        data={'range.surface_area': '50',
                              'range.method': '1',
                              'population.method': '1',
-                             'habitat.surface_area': '100'})
+                             'habitat.surface_area': '100',
+                             'habitat.method': '1'})
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
@@ -191,7 +194,8 @@ def test_edit_comment_submit(species_app):
                        data={'range.surface_area': '50',
                              'range.method': '1',
                              'population.method': '1',
-                             'habitat.surface_area': '100'})
+                             'habitat.surface_area': '100',
+                             'habitat.method': '1'})
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
