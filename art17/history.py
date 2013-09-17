@@ -60,8 +60,9 @@ def handle_signal(table, action, ob, old_data=None, new_data=None, **extra):
 @history.route('/activitate')
 @admin_permission.require(403)
 def index():
+    history_items = models.History.query.order_by(models.History.date.desc())
     return flask.render_template('history/index.html', **{
-        'history_items': iter(models.History.query),
+        'history_items': iter(history_items),
     })
 
 
