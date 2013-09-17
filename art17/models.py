@@ -256,7 +256,7 @@ class DataHabitattypeComment(Base):
     validation_date = Column(DateTime)
 
     comment_date = Column(DateTime)
-    user_id = Column(Text)
+    user_id = Column(String)
     status = Column(Text, default='new')
 
     hr_habitat = relationship(u'DataHabitat',
@@ -505,7 +505,7 @@ class DataSpeciesComment(Base):
     validation_date = Column(DateTime)
 
     comment_date = Column(DateTime)
-    user_id = Column(Text)
+    user_id = Column(String)
     status = Column(Text, default='new')
 
     species = relationship(u'DataSpecies',
@@ -517,7 +517,7 @@ class CommentMessage(Base):
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
     parent = Column(String)
-    user_id = Column(Text)
+    user_id = Column(String)
     date = Column(DateTime)
     text = Column(Text)
 
