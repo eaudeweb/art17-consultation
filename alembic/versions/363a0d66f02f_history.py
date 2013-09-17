@@ -10,7 +10,7 @@ def upgrade():
         sa.Column('objectid', sa.CHAR(32), nullable=False),
         sa.Column('table', sa.CHAR(128), nullable=False),
         sa.Column('object_id', sa.CHAR(32), nullable=False),
-        sa.Column('action', sa.CHAR(128), nullable=False),
+        sa.Column('action', sa.VARCHAR(128), nullable=False),
         sa.Column('date', sa.DateTime, nullable=False),
         sa.Column('user_id', sa.VARCHAR(256), nullable=True),
         sa.Column('old_data', sa.UnicodeText, nullable=True),
