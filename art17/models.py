@@ -537,7 +537,7 @@ class History(Base):
     table = Column(String)
     object_id = Column(String)
     action = Column(String)
-    date = Column(DateTime, default=func.now())
+    date = Column(DateTime)
     user_id = Column(String)
     old_data = Column(Text)
 

@@ -1,3 +1,4 @@
+from datetime import datetime
 import flask
 from art17 import models
 from art17 import species
@@ -38,6 +39,7 @@ def handle_signal(table, action, ob, old_data=None, **extra):
     item = models.History(table=table,
                           action=action,
                           object_id=ob.id,
+                          date=datetime.utcnow(),
                           user_id=flask.g.identity.id)
     if old_data:
         item.old_data = flask.json.dumps(old_data, default=json_encode_more)
