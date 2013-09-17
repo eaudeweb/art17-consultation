@@ -42,3 +42,10 @@ def handle_signal(table, action, ob, old_data=None, **extra):
     if old_data:
         item.old_data = flask.json.dumps(old_data, default=json_encode_more)
     models.db.session.add(item)
+
+
+@history.route('/activitate')
+def activity():
+    return flask.render_template('activity.html', **{
+        'history_items': iter(models.History.query),
+    })
