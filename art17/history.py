@@ -9,12 +9,17 @@ history = flask.Blueprint('history', __name__)
 @history.record
 def register_handlers(state):
     app = state.app
-    @species.comment_added.connect_via(app)
-    def handle_comment_added(sender, **extra):
-        handle_signal(table='data_species_comments', **extra)
-    @habitat.comment_added.connect_via(app)
-    def handle_comment_added(sender, **extra):
-        handle_signal(table='data_habitattype_comments', **extra)
+    connect(species.comment_added, app,
+            table='data_species_comments')
+    connect(habitat.comment_added, app,
+            table='data_habitattype_comments')
+
+
+def connect(signal, sender, **more_kwargs):
+    @signal.connect_via(sender)
+    def wrapper(sender, **kwargs):
+        kwargs.update(more_kwargs)
+        handle_signal(**kwargs)
 
 
 def handle_signal(table, ob, **extra):
