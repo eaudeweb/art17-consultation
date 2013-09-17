@@ -10,6 +10,7 @@ from art17 import schemas
 species = flask.Blueprint('species', __name__)
 
 comment_added = Signal()
+comment_edited = Signal()
 
 
 @species.route('/specii/regiuni/<int:species_code>')
@@ -101,7 +102,8 @@ class SpeciesCommentView(CommentView):
     parse_commentform = staticmethod(schemas.parse_species_commentform)
     template = 'species/comment.html'
     template_saved = 'species/comment-saved.html'
-    signal = comment_added
+    add_signal = comment_added
+    edit_signal = comment_edited
 
     def link_comment_to_record(self):
         self.comment.species_id = self.record.species_id

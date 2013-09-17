@@ -9,10 +9,16 @@ history = flask.Blueprint('history', __name__)
 @history.record
 def register_handlers(state):
     app = state.app
+
     connect(species.comment_added, app,
-            table='data_species_comments')
+            table='data_species_comments', action='add')
+    connect(species.comment_edited, app,
+            table='data_species_comments', action='edit')
+
     connect(habitat.comment_added, app,
-            table='data_habitattype_comments')
+            table='data_habitattype_comments', action='add')
+    connect(habitat.comment_edited, app,
+            table='data_habitattype_comments', action='edit')
 
 
 def connect(signal, sender, **more_kwargs):
@@ -22,10 +28,10 @@ def connect(signal, sender, **more_kwargs):
         handle_signal(**kwargs)
 
 
-def handle_signal(table, ob, **extra):
+def handle_signal(table, action, ob, **extra):
     models.db.session.flush()
     item = models.History(table=table,
-                          action='add',
+                          action=action,
                           object_id=ob.id,
                           user_id=flask.g.identity.id)
     models.db.session.add(item)

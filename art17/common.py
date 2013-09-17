@@ -56,12 +56,14 @@ class CommentView(flask.views.View):
 
     def dispatch_request(self, record_id=None, comment_id=None):
         if record_id:
+            new_comment = True
             self.record = self.record_cls.query.get_or_404(record_id)
             self.comment = self.comment_cls(user_id=flask.g.identity.id,
                                             comment_date=datetime.utcnow())
             form = self.form_cls(flask.request.form)
 
         elif comment_id:
+            new_comment = False
             self.comment = self.comment_cls.query.get_or_404(comment_id)
             self.record = self.record_for_comment(self.comment)
             if flask.request.method == 'POST':
@@ -81,10 +83,14 @@ class CommentView(flask.views.View):
             self.link_comment_to_record()
 
             form.populate_obj(self.comment)
-
             models.db.session.add(self.comment)
-            self.signal.send(flask.current_app._get_current_object(),
-                             ob=self.comment)
+
+            app = flask.current_app._get_current_object()
+            if new_comment:
+                self.add_signal.send(app, ob=self.comment)
+            else:
+                self.edit_signal.send(app, ob=self.comment)
+
             models.db.session.commit()
 
             return flask.render_template(self.template_saved,
