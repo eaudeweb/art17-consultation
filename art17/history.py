@@ -5,6 +5,7 @@ from art17 import species
 from art17 import habitat
 from art17 import messages
 from art17.common import json_encode_more
+from art17.auth import admin_permission
 
 history = flask.Blueprint('history', __name__)
 
@@ -55,6 +56,7 @@ def handle_signal(table, action, ob, old_data=None, **extra):
 
 
 @history.route('/activitate')
+@admin_permission.require(403)
 def activity():
     return flask.render_template('activity.html', **{
         'history_items': iter(models.History.query),
