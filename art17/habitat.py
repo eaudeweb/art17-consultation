@@ -11,6 +11,7 @@ habitat = flask.Blueprint('habitat', __name__)
 
 comment_added = Signal()
 comment_edited = Signal()
+comment_status_changed = Signal()
 
 
 @habitat.route('/habitate/regiuni/<int:habitat_code>')
@@ -125,6 +126,7 @@ habitat.add_url_rule('/habitate/comentariu/<comment_id>',
 class HabitatCommentStateView(CommentStateView):
 
     comment_cls = models.DataHabitattypeComment
+    signal = comment_status_changed
 
 
 habitat.add_url_rule('/habitate/comentariu/<comment_id>/stare',

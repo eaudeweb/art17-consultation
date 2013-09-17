@@ -11,6 +11,7 @@ species = flask.Blueprint('species', __name__)
 
 comment_added = Signal()
 comment_edited = Signal()
+comment_status_changed = Signal()
 
 
 @species.route('/specii/regiuni/<int:species_code>')
@@ -135,6 +136,7 @@ species.add_url_rule('/specii/comentariu/<comment_id>',
 class SpeciesCommentStateView(CommentStateView):
 
     comment_cls = models.DataSpeciesComment
+    signal = comment_status_changed
 
 
 species.add_url_rule('/specii/comentariu/<comment_id>/stare',

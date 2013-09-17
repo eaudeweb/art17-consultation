@@ -17,11 +17,15 @@ def register_handlers(state):
             table='data_species_comments', action='add')
     connect(species.comment_edited, app,
             table='data_species_comments', action='edit')
+    connect(species.comment_status_changed, app,
+            table='data_species_comments', action='status')
 
     connect(habitat.comment_added, app,
             table='data_habitattype_comments', action='add')
     connect(habitat.comment_edited, app,
             table='data_habitattype_comments', action='edit')
+    connect(habitat.comment_status_changed, app,
+            table='data_habitattype_comments', action='status')
 
     connect(messages.message_added, app,
             table='comment_messages', action='add')
@@ -35,7 +39,9 @@ def connect(signal, sender, **more_kwargs):
 
 
 def handle_signal(table, action, ob, old_data=None, **extra):
-    models.db.session.flush()
+    if not ob.id:
+        models.db.session.flush()
+        assert ob.id
     item = models.History(table=table,
                           action=action,
                           object_id=ob.id,

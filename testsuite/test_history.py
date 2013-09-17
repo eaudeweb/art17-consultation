@@ -10,6 +10,7 @@ class species_params(object):
     comment_cls = models.DataSpeciesComment
     comment_id = '4f799fdd6f5a'
     comment_edit_url = '/specii/comentariu/4f799fdd6f5a'
+    comment_status_url = '/specii/comentariu/4f799fdd6f5a/stare'
 
     @classmethod
     def setup(cls, app, comment=False):
@@ -28,6 +29,7 @@ class habitat_params(object):
     comment_cls = models.DataHabitattypeComment
     comment_id = '4f799fdd6f5a'
     comment_edit_url = '/habitate/comentariu/4f799fdd6f5a'
+    comment_status_url = '/habitate/comentariu/4f799fdd6f5a/stare'
 
     @classmethod
     def setup(cls, app, comment=False):
@@ -78,6 +80,27 @@ def test_comment_edit(params, app):
         assert history[0].user_id == params.user_id
         data = json.loads(history[0].old_data)
         assert data['range']['surface_area'] == 1337
+
+
+@pytest.mark.parametrize(['params'], [[species_params], [habitat_params]])
+def test_comment_update_status(params, app):
+    from flask import json
+    params.setup(app, comment=True)
+    client = app.test_client()
+
+    resp = client.post(params.comment_status_url,
+                       data={'status': 'approved', 'next': '/'})
+    assert resp.status_code == 302
+
+    with app.app_context():
+        history = models.History.query.all()
+        comment = params.comment_cls.query.first()
+        assert len(history) == 1
+        assert history[0].table == params.comment_table
+        assert history[0].object_id == comment.id
+        assert history[0].action == 'status'
+        assert history[0].user_id == params.user_id
+        assert json.loads(history[0].old_data) == 'new'
 
 
 def test_message_add(app):

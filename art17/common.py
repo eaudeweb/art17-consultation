@@ -118,6 +118,9 @@ class CommentStateView(flask.views.View):
         new_status = flask.request.form['status']
         if new_status not in STATUS_VALUES:
             flask.abort(403)
+        old_status = comment.status
         comment.status = new_status
+        app = flask.current_app._get_current_object()
+        self.signal.send(app, ob=comment, old_data=old_status)
         models.db.session.commit()
         return flask.redirect(next_url)
