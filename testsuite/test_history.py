@@ -58,6 +58,7 @@ def test_comment_add(spec, app):
 
 @pytest.mark.parametrize(['spec'], [[species_params], [habitat_params]])
 def test_comment_edit(spec, app):
+    from flask import json
     spec.setup(app, comment=True)
     client = app.test_client()
 
@@ -74,3 +75,5 @@ def test_comment_edit(spec, app):
         assert history[0].object_id == comment.id
         assert history[0].action == 'edit'
         assert history[0].user_id == spec.user_id
+        data = json.loads(history[0].old_data)
+        assert data['range']['surface_area'] == 1337

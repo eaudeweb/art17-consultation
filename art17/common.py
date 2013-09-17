@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from dateutil import tz
+from decimal import Decimal
 from babel.dates import format_datetime
 import flask
 import flask.views
@@ -50,6 +51,13 @@ def flatten_dict(data):
     return rv
 
 
+def json_encode_more(value):
+    if isinstance(value, Decimal):
+        return float(value)
+
+    raise TypeError
+
+
 class CommentView(flask.views.View):
 
     methods = ['GET', 'POST']
@@ -66,11 +74,11 @@ class CommentView(flask.views.View):
             new_comment = False
             self.comment = self.comment_cls.query.get_or_404(comment_id)
             self.record = self.record_for_comment(self.comment)
+            old_data = self.parse_commentform(self.comment)
             if flask.request.method == 'POST':
                 form_data = flask.request.form
             else:
-                struct = self.parse_commentform(self.comment)
-                form_data = MultiDict(flatten_dict(struct))
+                form_data = MultiDict(flatten_dict(old_data))
             form = self.form_cls(form_data)
 
         else:
@@ -89,7 +97,7 @@ class CommentView(flask.views.View):
             if new_comment:
                 self.add_signal.send(app, ob=self.comment)
             else:
-                self.edit_signal.send(app, ob=self.comment)
+                self.edit_signal.send(app, ob=self.comment, old_data=old_data)
 
             models.db.session.commit()
 
