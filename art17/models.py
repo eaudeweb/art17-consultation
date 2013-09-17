@@ -540,6 +540,7 @@ class History(Base):
     date = Column(DateTime)
     user_id = Column(String)
     old_data = Column(Text)
+    new_data = Column(Text)
 
 
 @db_manager.option('alembic_args', nargs=argparse.REMAINDER)

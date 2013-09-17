@@ -22,6 +22,11 @@ def _get_comment_or_404(comment_id):
         flask.abort(404)
 
 
+def _dump_message_data(message):
+    return {k: getattr(message, k)
+            for k in ['text', 'user_id', 'parent', 'date']}
+
+
 @messages.route('/mesaje/<comment_id>/nou', methods=['GET', 'POST'])
 def new(comment_id):
     comment = _get_comment_or_404(comment_id)
@@ -34,7 +39,8 @@ def new(comment_id):
             parent=comment.id)
         models.db.session.add(message)
         app = flask.current_app._get_current_object()
-        message_added.send(app, ob=message)
+        message_added.send(app, ob=message,
+                           new_data=_dump_message_data(message))
         models.db.session.commit()
         return flask.redirect(flask.url_for('.index', comment_id=comment_id))
 
@@ -50,9 +56,7 @@ def remove():
     user_id = message.user_id
     models.db.session.delete(message)
     app = flask.current_app._get_current_object()
-    old_data = {k: getattr(message, k)
-                for k in ['text', 'user_id', 'parent', 'date']}
-    message_removed.send(app, ob=message, old_data=old_data)
+    message_removed.send(app, ob=message, old_data=_dump_message_data(message))
     models.db.session.commit()
     flask.flash(u"Mesajul lui %s a fost șters." % user_id, 'success')
     return flask.redirect(next_url)

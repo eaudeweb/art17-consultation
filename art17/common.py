@@ -98,9 +98,10 @@ class CommentView(flask.views.View):
 
             app = flask.current_app._get_current_object()
             if new_comment:
-                self.add_signal.send(app, ob=self.comment)
+                self.add_signal.send(app, ob=self.comment, new_data=form.data)
             else:
-                self.edit_signal.send(app, ob=self.comment, old_data=old_data)
+                self.edit_signal.send(app, ob=self.comment,
+                                      old_data=old_data, new_data=form.data)
 
             models.db.session.commit()
 
@@ -124,6 +125,7 @@ class CommentStateView(flask.views.View):
         old_status = comment.status
         comment.status = new_status
         app = flask.current_app._get_current_object()
-        self.signal.send(app, ob=comment, old_data=old_status)
+        self.signal.send(app, ob=comment,
+                         old_data=old_status, new_data=new_status)
         models.db.session.commit()
         return flask.redirect(next_url)

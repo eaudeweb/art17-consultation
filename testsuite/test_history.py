@@ -1,5 +1,6 @@
 from datetime import datetime
 import pytest
+from flask import json
 from art17 import models, species, habitat, history
 
 
@@ -58,11 +59,11 @@ def test_comment_add(params, app):
         assert history[0].object_id == comment.id
         assert history[0].action == 'add'
         assert history[0].user_id == params.user_id
+        assert json.loads(history[0].new_data)['range']['surface_area'] == 50
 
 
 @pytest.mark.parametrize(['params'], [[species_params], [habitat_params]])
 def test_comment_edit(params, app):
-    from flask import json
     params.setup(app, comment=True)
     client = app.test_client()
 
@@ -79,13 +80,12 @@ def test_comment_edit(params, app):
         assert history[0].object_id == comment.id
         assert history[0].action == 'edit'
         assert history[0].user_id == params.user_id
-        data = json.loads(history[0].old_data)
-        assert data['range']['surface_area'] == 1337
+        assert json.loads(history[0].old_data)['range']['surface_area'] == 1337
+        assert json.loads(history[0].new_data)['range']['surface_area'] == 50
 
 
 @pytest.mark.parametrize(['params'], [[species_params], [habitat_params]])
 def test_comment_update_status(params, app):
-    from flask import json
     params.setup(app, comment=True)
     client = app.test_client()
 
@@ -102,6 +102,7 @@ def test_comment_update_status(params, app):
         assert history[0].action == 'status'
         assert history[0].user_id == params.user_id
         assert json.loads(history[0].old_data) == 'new'
+        assert json.loads(history[0].new_data) == 'approved'
 
 
 def test_message_add(app):
@@ -122,11 +123,14 @@ def test_message_add(app):
         assert history[0].object_id == message.id
         assert history[0].action == 'add'
         assert history[0].user_id == params.user_id
+        new_data = json.loads(history[0].new_data)
+        assert new_data['text'] == 'hello world'
+        assert new_data['user_id'] == params.user_id
+        assert new_data['parent'] == params.comment_id
 
 
 def test_message_remove(app):
     from art17 import messages
-    from flask import json
     user_id = app.config['TESTING_USER_ID'] = 'somebody'
     app.register_blueprint(history.history)
     app.register_blueprint(messages.messages)

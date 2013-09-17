@@ -41,7 +41,7 @@ def connect(signal, sender, **more_kwargs):
         handle_signal(**kwargs)
 
 
-def handle_signal(table, action, ob, old_data=None, **extra):
+def handle_signal(table, action, ob, old_data=None, new_data=None, **extra):
     if not ob.id:
         models.db.session.flush()
         assert ob.id
@@ -52,6 +52,8 @@ def handle_signal(table, action, ob, old_data=None, **extra):
                           user_id=flask.g.identity.id)
     if old_data:
         item.old_data = flask.json.dumps(old_data, default=json_encode_more)
+    if new_data:
+        item.new_data = flask.json.dumps(new_data, default=json_encode_more)
     models.db.session.add(item)
 
 

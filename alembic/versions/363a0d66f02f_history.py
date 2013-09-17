@@ -14,6 +14,7 @@ def upgrade():
         sa.Column('date', sa.DateTime, nullable=False),
         sa.Column('user_id', sa.VARCHAR(256), nullable=True),
         sa.Column('old_data', sa.UnicodeText, nullable=True),
+        sa.Column('new_data', sa.UnicodeText, nullable=True),
         sa.PrimaryKeyConstraint('objectid'),
     )
 
