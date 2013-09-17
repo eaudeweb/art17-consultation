@@ -58,6 +58,15 @@ def create_manager():
     from art17.models import db_manager
     manager = Manager(create_app)
     manager.add_command('db', db_manager)
+
+    @manager.command
+    def waitress():
+        from waitress import serve
+        app = flask.current_app
+        host = app.config.get('ART17_LISTEN_HOST', '127.0.0.1')
+        port = app.config.get('ART17_LISTEN_PORT', 5000)
+        serve(app.wsgi_app, host=host, port=port)
+
     return manager
 
 
