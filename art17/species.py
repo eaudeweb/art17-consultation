@@ -45,8 +45,10 @@ class SpeciesIndexView(IndexView):
                              for s in self.subject_list],
             'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,
+        }
 
-            'species': None if self.subject is None else {
+        if self.subject:
+            self.ctx.update({
                 'code': self.subject.code,
                 'name': self.subject.lu.speciesname,
                 'annex_II': self.subject.lu.annexii == 'Y',
@@ -56,8 +58,7 @@ class SpeciesIndexView(IndexView):
                 'comments': [parse_species(r, is_comment=True)
                              for r in self.comments],
                 'message_counts': self.message_counts,
-            },
-        }
+            })
 
 
 species.add_url_rule('/specii/', view_func=SpeciesIndexView.as_view('index'))

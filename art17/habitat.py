@@ -36,16 +36,17 @@ class HabitatIndexView(IndexView):
                              for h in self.subject_list],
             'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,
+        }
 
-            'habitat': None if self.subject is None else {
+        if self.subject:
+            self.ctx.update({
                 'name': self.subject.lu.name_ro,
                 'code': self.subject.code,
                 'records': [parse_habitat(r) for r in self.records],
                 'comments': [parse_habitat(r, is_comment=True)
                              for r in self.comments],
                 'message_counts': self.message_counts,
-            },
-        }
+            })
 
 
 habitat.add_url_rule('/habitate/', view_func=HabitatIndexView.as_view('index'))

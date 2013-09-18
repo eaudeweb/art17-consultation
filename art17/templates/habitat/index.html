@@ -2,7 +2,7 @@
 
 
 {% block title %}
-{%- if habitat %}{{ habitat.name }} &mdash; {% endif %}
+{%- if name %}{{ name }} &mdash; {% endif %}
 {{- super() }}
 {%- endblock title %}
 
@@ -39,10 +39,10 @@
     </fieldset>
   </form>
 
- {% if habitat %}
+ {% if name %}
   <p>
-    <strong>{{ habitat.name }}</strong>,
-    cod: {{ habitat.code }}
+    <strong>{{ name }}</strong>,
+    cod: {{ code }}
   </p>
 
   {%- include 'habitat/records.html' with context %}

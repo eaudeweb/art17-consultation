@@ -2,7 +2,7 @@
 
 
 {% block title %}
-{%- if species %}{{ species.name }} &mdash; {% endif %}
+{%- if name %}{{ name }} &mdash; {% endif %}
 {{- super() }}
 {%- endblock title %}
 
@@ -46,15 +46,15 @@
     </fieldset>
   </form>
 
- {% if species %}
+ {% if name %}
   <p>
     {%- set annex_list =
-      (["II"] if species.annex_II else []) +
-      (["IV"] if species.annex_IV else []) +
-      (["V"] if species.annex_V else []) %}
+      (["II"] if annex_II else []) +
+      (["IV"] if annex_IV else []) +
+      (["V"] if annex_V else []) %}
 
-    <strong>{{ species.name }}</strong>,
-    cod: {{ species.code }},
+    <strong>{{ name }}</strong>,
+    cod: {{ code }},
     anexe: {{ ", ".join(annex_list) if annex_list else "--" }}
   </p>
 
