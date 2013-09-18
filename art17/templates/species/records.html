@@ -11,10 +11,10 @@
 
   {#- range #}
   {%- set range = row.range %}
-  <td>{{ range.method }}</td>
   <td>{{ range.surface_area }}</td>
   {{ conclusion_td(range.conclusion) }}
   {{ trend_td(range.trend_short) }}
+  <td>{{ range.method }}</td>
   {{ reference_value_td(range.reference_value) }}
 
   {#- population #}
@@ -26,11 +26,11 @@
 
   {#- habitat #}
   {%- set habitat = row.habitat %}
-  <td>{{ habitat.method }}</td>
   <td>{{ habitat.surface_area }}</td>
   {{ conclusion_td(habitat.conclusion) }}
-  {{ trend_td(habitat.trend_short) }}
   <td>{{ habitat.area_suitable }}</td>
+  <td>{{ habitat.method }}</td>
+  {{ trend_td(habitat.trend_short) }}
   {{ habitat_quality_td(habitat.quality) }}
 
   {#- future prospects #}
@@ -48,10 +48,10 @@
 <table class="records">
   <tr class="records-header">
     <td rowspan=2></td>
-    <td rowspan=2 title="Regiunea biogeografică">Regiune</td>
+    <td rowspan=2 title="Regiunea biogeografică">Bio</td>
     <td colspan=5>Areal (km²)</td>
     <td colspan=4>Populație</td>
-    <td colspan=6>Habitat pentru specie (km²)</td>
+    <td colspan=6>Habitate (km²)</td>
     <td rowspan=2
         title="Perspective viitoare"
         >Perspective</td>
@@ -65,22 +65,22 @@
     {#- detail #}
     {#- bio-regiune #}
     {#- range #}
-    <td>Metodă</td>
-    <td>Suprafață</td>
-    <td>Concluzie</td>
-    <td>Tendință</td>
-    <td title="Arealul favorabil de referință">Referință</td>
+    <td title="Suprafața">Supr.</td>
+    <td title="Concluzie">Concl.</td>
+    <td title="Tendința pe termen scurt">Tend.<br>t.scurt</td>
+    <td title="Metoda folositǎ">Met.</td>
+    <td title="Arealul de referință favorabil">Ref.</td>
     {#- population #}
     <td title="Mărimea populației și unitatea de măsură">Mărime</td>
     <td>Concluzie</td>
-    <td title="Tendința pe termen scurt">Tendință</td>
-    <td title="Populația favorabilă de referință">Referință</td>
+    <td title="Tendința pe termen scurt">Tend.<br>t.scurt</td>
+    <td title="Populația de referință">Ref.</td>
     {#- habitat #}
-    <td>Metodă</td>
-    <td>Suprafață</td>
-    <td>Concluzie</td>
-    <td title="Tendința pe termen scurt">Tendință</td>
-    <td title="Zona de referință favorabilă">Referință</td>
+    <td title="Suprafața estimatǎ">Supr.</td>
+    <td title="Concluzie">Concl.</td>
+    <td title="Zona de referință favorabilă">Ref.</td>
+    <td title="Metoda folositǎ">Met.</td>
+    <td title="Tendința pe termen scurt">Tend.<br>t.scurt</td>
     <td>Calitate</td>
     {#- future prospects #}
     {#- overall assessment #}
