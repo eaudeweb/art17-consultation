@@ -14,7 +14,7 @@ Trebuie să fie deja instalate următoarele:
 
 Download codul sursă::
 
-    $ curl -L https://github.com/eaudeweb/art17/archive/master.tar.gz > art17-master.tgz
+    $ curl -L https://github.com/eaudeweb/art17-consultation/archive/master.tar.gz > art17-master.tgz
     $ tar xzf art17-master.tgz
     $ mv art17-master art17
     $ cd art17
