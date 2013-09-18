@@ -2,7 +2,6 @@ import flask
 from blinker import Signal
 from art17 import models
 from art17.common import IndexView, CommentView, CommentStateView
-from art17.schemas import parse_habitat
 from art17 import forms
 from art17 import schemas
 
@@ -29,6 +28,7 @@ class HabitatIndexView(IndexView):
     subject_name = 'habitat'
     subject_cls = models.DataHabitat
     record_cls = models.DataHabitattypeRegion
+    parse_record = staticmethod(schemas.parse_habitat)
 
     def custom_stuff(self):
         self.ctx = {
@@ -40,15 +40,15 @@ class HabitatIndexView(IndexView):
         if self.subject:
             self.ctx.update({
                 'code': self.subject.code,
-                'name': self.subject.lu.name_ro,
-                'records': [parse_habitat(r) for r in self.records],
-                'comments': [parse_habitat(r, is_comment=True)
+                'name': self.subject.lu.display_name,
+                'records': [self.parse_record(r) for r in self.records],
+                'comments': [self.parse_record(r, is_comment=True)
                              for r in self.comments],
                 'message_counts': self.message_counts,
             })
 
     def get_subject_list(self):
-        return [{'id': h.code, 'text': h.lu.name_ro}
+        return [{'id': h.code, 'text': h.lu.display_name}
                 for h in self.subject_list]
 
 
@@ -60,7 +60,7 @@ def detail(record_id):
     record = models.DataHabitattypeRegion.query.get_or_404(record_id)
     return flask.render_template('habitat/detail.html', **{
         'habitat': record.hr_habitat,
-        'record': parse_habitat(record),
+        'record': schemas.parse_habitat(record),
     })
 
 
@@ -83,7 +83,7 @@ class HabitatCommentView(CommentView):
     def setup_template_context(self):
         self.template_ctx = {
             'habitat': self.record.hr_habitat,
-            'record': parse_habitat(self.record),
+            'record': schemas.parse_habitat(self.record),
         }
 
     def record_for_comment(self, comment):

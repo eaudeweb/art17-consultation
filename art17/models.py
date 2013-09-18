@@ -30,6 +30,10 @@ class LuHabitattypeCodes(Base):
     priority = Column(Numeric)
     priority_comment = Column(String)
 
+    @property
+    def display_name(self):
+        return self.name_ro
+
 
 class LuGrupSpecie(Base):
     __tablename__ = u'lu_grup_specie'
@@ -57,6 +61,10 @@ class LuHdSpecies(Base):
     annexiv_commet = Column(Text)
     annexv_comment = Column(Text)
     etc_comments = Column(String)
+
+    @property
+    def display_name(self):
+        return self.speciesname
 
 
 class LuBiogeoreg(Base):

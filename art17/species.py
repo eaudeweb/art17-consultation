@@ -2,7 +2,6 @@ import flask
 from blinker import Signal
 from art17 import models
 from art17.common import IndexView, CommentView, CommentStateView
-from art17.schemas import parse_species
 from art17 import forms
 from art17 import schemas
 
@@ -30,6 +29,7 @@ class SpeciesIndexView(IndexView):
     subject_name = 'species'
     subject_cls = models.DataSpecies
     record_cls = models.DataSpeciesRegion
+    parse_record = staticmethod(schemas.parse_species)
 
     def custom_stuff(self):
         self.ctx = {
@@ -41,9 +41,9 @@ class SpeciesIndexView(IndexView):
         if self.subject:
             self.ctx.update({
                 'code': self.subject.code,
-                'name': self.subject.lu.speciesname,
-                'records': [parse_species(r) for r in self.records],
-                'comments': [parse_species(r, is_comment=True)
+                'name': self.subject.lu.display_name,
+                'records': [self.parse_record(r) for r in self.records],
+                'comments': [self.parse_record(r, is_comment=True)
                              for r in self.comments],
                 'message_counts': self.message_counts,
             })
@@ -66,7 +66,7 @@ class SpeciesIndexView(IndexView):
     def get_subject_list(self):
         return [{'id': s.code,
                  'group_id': s.lu.group_code,
-                 'text': s.lu.speciesname}
+                 'text': s.lu.display_name}
                 for s in self.subject_list]
 
 
@@ -78,7 +78,7 @@ def detail(record_id):
     record = models.DataSpeciesRegion.query.get_or_404(record_id)
     return flask.render_template('species/detail.html', **{
         'species': record.species,
-        'record': parse_species(record),
+        'record': schemas.parse_species(record),
     })
 
 
@@ -101,7 +101,7 @@ class SpeciesCommentView(CommentView):
     def setup_template_context(self):
         self.template_ctx = {
             'species': self.record.species,
-            'record': parse_species(self.record),
+            'record': schemas.parse_species(self.record),
         }
 
     def record_for_comment(self, comment):
