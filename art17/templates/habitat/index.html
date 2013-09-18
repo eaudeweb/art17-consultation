@@ -1,10 +1,4 @@
-{% extends "layout.html" %}
-
-
-{% block title %}
-{%- if habitat %}{{ habitat.name }} &mdash; {% endif %}
-{{- super() }}
-{%- endblock title %}
+{% extends "common/indexpage.html" %}
 
 
 {% block breadcrumbs %}
@@ -16,14 +10,14 @@
 {% endblock breadcrumbs %}
 
 
-{% block content %}
+{% block form %}
   <form class="habitatfilter">
     <fieldset>
       <legend>Filtrare habitate</legend>
 
       <div class="form-group">
         <label for="habitatfilter-group">Habitat</label>
-        <input name="habitat" value="{{ current_habitat_code or '' }}"
+        <input name="habitat" value="{{ current_subject_code or '' }}"
                type="hidden" id="habitatfilter-group">
       </div>
 
@@ -38,35 +32,29 @@
       </div>
     </fieldset>
   </form>
+{% endblock form %}
 
- {% if habitat %}
+
+{% block subject_details %}
   <p>
-    <strong>{{ habitat.name }}</strong>,
-    cod: {{ habitat.code }}
+    <strong>{{ name }}</strong>,
+    cod: {{ code }}
   </p>
-
-  {%- include 'habitat/records.html' with context %}
- {% endif %}
-{% endblock content %}
+{% endblock subject_details %}
 
 
 {% block script %}
-  {%- from 'bits.html' import script %}
-  {{ super() }}
-  {{ script('recordfilter.js') }}
-  {{ script('detail.js') }}
-  {{ script('commentstatus.js') }}
-  {{ script('messages.js') }}
+  {{- super() }}
 
   <script>
     (function() {
       "use strict";
 
       var habitatfilter = $('.habitatfilter');
-      var habitat_list = {{ habitat_list|tojson|safe }};
+      var subject_list = {{ subject_list|tojson|safe }};
 
       var habitat_select = habitatfilter.find('[name=habitat]').select2({
-        data: habitat_list,
+        data: subject_list,
         width: '40em'
       });
 

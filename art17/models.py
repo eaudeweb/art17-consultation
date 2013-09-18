@@ -30,6 +30,10 @@ class LuHabitattypeCodes(Base):
     priority = Column(Numeric)
     priority_comment = Column(String)
 
+    @property
+    def display_name(self):
+        return self.name_ro
+
 
 class LuGrupSpecie(Base):
     __tablename__ = u'lu_grup_specie'
@@ -43,7 +47,7 @@ class LuHdSpecies(Base):
     __tablename__ = u'lu_hd_species'
 
     objectid = Column(Numeric, primary_key=True)
-    speciescode = Column(Numeric)
+    code = Column('speciescode', Numeric)
     hdname = Column(String)
     speciesname = Column(String)
     alternativenames = Column(String)
@@ -57,6 +61,10 @@ class LuHdSpecies(Base):
     annexiv_commet = Column(Text)
     annexv_comment = Column(Text)
     etc_comments = Column(String)
+
+    @property
+    def display_name(self):
+        return self.speciesname
 
 
 class LuBiogeoreg(Base):
@@ -74,7 +82,7 @@ class DataHabitat(Base):
 
     id = Column('objectid', Numeric, primary_key=True)
     country = Column(String, index=True)
-    habitatcode = Column(String, index=True)
+    code = Column('habitatcode', String, index=True)
     distribution_map = Column(Numeric)
     distribution_method = Column(String, index=True)
     distribution_date = Column(String)
@@ -91,8 +99,7 @@ class DataHabitat(Base):
     import_id = Column(Numeric, index=True)
 
     lu = relationship(u'LuHabitattypeCodes',
-                      primaryjoin=(habitatcode ==
-                                   foreign(LuHabitattypeCodes.code)),
+                      primaryjoin=(code == foreign(LuHabitattypeCodes.code)),
                       uselist=False, lazy='eager')
 
 
@@ -269,7 +276,7 @@ class DataSpecies(Base):
 
     id = Column('objectid', Numeric, primary_key=True, index=True)
     country = Column(String)
-    speciescode = Column(String, index=True)
+    code = Column('speciescode', String, index=True)
     alternative_speciesname = Column(String)
     common_speciesname = Column(String)
     distribution_map = Column(Numeric)
@@ -289,9 +296,8 @@ class DataSpecies(Base):
     import_id = Column(Numeric, index=True)
 
     lu = relationship(LuHdSpecies,
-                      primaryjoin=(speciescode ==
-                                   cast(foreign(LuHdSpecies.speciescode),
-                                        String(255))),
+                      primaryjoin=(code == cast(foreign(LuHdSpecies.code),
+                                                String(255))),
                       lazy='joined', innerjoin=True, uselist=False,
                       backref=db.backref('data',
                                          lazy='joined',

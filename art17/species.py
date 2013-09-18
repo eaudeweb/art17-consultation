@@ -1,9 +1,7 @@
 import flask
-from sqlalchemy import func
 from blinker import Signal
 from art17 import models
-from art17.common import CommentView, CommentStateView
-from art17.schemas import parse_species
+from art17.common import IndexView, CommentView, CommentStateView
 from art17 import forms
 from art17 import schemas
 
@@ -17,73 +15,47 @@ comment_status_changed = Signal()
 @species.route('/specii/regiuni/<int:species_code>')
 def lookup_regions(species_code):
     species = (models.DataSpecies.query
-                .filter_by(speciescode=species_code)
+                .filter_by(code=species_code)
                 .first_or_404())
     regions = [{'id': r.lu.code, 'text': r.lu.name_ro}
                for r in species.regions.join(models.DataSpeciesRegion.lu)]
     return flask.jsonify(options=regions)
 
 
-@species.route('/specii/')
-def index():
-    group_code = flask.request.args.get('group')
 
-    species_code = flask.request.args.get('species', type=int)
-    if species_code:
-        species = (models.DataSpecies.query
-                    .filter_by(speciescode=species_code)
-                    .join(models.DataSpecies.lu)
-                    .first_or_404())
-    else:
-        species = None
+class SpeciesIndexView(IndexView):
 
-    region_code = flask.request.args.get('region', '')
-    if region_code:
-        region = (models.LuBiogeoreg.query
-                    .filter_by(code=region_code)
-                    .first_or_404())
-    else:
-        region = None
+    template = 'species/index.html'
+    subject_name = 'species'
+    subject_cls = models.DataSpecies
+    record_cls = models.DataSpeciesRegion
+    parse_record = staticmethod(schemas.parse_species)
+    records_template = 'species/records.html'
 
-    species_list = models.DataSpecies.query.join(models.DataSpeciesRegion)
+    def custom_ctx(self):
+        group_code = flask.request.args.get('group')
+        self.ctx.update({
+            'species_groups': [{'id': g.code,
+                                'text': g.description}
+                               for g in models.LuGrupSpecie.query],
+            'current_group_code': group_code,
+        })
 
-    if species:
-        records = species.regions
-        comments = species.comments
+        if self.subject:
+            self.ctx.update({
+                'annex_II': self.subject.lu.annexii == 'Y',
+                'annex_IV': self.subject.lu.annexiv == 'Y',
+                'annex_V': self.subject.lu.annexv == 'Y',
+            })
 
-        if region:
-            records = records.filter_by(region=region.code)
-            comments = comments.filter_by(region=region.code)
+    def get_subject_list(self):
+        return [{'id': s.code,
+                 'group_id': s.lu.group_code,
+                 'text': s.lu.display_name}
+                for s in self.subject_list]
 
-        CommentMessage = models.CommentMessage
-        message_counts = dict(models.db.session.query(
-                                CommentMessage.parent,
-                                func.count(CommentMessage.id)
-                            ).group_by(CommentMessage.parent))
 
-    return flask.render_template('species/index.html', **{
-        'species_groups': [{'id': g.code,
-                            'text': g.description}
-                           for g in models.LuGrupSpecie.query],
-        'current_group_code': group_code,
-        'species_list': [{'id': s.speciescode,
-                          'group_id': s.lu.group_code,
-                          'text': s.lu.speciesname}
-                         for s in species_list],
-        'current_species_code': species_code,
-        'current_region_code': region_code,
-
-        'species': None if species is None else {
-            'code': species.speciescode,
-            'name': species.lu.speciesname,
-            'annex_II': species.lu.annexii == 'Y',
-            'annex_IV': species.lu.annexiv == 'Y',
-            'annex_V': species.lu.annexv == 'Y',
-            'records': [parse_species(r) for r in records],
-            'comments': [parse_species(r, is_comment=True) for r in comments],
-            'message_counts': message_counts,
-        },
-    })
+species.add_url_rule('/specii/', view_func=SpeciesIndexView.as_view('index'))
 
 
 @species.route('/specii/detalii/<int:record_id>')
@@ -91,7 +63,7 @@ def detail(record_id):
     record = models.DataSpeciesRegion.query.get_or_404(record_id)
     return flask.render_template('species/detail.html', **{
         'species': record.species,
-        'record': parse_species(record),
+        'record': schemas.parse_species(record),
     })
 
 
@@ -114,7 +86,7 @@ class SpeciesCommentView(CommentView):
     def setup_template_context(self):
         self.template_ctx = {
             'species': self.record.species,
-            'record': parse_species(self.record),
+            'record': schemas.parse_species(self.record),
         }
 
     def record_for_comment(self, comment):
