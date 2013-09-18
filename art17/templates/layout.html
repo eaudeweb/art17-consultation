@@ -33,7 +33,10 @@
   <body>
     <div class="container">
       {%- if not config.TESTING %}
-        {% block breadcrumbs %}{% endblock %}
+        {%- block header %}
+          {%- include 'navbar.html' with context %}
+        {%- endblock %}
+        {%- block breadcrumbs %}{% endblock %}
       {%- endif %}
       {% block messages %}
         {% from 'bits.html' import flash_messages -%}
