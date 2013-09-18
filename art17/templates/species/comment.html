@@ -260,7 +260,7 @@
 
           <div class="row">
             <div class="col-sm-6 {{- error_cls(form.population.method) }}">
-              {{ form.population.method(class='form-control', rows=2) }}
+              {{ form.population.method(class='form-control') }}
             </div>
 
             <div class="col-sm-6 text-primary">
@@ -603,7 +603,7 @@
       <div class="panel-body">
         <div class="form-group">
           {%- set future_prospects = form.future_prospects %}
-          <label for="conclusion.future_prospects.value">
+          <label for="future_prospects.value">
             Perspective viitoare
           </label>
 
@@ -625,7 +625,7 @@
 
         <div class="form-group">
           {%- set overall_assessment = form.overall_assessment %}
-          <label for="conclusion.overall_assessment.value">
+          <label for="overall_assessment.value">
             Evaluare generală a stării de conservare
           </label>
 
@@ -648,7 +648,7 @@
         </div>
       </div>
     </div>
-
+  </div>
 
       <div class="form-group">
         <button type="submit" class="recordcomment-save">Save</button>
