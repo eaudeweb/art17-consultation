@@ -2,7 +2,7 @@ import flask
 from sqlalchemy import func
 from blinker import Signal
 from art17 import models
-from art17.common import CommentView, CommentStateView
+from art17.common import IndexView, CommentView, CommentStateView
 from art17.schemas import parse_habitat
 from art17 import forms
 from art17 import schemas
@@ -24,56 +24,60 @@ def lookup_regions(habitat_code):
     return flask.jsonify(options=regions)
 
 
-@habitat.route('/habitate/')
-def index():
-    habitat_code = flask.request.args.get('habitat', type=int)
-    if habitat_code:
-        habitat = (models.DataHabitat.query
-                    .filter_by(habitatcode=habitat_code)
-                    .join(models.DataSpecies.lu)
-                    .first_or_404())
-    else:
-        habitat = None
+class HabitatIndexView(IndexView):
 
-    region_code = flask.request.args.get('region', '')
-    if region_code:
-        region = (models.LuBiogeoreg.query
-                    .filter_by(code=region_code)
-                    .first_or_404())
-    else:
-        region = None
+    def custom_stuff(self):
+        habitat_code = flask.request.args.get('habitat', type=int)
+        if habitat_code:
+            habitat = (models.DataHabitat.query
+                        .filter_by(habitatcode=habitat_code)
+                        .join(models.DataSpecies.lu)
+                        .first_or_404())
+        else:
+            habitat = None
 
-    habitat_list = (models.DataHabitat.query
-                        .join(models.DataHabitattypeRegion)
-                        .order_by('habitatcode'))
+        region_code = flask.request.args.get('region', '')
+        if region_code:
+            region = (models.LuBiogeoreg.query
+                        .filter_by(code=region_code)
+                        .first_or_404())
+        else:
+            region = None
 
-    if habitat:
-        records = habitat.regions
-        comments = habitat.comments
-        if region:
-            records = records.filter_by(region=region.code)
-            comments = comments.filter_by(region=region.code)
+        habitat_list = (models.DataHabitat.query
+                            .join(models.DataHabitattypeRegion)
+                            .order_by('habitatcode'))
 
-        CommentMessage = models.CommentMessage
-        message_counts = dict(models.db.session.query(
-                                CommentMessage.parent,
-                                func.count(CommentMessage.id)
-                            ).group_by(CommentMessage.parent))
+        if habitat:
+            records = habitat.regions
+            comments = habitat.comments
+            if region:
+                records = records.filter_by(region=region.code)
+                comments = comments.filter_by(region=region.code)
 
-    return flask.render_template('habitat/index.html', **{
-        'habitat_list': [{'id': h.habitatcode, 'text': h.lu.name_ro}
-                         for h in habitat_list],
-        'current_habitat_code': habitat_code,
-        'current_region_code': region_code,
+            CommentMessage = models.CommentMessage
+            message_counts = dict(models.db.session.query(
+                                    CommentMessage.parent,
+                                    func.count(CommentMessage.id)
+                                ).group_by(CommentMessage.parent))
 
-        'habitat': None if habitat is None else {
-            'name': habitat.lu.name_ro,
-            'code': habitat.habitatcode,
-            'records': [parse_habitat(r) for r in records],
-            'comments': [parse_habitat(r, is_comment=True) for r in comments],
-            'message_counts': message_counts,
-        },
-    })
+        return flask.render_template('habitat/index.html', **{
+            'habitat_list': [{'id': h.habitatcode, 'text': h.lu.name_ro}
+                             for h in habitat_list],
+            'current_habitat_code': habitat_code,
+            'current_region_code': region_code,
+
+            'habitat': None if habitat is None else {
+                'name': habitat.lu.name_ro,
+                'code': habitat.habitatcode,
+                'records': [parse_habitat(r) for r in records],
+                'comments': [parse_habitat(r, is_comment=True) for r in comments],
+                'message_counts': message_counts,
+            },
+        })
+
+
+habitat.add_url_rule('/habitate/', view_func=HabitatIndexView.as_view('index'))
 
 
 @habitat.route('/habitate/detalii/<int:record_id>')
