@@ -30,6 +30,7 @@ class SpeciesIndexView(IndexView):
     subject_cls = models.DataSpecies
     record_cls = models.DataSpeciesRegion
     parse_record = staticmethod(schemas.parse_species)
+    records_template = 'species/records.html'
 
     def custom_ctx(self):
         group_code = flask.request.args.get('group')

@@ -29,6 +29,7 @@ class HabitatIndexView(IndexView):
     subject_cls = models.DataHabitat
     record_cls = models.DataHabitattypeRegion
     parse_record = staticmethod(schemas.parse_habitat)
+    records_template = 'habitat/records.html'
 
     def get_subject_list(self):
         return [{'id': h.code, 'text': h.lu.display_name}

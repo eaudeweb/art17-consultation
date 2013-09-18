@@ -51,7 +51,7 @@
     anexe: {{ ", ".join(annex_list) if annex_list else "--" }}
   </p>
 
-  {%- include 'species/records.html' with context %}
+  {%- include records_template with context %}
  {% endif %}
 {% endblock content %}
 
