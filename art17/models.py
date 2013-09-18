@@ -25,6 +25,7 @@ class LuHabitattypeCodes(Base):
     objectid = Column(Numeric, primary_key=True)
     code = Column(String)
     hd_name = Column(String)
+    name_ro = Column('hd_name_ro', Text)
     valide_name = Column(String)
     priority = Column(Numeric)
     priority_comment = Column(String)
