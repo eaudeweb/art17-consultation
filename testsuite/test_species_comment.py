@@ -164,8 +164,8 @@ SPECIES_MODEL_DATA = {
 def _create_species_record(species_app, comment=False):
     from art17 import models
     with species_app.app_context():
-        species = models.DataSpecies(id=1, speciescode='1234')
-        species.lu = models.LuHdSpecies(objectid=1, speciescode=1234)
+        species = models.DataSpecies(id=1, code='1234')
+        species.lu = models.LuHdSpecies(objectid=1, code=1234)
         record = models.DataSpeciesRegion(id=1, species=species,
                                           region='ALP')
         record.lu = models.LuBiogeoreg(objectid=1)
@@ -207,7 +207,7 @@ def test_save_comment_record(species_app):
     with species_app.app_context():
         assert DataSpeciesComment.query.count() == 1
         comment = DataSpeciesComment.query.first()
-        assert comment.species.speciescode == '1234'
+        assert comment.species.code == '1234'
         assert comment.region == 'ALP'
         assert comment.range_surface_area == 50
 

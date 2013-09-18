@@ -43,7 +43,7 @@ class LuHdSpecies(Base):
     __tablename__ = u'lu_hd_species'
 
     objectid = Column(Numeric, primary_key=True)
-    speciescode = Column(Numeric)
+    code = Column('speciescode', Numeric)
     hdname = Column(String)
     speciesname = Column(String)
     alternativenames = Column(String)
@@ -269,7 +269,7 @@ class DataSpecies(Base):
 
     id = Column('objectid', Numeric, primary_key=True, index=True)
     country = Column(String)
-    speciescode = Column(String, index=True)
+    code = Column('speciescode', String, index=True)
     alternative_speciesname = Column(String)
     common_speciesname = Column(String)
     distribution_map = Column(Numeric)
@@ -289,9 +289,8 @@ class DataSpecies(Base):
     import_id = Column(Numeric, index=True)
 
     lu = relationship(LuHdSpecies,
-                      primaryjoin=(speciescode ==
-                                   cast(foreign(LuHdSpecies.speciescode),
-                                        String(255))),
+                      primaryjoin=(code == cast(foreign(LuHdSpecies.code),
+                                                String(255))),
                       lazy='joined', innerjoin=True, uselist=False,
                       backref=db.backref('data',
                                          lazy='joined',

@@ -17,7 +17,7 @@ comment_status_changed = Signal()
 @species.route('/specii/regiuni/<int:species_code>')
 def lookup_regions(species_code):
     species = (models.DataSpecies.query
-                .filter_by(speciescode=species_code)
+                .filter_by(code=species_code)
                 .first_or_404())
     regions = [{'id': r.lu.code, 'text': r.lu.name_ro}
                for r in species.regions.join(models.DataSpeciesRegion.lu)]
@@ -35,7 +35,7 @@ class SpeciesIndexView(IndexView):
     def custom_stuff(self):
         if self.subject_code:
             self.subject = (self.subject_cls.query
-                        .filter_by(speciescode=self.subject_code)
+                        .filter_by(code=self.subject_code)
                         .join(models.DataSpecies.lu)
                         .first_or_404())
         else:
@@ -72,7 +72,7 @@ class SpeciesIndexView(IndexView):
                                 'text': g.description}
                                for g in models.LuGrupSpecie.query],
             'current_group_code': group_code,
-            'species_list': [{'id': s.speciescode,
+            'species_list': [{'id': s.code,
                               'group_id': s.lu.group_code,
                               'text': s.lu.speciesname}
                              for s in species_list],
@@ -80,7 +80,7 @@ class SpeciesIndexView(IndexView):
             'current_region_code': region_code,
 
             'species': None if self.subject is None else {
-                'code': self.subject.speciescode,
+                'code': self.subject.code,
                 'name': self.subject.lu.speciesname,
                 'annex_II': self.subject.lu.annexii == 'Y',
                 'annex_IV': self.subject.lu.annexiv == 'Y',
