@@ -61,13 +61,13 @@ def index():
                             ).group_by(CommentMessage.parent))
 
     return flask.render_template('habitat/index.html', **{
-        'habitat_list': [{'id': h.habitatcode, 'text': h.lu.hd_name}
+        'habitat_list': [{'id': h.habitatcode, 'text': h.lu.name_ro}
                          for h in habitat_list],
         'current_habitat_code': habitat_code,
         'current_region_code': region_code,
 
         'habitat': None if habitat is None else {
-            'name': habitat.lu.hd_name,
+            'name': habitat.lu.name_ro,
             'code': habitat.habitatcode,
             'records': [parse_habitat(r) for r in records],
             'comments': [parse_habitat(r, is_comment=True) for r in comments],
