@@ -52,7 +52,9 @@
             <div class="col-sm-2"></div>
 
             <div class="col-sm-6 text-primary">
-              {{ range_html(record.range) }}
+              <span class="recordvalue">
+                {{ range_html(record.range) }}
+              </span>
             </div>
           </div>
         </div>
@@ -70,7 +72,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ method_html(record.range.method) }}
+              <span class="recordvalue">
+                {{ method_html(record.range.method) }}
+              </span>
             </div>
           </div>
         </div>
@@ -97,8 +101,10 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ trend_detail_html(record.range.trend_short) }}
-              {{ period_html(record.range.trend_short.period) }}
+              <span class="recordvalue">
+                {{ trend_detail_html(record.range.trend_short) }}
+                {{ period_html(record.range.trend_short.period) }}
+              </span>
             </div>
           </div>
         </div>
@@ -125,8 +131,10 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ trend_detail_html(record.range.trend_long) }}
-              {{ period_html(record.range.trend_long.period) }}
+              <span class="recordvalue">
+                {{ trend_detail_html(record.range.trend_long) }}
+                {{ period_html(record.range.trend_long.period) }}
+              </span>
             </div>
           </div>
         </div>
@@ -149,8 +157,10 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ reference_value_html(record.range.reference_value,
+              <span class="recordvalue">
+                {{ reference_value_html(record.range.reference_value,
                         unit='km²') }}
+              </span>
             </div>
           </div>
         </div>
@@ -168,7 +178,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ record.range.reference_value.method }}
+              <span class="recordvalue">
+                {{ record.range.reference_value.method }}
+              </span>
             </div>
           </div>
         </div>
@@ -191,7 +203,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ conclusions_html(record.range.conclusion) }}
+              <span class="recordvalue">
+                {{ conclusions_html(record.range.conclusion) }}
+              </span>
             </div>
           </div>
         </div>
@@ -226,7 +240,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ population_size_html(record.population.size) }}
+              <span class="recordvalue">
+                {{ population_size_html(record.population.size) }}
+              </span>
             </div>
           </div>
         </div>
@@ -246,7 +262,7 @@
             </div>
 
             <div class="col-sm-2 {{- error_cls(population_alt.max) }}">
-              {{ population_alt.max(class='form-control') }}
+                {{ population_alt.max(class='form-control') }}
             </div>
           </div>
         </div>
@@ -264,7 +280,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ method_html(record.population.method) }}
+              <span class="recordvalue">
+                {{ method_html(record.population.method) }}
+              </span>
             </div>
           </div>
         </div>
@@ -291,8 +309,10 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ trend_detail_html(record.population.trend_short) }}
-              {{ period_html(record.population.trend_short.period) }}
+              <span class="recordvalue">
+                {{ trend_detail_html(record.population.trend_short) }}
+                {{ period_html(record.population.trend_short.period) }}
+              </span>
             </div>
           </div>
         </div>
@@ -319,8 +339,10 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ trend_detail_html(record.population.trend_long) }}
-              {{ period_html(record.population.trend_long.period) }}
+              <span class="recordvalue">
+                {{ trend_detail_html(record.population.trend_long) }}
+                {{ period_html(record.population.trend_long.period) }}
+              </span>
             </div>
           </div>
         </div>
@@ -343,8 +365,10 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ reference_value_html(record.population.reference_value,
+              <span class="recordvalue">
+                {{ reference_value_html(record.population.reference_value,
                         unit='km²') }}
+              </span>
             </div>
           </div>
         </div>
@@ -362,7 +386,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ record.population.reference_value.method }}
+              <span class="recordvalue">
+                {{ record.population.reference_value.method }}
+              </span>
             </div>
           </div>
         </div>
@@ -385,7 +411,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ conclusions_html(record.population.conclusion) }}
+              <span class="recordvalue">
+                {{ conclusions_html(record.population.conclusion) }}
+              </span>
             </div>
           </div>
         </div>
@@ -414,7 +442,9 @@
             <div class="col-sm-2"></div>
 
             <div class="col-sm-6 text-primary">
-              {{ range_html(record.habitat) }}
+              <span class="recordvalue">
+                {{ range_html(record.habitat) }}
+              </span>
             </div>
           </div>
         </div>
@@ -434,7 +464,9 @@
             <div class="col-sm-2"></div>
 
             <div class="col-sm-6 text-primary">
-              {{ record.habitat.date }}
+              <span class="recordvalue">
+                {{ record.habitat.date }}
+              </span>
             </div>
           </div>
         </div>
@@ -452,7 +484,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ method_html(record.habitat.method) }}
+              <span class="recordvalue">
+                {{ method_html(record.habitat.method) }}
+              </span>
             </div>
           </div>
         </div>
@@ -470,7 +504,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ habitat_quality_html(record.habitat.quality) }}
+              <span class="recordvalue">
+                {{ habitat_quality_html(record.habitat.quality) }}
+              </span>
             </div>
           </div>
         </div>
@@ -488,7 +524,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ record.habitat.quality_explanation }}
+              <span class="recordvalue">
+                {{ record.habitat.quality_explanation }}
+              </span>
             </div>
           </div>
         </div>
@@ -515,8 +553,10 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ trend_detail_html(record.habitat.trend_short) }}
-              {{ period_html(record.habitat.trend_short.period) }}
+              <span class="recordvalue">
+                {{ trend_detail_html(record.habitat.trend_short) }}
+                {{ period_html(record.habitat.trend_short.period) }}
+              </span>
             </div>
           </div>
         </div>
@@ -543,8 +583,10 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ trend_detail_html(record.habitat.trend_long) }}
-              {{ period_html(record.habitat.trend_long.period) }}
+              <span class="recordvalue">
+                {{ trend_detail_html(record.habitat.trend_long) }}
+                {{ period_html(record.habitat.trend_long.period) }}
+              </span>
             </div>
           </div>
         </div>
@@ -564,7 +606,9 @@
             <div class="col-sm-2"></div>
 
             <div class="col-sm-6 text-primary">
-              {{ range_html(record.habitat.area_suitable) }}
+              <span class="recordvalue">
+                {{ range_html(record.habitat.area_suitable) }}
+              </span>
             </div>
           </div>
         </div>
@@ -587,7 +631,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ conclusions_html(record.habitat.conclusion) }}
+              <span class="recordvalue">
+                {{ conclusions_html(record.habitat.conclusion) }}
+              </span>
             </div>
           </div>
         </div>
@@ -619,7 +665,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ conclusions_html(record.future_prospects) }}
+              <span class="recordvalue">
+                {{ conclusions_html(record.future_prospects) }}
+              </span>
             </div>
           </div>
 
@@ -641,7 +689,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ conclusions_html(record.overall_assessment) }}
+              <span class="recordvalue">
+                {{ conclusions_html(record.overall_assessment) }}
+              </span>
             </div>
           </div>
 

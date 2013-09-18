@@ -52,7 +52,9 @@
             <div class="col-sm-2"></div>
 
             <div class="col-sm-6 text-primary">
-              {{ range_html(record.range) }}
+              <span class="recordvalue">
+                {{ range_html(record.range) }}
+              </span>
             </div>
           </div>
         </div>
@@ -70,7 +72,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ record.range.method }}
+              <span class="recordvalue">
+                {{ method_html(record.range.method) }}
+              </span>
             </div>
           </div>
         </div>
@@ -97,8 +101,10 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ trend_detail_html(record.range.trend_short) }}
-              {{ period_html(record.range.trend_short.period) }}
+              <span class="recordvalue">
+                {{ trend_detail_html(record.range.trend_short) }}
+                {{ period_html(record.range.trend_short.period) }}
+              </span>
             </div>
           </div>
         </div>
@@ -125,8 +131,10 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ trend_detail_html(record.range.trend_long) }}
-              {{ period_html(record.range.trend_long.period) }}
+              <span class="recordvalue">
+                {{ trend_detail_html(record.range.trend_long) }}
+                {{ period_html(record.range.trend_long.period) }}
+              </span>
             </div>
           </div>
         </div>
@@ -149,8 +157,10 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ reference_value_html(record.range.reference_value,
+              <span class="recordvalue">
+                {{ reference_value_html(record.range.reference_value,
                         unit='km²') }}
+              </span>
             </div>
           </div>
         </div>
@@ -168,7 +178,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ record.range.reference_value.method }}
+              <span class="recordvalue">
+                {{ record.range.reference_value.method }}
+              </span>
             </div>
           </div>
         </div>
@@ -191,7 +203,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ conclusions_html(record.range.conclusion) }}
+              <span class="recordvalue">
+                {{ conclusions_html(record.range.conclusion) }}
+              </span>
             </div>
           </div>
         </div>
@@ -220,7 +234,9 @@
             <div class="col-sm-2"></div>
 
             <div class="col-sm-6 text-primary">
-              {{ range_html(record.coverage) }}
+              <span class="recordvalue">
+                {{ range_html(record.coverage) }}
+              </span>
             </div>
           </div>
         </div>
@@ -240,7 +256,9 @@
             <div class="col-sm-2"></div>
 
             <div class="col-sm-6 text-primary">
-              {{ record.coverage.date }}
+              <span class="recordvalue">
+                {{ record.coverage.date }}
+              </span>
             </div>
           </div>
         </div>
@@ -258,7 +276,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ method_html(record.coverage.method) }}
+              <span class="recordvalue">
+                {{ method_html(record.coverage.method) }}
+              </span>
             </div>
           </div>
         </div>
@@ -285,8 +305,10 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ trend_detail_html(record.coverage.trend_short) }}
-              {{ period_html(record.coverage.trend_short.period) }}
+              <span class="recordvalue">
+                {{ trend_detail_html(record.coverage.trend_short) }}
+                {{ period_html(record.coverage.trend_short.period) }}
+              </span>
             </div>
           </div>
         </div>
@@ -313,8 +335,10 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ trend_detail_html(record.coverage.trend_long) }}
-              {{ period_html(record.coverage.trend_long.period) }}
+              <span class="recordvalue">
+                {{ trend_detail_html(record.coverage.trend_long) }}
+                {{ period_html(record.coverage.trend_long.period) }}
+              </span>
             </div>
           </div>
         </div>
@@ -337,8 +361,10 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ reference_value_html(record.coverage.reference_value,
+              <span class="recordvalue">
+                {{ reference_value_html(record.coverage.reference_value,
                         unit='km²') }}
+              </span>
             </div>
           </div>
         </div>
@@ -356,7 +382,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ record.coverage.reference_value.method }}
+              <span class="recordvalue">
+                {{ record.coverage.reference_value.method }}
+              </span>
             </div>
           </div>
         </div>
@@ -379,7 +407,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ conclusions_html(record.coverage.conclusion) }}
+              <span class="recordvalue">
+                {{ conclusions_html(record.coverage.conclusion) }}
+              </span>
             </div>
           </div>
         </div>
@@ -411,7 +441,9 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              {{ conclusions_html(record.structure) }}
+              <span class="recordvalue">
+                {{ conclusions_html(record.structure) }}
+              </span>
             </div>
           </div>
 
@@ -433,7 +465,9 @@
               </div>
 
               <div class="col-sm-6 text-primary">
-                {{ conclusions_html(record.future_prospects) }}
+                <span class="recordvalue">
+                  {{ conclusions_html(record.future_prospects) }}
+                </span>
               </div>
             </div>
 
@@ -455,7 +489,9 @@
               </div>
 
               <div class="col-sm-6 text-primary">
-                {{ conclusions_html(record.overall_assessment) }}
+                <span class="recordvalue">
+                  {{ conclusions_html(record.overall_assessment) }}
+                </span>
               </div>
             </div>
 
