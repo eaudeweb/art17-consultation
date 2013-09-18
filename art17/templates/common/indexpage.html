@@ -7,6 +7,17 @@
 {%- endblock title %}
 
 
+{% block content %}
+  {% block form %}{% endblock %}
+
+  {% if name %}
+    {% block subject_details %}{% endblock %}
+
+    {%- include records_template with context %}
+  {%- endif %}
+{%- endblock content %}
+
+
 {% block script %}
   {%- from 'bits.html' import script %}
   {{- super() }}

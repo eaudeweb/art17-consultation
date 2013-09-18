@@ -10,7 +10,7 @@
 {% endblock breadcrumbs %}
 
 
-{% block content %}
+{% block form %}
   <form class="speciesfilter">
     <fieldset>
       <legend>Filtrare specii</legend>
@@ -38,8 +38,10 @@
       </div>
     </fieldset>
   </form>
+{% endblock form %}
 
- {% if name %}
+
+{% block subject_details %}
   <p>
     {%- set annex_list =
       (["II"] if annex_II else []) +
@@ -50,10 +52,7 @@
     cod: {{ code }},
     anexe: {{ ", ".join(annex_list) if annex_list else "--" }}
   </p>
-
-  {%- include records_template with context %}
- {% endif %}
-{% endblock content %}
+{% endblock subject_details %}
 
 
 {% block script %}

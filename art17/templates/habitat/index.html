@@ -10,7 +10,7 @@
 {% endblock breadcrumbs %}
 
 
-{% block content %}
+{% block form %}
   <form class="habitatfilter">
     <fieldset>
       <legend>Filtrare habitate</legend>
@@ -32,16 +32,15 @@
       </div>
     </fieldset>
   </form>
+{% endblock form %}
 
- {% if name %}
+
+{% block subject_details %}
   <p>
     <strong>{{ name }}</strong>,
     cod: {{ code }}
   </p>
-
-  {%- include records_template with context %}
- {% endif %}
-{% endblock content %}
+{% endblock subject_details %}
 
 
 {% block script %}
