@@ -117,6 +117,22 @@ class Habitat(Form):
     conclusion = FormField(Conclusion)
 
 
+class Coverage(Form):
+    surface_area = DecimalField(
+            validators=[Required(u"Suprafața este obligatorie")])
+    date = TextField(
+            validators=[Required(u"Anul sau perioada sunt obligatorii")])
+    method = SelectField(choices=METHODS_USED_OPTIONS,
+            validators=[Required(u"Metoda utilizată este obligatorie")])
+    trend_short = FormField(Trend)
+    trend_long = FormField(Trend)
+    reference_value = FormField(ReferenceValue)
+    conclusion = FormField(Conclusion)
+
+    def __init__(self, *args, **kwargs):
+        super(Coverage, self).__init__(*args, **kwargs)
+        self.reference_value.op.choices=EMPTY_CHOICE + LU_FV_RANGE_OP_FUNCT_OPTIONS
+
 class SpeciesComment(Form):
 
     range = FormField(Range)
@@ -129,3 +145,7 @@ class SpeciesComment(Form):
 class HabitatComment(Form):
 
     range = FormField(Range)
+    coverage = FormField(Coverage)
+    structure = FormField(Conclusion)
+    future_prospects = FormField(Conclusion)
+    overall_assessment = FormField(Conclusion)

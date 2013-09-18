@@ -20,7 +20,8 @@
 
 {% block content %}
 {%- from 'common/td.html' import
-    range_html, trend_detail_html, reference_value_html, period_html
+    range_html, trend_detail_html, reference_value_html, period_html,
+    method_html, conclusions_html
     with context %}
 
   <h1>
@@ -32,7 +33,7 @@
   <form method="post">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">Areal</h3>
+        <h3 class="panel-title">Proporția</h3>
       </div>
 
       <div class="panel-body">
@@ -196,6 +197,273 @@
         </div>
       </div>
     </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Suprafața</h3>
+      </div>
+
+      <div class="panel-body">
+
+        <div class="form-group">
+          <label for="coverage.surface_area">
+            Suprafață (km²)
+          </label>
+
+          {{ errors(form.coverage.surface_area) }}
+
+          <div class="row">
+            <div class="col-sm-4 {{- error_cls(form.coverage.surface_area) }}">
+              {{ form.coverage.surface_area(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2"></div>
+
+            <div class="col-sm-6 text-primary">
+              {{ range_html(record.coverage) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="coverage.date">
+            Anul/perioada
+          </label>
+
+          {{ errors(form.coverage.date) }}
+
+          <div class="row">
+            <div class="col-sm-4 {{- error_cls(form.coverage.date) }}">
+              {{ form.coverage.date(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2"></div>
+
+            <div class="col-sm-6 text-primary">
+              {{ record.coverage.date }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="coverage.method">
+            Metoda utilizată
+          </label>
+
+          {{ errors(form.coverage.method) }}
+
+          <div class="row">
+            <div class="col-sm-6 {{- error_cls(form.coverage.method) }}">
+              {{ form.coverage.method(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ method_html(record.coverage.method) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          {%- set trend_short = form.coverage.trend_short %}
+          <label for="coverage.trend_short.trend">
+            Tendință pe termen scurt
+          </label>
+
+          {{ errors(trend_short) }}
+
+          <div class="row">
+            <div class="col-sm-2 {{- error_cls(trend_short.trend) }}">
+              {{ trend_short.trend(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(trend_short.period.start) }}">
+              {{ trend_short.period.start(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(trend_short.period.end) }}">
+              {{ trend_short.period.end(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ trend_detail_html(record.coverage.trend_short) }}
+              {{ period_html(record.coverage.trend_short.period) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          {%- set trend_long = form.coverage.trend_long %}
+          <label for="coverage.trend_long.trend">
+            Tendință pe termen lung
+          </label>
+
+          {{ errors(trend_long) }}
+
+          <div class="row">
+            <div class="col-sm-2 {{- error_cls(trend_long.trend) }}">
+              {{ trend_long.trend(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(trend_long.period.start) }}">
+              {{ trend_long.period.start(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2 {{- error_cls(trend_long.period.end) }}">
+              {{ trend_long.period.end(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ trend_detail_html(record.coverage.trend_long) }}
+              {{ period_html(record.coverage.trend_long.period) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          {%- set reference_value = form.coverage.reference_value %}
+          <label for="coverage.reference_value.op">
+            Arealul favorabil de referință
+          </label>
+
+          {{ errors(reference_value) }}
+
+          <div class="row">
+            <div class="col-sm-2 {{- error_cls(reference_value.op) }}">
+              {{ reference_value.op(class='form-control') }}
+            </div>
+
+            <div class="col-sm-4 {{- error_cls(reference_value.number) }}">
+              {{ reference_value.number(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ reference_value_html(record.coverage.reference_value,
+                        unit='km²') }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="coverage.reference_value.method">
+            Arealul favorabil de referință - Metoda
+          </label>
+
+          {{ errors(form.coverage.reference_value.method) }}
+
+          <div class="row">
+            <div class="col-sm-6 {{- error_cls(form.coverage.reference_value.method) }}">
+              {{ form.coverage.reference_value.method(class='form-control', rows=2) }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ record.coverage.reference_value.method }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          {%- set conclusion = form.coverage.conclusion %}
+          <label for="coverage.conclusion.value">
+            Concluzie
+          </label>
+
+          {{ errors(conclusion) }}
+
+          <div class="row">
+            <div class="col-sm-3 {{- error_cls(conclusion.value) }}">
+              {{ conclusion.value(class='form-control') }}
+            </div>
+
+            <div class="col-sm-3 {{- error_cls(conclusion.trend) }}">
+              {{ conclusion.trend(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ record.coverage.conclusion.value }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Concluzii</h3>
+      </div>
+
+      <div class="panel-body">
+
+        <div class="form-group">
+          {%- set structure = form.structure %}
+          <label for="structure.value">
+            Structura și funcțiile specifice
+          </label>
+
+          {{ errors(structure) }}
+
+          <div class="row">
+            <div class="col-sm-3 {{- error_cls(structure.value) }}">
+              {{ structure.value(class='form-control') }}
+            </div>
+
+            <div class="col-sm-3 {{- error_cls(structure.trend) }}">
+              {{ structure.trend(class='form-control') }}
+            </div>
+
+            <div class="col-sm-6 text-primary">
+              {{ conclusions_html(record.structure) }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            {%- set future_prospects = form.future_prospects %}
+            <label for="future_prospects.value">
+              Perspective viitoare
+            </label>
+
+            {{ errors(future_prospects) }}
+
+            <div class="row">
+              <div class="col-sm-3 {{- error_cls(future_prospects.value) }}">
+                {{ future_prospects.value(class='form-control') }}
+              </div>
+
+              <div class="col-sm-3 {{- error_cls(future_prospects.trend) }}">
+                {{ future_prospects.trend(class='form-control') }}
+              </div>
+
+              <div class="col-sm-6 text-primary">
+                {{ conclusions_html(record.future_prospects) }}
+              </div>
+            </div>
+
+          <div class="form-group">
+            {%- set overall_assessment = form.overall_assessment %}
+            <label for="overall_assessment.value">
+              Evaluare generală a stării de conservare
+            </label>
+
+            {{ errors(overall_assessment) }}
+
+            <div class="row">
+              <div class="col-sm-3 {{- error_cls(overall_assessment.value) }}">
+                {{ overall_assessment.value(class='form-control') }}
+              </div>
+
+              <div class="col-sm-3 {{- error_cls(overall_assessment.trend) }}">
+                {{ overall_assessment.trend(class='form-control') }}
+              </div>
+
+              <div class="col-sm-6 text-primary">
+                {{ conclusions_html(record.overall_assessment) }}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
     {%- if next_url %}
       <input type="hidden" name="next" value="{{ next_url }}">

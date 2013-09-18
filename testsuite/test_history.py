@@ -42,7 +42,10 @@ class habitat_params(object):
     comment_edit_url = '/habitate/comentariu/4f799fdd6f5a'
     comment_status_url = '/habitate/comentariu/4f799fdd6f5a/stare'
     comment_data = {'range.surface_area': '50',
-                    'range.method': '1'}
+                    'range.method': '1',
+                     'coverage.surface_area': 123,
+                     'coverage.date': '2001',
+                     'coverage.method': '1'}
 
     @classmethod
     def setup(cls, app, comment=False):

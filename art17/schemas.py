@@ -234,6 +234,22 @@ def parse_habitat_commentform(row):
             'reference_value': parse_reference_value(row,
                                     'complementary_favourable_range')
         }
+
+    rv['coverage'] = {
+            'surface_area': row.coverage_surface_area,
+            'date':row.coverage_date,
+            'method': row.coverage_method,
+            'trend_short': parse_trend(row, 'coverage_trend'),
+            'trend_long': parse_trend(row, 'coverage_trend_long'),
+            'reference_value': parse_reference_value(row,
+                                    'complementary_favourable_area'),
+            'conclusion': parse_conclusion(row, 'conclusion_area')
+        }
+
+    rv['structure'] = parse_conclusion(row, 'conclusion_structure')
+    rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
+    rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
+
     return rv
 
 
@@ -321,3 +337,23 @@ def flatten_habitat_commentform(struct, obj):
     flatten_refval(struct['range']['reference_value'], obj,
                    'complementary_favourable_range')
     flatten_conclusion(struct['range']['conclusion'], obj, 'conclusion_range')
+
+
+    obj.coverage_surface_area = struct['coverage']['surface_area']
+    obj.coverage_date = struct['coverage']['date']
+    obj.coverage_method = struct['coverage']['method']
+    flatten_trend(struct['coverage']['trend_short'], obj,
+                    'coverage_trend')
+    flatten_trend(struct['coverage']['trend_long'], obj,
+                    'coverage_trend_long')
+    flatten_refval(struct['coverage']['reference_value'], obj,
+                    'complementary_favourable_area')
+    flatten_conclusion(struct['coverage']['conclusion'], obj,
+                    'conclusion_area')
+
+    flatten_conclusion(struct['structure'], obj,
+                    'conclusion_structure')
+    flatten_conclusion(struct['future_prospects'], obj,
+                    'conclusion_future')
+    flatten_conclusion(struct['overall_assessment'], obj,
+                    'conclusion_assessment')

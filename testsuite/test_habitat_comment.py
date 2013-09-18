@@ -34,6 +34,47 @@ HABITAT_STRUCT_DATA = {
             'trend': '-',
         },
     },
+    'coverage': {
+        'surface_area': 123,
+        'date': '2001',
+        'method': '1',
+        'trend_short': {
+            'trend': '+',
+            'period': {
+                'start': 'hmin',
+                'end': 'hmax',
+            },
+        },
+        'trend_long': {
+            'trend': '+',
+            'period': {
+                'start': 'cmin',
+                'end': 'cmax',
+            },
+        },
+        'reference_value': {
+            'method': 'foo method',
+            'number': 123,
+            'op': '<',
+            'x': None,
+        },
+        'conclusion': {
+            'value': 'U2',
+            'trend': '+',
+        },
+    },
+    'structure': {
+        'value': 'U2',
+        'trend': '+',
+    },
+    'future_prospects': {
+        'value': 'U2',
+        'trend': '+',
+    },
+    'overall_assessment': {
+        'value': 'U2',
+        'trend': '+',
+    },
 }
 
 
@@ -49,6 +90,29 @@ HABITAT_MODEL_DATA = {
     'complementary_favourable_range_method': 'foo method',
     'conclusion_range': 'U1',
     'conclusion_range_trend': '-',
+
+    'coverage_surface_area': 123,
+    'coverage_date': '2001',
+    'coverage_method': '2001',
+    'coverage_method': '1',
+    'coverage_trend': '+',
+    'coverage_trend_period': 'hminhmax',
+    'coverage_trend_long': '+',
+    'coverage_trend_long_period': 'cmincmax',
+    'complementary_favourable_area_op': '<',
+    'complementary_favourable_area': 123,
+    'complementary_favourable_area_method': 'foo method',
+    'conclusion_area': 'U2',
+    'conclusion_area_trend': '+',
+
+    'conclusion_structure': 'U2',
+    'conclusion_structure_trend': '+',
+
+    'conclusion_future': 'U2',
+    'conclusion_future_trend': '+',
+
+    'conclusion_assessment': 'U2',
+    'conclusion_assessment_trend': '+',
 }
 
 
@@ -85,7 +149,10 @@ def test_save_comment_record(habitat_app):
     client = habitat_app.test_client()
     resp = client.post('/habitate/detalii/1/comentariu',
                        data={'range.surface_area': '50',
-                             'range.method': '1'})
+                             'range.method': '1',
+                             'coverage.surface_area': 123,
+                             'coverage.date': '2001',
+                             'coverage.method': '1'})
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with habitat_app.app_context():
@@ -126,7 +193,10 @@ def test_edit_comment_submit(habitat_app):
     client = habitat_app.test_client()
     resp = client.post('/habitate/comentariu/4f799fdd6f5a',
                        data={'range.surface_area': '50',
-                             'range.method': '1'})
+                             'range.method': '1',
+                             'coverage.surface_area': 123,
+                             'coverage.date': '2001',
+                             'coverage.method': '1'})
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with habitat_app.app_context():
