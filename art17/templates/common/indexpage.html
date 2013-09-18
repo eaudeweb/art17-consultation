@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+{%- if name %}{{ name }} &mdash; {% endif %}
+{{- super() }}
+{%- endblock title %}
+
+
+{% block script %}
+  {%- from 'bits.html' import script %}
+  {{- super() }}
+  {{ script('recordfilter.js') }}
+  {{ script('detail.js') }}
+  {{ script('commentstatus.js') }}
+  {{ script('messages.js') }}
+{% endblock script %}
