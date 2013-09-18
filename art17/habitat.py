@@ -32,9 +32,9 @@ class HabitatIndexView(IndexView):
 
     def custom_stuff(self):
         self.ctx = {
-            'habitat_list': [{'id': h.code, 'text': h.lu.name_ro}
+            'subject_list': [{'id': h.code, 'text': h.lu.name_ro}
                              for h in self.subject_list],
-            'current_habitat_code': self.subject_code,
+            'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,
 
             'habitat': None if self.subject is None else {

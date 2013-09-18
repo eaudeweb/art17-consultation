@@ -39,11 +39,11 @@ class SpeciesIndexView(IndexView):
                                 'text': g.description}
                                for g in models.LuGrupSpecie.query],
             'current_group_code': group_code,
-            'species_list': [{'id': s.code,
+            'subject_list': [{'id': s.code,
                               'group_id': s.lu.group_code,
                               'text': s.lu.speciesname}
                              for s in self.subject_list],
-            'current_species_code': self.subject_code,
+            'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,
 
             'species': None if self.subject is None else {

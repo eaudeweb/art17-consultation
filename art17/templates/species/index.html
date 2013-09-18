@@ -30,7 +30,7 @@
 
       <div class="form-group">
         <label for="speciesfilter-species">Specie</label>
-        <input name="species" value="{{ current_species_code or '' }}"
+        <input name="species" value="{{ current_subject_code or '' }}"
                type="hidden" id="speciesfilter-species">
       </div>
 
@@ -73,7 +73,7 @@
 
   <script>
     App.species_groups = {{ species_groups|tojson|safe }};
-    App.species_list = {{ species_list|tojson|safe }};
+    App.species_list = {{ subject_list|tojson|safe }};
   </script>
   {{ script('speciesfilter.js') }}
 {% endblock script %}

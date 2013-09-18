@@ -23,7 +23,7 @@
 
       <div class="form-group">
         <label for="habitatfilter-group">Habitat</label>
-        <input name="habitat" value="{{ current_habitat_code or '' }}"
+        <input name="habitat" value="{{ current_subject_code or '' }}"
                type="hidden" id="habitatfilter-group">
       </div>
 
@@ -63,10 +63,10 @@
       "use strict";
 
       var habitatfilter = $('.habitatfilter');
-      var habitat_list = {{ habitat_list|tojson|safe }};
+      var subject_list = {{ subject_list|tojson|safe }};
 
       var habitat_select = habitatfilter.find('[name=habitat]').select2({
-        data: habitat_list,
+        data: subject_list,
         width: '40em'
       });
 
