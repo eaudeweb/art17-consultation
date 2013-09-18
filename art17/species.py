@@ -27,6 +27,8 @@ def lookup_regions(species_code):
 
 class SpeciesIndexView(IndexView):
 
+    template = 'species/index.html'
+
     def custom_stuff(self):
         group_code = flask.request.args.get('group')
 
@@ -63,7 +65,7 @@ class SpeciesIndexView(IndexView):
                                     func.count(CommentMessage.id)
                                 ).group_by(CommentMessage.parent))
 
-        return flask.render_template('species/index.html', **{
+        self.ctx = {
             'species_groups': [{'id': g.code,
                                 'text': g.description}
                                for g in models.LuGrupSpecie.query],
@@ -85,7 +87,7 @@ class SpeciesIndexView(IndexView):
                 'comments': [parse_species(r, is_comment=True) for r in comments],
                 'message_counts': message_counts,
             },
-        })
+        }
 
 
 species.add_url_rule('/specii/', view_func=SpeciesIndexView.as_view('index'))

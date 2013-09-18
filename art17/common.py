@@ -65,7 +65,8 @@ def json_encode_more(value):
 class IndexView(flask.views.View):
 
     def dispatch_request(self):
-        return self.custom_stuff()
+        self.custom_stuff()
+        return flask.render_template(self.template, **self.ctx)
 
 
 class CommentView(flask.views.View):

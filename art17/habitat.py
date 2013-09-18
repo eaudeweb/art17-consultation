@@ -26,6 +26,8 @@ def lookup_regions(habitat_code):
 
 class HabitatIndexView(IndexView):
 
+    template = 'habitat/index.html'
+
     def custom_stuff(self):
         habitat_code = flask.request.args.get('habitat', type=int)
         if habitat_code:
@@ -61,7 +63,7 @@ class HabitatIndexView(IndexView):
                                     func.count(CommentMessage.id)
                                 ).group_by(CommentMessage.parent))
 
-        return flask.render_template('habitat/index.html', **{
+        self.ctx = {
             'habitat_list': [{'id': h.habitatcode, 'text': h.lu.name_ro}
                              for h in habitat_list],
             'current_habitat_code': habitat_code,
@@ -74,7 +76,7 @@ class HabitatIndexView(IndexView):
                 'comments': [parse_habitat(r, is_comment=True) for r in comments],
                 'message_counts': message_counts,
             },
-        })
+        }
 
 
 habitat.add_url_rule('/habitate/', view_func=HabitatIndexView.as_view('index'))
