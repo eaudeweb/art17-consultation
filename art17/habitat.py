@@ -1,5 +1,4 @@
 import flask
-from sqlalchemy import func
 from blinker import Signal
 from art17 import models
 from art17.common import IndexView, CommentView, CommentStateView
@@ -32,52 +31,19 @@ class HabitatIndexView(IndexView):
     record_cls = models.DataHabitattypeRegion
 
     def custom_stuff(self):
-        if self.subject_code:
-            self.subject = (self.subject_cls.query
-                        .filter_by(code=self.subject_code)
-                        .join(models.DataSpecies.lu)
-                        .first_or_404())
-        else:
-            self.subject = None
-
-        self.region_code = flask.request.args.get('region', '')
-        if self.region_code:
-            self.region = (models.LuBiogeoreg.query
-                        .filter_by(code=self.region_code)
-                        .first_or_404())
-        else:
-            self.region = None
-
-        if self.subject:
-            records = self.subject.regions
-            comments = self.subject.comments
-
-            if self.region:
-                records = records.filter_by(region=self.region.code)
-                comments = comments.filter_by(region=self.region.code)
-
-            CommentMessage = models.CommentMessage
-            message_counts = dict(models.db.session.query(
-                                    CommentMessage.parent,
-                                    func.count(CommentMessage.id)
-                                ).group_by(CommentMessage.parent))
-
-        habitat_list = (self.subject_cls.query
-                            .join(self.record_cls)
-                            .order_by(self.subject_cls.code))
-
         self.ctx = {
             'habitat_list': [{'id': h.code, 'text': h.lu.name_ro}
-                             for h in habitat_list],
+                             for h in self.subject_list],
             'current_habitat_code': self.subject_code,
             'current_region_code': self.region_code,
 
             'habitat': None if self.subject is None else {
                 'name': self.subject.lu.name_ro,
                 'code': self.subject.code,
-                'records': [parse_habitat(r) for r in records],
-                'comments': [parse_habitat(r, is_comment=True) for r in comments],
-                'message_counts': message_counts,
+                'records': [parse_habitat(r) for r in self.records],
+                'comments': [parse_habitat(r, is_comment=True)
+                             for r in self.comments],
+                'message_counts': self.message_counts,
             },
         }
 

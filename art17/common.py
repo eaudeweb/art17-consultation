@@ -7,6 +7,7 @@ from babel.dates import format_datetime
 import flask
 import flask.views
 from werkzeug.datastructures import MultiDict
+from sqlalchemy import func
 from art17 import models
 import lookup
 
@@ -66,7 +67,43 @@ class IndexView(flask.views.View):
 
     def dispatch_request(self):
         self.subject_code = flask.request.args.get(self.subject_name, type=int)
+
+        if self.subject_code:
+            self.subject = (self.subject_cls.query
+                        .filter_by(code=self.subject_code)
+                        .join(models.DataSpecies.lu)
+                        .first_or_404())
+        else:
+            self.subject = None
+
+        self.region_code = flask.request.args.get('region', '')
+        if self.region_code:
+            self.region = (models.LuBiogeoreg.query
+                        .filter_by(code=self.region_code)
+                        .first_or_404())
+        else:
+            self.region = None
+
+        if self.subject:
+            self.records = self.subject.regions
+            self.comments = self.subject.comments
+
+            if self.region:
+                self.records = self.records.filter_by(region=self.region.code)
+                self.comments = self.comments.filter_by(region=self.region.code)
+
+            CommentMessage = models.CommentMessage
+            self.message_counts = dict(models.db.session.query(
+                                    CommentMessage.parent,
+                                    func.count(CommentMessage.id)
+                                ).group_by(CommentMessage.parent))
+
+        self.subject_list = (self.subject_cls.query
+                            .join(self.record_cls)
+                            .order_by(self.subject_cls.code))
+
         self.custom_stuff()
+
         return flask.render_template(self.template, **self.ctx)
 
 

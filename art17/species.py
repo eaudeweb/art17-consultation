@@ -1,5 +1,4 @@
 import flask
-from sqlalchemy import func
 from blinker import Signal
 from art17 import models
 from art17.common import IndexView, CommentView, CommentStateView
@@ -33,38 +32,6 @@ class SpeciesIndexView(IndexView):
     record_cls = models.DataSpeciesRegion
 
     def custom_stuff(self):
-        if self.subject_code:
-            self.subject = (self.subject_cls.query
-                        .filter_by(code=self.subject_code)
-                        .join(models.DataSpecies.lu)
-                        .first_or_404())
-        else:
-            self.subject = None
-
-        self.region_code = flask.request.args.get('region', '')
-        if self.region_code:
-            self.region = (models.LuBiogeoreg.query
-                        .filter_by(code=self.region_code)
-                        .first_or_404())
-        else:
-            self.region = None
-
-        if self.subject:
-            records = self.subject.regions
-            comments = self.subject.comments
-
-            if self.region:
-                records = records.filter_by(region=self.region.code)
-                comments = comments.filter_by(region=self.region.code)
-
-            CommentMessage = models.CommentMessage
-            message_counts = dict(models.db.session.query(
-                                    CommentMessage.parent,
-                                    func.count(CommentMessage.id)
-                                ).group_by(CommentMessage.parent))
-
-        species_list = self.subject_cls.query.join(self.record_cls)
-
         group_code = flask.request.args.get('group')
 
         self.ctx = {
@@ -75,7 +42,7 @@ class SpeciesIndexView(IndexView):
             'species_list': [{'id': s.code,
                               'group_id': s.lu.group_code,
                               'text': s.lu.speciesname}
-                             for s in species_list],
+                             for s in self.subject_list],
             'current_species_code': self.subject_code,
             'current_region_code': self.region_code,
 
@@ -85,9 +52,10 @@ class SpeciesIndexView(IndexView):
                 'annex_II': self.subject.lu.annexii == 'Y',
                 'annex_IV': self.subject.lu.annexiv == 'Y',
                 'annex_V': self.subject.lu.annexv == 'Y',
-                'records': [parse_species(r) for r in records],
-                'comments': [parse_species(r, is_comment=True) for r in comments],
-                'message_counts': message_counts,
+                'records': [parse_species(r) for r in self.records],
+                'comments': [parse_species(r, is_comment=True)
+                             for r in self.comments],
+                'message_counts': self.message_counts,
             },
         }
 
