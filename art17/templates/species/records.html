@@ -2,6 +2,7 @@
     import conclusion_td, reference_value_td, trend_td,
            population_size_td, habitat_quality_td
     with context %}
+{%- from 'bits.html' import fonticon %}
 
 
 {% macro record_cells(row) %}
@@ -134,7 +135,7 @@
       {%- set url = url_for('messages.index', comment_id=row.id) %}
       {%- set count = species.message_counts[row.id] or 0 %}
       <a class="records-messagesbtn btn btn-xs btn-default"
-         href="{{ url }}">mesaje ({{ count }})</a>
+         href="{{ url }}">{{ fonticon('comment') }} {{ count }}</a>
     </td>
   </tr>
  {% endfor %}
