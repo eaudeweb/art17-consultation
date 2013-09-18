@@ -74,7 +74,7 @@ class DataHabitat(Base):
 
     id = Column('objectid', Numeric, primary_key=True)
     country = Column(String, index=True)
-    habitatcode = Column(String, index=True)
+    code = Column('habitatcode', String, index=True)
     distribution_map = Column(Numeric)
     distribution_method = Column(String, index=True)
     distribution_date = Column(String)
@@ -91,8 +91,7 @@ class DataHabitat(Base):
     import_id = Column(Numeric, index=True)
 
     lu = relationship(u'LuHabitattypeCodes',
-                      primaryjoin=(habitatcode ==
-                                   foreign(LuHabitattypeCodes.code)),
+                      primaryjoin=(code == foreign(LuHabitattypeCodes.code)),
                       uselist=False, lazy='eager')
 
 

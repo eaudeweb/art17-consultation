@@ -17,7 +17,7 @@ comment_status_changed = Signal()
 @habitat.route('/habitate/regiuni/<int:habitat_code>')
 def lookup_regions(habitat_code):
     habitat = (models.DataHabitat.query
-                .filter_by(habitatcode=habitat_code)
+                .filter_by(code=habitat_code)
                 .first_or_404())
     regions = [{'id': r.lu.code, 'text': r.lu.name_ro}
                for r in habitat.regions.join(models.DataHabitattypeRegion.lu)]
@@ -34,7 +34,7 @@ class HabitatIndexView(IndexView):
     def custom_stuff(self):
         if self.subject_code:
             self.subject = (self.subject_cls.query
-                        .filter_by(habitatcode=self.subject_code)
+                        .filter_by(code=self.subject_code)
                         .join(models.DataSpecies.lu)
                         .first_or_404())
         else:
@@ -50,7 +50,7 @@ class HabitatIndexView(IndexView):
 
         habitat_list = (self.subject_cls.query
                             .join(self.record_cls)
-                            .order_by('habitatcode'))
+                            .order_by(self.subject_cls.code))
 
         if self.subject:
             records = self.subject.regions
@@ -66,14 +66,14 @@ class HabitatIndexView(IndexView):
                                 ).group_by(CommentMessage.parent))
 
         self.ctx = {
-            'habitat_list': [{'id': h.habitatcode, 'text': h.lu.name_ro}
+            'habitat_list': [{'id': h.code, 'text': h.lu.name_ro}
                              for h in habitat_list],
             'current_habitat_code': self.subject_code,
             'current_region_code': region_code,
 
             'habitat': None if self.subject is None else {
                 'name': self.subject.lu.name_ro,
-                'code': self.subject.habitatcode,
+                'code': self.subject.code,
                 'records': [parse_habitat(r) for r in records],
                 'comments': [parse_habitat(r, is_comment=True) for r in comments],
                 'message_counts': message_counts,
