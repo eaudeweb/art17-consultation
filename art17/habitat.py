@@ -32,21 +32,24 @@ class HabitatIndexView(IndexView):
 
     def custom_stuff(self):
         self.ctx = {
-            'subject_list': [{'id': h.code, 'text': h.lu.name_ro}
-                             for h in self.subject_list],
+            'subject_list': self.get_subject_list(),
             'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,
         }
 
         if self.subject:
             self.ctx.update({
-                'name': self.subject.lu.name_ro,
                 'code': self.subject.code,
+                'name': self.subject.lu.name_ro,
                 'records': [parse_habitat(r) for r in self.records],
                 'comments': [parse_habitat(r, is_comment=True)
                              for r in self.comments],
                 'message_counts': self.message_counts,
             })
+
+    def get_subject_list(self):
+        return [{'id': h.code, 'text': h.lu.name_ro}
+                for h in self.subject_list]
 
 
 habitat.add_url_rule('/habitate/', view_func=HabitatIndexView.as_view('index'))

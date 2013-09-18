@@ -32,17 +32,8 @@ class SpeciesIndexView(IndexView):
     record_cls = models.DataSpeciesRegion
 
     def custom_stuff(self):
-        group_code = flask.request.args.get('group')
-
         self.ctx = {
-            'species_groups': [{'id': g.code,
-                                'text': g.description}
-                               for g in models.LuGrupSpecie.query],
-            'current_group_code': group_code,
-            'subject_list': [{'id': s.code,
-                              'group_id': s.lu.group_code,
-                              'text': s.lu.speciesname}
-                             for s in self.subject_list],
+            'subject_list': self.get_subject_list(),
             'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,
         }
@@ -51,14 +42,32 @@ class SpeciesIndexView(IndexView):
             self.ctx.update({
                 'code': self.subject.code,
                 'name': self.subject.lu.speciesname,
-                'annex_II': self.subject.lu.annexii == 'Y',
-                'annex_IV': self.subject.lu.annexiv == 'Y',
-                'annex_V': self.subject.lu.annexv == 'Y',
                 'records': [parse_species(r) for r in self.records],
                 'comments': [parse_species(r, is_comment=True)
                              for r in self.comments],
                 'message_counts': self.message_counts,
             })
+
+        group_code = flask.request.args.get('group')
+        self.ctx.update({
+            'species_groups': [{'id': g.code,
+                                'text': g.description}
+                               for g in models.LuGrupSpecie.query],
+            'current_group_code': group_code,
+        })
+
+        if self.subject:
+            self.ctx.update({
+                'annex_II': self.subject.lu.annexii == 'Y',
+                'annex_IV': self.subject.lu.annexiv == 'Y',
+                'annex_V': self.subject.lu.annexv == 'Y',
+            })
+
+    def get_subject_list(self):
+        return [{'id': s.code,
+                 'group_id': s.lu.group_code,
+                 'text': s.lu.speciesname}
+                for s in self.subject_list]
 
 
 species.add_url_rule('/specii/', view_func=SpeciesIndexView.as_view('index'))
