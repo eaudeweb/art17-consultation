@@ -11,16 +11,18 @@
   {#- range #}
   {%- set range = row.range %}
   <td>{{ range.surface_area }}</td>
-  {{ conclusion_td(range.conclusion) }}
+  <td class="method">{{ range.method }}</td>
   {{ trend_td(range.trend_short) }}
   {{ reference_value_td(range.reference_value) }}
+  {{ conclusion_td(range.conclusion) }}
 
   {#- coverage #}
   {%- set coverage = row.coverage %}
   <td>{{ coverage.surface_area }}</td>
-  {{ conclusion_td(coverage.conclusion) }}
+  <td class="method">{{ coverage.method }}</td>
   {{ trend_td(coverage.trend_short) }}
   {{ reference_value_td(coverage.reference_value) }}
+  {{ conclusion_td(coverage.conclusion) }}
 
   {#- structure #}
   {{ conclusion_td(row.structure) }}
@@ -37,18 +39,21 @@
 
 <table class="records">
   <tr class="records-header">
-    <td rowspan=2></td>
-    <td rowspan=2 title="Regiunea biogeografică">Regiune</td>
-    <td colspan=4>Proporția habitatului din regiunea biogeografică</td>
-    <td colspan=4>Suprafața acoperită de habitat (km²)</td>
-    <td rowspan=2>Structura și <br /> funcțiile specifice</td>
-    <td rowspan=2
+    <th rowspan=2></th>
+    <th rowspan=2 title="Regiunea biogeografică">Bio</th>
+    <th colspan=5
+        title="Proporția habitatului din regiunea biogeografică">Areal</th>
+    <th colspan=5
+        title="Suprafața acoperită de habitat (km²)">Suprafața (km²)</th>
+    <th rowspan=2
+        title="Structura și funcțiile specifice">Struct.<br>și func.</th>
+    <th rowspan=2
         title="Perspective viitoare"
-        >Perspective</td>
-    <td rowspan=2
+        >Perspective</th>
+    <th rowspan=2
         title="Evaluare generală a stării de conservare"
-        >Evaluare generală</td>
-    <td rowspan=2 colspan=4></td>  {#- comment (author, etc) #}
+        >Evaluare<br>generală</th>
+    <th rowspan=2 colspan=4></th>  {#- comment (author, etc) #}
   </tr>
 
   <tr class="records-header">
@@ -56,16 +61,18 @@
     {#- bio-regiune #}
 
     {#- range #}
-    <td>Suprafață</td>
-    <td>Concluzie</td>
-    <td>Tendință</td>
-    <td title="Arealul favorabil de referință">Referință</td>
+    <th title="Suprafața">Supr.</th>
+    <th title="Metoda folositǎ">Met.</th>
+    <th title="Tendința areal pe termen scurt">Tend.<br>t.scurt</th>
+    <th title="Arealul favorabil de referință">Ref.</th>
+    <th title="Concluzie">Concl.</th>
 
     {#- coverage #}
-    <td>Suprafață</td>
-    <td>Concluzie</td>
-    <td>Tendință</td>
-    <td>Referință</td>
+    <th title="Suprafața">Supr.</th>
+    <th title="Metoda folositǎ">Met.</th>
+    <th title="Tendința suprafața pe termen scurt">Tend.<br>t.scurt</th>
+    <th title="Suprafața de referință favorabilǎ">Ref.</th>
+    <th title="Concluzie">Concl.</th>
 
     {#- structure #}
     {#- future prospects #}
@@ -77,20 +84,20 @@
     {#- detail #}
     <td>
       {%- set url = url_for('.detail', record_id=row.id) %}
-      <button class="records-detailbtn" data-url="{{ url }}">info</button>
-
-      {%- set url = url_for('.comment', record_id=row.id, next=comment_next) %}
-      <a class="records-commentbtn" href="{{ url }}">comentariu</a>
+      <button class="records-detailbtn" data-url="{{ url }}">vezi detalii</button>
     </td>
 
     {{ record_cells(row) }}
 
-    <td colspan=4></td>  {#- comment (author, etc) #}
+    <td colspan=4>
+      {%- set url = url_for('.comment', record_id=row.id, next=comment_next) %}
+      <a class="records-commentbtn" href="{{ url }}">adaugǎ comentariu</a>
+    </td>  {#- comment (author, etc) #}
   </tr>
  {% endfor %}
 
   <tr class="records-header">
-    <td colspan=17>Comentarii</td>
+    <th colspan=19>Comentarii</th>
   </tr>
 
  {% for row in habitat.comments %}

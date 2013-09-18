@@ -29,7 +29,7 @@
         </tr>
 
         <tr>
-          <th>Metoda utilizată - suprafața arealului</th>
+          <th> &nbsp; - metoda utilizată</th>
           <td>{{ record.range.method }}</td>
         </tr>
 
@@ -39,12 +39,12 @@
         </tr>
 
         <tr>
-          <th>Tendinţa pe termen scurt - perioada</th>
+          <th> &nbsp; - perioada</th>
           <td>{{ period_html(record.range.trend_short.period) }}</td>
         </tr>
 
         <tr>
-          <th>Tendinţa pe termen scurt - magnitudinea</th>
+          <th> &nbsp; - magnitudinea</th>
           <td>{{ magnitude_html(record.range.trend_short.magnitude) }}</td>
         </tr>
 
@@ -55,21 +55,26 @@
         </tr>
 
         <tr>
-          <th>Tendință pe termen lung - perioada</th>
+          <th> &nbsp; - perioada</th>
           <td>{{ period_html(record.range.trend_long.period) }}</td>
         </tr>
 
         <tr>
-          <th>Tendinţa pe termen lung - magnitudinea</th>
+          <th> &nbsp; - magnitudinea</th>
           <td>{{ magnitude_html(record.range.trend_long.magnitude) }}</td>
         </tr>
 
         <tr>
           <th>Arealul favorabil de referință</th>
           <td>{{ reference_value_html(record.range.reference_value,
-                  unit='km²') }} <br />
+                  unit='km²') }}</td>
+        </tr>
+
+        <tr>
+          <th> &nbsp; - metoda utilizată</th>
+          <td>
             {%- if record.range.reference_value.method %}
-              Metoda utilizată: {{ record.range.reference_value.method }}
+              {{ record.range.reference_value.method }}
             {% endif -%}
           </td>
         </tr>
@@ -92,7 +97,7 @@
         </tr>
 
         <tr>
-          <th>Metoda utilizată</th>
+          <th> &nbsp; - metoda utilizată</th>
           <td>{{ record.coverage.method }}</td>
         </tr>
 
@@ -102,12 +107,12 @@
         </tr>
 
         <tr>
-          <th>Tendinţa pe termen scurt - perioada</th>
+          <th> &nbsp; - perioada</th>
           <td>{{ period_html(record.coverage.trend_short.period) }}</td>
         </tr>
 
         <tr>
-          <th>Tendinţa pe termen scurt - magnitudinea</th>
+          <th> &nbsp; - magnitudinea</th>
           <td>{{ magnitude_html(record.coverage.trend_short.magnitude) }}</td>
         </tr>
 
@@ -118,21 +123,26 @@
         </tr>
 
         <tr>
-          <th>Tendință pe termen lung - perioada</th>
+          <th> &nbsp; - perioada</th>
           <td>{{ period_html(record.coverage.trend_long.period) }}</td>
         </tr>
 
         <tr>
-          <th>Tendinţa pe termen lung - magnitudinea</th>
+          <th> &nbsp; - magnitudinea</th>
           <td>{{ magnitude_html(record.coverage.trend_long.magnitude) }}</td>
         </tr>
 
         <tr>
           <th>Arealul favorabil de referință</th>
           <td>{{ reference_value_html(record.coverage.reference_value,
-                  unit='km²') }} <br />
+                  unit='km²') }}</td>
+        </tr>
+
+        <tr>
+          <th> &nbsp; - metoda utilizată</th>
+          <td>
             {%- if record.coverage.reference_value.method %}
-              Metoda utilizată: {{ record.coverage.reference_value.method }}
+              {{ record.coverage.reference_value.method }}
             {% endif -%}
           </td>
         </tr>
