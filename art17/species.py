@@ -28,18 +28,18 @@ def lookup_regions(species_code):
 class SpeciesIndexView(IndexView):
 
     template = 'species/index.html'
+    subject_name = 'species'
+    subject_cls = models.DataSpecies
+    record_cls = models.DataSpeciesRegion
 
     def custom_stuff(self):
-        group_code = flask.request.args.get('group')
-
-        species_code = flask.request.args.get('species', type=int)
-        if species_code:
-            species = (models.DataSpecies.query
-                        .filter_by(speciescode=species_code)
+        if self.subject_code:
+            self.subject = (self.subject_cls.query
+                        .filter_by(speciescode=self.subject_code)
                         .join(models.DataSpecies.lu)
                         .first_or_404())
         else:
-            species = None
+            self.subject = None
 
         region_code = flask.request.args.get('region', '')
         if region_code:
@@ -49,11 +49,11 @@ class SpeciesIndexView(IndexView):
         else:
             region = None
 
-        species_list = models.DataSpecies.query.join(models.DataSpeciesRegion)
+        species_list = self.subject_cls.query.join(self.record_cls)
 
-        if species:
-            records = species.regions
-            comments = species.comments
+        if self.subject:
+            records = self.subject.regions
+            comments = self.subject.comments
 
             if region:
                 records = records.filter_by(region=region.code)
@@ -65,6 +65,8 @@ class SpeciesIndexView(IndexView):
                                     func.count(CommentMessage.id)
                                 ).group_by(CommentMessage.parent))
 
+        group_code = flask.request.args.get('group')
+
         self.ctx = {
             'species_groups': [{'id': g.code,
                                 'text': g.description}
@@ -74,15 +76,15 @@ class SpeciesIndexView(IndexView):
                               'group_id': s.lu.group_code,
                               'text': s.lu.speciesname}
                              for s in species_list],
-            'current_species_code': species_code,
+            'current_species_code': self.subject_code,
             'current_region_code': region_code,
 
-            'species': None if species is None else {
-                'code': species.speciescode,
-                'name': species.lu.speciesname,
-                'annex_II': species.lu.annexii == 'Y',
-                'annex_IV': species.lu.annexiv == 'Y',
-                'annex_V': species.lu.annexv == 'Y',
+            'species': None if self.subject is None else {
+                'code': self.subject.speciescode,
+                'name': self.subject.lu.speciesname,
+                'annex_II': self.subject.lu.annexii == 'Y',
+                'annex_IV': self.subject.lu.annexiv == 'Y',
+                'annex_V': self.subject.lu.annexv == 'Y',
                 'records': [parse_species(r) for r in records],
                 'comments': [parse_species(r, is_comment=True) for r in comments],
                 'message_counts': message_counts,

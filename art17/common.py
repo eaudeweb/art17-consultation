@@ -65,6 +65,7 @@ def json_encode_more(value):
 class IndexView(flask.views.View):
 
     def dispatch_request(self):
+        self.subject_code = flask.request.args.get(self.subject_name, type=int)
         self.custom_stuff()
         return flask.render_template(self.template, **self.ctx)
 

@@ -27,16 +27,18 @@ def lookup_regions(habitat_code):
 class HabitatIndexView(IndexView):
 
     template = 'habitat/index.html'
+    subject_name = 'habitat'
+    subject_cls = models.DataHabitat
+    record_cls = models.DataHabitattypeRegion
 
     def custom_stuff(self):
-        habitat_code = flask.request.args.get('habitat', type=int)
-        if habitat_code:
-            habitat = (models.DataHabitat.query
-                        .filter_by(habitatcode=habitat_code)
+        if self.subject_code:
+            self.subject = (self.subject_cls.query
+                        .filter_by(habitatcode=self.subject_code)
                         .join(models.DataSpecies.lu)
                         .first_or_404())
         else:
-            habitat = None
+            self.subject = None
 
         region_code = flask.request.args.get('region', '')
         if region_code:
@@ -46,13 +48,13 @@ class HabitatIndexView(IndexView):
         else:
             region = None
 
-        habitat_list = (models.DataHabitat.query
-                            .join(models.DataHabitattypeRegion)
+        habitat_list = (self.subject_cls.query
+                            .join(self.record_cls)
                             .order_by('habitatcode'))
 
-        if habitat:
-            records = habitat.regions
-            comments = habitat.comments
+        if self.subject:
+            records = self.subject.regions
+            comments = self.subject.comments
             if region:
                 records = records.filter_by(region=region.code)
                 comments = comments.filter_by(region=region.code)
@@ -66,12 +68,12 @@ class HabitatIndexView(IndexView):
         self.ctx = {
             'habitat_list': [{'id': h.habitatcode, 'text': h.lu.name_ro}
                              for h in habitat_list],
-            'current_habitat_code': habitat_code,
+            'current_habitat_code': self.subject_code,
             'current_region_code': region_code,
 
-            'habitat': None if habitat is None else {
-                'name': habitat.lu.name_ro,
-                'code': habitat.habitatcode,
+            'habitat': None if self.subject is None else {
+                'name': self.subject.lu.name_ro,
+                'code': self.subject.habitatcode,
                 'records': [parse_habitat(r) for r in records],
                 'comments': [parse_habitat(r, is_comment=True) for r in comments],
                 'message_counts': message_counts,
