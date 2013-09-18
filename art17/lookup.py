@@ -48,49 +48,49 @@ LU_FV_RANGE_OP_FUNCT = dict(LU_FV_RANGE_OP_FUNCT_OPTIONS)
 
 
 LU_FV_RANGE_OP_OPTIONS =[
-    (u'≈', u"≈ approximately equal to"),
-    (u'>', u"> more than"),
-    (u'≫', u"≫ much more than"),
+    (u'≈', u"approximately equal to"),
+    (u'>', u"more than"),
+    (u'≫', u"much more than"),
 ]
 
 LU_FV_RANGE_OP = dict(LU_FV_RANGE_OP_OPTIONS)
 
 
 METHODS_USED_OPTIONS = [
-    ('3', u"Complete survey/Complete survey or a statistically robust estimate"),
-    ('2', u"Estimate based on partial data with some extrapolation and/or modelling"),
-    ('1', u"Estimate based on expert opinion with no or minimal sampling"),
-    ('0', u"Absent data"),
+    ('3', u"Inventarieri complete sau o estimare statistică solidă"),
+    ('2', u"Estimări prin extrapolări și/sau modelări bazate pe date parțiale"),
+    ('1', u"Estimǎri bazate numai pe opinia expertului, fără sau cu eșantionare minimală"),
+    ('0', u"Date lipsǎ"),
 ]
 
 METHODS_USED = dict(METHODS_USED_OPTIONS)
 
 
 TREND_OPTIONS = [
-    ('+', u"+ (În creștere)"),
-    ('-', u"- (În scădere)"),
-    ('0', u"0 (Stabil)"),
-    ('x', u"x (Necunoscut)"),
+    ('+', u"În creștere"),
+    ('-', u"În descreștere"),
+    ('0', u"Stabilă"),
+    ('x', u"Necunoscută"),
 ]
 
 TREND_NAME = dict(TREND_OPTIONS)
 
 
 CONCLUSION_OPTIONS = [
-    ('FV', u"Favourable"),
-    ('U1', u"Inadequate"),
-    ('U2', u"Bad"),
-    ('XX', u"Unknown"),
+    ('FV', u"Favorabilǎ"),
+    ('U1', u"Nefavorabil-Inadecvat"),
+    ('U2', u"Nefavorabil-Rau"),
+    ('XX', u"Necunoscutǎ"),
 ]
 
 CONCLUSIONS = dict(CONCLUSION_OPTIONS)
 
 
 QUALITY_OPTIONS = [
-    ('1', u"Good"),
-    ('2', u"Moderate"),
-    ('3', u"Bad"),
-    ('4', u"Unknown"),
+    ('1', u"Bunǎ"),
+    ('2', u"Moderatǎ"),
+    ('3', u"Neadecvatǎ"),
+    ('4', u"Necunoscutǎ"),
 ]
 
 QUALITY = dict(QUALITY_OPTIONS)
