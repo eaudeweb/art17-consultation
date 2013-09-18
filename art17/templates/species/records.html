@@ -14,7 +14,7 @@
   <td>{{ range.surface_area }}</td>
   {{ conclusion_td(range.conclusion) }}
   {{ trend_td(range.trend_short) }}
-  <td>{{ range.method }}</td>
+  <td class="method">{{ range.method }}</td>
   {{ reference_value_td(range.reference_value) }}
 
   {#- population #}
@@ -29,7 +29,7 @@
   <td>{{ habitat.surface_area }}</td>
   {{ conclusion_td(habitat.conclusion) }}
   <td>{{ habitat.area_suitable }}</td>
-  <td>{{ habitat.method }}</td>
+  <td class="method">{{ habitat.method }}</td>
   {{ trend_td(habitat.trend_short) }}
   {{ habitat_quality_td(habitat.quality) }}
 
@@ -91,15 +91,14 @@
     {#- detail #}
     <td>
       {%- set url = url_for('.detail', record_id=row.id) %}
-      <button class="records-detailbtn" data-url="{{ url }}">info</button>
-
-      {%- set url = url_for('.comment', record_id=row.id, next=comment_next) %}
-      <a class="records-commentbtn" href="{{ url }}">comentariu</a>
+      <button class="records-detailbtn" data-url="{{ url }}">vezi detalii</button>
     </td>
-
     {{ record_cells(row) }}
 
-    <td colspan=4></td>  {#- comment (author, etc) #}
+    <td colspan=4>
+            {%- set url = url_for('.comment', record_id=row.id, next=comment_next) %}
+      <a class="records-commentbtn" href="{{ url }}">adaugǎ comentariu</a>
+    </td>  {#- comment (author, etc) #}
   </tr>
  {% endfor %}
 

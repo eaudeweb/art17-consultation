@@ -1,5 +1,5 @@
 {% macro conclusion_td(conclusion) -%}
-  <td class="conclusion-{{ conclusion.value }}">{{ conclusion.value }}</td>
+  <td class="conclusion conclusion-{{ conclusion.value }}">{{ conclusion.value }}</td>
 {%- endmacro %}
 
 
@@ -67,7 +67,7 @@
 
 {% macro trend_td(trend) -%}
   {%- set tooltip = TREND_NAME[trend.trend] %}
-  <td title="{{ tooltip }}">{{ trend_html(trend) }}</td>
+  <td class="trend" title="{{ tooltip }}">{{ trend_html(trend) }}</td>
 {%- endmacro %}
 
 
@@ -77,7 +77,7 @@
     {%- if item.min == item.max %}
       {{- item.min }} {{ item.unit }}
     {%- else %}
-      {{- item.min }}-{{ item.max }} {{ item.unit }}
+      {{- item.min }}-{{ item.max }}&nbsp;{{ item.unit }}
     {%- endif %}
     {%- if not loop.last %};{% endif %}
   {%- endfor %}

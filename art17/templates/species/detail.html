@@ -27,7 +27,7 @@
         </tr>
 
         <tr>
-          <th>Metoda utilizată - suprafața arealului</th>
+          <th> &nbsp; - metoda utilizată</th>
           <td>{{ method_html(record.range.method) }}</td>
         </tr>
 
@@ -38,12 +38,12 @@
         </tr>
 
         <tr>
-          <th>Tendinţa pe termen scurt - perioada</th>
+          <th> &nbsp; - perioada</th>
           <td>{{ period_html(record.range.trend_short.period) }}</td>
         </tr>
 
         <tr>
-          <th>Tendinţa pe termen scurt - magnitudinea</th>
+          <th> &nbsp; - magnitudinea</th>
           <td>{{ magnitude_html(record.range.trend_short.magnitude) }}</td>
         </tr>
 
@@ -54,12 +54,12 @@
         </tr>
 
         <tr>
-          <th>Tendință pe termen lung - perioada</th>
+          <th> &nbsp; - perioada</th>
           <td>{{ period_html(record.range.trend_long.period) }}</td>
         </tr>
 
         <tr>
-          <th>Tendinţa pe termen lung - magnitudinea</th>
+          <th> &nbsp; - magnitudinea</th>
           <td>{{ magnitude_html(record.range.trend_long.magnitude) }}</td>
         </tr>
 
@@ -71,7 +71,7 @@
         </tr>
 
         <tr>
-          <th>Arealul favorabil de referință - metoda</th>
+          <th> &nbsp; - metoda utilizată</th>
           <td>
             {% if record.range.reference_value.method %}
               {{- record.range.reference_value.method -}}
@@ -97,7 +97,7 @@
         </tr>
 
         <tr>
-          <th>Metoda utilizată - mărimea populației</th>
+          <th> &nbsp; - metoda utilizată</th>
           <td>{{ method_html(record.population.method) }}</td>
         </tr>
 
@@ -108,12 +108,12 @@
         </tr>
 
         <tr>
-          <th>Tendință pe termen scurt - perioada</th>
+          <th> &nbsp; - perioada</th>
           <td>{{ period_html(record.population.trend_short.period) }}</td>
         </tr>
 
         <tr>
-          <th>Tendinţa pe termen scurt - magnitudinea</th>
+          <th> &nbsp; - magnitudinea</th>
           <td>{{ magnitude_html(record.population.trend_short.magnitude) }}</td>
         </tr>
 
@@ -124,12 +124,12 @@
         </tr>
 
         <tr>
-          <th>Tendință pe termen lung - perioada</th>
+          <th> &nbsp; - perioada</th>
           <td>{{ period_html(record.population.trend_long.period) }}</td>
         </tr>
 
         <tr>
-          <th>Tendinţa pe termen lung - magnitudinea</th>
+          <th> &nbsp; - magnitudinea</th>
           <td>{{ magnitude_html(record.population.trend_long.magnitude) }}</td>
         </tr>
 
@@ -139,7 +139,7 @@
         </tr>
 
         <tr>
-          <th>Populația favorabilă de referință - metoda</th>
+          <th> &nbsp; - metoda utilizată</th>
           <td>
             {%- if record.population.reference_value.method %}
               {{ record.population.reference_value.method }}
@@ -165,12 +165,12 @@
         </tr>
 
         <tr>
-          <th>Anul/perioada</th>
+          <th> &nbsp; - anul/perioada</th>
           <td>{{ record.habitat.date }}</td>
         </tr>
 
         <tr>
-          <th>Metoda utilizată - habitatul speciei</th>
+          <th> &nbsp; - metoda utilizată</th>
           <td>{{ method_html(record.habitat.method) }}</td>
         </tr>
 
@@ -180,7 +180,7 @@
         </tr>
 
         <tr>
-          <th>Calitatea habitatului - metoda</th>
+          <th> &nbsp; - metoda utilizată</th>
           <td>
             {%- if record.habitat.quality.explanation %}
               {{ record.habitat.quality.explanation }}
@@ -196,7 +196,7 @@
         </tr>
 
         <tr>
-          <th>Tendință pe termen scurt - perioada</th>
+          <th> &nbsp; - perioada</th>
           <td>{{ period_html(record.habitat.trend_short.period) }}</td>
         </tr>
 
@@ -208,7 +208,7 @@
         </tr>
 
         <tr>
-          <th>Tendință pe termen lung - perioada</th>
+          <th> &nbsp; - perioada</th>
           <td>{{ period_html(record.habitat.trend_long.period) }}</td>
         </tr>
 

@@ -11,8 +11,8 @@ from art17 import models
 import lookup
 
 DATE_FORMAT = {
-    'day': 'd MMM',
-    'long': 'd MMMM y HH:mm',
+    'day': u'd\u00a0MMM',
+    'long': u'd\u00a0MMMM\u00a0y\u00a0HH:mm',
 }
 
 STATUS_VALUES = ['new', 'approved', 'rejected']
