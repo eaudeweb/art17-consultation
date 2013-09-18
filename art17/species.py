@@ -41,29 +41,29 @@ class SpeciesIndexView(IndexView):
         else:
             self.subject = None
 
-        region_code = flask.request.args.get('region', '')
-        if region_code:
-            region = (models.LuBiogeoreg.query
-                        .filter_by(code=region_code)
+        self.region_code = flask.request.args.get('region', '')
+        if self.region_code:
+            self.region = (models.LuBiogeoreg.query
+                        .filter_by(code=self.region_code)
                         .first_or_404())
         else:
-            region = None
-
-        species_list = self.subject_cls.query.join(self.record_cls)
+            self.region = None
 
         if self.subject:
             records = self.subject.regions
             comments = self.subject.comments
 
-            if region:
-                records = records.filter_by(region=region.code)
-                comments = comments.filter_by(region=region.code)
+            if self.region:
+                records = records.filter_by(region=self.region.code)
+                comments = comments.filter_by(region=self.region.code)
 
             CommentMessage = models.CommentMessage
             message_counts = dict(models.db.session.query(
                                     CommentMessage.parent,
                                     func.count(CommentMessage.id)
                                 ).group_by(CommentMessage.parent))
+
+        species_list = self.subject_cls.query.join(self.record_cls)
 
         group_code = flask.request.args.get('group')
 
@@ -77,7 +77,7 @@ class SpeciesIndexView(IndexView):
                               'text': s.lu.speciesname}
                              for s in species_list],
             'current_species_code': self.subject_code,
-            'current_region_code': region_code,
+            'current_region_code': self.region_code,
 
             'species': None if self.subject is None else {
                 'code': self.subject.code,

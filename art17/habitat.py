@@ -40,24 +40,21 @@ class HabitatIndexView(IndexView):
         else:
             self.subject = None
 
-        region_code = flask.request.args.get('region', '')
-        if region_code:
-            region = (models.LuBiogeoreg.query
-                        .filter_by(code=region_code)
+        self.region_code = flask.request.args.get('region', '')
+        if self.region_code:
+            self.region = (models.LuBiogeoreg.query
+                        .filter_by(code=self.region_code)
                         .first_or_404())
         else:
-            region = None
-
-        habitat_list = (self.subject_cls.query
-                            .join(self.record_cls)
-                            .order_by(self.subject_cls.code))
+            self.region = None
 
         if self.subject:
             records = self.subject.regions
             comments = self.subject.comments
-            if region:
-                records = records.filter_by(region=region.code)
-                comments = comments.filter_by(region=region.code)
+
+            if self.region:
+                records = records.filter_by(region=self.region.code)
+                comments = comments.filter_by(region=self.region.code)
 
             CommentMessage = models.CommentMessage
             message_counts = dict(models.db.session.query(
@@ -65,11 +62,15 @@ class HabitatIndexView(IndexView):
                                     func.count(CommentMessage.id)
                                 ).group_by(CommentMessage.parent))
 
+        habitat_list = (self.subject_cls.query
+                            .join(self.record_cls)
+                            .order_by(self.subject_cls.code))
+
         self.ctx = {
             'habitat_list': [{'id': h.code, 'text': h.lu.name_ro}
                              for h in habitat_list],
             'current_habitat_code': self.subject_code,
-            'current_region_code': region_code,
+            'current_region_code': self.region_code,
 
             'habitat': None if self.subject is None else {
                 'name': self.subject.lu.name_ro,
