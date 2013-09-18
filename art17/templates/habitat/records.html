@@ -79,7 +79,7 @@
     {#- overall assessment #}
   </tr>
 
- {% for row in habitat.records %}
+ {% for row in records %}
   <tr>
     {#- detail #}
     <td>
@@ -100,7 +100,7 @@
     <th colspan=19>Comentarii</th>
   </tr>
 
- {% for row in habitat.comments %}
+ {% for row in comments %}
   <tr>
     {#- detail #}
     <td>
@@ -126,7 +126,7 @@
     <td>{{ row.comment_date|local_date }}</td>
     <td>
       {%- set url = url_for('messages.index', comment_id=row.id) %}
-      {%- set count = habitat.message_counts[row.id] or 0 %}
+      {%- set count = message_counts[row.id] or 0 %}
       <a class="records-messagesbtn btn btn-xs btn-default"
          href="{{ url }}">{{ fonticon('comment') }} {{ count }}</a>
     </td>

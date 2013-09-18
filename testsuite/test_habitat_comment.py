@@ -119,7 +119,7 @@ HABITAT_MODEL_DATA = {
 def _create_habitat_record(habitat_app, comment=False):
     from art17 import models
     with habitat_app.app_context():
-        habitat = models.DataHabitat(id=1, habitatcode='1234')
+        habitat = models.DataHabitat(id=1, code='1234')
         habitat.lu = models.LuHabitattypeCodes(objectid=1, code=1234)
         record = models.DataHabitattypeRegion(id=1, hr_habitat=habitat,
                                               region='ALP')
@@ -158,7 +158,7 @@ def test_save_comment_record(habitat_app):
     with habitat_app.app_context():
         assert DataHabitattypeComment.query.count() == 1
         comment = DataHabitattypeComment.query.first()
-        assert comment.hr_habitat.habitatcode == '1234'
+        assert comment.hr_habitat.code == '1234'
         assert comment.region == 'ALP'
         assert comment.range_surface_area == 50
 

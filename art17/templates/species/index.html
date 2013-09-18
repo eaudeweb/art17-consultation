@@ -1,10 +1,4 @@
-{% extends "layout.html" %}
-
-
-{% block title %}
-{%- if species %}{{ species.name }} &mdash; {% endif %}
-{{- super() }}
-{%- endblock title %}
+{% extends "common/indexpage.html" %}
 
 
 {% block breadcrumbs %}
@@ -16,8 +10,7 @@
 {% endblock breadcrumbs %}
 
 
-{% block content %}
-
+{% block form %}
   <form class="speciesfilter">
     <fieldset>
       <legend>Filtrare specii</legend>
@@ -30,7 +23,7 @@
 
       <div class="form-group">
         <label for="speciesfilter-species">Specie</label>
-        <input name="species" value="{{ current_species_code or '' }}"
+        <input name="species" value="{{ current_subject_code or '' }}"
                type="hidden" id="speciesfilter-species">
       </div>
 
@@ -45,35 +38,29 @@
       </div>
     </fieldset>
   </form>
+{% endblock form %}
 
- {% if species %}
+
+{% block subject_details %}
   <p>
     {%- set annex_list =
-      (["II"] if species.annex_II else []) +
-      (["IV"] if species.annex_IV else []) +
-      (["V"] if species.annex_V else []) %}
+      (["II"] if annex_II else []) +
+      (["IV"] if annex_IV else []) +
+      (["V"] if annex_V else []) %}
 
-    <strong>{{ species.name }}</strong>,
-    cod: {{ species.code }},
+    <strong>{{ name }}</strong>,
+    cod: {{ code }},
     anexe: {{ ", ".join(annex_list) if annex_list else "--" }}
   </p>
-
-  {%- include 'species/records.html' with context %}
- {% endif %}
-{% endblock content %}
+{% endblock subject_details %}
 
 
 {% block script %}
-  {%- from 'bits.html' import script %}
-  {{ super() }}
-  {{ script('recordfilter.js') }}
-  {{ script('detail.js') }}
-  {{ script('commentstatus.js') }}
-  {{ script('messages.js') }}
+  {{- super() }}
 
   <script>
     App.species_groups = {{ species_groups|tojson|safe }};
-    App.species_list = {{ species_list|tojson|safe }};
+    App.species_list = {{ subject_list|tojson|safe }};
   </script>
   {{ script('speciesfilter.js') }}
 {% endblock script %}
