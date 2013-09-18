@@ -31,23 +31,7 @@ class SpeciesIndexView(IndexView):
     record_cls = models.DataSpeciesRegion
     parse_record = staticmethod(schemas.parse_species)
 
-    def custom_stuff(self):
-        self.ctx = {
-            'subject_list': self.get_subject_list(),
-            'current_subject_code': self.subject_code,
-            'current_region_code': self.region_code,
-        }
-
-        if self.subject:
-            self.ctx.update({
-                'code': self.subject.code,
-                'name': self.subject.lu.display_name,
-                'records': [self.parse_record(r) for r in self.records],
-                'comments': [self.parse_record(r, is_comment=True)
-                             for r in self.comments],
-                'message_counts': self.message_counts,
-            })
-
+    def custom_ctx(self):
         group_code = flask.request.args.get('group')
         self.ctx.update({
             'species_groups': [{'id': g.code,

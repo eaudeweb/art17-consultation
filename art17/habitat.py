@@ -30,23 +30,6 @@ class HabitatIndexView(IndexView):
     record_cls = models.DataHabitattypeRegion
     parse_record = staticmethod(schemas.parse_habitat)
 
-    def custom_stuff(self):
-        self.ctx = {
-            'subject_list': self.get_subject_list(),
-            'current_subject_code': self.subject_code,
-            'current_region_code': self.region_code,
-        }
-
-        if self.subject:
-            self.ctx.update({
-                'code': self.subject.code,
-                'name': self.subject.lu.display_name,
-                'records': [self.parse_record(r) for r in self.records],
-                'comments': [self.parse_record(r, is_comment=True)
-                             for r in self.comments],
-                'message_counts': self.message_counts,
-            })
-
     def get_subject_list(self):
         return [{'id': h.code, 'text': h.lu.display_name}
                 for h in self.subject_list]

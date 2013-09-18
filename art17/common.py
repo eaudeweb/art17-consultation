@@ -102,9 +102,28 @@ class IndexView(flask.views.View):
                             .join(self.record_cls)
                             .order_by(self.subject_cls.code))
 
-        self.custom_stuff()
+        self.ctx = {
+            'subject_list': self.get_subject_list(),
+            'current_subject_code': self.subject_code,
+            'current_region_code': self.region_code,
+        }
+
+        if self.subject:
+            self.ctx.update({
+                'code': self.subject.code,
+                'name': self.subject.lu.display_name,
+                'records': [self.parse_record(r) for r in self.records],
+                'comments': [self.parse_record(r, is_comment=True)
+                             for r in self.comments],
+                'message_counts': self.message_counts,
+            })
+
+        self.custom_ctx()
 
         return flask.render_template(self.template, **self.ctx)
+
+    def custom_ctx(self):
+        pass
 
 
 class CommentView(flask.views.View):
