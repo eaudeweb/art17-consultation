@@ -87,9 +87,8 @@ class PopulationSize(Form):
 class Range(Form):
 
     surface_area = DecimalField(
-            validators=[Required(u"Suprafața este obligatorie")])
-    method = SelectField(choices=METHODS_USED_OPTIONS,
-            validators=[Required(u"Metoda utilizată este obligatorie")])
+            validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+    method = SelectField(choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
     trend_short = FormField(Trend)
     trend_long = FormField(Trend)
     reference_value = FormField(ReferenceValue)
@@ -102,8 +101,7 @@ class Range(Form):
 
 class Population(Form):
     size = FormField(PopulationSize)
-    method = SelectField(choices=METHODS_USED_OPTIONS,
-            validators=[Required(u"Metoda utilizată este obligatorie")])
+    method = SelectField(choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
     trend_short = FormField(Trend)
     trend_long = FormField(Trend)
     reference_value = FormField(ReferenceValue)
@@ -116,29 +114,23 @@ class Population(Form):
 
 class Habitat(Form):
     surface_area = DecimalField(
-            validators=[Required(u"Suprafața este obligatorie")])
-    date = TextField(
-            validators=[Required(u"Anul sau perioada sunt obligatorii")])
-    method = SelectField(choices=METHODS_USED_OPTIONS,
-            validators=[Required(u"Metoda utilizată este obligatorie")])
-    quality = SelectField(choices=QUALITY_OPTIONS,
-            validators=[Required(u"Valoarea calitǎții este obligatorie")])
-    quality_explanation = TextAreaField(
-            validators=[Required(u"Metoda este obligatorie")])
+            validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+    date = TextField(validators=[Optional()])
+    method = SelectField(choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
+    quality = SelectField(choices=EMPTY_CHOICE + QUALITY_OPTIONS)
+    quality_explanation = TextAreaField()
     trend_short = FormField(Trend)
     trend_long = FormField(Trend)
     area_suitable = DecimalField(
-            validators=[Required(u"Suprafața este obligatorie")])
+            validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
     conclusion = FormField(Conclusion)
 
 
 class Coverage(Form):
     surface_area = DecimalField(
-            validators=[Required(u"Suprafața este obligatorie")])
-    date = TextField(
-            validators=[Required(u"Anul sau perioada sunt obligatorii")])
-    method = SelectField(choices=METHODS_USED_OPTIONS,
-            validators=[Required(u"Metoda utilizată este obligatorie")])
+            validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+    date = TextField(validators=[Optional()])
+    method = SelectField(choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
     trend_short = FormField(Trend)
     trend_long = FormField(Trend)
     reference_value = FormField(ReferenceValue)

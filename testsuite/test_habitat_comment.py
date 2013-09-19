@@ -163,19 +163,6 @@ def test_save_comment_record(habitat_app):
         assert comment.range_surface_area == 50
 
 
-def test_error_on_required_record(habitat_app):
-    from art17.models import DataHabitattypeComment
-    _create_habitat_record(habitat_app)
-    client = habitat_app.test_client()
-    resp = client.post('/habitate/detalii/1/comentariu',
-                       data={'range.surface_area': ''})
-    assert resp.status_code == 200
-    assert COMMENT_SAVED_TXT not in resp.data
-    assert MISSING_FIELD_TXT in resp.data
-    with habitat_app.app_context():
-        assert DataHabitattypeComment.query.count() == 0
-
-
 def test_edit_comment_form(habitat_app):
     from art17.models import DataHabitattypeComment, db
     _create_habitat_record(habitat_app, comment=True)

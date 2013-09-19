@@ -212,19 +212,6 @@ def test_save_comment_record(species_app):
         assert comment.range_surface_area == 50
 
 
-def test_error_on_required_record(species_app):
-    from art17.models import DataSpeciesComment
-    _create_species_record(species_app)
-    client = species_app.test_client()
-    resp = client.post('/specii/detalii/1/comentariu',
-                       data={'range.surface_area': ''})
-    assert resp.status_code == 200
-    assert COMMENT_SAVED_TXT not in resp.data
-    assert MISSING_FIELD_TXT in resp.data
-    with species_app.app_context():
-        assert DataSpeciesComment.query.count() == 0
-
-
 def test_edit_comment_form(species_app):
     from art17.models import DataSpeciesComment, db
     _create_species_record(species_app, comment=True)
