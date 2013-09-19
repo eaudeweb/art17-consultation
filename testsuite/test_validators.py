@@ -38,9 +38,39 @@ NOT_VALID = object()
     [{'trend': '+', 'period.start': '', 'period.end': ''},
      NOT_VALID],
 ])
-def test_period_validation(formdata, valid_data):
+def test_trend_validation(formdata, valid_data):
     from art17 import forms
     form = forms.Trend(MultiDict(formdata))
+
+    if valid_data is NOT_VALID:
+        assert not form.validate()
+
+    else:
+        assert form.validate()
+        assert form.data == valid_data
+
+
+@pytest.mark.parametrize(['formdata', 'valid_data'], [
+    # all values are blank
+    [{'op': '', 'number': '', 'method': ''},
+     {'op': '', 'number': None, 'method': ''}],
+
+    # both values filled in
+    [{'op': 'foo', 'number': '1234', 'method': ''},
+     {'op': 'foo', 'number': 1234, 'method': ''}],
+
+    # only op filled in
+    [{'op': 'foo', 'number': '', 'method': ''},
+     NOT_VALID],
+
+    # only number filled in
+    [{'op': '', 'number': '1234', 'method': ''},
+     NOT_VALID],
+])
+def test_reference_value_validation(formdata, valid_data):
+    from art17 import forms
+    form = forms.ReferenceValue(MultiDict(formdata))
+    form.op.choices = [('', ''), ('foo', 'Foo'), ('bar', 'Bar')]
 
     if valid_data is NOT_VALID:
         assert not form.validate()

@@ -58,6 +58,20 @@ class ReferenceValue(Form):
     number = DecimalField(validators=[Optional()])
     method = TextAreaField()
 
+    def validate(self):
+        if not super(ReferenceValue, self).validate():
+            return False
+
+        fields = [self.op, self.number]
+        empty = [f for f in fields if not f.data]
+
+        if empty and len(empty) < len(fields):
+            for field in empty:
+                field.errors.append(u"Completați toate câmpurile")
+            return False
+
+        return True
+
 
 class Conclusion(Form):
 
