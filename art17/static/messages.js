@@ -3,7 +3,7 @@
 
 $('.records').on('click', '.records-messagesbtn', function(evt) {
   evt.preventDefault();
-  var link = $(evt.target);
+  var link = $(this);
   var url = link.attr('href');
   var title = "Mesaje";
   var params = 'height=600,width=600,screenX=300,screenY=100';
@@ -14,7 +14,7 @@ $('.records').on('click', '.records-messagesbtn', function(evt) {
 
 $('body').on('click', '.readbox-mark', function(evt) {
   evt.preventDefault();
-  var button = $(evt.target);
+  var button = $(this);
   var message = button.parents('.message');
   var message_id = message.data('id');
   var post = $.post(App.set_read_status_url,
@@ -27,7 +27,7 @@ $('body').on('click', '.readbox-mark', function(evt) {
 
 $('body').on('click', '.readbox-unmark', function(evt) {
   evt.preventDefault();
-  var button = $(evt.target);
+  var button = $(this);
   var message = button.parents('.message');
   var message_id = message.data('id');
   var post = $.post(App.set_read_status_url,
