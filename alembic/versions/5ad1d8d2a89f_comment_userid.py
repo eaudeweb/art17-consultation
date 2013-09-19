@@ -7,15 +7,11 @@ import sqlalchemy as sa
 
 def upgrade():
     op.add_column('data_species_comments',
-        sa.Column('user_id', sa.UnicodeText, nullable=True),
-        schema='reportdata_owner')
+        sa.Column('user_id', sa.VARCHAR(256), nullable=False))
     op.add_column('data_habitattype_comments',
-        sa.Column('user_id', sa.UnicodeText, nullable=True),
-        schema='reportdata_owner')
+        sa.Column('user_id', sa.VARCHAR(256), nullable=False))
 
 
 def downgrade():
-    op.drop_column('data_habitattype_comments', 'user_id',
-                   schema='reportdata_owner')
-    op.drop_column('data_species_comments', 'user_id',
-                   schema='reportdata_owner')
+    op.drop_column('data_habitattype_comments', 'user_id')
+    op.drop_column('data_species_comments', 'user_id')
