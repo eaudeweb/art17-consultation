@@ -110,4 +110,15 @@ App.habitat_filter = function(habitat_list) {
 };
 
 
+$('body').on('click', '.showmap', function(evt) {
+  evt.preventDefault();
+  var link = $(evt.target);
+  var url = link.attr('href');
+  var title = "Hartă";
+  var params = 'height=650,width=850,screenX=100,screenY=100';
+  var popup = window.open(url, title, params);
+  popup.focus();
+});
+
+
 })();

@@ -22,7 +22,6 @@ def lookup_regions(species_code):
     return flask.jsonify(options=regions)
 
 
-
 class SpeciesIndexView(IndexView):
 
     template = 'species/index.html'
@@ -31,6 +30,10 @@ class SpeciesIndexView(IndexView):
     record_cls = models.DataSpeciesRegion
     parse_record = staticmethod(schemas.parse_species)
     records_template = 'species/records.html'
+
+    @property
+    def map_url_template(self):
+        return flask.current_app.config['SPECIES_MAP_URL']
 
     def custom_ctx(self):
         group_code = flask.request.args.get('group')

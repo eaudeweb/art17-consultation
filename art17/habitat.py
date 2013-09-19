@@ -31,6 +31,10 @@ class HabitatIndexView(IndexView):
     parse_record = staticmethod(schemas.parse_habitat)
     records_template = 'habitat/records.html'
 
+    @property
+    def map_url_template(self):
+        return flask.current_app.config['HABITAT_MAP_URL']
+
     def get_subject_list(self):
         return [{'id': h.code, 'text': h.lu.display_name}
                 for h in self.subject_list]

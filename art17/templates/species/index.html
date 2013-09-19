@@ -35,6 +35,10 @@
 
       <div class="form-group">
         <button type="submit">filtrează</button>
+        {%- if map_url %}
+          <a class="showmap btn btn-sm btn-info"
+             href="{{ map_url }}">vezi harta</a>
+        {%- endif %}
       </div>
     </fieldset>
   </form>

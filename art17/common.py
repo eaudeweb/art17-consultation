@@ -117,6 +117,9 @@ class IndexView(flask.views.View):
                 'comments': [self.parse_record(r, is_comment=True)
                              for r in self.comments],
                 'message_counts': self.message_counts,
+                'map_url': self.map_url_template.format(**{
+                        self.subject_name: self.subject.code,
+                    })
             })
 
         self.custom_ctx()
