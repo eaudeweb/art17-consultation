@@ -68,3 +68,10 @@ Rularea testelor::
 Actualizarea fișierelor `requirements`::
 
     $ pip-dump
+
+Import baza de data
+-------------------
+
+Instrucțiunile de import sunt aici::
+
+    https://gist.github.com/nico4/1f7524c51194fbebe14a
