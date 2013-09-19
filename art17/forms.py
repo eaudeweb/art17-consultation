@@ -33,6 +33,7 @@ class Period(Form):
 class Trend(Form):
 
     trend = SelectField(choices=EMPTY_CHOICE + TREND_OPTIONS,
+                        default='',
                         validators=[Optional()])
     period = FormField(Period)
 
