@@ -12,15 +12,15 @@ SPECIES_STRUCT_DATA = {
         'trend_short': {
             'trend': '+',
             'period': {
-                'start': 'amin',
-                'end': 'amax',
+                'start': '2000',
+                'end': '2001',
             },
         },
         'trend_long': {
             'trend': '-',
             'period': {
-                'start': 'bmin',
-                'end': 'bmax',
+                'start': '2002',
+                'end': '2003',
             },
         },
         'reference_value': {
@@ -51,15 +51,15 @@ SPECIES_STRUCT_DATA = {
         'trend_short': {
             'trend': '-',
             'period': {
-                'start': 'pmin',
-                'end': 'pmax',
+                'start': '2008',
+                'end': '2009',
             },
         },
         'trend_long': {
             'trend': '+',
             'period': {
-                'start': 'pmin',
-                'end': 'pmax',
+                'start': '2010',
+                'end': '2011',
             },
         },
         'reference_value': {
@@ -82,15 +82,15 @@ SPECIES_STRUCT_DATA = {
         'trend_short': {
             'trend': '0',
             'period': {
-                'start': 'hmin',
-                'end': 'hmax',
+                'start': '2004',
+                'end': '2005',
             },
         },
         'trend_long': {
             'trend': '0',
             'period': {
-                'start': 'hmin',
-                'end': 'hmax',
+                'start': '2006',
+                'end': '2007',
             },
         },
         'area_suitable': 1000,
@@ -114,9 +114,9 @@ SPECIES_MODEL_DATA = {
     'range_surface_area': 123,
     'range_method': '1',
     'range_trend': '+',
-    'range_trend_period': 'aminamax',
+    'range_trend_period': '20002001',
     'range_trend_long': '-',
-    'range_trend_long_period': 'bminbmax',
+    'range_trend_long_period': '20022003',
     'complementary_favourable_range_op': '>',
     'complementary_favourable_range': 456,
     'complementary_favourable_range_method': 'foo method',
@@ -131,9 +131,9 @@ SPECIES_MODEL_DATA = {
     'population_alt_size_unit': 'grids10x10',
     'population_method': '1',
     'population_trend': '-',
-    'population_trend_period': 'pminpmax',
+    'population_trend_period': '20082009',
     'population_trend_long': '+',
-    'population_trend_long_period': 'pminpmax',
+    'population_trend_long_period': '20102011',
     'complementary_favourable_population_op': '<',
     'complementary_favourable_population': 234,
     'complementary_favourable_population_method': 'foo pop method',
@@ -146,9 +146,9 @@ SPECIES_MODEL_DATA = {
     'habitat_quality': '2',
     'habitat_quality_explanation': 'foo explanation',
     'habitat_trend': '0',
-    'habitat_trend_period': 'hminhmax',
+    'habitat_trend_period': '20042005',
     'habitat_trend_long': '0',
-    'habitat_trend_long_period': 'hminhmax',
+    'habitat_trend_long_period': '20062007',
     'habitat_area_suitable': 1000,
     'conclusion_habitat': 'U1',
     'conclusion_habitat_trend': '-',

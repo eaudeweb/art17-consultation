@@ -12,15 +12,15 @@ HABITAT_STRUCT_DATA = {
         'trend_short': {
             'trend': '+',
             'period': {
-                'start': 'amin',
-                'end': 'amax',
+                'start': '2000',
+                'end': '2001',
             },
         },
         'trend_long': {
             'trend': '-',
             'period': {
-                'start': 'bmin',
-                'end': 'bmax',
+                'start': '2002',
+                'end': '2003',
             },
         },
         'reference_value': {
@@ -41,15 +41,15 @@ HABITAT_STRUCT_DATA = {
         'trend_short': {
             'trend': '+',
             'period': {
-                'start': 'hmin',
-                'end': 'hmax',
+                'start': '2006',
+                'end': '2007',
             },
         },
         'trend_long': {
             'trend': '+',
             'period': {
-                'start': 'cmin',
-                'end': 'cmax',
+                'start': '2004',
+                'end': '2005',
             },
         },
         'reference_value': {
@@ -82,9 +82,9 @@ HABITAT_MODEL_DATA = {
     'range_surface_area': 123,
     'range_method': '1',
     'range_trend': '+',
-    'range_trend_period': 'aminamax',
+    'range_trend_period': '20002001',
     'range_trend_long': '-',
-    'range_trend_long_period': 'bminbmax',
+    'range_trend_long_period': '20022003',
     'complementary_favourable_range_op': '>',
     'complementary_favourable_range': 456,
     'complementary_favourable_range_method': 'foo method',
@@ -96,9 +96,9 @@ HABITAT_MODEL_DATA = {
     'coverage_method': '2001',
     'coverage_method': '1',
     'coverage_trend': '+',
-    'coverage_trend_period': 'hminhmax',
+    'coverage_trend_period': '20062007',
     'coverage_trend_long': '+',
-    'coverage_trend_long_period': 'cmincmax',
+    'coverage_trend_long_period': '20042005',
     'complementary_favourable_area_op': '<',
     'complementary_favourable_area': 123,
     'complementary_favourable_area_method': 'foo method',
