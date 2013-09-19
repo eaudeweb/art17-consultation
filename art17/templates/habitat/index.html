@@ -49,28 +49,8 @@
   <script>
     (function() {
       "use strict";
-
-      var habitatfilter = $('.habitatfilter');
-      var subject_list = {{ subject_list|tojson|safe }};
-
-      var habitat_select = habitatfilter.find('[name=habitat]').select2({
-        data: subject_list,
-        width: '40em'
-      });
-
-      App.region_select = new App.AjaxSelect({
-        el: habitatfilter.find('[name=region]'),
-        get_data_url: function() {
-           var habitat_code = habitat_select.val();
-           return habitat_code ? 'regiuni/' + habitat_code : null;
-        },
-        width: '15em'
-      });
-
-      habitat_select.change(function() {
-        App.region_select.update();
-      });
-
+      var habitat_list = {{ subject_list|tojson|safe }};
+      App.habitat_filter(habitat_list);
     })();
   </script>
 {% endblock script %}

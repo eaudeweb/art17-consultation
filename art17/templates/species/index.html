@@ -59,8 +59,11 @@
   {{- super() }}
 
   <script>
-    App.species_groups = {{ species_groups|tojson|safe }};
-    App.species_list = {{ subject_list|tojson|safe }};
+    (function() {
+      "use strict";
+      var species_groups = {{ species_groups|tojson|safe }};
+      var species_list = {{ subject_list|tojson|safe }};
+      App.species_filter(species_groups, species_list);
+    })();
   </script>
-  {{ script('speciesfilter.js') }}
 {% endblock script %}
