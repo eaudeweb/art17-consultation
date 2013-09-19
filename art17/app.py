@@ -10,6 +10,20 @@ def home():
     return flask.render_template('home.html')
 
 
+@views.route('/_crashme')
+def crashme():
+    raise RuntimeError("Crashing, as requested.")
+
+
+@views.route('/_ping')
+def ping():
+    from art17 import models
+    from datetime import datetime
+    count = models.History.query.count()
+    now = datetime.utcnow().isoformat()
+    return "art17 consultation is up; %s; %d history items" % (now, count)
+
+
 @views.app_url_defaults
 def bust_cache(endpoint, values):
     if endpoint == 'static':
@@ -56,9 +70,9 @@ def create_app():
     return app
 
 
-def create_manager():
+def create_manager(app):
     from art17.models import db_manager
-    manager = Manager(create_app)
+    manager = Manager(app)
     manager.add_command('db', db_manager)
 
     @manager.command

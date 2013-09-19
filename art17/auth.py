@@ -28,6 +28,9 @@ def inject_permissions():
 
 @auth.route('/auth_debug', methods=['GET', 'POST'])
 def debug():
+    if not flask.current_app.config.get('AUTH_DEBUG'):
+        flask.abort(404)
+
     if flask.request.method == 'POST':
         set_session_auth(flask.request.form['user_id'],
                          flask.request.form.getlist('roles'))
@@ -44,7 +47,10 @@ def set_session_auth(user_id=None, roles=[]):
 
 
 @auth.before_app_request
-def load_sessoin_auth():
+def load_debug_auth():
+    if not flask.current_app.config.get('AUTH_DEBUG'):
+        return
+
     auth_data = flask.session.get('auth')
     if auth_data and auth_data.get('user_id'):
         identity = Identity(id=auth_data['user_id'],
