@@ -19,8 +19,8 @@ def upgrade():
     for code, name_ro in DATA:
         op.execute(
             lu_habitattype_codes.update()
-                                .where(lu_habitattype_codes.c.code == code)
-                                .values({'hd_name_ro': name_ro}))
+                .where(lu_habitattype_codes.c.code == op.inline_literal(code))
+                .values({'hd_name_ro': op.inline_literal(name_ro)}))
 
 
 def downgrade():
