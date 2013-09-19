@@ -54,7 +54,7 @@ class Trend(Form):
 
 class ReferenceValue(Form):
 
-    op = SelectField(validators=[Optional()])
+    op = SelectField(default='', validators=[Optional()])
     number = DecimalField(validators=[Optional()])
     method = TextAreaField()
 
@@ -62,13 +62,15 @@ class ReferenceValue(Form):
 class Conclusion(Form):
 
     value = SelectField(choices=EMPTY_CHOICE + CONCLUSION_OPTIONS,
+                        default='',
                         validators=[Optional()])
     trend = SelectField(choices=EMPTY_CHOICE + TREND_OPTIONS,
+                        default='',
                         validators=[Optional()])
 
 
 class PopulationValue(Form):
-    unit = SelectField(validators=[Optional()])
+    unit = SelectField(default='', validators=[Optional()])
     min = DecimalField(
             validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
     max = DecimalField(
@@ -89,7 +91,8 @@ class Range(Form):
 
     surface_area = DecimalField(
             validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
-    method = SelectField(choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
+    method = SelectField(default='',
+                         choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
     trend_short = FormField(Trend)
     trend_long = FormField(Trend)
     reference_value = FormField(ReferenceValue)
@@ -102,7 +105,8 @@ class Range(Form):
 
 class Population(Form):
     size = FormField(PopulationSize)
-    method = SelectField(choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
+    method = SelectField(default='',
+                         choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
     trend_short = FormField(Trend)
     trend_long = FormField(Trend)
     reference_value = FormField(ReferenceValue)
@@ -117,8 +121,10 @@ class Habitat(Form):
     surface_area = DecimalField(
             validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
     date = TextField(validators=[Optional()])
-    method = SelectField(choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
-    quality = SelectField(choices=EMPTY_CHOICE + QUALITY_OPTIONS)
+    method = SelectField(default='',
+                         choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
+    quality = SelectField(default='',
+                          choices=EMPTY_CHOICE + QUALITY_OPTIONS)
     quality_explanation = TextAreaField()
     trend_short = FormField(Trend)
     trend_long = FormField(Trend)
@@ -131,7 +137,8 @@ class Coverage(Form):
     surface_area = DecimalField(
             validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
     date = TextField(validators=[Optional()])
-    method = SelectField(choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
+    method = SelectField(default='',
+                         choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
     trend_short = FormField(Trend)
     trend_long = FormField(Trend)
     reference_value = FormField(ReferenceValue)
