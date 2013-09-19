@@ -69,9 +69,13 @@ Actualizarea fișierelor `requirements`::
 
     $ pip-dump
 
+
 Import baza de data
 -------------------
-
-Instrucțiunile de import sunt aici::
+Pentru importul inițial instrucțiunile de import sunt aici::
 
     https://gist.github.com/nico4/1f7524c51194fbebe14a
+
+După aceea trebuie rulate migrările::
+
+    $ ./manage.py db upgrade

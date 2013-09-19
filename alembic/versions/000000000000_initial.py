@@ -1,4 +1,4 @@
-revision = '510dbe873d35'
+revision = '000000000000'
 down_revision = None
 
 from alembic import op
