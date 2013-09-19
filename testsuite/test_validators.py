@@ -18,6 +18,10 @@ NOT_VALID = object()
     [{'trend': '+', 'period.start': 'asdf', 'period.end': 'qwer'},
      NOT_VALID],
 
+    # years filled in with bogus numeric
+    [{'trend': '+', 'period.start': '13', 'period.end': '123456'},
+     NOT_VALID],
+
     # only first year filled in
     [{'trend': '+', 'period.start': '2010', 'period.end': ''},
      NOT_VALID],

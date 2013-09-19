@@ -3,7 +3,7 @@
 from wtforms import (Form, FormField as FormField_base,
                      TextField, TextAreaField, DecimalField, SelectField,
                      IntegerField)
-from wtforms.validators import Required, Optional
+from wtforms.validators import Required, Optional, NumberRange
 from art17.lookup import (TREND_OPTIONS,
                           CONCLUSION_OPTIONS,
                           METHODS_USED_OPTIONS,
@@ -26,8 +26,8 @@ class FormField(FormField_base):
 
 class Period(Form):
 
-    start = IntegerField(validators=[Optional()])
-    end = IntegerField(validators=[Optional()])
+    start = IntegerField(validators=[Optional(), NumberRange(1900, 2100)])
+    end = IntegerField(validators=[Optional(), NumberRange(1900, 2100)])
 
 
 class Trend(Form):
