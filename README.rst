@@ -1,4 +1,4 @@
-Art17 – aplicație de comentarii
+Art17 – aplicație de consultare
 ===============================
 
 
