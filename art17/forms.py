@@ -36,6 +36,20 @@ class Trend(Form):
                         validators=[Optional()])
     period = FormField(Period)
 
+    def validate(self):
+        if not super(Trend, self).validate():
+            return False
+
+        fields = [self.period.start, self.period.end, self.trend]
+        empty = [f for f in fields if not f.data]
+
+        if empty and len(empty) < len(fields):
+            for field in empty:
+                field.errors.append(u"Completați toate câmpurile")
+            return False
+
+        return True
+
 
 class ReferenceValue(Form):
 
