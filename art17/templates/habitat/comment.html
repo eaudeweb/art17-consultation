@@ -53,7 +53,7 @@
 
             <div class="col-sm-6 text-primary">
               <span class="recordvalue">
-                {{ range_html(record.range) }}
+                {{- range_html(record.range) -}}
               </span>
             </div>
           </div>
@@ -73,7 +73,7 @@
 
             <div class="col-sm-6 text-primary">
               <span class="recordvalue">
-                {{ method_html(record.range.method) }}
+                {{- method_html(record.range.method) -}}
               </span>
             </div>
           </div>
@@ -102,8 +102,8 @@
 
             <div class="col-sm-6 text-primary">
               <span class="recordvalue">
-                {{ trend_detail_html(record.range.trend_short) }}
-                {{ period_html(record.range.trend_short.period) }}
+                {{- trend_detail_html(record.range.trend_short) }}
+                {{- period_html(record.range.trend_short.period) -}}
               </span>
             </div>
           </div>
@@ -132,8 +132,8 @@
 
             <div class="col-sm-6 text-primary">
               <span class="recordvalue">
-                {{ trend_detail_html(record.range.trend_long) }}
-                {{ period_html(record.range.trend_long.period) }}
+                {{- trend_detail_html(record.range.trend_long) }}
+                {{- period_html(record.range.trend_long.period) -}}
               </span>
             </div>
           </div>
@@ -158,8 +158,8 @@
 
             <div class="col-sm-6 text-primary">
               <span class="recordvalue">
-                {{ reference_value_html(record.range.reference_value,
-                        unit='km²') }}
+                {{- reference_value_html(record.range.reference_value,
+                        unit='km²') -}}
               </span>
             </div>
           </div>
@@ -179,7 +179,7 @@
 
             <div class="col-sm-6 text-primary">
               <span class="recordvalue">
-                {{ record.range.reference_value.method }}
+                {{- record.range.reference_value.method -}}
               </span>
             </div>
           </div>
@@ -204,7 +204,7 @@
 
             <div class="col-sm-6 text-primary">
               <span class="recordvalue">
-                {{ conclusions_html(record.range.conclusion) }}
+                {{- conclusions_html(record.range.conclusion) -}}
               </span>
             </div>
           </div>
@@ -235,7 +235,7 @@
 
             <div class="col-sm-6 text-primary">
               <span class="recordvalue">
-                {{ range_html(record.coverage) }}
+                {{- range_html(record.coverage) -}}
               </span>
             </div>
           </div>
@@ -257,7 +257,7 @@
 
             <div class="col-sm-6 text-primary">
               <span class="recordvalue">
-                {{ record.coverage.date }}
+                {{- record.coverage.date -}}
               </span>
             </div>
           </div>
@@ -277,7 +277,7 @@
 
             <div class="col-sm-6 text-primary">
               <span class="recordvalue">
-                {{ method_html(record.coverage.method) }}
+                {{- method_html(record.coverage.method) -}}
               </span>
             </div>
           </div>
@@ -306,8 +306,8 @@
 
             <div class="col-sm-6 text-primary">
               <span class="recordvalue">
-                {{ trend_detail_html(record.coverage.trend_short) }}
-                {{ period_html(record.coverage.trend_short.period) }}
+                {{- trend_detail_html(record.coverage.trend_short) }}
+                {{- period_html(record.coverage.trend_short.period) -}}
               </span>
             </div>
           </div>
@@ -336,8 +336,8 @@
 
             <div class="col-sm-6 text-primary">
               <span class="recordvalue">
-                {{ trend_detail_html(record.coverage.trend_long) }}
-                {{ period_html(record.coverage.trend_long.period) }}
+                {{- trend_detail_html(record.coverage.trend_long) }}
+                {{- period_html(record.coverage.trend_long.period) -}}
               </span>
             </div>
           </div>
@@ -362,8 +362,8 @@
 
             <div class="col-sm-6 text-primary">
               <span class="recordvalue">
-                {{ reference_value_html(record.coverage.reference_value,
-                        unit='km²') }}
+                {{- reference_value_html(record.coverage.reference_value,
+                        unit='km²') -}}
               </span>
             </div>
           </div>
@@ -383,7 +383,7 @@
 
             <div class="col-sm-6 text-primary">
               <span class="recordvalue">
-                {{ record.coverage.reference_value.method }}
+                {{- record.coverage.reference_value.method -}}
               </span>
             </div>
           </div>
@@ -408,7 +408,7 @@
 
             <div class="col-sm-6 text-primary">
               <span class="recordvalue">
-                {{ conclusions_html(record.coverage.conclusion) }}
+                {{- conclusions_html(record.coverage.conclusion) -}}
               </span>
             </div>
           </div>
@@ -442,7 +442,7 @@
 
             <div class="col-sm-6 text-primary">
               <span class="recordvalue">
-                {{ conclusions_html(record.structure) }}
+                {{- conclusions_html(record.structure) -}}
               </span>
             </div>
           </div>
@@ -466,7 +466,7 @@
 
               <div class="col-sm-6 text-primary">
                 <span class="recordvalue">
-                  {{ conclusions_html(record.future_prospects) }}
+                  {{- conclusions_html(record.future_prospects) -}}
                 </span>
               </div>
             </div>
@@ -490,7 +490,7 @@
 
               <div class="col-sm-6 text-primary">
                 <span class="recordvalue">
-                  {{ conclusions_html(record.overall_assessment) }}
+                  {{- conclusions_html(record.overall_assessment) -}}
                 </span>
               </div>
             </div>
