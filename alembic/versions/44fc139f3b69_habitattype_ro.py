@@ -17,4 +17,4 @@ def upgrade():
 
 
 def downgrade():
-    raise NotImplementedError
+    op.drop_column('lu_habitattype_codes', 'nume')

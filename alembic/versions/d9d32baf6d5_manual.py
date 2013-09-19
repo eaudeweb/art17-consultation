@@ -21,4 +21,6 @@ def upgrade():
 
 
 def downgrade():
-    raise NotImplementedError
+    op.drop_table('data_habitattype_comments')
+    op.drop_table('data_species_comments')
+    op.drop_table('lu_grup_specie')
