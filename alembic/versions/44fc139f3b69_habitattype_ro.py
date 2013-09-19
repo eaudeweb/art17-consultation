@@ -10,11 +10,11 @@ MANUAL_SCRIPTS = (path(__file__).abspath().parent.parent /
 
 
 def upgrade():
-    script_path = MANUAL_SCRIPTS / '4_lu_habitattype_codes_nume.sql'
+    script_path = MANUAL_SCRIPTS / '4_lu_biogeoreg_nume.sql'
     for statement in script_path.text(encoding='utf-8').split(';\n'):
         if statement.strip():
             op.execute(statement)
 
 
 def downgrade():
-    op.drop_column('lu_habitattype_codes', 'nume')
+    op.drop_column('lu_biogeoreg', 'nume')
