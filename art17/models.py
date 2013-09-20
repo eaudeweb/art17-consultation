@@ -194,8 +194,8 @@ class DataHabitattypeRegion(Base):
                       innerjoin=True, uselist=False)
 
 
-class DataHabitattypeComment(Base):
-    __tablename__ = u'data_habitattype_comments'
+class DataHabitattypeConclusion(Base):
+    __tablename__ = u'data_habitattype_conclusions'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
     habitat_id = Column('hr_habitat_id', ForeignKey(DataHabitat.id), index=True)
@@ -263,12 +263,12 @@ class DataHabitattypeComment(Base):
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    comment_date = Column(DateTime)
+    conclusion_date = Column(DateTime)
     user_id = Column(String)
     status = Column(Text, default='new')
 
     hr_habitat = relationship(u'DataHabitat',
-        backref=db.backref('comments', lazy='dynamic'))
+        backref=db.backref('conclusions', lazy='dynamic'))
 
 
 class DataSpecies(Base):
@@ -421,8 +421,8 @@ class DataSpeciesRegion(Base):
                       innerjoin=True, uselist=False)
 
 
-class DataSpeciesComment(Base):
-    __tablename__ = u'data_species_comments'
+class DataSpeciesConclusion(Base):
+    __tablename__ = u'data_species_conclusions'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
     species_id = Column('sr_species_id', ForeignKey(DataSpecies.id), index=True)
@@ -511,15 +511,15 @@ class DataSpeciesComment(Base):
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    comment_date = Column(DateTime)
+    conclusion_date = Column(DateTime)
     user_id = Column(String)
     status = Column(Text, default='new')
 
     species = relationship(u'DataSpecies',
-        backref=db.backref('comments', lazy='dynamic'))
+        backref=db.backref('conclusions', lazy='dynamic'))
 
 
-class CommentMessage(Base):
+class ConclusionMessage(Base):
     __tablename__ = u'comment_messages'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
@@ -529,11 +529,11 @@ class CommentMessage(Base):
     text = Column(Text)
 
 
-class CommentMessageRead(Base):
+class ConclusionMessageRead(Base):
     __tablename__ = u'comment_messages_read'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
-    message_id = Column(String, ForeignKey(CommentMessage.id))
+    message_id = Column(String, ForeignKey(ConclusionMessage.id))
     user_id = Column(String)
 
 

@@ -2,19 +2,19 @@
 
 
 {% block title %}
-  {%- if habitat %}{{ habitat.name }} &mdash; {% endif %}
+  {%- if species %}{{ species.name }} &mdash; {% endif %}
   {{- super() }}
 {%- endblock title %}
 
 
 {% block content %}
 <h1>
-  Comentariu pentru
-  {{ habitat.lu.habitatname }}
+  Concluzie pentru
+  {{ species.lu.speciesname }}
   ({{ record.region }})
 </h1>
 
-<p class="text-success">Comentariul a fost înregistrat.</p>
+<p class="text-success">Concluzia a fost înregistrată.</p>
 
 <p>
   <a class="btn btn-primary" href="{{ next_url }}">Înapoi</a>

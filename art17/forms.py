@@ -26,14 +26,22 @@ class FormField(FormField_base):
 
 class Period(Form):
 
-    start = IntegerField(validators=[Optional(), NumberRange(1900, 2100)])
-    end = IntegerField(validators=[Optional(), NumberRange(1900, 2100)])
+    start = IntegerField(label=u"an de început",
+                         validators=[Optional(), NumberRange(1900, 2100)])
+    end = IntegerField(label=u"an de sfârșit",
+                       validators=[Optional(), NumberRange(1900, 2100)])
+
+
+def set_required_error_message(field):
+    message = u'Completați câmpul "%s"' % field.label.text
+    field.errors.append(message)
 
 
 class Trend(Form):
 
     trend = SelectField(choices=EMPTY_CHOICE + TREND_OPTIONS,
                         default='',
+                        label=u"tendință",
                         validators=[Optional()])
     period = FormField(Period)
 
@@ -46,7 +54,7 @@ class Trend(Form):
 
         if empty and len(empty) < len(fields):
             for field in empty:
-                field.errors.append(u"Completați toate câmpurile")
+                set_required_error_message(field)
             return False
 
         return True
@@ -54,8 +62,8 @@ class Trend(Form):
 
 class ReferenceValue(Form):
 
-    op = SelectField(default='', validators=[Optional()])
-    number = DecimalField(validators=[Optional()])
+    op = SelectField(default='', label=u"operator", validators=[Optional()])
+    number = DecimalField(label=u"suprafață", validators=[Optional()])
     method = TextAreaField()
 
     def validate(self):
@@ -67,7 +75,7 @@ class ReferenceValue(Form):
 
         if empty and len(empty) < len(fields):
             for field in empty:
-                field.errors.append(u"Completați toate câmpurile")
+                set_required_error_message(field)
             return False
 
         return True
@@ -162,7 +170,7 @@ class Coverage(Form):
         super(Coverage, self).__init__(*args, **kwargs)
         self.reference_value.op.choices=EMPTY_CHOICE + LU_FV_RANGE_OP_FUNCT_OPTIONS
 
-class SpeciesComment(Form):
+class SpeciesConclusion(Form):
 
     range = FormField(Range)
     population = FormField(Population)
@@ -171,7 +179,7 @@ class SpeciesComment(Form):
     overall_assessment = FormField(Conclusion)
 
 
-class HabitatComment(Form):
+class HabitatConclusion(Form):
 
     range = FormField(Range)
     coverage = FormField(Coverage)

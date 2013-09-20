@@ -14,24 +14,24 @@ history = flask.Blueprint('history', __name__)
 def register_handlers(state):
     app = state.app
 
-    connect(species.comment_added, app,
-            table='data_species_comments', action='add')
-    connect(species.comment_edited, app,
-            table='data_species_comments', action='edit')
-    connect(species.comment_status_changed, app,
-            table='data_species_comments', action='status')
+    connect(species.conclusion_added, app,
+            table='data_species_conclusions', action='add')
+    connect(species.conclusion_edited, app,
+            table='data_species_conclusions', action='edit')
+    connect(species.conclusion_status_changed, app,
+            table='data_species_conclusions', action='status')
 
-    connect(habitat.comment_added, app,
-            table='data_habitattype_comments', action='add')
-    connect(habitat.comment_edited, app,
-            table='data_habitattype_comments', action='edit')
-    connect(habitat.comment_status_changed, app,
-            table='data_habitattype_comments', action='status')
+    connect(habitat.conclusion_added, app,
+            table='data_habitattype_conclusions', action='add')
+    connect(habitat.conclusion_edited, app,
+            table='data_habitattype_conclusions', action='edit')
+    connect(habitat.conclusion_status_changed, app,
+            table='data_habitattype_conclusions', action='status')
 
     connect(messages.message_added, app,
-            table='comment_messages', action='add')
+            table='conclusion_messages', action='add')
     connect(messages.message_removed, app,
-            table='comment_messages', action='remove')
+            table='conclusion_messages', action='remove')
 
 
 def connect(signal, sender, **more_kwargs):

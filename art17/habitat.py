@@ -1,15 +1,15 @@
 import flask
 from blinker import Signal
 from art17 import models
-from art17.common import IndexView, CommentView, CommentStateView
+from art17.common import IndexView, ConclusionView, ConclusionStateView
 from art17 import forms
 from art17 import schemas
 
 habitat = flask.Blueprint('habitat', __name__)
 
-comment_added = Signal()
-comment_edited = Signal()
-comment_status_changed = Signal()
+conclusion_added = Signal()
+conclusion_edited = Signal()
+conclusion_status_changed = Signal()
 
 
 @habitat.route('/habitate/regiuni/<int:habitat_code>')
@@ -52,21 +52,21 @@ def detail(record_id):
     })
 
 
-class HabitatCommentView(CommentView):
+class HabitatConclusionView(ConclusionView):
 
-    form_cls = forms.HabitatComment
+    form_cls = forms.HabitatConclusion
     record_cls = models.DataHabitattypeRegion
-    comment_cls = models.DataHabitattypeComment
-    parse_commentform = staticmethod(schemas.parse_habitat_commentform)
-    flatten_commentform = staticmethod(schemas.flatten_habitat_commentform)
-    template = 'habitat/comment.html'
-    template_saved = 'habitat/comment-saved.html'
-    add_signal = comment_added
-    edit_signal = comment_edited
+    conclusion_cls = models.DataHabitattypeConclusion
+    parse_conclusionform = staticmethod(schemas.parse_habitat_conclusionform)
+    flatten_conclusionform = staticmethod(schemas.flatten_habitat_conclusionform)
+    template = 'habitat/conclusion.html'
+    template_saved = 'habitat/conclusion-saved.html'
+    add_signal = conclusion_added
+    edit_signal = conclusion_edited
 
-    def link_comment_to_record(self):
-        self.comment.habitat_id = self.record.habitat_id
-        self.comment.region = self.record.region
+    def link_conclusion_to_record(self):
+        self.conclusion.habitat_id = self.record.habitat_id
+        self.conclusion.region = self.record.region
 
     def setup_template_context(self):
         self.template_ctx = {
@@ -74,28 +74,29 @@ class HabitatCommentView(CommentView):
             'record': schemas.parse_habitat(self.record),
         }
 
-    def record_for_comment(self, comment):
+    def record_for_conclusion(self, conclusion):
         records = (models.DataHabitattypeRegion.query
-                            .filter_by(habitat_id=comment.habitat_id)
-                            .filter_by(region=comment.region)
+                            .filter_by(habitat_id=conclusion.habitat_id)
+                            .filter_by(region=conclusion.region)
                             .all())
-        assert len(records) == 1, "Expected exactly one record for the comment"
+        assert len(records) == 1, ("Expected exactly one record "
+                                   "for the conclusion")
         return records[0]
 
 
-habitat.add_url_rule('/habitate/detalii/<int:record_id>/comentariu',
-                     view_func=HabitatCommentView.as_view('comment'))
+habitat.add_url_rule('/habitate/detalii/<int:record_id>/concluzii',
+                     view_func=HabitatConclusionView.as_view('conclusion'))
 
 
-habitat.add_url_rule('/habitate/comentariu/<comment_id>',
-                     view_func=HabitatCommentView.as_view('comment_edit'))
+habitat.add_url_rule('/habitate/concluzii/<conclusion_id>',
+                     view_func=HabitatConclusionView.as_view('conclusion_edit'))
 
 
-class HabitatCommentStateView(CommentStateView):
+class HabitatConclusionStateView(ConclusionStateView):
 
-    comment_cls = models.DataHabitattypeComment
-    signal = comment_status_changed
+    conclusion_cls = models.DataHabitattypeConclusion
+    signal = conclusion_status_changed
 
 
-habitat.add_url_rule('/habitate/comentariu/<comment_id>/stare',
-                view_func=HabitatCommentStateView.as_view('comment_status'))
+habitat.add_url_rule('/habitate/concluzii/<conclusion_id>/stare',
+            view_func=HabitatConclusionStateView.as_view('conclusion_status'))
