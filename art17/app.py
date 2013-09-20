@@ -67,6 +67,10 @@ def create_app():
     models.db.init_app(app)
     admin.init_app(app)
 
+    if app.config.get('SENTRY_DSN'):
+        from raven.contrib.flask import Sentry
+        Sentry(app)
+
     return app
 
 

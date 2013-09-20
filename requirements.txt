@@ -19,6 +19,7 @@ mock==1.0.1
 path.py==4.3
 python-dateutil==2.1
 pytz==2013d
+raven==2.0.12.2
 six==1.4.1
 sqlacodegen==1.1.1
 SQLAlchemy==0.8.2

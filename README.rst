@@ -79,6 +79,9 @@ Configurație
     habitate, de exemplu:
     ``'http://example.com/map?species={species}&regions={regions}'``
 
+``SENTRY_DSN``
+    Adresă a unui server Sentry pentru logat erori.
+
 
 Dezvoltare
 ----------
