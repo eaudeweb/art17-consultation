@@ -13,7 +13,8 @@ message_removed = Signal()
 
 
 def _get_comment_or_404(comment_id):
-    for cls in [models.DataSpeciesComment, models.DataHabitattypeComment]:
+    for cls in [models.DataSpeciesConclusion,
+                models.DataHabitattypeConclusion]:
         comment = cls.query.get(comment_id)
         if comment is not None:
             return comment
@@ -32,7 +33,7 @@ def new(comment_id):
     comment = _get_comment_or_404(comment_id)
 
     if flask.request.method == 'POST':
-        message = models.CommentMessage(
+        message = models.ConclusionMessage(
             text=flask.request.form['text'],
             user_id=flask.g.identity.id,
             date=datetime.utcnow(),
@@ -52,7 +53,7 @@ def new(comment_id):
 def remove():
     message_id = flask.request.args['message_id']
     next_url = flask.request.args['next']
-    message = models.CommentMessage.query.get_or_404(message_id)
+    message = models.ConclusionMessage.query.get_or_404(message_id)
     user_id = message.user_id
     models.db.session.delete(message)
     app = flask.current_app._get_current_object()
@@ -66,20 +67,19 @@ def remove():
 def set_read_status():
     message_id = flask.request.form['message_id']
     read = (flask.request.form.get('read') == 'on')
-    message = models.CommentMessage.query.get_or_404(message_id)
+    message = models.ConclusionMessage.query.get_or_404(message_id)
 
     user_id = flask.g.identity.id
     if user_id is None:
         flask.abort(403)
 
-    existing = (models.CommentMessageRead.query
-                                         .filter_by(message_id=message.id,
-                                                    user_id=user_id))
+    existing = (models.ConclusionMessageRead
+                    .query.filter_by(message_id=message.id, user_id=user_id))
 
     if read:
         if not existing.count():
-            row = models.CommentMessageRead(message_id=message.id,
-                                            user_id=user_id)
+            row = models.ConclusionMessageRead(message_id=message.id,
+                                               user_id=user_id)
             models.db.session.add(row)
             models.db.session.commit()
 
@@ -92,12 +92,13 @@ def set_read_status():
 
 @messages.route('/mesaje/<comment_id>')
 def index(comment_id):
-    messages = models.CommentMessage.query.filter_by(parent=comment_id).all()
+    messages = (models.ConclusionMessage
+                    .query.filter_by(parent=comment_id).all())
     user_id = flask.g.identity.id
 
     if user_id:
-        read_by_user = (models.CommentMessageRead.query
-                                                 .filter_by(user_id=user_id))
+        read_by_user = (models.ConclusionMessageRead
+                            .query.filter_by(user_id=user_id))
         read_msgs = set(r.message_id for r in read_by_user)
 
     else:

@@ -1,7 +1,7 @@
 import flask
 from blinker import Signal
 from art17 import models
-from art17.common import IndexView, CommentView, CommentStateView
+from art17.common import IndexView, ConclusionView, ConclusionStateView
 from art17 import forms
 from art17 import schemas
 
@@ -52,11 +52,11 @@ def detail(record_id):
     })
 
 
-class HabitatCommentView(CommentView):
+class HabitatConclusionView(ConclusionView):
 
-    form_cls = forms.HabitatComment
+    form_cls = forms.HabitatConclusion
     record_cls = models.DataHabitattypeRegion
-    comment_cls = models.DataHabitattypeComment
+    comment_cls = models.DataHabitattypeConclusion
     parse_commentform = staticmethod(schemas.parse_habitat_commentform)
     flatten_commentform = staticmethod(schemas.flatten_habitat_commentform)
     template = 'habitat/comment.html'
@@ -84,18 +84,18 @@ class HabitatCommentView(CommentView):
 
 
 habitat.add_url_rule('/habitate/detalii/<int:record_id>/comentariu',
-                     view_func=HabitatCommentView.as_view('comment'))
+                     view_func=HabitatConclusionView.as_view('comment'))
 
 
 habitat.add_url_rule('/habitate/comentariu/<comment_id>',
-                     view_func=HabitatCommentView.as_view('comment_edit'))
+                     view_func=HabitatConclusionView.as_view('comment_edit'))
 
 
-class HabitatCommentStateView(CommentStateView):
+class HabitatConclusionStateView(ConclusionStateView):
 
-    comment_cls = models.DataHabitattypeComment
+    comment_cls = models.DataHabitattypeConclusion
     signal = comment_status_changed
 
 
 habitat.add_url_rule('/habitate/comentariu/<comment_id>/stare',
-                view_func=HabitatCommentStateView.as_view('comment_status'))
+                view_func=HabitatConclusionStateView.as_view('comment_status'))

@@ -9,7 +9,7 @@ class species_params(object):
     comment_table = 'data_species_comments'
     comment_create_url = '/specii/detalii/1/comentariu'
     user_id = 'somebody'
-    comment_cls = models.DataSpeciesComment
+    comment_cls = models.DataSpeciesConclusion
     comment_id = '4f799fdd6f5a'
     comment_edit_url = '/specii/comentariu/4f799fdd6f5a'
     comment_status_url = '/specii/comentariu/4f799fdd6f5a/stare'
@@ -37,7 +37,7 @@ class habitat_params(object):
     comment_table = 'data_habitattype_comments'
     comment_create_url = '/habitate/detalii/1/comentariu'
     user_id = 'somebody'
-    comment_cls = models.DataHabitattypeComment
+    comment_cls = models.DataHabitattypeConclusion
     comment_id = '4f799fdd6f5a'
     comment_edit_url = '/habitate/comentariu/4f799fdd6f5a'
     comment_status_url = '/habitate/comentariu/4f799fdd6f5a/stare'
@@ -128,7 +128,7 @@ def test_message_add(app):
 
     with app.app_context():
         history = models.History.query.all()
-        message = models.CommentMessage.query.first()
+        message = models.ConclusionMessage.query.first()
         assert len(history) == 1
         assert history[0].table == 'comment_messages'
         assert history[0].object_id == message.id
@@ -147,10 +147,10 @@ def test_message_remove(app):
     app.register_blueprint(messages.messages)
 
     with app.app_context():
-        message = models.CommentMessage(text='hello foo',
-                                        user_id='somewho',
-                                        parent='123',
-                                        date=datetime(2010, 1, 4))
+        message = models.ConclusionMessage(text='hello foo',
+                                           user_id='somewho',
+                                           parent='123',
+                                           date=datetime(2010, 1, 4))
         models.db.session.add(message)
         models.db.session.commit()
         message_id = message.id

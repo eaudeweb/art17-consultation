@@ -127,10 +127,10 @@ def _create_habitat_record(habitat_app, comment=False):
         models.db.session.add(record)
 
         if comment:
-            comment = models.DataHabitattypeComment(id='4f799fdd6f5a',
-                                                    habitat_id=1,
-                                                    region='ALP',
-                                                    range_surface_area=1337)
+            comment = models.DataHabitattypeConclusion(id='4f799fdd6f5a',
+                                                       habitat_id=1,
+                                                       region='ALP',
+                                                       range_surface_area=1337)
             models.db.session.add(comment)
 
         models.db.session.commit()
@@ -144,7 +144,7 @@ def test_load_comments_view(habitat_app):
 
 
 def test_save_comment_record(habitat_app):
-    from art17.models import DataHabitattypeComment
+    from art17.models import DataHabitattypeConclusion
     _create_habitat_record(habitat_app)
     client = habitat_app.test_client()
     resp = client.post('/habitate/detalii/1/comentariu',
@@ -156,15 +156,15 @@ def test_save_comment_record(habitat_app):
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with habitat_app.app_context():
-        assert DataHabitattypeComment.query.count() == 1
-        comment = DataHabitattypeComment.query.first()
+        assert DataHabitattypeConclusion.query.count() == 1
+        comment = DataHabitattypeConclusion.query.first()
         assert comment.hr_habitat.code == '1234'
         assert comment.region == 'ALP'
         assert comment.range_surface_area == 50
 
 
 def test_edit_comment_form(habitat_app):
-    from art17.models import DataHabitattypeComment, db
+    from art17.models import DataHabitattypeConclusion, db
     _create_habitat_record(habitat_app, comment=True)
     client = habitat_app.test_client()
     resp1 = client.get('/habitate/comentariu/f3b4c23bcb88')
@@ -175,7 +175,7 @@ def test_edit_comment_form(habitat_app):
 
 
 def test_edit_comment_submit(habitat_app):
-    from art17.models import DataHabitattypeComment, db
+    from art17.models import DataHabitattypeConclusion, db
     _create_habitat_record(habitat_app, comment=True)
     client = habitat_app.test_client()
     resp = client.post('/habitate/comentariu/4f799fdd6f5a',
@@ -187,7 +187,7 @@ def test_edit_comment_submit(habitat_app):
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with habitat_app.app_context():
-        comment = DataHabitattypeComment.query.get('4f799fdd6f5a')
+        comment = DataHabitattypeConclusion.query.get('4f799fdd6f5a')
         assert comment.range_surface_area == 50
 
 
@@ -200,10 +200,10 @@ def test_save_all_form_fields():
 
     form_data = MultiDict(flatten_dict(HABITAT_STRUCT_DATA))
 
-    form = forms.HabitatComment(form_data)
+    form = forms.HabitatConclusion(form_data)
     assert form.validate()
 
-    comment = models.DataHabitattypeComment()
+    comment = models.DataHabitattypeConclusion()
     flatten_habitat_commentform(form.data, comment)
 
     for k, v in HABITAT_MODEL_DATA.items():
@@ -213,7 +213,7 @@ def test_save_all_form_fields():
 def test_flatten():
     from art17.schemas import flatten_habitat_commentform
     from art17 import models
-    obj = models.DataHabitattypeComment()
+    obj = models.DataHabitattypeConclusion()
     flatten_habitat_commentform(HABITAT_STRUCT_DATA, obj)
     for k, v in HABITAT_MODEL_DATA.items():
         assert getattr(obj, k) == v
@@ -222,7 +222,7 @@ def test_flatten():
 def test_parse():
     from art17.schemas import parse_habitat_commentform
     from art17 import models
-    obj = models.DataHabitattypeComment(**HABITAT_MODEL_DATA)
+    obj = models.DataHabitattypeConclusion(**HABITAT_MODEL_DATA)
     data = parse_habitat_commentform(obj)
     assert data == HABITAT_STRUCT_DATA
 
@@ -244,7 +244,7 @@ def test_add_comment_message(habitat_app):
     form.submit()
 
     with habitat_app.app_context():
-        messages = models.CommentMessage.query.all()
+        messages = models.ConclusionMessage.query.all()
         assert len(messages) == 1
         msg = messages[0]
         assert msg.text == "hello world!"

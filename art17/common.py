@@ -92,11 +92,11 @@ class IndexView(flask.views.View):
                 self.records = self.records.filter_by(region=self.region.code)
                 self.comments = self.comments.filter_by(region=self.region.code)
 
-            CommentMessage = models.CommentMessage
+            ConclusionMessage = models.ConclusionMessage
             self.message_counts = dict(models.db.session.query(
-                                    CommentMessage.parent,
-                                    func.count(CommentMessage.id)
-                                ).group_by(CommentMessage.parent))
+                                    ConclusionMessage.parent,
+                                    func.count(ConclusionMessage.id)
+                                ).group_by(ConclusionMessage.parent))
 
         self.subject_list = (self.subject_cls.query
                             .join(self.record_cls)
@@ -130,7 +130,7 @@ class IndexView(flask.views.View):
         pass
 
 
-class CommentView(flask.views.View):
+class ConclusionView(flask.views.View):
 
     methods = ['GET', 'POST']
 
@@ -181,7 +181,7 @@ class CommentView(flask.views.View):
         return flask.render_template(self.template, **self.template_ctx)
 
 
-class CommentStateView(flask.views.View):
+class ConclusionStateView(flask.views.View):
 
     methods = ['POST']
 

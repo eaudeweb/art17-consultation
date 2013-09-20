@@ -194,7 +194,7 @@ class DataHabitattypeRegion(Base):
                       innerjoin=True, uselist=False)
 
 
-class DataHabitattypeComment(Base):
+class DataHabitattypeConclusion(Base):
     __tablename__ = u'data_habitattype_comments'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
@@ -421,7 +421,7 @@ class DataSpeciesRegion(Base):
                       innerjoin=True, uselist=False)
 
 
-class DataSpeciesComment(Base):
+class DataSpeciesConclusion(Base):
     __tablename__ = u'data_species_comments'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
@@ -519,7 +519,7 @@ class DataSpeciesComment(Base):
         backref=db.backref('comments', lazy='dynamic'))
 
 
-class CommentMessage(Base):
+class ConclusionMessage(Base):
     __tablename__ = u'comment_messages'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
@@ -529,11 +529,11 @@ class CommentMessage(Base):
     text = Column(Text)
 
 
-class CommentMessageRead(Base):
+class ConclusionMessageRead(Base):
     __tablename__ = u'comment_messages_read'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
-    message_id = Column(String, ForeignKey(CommentMessage.id))
+    message_id = Column(String, ForeignKey(ConclusionMessage.id))
     user_id = Column(String)
 
 

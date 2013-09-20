@@ -1,7 +1,7 @@
 import flask
 from blinker import Signal
 from art17 import models
-from art17.common import IndexView, CommentView, CommentStateView
+from art17.common import IndexView, ConclusionView, ConclusionStateView
 from art17 import forms
 from art17 import schemas
 
@@ -70,11 +70,11 @@ def detail(record_id):
     })
 
 
-class SpeciesCommentView(CommentView):
+class SpeciesConclusionView(ConclusionView):
 
-    form_cls = forms.SpeciesComment
+    form_cls = forms.SpeciesConclusion
     record_cls = models.DataSpeciesRegion
-    comment_cls = models.DataSpeciesComment
+    comment_cls = models.DataSpeciesConclusion
     parse_commentform = staticmethod(schemas.parse_species_commentform)
     flatten_commentform = staticmethod(schemas.flatten_species_commentform)
     template = 'species/comment.html'
@@ -102,18 +102,18 @@ class SpeciesCommentView(CommentView):
 
 
 species.add_url_rule('/specii/detalii/<int:record_id>/comentariu',
-                     view_func=SpeciesCommentView.as_view('comment'))
+                     view_func=SpeciesConclusionView.as_view('comment'))
 
 
 species.add_url_rule('/specii/comentariu/<comment_id>',
-                     view_func=SpeciesCommentView.as_view('comment_edit'))
+                     view_func=SpeciesConclusionView.as_view('comment_edit'))
 
 
-class SpeciesCommentStateView(CommentStateView):
+class SpeciesConclusionStateView(ConclusionStateView):
 
-    comment_cls = models.DataSpeciesComment
+    comment_cls = models.DataSpeciesConclusion
     signal = comment_status_changed
 
 
 species.add_url_rule('/specii/comentariu/<comment_id>/stare',
-                view_func=SpeciesCommentStateView.as_view('comment_status'))
+                view_func=SpeciesConclusionStateView.as_view('comment_status'))

@@ -170,7 +170,7 @@ class Coverage(Form):
         super(Coverage, self).__init__(*args, **kwargs)
         self.reference_value.op.choices=EMPTY_CHOICE + LU_FV_RANGE_OP_FUNCT_OPTIONS
 
-class SpeciesComment(Form):
+class SpeciesConclusion(Form):
 
     range = FormField(Range)
     population = FormField(Population)
@@ -179,7 +179,7 @@ class SpeciesComment(Form):
     overall_assessment = FormField(Conclusion)
 
 
-class HabitatComment(Form):
+class HabitatConclusion(Form):
 
     range = FormField(Range)
     coverage = FormField(Coverage)
