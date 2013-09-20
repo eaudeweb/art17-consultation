@@ -121,20 +121,15 @@ $('body').on('click', '.showmap', function(evt) {
 });
 
 
-var menu_items = [
-  {value: 'new', label: "nou"},
-  {value: 'approved', label: "aprobat"},
-  {value: 'rejected', label: "refuzat"}
-];
-
-
 _($('.records-conclusionstatus [name=status]')).forEach(function(el) {
   var hidden_input = $(el);
   var select = $('<select name="status">');
-  _(menu_items).forEach(function(item) {
-    var option = $('<option>', {value: item.value});
-    option.text(item.label);
-    if(hidden_input.val() == item.value) {
+  _(App.STATUS_OPTIONS).forEach(function(item) {
+    var value = item[0];
+    var label = item[1];
+    var option = $('<option>', {value: value});
+    option.text(label);
+    if(hidden_input.val() == value) {
       option.attr('selected', true);
     }
     select.append(option);

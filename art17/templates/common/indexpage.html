@@ -21,6 +21,9 @@
 {% block script %}
   {%- from 'bits.html' import script %}
   {{- super() }}
+  <script>
+    App.STATUS_OPTIONS = {{ STATUS_OPTIONS|tojson|safe }};
+  </script>
   {{ script('indexpage.js') }}
   {{ script('detail.js') }}
   {{ script('messages.js') }}
