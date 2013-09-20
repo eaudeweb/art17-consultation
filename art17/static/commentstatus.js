@@ -8,7 +8,7 @@ var menu_items = [
 ];
 
 
-_($('.records-commentstatus [name=status]')).forEach(function(el) {
+_($('.records-conclusionstatus [name=status]')).forEach(function(el) {
   var hidden_input = $(el);
   var select = $('<select name="status">');
   _(menu_items).forEach(function(item) {
@@ -23,7 +23,7 @@ _($('.records-commentstatus [name=status]')).forEach(function(el) {
 });
 
 
-$('.records-commentstatus').change(function(evt) {
+$('.records-conclusionstatus').change(function(evt) {
   var form = $(this);
   var select = $(evt.target);
   select.hide();

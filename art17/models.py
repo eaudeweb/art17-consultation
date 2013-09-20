@@ -263,12 +263,12 @@ class DataHabitattypeConclusion(Base):
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    comment_date = Column(DateTime)
+    conclusion_date = Column('comment_date', DateTime)
     user_id = Column(String)
     status = Column(Text, default='new')
 
     hr_habitat = relationship(u'DataHabitat',
-        backref=db.backref('comments', lazy='dynamic'))
+        backref=db.backref('conclusions', lazy='dynamic'))
 
 
 class DataSpecies(Base):
@@ -511,12 +511,12 @@ class DataSpeciesConclusion(Base):
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    comment_date = Column(DateTime)
+    conclusion_date = Column('comment_date', DateTime)
     user_id = Column(String)
     status = Column(Text, default='new')
 
     species = relationship(u'DataSpecies',
-        backref=db.backref('comments', lazy='dynamic'))
+        backref=db.backref('conclusions', lazy='dynamic'))
 
 
 class ConclusionMessage(Base):

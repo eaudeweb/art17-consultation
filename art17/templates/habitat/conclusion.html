@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from 'common/comment_bits.html' import error_cls, errors %}
+{% from 'common/conclusion_bits.html' import error_cls, errors %}
 
 
 {% block title %}
@@ -518,6 +518,6 @@
       <input type="hidden" name="next" value="{{ next_url }}">
     {%- endif %}
 
-    <button type="submit" class="recordcomment-save">Save</button>
+    <button type="submit" class="recordconclusion-save">Save</button>
   </form>
 {% endblock content %}

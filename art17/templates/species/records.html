@@ -40,9 +40,9 @@
   {{ conclusion_td(row.overall_assessment) }}
 {%- endmacro %}
 
-{%- set comment_next = url_for('.index', group=current_group_code,
-                                         species=current_species_code,
-                                         region=current_region_code) %}
+{%- set conclusion_next = url_for('.index', group=current_group_code,
+                                            species=current_species_code,
+                                            region=current_region_code) %}
 
 
 <table class="records">
@@ -58,7 +58,7 @@
     <th rowspan=2
         title="Evaluare generală a stării de conservare"
         >Evaluare generală</th>
-    <th rowspan=2 colspan=4></th>  {#- comment (author, etc) #}
+    <th rowspan=2 colspan=4></th>  {#- conclusion (author, etc) #}
   </tr>
 
   <tr class="records-header">
@@ -96,9 +96,9 @@
     {{ record_cells(row) }}
 
     <td colspan=4>
-            {%- set url = url_for('.comment', record_id=row.id, next=comment_next) %}
-      <a class="records-commentbtn" href="{{ url }}">adaugǎ comentariu</a>
-    </td>  {#- comment (author, etc) #}
+            {%- set url = url_for('.conclusion', record_id=row.id, next=conclusion_next) %}
+      <a class="records-conclusionbtn" href="{{ url }}">adaugǎ comentariu</a>
+    </td>  {#- conclusion (author, etc) #}
   </tr>
  {% endfor %}
 
@@ -106,14 +106,14 @@
     <th colspan=23>Comentarii</th>
   </tr>
 
- {% for row in comments %}
+ {% for row in conclusions %}
   <tr>
     {#- detail #}
     <td>
       {%- if admin_permission.can() %}
-        {%- set url = url_for('.comment_status', comment_id=row.id) %}
-        <form method="post" action="{{ url }}" class="records-commentstatus">
-          <input type="hidden" name="next" value="{{ comment_next }}">
+        {%- set url = url_for('.conclusion_status', conclusion_id=row.id) %}
+        <form method="post" action="{{ url }}" class="records-conclusionstatus">
+          <input type="hidden" name="next" value="{{ conclusion_next }}">
           <input type="hidden" name="status" value="{{ row.status }}">
         </form>
       {%- endif %}
@@ -121,20 +121,20 @@
 
     {{ record_cells(row) }}
 
-    <td>{{ row.user_id }}</td>  {#- comment author, etc #}
+    <td>{{ row.user_id }}</td>  {#- conclusion author, etc #}
     <td>
       {%- if row.can_edit %}
-        {%- set url = url_for('.comment_edit', comment_id=row.id,
-                                               next=comment_next) %}
-        <a href="{{ url }}" class="records-editcommentbtn">edit</a>
+        {%- set url = url_for('.conclusion_edit', conclusion_id=row.id,
+                                               next=conclusion_next) %}
+        <a href="{{ url }}" class="records-editconclusionbtn">edit</a>
       {%- endif %}
     </td>
-    <td>{{ row.comment_date|local_date }}</td>
+    <td>{{ row.conclusion_date|local_date }}</td>
     <td>
-      {%- set url = url_for('messages.index', comment_id=row.id) %}
+      {%- set url = url_for('messages.index', conclusion_id=row.id) %}
       {%- set count = message_counts[row.id] or 0 %}
       <a class="records-messagesbtn btn btn-xs btn-default"
-         href="{{ url }}">{{ fonticon('comment') }} {{ count }}</a>
+         href="{{ url }}">{{ fonticon('conclusion') }} {{ count }}</a>
     </td>
   </tr>
  {% endfor %}

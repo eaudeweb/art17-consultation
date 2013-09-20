@@ -12,12 +12,12 @@ message_added = Signal()
 message_removed = Signal()
 
 
-def _get_comment_or_404(comment_id):
+def _get_conclusion_or_404(conclusion_id):
     for cls in [models.DataSpeciesConclusion,
                 models.DataHabitattypeConclusion]:
-        comment = cls.query.get(comment_id)
-        if comment is not None:
-            return comment
+        conclusion = cls.query.get(conclusion_id)
+        if conclusion is not None:
+            return conclusion
 
     else:
         flask.abort(404)
@@ -28,22 +28,23 @@ def _dump_message_data(message):
             for k in ['text', 'user_id', 'parent', 'date']}
 
 
-@messages.route('/mesaje/<comment_id>/nou', methods=['POST'])
-def new(comment_id):
-    comment = _get_comment_or_404(comment_id)
+@messages.route('/mesaje/<conclusion_id>/nou', methods=['POST'])
+def new(conclusion_id):
+    conclusion = _get_conclusion_or_404(conclusion_id)
 
     if flask.request.method == 'POST':
         message = models.ConclusionMessage(
             text=flask.request.form['text'],
             user_id=flask.g.identity.id,
             date=datetime.utcnow(),
-            parent=comment.id)
+            parent=conclusion.id)
         models.db.session.add(message)
         app = flask.current_app._get_current_object()
         message_added.send(app, ob=message,
                            new_data=_dump_message_data(message))
         models.db.session.commit()
-        return flask.redirect(flask.url_for('.index', comment_id=comment_id))
+        url = flask.url_for('.index', conclusion_id=conclusion_id)
+        return flask.redirect(url)
 
     return flask.render_template('messages/new.html')
 
@@ -90,10 +91,10 @@ def set_read_status():
     return flask.jsonify(read=read)
 
 
-@messages.route('/mesaje/<comment_id>')
-def index(comment_id):
+@messages.route('/mesaje/<conclusion_id>')
+def index(conclusion_id):
     messages = (models.ConclusionMessage
-                    .query.filter_by(parent=comment_id).all())
+                    .query.filter_by(parent=conclusion_id).all())
     user_id = flask.g.identity.id
 
     if user_id:
@@ -105,7 +106,7 @@ def index(comment_id):
         read_msgs = []
 
     return flask.render_template('messages/index.html', **{
-        'comment_id': comment_id,
+        'conclusion_id': conclusion_id,
         'messages': messages,
         'read_msgs': read_msgs,
     })
