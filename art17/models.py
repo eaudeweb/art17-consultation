@@ -195,7 +195,7 @@ class DataHabitattypeRegion(Base):
 
 
 class DataHabitattypeConclusion(Base):
-    __tablename__ = u'data_habitattype_comments'
+    __tablename__ = u'data_habitattype_conclusions'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
     habitat_id = Column('hr_habitat_id', ForeignKey(DataHabitat.id), index=True)
@@ -263,7 +263,7 @@ class DataHabitattypeConclusion(Base):
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    conclusion_date = Column('comment_date', DateTime)
+    conclusion_date = Column(DateTime)
     user_id = Column(String)
     status = Column(Text, default='new')
 
@@ -422,7 +422,7 @@ class DataSpeciesRegion(Base):
 
 
 class DataSpeciesConclusion(Base):
-    __tablename__ = u'data_species_comments'
+    __tablename__ = u'data_species_conclusions'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
     species_id = Column('sr_species_id', ForeignKey(DataSpecies.id), index=True)
@@ -511,7 +511,7 @@ class DataSpeciesConclusion(Base):
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    conclusion_date = Column('comment_date', DateTime)
+    conclusion_date = Column(DateTime)
     user_id = Column(String)
     status = Column(Text, default='new')
 
