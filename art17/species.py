@@ -1,15 +1,15 @@
 import flask
 from blinker import Signal
 from art17 import models
-from art17.common import IndexView, CommentView, CommentStateView
+from art17.common import IndexView, ConclusionView, ConclusionStateView
 from art17 import forms
 from art17 import schemas
 
 species = flask.Blueprint('species', __name__)
 
-comment_added = Signal()
-comment_edited = Signal()
-comment_status_changed = Signal()
+conclusion_added = Signal()
+conclusion_edited = Signal()
+conclusion_status_changed = Signal()
 
 
 @species.route('/specii/regiuni/<int:species_code>')
@@ -70,21 +70,21 @@ def detail(record_id):
     })
 
 
-class SpeciesCommentView(CommentView):
+class SpeciesConclusionView(ConclusionView):
 
-    form_cls = forms.SpeciesComment
+    form_cls = forms.SpeciesConclusion
     record_cls = models.DataSpeciesRegion
-    comment_cls = models.DataSpeciesComment
-    parse_commentform = staticmethod(schemas.parse_species_commentform)
-    flatten_commentform = staticmethod(schemas.flatten_species_commentform)
-    template = 'species/comment.html'
-    template_saved = 'species/comment-saved.html'
-    add_signal = comment_added
-    edit_signal = comment_edited
+    conclusion_cls = models.DataSpeciesConclusion
+    parse_conclusionform = staticmethod(schemas.parse_species_conclusionform)
+    flatten_conclusionform = staticmethod(schemas.flatten_species_conclusionform)
+    template = 'species/conclusion.html'
+    template_saved = 'species/conclusion-saved.html'
+    add_signal = conclusion_added
+    edit_signal = conclusion_edited
 
-    def link_comment_to_record(self):
-        self.comment.species_id = self.record.species_id
-        self.comment.region = self.record.region
+    def link_conclusion_to_record(self):
+        self.conclusion.species_id = self.record.species_id
+        self.conclusion.region = self.record.region
 
     def setup_template_context(self):
         self.template_ctx = {
@@ -92,28 +92,29 @@ class SpeciesCommentView(CommentView):
             'record': schemas.parse_species(self.record),
         }
 
-    def record_for_comment(self, comment):
+    def record_for_conclusion(self, conclusion):
         records = (models.DataSpeciesRegion.query
-                            .filter_by(species_id=comment.species_id)
-                            .filter_by(region=comment.region)
+                            .filter_by(species_id=conclusion.species_id)
+                            .filter_by(region=conclusion.region)
                             .all())
-        assert len(records) == 1, "Expected exactly one record for the comment"
+        assert len(records) == 1, ("Expected exactly one record "
+                                   "for the conclusion")
         return records[0]
 
 
 species.add_url_rule('/specii/detalii/<int:record_id>/comentariu',
-                     view_func=SpeciesCommentView.as_view('comment'))
+                     view_func=SpeciesConclusionView.as_view('conclusion'))
 
 
-species.add_url_rule('/specii/comentariu/<comment_id>',
-                     view_func=SpeciesCommentView.as_view('comment_edit'))
+species.add_url_rule('/specii/comentariu/<conclusion_id>',
+                 view_func=SpeciesConclusionView.as_view('conclusion_edit'))
 
 
-class SpeciesCommentStateView(CommentStateView):
+class SpeciesConclusionStateView(ConclusionStateView):
 
-    comment_cls = models.DataSpeciesComment
-    signal = comment_status_changed
+    conclusion_cls = models.DataSpeciesConclusion
+    signal = conclusion_status_changed
 
 
-species.add_url_rule('/specii/comentariu/<comment_id>/stare',
-                view_func=SpeciesCommentStateView.as_view('comment_status'))
+species.add_url_rule('/specii/comentariu/<conclusion_id>/stare',
+            view_func=SpeciesConclusionStateView.as_view('conclusion_status'))

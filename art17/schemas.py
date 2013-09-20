@@ -72,7 +72,7 @@ def _get_habitat_quality(obj):
     }
 
 
-def can_edit_comment(row):
+def can_edit_conclusion(row):
     from art17 import auth
     if auth.admin_permission.can():
         return True
@@ -84,19 +84,19 @@ def can_edit_comment(row):
     return False
 
 
-def comment_info(row):
+def conclusion_info(row):
     return {
         'user_id': row.user_id,
-        'can_edit': can_edit_comment(row),
-        'comment_date': row.comment_date,
+        'can_edit': can_edit_conclusion(row),
+        'conclusion_date': row.conclusion_date,
         'status': row.status,
     }
 
 
-def parse_species(row, is_comment=False):
+def parse_species(row, is_conclusion=False):
     rv = {}
-    if is_comment:
-        rv.update(comment_info(row))
+    if is_conclusion:
+        rv.update(conclusion_info(row))
     rv['id'] = row.id
     rv['region'] = row.region
     rv['range'] = {
@@ -152,7 +152,7 @@ def parse_trend(obj, prefix, magnitude=False):
     return rv
 
 
-def parse_species_commentform(row):
+def parse_species_conclusionform(row):
     rv = {}
     rv['range'] = {
             'surface_area': row.range_surface_area,
@@ -192,10 +192,10 @@ def parse_species_commentform(row):
     return rv
 
 
-def parse_habitat(row, is_comment=False):
+def parse_habitat(row, is_conclusion=False):
     rv = {}
-    if is_comment:
-        rv.update(comment_info(row))
+    if is_conclusion:
+        rv.update(conclusion_info(row))
     rv['id'] = row.id
     rv['region'] = row.region
     rv['range'] = {
@@ -223,7 +223,7 @@ def parse_habitat(row, is_comment=False):
     return rv
 
 
-def parse_habitat_commentform(row):
+def parse_habitat_conclusionform(row):
     rv = {}
     rv['range'] = {
             'surface_area': row.range_surface_area,
@@ -290,7 +290,7 @@ def _set_population_size(pop_size_struct, obj):
                     pop_size_struct[qualifier]['unit'])
 
 
-def flatten_species_commentform(struct, obj):
+def flatten_species_conclusionform(struct, obj):
     obj.range_surface_area = struct['range']['surface_area']
     obj.range_method = struct['range']['method']
     flatten_trend(struct['range']['trend_short'], obj, 'range_trend')
@@ -328,7 +328,7 @@ def flatten_species_commentform(struct, obj):
     flatten_conclusion(struct['overall_assessment'], obj,
                     'conclusion_assessment')
 
-def flatten_habitat_commentform(struct, obj):
+def flatten_habitat_conclusionform(struct, obj):
     obj.range_surface_area = struct['range']['surface_area']
     obj.range_method = struct['range']['method']
 

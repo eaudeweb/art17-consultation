@@ -2,7 +2,7 @@
 
 import pytest
 
-COMMENT_SAVED_TXT = "Comentariul a fost înregistrat"
+CONCLUSION_SAVED_TXT = "Comentariul a fost înregistrat"
 MISSING_FIELD_TXT = "Suprafața este obligatorie"
 
 SPECIES_STRUCT_DATA = {
@@ -161,7 +161,7 @@ SPECIES_MODEL_DATA = {
 }
 
 
-def _create_species_record(species_app, comment=False):
+def _create_species_record(species_app, conclusion=False):
     from art17 import models
     with species_app.app_context():
         species = models.DataSpecies(id=1, code='1234')
@@ -171,25 +171,25 @@ def _create_species_record(species_app, comment=False):
         record.lu = models.LuBiogeoreg(objectid=1)
         models.db.session.add(record)
 
-        if comment:
-            comment = models.DataSpeciesComment(id='4f799fdd6f5a',
-                                                species_id=1,
-                                                region='ALP',
-                                                range_surface_area=1337)
-            models.db.session.add(comment)
+        if conclusion:
+            conclusion = models.DataSpeciesConclusion(id='4f799fdd6f5a',
+                                                      species_id=1,
+                                                      region='ALP',
+                                                      range_surface_area=1337)
+            models.db.session.add(conclusion)
 
         models.db.session.commit()
 
 
-def test_load_comments_view(species_app):
+def test_load_conclusions_view(species_app):
     _create_species_record(species_app)
     client = species_app.test_client()
     resp = client.get('/specii/detalii/1/comentariu')
     assert resp.status_code == 200
 
 
-def test_save_comment_record(species_app):
-    from art17.models import DataSpeciesComment
+def test_save_conclusion_record(species_app):
+    from art17.models import DataSpeciesConclusion
     _create_species_record(species_app)
     client = species_app.test_client()
     resp = client.post('/specii/detalii/1/comentariu',
@@ -203,18 +203,18 @@ def test_save_comment_record(species_app):
                              'habitat.quality_explanation': 'foo explanation',
                              'habitat.area_suitable': 1000})
     assert resp.status_code == 200
-    assert COMMENT_SAVED_TXT in resp.data
+    assert CONCLUSION_SAVED_TXT in resp.data
     with species_app.app_context():
-        assert DataSpeciesComment.query.count() == 1
-        comment = DataSpeciesComment.query.first()
-        assert comment.species.code == '1234'
-        assert comment.region == 'ALP'
-        assert comment.range_surface_area == 50
+        assert DataSpeciesConclusion.query.count() == 1
+        conclusion = DataSpeciesConclusion.query.first()
+        assert conclusion.species.code == '1234'
+        assert conclusion.region == 'ALP'
+        assert conclusion.range_surface_area == 50
 
 
-def test_edit_comment_form(species_app):
-    from art17.models import DataSpeciesComment, db
-    _create_species_record(species_app, comment=True)
+def test_edit_conclusion_form(species_app):
+    from art17.models import DataSpeciesConclusion, db
+    _create_species_record(species_app, conclusion=True)
     client = species_app.test_client()
     resp1 = client.get('/specii/comentariu/f3b4c23bcb88')
     assert resp1.status_code == 404
@@ -223,9 +223,9 @@ def test_edit_comment_form(species_app):
     assert '1337' in resp2.data
 
 
-def test_edit_comment_submit(species_app):
-    from art17.models import DataSpeciesComment, db
-    _create_species_record(species_app, comment=True)
+def test_edit_conclusion_submit(species_app):
+    from art17.models import DataSpeciesConclusion, db
+    _create_species_record(species_app, conclusion=True)
     client = species_app.test_client()
     resp = client.post('/specii/comentariu/4f799fdd6f5a',
                        data={'range.surface_area': '50',
@@ -238,56 +238,56 @@ def test_edit_comment_submit(species_app):
                              'habitat.quality_explanation': 'foo explanation',
                              'habitat.area_suitable': 1000})
     assert resp.status_code == 200
-    assert COMMENT_SAVED_TXT in resp.data
+    assert CONCLUSION_SAVED_TXT in resp.data
     with species_app.app_context():
-        comment = DataSpeciesComment.query.get('4f799fdd6f5a')
-        assert comment.range_surface_area == 50
+        conclusion = DataSpeciesConclusion.query.get('4f799fdd6f5a')
+        assert conclusion.range_surface_area == 50
 
 
 def test_save_all_form_fields():
     from art17 import forms
     from art17 import models
     from art17.common import flatten_dict
-    from art17.schemas import flatten_species_commentform
+    from art17.schemas import flatten_species_conclusionform
     from werkzeug.datastructures import MultiDict
 
     form_data = MultiDict(flatten_dict(SPECIES_STRUCT_DATA))
 
-    form = forms.SpeciesComment(form_data)
+    form = forms.SpeciesConclusion(form_data)
     assert form.validate()
 
-    comment = models.DataSpeciesComment()
-    flatten_species_commentform(form.data, comment)
+    conclusion = models.DataSpeciesConclusion()
+    flatten_species_conclusionform(form.data, conclusion)
 
     for k, v in SPECIES_MODEL_DATA.items():
-        assert getattr(comment, k) == v
+        assert getattr(conclusion, k) == v
 
 
 def test_flatten():
-    from art17.schemas import flatten_species_commentform
+    from art17.schemas import flatten_species_conclusionform
     from art17 import models
-    obj = models.DataSpeciesComment()
-    flatten_species_commentform(SPECIES_STRUCT_DATA, obj)
+    obj = models.DataSpeciesConclusion()
+    flatten_species_conclusionform(SPECIES_STRUCT_DATA, obj)
     for k, v in SPECIES_MODEL_DATA.items():
         assert getattr(obj, k) == v
 
 
 def test_parse():
-    from art17.schemas import parse_species_commentform
+    from art17.schemas import parse_species_conclusionform
     from art17 import models
-    obj = models.DataSpeciesComment(**SPECIES_MODEL_DATA)
-    data = parse_species_commentform(obj)
+    obj = models.DataSpeciesConclusion(**SPECIES_MODEL_DATA)
+    data = parse_species_conclusionform(obj)
     assert data == SPECIES_STRUCT_DATA
 
 
-def test_add_comment_message(species_app):
+def test_add_conclusion_message(species_app):
     import flask
     from webtest import TestApp
     from art17.messages import messages
     from art17 import models
     from art17.common import common
 
-    _create_species_record(species_app, comment=True)
+    _create_species_record(species_app, conclusion=True)
     species_app.register_blueprint(messages)
     species_app.register_blueprint(common)
     client = TestApp(species_app)
@@ -297,7 +297,7 @@ def test_add_comment_message(species_app):
     form.submit()
 
     with species_app.app_context():
-        messages = models.CommentMessage.query.all()
+        messages = models.ConclusionMessage.query.all()
         assert len(messages) == 1
         msg = messages[0]
         assert msg.text == "hello world!"

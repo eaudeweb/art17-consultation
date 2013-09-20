@@ -86,17 +86,18 @@ class IndexView(flask.views.View):
 
         if self.subject:
             self.records = self.subject.regions
-            self.comments = self.subject.comments
+            self.conclusions = self.subject.conclusions
 
             if self.region:
                 self.records = self.records.filter_by(region=self.region.code)
-                self.comments = self.comments.filter_by(region=self.region.code)
+                self.conclusions = self.conclusions.filter_by(
+                                        region=self.region.code)
 
-            CommentMessage = models.CommentMessage
+            ConclusionMessage = models.ConclusionMessage
             self.message_counts = dict(models.db.session.query(
-                                    CommentMessage.parent,
-                                    func.count(CommentMessage.id)
-                                ).group_by(CommentMessage.parent))
+                                    ConclusionMessage.parent,
+                                    func.count(ConclusionMessage.id)
+                                ).group_by(ConclusionMessage.parent))
 
         self.subject_list = (self.subject_cls.query
                             .join(self.record_cls)
@@ -114,8 +115,8 @@ class IndexView(flask.views.View):
                 'code': self.subject.code,
                 'name': self.subject.lu.display_name,
                 'records': [self.parse_record(r) for r in self.records],
-                'comments': [self.parse_record(r, is_comment=True)
-                             for r in self.comments],
+                'conclusions': [self.parse_record(r, is_conclusion=True)
+                             for r in self.conclusions],
                 'message_counts': self.message_counts,
                 'map_url': self.map_url_template.format(**{
                         self.subject_name: self.subject.code,
@@ -130,23 +131,24 @@ class IndexView(flask.views.View):
         pass
 
 
-class CommentView(flask.views.View):
+class ConclusionView(flask.views.View):
 
     methods = ['GET', 'POST']
 
-    def dispatch_request(self, record_id=None, comment_id=None):
+    def dispatch_request(self, record_id=None, conclusion_id=None):
         if record_id:
-            new_comment = True
+            new_conclusion = True
             self.record = self.record_cls.query.get_or_404(record_id)
-            self.comment = self.comment_cls(user_id=flask.g.identity.id,
-                                            comment_date=datetime.utcnow())
+            self.conclusion = self.conclusion_cls(user_id=flask.g.identity.id,
+                                            conclusion_date=datetime.utcnow())
             form = self.form_cls(flask.request.form)
 
-        elif comment_id:
-            new_comment = False
-            self.comment = self.comment_cls.query.get_or_404(comment_id)
-            self.record = self.record_for_comment(self.comment)
-            old_data = self.parse_commentform(self.comment)
+        elif conclusion_id:
+            new_conclusion = False
+            self.conclusion = (self.conclusion_cls
+                                    .query.get_or_404(conclusion_id))
+            self.record = self.record_for_conclusion(self.conclusion)
+            old_data = self.parse_conclusionform(self.conclusion)
             if flask.request.method == 'POST':
                 form_data = flask.request.form
             else:
@@ -154,22 +156,24 @@ class CommentView(flask.views.View):
             form = self.form_cls(form_data)
 
         else:
-            raise RuntimeError("Need at least one of record_id and comment_id")
+            raise RuntimeError("Need at least one of "
+                               "record_id and conclusion_id")
 
         self.setup_template_context()
         self.template_ctx['next_url'] = flask.request.args.get('next')
 
         if flask.request.method == 'POST' and form.validate():
-            self.link_comment_to_record()
+            self.link_conclusion_to_record()
 
-            self.flatten_commentform(form.data, self.comment)
-            models.db.session.add(self.comment)
+            self.flatten_conclusionform(form.data, self.conclusion)
+            models.db.session.add(self.conclusion)
 
             app = flask.current_app._get_current_object()
-            if new_comment:
-                self.add_signal.send(app, ob=self.comment, new_data=form.data)
+            if new_conclusion:
+                self.add_signal.send(app, ob=self.conclusion,
+                                          new_data=form.data)
             else:
-                self.edit_signal.send(app, ob=self.comment,
+                self.edit_signal.send(app, ob=self.conclusion,
                                       old_data=old_data, new_data=form.data)
 
             models.db.session.commit()
@@ -181,20 +185,20 @@ class CommentView(flask.views.View):
         return flask.render_template(self.template, **self.template_ctx)
 
 
-class CommentStateView(flask.views.View):
+class ConclusionStateView(flask.views.View):
 
     methods = ['POST']
 
-    def dispatch_request(self, comment_id):
-        comment = self.comment_cls.query.get_or_404(comment_id)
+    def dispatch_request(self, conclusion_id):
+        conclusion = self.conclusion_cls.query.get_or_404(conclusion_id)
         next_url = flask.request.form['next']
         new_status = flask.request.form['status']
         if new_status not in STATUS_VALUES:
             flask.abort(403)
-        old_status = comment.status
-        comment.status = new_status
+        old_status = conclusion.status
+        conclusion.status = new_status
         app = flask.current_app._get_current_object()
-        self.signal.send(app, ob=comment,
+        self.signal.send(app, ob=conclusion,
                          old_data=old_status, new_data=new_status)
         models.db.session.commit()
         return flask.redirect(next_url)
