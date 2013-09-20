@@ -84,11 +84,11 @@ class HabitatConclusionView(ConclusionView):
         return records[0]
 
 
-habitat.add_url_rule('/habitate/detalii/<int:record_id>/comentariu',
+habitat.add_url_rule('/habitate/detalii/<int:record_id>/concluzii',
                      view_func=HabitatConclusionView.as_view('conclusion'))
 
 
-habitat.add_url_rule('/habitate/comentariu/<conclusion_id>',
+habitat.add_url_rule('/habitate/concluzii/<conclusion_id>',
                      view_func=HabitatConclusionView.as_view('conclusion_edit'))
 
 
@@ -98,5 +98,5 @@ class HabitatConclusionStateView(ConclusionStateView):
     signal = conclusion_status_changed
 
 
-habitat.add_url_rule('/habitate/comentariu/<conclusion_id>/stare',
+habitat.add_url_rule('/habitate/concluzii/<conclusion_id>/stare',
             view_func=HabitatConclusionStateView.as_view('conclusion_status'))

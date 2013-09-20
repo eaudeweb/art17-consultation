@@ -91,13 +91,13 @@
 
     <td colspan=4>
       {%- set url = url_for('.conclusion', record_id=row.id, next=conclusion_next) %}
-      <a class="records-conclusionbtn" href="{{ url }}">adaugǎ comentariu</a>
+      <a class="records-conclusionbtn" href="{{ url }}">adaugǎ concluzie</a>
     </td>  {#- conclusion (author, etc) #}
   </tr>
  {% endfor %}
 
   <tr class="records-header">
-    <th colspan=19>Comentarii</th>
+    <th colspan=19>Concluzii</th>
   </tr>
 
  {% for row in conclusions %}

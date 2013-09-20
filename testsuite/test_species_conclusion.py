@@ -2,7 +2,7 @@
 
 import pytest
 
-CONCLUSION_SAVED_TXT = "Comentariul a fost înregistrat"
+CONCLUSION_SAVED_TXT = "Concluzia a fost înregistrată"
 MISSING_FIELD_TXT = "Suprafața este obligatorie"
 
 SPECIES_STRUCT_DATA = {
@@ -184,7 +184,7 @@ def _create_species_record(species_app, conclusion=False):
 def test_load_conclusions_view(species_app):
     _create_species_record(species_app)
     client = species_app.test_client()
-    resp = client.get('/specii/detalii/1/comentariu')
+    resp = client.get('/specii/detalii/1/concluzii')
     assert resp.status_code == 200
 
 
@@ -192,7 +192,7 @@ def test_save_conclusion_record(species_app):
     from art17.models import DataSpeciesConclusion
     _create_species_record(species_app)
     client = species_app.test_client()
-    resp = client.post('/specii/detalii/1/comentariu',
+    resp = client.post('/specii/detalii/1/concluzii',
                        data={'range.surface_area': '50',
                              'range.method': '1',
                              'population.method': '1',
@@ -216,9 +216,9 @@ def test_edit_conclusion_form(species_app):
     from art17.models import DataSpeciesConclusion, db
     _create_species_record(species_app, conclusion=True)
     client = species_app.test_client()
-    resp1 = client.get('/specii/comentariu/f3b4c23bcb88')
+    resp1 = client.get('/specii/concluzii/f3b4c23bcb88')
     assert resp1.status_code == 404
-    resp2 = client.get('/specii/comentariu/4f799fdd6f5a')
+    resp2 = client.get('/specii/concluzii/4f799fdd6f5a')
     assert resp2.status_code == 200
     assert '1337' in resp2.data
 
@@ -227,7 +227,7 @@ def test_edit_conclusion_submit(species_app):
     from art17.models import DataSpeciesConclusion, db
     _create_species_record(species_app, conclusion=True)
     client = species_app.test_client()
-    resp = client.post('/specii/comentariu/4f799fdd6f5a',
+    resp = client.post('/specii/concluzii/4f799fdd6f5a',
                        data={'range.surface_area': '50',
                              'range.method': '1',
                              'population.method': '1',

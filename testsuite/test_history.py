@@ -7,12 +7,12 @@ from art17 import models, species, habitat, history
 class species_params(object):
     blueprint = species.species
     conclusion_table = 'data_species_conclusions'
-    conclusion_create_url = '/specii/detalii/1/comentariu'
+    conclusion_create_url = '/specii/detalii/1/concluzii'
     user_id = 'somebody'
     conclusion_cls = models.DataSpeciesConclusion
     conclusion_id = '4f799fdd6f5a'
-    conclusion_edit_url = '/specii/comentariu/4f799fdd6f5a'
-    conclusion_status_url = '/specii/comentariu/4f799fdd6f5a/stare'
+    conclusion_edit_url = '/specii/concluzii/4f799fdd6f5a'
+    conclusion_status_url = '/specii/concluzii/4f799fdd6f5a/stare'
     conclusion_data = {'range.surface_area': '50',
                        'range.method': '1',
                        'population.method': '1',
@@ -35,12 +35,12 @@ class species_params(object):
 class habitat_params(object):
     blueprint = habitat.habitat
     conclusion_table = 'data_habitattype_conclusions'
-    conclusion_create_url = '/habitate/detalii/1/comentariu'
+    conclusion_create_url = '/habitate/detalii/1/concluzii'
     user_id = 'somebody'
     conclusion_cls = models.DataHabitattypeConclusion
     conclusion_id = '4f799fdd6f5a'
-    conclusion_edit_url = '/habitate/comentariu/4f799fdd6f5a'
-    conclusion_status_url = '/habitate/comentariu/4f799fdd6f5a/stare'
+    conclusion_edit_url = '/habitate/concluzii/4f799fdd6f5a'
+    conclusion_status_url = '/habitate/concluzii/4f799fdd6f5a/stare'
     conclusion_data = {'range.surface_area': '50',
                        'range.method': '1',
                         'coverage.surface_area': 123,

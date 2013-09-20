@@ -102,11 +102,11 @@ class SpeciesConclusionView(ConclusionView):
         return records[0]
 
 
-species.add_url_rule('/specii/detalii/<int:record_id>/comentariu',
+species.add_url_rule('/specii/detalii/<int:record_id>/concluzii',
                      view_func=SpeciesConclusionView.as_view('conclusion'))
 
 
-species.add_url_rule('/specii/comentariu/<conclusion_id>',
+species.add_url_rule('/specii/concluzii/<conclusion_id>',
                  view_func=SpeciesConclusionView.as_view('conclusion_edit'))
 
 
@@ -116,5 +116,5 @@ class SpeciesConclusionStateView(ConclusionStateView):
     signal = conclusion_status_changed
 
 
-species.add_url_rule('/specii/comentariu/<conclusion_id>/stare',
+species.add_url_rule('/specii/concluzii/<conclusion_id>/stare',
             view_func=SpeciesConclusionStateView.as_view('conclusion_status'))

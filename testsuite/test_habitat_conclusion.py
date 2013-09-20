@@ -2,7 +2,7 @@
 
 import pytest
 
-CONCLUSION_SAVED_TXT = "Comentariul a fost înregistrat"
+CONCLUSION_SAVED_TXT = "Concluzia a fost înregistrată"
 MISSING_FIELD_TXT = "Suprafața este obligatorie"
 
 HABITAT_STRUCT_DATA = {
@@ -140,7 +140,7 @@ def _create_habitat_record(habitat_app, conclusion=False):
 def test_load_conclusions_view(habitat_app):
     _create_habitat_record(habitat_app)
     client = habitat_app.test_client()
-    resp = client.get('/habitate/detalii/1/comentariu')
+    resp = client.get('/habitate/detalii/1/concluzii')
     assert resp.status_code == 200
 
 
@@ -148,7 +148,7 @@ def test_save_conclusion_record(habitat_app):
     from art17.models import DataHabitattypeConclusion
     _create_habitat_record(habitat_app)
     client = habitat_app.test_client()
-    resp = client.post('/habitate/detalii/1/comentariu',
+    resp = client.post('/habitate/detalii/1/concluzii',
                        data={'range.surface_area': '50',
                              'range.method': '1',
                              'coverage.surface_area': 123,
@@ -168,9 +168,9 @@ def test_edit_conclusion_form(habitat_app):
     from art17.models import DataHabitattypeConclusion, db
     _create_habitat_record(habitat_app, conclusion=True)
     client = habitat_app.test_client()
-    resp1 = client.get('/habitate/comentariu/f3b4c23bcb88')
+    resp1 = client.get('/habitate/concluzii/f3b4c23bcb88')
     assert resp1.status_code == 404
-    resp2 = client.get('/habitate/comentariu/4f799fdd6f5a')
+    resp2 = client.get('/habitate/concluzii/4f799fdd6f5a')
     assert resp2.status_code == 200
     assert '1337' in resp2.data
 
@@ -179,7 +179,7 @@ def test_edit_conclusion_submit(habitat_app):
     from art17.models import DataHabitattypeConclusion, db
     _create_habitat_record(habitat_app, conclusion=True)
     client = habitat_app.test_client()
-    resp = client.post('/habitate/comentariu/4f799fdd6f5a',
+    resp = client.post('/habitate/concluzii/4f799fdd6f5a',
                        data={'range.surface_area': '50',
                              'range.method': '1',
                              'coverage.surface_area': 123,

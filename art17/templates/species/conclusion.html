@@ -13,7 +13,7 @@
   {{ breadcrumbs([
           ('home', url_for('views.home')),
           ('specii', next_url or url_for('.index')),
-          ('comentariu', None),
+          ('concluzie', None),
       ]) }}
 {% endblock breadcrumbs %}
 
@@ -25,7 +25,7 @@
     with context %}
 
   <h1>
-    Comentariu pentru
+    Concluzie pentru
     {{ species.lu.speciesname }}
     ({{ record.region }})
   </h1>
