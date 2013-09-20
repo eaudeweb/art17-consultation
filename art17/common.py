@@ -16,7 +16,15 @@ DATE_FORMAT = {
     'long': u'd\u00a0MMMM\u00a0y\u00a0HH:mm',
 }
 
-STATUS_VALUES = ['new', 'approved', 'rejected']
+
+STATUS_OPTIONS = [
+    ('new', "-"),
+    ('approved', "Y"),
+    ('rejected', "N"),
+    ('question', "?"),
+]
+
+STATUS_VALUES = list(dict(STATUS_OPTIONS))
 
 common = flask.Blueprint('common', __name__)
 
@@ -29,7 +37,8 @@ def inject_constants():
             'LU_FV_RANGE_OP_FUNCT': lookup.LU_FV_RANGE_OP_FUNCT,
             'LU_POP_NUMBER': lookup.LU_POP_NUMBER,
             'CONCLUSIONS': lookup.CONCLUSIONS,
-            'QUALITY': lookup.QUALITY}
+            'QUALITY': lookup.QUALITY,
+            'STATUS_OPTIONS': STATUS_OPTIONS}
 
 
 @common.app_template_filter('local_date')
