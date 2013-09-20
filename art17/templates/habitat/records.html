@@ -34,7 +34,7 @@
   {{ conclusion_td(row.overall_assessment) }}
 {%- endmacro %}
 
-{%- set conclusion_next = url_for('.index', habitat=current_habitat_code,
+{%- set conclusion_next = url_for('.index', habitat=current_subject_code,
                                             region=current_region_code) %}
 
 <table class="records">
