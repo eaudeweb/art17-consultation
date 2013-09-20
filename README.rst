@@ -53,6 +53,33 @@ după cum urmează:
     $ pip install -f instance/dist -r requirements.txt
 
 
+Configurație
+------------
+``DEBUG = False``
+    Modul "debug", util pentru dezvoltare, a nu se folosi în producție,
+    este complet nesecurizat.
+
+``USE_LESS = False``
+    Dacă este activ, fișierele ``.less`` se vor compila de către
+    browser.
+
+``SQL_DEBUG = False``
+    Dacă este activ, se vor afișa query-urile SQL în consolă.
+
+``AUTH_DEBUG = False``
+    Activează o pagină de login unde se poate introduce orice `user_id`
+    și set de roluri.
+
+``SQLALCHEMY_DATABASE_URI``
+    Accesul la baza de date:
+    ``'oracle://reportdata_owner:parola@localhost:1521/XE'``
+
+``SPECIES_MAP_URL``, ``HABITAT_MAP_URL``
+    Template-uri pentru generat link-uri la hărțile de specii și
+    habitate, de exemplu:
+    ``'http://example.com/map?species={species}&regions={regions}'``
+
+
 Dezvoltare
 ----------
 Instalarea pachetelor ajutătoare::
