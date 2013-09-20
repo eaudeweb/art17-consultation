@@ -14,7 +14,7 @@ Trebuie să fie deja instalate următoarele:
 
 Download codul sursă::
 
-    $ git clone https://github.com/eaudeweb/art17-consultation.git art17
+    $ git clone https://github.com/eaudeweb/art17-consultation.git
     $ cd art17-consultation
 
 Instalarea bibliotecilor Python::
