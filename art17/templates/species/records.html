@@ -134,7 +134,7 @@
       {%- set url = url_for('messages.index', conclusion_id=row.id) %}
       {%- set count = message_counts[row.id] or 0 %}
       <a class="records-messagesbtn btn btn-xs btn-default"
-         href="{{ url }}">{{ fonticon('conclusion') }} {{ count }}</a>
+         href="{{ url }}">{{ fonticon('comment') }} {{ count }}</a>
     </td>
   </tr>
  {% endfor %}
