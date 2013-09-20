@@ -1,7 +1,8 @@
 import flask
 from blinker import Signal
 from art17 import models
-from art17.common import IndexView, ConclusionView, ConclusionStateView
+from art17.common import (IndexView, ConclusionView, ConclusionStateView,
+                          ConclusionDeleteView)
 from art17 import forms
 from art17 import schemas
 
@@ -118,3 +119,13 @@ class SpeciesConclusionStateView(ConclusionStateView):
 
 species.add_url_rule('/specii/concluzii/<conclusion_id>/stare',
             view_func=SpeciesConclusionStateView.as_view('conclusion_status'))
+
+
+class SpeciesConclusionDeleteView(ConclusionDeleteView):
+
+    conclusion_cls = models.DataSpeciesConclusion
+    parse_conclusionform = staticmethod(schemas.parse_species_conclusionform)
+
+
+species.add_url_rule('/specii/concluzii/<conclusion_id>/sterge',
+            view_func=SpeciesConclusionDeleteView.as_view('conclusion_delete'))

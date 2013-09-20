@@ -224,3 +224,17 @@ class ConclusionStateView(flask.views.View):
                          old_data=old_status, new_data=new_status)
         models.db.session.commit()
         return flask.redirect(next_url)
+
+
+class ConclusionDeleteView(flask.views.View):
+
+    methods = ['POST']
+
+    def dispatch_request(self, conclusion_id):
+        conclusion = self.conclusion_cls.query.get_or_404(conclusion_id)
+        next_url = flask.request.form['next']
+        models.db.session.delete(conclusion)
+        app = flask.current_app._get_current_object()
+        old_data = self.parse_conclusionform(conclusion)
+        models.db.session.commit()
+        return flask.redirect(next_url)

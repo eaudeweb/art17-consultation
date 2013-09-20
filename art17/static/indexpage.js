@@ -145,4 +145,11 @@ $('.records-conclusionstatus').change(function(evt) {
   form.append('...').submit();
 });
 
+
+$('.records-conclusiondelete').submit(function(evt) {
+  if(! confirm("Ștergi concluzia?")) {
+    evt.preventDefault();
+  }
+});
+
 })();

@@ -1,7 +1,8 @@
 import flask
 from blinker import Signal
 from art17 import models
-from art17.common import IndexView, ConclusionView, ConclusionStateView
+from art17.common import (IndexView, ConclusionView, ConclusionStateView,
+                          ConclusionDeleteView)
 from art17 import forms
 from art17 import schemas
 
@@ -100,3 +101,13 @@ class HabitatConclusionStateView(ConclusionStateView):
 
 habitat.add_url_rule('/habitate/concluzii/<conclusion_id>/stare',
             view_func=HabitatConclusionStateView.as_view('conclusion_status'))
+
+
+class HabitatConclusionDeleteView(ConclusionDeleteView):
+
+    conclusion_cls = models.DataHabitattypeConclusion
+    parse_conclusionform = staticmethod(schemas.parse_habitat_conclusionform)
+
+
+habitat.add_url_rule('/habitate/concluzii/<conclusion_id>/sterge',
+            view_func=HabitatConclusionDeleteView.as_view('conclusion_delete'))

@@ -110,6 +110,13 @@
           <input type="hidden" name="next" value="{{ conclusion_next }}">
           <input type="hidden" name="status" value="{{ row.status }}">
         </form>
+
+        {%- set url = url_for('.conclusion_delete', conclusion_id=row.id) %}
+        <form method="post" action="{{ url }}" class="records-conclusiondelete">
+          <input type="hidden" name="next" value="{{ conclusion_next }}">
+          <button class="btn btn-xs btn-danger"
+                  type="submit">{{ fonticon('trash') }}</button>
+        </form>
       {%- endif %}
     </td>
 
