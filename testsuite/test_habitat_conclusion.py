@@ -192,6 +192,13 @@ def test_edit_conclusion_submit(habitat_app):
         assert conclusion.range_surface_area == 50
 
 
+def test_one_field_required():
+    from werkzeug.datastructures import MultiDict
+    from art17 import forms
+    form = forms.HabitatConclusion(MultiDict())
+    assert not form.validate()
+
+
 def test_save_all_form_fields():
     from art17 import forms
     from art17 import models

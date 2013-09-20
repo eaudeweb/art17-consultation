@@ -17,6 +17,15 @@ from art17 import schemas
 EMPTY_CHOICE = [('', "")]
 
 
+def all_fields(form):
+    for field in form._fields.values():
+        if hasattr(field, 'form'):
+            for subfield in all_fields(field.form):
+               yield subfield
+        else:
+            yield field
+
+
 class FormField(FormField_base):
 
     def __init__(self, *args, **kwargs):
@@ -178,6 +187,19 @@ class SpeciesConclusion(Form):
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)
 
+    def validate(self):
+        if not super(SpeciesConclusion, self).validate():
+            return False
+
+        fields = list(all_fields(self))
+        empty = [f for f in fields if not f.data]
+
+        if empty and len(empty) == len(fields):
+            fields[0].errors.append(u"Completați cel puțin o valoare.")
+            return False
+
+        return True
+
 
 class HabitatConclusion(Form):
 
@@ -186,3 +208,16 @@ class HabitatConclusion(Form):
     structure = FormField(Conclusion)
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)
+
+    def validate(self):
+        if not super(HabitatConclusion, self).validate():
+            return False
+
+        fields = list(all_fields(self))
+        empty = [f for f in fields if not f.data]
+
+        if empty and len(empty) == len(fields):
+            fields[0].errors.append(u"Completați cel puțin o valoare.")
+            return False
+
+        return True
