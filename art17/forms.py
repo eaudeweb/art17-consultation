@@ -18,7 +18,7 @@ EMPTY_CHOICE = [('', "")]
 
 
 def all_fields(form):
-    for field in form._fields.values():
+    for field in form:
         if hasattr(field, 'form'):
             for subfield in all_fields(field.form):
                yield subfield
