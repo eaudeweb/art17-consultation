@@ -34,7 +34,7 @@
     <div class="container">
       {%- if not config.TESTING %}
         {%- block header %}
-          {%- include 'navbar.html' with context %}
+          {%- include 'header.html' with context %}
         {%- endblock %}
         {%- block breadcrumbs %}{% endblock %}
       {%- endif %}
@@ -45,6 +45,9 @@
       {% block content %}
         <h1>Hello, world!</h1>
       {% endblock %}
+      {%- block footer %}
+        {%- include 'footer.html' with context %}
+      {%- endblock %}
     </div>
 
     {% block script %}

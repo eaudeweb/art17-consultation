@@ -11,7 +11,7 @@
 {% block breadcrumbs %}
   {%- from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
-          ('home', url_for('views.home')),
+          ('acasǎ', url_for('views.home')),
           ('specii', next_url or url_for('.index')),
           ('concluzie', None),
       ]) }}
@@ -24,13 +24,14 @@
     population_size_html, method_html, conclusions_html, habitat_quality_html
     with context %}
 
-  <h1>
-    Concluzie pentru
-    {{ species.lu.speciesname }}
-    ({{ record.region }})
-  </h1>
+  <h2>
+    Adaugǎ concluzie pentru
+    <em>{{ species.lu.speciesname }}</em> in regiunea
+    <em>{{ record.region.nume }}</em>
+  </h2>
 
   <form method="post">
+    <p class="text-info">Toate câmpurile sunt opționale. Valorile originale sunt prezentate in partea dreaptǎ a acestei pagini în font gri.</p>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Areal</h3>

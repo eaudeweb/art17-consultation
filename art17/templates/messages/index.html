@@ -3,7 +3,7 @@
 
 
 {% block content %}
-  <h1>Comentarii</h1>
+  <h2>Comentarii</h2>
 
   {% for msg in messages %}
     <div class="panel panel-default message
@@ -57,6 +57,7 @@
 
 {% endblock content %}
 
+{% block footer %}{% endblock %}
 
 {% block script %}
 {%- from 'bits.html' import script %}

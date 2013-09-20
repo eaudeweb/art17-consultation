@@ -11,7 +11,7 @@
 {% block breadcrumbs %}
   {%- from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
-          ('home', url_for('views.home')),
+          ('acasǎ', url_for('views.home')),
           ('habitat', next_url or url_for('.index')),
           ('concluzie', None),
       ]) }}
@@ -24,13 +24,14 @@
     method_html, conclusions_html
     with context %}
 
-  <h1>
-    Concluzie pentru
-    {{ habitat.lu.name_ro }}
-    ({{ record.region }})
-  </h1>
+  <h2>
+    Adaugǎ concluzie pentru
+    <em>{{ habitat.lu.name_ro }}</em> in regiunea
+    <em>{{ record.region }}</em>
+  </h2>
 
   <form method="post">
+    <p class="text-info">Toate câmpurile sunt opționale. Valorile originale sunt prezentate in partea dreaptǎ a acestei pagini în font gri.</p>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Proporția</h3>
