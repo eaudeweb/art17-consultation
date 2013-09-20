@@ -232,11 +232,13 @@ def test_add_comment_message(habitat_app):
     from webtest import TestApp
     from art17.messages import messages
     from art17 import models
+    from art17.common import common
 
     _create_habitat_record(habitat_app, comment=True)
+    habitat_app.register_blueprint(common)
     habitat_app.register_blueprint(messages)
     client = TestApp(habitat_app)
-    page = client.get('/mesaje/4f799fdd6f5a/nou')
+    page = client.get('/mesaje/4f799fdd6f5a')
     form = page.forms['message-form']
     form['text'] = "hello world!"
     form.submit()

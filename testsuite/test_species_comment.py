@@ -285,11 +285,13 @@ def test_add_comment_message(species_app):
     from webtest import TestApp
     from art17.messages import messages
     from art17 import models
+    from art17.common import common
 
     _create_species_record(species_app, comment=True)
     species_app.register_blueprint(messages)
+    species_app.register_blueprint(common)
     client = TestApp(species_app)
-    page = client.get('/mesaje/4f799fdd6f5a/nou')
+    page = client.get('/mesaje/4f799fdd6f5a')
     form = page.forms['message-form']
     form['text'] = "hello world!"
     form.submit()

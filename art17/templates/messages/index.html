@@ -3,12 +3,7 @@
 
 
 {% block content %}
-  <h1>Mesaje</h1>
-
-  <p>
-    {% set url = url_for('.new', comment_id=comment_id) %}
-    <a class="btn btn-primary" href="{{ url }}">mesaj nou</a>
-  </p>
+  <h1>Comentarii</h1>
 
   {% for msg in messages %}
     <div class="panel panel-default message
@@ -21,25 +16,45 @@
           {% set url = url_for('.remove', message_id=msg.id,
                                           next=request.url) %}
           <form class="message-remove" method="post" action="{{ url }}">
-            <button class="btn btn-xs btn-danger">
-              {{- fonticon('remove', 1.5) -}}
-            </button>
+            <button class="btn btn-xs btn-danger">șterge</button>
           </form>
         {% endif %}
 
         {% if g.identity.id %}
           <span class="readbox">
-            <button class="readbox-new">{{ fonticon('lightbulb') }}</button>
-            <button class="readbox-read">{{ fonticon('lightbulb') }}</button>
-            <button class="readbox-mark">marchează văzut</button>
-            <button class="readbox-unmark">marchează nou</button>
+            <button class="readbox-new">necitit</button>
+            <button class="readbox-read">citit</button>
+            <button class="readbox-mark">citit</button>
+            <button class="readbox-unmark">necitit</button>
           </span>
         {% endif %}
       </div>
 
-      <div class="panel-body">{{ msg.text }}</div>
+      <div class="panel-body" style="white-space: pre;">
+        {{ msg.text|wordwrap }}
+      </div>
+    </div>
+  {% else %}
+    <div class="panel panel-default">
+      <div class="panel-body">
+        Nu existǎ nici un comentariu.
+      </div>
     </div>
   {% endfor %}
+
+  <div class="panel panel-default">
+    <div class="panel-heading">Adaugǎ comentariu</div>
+    <div class="panel-body">
+      <form method="post" action="{{ url_for('.new', comment_id=comment_id) }}"
+            class="form" id="message-form">
+        <div class="form-group">
+          <textarea name="text" class="form-control" rows=4></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Salveazǎ</button>
+      </form>
+    </div>
+  </div>
+
 {% endblock content %}
 
 
@@ -55,7 +70,7 @@
   "use strict";
 
   $('.message-remove').submit(function(evt) {
-    if(! confirm("Șterge comentariul?")) {
+    if(! confirm("Ștergi comentariul?")) {
       evt.preventDefault();
     }
   });

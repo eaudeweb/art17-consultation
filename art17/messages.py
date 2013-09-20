@@ -27,7 +27,7 @@ def _dump_message_data(message):
             for k in ['text', 'user_id', 'parent', 'date']}
 
 
-@messages.route('/mesaje/<comment_id>/nou', methods=['GET', 'POST'])
+@messages.route('/mesaje/<comment_id>/nou', methods=['POST'])
 def new(comment_id):
     comment = _get_comment_or_404(comment_id)
 
