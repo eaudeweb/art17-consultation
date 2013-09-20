@@ -93,10 +93,11 @@
       {%- set url = url_for('.detail', record_id=row.id) %}
       <button class="records-detailbtn" data-url="{{ url }}">vezi detalii</button>
     </td>
+
     {{ record_cells(row) }}
 
     <td colspan=4>
-            {%- set url = url_for('.conclusion', record_id=row.id, next=conclusion_next) %}
+      {%- set url = url_for('.conclusion', record_id=row.id, next=conclusion_next) %}
       <a class="records-conclusionbtn" href="{{ url }}">adaugǎ concluzie</a>
     </td>  {#- conclusion (author, etc) #}
   </tr>
