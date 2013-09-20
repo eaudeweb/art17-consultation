@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-from wtforms import (Form, FormField as FormField_base,
+from wtforms import (Form as Form_base, FormField as FormField_base,
                      TextField, TextAreaField, DecimalField, SelectField,
                      IntegerField)
 from wtforms.validators import Required, Optional, NumberRange
@@ -33,6 +33,18 @@ class FormField(FormField_base):
         super(FormField, self).__init__(*args, **kwargs)
 
 
+class Form(Form_base):
+
+    def validate(self):
+        if not super(Form, self).validate():
+            return False
+
+        return self.custom_validate()
+
+    def custom_validate(self):
+        return True
+
+
 class Period(Form):
 
     start = IntegerField(label=u"an de început",
@@ -54,10 +66,7 @@ class Trend(Form):
                         validators=[Optional()])
     period = FormField(Period)
 
-    def validate(self):
-        if not super(Trend, self).validate():
-            return False
-
+    def custom_validate(self):
         fields = [self.period.start, self.period.end, self.trend]
         empty = [f for f in fields if not f.data]
 
@@ -75,10 +84,7 @@ class ReferenceValue(Form):
     number = DecimalField(label=u"suprafață", validators=[Optional()])
     method = TextAreaField()
 
-    def validate(self):
-        if not super(ReferenceValue, self).validate():
-            return False
-
+    def custom_validate(self):
         fields = [self.op, self.number]
         empty = [f for f in fields if not f.data]
 
@@ -187,10 +193,7 @@ class SpeciesConclusion(Form):
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)
 
-    def validate(self):
-        if not super(SpeciesConclusion, self).validate():
-            return False
-
+    def custom_validate(self):
         fields = list(all_fields(self))
         empty = [f for f in fields if not f.data]
 
@@ -209,10 +212,7 @@ class HabitatConclusion(Form):
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)
 
-    def validate(self):
-        if not super(HabitatConclusion, self).validate():
-            return False
-
+    def custom_validate(self):
         fields = list(all_fields(self))
         empty = [f for f in fields if not f.data]
 
