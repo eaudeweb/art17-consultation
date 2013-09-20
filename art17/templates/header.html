@@ -1,0 +1,21 @@
+<div id="header">
+  <div class="row">
+    <div class="col-md-4">
+      <h1 id="logo">
+        <a href="/" title="logo"></a>
+      </h1>
+    </div>
+    <div class="col-md-8">
+      <ul class="nav nav-pills pull-right">
+        <li><a href="http://www.posmediu.ro/ajutor">ajutor</a></li>
+        <li><a href="http://www.posmediu.ro/faq">întrebări frecvente</a></li>
+        <li><a href="http://www.posmediu.ro/hartasite">hartă website</a></li>
+        <li><a href="http://www.posmediu.ro/home">versiune pentru tipărire</a></li>
+        <li>
+          {%- set login_url = url_for('auth.debug', next=request.url) %}
+          <a href="{{ login_url }}">utilizator: {{ g.identity.id or "vizitator" }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
