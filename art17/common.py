@@ -103,7 +103,8 @@ class IndexView(flask.views.View):
 
         if self.subject:
             self.records = self.subject.regions
-            self.conclusions = self.subject.conclusions
+            self.conclusions = (self.subject.conclusions
+                                            .filter_by(deleted=False))
 
             if self.region:
                 self.records = self.records.filter_by(region=self.region.code)
@@ -233,7 +234,7 @@ class ConclusionDeleteView(flask.views.View):
     def dispatch_request(self, conclusion_id):
         conclusion = self.conclusion_cls.query.get_or_404(conclusion_id)
         next_url = flask.request.form['next']
-        models.db.session.delete(conclusion)
+        conclusion.deleted = True
         app = flask.current_app._get_current_object()
         old_data = self.parse_conclusionform(conclusion)
         models.db.session.commit()

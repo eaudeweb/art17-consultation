@@ -2,7 +2,7 @@ import uuid
 import argparse
 import logging
 from sqlalchemy import (Column, DateTime, ForeignKey, Index, func,
-                        String, Table, Text, Numeric, cast, Binary)
+                        String, Table, Text, Numeric, cast, Binary, Boolean)
 from sqlalchemy.orm import relationship, foreign
 from sqlalchemy.ext.declarative import declarative_base
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -266,6 +266,7 @@ class DataHabitattypeConclusion(Base):
     conclusion_date = Column(DateTime)
     user_id = Column(String)
     status = Column(Text, default='new')
+    deleted = Column(Boolean, default=False)
 
     hr_habitat = relationship(u'DataHabitat',
         backref=db.backref('conclusions', lazy='dynamic'))
@@ -514,6 +515,7 @@ class DataSpeciesConclusion(Base):
     conclusion_date = Column(DateTime)
     user_id = Column(String)
     status = Column(Text, default='new')
+    deleted = Column(Boolean, default=False)
 
     species = relationship(u'DataSpecies',
         backref=db.backref('conclusions', lazy='dynamic'))
