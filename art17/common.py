@@ -3,6 +3,7 @@
 from datetime import datetime
 from dateutil import tz
 from decimal import Decimal
+import urllib
 from babel.dates import format_datetime
 import flask
 import flask.views
@@ -25,6 +26,13 @@ STATUS_OPTIONS = [
 ]
 
 STATUS_VALUES = list(dict(STATUS_OPTIONS))
+
+CONCLUSION_COLOR = {
+    'FV': '71A057',
+    'U1': 'E7E737',
+    'U2': 'F76C27',
+    'XX': 'FFFFFF',
+}
 
 common = flask.Blueprint('common', __name__)
 
@@ -120,6 +128,10 @@ class IndexView(flask.views.View):
         }
 
         if self.subject:
+            map_colors = [{
+                    'region': r.region,
+                    'code': CONCLUSION_COLOR.get(r.conclusion_assessment),
+                } for r in self.records]
             self.ctx.update({
                 'code': self.subject.code,
                 'name': self.subject.lu.display_name,
@@ -129,6 +141,7 @@ class IndexView(flask.views.View):
                 'message_counts': self.message_counts,
                 'map_url': self.map_url_template.format(**{
                         self.subject_name: self.subject.code,
+                        'regions': urllib.quote(flask.json.dumps(map_colors)),
                     })
             })
 
