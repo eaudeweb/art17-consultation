@@ -27,7 +27,8 @@
         {#- detail #}
         <td>
           {%- set url = url_for(blueprint + '.detail', record_id=row.id) %}
-          <button class="records-detailbtn" data-url="{{ url }}">detalii</button>
+          <button class="records-detailbtn"
+                  data-url="{{ url }}">detalii</button>
         </td>
 
         {{ record_cell(row) }}
@@ -37,7 +38,8 @@
             {%- set url = url_for(blueprint + '.conclusion',
                                   record_id=row.id,
                                   next=conclusion_next) %}
-            <a class="records-conclusionbtn" href="{{ url }}">adaugǎ concluzie</a>
+            <a class="records-conclusionbtn"
+               href="{{ url }}">adaugǎ concluzie</a>
           {%- endif %}
         </td>
       </tr>
@@ -52,7 +54,8 @@
           {%- if perm_update_conclusion_status(row.model).can() %}
             {%- set url = url_for(blueprint + '.conclusion_status',
                                   conclusion_id=row.id) %}
-            <form method="post" action="{{ url }}" class="records-conclusionstatus">
+            <form method="post" action="{{ url }}"
+                  class="records-conclusionstatus">
               <input type="hidden" name="next" value="{{ conclusion_next }}">
               <input type="hidden" name="status" value="{{ row.status }}">
             </form>
@@ -61,7 +64,8 @@
           {%- if perm_delete_conclusion(row.model).can() %}
             {%- set url = url_for(blueprint + '.conclusion_delete',
                                   conclusion_id=row.id) %}
-            <form method="post" action="{{ url }}" class="records-conclusiondelete">
+            <form method="post" action="{{ url }}"
+                  class="records-conclusiondelete">
               <input type="hidden" name="next" value="{{ conclusion_next }}">
               <button class="btn btn-xs btn-danger"
                       type="submit">{{ fonticon('trash') }}</button>
