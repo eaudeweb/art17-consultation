@@ -112,5 +112,5 @@ def index(conclusion_id):
         'conclusion_id': conclusion_id,
         'messages': messages,
         'read_msgs': read_msgs,
-        'new_message_permission': Permission(need.authenticated).can(),
+        'can_post_new_message': Permission(need.authenticated).can(),
     })
