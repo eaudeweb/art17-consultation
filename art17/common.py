@@ -164,7 +164,6 @@ class IndexView(flask.views.View):
             'subject_list': self.get_subject_list(),
             'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,
-            'record_cell_template': self.record_cell_template,
             'conclusion_next': self.get_conclusion_next_url(),
             'blueprint': self.blueprint,
         })
