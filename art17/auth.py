@@ -10,12 +10,19 @@ principals = Principal(use_sessions=False)
 class need(object):
     """ A list of needs defined by our application. """
 
+    everybody = RoleNeed('everybody')
     admin = RoleNeed('admin')
     authenticated = RoleNeed('authenticated')
 
     @staticmethod
     def user_id(user_id):
         return UserNeed(user_id)
+
+
+class Never(Permission):
+
+    def allows(self, identity):
+        return False
 
 
 admin_permission = Permission(need.admin)
@@ -79,6 +86,9 @@ def load_debug_auth():
         identity.provides.add(need.authenticated)
         for role_name in auth_data.get('roles', []):
             identity.provides.add(RoleNeed(role_name))
+
+    if 'identity' in flask.g:
+        flask.g.identity.provides.add(need.everybody)
 
 
 @auth.app_errorhandler(PermissionDenied)

@@ -15,6 +15,7 @@ def app():
     @app.route('/needs')
     def get_needs():
         return flask.jsonify(
+            everybody=Permission(auth.need.everybody).can(),
             authenticated=Permission(auth.need.authenticated).can(),
             admin=Permission(auth.need.admin).can(),
             user_id_foo=Permission(auth.need.user_id('foo')).can(),
@@ -32,6 +33,7 @@ def get_needs_json(client):
 
 def test_anonymous_has_no_needs(app):
     assert get_needs_json(app.test_client()) == {
+        'everybody': True,
         'authenticated': False,
         'admin': False,
         'user_id_foo': False,
@@ -43,6 +45,7 @@ def test_authenticated_has_some_needs(app):
     client = app.test_client()
     client.post('/auth_debug', data={'user_id': 'foo'})
     assert get_needs_json(client) == {
+        'everybody': True,
         'authenticated': True,
         'admin': False,
         'user_id_foo': True,
@@ -54,6 +57,7 @@ def test_set_explicit_permissions(app):
     client = app.test_client()
     client.post('/auth_debug', data={'user_id': 'bar', 'roles': 'admin'})
     assert get_needs_json(client) == {
+        'everybody': True,
         'authenticated': True,
         'admin': True,
         'user_id_foo': False,

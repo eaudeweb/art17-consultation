@@ -49,7 +49,7 @@
       <tr>
         {#- detail #}
         <td>
-          {%- if can_update_conclusion_status %}
+          {%- if perm_update_conclusion_status(row.model) %}
             {%- set url = url_for(blueprint + '.conclusion_status',
                                   conclusion_id=row.id) %}
             <form method="post" action="{{ url }}" class="records-conclusionstatus">
@@ -58,7 +58,7 @@
             </form>
           {%- endif %}
 
-          {%- if can_delete_conclusion %}
+          {%- if perm_delete_conclusion(row.model) %}
             {%- set url = url_for(blueprint + '.conclusion_delete',
                                   conclusion_id=row.id) %}
             <form method="post" action="{{ url }}" class="records-conclusiondelete">

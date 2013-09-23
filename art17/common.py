@@ -11,7 +11,7 @@ from flask.ext.principal import Permission
 from werkzeug.datastructures import MultiDict
 from sqlalchemy import func
 from art17 import models
-from art17.auth import need
+from art17.auth import need, Never
 import lookup
 
 DATE_FORMAT = {
@@ -28,6 +28,9 @@ STATUS_OPTIONS = [
 ]
 
 STATUS_VALUES = list(dict(STATUS_OPTIONS))
+
+APPROVED_STATUS = 'approved'
+assert APPROVED_STATUS in STATUS_VALUES
 
 CONCLUSION_COLOR = {
     'FV': '71A057',
@@ -48,6 +51,17 @@ def perm_edit_conclusion(conclusion):
         return Permission(need.admin)
 
 
+def perm_update_conclusion_status(conclusion):
+    if conclusion.status == APPROVED_STATUS:
+        return Never()
+    else:
+        return Permission(need.admin)
+
+
+def perm_delete_conclusion(conclusion):
+    return perm_update_conclusion_status(conclusion)
+
+
 common = flask.Blueprint('common', __name__)
 
 
@@ -56,6 +70,8 @@ def inject_permissions():
     return {
         'perm_create_conclusion': perm_create_conclusion,
         'perm_edit_conclusion': perm_edit_conclusion,
+        'perm_update_conclusion_status': perm_update_conclusion_status,
+        'perm_delete_conclusion': perm_delete_conclusion,
     }
 
 
@@ -149,8 +165,6 @@ class IndexView(flask.views.View):
             'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,
             'record_cell_template': self.record_cell_template,
-            'can_update_conclusion_status': Permission(need.admin).can(),
-            'can_delete_conclusion': Permission(need.admin).can(),
             'conclusion_next': self.get_conclusion_next_url(),
             'blueprint': self.blueprint,
         })
@@ -261,6 +275,7 @@ class ConclusionDeleteView(flask.views.View):
 
     def dispatch_request(self, conclusion_id):
         conclusion = self.conclusion_cls.query.get_or_404(conclusion_id)
+        perm_delete_conclusion(conclusion).test()
         next_url = flask.request.form['next']
         conclusion.deleted = True
         app = flask.current_app._get_current_object()
