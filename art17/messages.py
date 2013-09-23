@@ -111,4 +111,5 @@ def index(conclusion_id):
         'conclusion_id': conclusion_id,
         'messages': messages,
         'read_msgs': read_msgs,
+        'new_message_permission': Permission(need.authenticated).can(),
     })

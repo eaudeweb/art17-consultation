@@ -42,6 +42,7 @@
     </div>
   {% endfor %}
 
+  {% if new_message_permission %}
   <div class="panel panel-default">
     <div class="panel-heading">Adaugǎ comentariu</div>
     <div class="panel-body">
@@ -54,6 +55,7 @@
       </form>
     </div>
   </div>
+  {% endif %}
 
 {% endblock content %}
 
