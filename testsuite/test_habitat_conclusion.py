@@ -242,6 +242,7 @@ def test_add_conclusion_message(habitat_app):
     from art17 import models
     from art17.common import common
 
+    habitat_app.config['TESTING_USER_ID'] = 'somewho'
     _create_habitat_record(habitat_app, conclusion=True)
     habitat_app.register_blueprint(common)
     habitat_app.register_blueprint(messages)

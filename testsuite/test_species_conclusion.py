@@ -294,6 +294,7 @@ def test_add_conclusion_message(species_app):
     from art17 import models
     from art17.common import common
 
+    species_app.config['TESTING_USER_ID'] = 'somewho'
     _create_species_record(species_app, conclusion=True)
     species_app.register_blueprint(messages)
     species_app.register_blueprint(common)

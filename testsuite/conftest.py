@@ -12,7 +12,7 @@ def app():
     app = flask.Flask('art17.app')
     app.config['TESTING'] = True
     app.config['SECRET_KEY'] = 'foo'
-    app.config['TESTING_USER_ID'] = 'somewho'
+    app.config['TESTING_USER_ID'] = None
     @app.before_request
     def set_identity():
         user_id = flask.current_app.config['TESTING_USER_ID']
