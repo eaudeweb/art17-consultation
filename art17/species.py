@@ -31,7 +31,8 @@ class SpeciesIndexView(IndexView):
     subject_cls = models.DataSpecies
     record_cls = models.DataSpeciesRegion
     parse_record = staticmethod(schemas.parse_species)
-    records_template = 'species/records.html'
+    record_cell_template = 'species/record_cell.html'
+    blueprint = 'species'
 
     def parse_request(self):
         super(SpeciesIndexView, self).parse_request()

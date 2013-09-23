@@ -31,7 +31,8 @@ class HabitatIndexView(IndexView):
     subject_cls = models.DataHabitat
     record_cls = models.DataHabitattypeRegion
     parse_record = staticmethod(schemas.parse_habitat)
-    records_template = 'habitat/records.html'
+    record_cell_template = 'habitat/record_cell.html'
+    blueprint = 'habitat'
 
     def get_conclusion_next_url(self):
         return flask.url_for('.index', habitat=self.subject_code,

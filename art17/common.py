@@ -148,10 +148,11 @@ class IndexView(flask.views.View):
             'subject_list': self.get_subject_list(),
             'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,
-            'records_template': self.records_template,
+            'record_cell_template': self.record_cell_template,
             'can_update_conclusion_status': Permission(need.admin).can(),
             'can_delete_conclusion': Permission(need.admin).can(),
             'conclusion_next': self.get_conclusion_next_url(),
+            'blueprint': self.blueprint,
         })
 
         if self.subject:

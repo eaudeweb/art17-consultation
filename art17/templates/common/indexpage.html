@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{%- from 'bits.html' import fonticon %}
 
 
 {% block title %}
@@ -7,13 +8,91 @@
 {%- endblock title %}
 
 
+{% macro record_cell(row) %}
+{% block record_cell scoped %}{% endblock %}
+{%- endmacro %}
+
+
 {% block content %}
   {% block form %}{% endblock %}
 
   {% if name %}
     {% block subject_details %}{% endblock %}
 
-    {%- include records_template with context %}
+    <table class="records">
+    {%- block records_header %}{% endblock records_header %}
+
+     {% for row in records %}
+      <tr>
+        {#- detail #}
+        <td>
+          {%- set url = url_for(blueprint + '.detail', record_id=row.id) %}
+          <button class="records-detailbtn" data-url="{{ url }}">detalii</button>
+        </td>
+
+        {{ record_cell(row) }}
+
+        <td colspan=4>  {#- conclusion (author, etc) #}
+          {%- if perm_create_conclusion(row) %}
+            {%- set url = url_for(blueprint + '.conclusion',
+                                  record_id=row.id,
+                                  next=conclusion_next) %}
+            <a class="records-conclusionbtn" href="{{ url }}">adaugǎ concluzie</a>
+          {%- endif %}
+        </td>
+      </tr>
+     {% endfor %}
+
+    {%- block conclusions_header %}{% endblock %}
+
+     {% for row in conclusions %}
+      <tr>
+        {#- detail #}
+        <td>
+          {%- if can_update_conclusion_status %}
+            {%- set url = url_for(blueprint + '.conclusion_status',
+                                  conclusion_id=row.id) %}
+            <form method="post" action="{{ url }}" class="records-conclusionstatus">
+              <input type="hidden" name="next" value="{{ conclusion_next }}">
+              <input type="hidden" name="status" value="{{ row.status }}">
+            </form>
+          {%- endif %}
+
+          {%- if can_delete_conclusion %}
+            {%- set url = url_for(blueprint + '.conclusion_delete',
+                                  conclusion_id=row.id) %}
+            <form method="post" action="{{ url }}" class="records-conclusiondelete">
+              <input type="hidden" name="next" value="{{ conclusion_next }}">
+              <button class="btn btn-xs btn-danger"
+                      type="submit">{{ fonticon('trash') }}</button>
+            </form>
+          {%- endif %}
+        </td>
+
+        {{ record_cell(row) }}
+
+        <td>{{ row.user_id }}</td>  {#- conclusion author, etc #}
+        <td>
+          {%- if perm_edit_conclusion(row.model) %}
+            {%- set url = url_for(blueprint + '.conclusion_edit',
+                                  conclusion_id=row.id,
+                                  next=conclusion_next) %}
+            <a href="{{ url }}" class="records-editconclusionbtn">edit</a>
+          {%- endif %}
+        </td>
+        <td>{{ row.conclusion_date|local_date }}</td>
+        <td>
+          {%- set url = url_for('messages.index', conclusion_id=row.id) %}
+          {%- set count = message_counts[row.id] or 0 %}
+          <a class="records-messagesbtn btn btn-xs btn-default"
+             href="{{ url }}">{{ fonticon('comment') }} {{ count }}</a>
+        </td>
+      </tr>
+     {% endfor %}
+    </table>
+
+
+    {% include 'common/recorddetail.html' %}
   {%- endif %}
 {%- endblock content %}
 
