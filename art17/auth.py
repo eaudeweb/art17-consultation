@@ -1,6 +1,6 @@
 import flask
 from flask.ext.principal import (Principal, Permission, Identity,
-                                 RoleNeed, UserNeed)
+                                 RoleNeed, UserNeed, PermissionDenied)
 
 auth = flask.Blueprint('auth', __name__)
 
@@ -25,9 +25,9 @@ def user_permission(user_id):
     return Permission(UserNeed(user_id))
 
 
-def require(permission, http_exception):
+def require(permission):
     def decorator(func):
-        return permission.require(http_exception)(func)
+        return permission.require()(func)
     return decorator
 
 
@@ -55,7 +55,7 @@ def debug():
         return flask.redirect(flask.url_for('.debug'))
 
     roles = flask.session.get('auth', {}).get('roles', [])
-    return flask.render_template('auth_debug.html',
+    return flask.render_template('auth/debug.html',
                                  user_id=flask.g.identity.id,
                                  roles=roles)
 
@@ -79,3 +79,8 @@ def load_debug_auth():
         identity.provides.add(need.authenticated)
         for role_name in auth_data.get('roles', []):
             identity.provides.add(RoleNeed(role_name))
+
+
+@auth.app_errorhandler(PermissionDenied)
+def handle_permission_denied(error):
+    return flask.render_template('auth/denied.html')

@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+
+{% block title %}Eroare de permisiuni &mdash; {{ super() }}{% endblock title %}
+
+
+{% block content %}
+  <h1>Eroare de permisiuni</h1>
+
+  <p>
+    Operațiunea nu poate fi efectuată de către
+    {% set user_id = g.identity.id %}
+    {% if user_id %}
+      utilizatorul {{ user_id }}.
+    {% else %}
+      utilizatori neautentificați.
+    {% endif %}
+  </p>
+{% endblock content %}

@@ -5,7 +5,7 @@ import flask
 from flask.ext.principal import Permission
 from blinker import Signal
 from art17 import models
-from art17.auth import require, admin_permission, need
+from art17.auth import require, need
 
 messages = flask.Blueprint('messages', __name__)
 
@@ -30,7 +30,7 @@ def _dump_message_data(message):
 
 
 @messages.route('/mesaje/<conclusion_id>/nou', methods=['POST'])
-@require(Permission(need.authenticated), 403)
+@require(Permission(need.authenticated))
 def new(conclusion_id):
     conclusion = _get_conclusion_or_404(conclusion_id)
 
@@ -52,7 +52,7 @@ def new(conclusion_id):
 
 
 @messages.route('/mesaje/sterge', methods=['POST'])
-@admin_permission.require(403)
+@require(Permission(need.admin))
 def remove():
     message_id = flask.request.args['message_id']
     next_url = flask.request.args['next']
