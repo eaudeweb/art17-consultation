@@ -11,6 +11,7 @@ habitat = flask.Blueprint('habitat', __name__)
 conclusion_added = Signal()
 conclusion_edited = Signal()
 conclusion_status_changed = Signal()
+conclusion_deleted = Signal()
 
 
 @habitat.route('/habitate/regiuni/<int:habitat_code>')
@@ -107,6 +108,7 @@ class HabitatConclusionDeleteView(ConclusionDeleteView):
 
     conclusion_cls = models.DataHabitattypeConclusion
     parse_conclusionform = staticmethod(schemas.parse_habitat_conclusionform)
+    signal = conclusion_deleted
 
 
 habitat.add_url_rule('/habitate/concluzii/<conclusion_id>/sterge',

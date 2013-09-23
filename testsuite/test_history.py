@@ -13,6 +13,7 @@ class species_params(object):
     conclusion_id = '4f799fdd6f5a'
     conclusion_edit_url = '/specii/concluzii/4f799fdd6f5a'
     conclusion_status_url = '/specii/concluzii/4f799fdd6f5a/stare'
+    conclusion_delete_url = '/specii/concluzii/4f799fdd6f5a/sterge'
     conclusion_data = {'range.surface_area': '50',
                        'range.method': '1',
                        'population.method': '1',
@@ -41,6 +42,7 @@ class habitat_params(object):
     conclusion_id = '4f799fdd6f5a'
     conclusion_edit_url = '/habitate/concluzii/4f799fdd6f5a'
     conclusion_status_url = '/habitate/concluzii/4f799fdd6f5a/stare'
+    conclusion_delete_url = '/habitate/concluzii/4f799fdd6f5a/sterge'
     conclusion_data = {'range.surface_area': '50',
                        'range.method': '1',
                         'coverage.surface_area': 123,
@@ -115,6 +117,26 @@ def test_conclusion_update_status(params, app):
         assert history[0].user_id == params.user_id
         assert json.loads(history[0].old_data) == 'new'
         assert json.loads(history[0].new_data) == 'approved'
+
+
+@pytest.mark.parametrize(['params'], [[species_params], [habitat_params]])
+def test_conclusion_delete(params, app):
+    params.setup(app, conclusion=True)
+    client = app.test_client()
+
+    resp = client.post(params.conclusion_delete_url, data={'next': '/'})
+    assert resp.status_code == 302
+
+    with app.app_context():
+        history = models.History.query.all()
+        conclusion = params.conclusion_cls.query.first()
+        assert len(history) == 1
+        assert history[0].table == params.conclusion_table
+        assert history[0].object_id == conclusion.id
+        assert history[0].action == 'delete'
+        assert history[0].user_id == params.user_id
+        assert json.loads(history[0].old_data)['range']['surface_area'] == 1337
+        assert json.loads(history[0].old_data)['_status'] == 'new'
 
 
 def test_message_add(app):

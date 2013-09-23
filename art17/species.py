@@ -11,6 +11,7 @@ species = flask.Blueprint('species', __name__)
 conclusion_added = Signal()
 conclusion_edited = Signal()
 conclusion_status_changed = Signal()
+conclusion_deleted = Signal()
 
 
 @species.route('/specii/regiuni/<int:species_code>')
@@ -125,6 +126,7 @@ class SpeciesConclusionDeleteView(ConclusionDeleteView):
 
     conclusion_cls = models.DataSpeciesConclusion
     parse_conclusionform = staticmethod(schemas.parse_species_conclusionform)
+    signal = conclusion_deleted
 
 
 species.add_url_rule('/specii/concluzii/<conclusion_id>/sterge',

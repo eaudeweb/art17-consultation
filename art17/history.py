@@ -20,6 +20,8 @@ def register_handlers(state):
             table='data_species_conclusions', action='edit')
     connect(species.conclusion_status_changed, app,
             table='data_species_conclusions', action='status')
+    connect(species.conclusion_deleted, app,
+            table='data_species_conclusions', action='delete')
 
     connect(habitat.conclusion_added, app,
             table='data_habitattype_conclusions', action='add')
@@ -27,6 +29,8 @@ def register_handlers(state):
             table='data_habitattype_conclusions', action='edit')
     connect(habitat.conclusion_status_changed, app,
             table='data_habitattype_conclusions', action='status')
+    connect(habitat.conclusion_deleted, app,
+            table='data_habitattype_conclusions', action='delete')
 
     connect(messages.message_added, app,
             table='conclusion_messages', action='add')

@@ -237,5 +237,7 @@ class ConclusionDeleteView(flask.views.View):
         conclusion.deleted = True
         app = flask.current_app._get_current_object()
         old_data = self.parse_conclusionform(conclusion)
+        old_data['_status'] = conclusion.status
+        self.signal.send(app, ob=conclusion, old_data=old_data)
         models.db.session.commit()
         return flask.redirect(next_url)
