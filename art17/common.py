@@ -58,6 +58,8 @@ def perm_update_conclusion_status(conclusion):
 def perm_delete_conclusion(conclusion):
     if conclusion.status == APPROVED_STATUS:
         return Denial(need.everybody)
+    elif conclusion.user_id:
+        return Permission(need.admin, need.user_id(conclusion.user_id))
     else:
         return Permission(need.admin)
 
