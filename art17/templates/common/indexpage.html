@@ -60,17 +60,6 @@
               <input type="hidden" name="status" value="{{ row.status }}">
             </form>
           {%- endif %}
-
-          {%- if perm_delete_conclusion(row.model).can() %}
-            {%- set url = url_for(blueprint + '.conclusion_delete',
-                                  conclusion_id=row.id) %}
-            <form method="post" action="{{ url }}"
-                  class="records-conclusiondelete">
-              <input type="hidden" name="next" value="{{ conclusion_next }}">
-              <button class="btn btn-xs btn-danger"
-                      type="submit">{{ fonticon('trash') }}</button>
-            </form>
-          {%- endif %}
         </td>
 
         {{ record_cell(row) }}
@@ -81,7 +70,18 @@
             {%- set url = url_for(blueprint + '.conclusion_edit',
                                   conclusion_id=row.id,
                                   next=conclusion_next) %}
-            <a href="{{ url }}" class="records-editconclusionbtn">edit</a>
+            <a href="{{ url }}" class="records-editconclusionbtn">editează</a>
+          {%- endif %}
+
+          {%- if perm_delete_conclusion(row.model).can() %}
+            {%- set url = url_for(blueprint + '.conclusion_delete',
+                                  conclusion_id=row.id) %}
+            <form method="post" action="{{ url }}"
+                  class="records-conclusiondelete">
+              <input type="hidden" name="next" value="{{ conclusion_next }}">
+              <button class="btn btn-xs btn-danger"
+                      type="submit">șterge</button>
+            </form>
           {%- endif %}
         </td>
         <td>{{ row.conclusion_date|local_date }}</td>
