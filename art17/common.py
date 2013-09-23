@@ -36,7 +36,27 @@ CONCLUSION_COLOR = {
     'XX': 'FFFFFF',
 }
 
+
+def perm_create_conclusion(record):
+    return Permission(need.authenticated)
+
+
+def perm_edit_conclusion(conclusion):
+    if conclusion.user_id:
+        return Permission(need.admin, need.user_id(conclusion.user_id))
+    else:
+        return Permission(need.admin)
+
+
 common = flask.Blueprint('common', __name__)
+
+
+@common.app_context_processor
+def inject_permissions():
+    return {
+        'perm_create_conclusion': perm_create_conclusion,
+        'perm_edit_conclusion': perm_edit_conclusion,
+    }
 
 
 @common.app_context_processor
@@ -166,6 +186,7 @@ class ConclusionView(flask.views.View):
         if record_id:
             new_conclusion = True
             self.record = self.record_cls.query.get_or_404(record_id)
+            perm_create_conclusion(self.record).test()
             self.conclusion = self.conclusion_cls(user_id=flask.g.identity.id,
                                             conclusion_date=datetime.utcnow())
             form = self.form_cls(flask.request.form)
@@ -174,6 +195,7 @@ class ConclusionView(flask.views.View):
             new_conclusion = False
             self.conclusion = (self.conclusion_cls
                                     .query.get_or_404(conclusion_id))
+            perm_edit_conclusion(self.conclusion).test()
             self.record = self.record_for_conclusion(self.conclusion)
             old_data = self.parse_conclusionform(self.conclusion)
             if flask.request.method == 'POST':

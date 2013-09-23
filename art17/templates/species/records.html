@@ -96,10 +96,13 @@
 
     {{ record_cells(row) }}
 
-    <td colspan=4>
-      {%- set url = url_for('.conclusion', record_id=row.id, next=conclusion_next) %}
-      <a class="records-conclusionbtn" href="{{ url }}">adaugǎ concluzie</a>
-    </td>  {#- conclusion (author, etc) #}
+    <td colspan=4>  {#- conclusion (author, etc) #}
+      {%- if perm_create_conclusion(row) %}
+        {%- set url = url_for('.conclusion', record_id=row.id,
+                                             next=conclusion_next) %}
+        <a class="records-conclusionbtn" href="{{ url }}">adaugǎ concluzie</a>
+      {%- endif %}
+    </td>
   </tr>
  {% endfor %}
 
@@ -133,7 +136,7 @@
 
     <td>{{ row.user_id }}</td>  {#- conclusion author, etc #}
     <td>
-      {%- if row.can_edit %}
+      {%- if perm_edit_conclusion(row.model) %}
         {%- set url = url_for('.conclusion_edit', conclusion_id=row.id,
                                                next=conclusion_next) %}
         <a href="{{ url }}" class="records-editconclusionbtn">edit</a>

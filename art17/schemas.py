@@ -72,22 +72,9 @@ def _get_habitat_quality(obj):
     }
 
 
-def can_edit_conclusion(row):
-    from art17 import auth
-    if auth.admin_permission.can():
-        return True
-
-    if row.user_id:
-        if auth.user_permission(row.user_id).can():
-            return True
-
-    return False
-
-
 def conclusion_info(row):
     return {
         'user_id': row.user_id,
-        'can_edit': can_edit_conclusion(row),
         'conclusion_date': row.conclusion_date,
         'status': row.status,
     }
@@ -95,6 +82,7 @@ def conclusion_info(row):
 
 def parse_species(row, is_conclusion=False):
     rv = {}
+    rv['model'] = row
     if is_conclusion:
         rv.update(conclusion_info(row))
     rv['id'] = row.id
@@ -194,6 +182,7 @@ def parse_species_conclusionform(row):
 
 def parse_habitat(row, is_conclusion=False):
     rv = {}
+    rv['model'] = row
     if is_conclusion:
         rv.update(conclusion_info(row))
     rv['id'] = row.id
