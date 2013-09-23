@@ -113,4 +113,6 @@ def index(conclusion_id):
         'messages': messages,
         'read_msgs': read_msgs,
         'can_post_new_message': Permission(need.authenticated).can(),
+        'can_set_read_status': Permission(need.authenticated).can(),
+        'can_delete_message': Permission(need.admin).can()
     })

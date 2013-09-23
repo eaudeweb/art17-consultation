@@ -7,9 +7,11 @@ import urllib
 from babel.dates import format_datetime
 import flask
 import flask.views
+from flask.ext.principal import Permission
 from werkzeug.datastructures import MultiDict
 from sqlalchemy import func
 from art17 import models
+from art17.auth import need
 import lookup
 
 DATE_FORMAT = {
@@ -126,6 +128,8 @@ class IndexView(flask.views.View):
             'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,
             'records_template': self.records_template,
+            'can_update_conclusion_status': Permission(need.admin).can(),
+            'can_delete_conclusion': Permission(need.admin).can(),
         }
 
         if self.subject:

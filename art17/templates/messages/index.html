@@ -12,7 +12,7 @@
       <div class="panel-heading">
         {{ msg.user_id }} ({{ msg.date|local_date('long') }})
 
-        {% if admin_permission.can() %}
+        {% if can_delete_message %}
           {% set url = url_for('.remove', message_id=msg.id,
                                           next=request.url) %}
           <form class="message-remove" method="post" action="{{ url }}">
@@ -20,7 +20,7 @@
           </form>
         {% endif %}
 
-        {% if g.identity.id %}
+        {% if can_set_read_status %}
           <span class="readbox">
             <button class="readbox-new">necitit</button>
             <button class="readbox-read">citit</button>
