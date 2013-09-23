@@ -6,11 +6,29 @@ auth = flask.Blueprint('auth', __name__)
 
 principals = Principal(use_sessions=False)
 
-admin_permission = Permission(RoleNeed('admin'))
+
+class need(object):
+    """ A list of needs defined by our application. """
+
+    admin = RoleNeed('admin')
+    authenticated = RoleNeed('authenticated')
+
+    @staticmethod
+    def user_id(user_id):
+        return UserNeed(user_id)
+
+
+admin_permission = Permission(need.admin)
 
 
 def user_permission(user_id):
     return Permission(UserNeed(user_id))
+
+
+def require(permission, http_exception):
+    def decorator(func):
+        return permission.require(http_exception)(func)
+    return decorator
 
 
 @auth.record
@@ -57,6 +75,7 @@ def load_debug_auth():
                             auth_type='session')
         principals.set_identity(identity)
 
-        identity.provides.add(UserNeed(identity.id))
+        identity.provides.add(need.user_id(identity.id))
+        identity.provides.add(need.authenticated)
         for role_name in auth_data.get('roles', []):
             identity.provides.add(RoleNeed(role_name))

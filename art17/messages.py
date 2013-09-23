@@ -2,9 +2,10 @@
 
 from datetime import datetime
 import flask
+from flask.ext.principal import Permission
 from blinker import Signal
 from art17 import models
-from art17.auth import admin_permission
+from art17.auth import require, admin_permission, need
 
 messages = flask.Blueprint('messages', __name__)
 
@@ -29,6 +30,7 @@ def _dump_message_data(message):
 
 
 @messages.route('/mesaje/<conclusion_id>/nou', methods=['POST'])
+@require(Permission(need.authenticated), 403)
 def new(conclusion_id):
     conclusion = _get_conclusion_or_404(conclusion_id)
 
