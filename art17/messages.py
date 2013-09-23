@@ -67,6 +67,7 @@ def remove():
 
 
 @messages.route('/mesaje/citit', methods=['POST'])
+@require(Permission(need.authenticated))
 def set_read_status():
     message_id = flask.request.form['message_id']
     read = (flask.request.form.get('read') == 'on')
