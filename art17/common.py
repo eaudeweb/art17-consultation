@@ -7,11 +7,11 @@ import urllib
 from babel.dates import format_datetime
 import flask
 import flask.views
-from flask.ext.principal import Permission
+from flask.ext.principal import Permission, Denial
 from werkzeug.datastructures import MultiDict
 from sqlalchemy import func
 from art17 import models
-from art17.auth import need, Never
+from art17.auth import need
 import lookup
 
 DATE_FORMAT = {
@@ -52,14 +52,14 @@ def perm_edit_conclusion(conclusion):
 
 
 def perm_update_conclusion_status(conclusion):
-    if conclusion.status == APPROVED_STATUS:
-        return Never()
-    else:
-        return Permission(need.admin)
+    return Permission(need.admin)
 
 
 def perm_delete_conclusion(conclusion):
-    return perm_update_conclusion_status(conclusion)
+    if conclusion.status == APPROVED_STATUS:
+        return Denial(need.everybody)
+    else:
+        return Permission(need.admin)
 
 
 common = flask.Blueprint('common', __name__)

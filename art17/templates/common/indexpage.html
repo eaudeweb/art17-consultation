@@ -33,7 +33,7 @@
         {{ record_cell(row) }}
 
         <td colspan=4>  {#- conclusion (author, etc) #}
-          {%- if perm_create_conclusion(row) %}
+          {%- if perm_create_conclusion(row).can() %}
             {%- set url = url_for(blueprint + '.conclusion',
                                   record_id=row.id,
                                   next=conclusion_next) %}
@@ -49,7 +49,7 @@
       <tr>
         {#- detail #}
         <td>
-          {%- if perm_update_conclusion_status(row.model) %}
+          {%- if perm_update_conclusion_status(row.model).can() %}
             {%- set url = url_for(blueprint + '.conclusion_status',
                                   conclusion_id=row.id) %}
             <form method="post" action="{{ url }}" class="records-conclusionstatus">
@@ -58,7 +58,7 @@
             </form>
           {%- endif %}
 
-          {%- if perm_delete_conclusion(row.model) %}
+          {%- if perm_delete_conclusion(row.model).can() %}
             {%- set url = url_for(blueprint + '.conclusion_delete',
                                   conclusion_id=row.id) %}
             <form method="post" action="{{ url }}" class="records-conclusiondelete">
@@ -73,7 +73,7 @@
 
         <td>{{ row.user_id }}</td>  {#- conclusion author, etc #}
         <td>
-          {%- if perm_edit_conclusion(row.model) %}
+          {%- if perm_edit_conclusion(row.model).can() %}
             {%- set url = url_for(blueprint + '.conclusion_edit',
                                   conclusion_id=row.id,
                                   next=conclusion_next) %}

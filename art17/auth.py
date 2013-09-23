@@ -19,12 +19,6 @@ class need(object):
         return UserNeed(user_id)
 
 
-class Never(Permission):
-
-    def allows(self, identity):
-        return False
-
-
 admin_permission = Permission(need.admin)
 
 
