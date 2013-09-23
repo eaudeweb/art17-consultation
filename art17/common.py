@@ -104,7 +104,7 @@ def json_encode_more(value):
 
 class IndexView(flask.views.View):
 
-    def dispatch_request(self):
+    def parse_request(self):
         self.subject_code = flask.request.args.get(self.subject_name, type=int)
 
         if self.subject_code:
@@ -143,14 +143,16 @@ class IndexView(flask.views.View):
                             .join(self.record_cls)
                             .order_by(self.subject_cls.code))
 
-        self.ctx = {
+    def prepare_context(self):
+        self.ctx.update({
             'subject_list': self.get_subject_list(),
             'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,
             'records_template': self.records_template,
             'can_update_conclusion_status': Permission(need.admin).can(),
             'can_delete_conclusion': Permission(need.admin).can(),
-        }
+            'conclusion_next': self.get_conclusion_next_url(),
+        })
 
         if self.subject:
             map_colors = [{
@@ -170,12 +172,11 @@ class IndexView(flask.views.View):
                     })
             })
 
-        self.custom_ctx()
-
+    def dispatch_request(self):
+        self.parse_request()
+        self.ctx = {}
+        self.prepare_context()
         return flask.render_template(self.template, **self.ctx)
-
-    def custom_ctx(self):
-        pass
 
 
 class ConclusionView(flask.views.View):

@@ -33,17 +33,26 @@ class SpeciesIndexView(IndexView):
     parse_record = staticmethod(schemas.parse_species)
     records_template = 'species/records.html'
 
+    def parse_request(self):
+        super(SpeciesIndexView, self).parse_request()
+        self.group_code = flask.request.args.get('group')
+
+    def get_conclusion_next_url(self):
+        return flask.url_for('.index', group=self.group_code,
+                                       species=self.subject_code,
+                                       region=self.region_code)
+
     @property
     def map_url_template(self):
         return flask.current_app.config['SPECIES_MAP_URL']
 
-    def custom_ctx(self):
-        group_code = flask.request.args.get('group')
+    def prepare_context(self):
+        super(SpeciesIndexView, self).prepare_context()
         self.ctx.update({
             'species_groups': [{'id': g.code,
                                 'text': g.description}
                                for g in models.LuGrupSpecie.query],
-            'current_group_code': group_code,
+            'current_group_code': self.group_code,
         })
 
         if self.subject:
