@@ -123,7 +123,7 @@ def json_encode_more(value):
 class IndexView(flask.views.View):
 
     def parse_request(self):
-        self.subject_code = flask.request.args.get(self.subject_name, type=int)
+        self.subject_code = flask.request.args.get(self.subject_name)
 
         if self.subject_code:
             self.subject = (self.subject_cls.query
