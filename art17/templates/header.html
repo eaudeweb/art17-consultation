@@ -7,10 +7,6 @@
     </div>
     <div class="col-md-10">
       <ul class="nav nav-pills pull-right">
-        <li><a href="http://www.posmediu.ro/ajutor">ajutor</a></li>
-        <li><a href="http://www.posmediu.ro/faq">întrebări frecvente</a></li>
-        <li><a href="http://www.posmediu.ro/hartasite">hartă website</a></li>
-        <li><a href="http://www.posmediu.ro/home">versiune pentru tipărire</a></li>
         <li>
           {%- set login_url = url_for('auth.debug', next=request.url) %}
           <a href="{{ login_url }}">utilizator: {{ g.identity.id or "vizitator" }}</a>
