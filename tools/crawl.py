@@ -34,11 +34,11 @@ SPECIES_CODES = [
     '4127', '5037', '5040', '5365']
 
 
-def test(url):
+def test(url, txt):
     print url
     resp = requests.get(url)
     assert resp.status_code == 200
-    assert ('cod: ' + code) in resp.text
+    assert txt in resp.text
 
 
 def main():
@@ -48,10 +48,10 @@ def main():
     urlbase = args.urlbase.rstrip('/') + '/'
 
     for code in HABITAT_CODES:
-        test(urlbase + 'habitate/?habitat=' + code)
+        test(urlbase + 'habitate/?habitat=' + code, 'cod: ' + code)
 
     for code in SPECIES_CODES:
-        test(urlbase + 'specii/?species=' + code)
+        test(urlbase + 'specii/?species=' + code, 'cod: ' + code)
 
 
 if __name__ == '__main__':
