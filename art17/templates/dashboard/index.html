@@ -14,5 +14,35 @@
 
 
 {% block content %}
-  <h2>Concluzii</h2>
+  <h2>Habitate</h2>
+
+  <table class="table table-bordered">
+    <thead>
+      <th></th>
+
+      {% for bioreg in bioreg_list %}
+        <th title="{{ bioreg.name_ro }}">{{ bioreg.code }}</th>
+      {% endfor %}
+    </thead>
+
+    <tbody>
+    {% for habitat in habitat_list %}
+      <tr>
+        {%- set name = habitat.lu.name_ro %}
+        <td title="{{ name }}">{{ name|truncate(60) }}</td>
+
+        {% for bioreg in bioreg_list %}
+          {%- set key = (habitat.id, bioreg.code) %}
+          {%- set available = habitat_regions[key] %}
+          {%- if available %}
+            {%- set count = habitat_conclusion_count[key] or 0 %}
+            <td>{{ count }}</td>
+          {%- else %}
+            <td class="dashboard-missingrecord"></td>
+          {%- endif %}
+        {% endfor %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
 {% endblock content %}
