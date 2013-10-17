@@ -13,9 +13,7 @@
 {% endblock breadcrumbs %}
 
 
-{% block content %}
-  <h2>Habitate</h2>
-
+{%- macro table(subject_list, regions, conclusion_count) %}
   <table class="table table-bordered">
     <thead>
       <th></th>
@@ -26,16 +24,16 @@
     </thead>
 
     <tbody>
-    {% for habitat in habitat_list %}
+    {% for subject in subject_list %}
       <tr>
-        {%- set name = habitat.lu.name_ro %}
+        {%- set name = subject.lu.name_ro or subject.lu.speciesname %}
         <td title="{{ name }}">{{ name|truncate(60) }}</td>
 
         {% for bioreg in bioreg_list %}
-          {%- set key = (habitat.id, bioreg.code) %}
-          {%- set available = habitat_regions[key] %}
+          {%- set key = (subject.id, bioreg.code) %}
+          {%- set available = regions[key] %}
           {%- if available %}
-            {%- set count = habitat_conclusion_count[key] or 0 %}
+            {%- set count = conclusion_count[key] or 0 %}
             <td>{{ count }}</td>
           {%- else %}
             <td class="dashboard-missingrecord"></td>
@@ -45,4 +43,18 @@
     {% endfor %}
     </tbody>
   </table>
+{%- endmacro %}
+
+
+{% block content %}
+  <h2>Habitate</h2>
+
+  {{ table(habitat_list, habitat_regions, habitat_conclusion_count) }}
+
+  {% for species_group in species_group_list %}
+    <h2>{{ species_group.description }}</h2>
+
+    {%- set species_list = species_by_group[species_group.code] %}
+    {{ table(species_list, species_regions, species_conclusion_count) }}
+  {% endfor %}
 {% endblock content %}
