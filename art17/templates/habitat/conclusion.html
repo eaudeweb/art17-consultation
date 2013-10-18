@@ -31,7 +31,18 @@
   </h2>
 
   <form method="post">
-    <p class="text-info">Toate câmpurile sunt opționale. Valorile originale sunt prezentate in partea dreaptǎ a acestei pagini în font gri.</p>
+    {%- if not config.TESTING %}
+    <p class="comment-info">
+      Toate câmpurile sunt opționale. Valorile originale sunt prezentate in
+      partea dreaptǎ a acestei pagini în font gri.
+
+      Aceste câmpuri și valorile lor sunt conforme cu
+      <a href="{{ url_for('views.guide') }}" target="_blank">
+        ghidul de raportare</a>
+      al Comisiei Europene.
+    </p>
+    {%- endif %}
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Proporția</h3>
