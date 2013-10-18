@@ -186,7 +186,7 @@ class DataHabitattypeRegion(Base):
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    hr_habitat = relationship(u'DataHabitat',
+    habitat = relationship(u'DataHabitat',
         backref=db.backref('regions', lazy='dynamic'))
 
     lu = relationship(LuBiogeoreg,
@@ -268,7 +268,7 @@ class DataHabitattypeConclusion(Base):
     status = Column(Text, default='new')
     deleted = Column(Boolean, default=False)
 
-    hr_habitat = relationship(u'DataHabitat',
+    habitat = relationship(u'DataHabitat',
         backref=db.backref('conclusions', lazy='dynamic'))
 
 

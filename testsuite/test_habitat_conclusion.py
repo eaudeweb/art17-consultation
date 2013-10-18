@@ -121,7 +121,7 @@ def _create_habitat_record(habitat_app, conclusion=False):
     with habitat_app.app_context():
         habitat = models.DataHabitat(id=1, code='1234')
         habitat.lu = models.LuHabitattypeCodes(objectid=1, code=1234)
-        record = models.DataHabitattypeRegion(id=1, hr_habitat=habitat,
+        record = models.DataHabitattypeRegion(id=1, habitat=habitat,
                                               region='ALP')
         record.lu = models.LuBiogeoreg(objectid=1)
         models.db.session.add(record)
@@ -159,7 +159,7 @@ def test_save_conclusion_record(habitat_app):
     with habitat_app.app_context():
         assert DataHabitattypeConclusion.query.count() == 1
         conclusion = DataHabitattypeConclusion.query.first()
-        assert conclusion.hr_habitat.code == '1234'
+        assert conclusion.habitat.code == '1234'
         assert conclusion.region == 'ALP'
         assert conclusion.range_surface_area == 50
 

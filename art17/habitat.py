@@ -53,7 +53,7 @@ habitat.add_url_rule('/habitate/', view_func=HabitatIndexView.as_view('index'))
 def detail(record_id):
     record = models.DataHabitattypeRegion.query.get_or_404(record_id)
     return flask.render_template('habitat/detail.html', **{
-        'habitat': record.hr_habitat,
+        'habitat': record.habitat,
         'record': schemas.parse_habitat(record),
     })
 
@@ -76,7 +76,7 @@ class HabitatConclusionView(ConclusionView):
 
     def setup_template_context(self):
         self.template_ctx = {
-            'habitat': self.record.hr_habitat,
+            'habitat': self.record.habitat,
             'record': schemas.parse_habitat(self.record),
         }
 
