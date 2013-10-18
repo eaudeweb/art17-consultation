@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+
+{% block title %}Dashboard &mdash; {{ super() }}{% endblock title %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', url_for('views.home')),
+          ('dashboard', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
+{% block content %}
+  {%- from 'dashboard/common.html' import table %}
+  <h2>Habitate</h2>
+
+  {{ table(
+      bioreg_list,
+      habitat_list,
+      habitat_regions,
+      habitat_conclusion_count,
+  ) }}
+{% endblock content %}

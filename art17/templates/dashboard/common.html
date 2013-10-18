@@ -1,19 +1,4 @@
-{% extends "layout.html" %}
-
-
-{% block title %}Dashboard &mdash; {{ super() }}{% endblock title %}
-
-
-{% block breadcrumbs %}
-  {%- from 'bits.html' import breadcrumbs %}
-  {{ breadcrumbs([
-          ('acasǎ', url_for('views.home')),
-          ('dashboard', None),
-      ]) }}
-{% endblock breadcrumbs %}
-
-
-{%- macro table(subject_list, regions, conclusion_count) %}
+{%- macro table(bioreg_list, subject_list, regions, conclusion_count) %}
   <table class="table table-bordered">
     <thead>
       <th></th>
@@ -44,17 +29,3 @@
     </tbody>
   </table>
 {%- endmacro %}
-
-
-{% block content %}
-  <h2>Habitate</h2>
-
-  {{ table(habitat_list, habitat_regions, habitat_conclusion_count) }}
-
-  {% for species_group in species_group_list %}
-    <h2>{{ species_group.description }}</h2>
-
-    {%- set species_list = species_by_group[species_group.code] %}
-    {{ table(species_list, species_regions, species_conclusion_count) }}
-  {% endfor %}
-{% endblock content %}

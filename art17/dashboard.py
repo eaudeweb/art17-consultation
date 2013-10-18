@@ -1,5 +1,4 @@
 from collections import defaultdict
-from itertools import groupby
 import flask
 from art17 import models
 
@@ -7,15 +6,12 @@ from art17 import models
 dashboard = flask.Blueprint('dashboard', __name__)
 
 
-@dashboard.route('/')
-def index():
+@dashboard.route('/habitate')
+def habitats():
     session = models.db.session
     DH = models.DataHabitat
     DHR = models.DataHabitattypeRegion
     DHC = models.DataHabitattypeConclusion
-    DS = models.DataSpecies
-    DSR = models.DataSpeciesRegion
-    DSC = models.DataSpeciesConclusion
 
     habitat_list = DH.query.join(DH.lu).all()
 
@@ -29,18 +25,33 @@ def index():
         key = (int(row.habitat_id), row.region)
         habitat_conclusion_count[key] += 1
 
-    species_group_list = models.LuGrupSpecie.query.all()
+    return flask.render_template('dashboard/habitat.html', **{
+        'bioreg_list': models.LuBiogeoreg.query.all(),
+        'habitat_list': habitat_list,
+        'habitat_regions': habitat_regions,
+        'habitat_conclusion_count': dict(habitat_conclusion_count),
+    })
+
+
+@dashboard.route('/specii/<group_code>')
+def species(group_code):
+    session = models.db.session
+    DS = models.DataSpecies
+    DSR = models.DataSpeciesRegion
+    DSC = models.DataSpeciesConclusion
+
+    species_group = (
+        models.LuGrupSpecie.query
+        .filter_by(code=group_code)
+        .first()
+    )
+
     species_list = (
         DS.query
         .join(DS.lu)
-        .order_by(models.LuHdSpecies.group_code)
+        .filter(models.LuHdSpecies.group_code == group_code)
         .all()
     )
-    species_by_group = {
-        g: list(items)
-        for g, items
-        in groupby(species_list, lambda s: s.lu.group_code)
-    }
 
     species_regions = {}
     for row in session.query(DSR.species_id, DSR.region):
@@ -52,15 +63,15 @@ def index():
         key = (int(row.species_id), row.region)
         species_conclusion_count[key] += 1
 
-    return flask.render_template('dashboard/index.html', **{
+    return flask.render_template('dashboard/species.html', **{
         'bioreg_list': models.LuBiogeoreg.query.all(),
-
-        'habitat_list': habitat_list,
-        'habitat_regions': habitat_regions,
-        'habitat_conclusion_count': dict(habitat_conclusion_count),
-
-        'species_group_list': species_group_list,
-        'species_by_group': species_by_group,
+        'species_group': species_group,
+        'species_list': species_list,
         'species_regions': species_regions,
         'species_conclusion_count': dict(species_conclusion_count),
     })
+
+
+@dashboard.route('/')
+def index():
+    return flask.redirect(flask.url_for('.habitats'))
