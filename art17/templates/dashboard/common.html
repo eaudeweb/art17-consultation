@@ -1,3 +1,14 @@
+{%- macro tabmenu(tabmenu_data, current) %}
+  <ul class="nav nav-tabs">
+    {% for item in tabmenu_data %}
+      <li {%- if item['code'] == current %} class="active" {%- endif %}>
+        <a href="{{ item['url'] }}">{{ item['label'] }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{%- endmacro %}
+
+
 {%- macro table(bioreg_list, subject_list, regions, conclusion_count) %}
   <table class="table table-bordered">
     <thead>

@@ -14,8 +14,8 @@
 
 
 {% block content %}
-  {%- from 'dashboard/common.html' import table %}
-  <h2>Habitate</h2>
+  {%- from 'dashboard/common.html' import table, tabmenu %}
+  {{ tabmenu(tabmenu_data, current='H') }}
 
   {{ table(
       bioreg_list,

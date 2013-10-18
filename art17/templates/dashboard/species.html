@@ -14,8 +14,8 @@
 
 
 {% block content %}
-  {%- from 'dashboard/common.html' import table %}
-  <h2>{{ species_group.description }}</h2>
+  {%- from 'dashboard/common.html' import table, tabmenu %}
+  {{ tabmenu(tabmenu_data, current='S' + species_group.code) }}
 
   {{ table(
       bioreg_list,

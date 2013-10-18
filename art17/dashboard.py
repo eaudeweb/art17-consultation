@@ -6,6 +6,20 @@ from art17 import models
 dashboard = flask.Blueprint('dashboard', __name__)
 
 
+def get_tabmenu_data():
+    yield {
+        'url': flask.url_for('.habitats'),
+        'label': "Habitate",
+        'code': 'H',
+    }
+    for group in models.LuGrupSpecie.query:
+        yield {
+            'url': flask.url_for('.species', group_code=group.code),
+            'label': group.description,
+            'code': 'S' + group.code,
+        }
+
+
 @dashboard.route('/habitate')
 def habitats():
     session = models.db.session
@@ -27,6 +41,7 @@ def habitats():
 
     return flask.render_template('dashboard/habitat.html', **{
         'bioreg_list': models.LuBiogeoreg.query.all(),
+        'tabmenu_data': list(get_tabmenu_data()),
         'habitat_list': habitat_list,
         'habitat_regions': habitat_regions,
         'habitat_conclusion_count': dict(habitat_conclusion_count),
@@ -65,6 +80,7 @@ def species(group_code):
 
     return flask.render_template('dashboard/species.html', **{
         'bioreg_list': models.LuBiogeoreg.query.all(),
+        'tabmenu_data': list(get_tabmenu_data()),
         'species_group': species_group,
         'species_list': species_list,
         'species_regions': species_regions,
