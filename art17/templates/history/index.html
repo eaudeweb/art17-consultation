@@ -35,7 +35,7 @@
     {%- for item in history_items %}
       <tr class="{{ CLASS_FOR_ACTION[item.action] }} history_row">
         {%- set date = item.date|local_date('long') %}
-        {%- set url = url_for('.detail', item_id=item.id) %}
+        {%- set url = url_for('.delta', item_id=item.id) %}
         <td><a href="{{ url }}">{{ date }}</a></td>
         <td title="{{ item.table.strip() }}">
           {{ TABLE_LABEL.get(item.table.strip(), '?') }}

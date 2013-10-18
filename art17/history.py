@@ -88,8 +88,8 @@ def index():
 
 @history.route('/activitate/<item_id>')
 @admin_permission.require(403)
-def detail(item_id):
-    return flask.render_template('history/detail.html', **{
+def delta(item_id):
+    return flask.render_template('history/delta.html', **{
         'item': models.History.query.get_or_404(item_id),
     })
 
