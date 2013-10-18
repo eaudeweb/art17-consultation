@@ -46,18 +46,3 @@
     </tbody>
   </table>
 {% endblock content %}
-
-
-{% block script %}
-{{- super() }}
-<script>
-(function() {
-  "use strict";
-  $('table').on('click', '.history_row', function(evt) {
-    var row = $(this);
-    var link = row.find('a');
-    window.location = link.attr('href');
-  });
-})();
-</script>
-{% endblock script %}
