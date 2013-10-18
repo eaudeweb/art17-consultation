@@ -123,24 +123,23 @@ $('body').on('click', '.showmap', function(evt) {
 
 _($('.records-conclusionstatus [name=status]')).forEach(function(el) {
   var hidden_input = $(el);
-  var select = $('<select name="status">');
-  _(App.STATUS_OPTIONS).forEach(function(item) {
-    var value = item[0];
-    var label = item[1];
-    var option = $('<option>', {value: value});
-    option.text(label);
-    if(hidden_input.val() == value) {
-      option.attr('selected', true);
-    }
-    select.append(option);
+  var data = _(App.STATUS_OPTIONS).map(function(item) {
+    return {id: item[0], text: item[1]};
   });
-  hidden_input.replaceWith(select);
+  console.log(data);
+  hidden_input.select2({
+    data: data,
+    formatSelection: function(ob) { return ob.text.split(' ')[0]; },
+    minimumResultsForSearch: -1,  // disable search field
+    width: '5em',
+    dropdownAutoWidth: true
+  });
 });
 
 
 $('.records-conclusionstatus').change(function(evt) {
   var form = $(this);
-  var select = $(evt.target);
+  var select = form.find('.select2-container');
   select.hide();
   form.append('...').submit();
 });
