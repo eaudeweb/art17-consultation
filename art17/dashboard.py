@@ -20,6 +20,31 @@ def get_tabmenu_data():
         }
 
 
+def consultation_url(subject, bioreg=None):
+    args = {}
+    if bioreg:
+        args['region'] = bioreg
+
+    if isinstance(subject, models.DataHabitat):
+        args['habitat'] = subject.code
+        return flask.url_for('habitat.index', **args)
+
+    elif isinstance(subject, models.DataSpecies):
+        args['species'] = subject.code
+        return flask.url_for('species.index', **args)
+
+    else:
+        raise RuntimeError("Unknown object %r" % subject)
+
+
+@dashboard.context_processor
+def inject_funcs():
+    return {
+        'get_tabmenu_data': get_tabmenu_data,
+        'consultation_url': consultation_url,
+    }
+
+
 @dashboard.route('/habitate')
 def habitats():
     session = models.db.session

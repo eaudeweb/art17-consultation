@@ -1,6 +1,6 @@
-{%- macro tabmenu(tabmenu_data, current) %}
+{%- macro tabmenu(current) %}
   <ul class="nav nav-tabs">
-    {% for item in tabmenu_data %}
+    {% for item in get_tabmenu_data() %}
       <li {%- if item['code'] == current %} class="active" {%- endif %}>
         <a href="{{ item['url'] }}">{{ item['label'] }}</a>
       </li>
@@ -23,14 +23,20 @@
     {% for subject in subject_list %}
       <tr>
         {%- set name = subject.lu.name_ro or subject.lu.speciesname %}
-        <td title="{{ name }}">{{ name|truncate(60) }}</td>
+        {%- set url = consultation_url(subject) %}
+        <td title="{{ name }}">
+          <a href="{{ url }}">{{ name|truncate(60) }}</a>
+        </td>
 
         {% for bioreg in bioreg_list %}
           {%- set key = (subject.id, bioreg.code) %}
           {%- set available = regions[key] %}
           {%- if available %}
             {%- set count = conclusion_count[key] or 0 %}
-            <td>{{ count }}</td>
+            {%- set url = consultation_url(subject, bioreg=bioreg.code) %}
+            <td class="dashboard-commentcount">
+              <a href="{{ url }}">{{ count }}</a>
+            </td>
           {%- else %}
             <td class="dashboard-missingrecord"></td>
           {%- endif %}

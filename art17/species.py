@@ -35,11 +35,10 @@ class SpeciesIndexView(IndexView):
 
     def parse_request(self):
         super(SpeciesIndexView, self).parse_request()
-        self.group_code = flask.request.args.get('group')
+        self.group_code = self.subject.lu.group_code
 
     def get_conclusion_next_url(self):
-        return flask.url_for('.index', group=self.group_code,
-                                       species=self.subject_code,
+        return flask.url_for('.index', species=self.subject_code,
                                        region=self.region_code)
 
     @property
