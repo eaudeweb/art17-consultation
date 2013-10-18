@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 from datetime import datetime
 import flask
 from art17 import models
@@ -8,6 +10,13 @@ from art17.common import json_encode_more
 from art17.auth import admin_permission
 
 history = flask.Blueprint('history', __name__)
+
+
+TABLE_LABEL = {
+    'data_species_conclusions': u"concluzie specie",
+    'data_habitattype_conclusions': u"concluzie habitat",
+    'conclusion_messages': u"mesaj",
+}
 
 
 @history.record
@@ -59,6 +68,13 @@ def handle_signal(table, action, ob, old_data=None, new_data=None, **extra):
     if new_data:
         item.new_data = flask.json.dumps(new_data, default=json_encode_more)
     models.db.session.add(item)
+
+
+@history.context_processor
+def inject_lookup_tables():
+    return {
+        'TABLE_LABEL': TABLE_LABEL,
+    }
 
 
 @history.route('/activitate')

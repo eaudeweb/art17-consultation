@@ -37,7 +37,9 @@
         {%- set date = item.date|local_date('long') %}
         {%- set url = url_for('.detail', item_id=item.id) %}
         <td><a href="{{ url }}">{{ date }}</a></td>
-        <td>{{ item.table }}</td>
+        <td title="{{ item.table.strip() }}">
+          {{ TABLE_LABEL.get(item.table.strip(), '?') }}
+        </td>
         <td>{{ item.object_id }}</td>
         <td>{{ item.action }}</td>
         <td>{{ item.user_id }}</td>
