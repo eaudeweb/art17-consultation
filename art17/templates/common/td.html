@@ -54,6 +54,16 @@
 {%- endmacro %}
 
 
+{% macro population_magnitude_html(magnitude) -%}
+{% if magnitude.min or magnitude.max %}
+    {{ magnitude.min }} - {{ magnitude.max }}
+{% endif %}
+{% if magnitude.ci %}
+  ({{ magnitude.ci|int }}%)
+{% endif %}
+{%- endmacro %}
+
+
 {% macro period_html(period) %}
 {%- if period -%}
   {#- unicode character 2011: non-breaking hyphen -#}
