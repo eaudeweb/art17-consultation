@@ -120,6 +120,7 @@ def parse_species(row, is_conclusion=False):
             'size': _get_population_size(row),
             'method': row.population_method,
             'additional': additional_info(row, 'population'),
+            'population_date': row.population_date,
             'conclusion': parse_conclusion(row, 'conclusion_population'),
             'trend_short': parse_population_trend(row,
                                                   'population_trend'),
