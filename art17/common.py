@@ -1,10 +1,12 @@
 # encoding: utf-8
 
+import re
 from datetime import datetime
 from dateutil import tz
 from decimal import Decimal
 import urllib
 from babel.dates import format_datetime
+from jinja2 import evalcontextfilter, Markup, escape
 import flask
 import flask.views
 from flask.ext.principal import Permission, Denial
@@ -14,11 +16,13 @@ from art17 import models
 from art17.auth import need
 import lookup
 
+
 DATE_FORMAT = {
     'day': u'd\u00a0MMM',
     'long': u'd\u00a0MMMM\u00a0y\u00a0HH:mm',
 }
 
+_paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
 
 STATUS_OPTIONS = [
     ('new', "-"),
@@ -98,6 +102,16 @@ def local_date(value, format='day'):
     local_tz = tz.gettz('Europe/Bucharest')
     local_value = value.replace(tzinfo=utc).astimezone(local_tz)
     return format_datetime(local_value, DATE_FORMAT[format], locale='ro')
+
+
+@common.app_template_filter('nl2br')
+@evalcontextfilter
+def nl2br(eval_ctx, value):
+    result = u'\n\n'.join(u'<p>%s</p>' % p.replace('\n', '<br>\n') \
+        for p in _paragraph_re.split(escape(value)))
+    if eval_ctx.autoescape:
+        result = Markup(result)
+    return result
 
 
 def flatten_dict(data):
