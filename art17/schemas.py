@@ -55,6 +55,14 @@ def reasons_for_change(obj, prefix):
     }
 
 
+def additional_info(obj, prefix):
+    return {
+        'locality': getattr(obj, '%s_additional_locality' % prefix),
+        'method': getattr(obj, '%s_additional_method' % prefix),
+        'problems': getattr(obj, '%s_additional_problems' % prefix),
+    }
+
+
 def _get_population_size(obj):
     rv = {}
     for qualifier in ['population', 'population_alt']:
@@ -111,6 +119,7 @@ def parse_species(row, is_conclusion=False):
     rv['population'] = {
             'size': _get_population_size(row),
             'method': row.population_method,
+            'additional': additional_info(row, 'population'),
             'conclusion': parse_conclusion(row, 'conclusion_population'),
             'trend_short': parse_population_trend(row,
                                                   'population_trend'),

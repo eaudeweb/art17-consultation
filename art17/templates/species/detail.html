@@ -108,6 +108,26 @@
         </tr>
 
         <tr>
+          <th>Informații suplimentare</th>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td> &nbsp; - definirea `localitǎții`</td>
+          <td>{{ record.population.additional.locality }}</td>
+        </tr>
+
+        <tr>
+          <td> &nbsp; - metoda de conversie</td>
+          <td>{{ record.population.additional.method }}</td>
+        </tr>
+
+        <tr>
+          <td> &nbsp; - probleme</td>
+          <td>{{ record.population.additional.problems }}</td>
+        </tr>
+
+        <tr>
           <th>Tendință pe termen scurt</th>
           <td>
             {{ trend_detail_html(record.population.trend_short) }}</td>
