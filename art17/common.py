@@ -85,6 +85,7 @@ def inject_constants():
             'LU_FV_RANGE_OP_FUNCT': lookup.LU_FV_RANGE_OP_FUNCT,
             'LU_POP_NUMBER': lookup.LU_POP_NUMBER,
             'CONCLUSIONS': lookup.CONCLUSIONS,
+            'LU_REASONS_FOR_CHANGE': lookup.LU_REASONS_FOR_CHANGE,
             'QUALITY': lookup.QUALITY,
             'STATUS_OPTIONS': STATUS_OPTIONS}
 

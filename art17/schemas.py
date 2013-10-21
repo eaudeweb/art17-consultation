@@ -47,6 +47,14 @@ def parse_reference_value(obj, prefix):
     }
 
 
+def reasons_for_change(obj, prefix):
+    return {
+        'a': getattr(obj, '%s_reasons_for_change_a' % prefix),
+        'b': getattr(obj, '%s_reasons_for_change_b' % prefix),
+        'c': getattr(obj, '%s_reasons_for_change_c' % prefix),
+    }
+
+
 def _get_population_size(obj):
     rv = {}
     for qualifier in ['population', 'population_alt']:
@@ -94,8 +102,9 @@ def parse_species(row, is_conclusion=False):
             'trend_long': parse_trend(row, 'range_trend_long', magnitude=True),
             'conclusion': parse_conclusion(row, 'conclusion_range'),
             'reference_value': parse_reference_value(row,
-                                    'complementary_favourable_range')
+                                    'complementary_favourable_range'),
                                 # ideal: row.range_surface_area
+            'reasons_for_change': reasons_for_change(row, 'range'),
         }
     ref_value_ideal = (row.population_minimum_size or
                        row.population_alt_minimum_size)

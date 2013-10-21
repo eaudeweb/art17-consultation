@@ -11,6 +11,7 @@ from art17.lookup import (TREND_OPTIONS,
                           LU_FV_RANGE_OP_FUNCT_OPTIONS,
                           LU_POP_NUMBER_OPTIONS,
                           LU_POP_NUMBER_RESTRICTED_OPTIONS,
+                          LU_REASONS_FOR_CHANGE_OPTIONS,
                           QUALITY_OPTIONS)
 from art17 import schemas
 

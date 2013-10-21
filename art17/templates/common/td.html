@@ -23,6 +23,15 @@
 {%- endmacro %}
 
 
+{% macro reasons_for_change_html(range) %}
+  {%- for k,v in range.reasons_for_change.items() %}
+    {% if v|int %}
+      * {{ LU_REASONS_FOR_CHANGE[k] }} <br>
+    {% endif %}
+  {% endfor %}
+{%- endmacro %}
+
+
 {% macro reference_value_td(refval, unit='') -%}
   <td {% if refval.method -%}
         title="Metoda utilizată: {{ refval.method }}"

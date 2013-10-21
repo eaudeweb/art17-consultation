@@ -1,7 +1,7 @@
 {%- from 'common/td.html'
     import conclusion_td, range_html, trend_html, trend_detail_html,
       magnitude_html, population_size_td, reference_value_html,
-      period_html, method_html, conclusions_html
+      period_html, method_html, conclusions_html, reasons_for_change_html
     with context %}
 
 
@@ -27,7 +27,7 @@
         </tr>
 
         <tr>
-          <th> &nbsp; - metoda utilizată</th>
+          <td> &nbsp; - metoda utilizată</td>
           <td>{{ method_html(record.range.method) }}</td>
         </tr>
 
@@ -38,12 +38,12 @@
         </tr>
 
         <tr>
-          <th> &nbsp; - perioada</th>
+          <td> &nbsp; - perioada</td>
           <td>{{ period_html(record.range.trend_short.period) }}</td>
         </tr>
 
         <tr>
-          <th> &nbsp; - magnitudinea</th>
+          <td> &nbsp; - magnitudinea</td>
           <td>{{ magnitude_html(record.range.trend_short.magnitude) }}</td>
         </tr>
 
@@ -54,12 +54,12 @@
         </tr>
 
         <tr>
-          <th> &nbsp; - perioada</th>
+          <td> &nbsp; - perioada</td>
           <td>{{ period_html(record.range.trend_long.period) }}</td>
         </tr>
 
         <tr>
-          <th> &nbsp; - magnitudinea</th>
+          <td> &nbsp; - magnitudinea</td>
           <td>{{ magnitude_html(record.range.trend_long.magnitude) }}</td>
         </tr>
 
@@ -71,11 +71,17 @@
         </tr>
 
         <tr>
-          <th> &nbsp; - metoda utilizată</th>
+          <td> &nbsp; - metoda utilizată</td>
           <td>
             {% if record.range.reference_value.method %}
               {{- record.range.reference_value.method -}}
             {% endif %}
+          </td>
+        </tr>
+
+        <tr>
+          <th>Motivul schimbării</th>
+          <td>{{ reasons_for_change_html(record.range) }}
           </td>
         </tr>
 
@@ -97,7 +103,7 @@
         </tr>
 
         <tr>
-          <th> &nbsp; - metoda utilizată</th>
+          <td> &nbsp; - metoda utilizată</td>
           <td>{{ method_html(record.population.method) }}</td>
         </tr>
 
@@ -108,12 +114,12 @@
         </tr>
 
         <tr>
-          <th> &nbsp; - perioada</th>
+          <td> &nbsp; - perioada</td>
           <td>{{ period_html(record.population.trend_short.period) }}</td>
         </tr>
 
         <tr>
-          <th> &nbsp; - magnitudinea</th>
+          <td> &nbsp; - magnitudinea</td>
           <td>{{ magnitude_html(record.population.trend_short.magnitude) }}</td>
         </tr>
 
@@ -124,12 +130,12 @@
         </tr>
 
         <tr>
-          <th> &nbsp; - perioada</th>
+          <td> &nbsp; - perioada</td>
           <td>{{ period_html(record.population.trend_long.period) }}</td>
         </tr>
 
         <tr>
-          <th> &nbsp; - magnitudinea</th>
+          <td> &nbsp; - magnitudinea</td>
           <td>{{ magnitude_html(record.population.trend_long.magnitude) }}</td>
         </tr>
 
@@ -139,7 +145,7 @@
         </tr>
 
         <tr>
-          <th> &nbsp; - metoda utilizată</th>
+          <td> &nbsp; - metoda utilizată</td>
           <td>
             {%- if record.population.reference_value.method %}
               {{ record.population.reference_value.method }}
@@ -165,12 +171,12 @@
         </tr>
 
         <tr>
-          <th> &nbsp; - anul/perioada</th>
+          <td> &nbsp; - anul/perioada</td>
           <td>{{ record.habitat.date }}</td>
         </tr>
 
         <tr>
-          <th> &nbsp; - metoda utilizată</th>
+          <td> &nbsp; - metoda utilizată</td>
           <td>{{ method_html(record.habitat.method) }}</td>
         </tr>
 
@@ -180,7 +186,7 @@
         </tr>
 
         <tr>
-          <th> &nbsp; - metoda utilizată</th>
+          <td> &nbsp; - metoda utilizată</td>
           <td>
             {%- if record.habitat.quality.explanation %}
               {{ record.habitat.quality.explanation }}
@@ -196,7 +202,7 @@
         </tr>
 
         <tr>
-          <th> &nbsp; - perioada</th>
+          <td> &nbsp; - perioada</td>
           <td>{{ period_html(record.habitat.trend_short.period) }}</td>
         </tr>
 
@@ -208,7 +214,7 @@
         </tr>
 
         <tr>
-          <th> &nbsp; - perioada</th>
+          <td> &nbsp; - perioada</td>
           <td>{{ period_html(record.habitat.trend_long.period) }}</td>
         </tr>
 

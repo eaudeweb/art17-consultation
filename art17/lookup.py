@@ -1,5 +1,14 @@
 # encoding: utf-8
 
+
+LU_REASONS_FOR_CHANGE_OPTIONS = [
+    ('a', u"genuine change"),
+    ('b', u"improved knowledge/more accurate data"),
+    ('c', u"use of different method (e.g. `Range tool`)"),
+]
+
+LU_REASONS_FOR_CHANGE = dict(LU_REASONS_FOR_CHANGE_OPTIONS)
+
 LU_POP_NUMBER_OPTIONS = [
     ('i', u"number of individuals"),
     ('adults', u"number of adults"),
