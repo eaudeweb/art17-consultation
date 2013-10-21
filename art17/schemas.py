@@ -139,6 +139,7 @@ def parse_species(row, is_conclusion=False):
             'trend_long': parse_trend(row, 'habitat_trend_long'),
             'area_suitable': row.habitat_area_suitable,
             'quality': _get_habitat_quality(row),
+            'reasons_for_change': reasons_for_change(row, 'habitat'),
         }
 
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')

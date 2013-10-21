@@ -203,16 +203,16 @@
       <table class="table table-bordered recorddetail-table">
         <tr>
           <th>Estimarea suprafeţei</th>
-          <td>{{ range_html(record.habitat.surface_area) }}</td>
+          <td>{{ range_html(record.habitat) }}</td>
         </tr>
 
         <tr>
-          <td> &nbsp; - anul/perioada</td>
+          <th>Anul/perioada</th>
           <td>{{ record.habitat.date }}</td>
         </tr>
 
         <tr>
-          <td> &nbsp; - metoda utilizată</td>
+          <th>Metoda utilizată</th>
           <td>{{ method_html(record.habitat.method) }}</td>
         </tr>
 
@@ -259,6 +259,12 @@
           <td>
             {{ reference_value_html(record.habitat.area_suitable,
                   unit='km²') }}
+          </td>
+        </tr>
+
+        <tr>
+          <th>Motivul schimbării</th>
+          <td>{{ reasons_for_change_html(record.habitat) }}
           </td>
         </tr>
 
