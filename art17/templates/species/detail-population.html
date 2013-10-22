@@ -1,0 +1,102 @@
+<div class="tab-pane" id="recorddetail-population">
+  <div class="table-responsive">
+    <table class="table table-bordered recorddetail-table">
+      <tr>
+        <th>Estimarea mărimii populației</th>
+        {{ macros.population_size_td(record.population.size) }}
+      </tr>
+
+      <tr>
+        <td> &nbsp; - metoda utilizată</td>
+        <td>{{ macros.method_html(record.population.method) }}</td>
+      </tr>
+
+      <tr>
+        <th>Informații suplimentare</th>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - definirea `localitǎții`</td>
+        <td>{{ record.population.additional.locality }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - metoda de conversie</td>
+        <td>{{ record.population.additional.method }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - probleme</td>
+        <td>{{ record.population.additional.problems }}</td>
+      </tr>
+
+      <tr>
+        <th>Anul sau perioada</th>
+        <td>{{ record.population.population_date }}</td>
+      </tr>
+
+      <tr>
+        <th>Tendință pe termen scurt</th>
+        <td>
+          {{ macros.trend_detail_html(record.population.trend_short) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - perioada</td>
+        <td>{{ macros.period_html(record.population.trend_short.period) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - magnitudinea</td>
+        <td>{{ macros.population_magnitude_html(record.population.trend_short.magnitude) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - metoda utilizată</td>
+        <td>{{ macros.method_html(record.population.trend_short.method) }}</td>
+      </tr>
+
+      <tr>
+        <th>Tendință pe termen lung</th>
+        <td>
+          {{ macros.trend_detail_html(record.population.trend_long) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - perioada</td>
+        <td>{{ macros.period_html(record.population.trend_long.period) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - magnitudinea</td>
+        <td>{{ macros.population_magnitude_html(record.population.trend_long.magnitude) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - metoda utilizată</td>
+        <td>{{ macros.method_html(record.population.trend_long.method) }}</td>
+      </tr>
+
+      <tr>
+        <th>Populația favorabilă de referință</th>
+        <td>{{ macros.reference_value_html(record.population.reference_value) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - metoda utilizată</td>
+        <td>
+          {%- if record.population.reference_value.method %}
+            {{ record.population.reference_value.method }}
+          {% endif -%}
+        </td>
+      </tr>
+
+      <tr>
+        <th>Concluzie</th>
+        <td>{{ macros.conclusions_html(record.population.conclusion)}}</td>
+      </tr>
+
+    </table>
+  </div>
+</div>

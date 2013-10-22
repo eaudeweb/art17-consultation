@@ -1,0 +1,75 @@
+<div class="tab-pane active" id="recorddetail-range">
+  <div class="table-responsive">
+    <table class="table table-bordered recorddetail-table">
+      <tr>
+        <th>Suprafață</th>
+        <td>{{ macros.range_html(record.range) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - metoda utilizată</td>
+        <td>{{ macros.method_html(record.range.method) }}</td>
+      </tr>
+
+      <tr>
+        <th>Tendință pe termen scurt</th>
+        <td>{{ macros.trend_detail_html(record.range.trend_short) }}
+        </td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - perioada</td>
+        <td>{{ macros.period_html(record.range.trend_short.period) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - magnitudinea</td>
+        <td>{{ macros.magnitude_html(record.range.trend_short.magnitude) }}</td>
+      </tr>
+
+      <tr>
+        <th>Tendință pe termen lung</th>
+        <td>
+          {{ macros.trend_detail_html(record.range.trend_long) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - perioada</td>
+        <td>{{ macros.period_html(record.range.trend_long.period) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - magnitudinea</td>
+        <td>{{ macros.magnitude_html(record.range.trend_long.magnitude) }}</td>
+      </tr>
+
+      <tr>
+        <th>Arealul favorabil de referință</th>
+        <td>{{ macros.reference_value_html(record.range.reference_value,
+                unit='km²') }}
+        </td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - metoda utilizată</td>
+        <td>
+          {% if record.range.reference_value.method %}
+            {{- record.range.reference_value.method -}}
+          {% endif %}
+        </td>
+      </tr>
+
+      <tr>
+        <th>Motivul schimbării</th>
+        <td>{{ macros.reasons_for_change_html(record.range) }}
+        </td>
+      </tr>
+
+      <tr>
+        <th>Concluzie</th>
+        <td>{{ macros.conclusions_html(record.range.conclusion)}}</td>
+      </tr>
+
+    </table>
+  </div>
+</div>
