@@ -14,8 +14,8 @@
 
 
 {% block content %}
-  {%- from 'dashboard/common.html' import table, tabmenu %}
-  {{ tabmenu(tabmenu_data, current='H') }}
+  {%- from 'dashboard/common.html' import table, tabmenu with context %}
+  {{ tabmenu(current='H') }}
 
   {{ table(
       bioreg_list,

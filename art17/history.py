@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 from datetime import datetime
 import flask
 from art17 import models
@@ -8,6 +10,13 @@ from art17.common import json_encode_more
 from art17.auth import admin_permission
 
 history = flask.Blueprint('history', __name__)
+
+
+TABLE_LABEL = {
+    'data_species_conclusions': u"concluzie specie",
+    'data_habitattype_conclusions': u"concluzie habitat",
+    'conclusion_messages': u"mesaj",
+}
 
 
 @history.record
@@ -61,6 +70,13 @@ def handle_signal(table, action, ob, old_data=None, new_data=None, **extra):
     models.db.session.add(item)
 
 
+@history.context_processor
+def inject_lookup_tables():
+    return {
+        'TABLE_LABEL': TABLE_LABEL,
+    }
+
+
 @history.route('/activitate')
 @admin_permission.require(403)
 def index():
@@ -72,8 +88,8 @@ def index():
 
 @history.route('/activitate/<item_id>')
 @admin_permission.require(403)
-def detail(item_id):
-    return flask.render_template('history/detail.html', **{
+def delta(item_id):
+    return flask.render_template('history/delta.html', **{
         'item': models.History.query.get_or_404(item_id),
     })
 

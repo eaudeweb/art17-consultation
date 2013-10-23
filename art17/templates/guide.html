@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+  {%- if species %}{{ species.name }} &mdash; {% endif %}
+  {{- super() }}
+{%- endblock title %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', url_for('views.home')),
+          ('ghid de raportare', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
+{% block content %}
+  <h1>Ghid de raportare</h1>
+
+  <p>
+    ... stuff ...
+    {# link la pdf-uri, 'formatul de raportare' și 'ghidul de raportare' #}
+  </p>
+{% endblock content %}

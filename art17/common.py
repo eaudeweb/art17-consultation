@@ -25,10 +25,14 @@ DATE_FORMAT = {
 _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
 
 STATUS_OPTIONS = [
-    ('new', "-"),
-    ('approved', "Y"),
-    ('rejected', "N"),
-    ('question', "?"),
+    ('new',         u"-- neevaluat"),
+    ('investigate', u"!! necesită mai multe investigații"),
+    ('incomplete',  u"CO necesită completări/corecții"),
+    ('approved',    u"OK propus pentru păstrare"),
+    ('rejected',    u"REJ refuzat, motive în replică"),
+    ('invalid',     u"NO invalid"),
+    ('question',    u"?? discutabil"),
+    ('final',       u"FIN raport modificat în urma consultării"),
 ]
 
 STATUS_VALUES = list(dict(STATUS_OPTIONS))
