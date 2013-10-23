@@ -558,7 +558,7 @@ class DataSpeciesComment(Base):
 
 
 class CommentReply(Base):
-    __tablename__ = u'comment_messages'
+    __tablename__ = u'comment_replies'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
     parent = Column(String)
@@ -568,10 +568,10 @@ class CommentReply(Base):
 
 
 class CommentReplyRead(Base):
-    __tablename__ = u'comment_messages_read'
+    __tablename__ = u'comment_replies_read'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
-    message_id = Column(String, ForeignKey(CommentReply.id))
+    message_id = Column('reply_id', String, ForeignKey(CommentReply.id))
     user_id = Column(String)
 
 
