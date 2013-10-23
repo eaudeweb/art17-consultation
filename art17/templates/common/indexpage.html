@@ -84,7 +84,7 @@
             </form>
           {%- endif %}
         </td>
-        <td>{{ row.conclusion_date|local_date }}</td>
+        <td>{{ row.comment_date|local_date }}</td>
         <td>
           {%- set url = url_for('messages.index', comment_id=row.id) %}
           {%- set count = message_counts[row.id] or 0 %}

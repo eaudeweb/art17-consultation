@@ -274,7 +274,7 @@ class DataHabitattypeComment(Base):
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    conclusion_date = Column(DateTime)
+    comment_date = Column('conclusion_date', DateTime)
     user_id = Column(String)
     status = Column(Text, default='new')
     deleted = Column(Boolean, default=False)
@@ -548,7 +548,7 @@ class DataSpeciesComment(Base):
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    conclusion_date = Column(DateTime)
+    comment_date = Column('conclusion_date', DateTime)
     user_id = Column(String)
     status = Column(Text, default='new')
     deleted = Column(Boolean, default=False)

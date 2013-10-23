@@ -227,7 +227,7 @@ class CommentView(flask.views.View):
             self.record = self.record_cls.query.get_or_404(record_id)
             perm_create_comment(self.record).test()
             self.comment = self.comment_cls(user_id=flask.g.identity.id,
-                                            conclusion_date=datetime.utcnow())
+                                            comment_date=datetime.utcnow())
             form = self.form_cls(flask.request.form)
 
         elif comment_id:
