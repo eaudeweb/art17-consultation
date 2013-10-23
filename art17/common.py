@@ -48,26 +48,26 @@ CONCLUSION_COLOR = {
 }
 
 
-def perm_create_conclusion(record):
+def perm_create_comment(record):
     return Permission(need.authenticated)
 
 
-def perm_edit_conclusion(conclusion):
-    if conclusion.user_id:
-        return Permission(need.admin, need.user_id(conclusion.user_id))
+def perm_edit_comment(comment):
+    if comment.user_id:
+        return Permission(need.admin, need.user_id(comment.user_id))
     else:
         return Permission(need.admin)
 
 
-def perm_update_conclusion_status(conclusion):
+def perm_update_comment_status(comment):
     return Permission(need.admin)
 
 
-def perm_delete_conclusion(conclusion):
-    if conclusion.status == APPROVED_STATUS:
+def perm_delete_comment(comment):
+    if comment.status == APPROVED_STATUS:
         return Denial(need.everybody)
-    elif conclusion.user_id:
-        return Permission(need.admin, need.user_id(conclusion.user_id))
+    elif comment.user_id:
+        return Permission(need.admin, need.user_id(comment.user_id))
     else:
         return Permission(need.admin)
 
@@ -78,10 +78,10 @@ common = flask.Blueprint('common', __name__)
 @common.app_context_processor
 def inject_permissions():
     return {
-        'perm_create_conclusion': perm_create_conclusion,
-        'perm_edit_conclusion': perm_edit_conclusion,
-        'perm_update_conclusion_status': perm_update_conclusion_status,
-        'perm_delete_conclusion': perm_delete_conclusion,
+        'perm_create_comment': perm_create_comment,
+        'perm_edit_comment': perm_edit_comment,
+        'perm_update_comment_status': perm_update_comment_status,
+        'perm_delete_comment': perm_delete_comment,
     }
 
 
@@ -225,7 +225,7 @@ class ConclusionView(flask.views.View):
         if record_id:
             new_conclusion = True
             self.record = self.record_cls.query.get_or_404(record_id)
-            perm_create_conclusion(self.record).test()
+            perm_create_comment(self.record).test()
             self.conclusion = self.conclusion_cls(user_id=flask.g.identity.id,
                                             conclusion_date=datetime.utcnow())
             form = self.form_cls(flask.request.form)
@@ -234,7 +234,7 @@ class ConclusionView(flask.views.View):
             new_conclusion = False
             self.conclusion = (self.conclusion_cls
                                     .query.get_or_404(conclusion_id))
-            perm_edit_conclusion(self.conclusion).test()
+            perm_edit_comment(self.conclusion).test()
             self.record = self.record_for_conclusion(self.conclusion)
             old_data = self.parse_conclusionform(self.conclusion)
             if flask.request.method == 'POST':
@@ -298,7 +298,7 @@ class ConclusionDeleteView(flask.views.View):
 
     def dispatch_request(self, conclusion_id):
         conclusion = self.conclusion_cls.query.get_or_404(conclusion_id)
-        perm_delete_conclusion(conclusion).test()
+        perm_delete_comment(conclusion).test()
         next_url = flask.request.form['next']
         conclusion.deleted = True
         app = flask.current_app._get_current_object()
