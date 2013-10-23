@@ -217,7 +217,7 @@ class IndexView(flask.views.View):
         return flask.render_template(self.template, **self.ctx)
 
 
-class ConclusionView(flask.views.View):
+class CommentView(flask.views.View):
 
     methods = ['GET', 'POST']
 
@@ -273,7 +273,7 @@ class ConclusionView(flask.views.View):
         return flask.render_template(self.template, **self.template_ctx)
 
 
-class ConclusionStateView(flask.views.View):
+class CommentStateView(flask.views.View):
 
     methods = ['POST']
 
@@ -292,7 +292,7 @@ class ConclusionStateView(flask.views.View):
         return flask.redirect(next_url)
 
 
-class ConclusionDeleteView(flask.views.View):
+class CommentDeleteView(flask.views.View):
 
     methods = ['POST']
 

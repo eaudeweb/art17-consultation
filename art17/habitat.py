@@ -1,8 +1,8 @@
 import flask
 from blinker import Signal
 from art17 import models
-from art17.common import (IndexView, ConclusionView, ConclusionStateView,
-                          ConclusionDeleteView)
+from art17.common import (IndexView, CommentView, CommentStateView,
+                          CommentDeleteView)
 from art17 import forms
 from art17 import schemas
 
@@ -59,7 +59,7 @@ def detail(record_id):
     })
 
 
-class HabitatConclusionView(ConclusionView):
+class HabitatCommentView(CommentView):
 
     form_cls = forms.HabitatConclusion
     record_cls = models.DataHabitattypeRegion
@@ -92,24 +92,24 @@ class HabitatConclusionView(ConclusionView):
 
 
 habitat.add_url_rule('/habitate/detalii/<int:record_id>/concluzii',
-                     view_func=HabitatConclusionView.as_view('conclusion'))
+                     view_func=HabitatCommentView.as_view('conclusion'))
 
 
 habitat.add_url_rule('/habitate/concluzii/<conclusion_id>',
-                     view_func=HabitatConclusionView.as_view('conclusion_edit'))
+                     view_func=HabitatCommentView.as_view('conclusion_edit'))
 
 
-class HabitatConclusionStateView(ConclusionStateView):
+class HabitatCommentStateView(CommentStateView):
 
     comment_cls = models.DataHabitattypeComment
     signal = conclusion_status_changed
 
 
 habitat.add_url_rule('/habitate/concluzii/<conclusion_id>/stare',
-            view_func=HabitatConclusionStateView.as_view('conclusion_status'))
+            view_func=HabitatCommentStateView.as_view('conclusion_status'))
 
 
-class HabitatConclusionDeleteView(ConclusionDeleteView):
+class HabitatCommentDeleteView(CommentDeleteView):
 
     comment_cls = models.DataHabitattypeComment
     parse_commentform = staticmethod(schemas.parse_habitat_conclusionform)
@@ -117,4 +117,4 @@ class HabitatConclusionDeleteView(ConclusionDeleteView):
 
 
 habitat.add_url_rule('/habitate/concluzii/<conclusion_id>/sterge',
-            view_func=HabitatConclusionDeleteView.as_view('conclusion_delete'))
+            view_func=HabitatCommentDeleteView.as_view('conclusion_delete'))

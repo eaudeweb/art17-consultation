@@ -1,8 +1,8 @@
 import flask
 from blinker import Signal
 from art17 import models
-from art17.common import (IndexView, ConclusionView, ConclusionStateView,
-                          ConclusionDeleteView)
+from art17.common import (IndexView, CommentView, CommentStateView,
+                          CommentDeleteView)
 from art17 import forms
 from art17 import schemas
 
@@ -81,7 +81,7 @@ def detail(record_id):
     })
 
 
-class SpeciesConclusionView(ConclusionView):
+class SpeciesCommentView(CommentView):
 
     form_cls = forms.SpeciesConclusion
     record_cls = models.DataSpeciesRegion
@@ -114,24 +114,24 @@ class SpeciesConclusionView(ConclusionView):
 
 
 species.add_url_rule('/specii/detalii/<int:record_id>/concluzii',
-                     view_func=SpeciesConclusionView.as_view('conclusion'))
+                     view_func=SpeciesCommentView.as_view('conclusion'))
 
 
 species.add_url_rule('/specii/concluzii/<conclusion_id>',
-                 view_func=SpeciesConclusionView.as_view('conclusion_edit'))
+                 view_func=SpeciesCommentView.as_view('conclusion_edit'))
 
 
-class SpeciesConclusionStateView(ConclusionStateView):
+class SpeciesCommentStateView(CommentStateView):
 
     comment_cls = models.DataSpeciesComment
     signal = conclusion_status_changed
 
 
 species.add_url_rule('/specii/concluzii/<conclusion_id>/stare',
-            view_func=SpeciesConclusionStateView.as_view('conclusion_status'))
+            view_func=SpeciesCommentStateView.as_view('conclusion_status'))
 
 
-class SpeciesConclusionDeleteView(ConclusionDeleteView):
+class SpeciesCommentDeleteView(CommentDeleteView):
 
     comment_cls = models.DataSpeciesComment
     parse_commentform = staticmethod(schemas.parse_species_conclusionform)
@@ -139,4 +139,4 @@ class SpeciesConclusionDeleteView(ConclusionDeleteView):
 
 
 species.add_url_rule('/specii/concluzii/<conclusion_id>/sterge',
-            view_func=SpeciesConclusionDeleteView.as_view('conclusion_delete'))
+            view_func=SpeciesCommentDeleteView.as_view('conclusion_delete'))
