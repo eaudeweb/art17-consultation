@@ -438,17 +438,20 @@ class DataPressuresThreats(Base):
 
     id = Column('objectid', Numeric, primary_key=True, index=True)
     habitat_id = Column('pressure_hr_id', Numeric,
-                        ForeignKey(DataHabitat.id), index=True)
+                        ForeignKey(DataHabitattypeRegion.id), index=True)
     species_id = Column('pressure_sr_id', Numeric,
-                        ForeignKey(DataSpecies.id), index=True)
+                        ForeignKey(DataSpeciesRegion.id), index=True)
     pressure = Column(String)
     ranking = Column(String)
     type = Column(String)
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    species = relationship(u'DataSpecies',
-        backref=db.backref('regions', lazy='dynamic'))
+    species = relationship(u'DataSpeciesRegion',
+        backref=db.backref('threats', lazy='dynamic'))
+
+    habitat = relationship(u'DataHabitattypeRegion',
+        backref=db.backref('threats', lazy='dynamic'))
 
     lu = relationship(LuThreats,
                       primaryjoin=(pressure == foreign(LuThreats.code)),

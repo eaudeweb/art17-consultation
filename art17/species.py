@@ -30,7 +30,6 @@ class SpeciesIndexView(IndexView):
     subject_name = 'species'
     subject_cls = models.DataSpecies
     record_cls = models.DataSpeciesRegion
-    threats_pressures_cls = models.DataPressuresThreats
     parse_record = staticmethod(schemas.parse_species)
     blueprint = 'species'
 
