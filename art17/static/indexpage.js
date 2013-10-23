@@ -126,7 +126,6 @@ _($('.records-commentstatus [name=status]')).forEach(function(el) {
   var data = _(App.STATUS_OPTIONS).map(function(item) {
     return {id: item[0], text: item[1]};
   });
-  console.log(data);
   hidden_input.select2({
     data: data,
     formatSelection: function(ob) { return ob.text.split(' ')[0]; },
