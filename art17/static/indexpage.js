@@ -121,7 +121,7 @@ $('body').on('click', '.showmap', function(evt) {
 });
 
 
-_($('.records-conclusionstatus [name=status]')).forEach(function(el) {
+_($('.records-commentstatus [name=status]')).forEach(function(el) {
   var hidden_input = $(el);
   var data = _(App.STATUS_OPTIONS).map(function(item) {
     return {id: item[0], text: item[1]};
@@ -137,7 +137,7 @@ _($('.records-conclusionstatus [name=status]')).forEach(function(el) {
 });
 
 
-$('.records-conclusionstatus').change(function(evt) {
+$('.records-commentstatus').change(function(evt) {
   var form = $(this);
   var select = form.find('.select2-container');
   select.hide();
@@ -145,7 +145,7 @@ $('.records-conclusionstatus').change(function(evt) {
 });
 
 
-$('.records-conclusiondelete').submit(function(evt) {
+$('.records-commentdelete').submit(function(evt) {
   if(! confirm("Ștergi concluzia?")) {
     evt.preventDefault();
   }
