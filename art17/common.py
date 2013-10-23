@@ -174,6 +174,7 @@ class IndexView(flask.views.View):
 
         self.subject_list = (self.subject_cls.query
                             .join(self.record_cls)
+                            .join(self.threats_pressures_cls)
                             .order_by(self.subject_cls.code))
 
     def prepare_context(self):
