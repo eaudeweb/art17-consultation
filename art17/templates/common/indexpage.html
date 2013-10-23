@@ -37,7 +37,7 @@
           {%- if perm_create_comment(row).can() %}
             {%- set url = url_for(blueprint + '.conclusion',
                                   record_id=row.id,
-                                  next=conclusion_next) %}
+                                  next=comment_next) %}
             <a class="records-conclusionbtn"
                href="{{ url }}">adaugǎ concluzie</a>
           {%- endif %}
@@ -56,7 +56,7 @@
                                   comment_id=row.id) %}
             <form method="post" action="{{ url }}"
                   class="records-conclusionstatus">
-              <input type="hidden" name="next" value="{{ conclusion_next }}">
+              <input type="hidden" name="next" value="{{ comment_next }}">
               <input type="hidden" name="status" value="{{ row.status }}">
             </form>
           {%- endif %}
@@ -69,7 +69,7 @@
           {%- if perm_edit_comment(row.model).can() %}
             {%- set url = url_for(blueprint + '.conclusion_edit',
                                   comment_id=row.id,
-                                  next=conclusion_next) %}
+                                  next=comment_next) %}
             <a href="{{ url }}" class="records-editconclusionbtn">editează</a>
           {%- endif %}
 
@@ -78,7 +78,7 @@
                                   comment_id=row.id) %}
             <form method="post" action="{{ url }}"
                   class="records-conclusiondelete">
-              <input type="hidden" name="next" value="{{ conclusion_next }}">
+              <input type="hidden" name="next" value="{{ comment_next }}">
               <button class="btn btn-xs btn-danger"
                       type="submit">șterge</button>
             </form>

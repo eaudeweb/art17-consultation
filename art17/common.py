@@ -188,7 +188,7 @@ class IndexView(flask.views.View):
             'subject_list': self.get_subject_list(),
             'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,
-            'conclusion_next': self.get_comment_next_url(),
+            'comment_next': self.get_comment_next_url(),
             'blueprint': self.blueprint,
         })
 
