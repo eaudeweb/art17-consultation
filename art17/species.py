@@ -8,10 +8,10 @@ from art17 import schemas
 
 species = flask.Blueprint('species', __name__)
 
-conclusion_added = Signal()
-conclusion_edited = Signal()
-conclusion_status_changed = Signal()
-conclusion_deleted = Signal()
+comment_added = Signal()
+comment_edited = Signal()
+comment_status_changed = Signal()
+comment_deleted = Signal()
 
 
 @species.route('/specii/regiuni/<int:species_code>')
@@ -90,8 +90,8 @@ class SpeciesCommentView(CommentView):
     flatten_commentform = staticmethod(schemas.flatten_species_conclusionform)
     template = 'species/conclusion.html'
     template_saved = 'species/conclusion-saved.html'
-    add_signal = conclusion_added
-    edit_signal = conclusion_edited
+    add_signal = comment_added
+    edit_signal = comment_edited
 
     def link_conclusion_to_record(self):
         self.comment.species_id = self.record.species_id
@@ -124,7 +124,7 @@ species.add_url_rule('/specii/concluzii/<comment_id>',
 class SpeciesCommentStateView(CommentStateView):
 
     comment_cls = models.DataSpeciesComment
-    signal = conclusion_status_changed
+    signal = comment_status_changed
 
 
 species.add_url_rule('/specii/concluzii/<comment_id>/stare',
@@ -135,7 +135,7 @@ class SpeciesCommentDeleteView(CommentDeleteView):
 
     comment_cls = models.DataSpeciesComment
     parse_commentform = staticmethod(schemas.parse_species_conclusionform)
-    signal = conclusion_deleted
+    signal = comment_deleted
 
 
 species.add_url_rule('/specii/concluzii/<comment_id>/sterge',

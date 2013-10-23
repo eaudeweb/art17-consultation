@@ -23,22 +23,22 @@ TABLE_LABEL = {
 def register_handlers(state):
     app = state.app
 
-    connect(species.conclusion_added, app,
+    connect(species.comment_added, app,
             table='data_species_conclusions', action='add')
-    connect(species.conclusion_edited, app,
+    connect(species.comment_edited, app,
             table='data_species_conclusions', action='edit')
-    connect(species.conclusion_status_changed, app,
+    connect(species.comment_status_changed, app,
             table='data_species_conclusions', action='status')
-    connect(species.conclusion_deleted, app,
+    connect(species.comment_deleted, app,
             table='data_species_conclusions', action='delete')
 
-    connect(habitat.conclusion_added, app,
+    connect(habitat.comment_added, app,
             table='data_habitattype_conclusions', action='add')
-    connect(habitat.conclusion_edited, app,
+    connect(habitat.comment_edited, app,
             table='data_habitattype_conclusions', action='edit')
-    connect(habitat.conclusion_status_changed, app,
+    connect(habitat.comment_status_changed, app,
             table='data_habitattype_conclusions', action='status')
-    connect(habitat.conclusion_deleted, app,
+    connect(habitat.comment_deleted, app,
             table='data_habitattype_conclusions', action='delete')
 
     connect(messages.message_added, app,

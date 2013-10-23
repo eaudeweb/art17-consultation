@@ -8,10 +8,10 @@ from art17 import schemas
 
 habitat = flask.Blueprint('habitat', __name__)
 
-conclusion_added = Signal()
-conclusion_edited = Signal()
-conclusion_status_changed = Signal()
-conclusion_deleted = Signal()
+comment_added = Signal()
+comment_edited = Signal()
+comment_status_changed = Signal()
+comment_deleted = Signal()
 
 
 @habitat.route('/habitate/regiuni/<int:habitat_code>')
@@ -68,8 +68,8 @@ class HabitatCommentView(CommentView):
     flatten_commentform = staticmethod(schemas.flatten_habitat_conclusionform)
     template = 'habitat/conclusion.html'
     template_saved = 'habitat/conclusion-saved.html'
-    add_signal = conclusion_added
-    edit_signal = conclusion_edited
+    add_signal = comment_added
+    edit_signal = comment_edited
 
     def link_conclusion_to_record(self):
         self.comment.habitat_id = self.record.habitat_id
@@ -102,7 +102,7 @@ habitat.add_url_rule('/habitate/concluzii/<comment_id>',
 class HabitatCommentStateView(CommentStateView):
 
     comment_cls = models.DataHabitattypeComment
-    signal = conclusion_status_changed
+    signal = comment_status_changed
 
 
 habitat.add_url_rule('/habitate/concluzii/<comment_id>/stare',
@@ -113,7 +113,7 @@ class HabitatCommentDeleteView(CommentDeleteView):
 
     comment_cls = models.DataHabitattypeComment
     parse_commentform = staticmethod(schemas.parse_habitat_conclusionform)
-    signal = conclusion_deleted
+    signal = comment_deleted
 
 
 habitat.add_url_rule('/habitate/concluzii/<comment_id>/sterge',
