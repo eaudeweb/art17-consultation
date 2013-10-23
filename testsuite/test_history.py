@@ -10,7 +10,7 @@ class species_params(object):
     conclusion_create_url = '/specii/detalii/1/concluzii'
     user_id = 'somebody'
     conclusion_cls = models.DataSpeciesComment
-    conclusion_id = '4f799fdd6f5a'
+    comment_id = '4f799fdd6f5a'
     conclusion_edit_url = '/specii/concluzii/4f799fdd6f5a'
     conclusion_status_url = '/specii/concluzii/4f799fdd6f5a/stare'
     conclusion_delete_url = '/specii/concluzii/4f799fdd6f5a/sterge'
@@ -39,7 +39,7 @@ class habitat_params(object):
     conclusion_create_url = '/habitate/detalii/1/concluzii'
     user_id = 'somebody'
     conclusion_cls = models.DataHabitattypeComment
-    conclusion_id = '4f799fdd6f5a'
+    comment_id = '4f799fdd6f5a'
     conclusion_edit_url = '/habitate/concluzii/4f799fdd6f5a'
     conclusion_status_url = '/habitate/concluzii/4f799fdd6f5a/stare'
     conclusion_delete_url = '/habitate/concluzii/4f799fdd6f5a/sterge'
@@ -145,7 +145,7 @@ def test_message_add(app):
     app.register_blueprint(messages.messages)
     params.setup(app, conclusion=True)
     client = app.test_client()
-    resp = client.post('/mesaje/%s/nou' % params.conclusion_id,
+    resp = client.post('/mesaje/%s/nou' % params.comment_id,
                        data={'text': "hello world"})
     assert resp.status_code == 302
 
@@ -160,7 +160,7 @@ def test_message_add(app):
         new_data = json.loads(history[0].new_data)
         assert new_data['text'] == 'hello world'
         assert new_data['user_id'] == params.user_id
-        assert new_data['parent'] == params.conclusion_id
+        assert new_data['parent'] == params.comment_id
 
 
 def test_message_remove(app):

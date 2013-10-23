@@ -221,7 +221,7 @@ class CommentView(flask.views.View):
 
     methods = ['GET', 'POST']
 
-    def dispatch_request(self, record_id=None, conclusion_id=None):
+    def dispatch_request(self, record_id=None, comment_id=None):
         if record_id:
             new_conclusion = True
             self.record = self.record_cls.query.get_or_404(record_id)
@@ -230,10 +230,10 @@ class CommentView(flask.views.View):
                                             conclusion_date=datetime.utcnow())
             form = self.form_cls(flask.request.form)
 
-        elif conclusion_id:
+        elif comment_id:
             new_conclusion = False
             self.comment = (self.comment_cls
-                                    .query.get_or_404(conclusion_id))
+                                    .query.get_or_404(comment_id))
             perm_edit_comment(self.comment).test()
             self.record = self.record_for_comment(self.comment)
             old_data = self.parse_commentform(self.comment)
@@ -245,7 +245,7 @@ class CommentView(flask.views.View):
 
         else:
             raise RuntimeError("Need at least one of "
-                               "record_id and conclusion_id")
+                               "record_id and comment_id")
 
         self.setup_template_context()
         self.template_ctx['next_url'] = flask.request.args.get('next')
@@ -277,8 +277,8 @@ class CommentStateView(flask.views.View):
 
     methods = ['POST']
 
-    def dispatch_request(self, conclusion_id):
-        comment = self.comment_cls.query.get_or_404(conclusion_id)
+    def dispatch_request(self, comment_id):
+        comment = self.comment_cls.query.get_or_404(comment_id)
         next_url = flask.request.form['next']
         new_status = flask.request.form['status']
         if new_status not in STATUS_VALUES:
@@ -296,8 +296,8 @@ class CommentDeleteView(flask.views.View):
 
     methods = ['POST']
 
-    def dispatch_request(self, conclusion_id):
-        comment = self.comment_cls.query.get_or_404(conclusion_id)
+    def dispatch_request(self, comment_id):
+        comment = self.comment_cls.query.get_or_404(comment_id)
         perm_delete_comment(comment).test()
         next_url = flask.request.form['next']
         comment.deleted = True

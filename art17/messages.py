@@ -13,10 +13,10 @@ message_added = Signal()
 message_removed = Signal()
 
 
-def _get_conclusion_or_404(conclusion_id):
+def _get_conclusion_or_404(comment_id):
     for cls in [models.DataSpeciesComment,
                 models.DataHabitattypeComment]:
-        conclusion = cls.query.get(conclusion_id)
+        conclusion = cls.query.get(comment_id)
         if conclusion is not None:
             return conclusion
 
@@ -29,10 +29,10 @@ def _dump_message_data(message):
             for k in ['text', 'user_id', 'parent', 'date']}
 
 
-@messages.route('/mesaje/<conclusion_id>/nou', methods=['POST'])
+@messages.route('/mesaje/<comment_id>/nou', methods=['POST'])
 @require(Permission(need.authenticated))
-def new(conclusion_id):
-    conclusion = _get_conclusion_or_404(conclusion_id)
+def new(comment_id):
+    conclusion = _get_conclusion_or_404(comment_id)
 
     if flask.request.method == 'POST':
         message = models.CommentReply(
@@ -45,7 +45,7 @@ def new(conclusion_id):
         message_added.send(app, ob=message,
                            new_data=_dump_message_data(message))
         models.db.session.commit()
-        url = flask.url_for('.index', conclusion_id=conclusion_id)
+        url = flask.url_for('.index', comment_id=comment_id)
         return flask.redirect(url)
 
     return flask.render_template('messages/new.html')
@@ -94,10 +94,10 @@ def set_read_status():
     return flask.jsonify(read=read)
 
 
-@messages.route('/mesaje/<conclusion_id>')
-def index(conclusion_id):
+@messages.route('/mesaje/<comment_id>')
+def index(comment_id):
     messages = (models.CommentReply
-                    .query.filter_by(parent=conclusion_id).all())
+                    .query.filter_by(parent=comment_id).all())
     user_id = flask.g.identity.id
 
     if user_id:
@@ -109,7 +109,7 @@ def index(conclusion_id):
         read_msgs = []
 
     return flask.render_template('messages/index.html', **{
-        'conclusion_id': conclusion_id,
+        'comment_id': comment_id,
         'messages': messages,
         'read_msgs': read_msgs,
         'can_post_new_message': Permission(need.authenticated).can(),

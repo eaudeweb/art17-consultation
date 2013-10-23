@@ -53,7 +53,7 @@
         <td>
           {%- if perm_update_comment_status(row.model).can() %}
             {%- set url = url_for(blueprint + '.conclusion_status',
-                                  conclusion_id=row.id) %}
+                                  comment_id=row.id) %}
             <form method="post" action="{{ url }}"
                   class="records-conclusionstatus">
               <input type="hidden" name="next" value="{{ conclusion_next }}">
@@ -68,14 +68,14 @@
         <td>
           {%- if perm_edit_comment(row.model).can() %}
             {%- set url = url_for(blueprint + '.conclusion_edit',
-                                  conclusion_id=row.id,
+                                  comment_id=row.id,
                                   next=conclusion_next) %}
             <a href="{{ url }}" class="records-editconclusionbtn">editează</a>
           {%- endif %}
 
           {%- if perm_delete_comment(row.model).can() %}
             {%- set url = url_for(blueprint + '.conclusion_delete',
-                                  conclusion_id=row.id) %}
+                                  comment_id=row.id) %}
             <form method="post" action="{{ url }}"
                   class="records-conclusiondelete">
               <input type="hidden" name="next" value="{{ conclusion_next }}">
@@ -86,7 +86,7 @@
         </td>
         <td>{{ row.conclusion_date|local_date }}</td>
         <td>
-          {%- set url = url_for('messages.index', conclusion_id=row.id) %}
+          {%- set url = url_for('messages.index', comment_id=row.id) %}
           {%- set count = message_counts[row.id] or 0 %}
           <a class="records-messagesbtn btn btn-xs btn-default"
              href="{{ url }}">{{ fonticon('comment') }} {{ count }}</a>
