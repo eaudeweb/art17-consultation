@@ -16,9 +16,9 @@ $('body').on('click', '.readbox-mark', function(evt) {
   evt.preventDefault();
   var button = $(this);
   var message = button.parents('.message');
-  var message_id = message.data('id');
+  var reply_id = message.data('id');
   var post = $.post(App.set_read_status_url,
-                    {message_id: message_id, read: 'on'});
+                    {reply_id: reply_id, read: 'on'});
   post.done(function() {
     message.addClass('message-read');
   });
@@ -29,9 +29,9 @@ $('body').on('click', '.readbox-unmark', function(evt) {
   evt.preventDefault();
   var button = $(this);
   var message = button.parents('.message');
-  var message_id = message.data('id');
+  var reply_id = message.data('id');
   var post = $.post(App.set_read_status_url,
-                    {message_id: message_id});
+                    {reply_id: reply_id});
   post.done(function() {
     message.removeClass('message-read');
   });

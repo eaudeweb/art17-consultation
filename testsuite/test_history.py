@@ -176,17 +176,17 @@ def test_message_remove(app):
                                            date=datetime(2010, 1, 4))
         models.db.session.add(message)
         models.db.session.commit()
-        message_id = message.id
+        reply_id = message.id
 
     client = app.test_client()
-    resp = client.post('/mesaje/sterge?message_id=%s&next=/' % message_id)
+    resp = client.post('/mesaje/sterge?reply_id=%s&next=/' % reply_id)
     assert resp.status_code == 302
 
     with app.app_context():
         history_items = models.History.query.all()
         assert len(history_items) == 1
         assert history_items[0].table == 'comment_messages'
-        assert history_items[0].object_id == message_id
+        assert history_items[0].object_id == reply_id
         assert history_items[0].action == 'remove'
         assert history_items[0].user_id == user_id
         assert json.loads(history_items[0].old_data) == {

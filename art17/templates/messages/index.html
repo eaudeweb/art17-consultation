@@ -13,7 +13,7 @@
         {{ msg.user_id }} ({{ msg.date|local_date('long') }})
 
         {% if can_delete_message %}
-          {% set url = url_for('.remove', message_id=msg.id,
+          {% set url = url_for('.remove', reply_id=msg.id,
                                           next=request.url) %}
           <form class="message-remove" method="post" action="{{ url }}">
             <button class="btn btn-xs btn-danger">șterge</button>

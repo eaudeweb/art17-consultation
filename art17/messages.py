@@ -54,9 +54,9 @@ def new(comment_id):
 @messages.route('/mesaje/sterge', methods=['POST'])
 @require(Permission(need.admin))
 def remove():
-    message_id = flask.request.args['message_id']
+    reply_id = flask.request.args['reply_id']
     next_url = flask.request.args['next']
-    message = models.CommentReply.query.get_or_404(message_id)
+    message = models.CommentReply.query.get_or_404(reply_id)
     user_id = message.user_id
     models.db.session.delete(message)
     app = flask.current_app._get_current_object()
@@ -69,20 +69,20 @@ def remove():
 @messages.route('/mesaje/citit', methods=['POST'])
 @require(Permission(need.authenticated))
 def set_read_status():
-    message_id = flask.request.form['message_id']
+    reply_id = flask.request.form['reply_id']
     read = (flask.request.form.get('read') == 'on')
-    message = models.CommentReply.query.get_or_404(message_id)
+    message = models.CommentReply.query.get_or_404(reply_id)
 
     user_id = flask.g.identity.id
     if user_id is None:
         flask.abort(403)
 
     existing = (models.CommentReplyRead
-                    .query.filter_by(message_id=message.id, user_id=user_id))
+                    .query.filter_by(reply_id=message.id, user_id=user_id))
 
     if read:
         if not existing.count():
-            row = models.CommentReplyRead(message_id=message.id,
+            row = models.CommentReplyRead(reply_id=message.id,
                                                user_id=user_id)
             models.db.session.add(row)
             models.db.session.commit()
@@ -103,7 +103,7 @@ def index(comment_id):
     if user_id:
         read_by_user = (models.CommentReplyRead
                             .query.filter_by(user_id=user_id))
-        read_msgs = set(r.message_id for r in read_by_user)
+        read_msgs = set(r.reply_id for r in read_by_user)
 
     else:
         read_msgs = []
