@@ -84,8 +84,26 @@ class LuThreats(Base):
     code = Column(String)
     name = Column(String)
     note = Column(String)
-    eurotroph = Column(String)
+    eutroph = Column(String)
     valid_entry = Column(String)
+
+
+class LuRanking(Base):
+    __tablename__ = u'lu_ranking'
+
+    objectid = Column(Numeric, primary_key=True, index=True)
+    code = Column(String)
+    name = Column(String)
+    note = Column(String)
+    order_ = Column(Numeric)
+
+
+class LuPollution(Base):
+    __tablename__ = u'lu_pollution'
+
+    objectid = Column(Numeric, primary_key=True, index=True)
+    code = Column(String)
+    name = Column(String)
 
 
 class DataHabitat(Base):
@@ -456,6 +474,27 @@ class DataPressuresThreats(Base):
     lu = relationship(LuThreats,
                       primaryjoin=(pressure == foreign(LuThreats.code)),
                       innerjoin=True, uselist=False)
+
+    lu_ranking = relationship(LuRanking,
+                      primaryjoin=(ranking == foreign(LuRanking.code)),
+                      innerjoin=True, uselist=False)
+
+
+class DataPressuresThreatsPollution(Base):
+    __tablename__ = u'data_pressures_threats_pol'
+
+    id = Column('objectid', Numeric, primary_key=True, index=True)
+    pollution_pressure_id = Column(Numeric, ForeignKey(DataPressuresThreats.id))
+    pollution_qualifier = Column(String)
+    validated = Column(Numeric)
+    validation_date = Column(DateTime)
+
+    lu = relationship(LuPollution,
+            primaryjoin=(pollution_qualifier == foreign(LuPollution.code)),
+            innerjoin=True, uselist=False)
+
+    pressure = relationship(u'DataPressuresThreats',
+        backref=db.backref('pollutions', lazy='dynamic'))
 
 
 class DataSpeciesComment(Base):

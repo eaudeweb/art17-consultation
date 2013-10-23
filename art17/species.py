@@ -80,7 +80,8 @@ def detail(record_id):
     return flask.render_template('species/detail.html', **{
         'species': record.species,
         'record': schemas.parse_species(record),
-        'pressures': record.pressures.all(),
+        'pressures': record.pressures.filter_by(type='p').all(),
+        'threats': record.pressures.filter_by(type='t').all(),
     })
 
 

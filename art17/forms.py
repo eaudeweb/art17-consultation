@@ -12,7 +12,9 @@ from art17.lookup import (TREND_OPTIONS,
                           LU_POP_NUMBER_OPTIONS,
                           LU_POP_NUMBER_RESTRICTED_OPTIONS,
                           LU_REASONS_FOR_CHANGE_OPTIONS,
-                          QUALITY_OPTIONS)
+                          QUALITY_OPTIONS,
+                          METHODS_PRESSURES_OPTIONS,
+                          METHODS_THREATS_OPTIONS)
 from art17 import schemas
 
 EMPTY_CHOICE = [('', "")]

@@ -103,3 +103,20 @@ QUALITY_OPTIONS = [
 ]
 
 QUALITY = dict(QUALITY_OPTIONS)
+
+
+METHODS_PRESSURES_OPTIONS = [
+    ('3', u"Bazat numai pe opinia expertului"),
+    ('2', u"Bazat în principal pe opinia expertului sau alte date"),
+    ('1', u"Bazat exclusiv sau în principal pe date reale provenite din teren")
+]
+
+METHODS_PRESSURES = dict(METHODS_PRESSURES_OPTIONS)
+
+
+METHODS_THREATS_OPTIONS = [
+    ('2', u"Modelări"),
+    ('1', u"Opinia expertului"),
+]
+
+METHODS_THREATS = dict(METHODS_THREATS_OPTIONS)

@@ -10,6 +10,20 @@
 {%- endmacro %}
 
 
+{% macro method_pressures_html(method) %}
+{%- if method %}
+  {{ method }} - {{ METHODS_PRESSURES[method] -}}
+{% endif %}
+{%- endmacro %}
+
+
+{% macro method_threats_html(method) %}
+{%- if method %}
+  {{ method }} - {{ METHODS_THREATS[method] -}}
+{% endif %}
+{%- endmacro %}
+
+
 {% macro reference_value_html(refval, unit='', ideal='') %}
   {%- if refval.number -%}
     {{ refval.number }} {{ unit }}

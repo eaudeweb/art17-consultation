@@ -95,7 +95,9 @@ def inject_constants():
             'CONCLUSIONS': lookup.CONCLUSIONS,
             'LU_REASONS_FOR_CHANGE': lookup.LU_REASONS_FOR_CHANGE,
             'QUALITY': lookup.QUALITY,
-            'STATUS_OPTIONS': STATUS_OPTIONS}
+            'STATUS_OPTIONS': STATUS_OPTIONS,
+            'METHODS_PRESSURES': lookup.METHODS_PRESSURES,
+            'METHODS_THREATS': lookup.METHODS_THREATS}
 
 
 @common.app_template_filter('local_date')
