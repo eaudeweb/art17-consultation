@@ -16,12 +16,8 @@
         {{ link('lib/font-awesome-3.2.1/css/font-awesome-ie7.min.css') }}
       <![endif]-->
 
-      {%- if config.USE_LESS %}
-        {{ link('style.less', rel='stylesheet/less') }}
-        {{ script('lib/less-1.4.1/less.min.js') }}
-      {%- else %}
-        {{ link('style.css') }}
-      {%- endif %}
+      {{ link('lib/bootstrap-3.0.0/css/bootstrap.min.css') }}
+      {{ link('style.css') }}
     {% endblock %}
 
     <!--[if lt IE 9]>
