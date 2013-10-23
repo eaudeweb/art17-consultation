@@ -62,7 +62,7 @@ def remove():
     app = flask.current_app._get_current_object()
     reply_removed.send(app, ob=reply, old_data=_dump_reply_data(reply))
     models.db.session.commit()
-    flask.flash(u"Mesajul lui %s a fost șters." % user_id, 'success')
+    flask.flash(u"Replica lui %s a fost ștearsă." % user_id, 'success')
     return flask.redirect(next_url)
 
 
