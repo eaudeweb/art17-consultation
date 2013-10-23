@@ -205,7 +205,7 @@ class DataHabitattypeRegion(Base):
                       innerjoin=True, uselist=False)
 
 
-class DataHabitattypeConclusion(Base):
+class DataHabitattypeComment(Base):
     __tablename__ = u'data_habitattype_conclusions'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)

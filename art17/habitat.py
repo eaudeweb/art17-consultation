@@ -63,7 +63,7 @@ class HabitatConclusionView(ConclusionView):
 
     form_cls = forms.HabitatConclusion
     record_cls = models.DataHabitattypeRegion
-    conclusion_cls = models.DataHabitattypeConclusion
+    conclusion_cls = models.DataHabitattypeComment
     parse_conclusionform = staticmethod(schemas.parse_habitat_conclusionform)
     flatten_conclusionform = staticmethod(schemas.flatten_habitat_conclusionform)
     template = 'habitat/conclusion.html'
@@ -101,7 +101,7 @@ habitat.add_url_rule('/habitate/concluzii/<conclusion_id>',
 
 class HabitatConclusionStateView(ConclusionStateView):
 
-    conclusion_cls = models.DataHabitattypeConclusion
+    conclusion_cls = models.DataHabitattypeComment
     signal = conclusion_status_changed
 
 
@@ -111,7 +111,7 @@ habitat.add_url_rule('/habitate/concluzii/<conclusion_id>/stare',
 
 class HabitatConclusionDeleteView(ConclusionDeleteView):
 
-    conclusion_cls = models.DataHabitattypeConclusion
+    conclusion_cls = models.DataHabitattypeComment
     parse_conclusionform = staticmethod(schemas.parse_habitat_conclusionform)
     signal = conclusion_deleted
 

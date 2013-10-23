@@ -38,7 +38,7 @@ class habitat_params(object):
     conclusion_table = 'data_habitattype_conclusions'
     conclusion_create_url = '/habitate/detalii/1/concluzii'
     user_id = 'somebody'
-    conclusion_cls = models.DataHabitattypeConclusion
+    conclusion_cls = models.DataHabitattypeComment
     conclusion_id = '4f799fdd6f5a'
     conclusion_edit_url = '/habitate/concluzii/4f799fdd6f5a'
     conclusion_status_url = '/habitate/concluzii/4f799fdd6f5a/stare'

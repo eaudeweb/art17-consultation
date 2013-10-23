@@ -50,7 +50,7 @@ def habitats():
     session = models.db.session
     DH = models.DataHabitat
     DHR = models.DataHabitattypeRegion
-    DHC = models.DataHabitattypeConclusion
+    DHC = models.DataHabitattypeComment
 
     habitat_list = DH.query.join(DH.lu).all()
 

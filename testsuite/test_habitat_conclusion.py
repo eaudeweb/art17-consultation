@@ -127,7 +127,7 @@ def _create_habitat_record(habitat_app, conclusion=False):
         models.db.session.add(record)
 
         if conclusion:
-            conclusion = models.DataHabitattypeConclusion(
+            conclusion = models.DataHabitattypeComment(
                             id='4f799fdd6f5a',
                             habitat_id=1,
                             region='ALP',
@@ -145,7 +145,7 @@ def test_load_conclusions_view(habitat_app):
 
 
 def test_save_conclusion_record(habitat_app):
-    from art17.models import DataHabitattypeConclusion
+    from art17.models import DataHabitattypeComment
     _create_habitat_record(habitat_app)
     client = habitat_app.test_client()
     resp = client.post('/habitate/detalii/1/concluzii',
@@ -157,15 +157,15 @@ def test_save_conclusion_record(habitat_app):
     assert resp.status_code == 200
     assert CONCLUSION_SAVED_TXT in resp.data
     with habitat_app.app_context():
-        assert DataHabitattypeConclusion.query.count() == 1
-        conclusion = DataHabitattypeConclusion.query.first()
+        assert DataHabitattypeComment.query.count() == 1
+        conclusion = DataHabitattypeComment.query.first()
         assert conclusion.habitat.code == '1234'
         assert conclusion.region == 'ALP'
         assert conclusion.range_surface_area == 50
 
 
 def test_edit_conclusion_form(habitat_app):
-    from art17.models import DataHabitattypeConclusion, db
+    from art17.models import DataHabitattypeComment, db
     _create_habitat_record(habitat_app, conclusion=True)
     client = habitat_app.test_client()
     resp1 = client.get('/habitate/concluzii/f3b4c23bcb88')
@@ -176,7 +176,7 @@ def test_edit_conclusion_form(habitat_app):
 
 
 def test_edit_conclusion_submit(habitat_app):
-    from art17.models import DataHabitattypeConclusion, db
+    from art17.models import DataHabitattypeComment, db
     _create_habitat_record(habitat_app, conclusion=True)
     client = habitat_app.test_client()
     resp = client.post('/habitate/concluzii/4f799fdd6f5a',
@@ -188,7 +188,7 @@ def test_edit_conclusion_submit(habitat_app):
     assert resp.status_code == 200
     assert CONCLUSION_SAVED_TXT in resp.data
     with habitat_app.app_context():
-        conclusion = DataHabitattypeConclusion.query.get('4f799fdd6f5a')
+        conclusion = DataHabitattypeComment.query.get('4f799fdd6f5a')
         assert conclusion.range_surface_area == 50
 
 
@@ -211,7 +211,7 @@ def test_save_all_form_fields():
     form = forms.HabitatConclusion(form_data)
     assert form.validate()
 
-    conclusion = models.DataHabitattypeConclusion()
+    conclusion = models.DataHabitattypeComment()
     flatten_habitat_conclusionform(form.data, conclusion)
 
     for k, v in HABITAT_MODEL_DATA.items():
@@ -221,7 +221,7 @@ def test_save_all_form_fields():
 def test_flatten():
     from art17.schemas import flatten_habitat_conclusionform
     from art17 import models
-    obj = models.DataHabitattypeConclusion()
+    obj = models.DataHabitattypeComment()
     flatten_habitat_conclusionform(HABITAT_STRUCT_DATA, obj)
     for k, v in HABITAT_MODEL_DATA.items():
         assert getattr(obj, k) == v
@@ -230,7 +230,7 @@ def test_flatten():
 def test_parse():
     from art17.schemas import parse_habitat_conclusionform
     from art17 import models
-    obj = models.DataHabitattypeConclusion(**HABITAT_MODEL_DATA)
+    obj = models.DataHabitattypeComment(**HABITAT_MODEL_DATA)
     data = parse_habitat_conclusionform(obj)
     assert data == HABITAT_STRUCT_DATA
 
