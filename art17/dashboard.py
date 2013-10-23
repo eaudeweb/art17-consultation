@@ -59,17 +59,17 @@ def habitats():
         key = (int(row.habitat_id), row.region)
         habitat_regions[key] = True
 
-    habitat_conclusion_count = defaultdict(int)
+    habitat_comment_count = defaultdict(int)
     for row in session.query(DHC.habitat_id, DHC.region):
         key = (int(row.habitat_id), row.region)
-        habitat_conclusion_count[key] += 1
+        habitat_comment_count[key] += 1
 
     return flask.render_template('dashboard/habitat.html', **{
         'bioreg_list': models.LuBiogeoreg.query.all(),
         'tabmenu_data': list(get_tabmenu_data()),
         'habitat_list': habitat_list,
         'habitat_regions': habitat_regions,
-        'habitat_conclusion_count': dict(habitat_conclusion_count),
+        'habitat_comment_count': dict(habitat_comment_count),
     })
 
 
@@ -98,10 +98,10 @@ def species(group_code):
         key = (int(row.species_id), row.region)
         species_regions[key] = True
 
-    species_conclusion_count = defaultdict(int)
+    species_comment_count = defaultdict(int)
     for row in session.query(DSC.species_id, DSC.region):
         key = (int(row.species_id), row.region)
-        species_conclusion_count[key] += 1
+        species_comment_count[key] += 1
 
     return flask.render_template('dashboard/species.html', **{
         'bioreg_list': models.LuBiogeoreg.query.all(),
@@ -109,7 +109,7 @@ def species(group_code):
         'species_group': species_group,
         'species_list': species_list,
         'species_regions': species_regions,
-        'species_conclusion_count': dict(species_conclusion_count),
+        'species_comment_count': dict(species_comment_count),
     })
 
 
