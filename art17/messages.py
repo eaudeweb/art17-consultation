@@ -35,7 +35,7 @@ def new(conclusion_id):
     conclusion = _get_conclusion_or_404(conclusion_id)
 
     if flask.request.method == 'POST':
-        message = models.ConclusionMessage(
+        message = models.CommentReply(
             text=flask.request.form['text'],
             user_id=flask.g.identity.id,
             date=datetime.utcnow(),
@@ -56,7 +56,7 @@ def new(conclusion_id):
 def remove():
     message_id = flask.request.args['message_id']
     next_url = flask.request.args['next']
-    message = models.ConclusionMessage.query.get_or_404(message_id)
+    message = models.CommentReply.query.get_or_404(message_id)
     user_id = message.user_id
     models.db.session.delete(message)
     app = flask.current_app._get_current_object()
@@ -71,7 +71,7 @@ def remove():
 def set_read_status():
     message_id = flask.request.form['message_id']
     read = (flask.request.form.get('read') == 'on')
-    message = models.ConclusionMessage.query.get_or_404(message_id)
+    message = models.CommentReply.query.get_or_404(message_id)
 
     user_id = flask.g.identity.id
     if user_id is None:
@@ -96,7 +96,7 @@ def set_read_status():
 
 @messages.route('/mesaje/<conclusion_id>')
 def index(conclusion_id):
-    messages = (models.ConclusionMessage
+    messages = (models.CommentReply
                     .query.filter_by(parent=conclusion_id).all())
     user_id = flask.g.identity.id
 

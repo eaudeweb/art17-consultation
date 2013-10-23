@@ -253,7 +253,7 @@ def test_add_conclusion_message(habitat_app):
     form.submit()
 
     with habitat_app.app_context():
-        messages = models.ConclusionMessage.query.all()
+        messages = models.CommentReply.query.all()
         assert len(messages) == 1
         msg = messages[0]
         assert msg.text == "hello world!"

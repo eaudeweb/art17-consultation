@@ -151,7 +151,7 @@ def test_message_add(app):
 
     with app.app_context():
         history = models.History.query.all()
-        message = models.ConclusionMessage.query.first()
+        message = models.CommentReply.query.first()
         assert len(history) == 1
         assert history[0].table == 'conclusion_messages'
         assert history[0].object_id == message.id
@@ -170,7 +170,7 @@ def test_message_remove(app):
     app.register_blueprint(messages.messages)
 
     with app.app_context():
-        message = models.ConclusionMessage(text='hello foo',
+        message = models.CommentReply(text='hello foo',
                                            user_id='somewho',
                                            parent='123',
                                            date=datetime(2010, 1, 4))

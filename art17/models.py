@@ -557,7 +557,7 @@ class DataSpeciesComment(Base):
         backref=db.backref('comments', lazy='dynamic'))
 
 
-class ConclusionMessage(Base):
+class CommentReply(Base):
     __tablename__ = u'comment_messages'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
@@ -571,7 +571,7 @@ class ConclusionMessageRead(Base):
     __tablename__ = u'comment_messages_read'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
-    message_id = Column(String, ForeignKey(ConclusionMessage.id))
+    message_id = Column(String, ForeignKey(CommentReply.id))
     user_id = Column(String)
 
 

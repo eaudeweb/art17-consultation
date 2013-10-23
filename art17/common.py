@@ -170,11 +170,11 @@ class IndexView(flask.views.View):
                 self.comments = self.comments.filter_by(
                                         region=self.region.code)
 
-            ConclusionMessage = models.ConclusionMessage
+            CommentReply = models.CommentReply
             self.message_counts = dict(models.db.session.query(
-                                    ConclusionMessage.parent,
-                                    func.count(ConclusionMessage.id)
-                                ).group_by(ConclusionMessage.parent))
+                                    CommentReply.parent,
+                                    func.count(CommentReply.id)
+                                ).group_by(CommentReply.parent))
 
         self.subject_list = (self.subject_cls.query
                             .join(self.record_cls)
