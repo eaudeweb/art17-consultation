@@ -77,6 +77,17 @@ class LuBiogeoreg(Base):
     order = Column('order_', Numeric)
 
 
+class LuThreats(Base):
+    __tablename__ = u'lu_threats'
+
+    objectid = Column(Numeric, primary_key=True, index=True)
+    code = Column(String)
+    name = Column(String)
+    note = Column(String)
+    eurotroph = Column(String)
+    valid_entry = Column(String)
+
+
 class DataHabitat(Base):
     __tablename__ = u'data_habitats'
 
@@ -419,6 +430,31 @@ class DataSpeciesRegion(Base):
 
     lu = relationship(LuBiogeoreg,
                       primaryjoin=(region == foreign(LuBiogeoreg.code)),
+                      innerjoin=True, uselist=False)
+
+
+class DataPressuresThreats(Base):
+    __tablename__ = u'data_pressures_threats'
+
+    id = Column('objectid', Numeric, primary_key=True, index=True)
+    habitat_id = Column('pressure_hr_id', Numeric,
+                        ForeignKey(DataHabitattypeRegion.id), index=True)
+    species_id = Column('pressure_sr_id', Numeric,
+                        ForeignKey(DataSpeciesRegion.id), index=True)
+    pressure = Column(String)
+    ranking = Column(String)
+    type = Column(String)
+    validated = Column(Numeric)
+    validation_date = Column(DateTime)
+
+    species = relationship(u'DataSpeciesRegion',
+        backref=db.backref('pressures', lazy='dynamic'))
+
+    habitat = relationship(u'DataHabitattypeRegion',
+        backref=db.backref('pressures', lazy='dynamic'))
+
+    lu = relationship(LuThreats,
+                      primaryjoin=(pressure == foreign(LuThreats.code)),
                       innerjoin=True, uselist=False)
 
 

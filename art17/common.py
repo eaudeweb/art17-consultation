@@ -176,6 +176,9 @@ class IndexView(flask.views.View):
                             .join(self.record_cls)
                             .order_by(self.subject_cls.code))
 
+    def get_pressures(self, record):
+        return record.pressures.all()
+
     def prepare_context(self):
         self.ctx.update({
             'subject_list': self.get_subject_list(),

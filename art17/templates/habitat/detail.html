@@ -16,6 +16,8 @@
     <a href="#recorddetail-area" data-toggle="tab">Suprafața</a></li>
   <li>
     <a href="#recorddetail-conclusions" data-toggle="tab">Concluzii</a></li>
+  <li>
+    <a href="#recorddetail-pressures" data-toggle="tab">Presiuni</a></li>
 </ul>
 
 
@@ -174,6 +176,19 @@
           <th>Evaluare generală a stării de conservare</th>
           {{ conclusion_td(record.overall_assessment) }}
         </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="recorddetail-pressures">
+    <div class="table-responsive">
+      <table class="table table-bordered recorddetail-table">
+
+        {%- for pressure in pressures %}
+          <tr>
+            <td>{{ pressure }}</td>
+          </tr>
+        {%- endfor %}
       </table>
     </div>
   </div>
