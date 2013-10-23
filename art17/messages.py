@@ -13,12 +13,12 @@ message_added = Signal()
 message_removed = Signal()
 
 
-def _get_conclusion_or_404(comment_id):
+def _get_comment_or_404(comment_id):
     for cls in [models.DataSpeciesComment,
                 models.DataHabitattypeComment]:
-        conclusion = cls.query.get(comment_id)
-        if conclusion is not None:
-            return conclusion
+        comment = cls.query.get(comment_id)
+        if comment is not None:
+            return comment
 
     else:
         flask.abort(404)
@@ -32,14 +32,14 @@ def _dump_message_data(message):
 @messages.route('/mesaje/<comment_id>/nou', methods=['POST'])
 @require(Permission(need.authenticated))
 def new(comment_id):
-    conclusion = _get_conclusion_or_404(comment_id)
+    comment = _get_comment_or_404(comment_id)
 
     if flask.request.method == 'POST':
         message = models.CommentReply(
             text=flask.request.form['text'],
             user_id=flask.g.identity.id,
             date=datetime.utcnow(),
-            parent=conclusion.id)
+            parent=comment.id)
         models.db.session.add(message)
         app = flask.current_app._get_current_object()
         message_added.send(app, ob=message,
