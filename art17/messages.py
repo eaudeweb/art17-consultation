@@ -14,7 +14,7 @@ message_removed = Signal()
 
 
 def _get_conclusion_or_404(conclusion_id):
-    for cls in [models.DataSpeciesConclusion,
+    for cls in [models.DataSpeciesComment,
                 models.DataHabitattypeComment]:
         conclusion = cls.query.get(conclusion_id)
         if conclusion is not None:

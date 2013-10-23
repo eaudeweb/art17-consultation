@@ -85,7 +85,7 @@ class SpeciesConclusionView(ConclusionView):
 
     form_cls = forms.SpeciesConclusion
     record_cls = models.DataSpeciesRegion
-    conclusion_cls = models.DataSpeciesConclusion
+    conclusion_cls = models.DataSpeciesComment
     parse_conclusionform = staticmethod(schemas.parse_species_conclusionform)
     flatten_conclusionform = staticmethod(schemas.flatten_species_conclusionform)
     template = 'species/conclusion.html'
@@ -123,7 +123,7 @@ species.add_url_rule('/specii/concluzii/<conclusion_id>',
 
 class SpeciesConclusionStateView(ConclusionStateView):
 
-    conclusion_cls = models.DataSpeciesConclusion
+    conclusion_cls = models.DataSpeciesComment
     signal = conclusion_status_changed
 
 
@@ -133,7 +133,7 @@ species.add_url_rule('/specii/concluzii/<conclusion_id>/stare',
 
 class SpeciesConclusionDeleteView(ConclusionDeleteView):
 
-    conclusion_cls = models.DataSpeciesConclusion
+    conclusion_cls = models.DataSpeciesComment
     parse_conclusionform = staticmethod(schemas.parse_species_conclusionform)
     signal = conclusion_deleted
 

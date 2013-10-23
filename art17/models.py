@@ -458,7 +458,7 @@ class DataPressuresThreats(Base):
                       innerjoin=True, uselist=False)
 
 
-class DataSpeciesConclusion(Base):
+class DataSpeciesComment(Base):
     __tablename__ = u'data_species_conclusions'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)

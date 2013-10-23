@@ -20,6 +20,6 @@ class ModelView(ModelView_base):
 
 
 admin.add_view(ModelView(models.DataSpeciesRegion))
-admin.add_view(ModelView(models.DataSpeciesConclusion))
+admin.add_view(ModelView(models.DataSpeciesComment))
 admin.add_view(ModelView(models.DataHabitattypeRegion))
 admin.add_view(ModelView(models.DataHabitattypeComment))

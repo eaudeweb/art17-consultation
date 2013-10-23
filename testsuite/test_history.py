@@ -9,7 +9,7 @@ class species_params(object):
     conclusion_table = 'data_species_conclusions'
     conclusion_create_url = '/specii/detalii/1/concluzii'
     user_id = 'somebody'
-    conclusion_cls = models.DataSpeciesConclusion
+    conclusion_cls = models.DataSpeciesComment
     conclusion_id = '4f799fdd6f5a'
     conclusion_edit_url = '/specii/concluzii/4f799fdd6f5a'
     conclusion_status_url = '/specii/concluzii/4f799fdd6f5a/stare'

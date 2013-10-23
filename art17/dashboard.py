@@ -78,7 +78,7 @@ def species(group_code):
     session = models.db.session
     DS = models.DataSpecies
     DSR = models.DataSpeciesRegion
-    DSC = models.DataSpeciesConclusion
+    DSC = models.DataSpeciesComment
 
     species_group = (
         models.LuGrupSpecie.query
