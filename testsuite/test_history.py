@@ -26,7 +26,7 @@ class species_params(object):
 
     @classmethod
     def setup(cls, app, comment=False):
-        from test_species_conclusion import _create_species_record
+        from test_species import _create_species_record
         app.register_blueprint(species.species)
         app.register_blueprint(history.history)
         _create_species_record(app, comment)
@@ -51,7 +51,7 @@ class habitat_params(object):
 
     @classmethod
     def setup(cls, app, comment=False):
-        from test_habitat_conclusion import _create_habitat_record
+        from test_habitat import _create_habitat_record
         app.register_blueprint(habitat.habitat)
         app.register_blueprint(history.history)
         _create_habitat_record(app, comment)
