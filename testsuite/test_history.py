@@ -6,92 +6,92 @@ from art17 import models, species, habitat, history
 
 class species_params(object):
     blueprint = species.species
-    conclusion_table = 'data_species_conclusions'
-    conclusion_create_url = '/specii/detalii/1/concluzii'
+    comment_table = 'data_species_conclusions'
+    comment_create_url = '/specii/detalii/1/concluzii'
     user_id = 'somebody'
-    conclusion_cls = models.DataSpeciesComment
+    comment_cls = models.DataSpeciesComment
     comment_id = '4f799fdd6f5a'
-    conclusion_edit_url = '/specii/concluzii/4f799fdd6f5a'
-    conclusion_status_url = '/specii/concluzii/4f799fdd6f5a/stare'
-    conclusion_delete_url = '/specii/concluzii/4f799fdd6f5a/sterge'
-    conclusion_data = {'range.surface_area': '50',
-                       'range.method': '1',
-                       'population.method': '1',
-                       'habitat.surface_area': '100',
-                       'habitat.date': '2000-2001',
-                       'habitat.method': '1',
-                       'habitat.quality': '2',
-                       'habitat.quality_explanation': 'foo explanation',
-                       'habitat.area_suitable': 1000}
+    comment_edit_url = '/specii/concluzii/4f799fdd6f5a'
+    comment_status_url = '/specii/concluzii/4f799fdd6f5a/stare'
+    comment_delete_url = '/specii/concluzii/4f799fdd6f5a/sterge'
+    comment_data = {'range.surface_area': '50',
+                    'range.method': '1',
+                    'population.method': '1',
+                    'habitat.surface_area': '100',
+                    'habitat.date': '2000-2001',
+                    'habitat.method': '1',
+                    'habitat.quality': '2',
+                    'habitat.quality_explanation': 'foo explanation',
+                    'habitat.area_suitable': 1000}
 
     @classmethod
-    def setup(cls, app, conclusion=False):
+    def setup(cls, app, comment=False):
         from test_species_conclusion import _create_species_record
         app.register_blueprint(species.species)
         app.register_blueprint(history.history)
-        _create_species_record(app, conclusion)
+        _create_species_record(app, comment)
         app.config['TESTING_USER_ID'] = cls.user_id
 
 
 class habitat_params(object):
     blueprint = habitat.habitat
-    conclusion_table = 'data_habitattype_conclusions'
-    conclusion_create_url = '/habitate/detalii/1/concluzii'
+    comment_table = 'data_habitattype_conclusions'
+    comment_create_url = '/habitate/detalii/1/concluzii'
     user_id = 'somebody'
-    conclusion_cls = models.DataHabitattypeComment
+    comment_cls = models.DataHabitattypeComment
     comment_id = '4f799fdd6f5a'
-    conclusion_edit_url = '/habitate/concluzii/4f799fdd6f5a'
-    conclusion_status_url = '/habitate/concluzii/4f799fdd6f5a/stare'
-    conclusion_delete_url = '/habitate/concluzii/4f799fdd6f5a/sterge'
-    conclusion_data = {'range.surface_area': '50',
-                       'range.method': '1',
-                        'coverage.surface_area': 123,
-                        'coverage.date': '2001',
-                        'coverage.method': '1'}
+    comment_edit_url = '/habitate/concluzii/4f799fdd6f5a'
+    comment_status_url = '/habitate/concluzii/4f799fdd6f5a/stare'
+    comment_delete_url = '/habitate/concluzii/4f799fdd6f5a/sterge'
+    comment_data = {'range.surface_area': '50',
+                    'range.method': '1',
+                    'coverage.surface_area': 123,
+                    'coverage.date': '2001',
+                    'coverage.method': '1'}
 
     @classmethod
-    def setup(cls, app, conclusion=False):
+    def setup(cls, app, comment=False):
         from test_habitat_conclusion import _create_habitat_record
         app.register_blueprint(habitat.habitat)
         app.register_blueprint(history.history)
-        _create_habitat_record(app, conclusion)
+        _create_habitat_record(app, comment)
         app.config['TESTING_USER_ID'] = cls.user_id
 
 
 @pytest.mark.parametrize(['params'], [[species_params], [habitat_params]])
-def test_conclusion_add(params, app):
+def test_comment_add(params, app):
     params.setup(app)
     client = app.test_client()
 
-    resp = client.post(params.conclusion_create_url,
-                       data=params.conclusion_data)
+    resp = client.post(params.comment_create_url,
+                       data=params.comment_data)
     assert resp.status_code == 200
 
     with app.app_context():
         history = models.History.query.all()
-        conclusion = params.conclusion_cls.query.first()
+        comment = params.comment_cls.query.first()
         assert len(history) == 1
-        assert history[0].table == params.conclusion_table
-        assert history[0].object_id == conclusion.id
+        assert history[0].table == params.comment_table
+        assert history[0].object_id == comment.id
         assert history[0].action == 'add'
         assert history[0].user_id == params.user_id
         assert json.loads(history[0].new_data)['range']['surface_area'] == 50
 
 
 @pytest.mark.parametrize(['params'], [[species_params], [habitat_params]])
-def test_conclusion_edit(params, app):
-    params.setup(app, conclusion=True)
+def test_comment_edit(params, app):
+    params.setup(app, comment=True)
     client = app.test_client()
 
-    resp = client.post(params.conclusion_edit_url, data=params.conclusion_data)
+    resp = client.post(params.comment_edit_url, data=params.comment_data)
     assert resp.status_code == 200
 
     with app.app_context():
         history = models.History.query.all()
-        conclusion = params.conclusion_cls.query.first()
+        comment = params.comment_cls.query.first()
         assert len(history) == 1
-        assert history[0].table == params.conclusion_table
-        assert history[0].object_id == conclusion.id
+        assert history[0].table == params.comment_table
+        assert history[0].object_id == comment.id
         assert history[0].action == 'edit'
         assert history[0].user_id == params.user_id
         assert json.loads(history[0].old_data)['range']['surface_area'] == 1337
@@ -99,20 +99,20 @@ def test_conclusion_edit(params, app):
 
 
 @pytest.mark.parametrize(['params'], [[species_params], [habitat_params]])
-def test_conclusion_update_status(params, app):
-    params.setup(app, conclusion=True)
+def test_comment_update_status(params, app):
+    params.setup(app, comment=True)
     client = app.test_client()
 
-    resp = client.post(params.conclusion_status_url,
+    resp = client.post(params.comment_status_url,
                        data={'status': 'approved', 'next': '/'})
     assert resp.status_code == 302
 
     with app.app_context():
         history = models.History.query.all()
-        conclusion = params.conclusion_cls.query.first()
+        comment = params.comment_cls.query.first()
         assert len(history) == 1
-        assert history[0].table == params.conclusion_table
-        assert history[0].object_id == conclusion.id
+        assert history[0].table == params.comment_table
+        assert history[0].object_id == comment.id
         assert history[0].action == 'status'
         assert history[0].user_id == params.user_id
         assert json.loads(history[0].old_data) == 'new'
@@ -120,19 +120,19 @@ def test_conclusion_update_status(params, app):
 
 
 @pytest.mark.parametrize(['params'], [[species_params], [habitat_params]])
-def test_conclusion_delete(params, app):
-    params.setup(app, conclusion=True)
+def test_comment_delete(params, app):
+    params.setup(app, comment=True)
     client = app.test_client()
 
-    resp = client.post(params.conclusion_delete_url, data={'next': '/'})
+    resp = client.post(params.comment_delete_url, data={'next': '/'})
     assert resp.status_code == 302
 
     with app.app_context():
         history = models.History.query.all()
-        conclusion = params.conclusion_cls.query.first()
+        comment = params.comment_cls.query.first()
         assert len(history) == 1
-        assert history[0].table == params.conclusion_table
-        assert history[0].object_id == conclusion.id
+        assert history[0].table == params.comment_table
+        assert history[0].object_id == comment.id
         assert history[0].action == 'delete'
         assert history[0].user_id == params.user_id
         assert json.loads(history[0].old_data)['range']['surface_area'] == 1337
@@ -143,7 +143,7 @@ def test_message_add(app):
     from art17 import messages
     params = species_params
     app.register_blueprint(messages.messages)
-    params.setup(app, conclusion=True)
+    params.setup(app, comment=True)
     client = app.test_client()
     resp = client.post('/mesaje/%s/nou' % params.comment_id,
                        data={'text': "hello world"})
@@ -153,7 +153,7 @@ def test_message_add(app):
         history = models.History.query.all()
         message = models.CommentReply.query.first()
         assert len(history) == 1
-        assert history[0].table == 'conclusion_messages'
+        assert history[0].table == 'comment_messages'
         assert history[0].object_id == message.id
         assert history[0].action == 'add'
         assert history[0].user_id == params.user_id
@@ -185,7 +185,7 @@ def test_message_remove(app):
     with app.app_context():
         history_items = models.History.query.all()
         assert len(history_items) == 1
-        assert history_items[0].table == 'conclusion_messages'
+        assert history_items[0].table == 'comment_messages'
         assert history_items[0].object_id == message_id
         assert history_items[0].action == 'remove'
         assert history_items[0].user_id == user_id
