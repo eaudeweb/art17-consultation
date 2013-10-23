@@ -235,27 +235,27 @@ def test_parse():
     assert data == HABITAT_STRUCT_DATA
 
 
-def test_add_comment_message(habitat_app):
+def test_add_comment_reply(habitat_app):
     import flask
     from webtest import TestApp
-    from art17.messages import messages
+    from art17.replies import replies
     from art17 import models
     from art17.common import common
 
     habitat_app.config['TESTING_USER_ID'] = 'somewho'
     _create_habitat_record(habitat_app, comment=True)
     habitat_app.register_blueprint(common)
-    habitat_app.register_blueprint(messages)
+    habitat_app.register_blueprint(replies)
     client = TestApp(habitat_app)
     page = client.get('/mesaje/4f799fdd6f5a')
-    form = page.forms['message-form']
+    form = page.forms['reply-form']
     form['text'] = "hello world!"
     form.submit()
 
     with habitat_app.app_context():
-        messages = models.CommentReply.query.all()
-        assert len(messages) == 1
-        msg = messages[0]
+        replies = models.CommentReply.query.all()
+        assert len(replies) == 1
+        msg = replies[0]
         assert msg.text == "hello world!"
         assert msg.user_id == 'somewho'
         assert msg.parent == '4f799fdd6f5a'

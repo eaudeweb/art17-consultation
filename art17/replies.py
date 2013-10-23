@@ -7,10 +7,10 @@ from blinker import Signal
 from art17 import models
 from art17.auth import require, need
 
-messages = flask.Blueprint('messages', __name__)
+replies = flask.Blueprint('replies', __name__)
 
-message_added = Signal()
-message_removed = Signal()
+reply_added = Signal()
+reply_removed = Signal()
 
 
 def _get_comment_or_404(comment_id):
@@ -29,7 +29,7 @@ def _dump_reply_data(reply):
             for k in ['text', 'user_id', 'parent', 'date']}
 
 
-@messages.route('/mesaje/<comment_id>/nou', methods=['POST'])
+@replies.route('/mesaje/<comment_id>/nou', methods=['POST'])
 @require(Permission(need.authenticated))
 def new(comment_id):
     comment = _get_comment_or_404(comment_id)
@@ -42,16 +42,16 @@ def new(comment_id):
             parent=comment.id)
         models.db.session.add(reply)
         app = flask.current_app._get_current_object()
-        message_added.send(app, ob=reply,
+        reply_added.send(app, ob=reply,
                            new_data=_dump_reply_data(reply))
         models.db.session.commit()
         url = flask.url_for('.index', comment_id=comment_id)
         return flask.redirect(url)
 
-    return flask.render_template('messages/new.html')
+    return flask.render_template('replies/new.html')
 
 
-@messages.route('/mesaje/sterge', methods=['POST'])
+@replies.route('/mesaje/sterge', methods=['POST'])
 @require(Permission(need.admin))
 def remove():
     reply_id = flask.request.args['reply_id']
@@ -66,7 +66,7 @@ def remove():
     return flask.redirect(next_url)
 
 
-@messages.route('/mesaje/citit', methods=['POST'])
+@replies.route('/mesaje/citit', methods=['POST'])
 @require(Permission(need.authenticated))
 def set_read_status():
     reply_id = flask.request.form['reply_id']
@@ -93,7 +93,7 @@ def set_read_status():
     return flask.jsonify(read=read)
 
 
-@messages.route('/mesaje/<comment_id>')
+@replies.route('/mesaje/<comment_id>')
 def index(comment_id):
     replies = (models.CommentReply
                     .query.filter_by(parent=comment_id).all())
@@ -107,7 +107,7 @@ def index(comment_id):
     else:
         read_msgs = []
 
-    return flask.render_template('messages/index.html', **{
+    return flask.render_template('replies/index.html', **{
         'comment_id': comment_id,
         'replies': replies,
         'read_msgs': read_msgs,

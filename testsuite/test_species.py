@@ -287,27 +287,27 @@ def test_parse():
     assert data == SPECIES_STRUCT_DATA
 
 
-def test_add_comment_message(species_app):
+def test_add_comment_reply(species_app):
     import flask
     from webtest import TestApp
-    from art17.messages import messages
+    from art17.replies import replies
     from art17 import models
     from art17.common import common
 
     species_app.config['TESTING_USER_ID'] = 'somewho'
     _create_species_record(species_app, comment=True)
-    species_app.register_blueprint(messages)
+    species_app.register_blueprint(replies)
     species_app.register_blueprint(common)
     client = TestApp(species_app)
     page = client.get('/mesaje/4f799fdd6f5a')
-    form = page.forms['message-form']
+    form = page.forms['reply-form']
     form['text'] = "hello world!"
     form.submit()
 
     with species_app.app_context():
-        messages = models.CommentReply.query.all()
-        assert len(messages) == 1
-        msg = messages[0]
+        replies = models.CommentReply.query.all()
+        assert len(replies) == 1
+        msg = replies[0]
         assert msg.text == "hello world!"
         assert msg.user_id == 'somewho'
         assert msg.parent == '4f799fdd6f5a'

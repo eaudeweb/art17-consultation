@@ -5,7 +5,7 @@ import flask
 from art17 import models
 from art17 import species
 from art17 import habitat
-from art17 import messages
+from art17 import replies
 from art17.common import json_encode_more
 from art17.auth import admin_permission
 
@@ -41,9 +41,9 @@ def register_handlers(state):
     connect(habitat.comment_deleted, app,
             table='data_habitattype_comments', action='delete')
 
-    connect(messages.message_added, app,
+    connect(replies.reply_added, app,
             table='comment_replies', action='add')
-    connect(messages.message_removed, app,
+    connect(replies.reply_removed, app,
             table='comment_replies', action='remove')
 
 

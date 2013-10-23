@@ -139,10 +139,10 @@ def test_comment_delete(params, app):
         assert json.loads(history[0].old_data)['_status'] == 'new'
 
 
-def test_message_add(app):
-    from art17 import messages
+def test_reply_add(app):
+    from art17 import replies
     params = species_params
-    app.register_blueprint(messages.messages)
+    app.register_blueprint(replies.replies)
     params.setup(app, comment=True)
     client = app.test_client()
     resp = client.post('/mesaje/%s/nou' % params.comment_id,
@@ -151,10 +151,10 @@ def test_message_add(app):
 
     with app.app_context():
         history = models.History.query.all()
-        message = models.CommentReply.query.first()
+        reply = models.CommentReply.query.first()
         assert len(history) == 1
-        assert history[0].table == 'comment_messages'
-        assert history[0].object_id == message.id
+        assert history[0].table == 'comment_replies'
+        assert history[0].object_id == reply.id
         assert history[0].action == 'add'
         assert history[0].user_id == params.user_id
         new_data = json.loads(history[0].new_data)
@@ -163,20 +163,20 @@ def test_message_add(app):
         assert new_data['parent'] == params.comment_id
 
 
-def test_message_remove(app):
-    from art17 import messages
+def test_reply_remove(app):
+    from art17 import replies
     user_id = app.config['TESTING_USER_ID'] = 'somebody'
     app.register_blueprint(history.history)
-    app.register_blueprint(messages.messages)
+    app.register_blueprint(replies.replies)
 
     with app.app_context():
-        message = models.CommentReply(text='hello foo',
+        reply = models.CommentReply(text='hello foo',
                                            user_id='somewho',
                                            parent='123',
                                            date=datetime(2010, 1, 4))
-        models.db.session.add(message)
+        models.db.session.add(reply)
         models.db.session.commit()
-        reply_id = message.id
+        reply_id = reply.id
 
     client = app.test_client()
     resp = client.post('/mesaje/sterge?reply_id=%s&next=/' % reply_id)
@@ -185,7 +185,7 @@ def test_message_remove(app):
     with app.app_context():
         history_items = models.History.query.all()
         assert len(history_items) == 1
-        assert history_items[0].table == 'comment_messages'
+        assert history_items[0].table == 'comment_replies'
         assert history_items[0].object_id == reply_id
         assert history_items[0].action == 'remove'
         assert history_items[0].user_id == user_id
