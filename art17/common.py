@@ -201,7 +201,7 @@ class IndexView(flask.views.View):
                 'code': self.subject.code,
                 'name': self.subject.lu.display_name,
                 'records': [self.parse_record(r) for r in self.records],
-                'comments': [self.parse_record(r, is_conclusion=True)
+                'comments': [self.parse_record(r, is_comment=True)
                              for r in self.comments],
                 'message_counts': self.message_counts,
                 'map_url': self.map_url_template.format(**{
