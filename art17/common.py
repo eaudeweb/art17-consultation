@@ -251,7 +251,7 @@ class CommentView(flask.views.View):
         self.template_ctx['next_url'] = flask.request.args.get('next')
 
         if flask.request.method == 'POST' and form.validate():
-            self.link_conclusion_to_record()
+            self.link_comment_to_record()
 
             self.flatten_commentform(form.data, self.comment)
             models.db.session.add(self.comment)

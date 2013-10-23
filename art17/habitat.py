@@ -71,7 +71,7 @@ class HabitatCommentView(CommentView):
     add_signal = comment_added
     edit_signal = comment_edited
 
-    def link_conclusion_to_record(self):
+    def link_comment_to_record(self):
         self.comment.habitat_id = self.record.habitat_id
         self.comment.region = self.record.region
 
