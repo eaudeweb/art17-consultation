@@ -15,7 +15,7 @@ history = flask.Blueprint('history', __name__)
 TABLE_LABEL = {
     'data_species_comments': u"concluzie specie",
     'data_habitattype_comments': u"concluzie habitat",
-    'comment_messages': u"mesaj",
+    'comment_replies': u"mesaj",
 }
 
 
@@ -42,9 +42,9 @@ def register_handlers(state):
             table='data_habitattype_comments', action='delete')
 
     connect(messages.message_added, app,
-            table='comment_messages', action='add')
+            table='comment_replies', action='add')
     connect(messages.message_removed, app,
-            table='comment_messages', action='remove')
+            table='comment_replies', action='remove')
 
 
 def connect(signal, sender, **more_kwargs):
