@@ -37,7 +37,7 @@ class SpeciesIndexView(IndexView):
         super(SpeciesIndexView, self).parse_request()
         self.group_code = self.subject.lu.group_code
 
-    def get_conclusion_next_url(self):
+    def get_comment_next_url(self):
         return flask.url_for('.index', species=self.subject_code,
                                        region=self.region_code)
 
@@ -85,9 +85,9 @@ class SpeciesConclusionView(ConclusionView):
 
     form_cls = forms.SpeciesConclusion
     record_cls = models.DataSpeciesRegion
-    conclusion_cls = models.DataSpeciesComment
-    parse_conclusionform = staticmethod(schemas.parse_species_conclusionform)
-    flatten_conclusionform = staticmethod(schemas.flatten_species_conclusionform)
+    comment_cls = models.DataSpeciesComment
+    parse_commentform = staticmethod(schemas.parse_species_conclusionform)
+    flatten_commentform = staticmethod(schemas.flatten_species_conclusionform)
     template = 'species/conclusion.html'
     template_saved = 'species/conclusion-saved.html'
     add_signal = conclusion_added
@@ -103,7 +103,7 @@ class SpeciesConclusionView(ConclusionView):
             'record': schemas.parse_species(self.record),
         }
 
-    def record_for_conclusion(self, conclusion):
+    def record_for_comment(self, conclusion):
         records = (models.DataSpeciesRegion.query
                             .filter_by(species_id=conclusion.species_id)
                             .filter_by(region=conclusion.region)
@@ -123,7 +123,7 @@ species.add_url_rule('/specii/concluzii/<conclusion_id>',
 
 class SpeciesConclusionStateView(ConclusionStateView):
 
-    conclusion_cls = models.DataSpeciesComment
+    comment_cls = models.DataSpeciesComment
     signal = conclusion_status_changed
 
 
@@ -133,8 +133,8 @@ species.add_url_rule('/specii/concluzii/<conclusion_id>/stare',
 
 class SpeciesConclusionDeleteView(ConclusionDeleteView):
 
-    conclusion_cls = models.DataSpeciesComment
-    parse_conclusionform = staticmethod(schemas.parse_species_conclusionform)
+    comment_cls = models.DataSpeciesComment
+    parse_commentform = staticmethod(schemas.parse_species_conclusionform)
     signal = conclusion_deleted
 
 

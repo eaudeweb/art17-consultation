@@ -33,7 +33,7 @@ class HabitatIndexView(IndexView):
     parse_record = staticmethod(schemas.parse_habitat)
     blueprint = 'habitat'
 
-    def get_conclusion_next_url(self):
+    def get_comment_next_url(self):
         return flask.url_for('.index', habitat=self.subject_code,
                                        region=self.region_code)
 
@@ -63,9 +63,9 @@ class HabitatConclusionView(ConclusionView):
 
     form_cls = forms.HabitatConclusion
     record_cls = models.DataHabitattypeRegion
-    conclusion_cls = models.DataHabitattypeComment
-    parse_conclusionform = staticmethod(schemas.parse_habitat_conclusionform)
-    flatten_conclusionform = staticmethod(schemas.flatten_habitat_conclusionform)
+    comment_cls = models.DataHabitattypeComment
+    parse_commentform = staticmethod(schemas.parse_habitat_conclusionform)
+    flatten_commentform = staticmethod(schemas.flatten_habitat_conclusionform)
     template = 'habitat/conclusion.html'
     template_saved = 'habitat/conclusion-saved.html'
     add_signal = conclusion_added
@@ -81,7 +81,7 @@ class HabitatConclusionView(ConclusionView):
             'record': schemas.parse_habitat(self.record),
         }
 
-    def record_for_conclusion(self, conclusion):
+    def record_for_comment(self, conclusion):
         records = (models.DataHabitattypeRegion.query
                             .filter_by(habitat_id=conclusion.habitat_id)
                             .filter_by(region=conclusion.region)
@@ -101,7 +101,7 @@ habitat.add_url_rule('/habitate/concluzii/<conclusion_id>',
 
 class HabitatConclusionStateView(ConclusionStateView):
 
-    conclusion_cls = models.DataHabitattypeComment
+    comment_cls = models.DataHabitattypeComment
     signal = conclusion_status_changed
 
 
@@ -111,8 +111,8 @@ habitat.add_url_rule('/habitate/concluzii/<conclusion_id>/stare',
 
 class HabitatConclusionDeleteView(ConclusionDeleteView):
 
-    conclusion_cls = models.DataHabitattypeComment
-    parse_conclusionform = staticmethod(schemas.parse_habitat_conclusionform)
+    comment_cls = models.DataHabitattypeComment
+    parse_commentform = staticmethod(schemas.parse_habitat_conclusionform)
     signal = conclusion_deleted
 
 

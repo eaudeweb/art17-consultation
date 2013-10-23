@@ -188,7 +188,7 @@ class IndexView(flask.views.View):
             'subject_list': self.get_subject_list(),
             'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,
-            'conclusion_next': self.get_conclusion_next_url(),
+            'conclusion_next': self.get_comment_next_url(),
             'blueprint': self.blueprint,
         })
 
@@ -226,17 +226,17 @@ class ConclusionView(flask.views.View):
             new_conclusion = True
             self.record = self.record_cls.query.get_or_404(record_id)
             perm_create_comment(self.record).test()
-            self.conclusion = self.conclusion_cls(user_id=flask.g.identity.id,
+            self.conclusion = self.comment_cls(user_id=flask.g.identity.id,
                                             conclusion_date=datetime.utcnow())
             form = self.form_cls(flask.request.form)
 
         elif conclusion_id:
             new_conclusion = False
-            self.conclusion = (self.conclusion_cls
+            self.conclusion = (self.comment_cls
                                     .query.get_or_404(conclusion_id))
             perm_edit_comment(self.conclusion).test()
-            self.record = self.record_for_conclusion(self.conclusion)
-            old_data = self.parse_conclusionform(self.conclusion)
+            self.record = self.record_for_comment(self.conclusion)
+            old_data = self.parse_commentform(self.conclusion)
             if flask.request.method == 'POST':
                 form_data = flask.request.form
             else:
@@ -253,7 +253,7 @@ class ConclusionView(flask.views.View):
         if flask.request.method == 'POST' and form.validate():
             self.link_conclusion_to_record()
 
-            self.flatten_conclusionform(form.data, self.conclusion)
+            self.flatten_commentform(form.data, self.conclusion)
             models.db.session.add(self.conclusion)
 
             app = flask.current_app._get_current_object()
@@ -278,7 +278,7 @@ class ConclusionStateView(flask.views.View):
     methods = ['POST']
 
     def dispatch_request(self, conclusion_id):
-        conclusion = self.conclusion_cls.query.get_or_404(conclusion_id)
+        conclusion = self.comment_cls.query.get_or_404(conclusion_id)
         next_url = flask.request.form['next']
         new_status = flask.request.form['status']
         if new_status not in STATUS_VALUES:
@@ -297,12 +297,12 @@ class ConclusionDeleteView(flask.views.View):
     methods = ['POST']
 
     def dispatch_request(self, conclusion_id):
-        conclusion = self.conclusion_cls.query.get_or_404(conclusion_id)
+        conclusion = self.comment_cls.query.get_or_404(conclusion_id)
         perm_delete_comment(conclusion).test()
         next_url = flask.request.form['next']
         conclusion.deleted = True
         app = flask.current_app._get_current_object()
-        old_data = self.parse_conclusionform(conclusion)
+        old_data = self.parse_commentform(conclusion)
         old_data['_status'] = conclusion.status
         self.signal.send(app, ob=conclusion, old_data=old_data)
         models.db.session.commit()
