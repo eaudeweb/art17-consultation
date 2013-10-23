@@ -255,7 +255,7 @@ def test_save_all_form_fields():
     from art17 import forms
     from art17 import models
     from art17.common import flatten_dict
-    from art17.schemas import flatten_species_conclusionform
+    from art17.schemas import flatten_species_commentform
     from werkzeug.datastructures import MultiDict
 
     form_data = MultiDict(flatten_dict(SPECIES_STRUCT_DATA))
@@ -264,26 +264,26 @@ def test_save_all_form_fields():
     assert form.validate()
 
     conclusion = models.DataSpeciesComment()
-    flatten_species_conclusionform(form.data, conclusion)
+    flatten_species_commentform(form.data, conclusion)
 
     for k, v in SPECIES_MODEL_DATA.items():
         assert getattr(conclusion, k) == v
 
 
 def test_flatten():
-    from art17.schemas import flatten_species_conclusionform
+    from art17.schemas import flatten_species_commentform
     from art17 import models
     obj = models.DataSpeciesComment()
-    flatten_species_conclusionform(SPECIES_STRUCT_DATA, obj)
+    flatten_species_commentform(SPECIES_STRUCT_DATA, obj)
     for k, v in SPECIES_MODEL_DATA.items():
         assert getattr(obj, k) == v
 
 
 def test_parse():
-    from art17.schemas import parse_species_conclusionform
+    from art17.schemas import parse_species_commentform
     from art17 import models
     obj = models.DataSpeciesComment(**SPECIES_MODEL_DATA)
-    data = parse_species_conclusionform(obj)
+    data = parse_species_commentform(obj)
     assert data == SPECIES_STRUCT_DATA
 
 

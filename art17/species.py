@@ -86,8 +86,8 @@ class SpeciesCommentView(CommentView):
     form_cls = forms.SpeciesComment
     record_cls = models.DataSpeciesRegion
     comment_cls = models.DataSpeciesComment
-    parse_commentform = staticmethod(schemas.parse_species_conclusionform)
-    flatten_commentform = staticmethod(schemas.flatten_species_conclusionform)
+    parse_commentform = staticmethod(schemas.parse_species_commentform)
+    flatten_commentform = staticmethod(schemas.flatten_species_commentform)
     template = 'species/conclusion.html'
     template_saved = 'species/conclusion-saved.html'
     add_signal = comment_added
@@ -134,7 +134,7 @@ species.add_url_rule('/specii/concluzii/<comment_id>/stare',
 class SpeciesCommentDeleteView(CommentDeleteView):
 
     comment_cls = models.DataSpeciesComment
-    parse_commentform = staticmethod(schemas.parse_species_conclusionform)
+    parse_commentform = staticmethod(schemas.parse_species_commentform)
     signal = comment_deleted
 
 

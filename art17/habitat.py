@@ -64,8 +64,8 @@ class HabitatCommentView(CommentView):
     form_cls = forms.HabitatComment
     record_cls = models.DataHabitattypeRegion
     comment_cls = models.DataHabitattypeComment
-    parse_commentform = staticmethod(schemas.parse_habitat_conclusionform)
-    flatten_commentform = staticmethod(schemas.flatten_habitat_conclusionform)
+    parse_commentform = staticmethod(schemas.parse_habitat_commentform)
+    flatten_commentform = staticmethod(schemas.flatten_habitat_commentform)
     template = 'habitat/conclusion.html'
     template_saved = 'habitat/conclusion-saved.html'
     add_signal = comment_added
@@ -112,7 +112,7 @@ habitat.add_url_rule('/habitate/concluzii/<comment_id>/stare',
 class HabitatCommentDeleteView(CommentDeleteView):
 
     comment_cls = models.DataHabitattypeComment
-    parse_commentform = staticmethod(schemas.parse_habitat_conclusionform)
+    parse_commentform = staticmethod(schemas.parse_habitat_commentform)
     signal = comment_deleted
 
 

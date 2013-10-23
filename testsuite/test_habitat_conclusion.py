@@ -203,7 +203,7 @@ def test_save_all_form_fields():
     from art17 import forms
     from art17 import models
     from art17.common import flatten_dict
-    from art17.schemas import flatten_habitat_conclusionform
+    from art17.schemas import flatten_habitat_commentform
     from werkzeug.datastructures import MultiDict
 
     form_data = MultiDict(flatten_dict(HABITAT_STRUCT_DATA))
@@ -212,26 +212,26 @@ def test_save_all_form_fields():
     assert form.validate()
 
     conclusion = models.DataHabitattypeComment()
-    flatten_habitat_conclusionform(form.data, conclusion)
+    flatten_habitat_commentform(form.data, conclusion)
 
     for k, v in HABITAT_MODEL_DATA.items():
         assert getattr(conclusion, k) == v
 
 
 def test_flatten():
-    from art17.schemas import flatten_habitat_conclusionform
+    from art17.schemas import flatten_habitat_commentform
     from art17 import models
     obj = models.DataHabitattypeComment()
-    flatten_habitat_conclusionform(HABITAT_STRUCT_DATA, obj)
+    flatten_habitat_commentform(HABITAT_STRUCT_DATA, obj)
     for k, v in HABITAT_MODEL_DATA.items():
         assert getattr(obj, k) == v
 
 
 def test_parse():
-    from art17.schemas import parse_habitat_conclusionform
+    from art17.schemas import parse_habitat_commentform
     from art17 import models
     obj = models.DataHabitattypeComment(**HABITAT_MODEL_DATA)
-    data = parse_habitat_conclusionform(obj)
+    data = parse_habitat_commentform(obj)
     assert data == HABITAT_STRUCT_DATA
 
 
