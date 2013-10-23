@@ -162,12 +162,12 @@ class IndexView(flask.views.View):
 
         if self.subject:
             self.records = self.subject.regions
-            self.conclusions = (self.subject.conclusions
+            self.comments = (self.subject.comments
                                             .filter_by(deleted=False))
 
             if self.region:
                 self.records = self.records.filter_by(region=self.region.code)
-                self.conclusions = self.conclusions.filter_by(
+                self.comments = self.comments.filter_by(
                                         region=self.region.code)
 
             ConclusionMessage = models.ConclusionMessage
@@ -201,8 +201,8 @@ class IndexView(flask.views.View):
                 'code': self.subject.code,
                 'name': self.subject.lu.display_name,
                 'records': [self.parse_record(r) for r in self.records],
-                'conclusions': [self.parse_record(r, is_conclusion=True)
-                             for r in self.conclusions],
+                'comments': [self.parse_record(r, is_conclusion=True)
+                             for r in self.comments],
                 'message_counts': self.message_counts,
                 'map_url': self.map_url_template.format(**{
                         self.subject_name: self.subject.code,

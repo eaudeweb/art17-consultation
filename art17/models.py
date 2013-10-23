@@ -280,7 +280,7 @@ class DataHabitattypeComment(Base):
     deleted = Column(Boolean, default=False)
 
     habitat = relationship(u'DataHabitat',
-        backref=db.backref('conclusions', lazy='dynamic'))
+        backref=db.backref('comments', lazy='dynamic'))
 
 
 class DataSpecies(Base):
@@ -554,7 +554,7 @@ class DataSpeciesComment(Base):
     deleted = Column(Boolean, default=False)
 
     species = relationship(u'DataSpecies',
-        backref=db.backref('conclusions', lazy='dynamic'))
+        backref=db.backref('comments', lazy='dynamic'))
 
 
 class ConclusionMessage(Base):
