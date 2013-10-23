@@ -223,7 +223,7 @@ class CommentView(flask.views.View):
 
     def dispatch_request(self, record_id=None, comment_id=None):
         if record_id:
-            new_conclusion = True
+            new_comment = True
             self.record = self.record_cls.query.get_or_404(record_id)
             perm_create_comment(self.record).test()
             self.comment = self.comment_cls(user_id=flask.g.identity.id,
@@ -231,7 +231,7 @@ class CommentView(flask.views.View):
             form = self.form_cls(flask.request.form)
 
         elif comment_id:
-            new_conclusion = False
+            new_comment = False
             self.comment = (self.comment_cls
                                     .query.get_or_404(comment_id))
             perm_edit_comment(self.comment).test()
@@ -257,7 +257,7 @@ class CommentView(flask.views.View):
             models.db.session.add(self.comment)
 
             app = flask.current_app._get_current_object()
-            if new_conclusion:
+            if new_comment:
                 self.add_signal.send(app, ob=self.comment,
                                           new_data=form.data)
             else:
