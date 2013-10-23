@@ -299,7 +299,7 @@ def test_add_comment_reply(species_app):
     species_app.register_blueprint(replies)
     species_app.register_blueprint(common)
     client = TestApp(species_app)
-    page = client.get('/mesaje/4f799fdd6f5a')
+    page = client.get('/replici/4f799fdd6f5a')
     form = page.forms['reply-form']
     form['text'] = "hello world!"
     form.submit()

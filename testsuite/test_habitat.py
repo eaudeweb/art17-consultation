@@ -247,7 +247,7 @@ def test_add_comment_reply(habitat_app):
     habitat_app.register_blueprint(common)
     habitat_app.register_blueprint(replies)
     client = TestApp(habitat_app)
-    page = client.get('/mesaje/4f799fdd6f5a')
+    page = client.get('/replici/4f799fdd6f5a')
     form = page.forms['reply-form']
     form['text'] = "hello world!"
     form.submit()

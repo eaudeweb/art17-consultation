@@ -15,7 +15,7 @@ history = flask.Blueprint('history', __name__)
 TABLE_LABEL = {
     'data_species_comments': u"comentariu specie",
     'data_habitattype_comments': u"comentariu habitat",
-    'comment_replies': u"mesaj",
+    'comment_replies': u"replică",
 }
 
 

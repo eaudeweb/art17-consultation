@@ -145,7 +145,7 @@ def test_reply_add(app):
     app.register_blueprint(replies.replies)
     params.setup(app, comment=True)
     client = app.test_client()
-    resp = client.post('/mesaje/%s/nou' % params.comment_id,
+    resp = client.post('/replici/%s/nou' % params.comment_id,
                        data={'text': "hello world"})
     assert resp.status_code == 302
 
@@ -179,7 +179,7 @@ def test_reply_remove(app):
         reply_id = reply.id
 
     client = app.test_client()
-    resp = client.post('/mesaje/sterge?reply_id=%s&next=/' % reply_id)
+    resp = client.post('/replici/sterge?reply_id=%s&next=/' % reply_id)
     assert resp.status_code == 302
 
     with app.app_context():

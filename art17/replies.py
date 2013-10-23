@@ -29,7 +29,7 @@ def _dump_reply_data(reply):
             for k in ['text', 'user_id', 'parent', 'date']}
 
 
-@replies.route('/mesaje/<comment_id>/nou', methods=['POST'])
+@replies.route('/replici/<comment_id>/nou', methods=['POST'])
 @require(Permission(need.authenticated))
 def new(comment_id):
     comment = _get_comment_or_404(comment_id)
@@ -51,7 +51,7 @@ def new(comment_id):
     return flask.render_template('replies/new.html')
 
 
-@replies.route('/mesaje/sterge', methods=['POST'])
+@replies.route('/replici/sterge', methods=['POST'])
 @require(Permission(need.admin))
 def remove():
     reply_id = flask.request.args['reply_id']
@@ -66,7 +66,7 @@ def remove():
     return flask.redirect(next_url)
 
 
-@replies.route('/mesaje/citit', methods=['POST'])
+@replies.route('/replici/citit', methods=['POST'])
 @require(Permission(need.authenticated))
 def set_read_status():
     reply_id = flask.request.form['reply_id']
@@ -93,7 +93,7 @@ def set_read_status():
     return flask.jsonify(read=read)
 
 
-@replies.route('/mesaje/<comment_id>')
+@replies.route('/replici/<comment_id>')
 def index(comment_id):
     replies = (models.CommentReply
                     .query.filter_by(parent=comment_id).all())
