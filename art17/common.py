@@ -176,8 +176,8 @@ class IndexView(flask.views.View):
                             .join(self.record_cls)
                             .order_by(self.subject_cls.code))
 
-    def get_threats(self, record):
-        return record.threats.all()
+    def get_pressures(self, record):
+        return record.pressures.all()
 
     def prepare_context(self):
         self.ctx.update({
@@ -197,7 +197,7 @@ class IndexView(flask.views.View):
                 'code': self.subject.code,
                 'name': self.subject.lu.display_name,
                 'records': [self.parse_record(r) for r in self.records],
-                'threats': {r.id: self.get_threats(r) for r in self.records},
+                'pressures': {r.id: self.get_pressures(r) for r in self.records},
                 'conclusions': [self.parse_record(r, is_conclusion=True)
                              for r in self.conclusions],
                 'message_counts': self.message_counts,

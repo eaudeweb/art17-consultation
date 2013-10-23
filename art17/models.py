@@ -448,10 +448,10 @@ class DataPressuresThreats(Base):
     validation_date = Column(DateTime)
 
     species = relationship(u'DataSpeciesRegion',
-        backref=db.backref('threats', lazy='dynamic'))
+        backref=db.backref('pressures', lazy='dynamic'))
 
     habitat = relationship(u'DataHabitattypeRegion',
-        backref=db.backref('threats', lazy='dynamic'))
+        backref=db.backref('pressures', lazy='dynamic'))
 
     lu = relationship(LuThreats,
                       primaryjoin=(pressure == foreign(LuThreats.code)),
