@@ -7,13 +7,13 @@ from art17 import models, species, habitat, history
 class species_params(object):
     blueprint = species.species
     comment_table = 'data_species_comments'
-    comment_create_url = '/specii/detalii/1/concluzii'
+    comment_create_url = '/specii/detalii/1/comentarii'
     user_id = 'somebody'
     comment_cls = models.DataSpeciesComment
     comment_id = '4f799fdd6f5a'
-    comment_edit_url = '/specii/concluzii/4f799fdd6f5a'
-    comment_status_url = '/specii/concluzii/4f799fdd6f5a/stare'
-    comment_delete_url = '/specii/concluzii/4f799fdd6f5a/sterge'
+    comment_edit_url = '/specii/comentarii/4f799fdd6f5a'
+    comment_status_url = '/specii/comentarii/4f799fdd6f5a/stare'
+    comment_delete_url = '/specii/comentarii/4f799fdd6f5a/sterge'
     comment_data = {'range.surface_area': '50',
                     'range.method': '1',
                     'population.method': '1',
@@ -36,13 +36,13 @@ class species_params(object):
 class habitat_params(object):
     blueprint = habitat.habitat
     comment_table = 'data_habitattype_comments'
-    comment_create_url = '/habitate/detalii/1/concluzii'
+    comment_create_url = '/habitate/detalii/1/comentarii'
     user_id = 'somebody'
     comment_cls = models.DataHabitattypeComment
     comment_id = '4f799fdd6f5a'
-    comment_edit_url = '/habitate/concluzii/4f799fdd6f5a'
-    comment_status_url = '/habitate/concluzii/4f799fdd6f5a/stare'
-    comment_delete_url = '/habitate/concluzii/4f799fdd6f5a/sterge'
+    comment_edit_url = '/habitate/comentarii/4f799fdd6f5a'
+    comment_status_url = '/habitate/comentarii/4f799fdd6f5a/stare'
+    comment_delete_url = '/habitate/comentarii/4f799fdd6f5a/sterge'
     comment_data = {'range.surface_area': '50',
                     'range.method': '1',
                     'coverage.surface_area': 123,

@@ -184,7 +184,7 @@ def _create_species_record(species_app, comment=False):
 def test_load_comments_view(species_app):
     _create_species_record(species_app)
     client = species_app.test_client()
-    resp = client.get('/specii/detalii/1/concluzii')
+    resp = client.get('/specii/detalii/1/comentarii')
     assert resp.status_code == 200
 
 
@@ -192,7 +192,7 @@ def test_save_comment_record(species_app):
     from art17.models import DataSpeciesComment
     _create_species_record(species_app)
     client = species_app.test_client()
-    resp = client.post('/specii/detalii/1/concluzii',
+    resp = client.post('/specii/detalii/1/comentarii',
                        data={'range.surface_area': '50',
                              'range.method': '1',
                              'population.method': '1',
@@ -216,9 +216,9 @@ def test_edit_comment_form(species_app):
     from art17.models import DataSpeciesComment, db
     _create_species_record(species_app, comment=True)
     client = species_app.test_client()
-    resp1 = client.get('/specii/concluzii/f3b4c23bcb88')
+    resp1 = client.get('/specii/comentarii/f3b4c23bcb88')
     assert resp1.status_code == 404
-    resp2 = client.get('/specii/concluzii/4f799fdd6f5a')
+    resp2 = client.get('/specii/comentarii/4f799fdd6f5a')
     assert resp2.status_code == 200
     assert '1337' in resp2.data
 
@@ -227,7 +227,7 @@ def test_edit_comment_submit(species_app):
     from art17.models import DataSpeciesComment, db
     _create_species_record(species_app, comment=True)
     client = species_app.test_client()
-    resp = client.post('/specii/concluzii/4f799fdd6f5a',
+    resp = client.post('/specii/comentarii/4f799fdd6f5a',
                        data={'range.surface_area': '50',
                              'range.method': '1',
                              'population.method': '1',

@@ -91,11 +91,11 @@ class HabitatCommentView(CommentView):
         return records[0]
 
 
-habitat.add_url_rule('/habitate/detalii/<int:record_id>/concluzii',
+habitat.add_url_rule('/habitate/detalii/<int:record_id>/comentarii',
                      view_func=HabitatCommentView.as_view('comment'))
 
 
-habitat.add_url_rule('/habitate/concluzii/<comment_id>',
+habitat.add_url_rule('/habitate/comentarii/<comment_id>',
                      view_func=HabitatCommentView.as_view('comment_edit'))
 
 
@@ -105,7 +105,7 @@ class HabitatCommentStateView(CommentStateView):
     signal = comment_status_changed
 
 
-habitat.add_url_rule('/habitate/concluzii/<comment_id>/stare',
+habitat.add_url_rule('/habitate/comentarii/<comment_id>/stare',
             view_func=HabitatCommentStateView.as_view('comment_status'))
 
 
@@ -116,5 +116,5 @@ class HabitatCommentDeleteView(CommentDeleteView):
     signal = comment_deleted
 
 
-habitat.add_url_rule('/habitate/concluzii/<comment_id>/sterge',
+habitat.add_url_rule('/habitate/comentarii/<comment_id>/sterge',
             view_func=HabitatCommentDeleteView.as_view('comment_delete'))

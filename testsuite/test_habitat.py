@@ -140,7 +140,7 @@ def _create_habitat_record(habitat_app, comment=False):
 def test_load_comments_view(habitat_app):
     _create_habitat_record(habitat_app)
     client = habitat_app.test_client()
-    resp = client.get('/habitate/detalii/1/concluzii')
+    resp = client.get('/habitate/detalii/1/comentarii')
     assert resp.status_code == 200
 
 
@@ -148,7 +148,7 @@ def test_save_comment_record(habitat_app):
     from art17.models import DataHabitattypeComment
     _create_habitat_record(habitat_app)
     client = habitat_app.test_client()
-    resp = client.post('/habitate/detalii/1/concluzii',
+    resp = client.post('/habitate/detalii/1/comentarii',
                        data={'range.surface_area': '50',
                              'range.method': '1',
                              'coverage.surface_area': 123,
@@ -168,9 +168,9 @@ def test_edit_comment_form(habitat_app):
     from art17.models import DataHabitattypeComment, db
     _create_habitat_record(habitat_app, comment=True)
     client = habitat_app.test_client()
-    resp1 = client.get('/habitate/concluzii/f3b4c23bcb88')
+    resp1 = client.get('/habitate/comentarii/f3b4c23bcb88')
     assert resp1.status_code == 404
-    resp2 = client.get('/habitate/concluzii/4f799fdd6f5a')
+    resp2 = client.get('/habitate/comentarii/4f799fdd6f5a')
     assert resp2.status_code == 200
     assert '1337' in resp2.data
 
@@ -179,7 +179,7 @@ def test_edit_comment_submit(habitat_app):
     from art17.models import DataHabitattypeComment, db
     _create_habitat_record(habitat_app, comment=True)
     client = habitat_app.test_client()
-    resp = client.post('/habitate/concluzii/4f799fdd6f5a',
+    resp = client.post('/habitate/comentarii/4f799fdd6f5a',
                        data={'range.surface_area': '50',
                              'range.method': '1',
                              'coverage.surface_area': 123,
