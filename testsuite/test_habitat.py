@@ -2,7 +2,7 @@
 
 import pytest
 
-COMMENT_SAVED_TXT = "Concluzia a fost înregistrată"
+COMMENT_SAVED_TXT = "Comentariul a fost înregistrat"
 MISSING_FIELD_TXT = "Suprafața este obligatorie"
 
 HABITAT_STRUCT_DATA = {

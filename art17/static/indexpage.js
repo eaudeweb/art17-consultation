@@ -146,7 +146,7 @@ $('.records-commentstatus').change(function(evt) {
 
 
 $('.records-commentdelete').submit(function(evt) {
-  if(! confirm("Ștergi concluzia?")) {
+  if(! confirm("Ștergi comentariul?")) {
     evt.preventDefault();
   }
 });
