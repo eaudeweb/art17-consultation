@@ -91,7 +91,7 @@ def _get_habitat_quality(obj):
 def comment_info(row):
     return {
         'user_id': row.user_id,
-        'conclusion_date': row.conclusion_date,
+        'comment_date': row.comment_date,
         'status': row.status,
     }
 
