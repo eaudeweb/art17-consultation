@@ -114,11 +114,11 @@ class SpeciesCommentView(CommentView):
 
 
 species.add_url_rule('/specii/detalii/<int:record_id>/concluzii',
-                     view_func=SpeciesCommentView.as_view('conclusion'))
+                     view_func=SpeciesCommentView.as_view('comment'))
 
 
 species.add_url_rule('/specii/concluzii/<comment_id>',
-                 view_func=SpeciesCommentView.as_view('conclusion_edit'))
+                 view_func=SpeciesCommentView.as_view('comment_edit'))
 
 
 class SpeciesCommentStateView(CommentStateView):
@@ -128,7 +128,7 @@ class SpeciesCommentStateView(CommentStateView):
 
 
 species.add_url_rule('/specii/concluzii/<comment_id>/stare',
-            view_func=SpeciesCommentStateView.as_view('conclusion_status'))
+            view_func=SpeciesCommentStateView.as_view('comment_status'))
 
 
 class SpeciesCommentDeleteView(CommentDeleteView):
@@ -139,4 +139,4 @@ class SpeciesCommentDeleteView(CommentDeleteView):
 
 
 species.add_url_rule('/specii/concluzii/<comment_id>/sterge',
-            view_func=SpeciesCommentDeleteView.as_view('conclusion_delete'))
+            view_func=SpeciesCommentDeleteView.as_view('comment_delete'))
