@@ -247,7 +247,7 @@ def test_edit_conclusion_submit(species_app):
 def test_one_field_required():
     from werkzeug.datastructures import MultiDict
     from art17 import forms
-    form = forms.SpeciesConclusion(MultiDict())
+    form = forms.SpeciesComment(MultiDict())
     assert not form.validate()
 
 
@@ -260,7 +260,7 @@ def test_save_all_form_fields():
 
     form_data = MultiDict(flatten_dict(SPECIES_STRUCT_DATA))
 
-    form = forms.SpeciesConclusion(form_data)
+    form = forms.SpeciesComment(form_data)
     assert form.validate()
 
     conclusion = models.DataSpeciesComment()

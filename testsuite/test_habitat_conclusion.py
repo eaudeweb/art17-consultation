@@ -195,7 +195,7 @@ def test_edit_conclusion_submit(habitat_app):
 def test_one_field_required():
     from werkzeug.datastructures import MultiDict
     from art17 import forms
-    form = forms.HabitatConclusion(MultiDict())
+    form = forms.HabitatComment(MultiDict())
     assert not form.validate()
 
 
@@ -208,7 +208,7 @@ def test_save_all_form_fields():
 
     form_data = MultiDict(flatten_dict(HABITAT_STRUCT_DATA))
 
-    form = forms.HabitatConclusion(form_data)
+    form = forms.HabitatComment(form_data)
     assert form.validate()
 
     conclusion = models.DataHabitattypeComment()

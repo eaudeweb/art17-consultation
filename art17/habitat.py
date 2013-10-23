@@ -61,7 +61,7 @@ def detail(record_id):
 
 class HabitatCommentView(CommentView):
 
-    form_cls = forms.HabitatConclusion
+    form_cls = forms.HabitatComment
     record_cls = models.DataHabitattypeRegion
     comment_cls = models.DataHabitattypeComment
     parse_commentform = staticmethod(schemas.parse_habitat_conclusionform)

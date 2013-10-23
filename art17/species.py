@@ -83,7 +83,7 @@ def detail(record_id):
 
 class SpeciesCommentView(CommentView):
 
-    form_cls = forms.SpeciesConclusion
+    form_cls = forms.SpeciesComment
     record_cls = models.DataSpeciesRegion
     comment_cls = models.DataSpeciesComment
     parse_commentform = staticmethod(schemas.parse_species_conclusionform)
