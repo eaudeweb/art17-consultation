@@ -19,7 +19,7 @@
   {% if name %}
     {% block subject_details %}{% endblock %}
 
-    <table class="records">
+    <table class="records table table-bordered">
     {%- block records_header %}{% endblock records_header %}
 
      {% for row in records %}
@@ -27,7 +27,7 @@
         {#- detail #}
         <td>
           {%- set url = url_for(blueprint + '.detail', record_id=row.id) %}
-          <button class="records-detailbtn"
+          <button class="records-detailbtn btn btn-xs btn-info"
                   data-url="{{ url }}">detalii</button>
         </td>
 
@@ -38,7 +38,7 @@
             {%- set url = url_for(blueprint + '.comment',
                                   record_id=row.id,
                                   next=comment_next) %}
-            <a class="records-commentbtn"
+            <a class="records-commentbtn btn btn-xs btn-warning"
                href="{{ url }}">adaugǎ comentariu</a>
           {%- endif %}
         </td>
@@ -70,7 +70,8 @@
             {%- set url = url_for(blueprint + '.comment_edit',
                                   comment_id=row.id,
                                   next=comment_next) %}
-            <a href="{{ url }}" class="records-editcommentbtn">editează</a>
+            <a class="records-editcommentbtn btn btn-xs btn-default"
+               href="{{ url }}">editează</a>
           {%- endif %}
 
           {%- if perm_delete_comment(row.model).can() %}

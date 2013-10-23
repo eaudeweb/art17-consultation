@@ -38,27 +38,6 @@ fieldset legend {
     margin: 10px 0 10px;
 }
 
-.speciesfilter {
-    .form-inline;
-
-    button[type=submit] {
-        .btn;
-        .btn-sm;
-        .btn-primary;
-    }
-}
-
-
-.habitatfilter {
-    .form-inline;
-
-    button[type=submit] {
-        .btn;
-        .btn-sm;
-        .btn-primary;
-    }
-}
-
 .trend, .method, .conclusion {
     text-align: center;
 }
@@ -69,120 +48,55 @@ fieldset legend {
 .conclusion-XX { background: #FFFFFF; }
 
 .records {
-    .table;
-    .table-bordered;
     font-size: 11px;
-
-    > tbody > tr > td {
-        padding: 3px 3px;
-    }
-
-    .records-header th {
-        background: #F6F8EE;
-        text-align: center;
-    }
-
-    .records-detailbtn {
-        .btn;
-        .btn-xs;
-        .btn-info;
-    }
-
-    .records-commentbtn {
-        .btn;
-        .btn-xs;
-        .btn-warning;
-    }
-
-    .records-editcommentbtn {
-        .btn;
-        .btn-xs;
-        .btn-default;
-    }
-
-    .records-commentstatus,
-    .records-commentdelete {
-        display: inline;
-    }
 }
 
-
-#recorddetail-modal {
-    .modal;
-    .fade;
-
-    .recorddetail-content { .modal-content }
-    .recorddetail-header  { .modal-header  }
-    .recorddetail-title   { .modal-title   }
-    .recorddetail-body    { .modal-body    }
-    .recorddetail-footer  { .modal-footer  }
-
-    .modal-dialog {
-        width: 750px;
-    }
+.records-header th {
+    background: #F6F8EE;
+    text-align: center;
 }
 
-
-.recorddetail-footer button {
-    .btn;
-    .btn-default;
+.records-commentstatus,
+.records-commentdelete {
+    display: inline;
 }
 
-
-.recorddetail-tabs {
-    .nav;
-    .nav-tabs;
+.records > tbody > tr > td {
+    padding: 3px 3px;
 }
 
+#recorddetail-modal .modal-dialog {
+    width: 750px;
+}
 
 .recorddetail-table {
     margin-top: -1px;
-
-    tr th {
-        width: 50%;
-    }
 }
 
-.recordconclusion-save {
-    .btn;
-    .btn-primary;
+.recorddetail-table tr,
+.recorddetail-table th {
+    width: 50%;
 }
 
 .recordvalue {
-    .label;
-    .label-default;
-
     font-size:12px;
     white-space: normal;
 }
 
-.readbox {
-    .pull-right;
+.readbox-new    { width: 100px; }
+.readbox-read   { width: 100px; display: none; }
+.readbox-mark   { width: 100px; display: none; }
+.readbox-unmark { width: 100px; display: none; }
 
-    .readbox-new    { width: 100px; .btn; .btn-xs; .btn-warning; }
-    .readbox-read   { width: 100px; .btn; .btn-xs; .btn-default; display: none; }
-    .readbox-mark   { width: 100px; .btn; .btn-xs; .btn-info; display: none; }
-    .readbox-unmark { width: 100px; .btn; .btn-xs; .btn-info; display: none; }
-}
+.reply-read .readbox-new  { display: none; }
+.reply-read .readbox-read { display: inline-block; }
 
+.readbox:hover .readbox-new  { display: none; }
+.readbox:hover .readbox-mark { display: inline-block; }
 
-.reply-read .readbox {
-    .readbox-new    { display: none; }
-    .readbox-read   { display: inline-block; }
-}
-
-
-.readbox:hover {
-    .readbox-new    { display: none; }
-    .readbox-mark   { display: inline-block; }
-}
-
-
-.reply-read .readbox:hover {
-    .readbox-read   { display: none; }
-    .readbox-mark   { display: none; }
-    .readbox-unmark { display: inline-block; }
-}
+.reply-read .readbox:hover .readbox-read   { display: none; }
+.reply-read .readbox:hover .readbox-mark   { display: none; }
+.reply-read .readbox:hover .readbox-unmark { display: inline-block; }
 
 .reply .panel-body {
     font-weight: bold;
