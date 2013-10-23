@@ -77,12 +77,12 @@ def set_read_status():
     if user_id is None:
         flask.abort(403)
 
-    existing = (models.ConclusionMessageRead
+    existing = (models.CommentReplyRead
                     .query.filter_by(message_id=message.id, user_id=user_id))
 
     if read:
         if not existing.count():
-            row = models.ConclusionMessageRead(message_id=message.id,
+            row = models.CommentReplyRead(message_id=message.id,
                                                user_id=user_id)
             models.db.session.add(row)
             models.db.session.commit()
@@ -101,7 +101,7 @@ def index(conclusion_id):
     user_id = flask.g.identity.id
 
     if user_id:
-        read_by_user = (models.ConclusionMessageRead
+        read_by_user = (models.CommentReplyRead
                             .query.filter_by(user_id=user_id))
         read_msgs = set(r.message_id for r in read_by_user)
 

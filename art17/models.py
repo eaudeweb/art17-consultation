@@ -567,7 +567,7 @@ class CommentReply(Base):
     text = Column(Text)
 
 
-class ConclusionMessageRead(Base):
+class CommentReplyRead(Base):
     __tablename__ = u'comment_messages_read'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
