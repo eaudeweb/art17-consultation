@@ -94,8 +94,8 @@ class SpeciesCommentView(CommentView):
     edit_signal = conclusion_edited
 
     def link_conclusion_to_record(self):
-        self.conclusion.species_id = self.record.species_id
-        self.conclusion.region = self.record.region
+        self.comment.species_id = self.record.species_id
+        self.comment.region = self.record.region
 
     def setup_template_context(self):
         self.template_ctx = {
@@ -103,13 +103,13 @@ class SpeciesCommentView(CommentView):
             'record': schemas.parse_species(self.record),
         }
 
-    def record_for_comment(self, conclusion):
+    def record_for_comment(self, comment):
         records = (models.DataSpeciesRegion.query
-                            .filter_by(species_id=conclusion.species_id)
-                            .filter_by(region=conclusion.region)
+                            .filter_by(species_id=comment.species_id)
+                            .filter_by(region=comment.region)
                             .all())
         assert len(records) == 1, ("Expected exactly one record "
-                                   "for the conclusion")
+                                   "for the comment")
         return records[0]
 
 

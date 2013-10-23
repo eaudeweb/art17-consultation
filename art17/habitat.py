@@ -72,8 +72,8 @@ class HabitatCommentView(CommentView):
     edit_signal = conclusion_edited
 
     def link_conclusion_to_record(self):
-        self.conclusion.habitat_id = self.record.habitat_id
-        self.conclusion.region = self.record.region
+        self.comment.habitat_id = self.record.habitat_id
+        self.comment.region = self.record.region
 
     def setup_template_context(self):
         self.template_ctx = {
@@ -81,10 +81,10 @@ class HabitatCommentView(CommentView):
             'record': schemas.parse_habitat(self.record),
         }
 
-    def record_for_comment(self, conclusion):
+    def record_for_comment(self, comment):
         records = (models.DataHabitattypeRegion.query
-                            .filter_by(habitat_id=conclusion.habitat_id)
-                            .filter_by(region=conclusion.region)
+                            .filter_by(habitat_id=comment.habitat_id)
+                            .filter_by(region=comment.region)
                             .all())
         assert len(records) == 1, ("Expected exactly one record "
                                    "for the conclusion")

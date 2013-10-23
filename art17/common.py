@@ -226,17 +226,17 @@ class CommentView(flask.views.View):
             new_conclusion = True
             self.record = self.record_cls.query.get_or_404(record_id)
             perm_create_comment(self.record).test()
-            self.conclusion = self.comment_cls(user_id=flask.g.identity.id,
+            self.comment = self.comment_cls(user_id=flask.g.identity.id,
                                             conclusion_date=datetime.utcnow())
             form = self.form_cls(flask.request.form)
 
         elif conclusion_id:
             new_conclusion = False
-            self.conclusion = (self.comment_cls
+            self.comment = (self.comment_cls
                                     .query.get_or_404(conclusion_id))
-            perm_edit_comment(self.conclusion).test()
-            self.record = self.record_for_comment(self.conclusion)
-            old_data = self.parse_commentform(self.conclusion)
+            perm_edit_comment(self.comment).test()
+            self.record = self.record_for_comment(self.comment)
+            old_data = self.parse_commentform(self.comment)
             if flask.request.method == 'POST':
                 form_data = flask.request.form
             else:
@@ -253,15 +253,15 @@ class CommentView(flask.views.View):
         if flask.request.method == 'POST' and form.validate():
             self.link_conclusion_to_record()
 
-            self.flatten_commentform(form.data, self.conclusion)
-            models.db.session.add(self.conclusion)
+            self.flatten_commentform(form.data, self.comment)
+            models.db.session.add(self.comment)
 
             app = flask.current_app._get_current_object()
             if new_conclusion:
-                self.add_signal.send(app, ob=self.conclusion,
+                self.add_signal.send(app, ob=self.comment,
                                           new_data=form.data)
             else:
-                self.edit_signal.send(app, ob=self.conclusion,
+                self.edit_signal.send(app, ob=self.comment,
                                       old_data=old_data, new_data=form.data)
 
             models.db.session.commit()
@@ -278,15 +278,15 @@ class CommentStateView(flask.views.View):
     methods = ['POST']
 
     def dispatch_request(self, conclusion_id):
-        conclusion = self.comment_cls.query.get_or_404(conclusion_id)
+        comment = self.comment_cls.query.get_or_404(conclusion_id)
         next_url = flask.request.form['next']
         new_status = flask.request.form['status']
         if new_status not in STATUS_VALUES:
             flask.abort(403)
-        old_status = conclusion.status
-        conclusion.status = new_status
+        old_status = comment.status
+        comment.status = new_status
         app = flask.current_app._get_current_object()
-        self.signal.send(app, ob=conclusion,
+        self.signal.send(app, ob=comment,
                          old_data=old_status, new_data=new_status)
         models.db.session.commit()
         return flask.redirect(next_url)
@@ -297,13 +297,13 @@ class CommentDeleteView(flask.views.View):
     methods = ['POST']
 
     def dispatch_request(self, conclusion_id):
-        conclusion = self.comment_cls.query.get_or_404(conclusion_id)
-        perm_delete_comment(conclusion).test()
+        comment = self.comment_cls.query.get_or_404(conclusion_id)
+        perm_delete_comment(comment).test()
         next_url = flask.request.form['next']
-        conclusion.deleted = True
+        comment.deleted = True
         app = flask.current_app._get_current_object()
-        old_data = self.parse_commentform(conclusion)
-        old_data['_status'] = conclusion.status
-        self.signal.send(app, ob=conclusion, old_data=old_data)
+        old_data = self.parse_commentform(comment)
+        old_data['_status'] = comment.status
+        self.signal.send(app, ob=comment, old_data=old_data)
         models.db.session.commit()
         return flask.redirect(next_url)
