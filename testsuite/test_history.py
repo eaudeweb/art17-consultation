@@ -7,13 +7,13 @@ from art17 import models, species, habitat, history
 class species_params(object):
     blueprint = species.species
     comment_table = 'data_species_comments'
-    comment_create_url = '/specii/detalii/1/concluzii'
+    comment_create_url = '/specii/detalii/1/comentarii'
     user_id = 'somebody'
     comment_cls = models.DataSpeciesComment
     comment_id = '4f799fdd6f5a'
-    comment_edit_url = '/specii/concluzii/4f799fdd6f5a'
-    comment_status_url = '/specii/concluzii/4f799fdd6f5a/stare'
-    comment_delete_url = '/specii/concluzii/4f799fdd6f5a/sterge'
+    comment_edit_url = '/specii/comentarii/4f799fdd6f5a'
+    comment_status_url = '/specii/comentarii/4f799fdd6f5a/stare'
+    comment_delete_url = '/specii/comentarii/4f799fdd6f5a/sterge'
     comment_data = {'range.surface_area': '50',
                     'range.method': '1',
                     'population.method': '1',
@@ -36,13 +36,13 @@ class species_params(object):
 class habitat_params(object):
     blueprint = habitat.habitat
     comment_table = 'data_habitattype_comments'
-    comment_create_url = '/habitate/detalii/1/concluzii'
+    comment_create_url = '/habitate/detalii/1/comentarii'
     user_id = 'somebody'
     comment_cls = models.DataHabitattypeComment
     comment_id = '4f799fdd6f5a'
-    comment_edit_url = '/habitate/concluzii/4f799fdd6f5a'
-    comment_status_url = '/habitate/concluzii/4f799fdd6f5a/stare'
-    comment_delete_url = '/habitate/concluzii/4f799fdd6f5a/sterge'
+    comment_edit_url = '/habitate/comentarii/4f799fdd6f5a'
+    comment_status_url = '/habitate/comentarii/4f799fdd6f5a/stare'
+    comment_delete_url = '/habitate/comentarii/4f799fdd6f5a/sterge'
     comment_data = {'range.surface_area': '50',
                     'range.method': '1',
                     'coverage.surface_area': 123,
@@ -139,22 +139,22 @@ def test_comment_delete(params, app):
         assert json.loads(history[0].old_data)['_status'] == 'new'
 
 
-def test_message_add(app):
-    from art17 import messages
+def test_reply_add(app):
+    from art17 import replies
     params = species_params
-    app.register_blueprint(messages.messages)
+    app.register_blueprint(replies.replies)
     params.setup(app, comment=True)
     client = app.test_client()
-    resp = client.post('/mesaje/%s/nou' % params.comment_id,
+    resp = client.post('/replici/%s/nou' % params.comment_id,
                        data={'text': "hello world"})
     assert resp.status_code == 302
 
     with app.app_context():
         history = models.History.query.all()
-        message = models.CommentReply.query.first()
+        reply = models.CommentReply.query.first()
         assert len(history) == 1
-        assert history[0].table == 'comment_messages'
-        assert history[0].object_id == message.id
+        assert history[0].table == 'comment_replies'
+        assert history[0].object_id == reply.id
         assert history[0].action == 'add'
         assert history[0].user_id == params.user_id
         new_data = json.loads(history[0].new_data)
@@ -163,30 +163,30 @@ def test_message_add(app):
         assert new_data['parent'] == params.comment_id
 
 
-def test_message_remove(app):
-    from art17 import messages
+def test_reply_remove(app):
+    from art17 import replies
     user_id = app.config['TESTING_USER_ID'] = 'somebody'
     app.register_blueprint(history.history)
-    app.register_blueprint(messages.messages)
+    app.register_blueprint(replies.replies)
 
     with app.app_context():
-        message = models.CommentReply(text='hello foo',
+        reply = models.CommentReply(text='hello foo',
                                            user_id='somewho',
                                            parent='123',
                                            date=datetime(2010, 1, 4))
-        models.db.session.add(message)
+        models.db.session.add(reply)
         models.db.session.commit()
-        message_id = message.id
+        reply_id = reply.id
 
     client = app.test_client()
-    resp = client.post('/mesaje/sterge?message_id=%s&next=/' % message_id)
+    resp = client.post('/replici/sterge?reply_id=%s&next=/' % reply_id)
     assert resp.status_code == 302
 
     with app.app_context():
         history_items = models.History.query.all()
         assert len(history_items) == 1
-        assert history_items[0].table == 'comment_messages'
-        assert history_items[0].object_id == message_id
+        assert history_items[0].table == 'comment_replies'
+        assert history_items[0].object_id == reply_id
         assert history_items[0].action == 'remove'
         assert history_items[0].user_id == user_id
         assert json.loads(history_items[0].old_data) == {

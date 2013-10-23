@@ -53,7 +53,7 @@ def create_app():
     from art17.habitat import habitat
     from art17 import models
     from art17.admin import admin
-    from art17.messages import messages
+    from art17.replies import replies
     from art17.history import history
     from art17.dashboard import dashboard
 
@@ -68,7 +68,7 @@ def create_app():
     app.register_blueprint(common)
     app.register_blueprint(species)
     app.register_blueprint(habitat)
-    app.register_blueprint(messages)
+    app.register_blueprint(replies)
     app.register_blueprint(history)
     app.register_blueprint(dashboard, url_prefix='/dashboard')
     models.db.init_app(app)

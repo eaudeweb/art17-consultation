@@ -11,7 +11,7 @@
 
 
 {% block form %}
-  <form class="habitatfilter">
+  <form class="habitatfilter form-inline">
     <fieldset>
       <legend>Filtrare habitate</legend>
 
@@ -28,7 +28,7 @@
       </div>
 
       <div class="form-group">
-        <button type="submit">filtrează</button>
+        <button type="submit" class="btn btn-sm btn-primary">filtrează</button>
         {%- if map_url %}
           <a class="showmap btn btn-sm btn-info"
              href="{{ map_url }}">vezi harta</a>
@@ -91,11 +91,11 @@
 {%- endblock records_header %}
 
 
-{% block conclusions_header %}
+{% block comments_header %}
   <tr class="records-header">
     <th colspan=19>Concluzii</th>
   </tr>
-{% endblock conclusions_header %}
+{% endblock comments_header %}
 
 
 {% block record_cell %}

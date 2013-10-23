@@ -7,10 +7,10 @@ from blinker import Signal
 from art17 import models
 from art17.auth import require, need
 
-messages = flask.Blueprint('messages', __name__)
+replies = flask.Blueprint('replies', __name__)
 
-message_added = Signal()
-message_removed = Signal()
+reply_added = Signal()
+reply_removed = Signal()
 
 
 def _get_comment_or_404(comment_id):
@@ -24,66 +24,65 @@ def _get_comment_or_404(comment_id):
         flask.abort(404)
 
 
-def _dump_message_data(message):
-    return {k: getattr(message, k)
+def _dump_reply_data(reply):
+    return {k: getattr(reply, k)
             for k in ['text', 'user_id', 'parent', 'date']}
 
 
-@messages.route('/mesaje/<comment_id>/nou', methods=['POST'])
+@replies.route('/replici/<comment_id>/nou', methods=['POST'])
 @require(Permission(need.authenticated))
 def new(comment_id):
     comment = _get_comment_or_404(comment_id)
 
     if flask.request.method == 'POST':
-        message = models.CommentReply(
+        reply = models.CommentReply(
             text=flask.request.form['text'],
             user_id=flask.g.identity.id,
             date=datetime.utcnow(),
             parent=comment.id)
-        models.db.session.add(message)
+        models.db.session.add(reply)
         app = flask.current_app._get_current_object()
-        message_added.send(app, ob=message,
-                           new_data=_dump_message_data(message))
+        reply_added.send(app, ob=reply,
+                           new_data=_dump_reply_data(reply))
         models.db.session.commit()
         url = flask.url_for('.index', comment_id=comment_id)
         return flask.redirect(url)
 
-    return flask.render_template('messages/new.html')
+    return flask.render_template('replies/new.html')
 
 
-@messages.route('/mesaje/sterge', methods=['POST'])
+@replies.route('/replici/sterge', methods=['POST'])
 @require(Permission(need.admin))
 def remove():
-    message_id = flask.request.args['message_id']
+    reply_id = flask.request.args['reply_id']
     next_url = flask.request.args['next']
-    message = models.CommentReply.query.get_or_404(message_id)
-    user_id = message.user_id
-    models.db.session.delete(message)
+    reply = models.CommentReply.query.get_or_404(reply_id)
+    user_id = reply.user_id
+    models.db.session.delete(reply)
     app = flask.current_app._get_current_object()
-    message_removed.send(app, ob=message, old_data=_dump_message_data(message))
+    reply_removed.send(app, ob=reply, old_data=_dump_reply_data(reply))
     models.db.session.commit()
-    flask.flash(u"Mesajul lui %s a fost șters." % user_id, 'success')
+    flask.flash(u"Replica lui %s a fost ștearsă." % user_id, 'success')
     return flask.redirect(next_url)
 
 
-@messages.route('/mesaje/citit', methods=['POST'])
+@replies.route('/replici/citit', methods=['POST'])
 @require(Permission(need.authenticated))
 def set_read_status():
-    message_id = flask.request.form['message_id']
+    reply_id = flask.request.form['reply_id']
     read = (flask.request.form.get('read') == 'on')
-    message = models.CommentReply.query.get_or_404(message_id)
+    reply = models.CommentReply.query.get_or_404(reply_id)
 
     user_id = flask.g.identity.id
     if user_id is None:
         flask.abort(403)
 
     existing = (models.CommentReplyRead
-                    .query.filter_by(message_id=message.id, user_id=user_id))
+                    .query.filter_by(reply_id=reply.id, user_id=user_id))
 
     if read:
         if not existing.count():
-            row = models.CommentReplyRead(message_id=message.id,
-                                               user_id=user_id)
+            row = models.CommentReplyRead(reply_id=reply.id, user_id=user_id)
             models.db.session.add(row)
             models.db.session.commit()
 
@@ -94,25 +93,25 @@ def set_read_status():
     return flask.jsonify(read=read)
 
 
-@messages.route('/mesaje/<comment_id>')
+@replies.route('/replici/<comment_id>')
 def index(comment_id):
-    messages = (models.CommentReply
+    replies = (models.CommentReply
                     .query.filter_by(parent=comment_id).all())
     user_id = flask.g.identity.id
 
     if user_id:
         read_by_user = (models.CommentReplyRead
                             .query.filter_by(user_id=user_id))
-        read_msgs = set(r.message_id for r in read_by_user)
+        read_msgs = set(r.reply_id for r in read_by_user)
 
     else:
         read_msgs = []
 
-    return flask.render_template('messages/index.html', **{
+    return flask.render_template('replies/index.html', **{
         'comment_id': comment_id,
-        'messages': messages,
+        'replies': replies,
         'read_msgs': read_msgs,
-        'can_post_new_message': Permission(need.authenticated).can(),
+        'can_post_new_reply': Permission(need.authenticated).can(),
         'can_set_read_status': Permission(need.authenticated).can(),
-        'can_delete_message': Permission(need.admin).can()
+        'can_delete_reply': Permission(need.admin).can()
     })

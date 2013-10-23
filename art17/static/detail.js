@@ -15,8 +15,8 @@ $('.records-detailbtn').click(function(evt) {
 });
 
 function set_html(html) {
-  var title = recorddetail.find('.recorddetail-title');
-  var body = recorddetail.find('.recorddetail-body');
+  var title = recorddetail.find('.modal-title');
+  var body = recorddetail.find('.modal-body');
   body.html(html);
   var h1 = body.find('h1').remove();
   title.empty().append(h1.html());

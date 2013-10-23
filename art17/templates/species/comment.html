@@ -13,7 +13,7 @@
   {{ breadcrumbs([
           ('acasǎ', url_for('views.home')),
           ('specii', next_url or url_for('.index')),
-          ('concluzie', None),
+          ('comentariu', None),
       ]) }}
 {% endblock breadcrumbs %}
 
@@ -25,7 +25,7 @@
     with context %}
 
   <h2>
-    Adaugǎ concluzie pentru
+    Adaugǎ comentariu pentru
     <em>{{ species.lu.speciesname }}</em> in regiunea
     <em>{{ record.region.nume }}</em>
   </h2>
@@ -65,7 +65,7 @@
             <div class="col-sm-2"></div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- range_html(record.range) -}}
               </span>
             </div>
@@ -85,7 +85,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- method_html(record.range.method) -}}
               </span>
             </div>
@@ -116,7 +116,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- trend_detail_html(record.range.trend_short) }}
                 {{- period_html(record.range.trend_short.period) -}}
               </span>
@@ -148,7 +148,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- trend_detail_html(record.range.trend_long) }}
                 {{- period_html(record.range.trend_long.period) -}}
               </span>
@@ -175,7 +175,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- reference_value_html(record.range.reference_value,
                         unit='km²') -}}
               </span>
@@ -196,7 +196,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- record.range.reference_value.method -}}
               </span>
             </div>
@@ -221,7 +221,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- conclusions_html(record.range.conclusion) -}}
               </span>
             </div>
@@ -260,7 +260,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- population_size_html(record.population.size) -}}
               </span>
             </div>
@@ -302,7 +302,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- method_html(record.population.method) -}}
               </span>
             </div>
@@ -333,7 +333,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- trend_detail_html(record.population.trend_short) }}
                 {{- period_html(record.population.trend_short.period) -}}
               </span>
@@ -365,7 +365,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- trend_detail_html(record.population.trend_long) }}
                 {{- period_html(record.population.trend_long.period) -}}
               </span>
@@ -392,7 +392,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- reference_value_html(record.population.reference_value,
                         unit='km²') -}}
               </span>
@@ -413,7 +413,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- record.population.reference_value.method -}}
               </span>
             </div>
@@ -438,7 +438,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- conclusions_html(record.population.conclusion) -}}
               </span>
             </div>
@@ -470,7 +470,7 @@
             <div class="col-sm-2"></div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- range_html(record.habitat) -}}
               </span>
             </div>
@@ -493,7 +493,7 @@
             <div class="col-sm-2"></div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- record.habitat.date -}}
               </span>
             </div>
@@ -513,7 +513,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- method_html(record.habitat.method) -}}
               </span>
             </div>
@@ -533,7 +533,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- habitat_quality_html(record.habitat.quality) -}}
               </span>
             </div>
@@ -553,7 +553,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- record.habitat.quality_explanation -}}
               </span>
             </div>
@@ -584,7 +584,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- trend_detail_html(record.habitat.trend_short) }}
                 {{- period_html(record.habitat.trend_short.period) -}}
               </span>
@@ -616,7 +616,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- trend_detail_html(record.habitat.trend_long) }}
                 {{- period_html(record.habitat.trend_long.period) -}}
               </span>
@@ -640,7 +640,7 @@
             <div class="col-sm-2"></div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- range_html(record.habitat.area_suitable) -}}
               </span>
             </div>
@@ -665,7 +665,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- conclusions_html(record.habitat.conclusion) -}}
               </span>
             </div>
@@ -699,7 +699,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- conclusions_html(record.future_prospects) -}}
               </span>
             </div>
@@ -723,7 +723,7 @@
             </div>
 
             <div class="col-sm-6 text-primary">
-              <span class="recordvalue">
+              <span class="recordvalue label label-default">
                 {{- conclusions_html(record.overall_assessment) -}}
               </span>
             </div>
@@ -735,7 +735,7 @@
   </div>
 
       <div class="form-group">
-        <button type="submit" class="recordconclusion-save">Save</button>
+        <button type="submit" class="btn btn-primary">Save</button>
       </div>
 
 

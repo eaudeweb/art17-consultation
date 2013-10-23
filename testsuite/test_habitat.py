@@ -2,7 +2,7 @@
 
 import pytest
 
-COMMENT_SAVED_TXT = "Concluzia a fost înregistrată"
+COMMENT_SAVED_TXT = "Comentariul a fost înregistrat"
 MISSING_FIELD_TXT = "Suprafața este obligatorie"
 
 HABITAT_STRUCT_DATA = {
@@ -140,7 +140,7 @@ def _create_habitat_record(habitat_app, comment=False):
 def test_load_comments_view(habitat_app):
     _create_habitat_record(habitat_app)
     client = habitat_app.test_client()
-    resp = client.get('/habitate/detalii/1/concluzii')
+    resp = client.get('/habitate/detalii/1/comentarii')
     assert resp.status_code == 200
 
 
@@ -148,7 +148,7 @@ def test_save_comment_record(habitat_app):
     from art17.models import DataHabitattypeComment
     _create_habitat_record(habitat_app)
     client = habitat_app.test_client()
-    resp = client.post('/habitate/detalii/1/concluzii',
+    resp = client.post('/habitate/detalii/1/comentarii',
                        data={'range.surface_area': '50',
                              'range.method': '1',
                              'coverage.surface_area': 123,
@@ -168,9 +168,9 @@ def test_edit_comment_form(habitat_app):
     from art17.models import DataHabitattypeComment, db
     _create_habitat_record(habitat_app, comment=True)
     client = habitat_app.test_client()
-    resp1 = client.get('/habitate/concluzii/f3b4c23bcb88')
+    resp1 = client.get('/habitate/comentarii/f3b4c23bcb88')
     assert resp1.status_code == 404
-    resp2 = client.get('/habitate/concluzii/4f799fdd6f5a')
+    resp2 = client.get('/habitate/comentarii/4f799fdd6f5a')
     assert resp2.status_code == 200
     assert '1337' in resp2.data
 
@@ -179,7 +179,7 @@ def test_edit_comment_submit(habitat_app):
     from art17.models import DataHabitattypeComment, db
     _create_habitat_record(habitat_app, comment=True)
     client = habitat_app.test_client()
-    resp = client.post('/habitate/concluzii/4f799fdd6f5a',
+    resp = client.post('/habitate/comentarii/4f799fdd6f5a',
                        data={'range.surface_area': '50',
                              'range.method': '1',
                              'coverage.surface_area': 123,
@@ -235,27 +235,27 @@ def test_parse():
     assert data == HABITAT_STRUCT_DATA
 
 
-def test_add_comment_message(habitat_app):
+def test_add_comment_reply(habitat_app):
     import flask
     from webtest import TestApp
-    from art17.messages import messages
+    from art17.replies import replies
     from art17 import models
     from art17.common import common
 
     habitat_app.config['TESTING_USER_ID'] = 'somewho'
     _create_habitat_record(habitat_app, comment=True)
     habitat_app.register_blueprint(common)
-    habitat_app.register_blueprint(messages)
+    habitat_app.register_blueprint(replies)
     client = TestApp(habitat_app)
-    page = client.get('/mesaje/4f799fdd6f5a')
-    form = page.forms['message-form']
+    page = client.get('/replici/4f799fdd6f5a')
+    form = page.forms['reply-form']
     form['text'] = "hello world!"
     form.submit()
 
     with habitat_app.app_context():
-        messages = models.CommentReply.query.all()
-        assert len(messages) == 1
-        msg = messages[0]
+        replies = models.CommentReply.query.all()
+        assert len(replies) == 1
+        msg = replies[0]
         assert msg.text == "hello world!"
         assert msg.user_id == 'somewho'
         assert msg.parent == '4f799fdd6f5a'

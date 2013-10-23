@@ -2,7 +2,7 @@
 
 import pytest
 
-COMMENT_SAVED_TXT = "Concluzia a fost înregistrată"
+COMMENT_SAVED_TXT = "Comentariul a fost înregistrat"
 MISSING_FIELD_TXT = "Suprafața este obligatorie"
 
 SPECIES_STRUCT_DATA = {
@@ -184,7 +184,7 @@ def _create_species_record(species_app, comment=False):
 def test_load_comments_view(species_app):
     _create_species_record(species_app)
     client = species_app.test_client()
-    resp = client.get('/specii/detalii/1/concluzii')
+    resp = client.get('/specii/detalii/1/comentarii')
     assert resp.status_code == 200
 
 
@@ -192,7 +192,7 @@ def test_save_comment_record(species_app):
     from art17.models import DataSpeciesComment
     _create_species_record(species_app)
     client = species_app.test_client()
-    resp = client.post('/specii/detalii/1/concluzii',
+    resp = client.post('/specii/detalii/1/comentarii',
                        data={'range.surface_area': '50',
                              'range.method': '1',
                              'population.method': '1',
@@ -216,9 +216,9 @@ def test_edit_comment_form(species_app):
     from art17.models import DataSpeciesComment, db
     _create_species_record(species_app, comment=True)
     client = species_app.test_client()
-    resp1 = client.get('/specii/concluzii/f3b4c23bcb88')
+    resp1 = client.get('/specii/comentarii/f3b4c23bcb88')
     assert resp1.status_code == 404
-    resp2 = client.get('/specii/concluzii/4f799fdd6f5a')
+    resp2 = client.get('/specii/comentarii/4f799fdd6f5a')
     assert resp2.status_code == 200
     assert '1337' in resp2.data
 
@@ -227,7 +227,7 @@ def test_edit_comment_submit(species_app):
     from art17.models import DataSpeciesComment, db
     _create_species_record(species_app, comment=True)
     client = species_app.test_client()
-    resp = client.post('/specii/concluzii/4f799fdd6f5a',
+    resp = client.post('/specii/comentarii/4f799fdd6f5a',
                        data={'range.surface_area': '50',
                              'range.method': '1',
                              'population.method': '1',
@@ -287,27 +287,27 @@ def test_parse():
     assert data == SPECIES_STRUCT_DATA
 
 
-def test_add_comment_message(species_app):
+def test_add_comment_reply(species_app):
     import flask
     from webtest import TestApp
-    from art17.messages import messages
+    from art17.replies import replies
     from art17 import models
     from art17.common import common
 
     species_app.config['TESTING_USER_ID'] = 'somewho'
     _create_species_record(species_app, comment=True)
-    species_app.register_blueprint(messages)
+    species_app.register_blueprint(replies)
     species_app.register_blueprint(common)
     client = TestApp(species_app)
-    page = client.get('/mesaje/4f799fdd6f5a')
-    form = page.forms['message-form']
+    page = client.get('/replici/4f799fdd6f5a')
+    form = page.forms['reply-form']
     form['text'] = "hello world!"
     form.submit()
 
     with species_app.app_context():
-        messages = models.CommentReply.query.all()
-        assert len(messages) == 1
-        msg = messages[0]
+        replies = models.CommentReply.query.all()
+        assert len(replies) == 1
+        msg = replies[0]
         assert msg.text == "hello world!"
         assert msg.user_id == 'somewho'
         assert msg.parent == '4f799fdd6f5a'

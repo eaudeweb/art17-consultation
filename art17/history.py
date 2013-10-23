@@ -5,7 +5,7 @@ import flask
 from art17 import models
 from art17 import species
 from art17 import habitat
-from art17 import messages
+from art17 import replies
 from art17.common import json_encode_more
 from art17.auth import admin_permission
 
@@ -13,9 +13,9 @@ history = flask.Blueprint('history', __name__)
 
 
 TABLE_LABEL = {
-    'data_species_comments': u"concluzie specie",
-    'data_habitattype_comments': u"concluzie habitat",
-    'comment_messages': u"mesaj",
+    'data_species_comments': u"comentariu specie",
+    'data_habitattype_comments': u"comentariu habitat",
+    'comment_replies': u"replică",
 }
 
 
@@ -41,10 +41,10 @@ def register_handlers(state):
     connect(habitat.comment_deleted, app,
             table='data_habitattype_comments', action='delete')
 
-    connect(messages.message_added, app,
-            table='comment_messages', action='add')
-    connect(messages.message_removed, app,
-            table='comment_messages', action='remove')
+    connect(replies.reply_added, app,
+            table='comment_replies', action='add')
+    connect(replies.reply_removed, app,
+            table='comment_replies', action='remove')
 
 
 def connect(signal, sender, **more_kwargs):

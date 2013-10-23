@@ -610,7 +610,7 @@ class CommentReplyRead(Base):
     __tablename__ = u'comment_replies_read'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
-    message_id = Column('reply_id', String, ForeignKey(CommentReply.id))
+    reply_id = Column('reply_id', String, ForeignKey(CommentReply.id))
     user_id = Column(String)
 
 

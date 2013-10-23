@@ -3,29 +3,29 @@
 
 
 {% block content %}
-  <h2>Comentarii</h2>
+  <h2>Replici</h2>
 
-  {% for msg in messages %}
-    <div class="panel panel-default message
-                {%- if msg.id in read_msgs %} message-read{% endif %}"
+  {% for msg in replies %}
+    <div class="panel panel-default reply
+                {%- if msg.id in read_msgs %} reply-read{% endif %}"
          data-id="{{ msg.id }}">
       <div class="panel-heading">
         {{ msg.user_id }} ({{ msg.date|local_date('long') }})
 
-        {% if can_delete_message %}
-          {% set url = url_for('.remove', message_id=msg.id,
+        {% if can_delete_reply %}
+          {% set url = url_for('.remove', reply_id=msg.id,
                                           next=request.url) %}
-          <form class="message-remove" method="post" action="{{ url }}">
+          <form class="reply-remove" method="post" action="{{ url }}">
             <button class="btn btn-xs btn-danger">șterge</button>
           </form>
         {% endif %}
 
         {% if can_set_read_status %}
-          <span class="readbox">
-            <button class="readbox-new">necitit</button>
-            <button class="readbox-read">citit</button>
-            <button class="readbox-mark">citit</button>
-            <button class="readbox-unmark">necitit</button>
+          <span class="readbox pull-right">
+            <button class="btn btn-xs btn-warning readbox-new">necitit</button>
+            <button class="btn btn-xs btn-default readbox-read">citit</button>
+            <button class="btn btn-xs btn-info readbox-mark">citit</button>
+            <button class="btn btn-xs btn-info readbox-unmark">necitit</button>
           </span>
         {% endif %}
       </div>
@@ -42,12 +42,12 @@
     </div>
   {% endfor %}
 
-  {% if can_post_new_message %}
+  {% if can_post_new_reply %}
   <div class="panel panel-default">
     <div class="panel-heading">Adaugǎ comentariu</div>
     <div class="panel-body">
       <form method="post" action="{{ url_for('.new', comment_id=comment_id) }}"
-            class="form" id="message-form">
+            class="form" id="reply-form">
         <div class="form-group">
           <textarea name="text" class="form-control" rows=4></textarea>
         </div>
@@ -66,13 +66,13 @@
 {{- super() }}
 
 <script>window.App.set_read_status_url = "{{ url_for('.set_read_status') }}";</script>
-{{ script('messages.js') }}
+{{ script('replies.js') }}
 
 <script>
 (function() {
   "use strict";
 
-  $('.message-remove').submit(function(evt) {
+  $('.reply-remove').submit(function(evt) {
     if(! confirm("Ștergi comentariul?")) {
       evt.preventDefault();
     }
