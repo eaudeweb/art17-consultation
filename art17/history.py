@@ -13,8 +13,8 @@ history = flask.Blueprint('history', __name__)
 
 
 TABLE_LABEL = {
-    'data_species_conclusions': u"concluzie specie",
-    'data_habitattype_conclusions': u"concluzie habitat",
+    'data_species_comments': u"concluzie specie",
+    'data_habitattype_comments': u"concluzie habitat",
     'comment_messages': u"mesaj",
 }
 
@@ -24,22 +24,22 @@ def register_handlers(state):
     app = state.app
 
     connect(species.comment_added, app,
-            table='data_species_conclusions', action='add')
+            table='data_species_comments', action='add')
     connect(species.comment_edited, app,
-            table='data_species_conclusions', action='edit')
+            table='data_species_comments', action='edit')
     connect(species.comment_status_changed, app,
-            table='data_species_conclusions', action='status')
+            table='data_species_comments', action='status')
     connect(species.comment_deleted, app,
-            table='data_species_conclusions', action='delete')
+            table='data_species_comments', action='delete')
 
     connect(habitat.comment_added, app,
-            table='data_habitattype_conclusions', action='add')
+            table='data_habitattype_comments', action='add')
     connect(habitat.comment_edited, app,
-            table='data_habitattype_conclusions', action='edit')
+            table='data_habitattype_comments', action='edit')
     connect(habitat.comment_status_changed, app,
-            table='data_habitattype_conclusions', action='status')
+            table='data_habitattype_comments', action='status')
     connect(habitat.comment_deleted, app,
-            table='data_habitattype_conclusions', action='delete')
+            table='data_habitattype_comments', action='delete')
 
     connect(messages.message_added, app,
             table='comment_messages', action='add')
