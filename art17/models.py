@@ -206,7 +206,7 @@ class DataHabitattypeRegion(Base):
 
 
 class DataHabitattypeComment(Base):
-    __tablename__ = u'data_habitattype_conclusions'
+    __tablename__ = u'data_habitattype_comments'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
     habitat_id = Column('hr_habitat_id', ForeignKey(DataHabitat.id), index=True)
@@ -274,7 +274,7 @@ class DataHabitattypeComment(Base):
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    comment_date = Column('conclusion_date', DateTime)
+    comment_date = Column(DateTime)
     user_id = Column(String)
     status = Column(Text, default='new')
     deleted = Column(Boolean, default=False)
@@ -459,7 +459,7 @@ class DataPressuresThreats(Base):
 
 
 class DataSpeciesComment(Base):
-    __tablename__ = u'data_species_conclusions'
+    __tablename__ = u'data_species_comments'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
     species_id = Column('sr_species_id', ForeignKey(DataSpecies.id), index=True)
@@ -548,7 +548,7 @@ class DataSpeciesComment(Base):
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    comment_date = Column('conclusion_date', DateTime)
+    comment_date = Column(DateTime)
     user_id = Column(String)
     status = Column(Text, default='new')
     deleted = Column(Boolean, default=False)
