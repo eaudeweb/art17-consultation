@@ -171,7 +171,7 @@ class IndexView(flask.views.View):
                                         region=self.region.code)
 
             CommentReply = models.CommentReply
-            self.message_counts = dict(models.db.session.query(
+            self.reply_counts = dict(models.db.session.query(
                                     CommentReply.parent,
                                     func.count(CommentReply.id)
                                 ).group_by(CommentReply.parent))
@@ -203,7 +203,7 @@ class IndexView(flask.views.View):
                 'records': [self.parse_record(r) for r in self.records],
                 'comments': [self.parse_record(r, is_comment=True)
                              for r in self.comments],
-                'message_counts': self.message_counts,
+                'reply_counts': self.reply_counts,
                 'map_url': self.map_url_template.format(**{
                         self.subject_name: self.subject.code,
                         'regions': urllib.quote(flask.json.dumps(map_colors)),

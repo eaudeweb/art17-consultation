@@ -24,8 +24,8 @@ def _get_comment_or_404(comment_id):
         flask.abort(404)
 
 
-def _dump_message_data(message):
-    return {k: getattr(message, k)
+def _dump_reply_data(reply):
+    return {k: getattr(reply, k)
             for k in ['text', 'user_id', 'parent', 'date']}
 
 
@@ -35,15 +35,15 @@ def new(comment_id):
     comment = _get_comment_or_404(comment_id)
 
     if flask.request.method == 'POST':
-        message = models.CommentReply(
+        reply = models.CommentReply(
             text=flask.request.form['text'],
             user_id=flask.g.identity.id,
             date=datetime.utcnow(),
             parent=comment.id)
-        models.db.session.add(message)
+        models.db.session.add(reply)
         app = flask.current_app._get_current_object()
-        message_added.send(app, ob=message,
-                           new_data=_dump_message_data(message))
+        message_added.send(app, ob=reply,
+                           new_data=_dump_reply_data(reply))
         models.db.session.commit()
         url = flask.url_for('.index', comment_id=comment_id)
         return flask.redirect(url)
@@ -56,11 +56,11 @@ def new(comment_id):
 def remove():
     reply_id = flask.request.args['reply_id']
     next_url = flask.request.args['next']
-    message = models.CommentReply.query.get_or_404(reply_id)
-    user_id = message.user_id
-    models.db.session.delete(message)
+    reply = models.CommentReply.query.get_or_404(reply_id)
+    user_id = reply.user_id
+    models.db.session.delete(reply)
     app = flask.current_app._get_current_object()
-    message_removed.send(app, ob=message, old_data=_dump_message_data(message))
+    reply_removed.send(app, ob=reply, old_data=_dump_reply_data(reply))
     models.db.session.commit()
     flask.flash(u"Mesajul lui %s a fost șters." % user_id, 'success')
     return flask.redirect(next_url)
@@ -71,19 +71,18 @@ def remove():
 def set_read_status():
     reply_id = flask.request.form['reply_id']
     read = (flask.request.form.get('read') == 'on')
-    message = models.CommentReply.query.get_or_404(reply_id)
+    reply = models.CommentReply.query.get_or_404(reply_id)
 
     user_id = flask.g.identity.id
     if user_id is None:
         flask.abort(403)
 
     existing = (models.CommentReplyRead
-                    .query.filter_by(reply_id=message.id, user_id=user_id))
+                    .query.filter_by(reply_id=reply.id, user_id=user_id))
 
     if read:
         if not existing.count():
-            row = models.CommentReplyRead(reply_id=message.id,
-                                               user_id=user_id)
+            row = models.CommentReplyRead(reply_id=reply.id, user_id=user_id)
             models.db.session.add(row)
             models.db.session.commit()
 
@@ -96,7 +95,7 @@ def set_read_status():
 
 @messages.route('/mesaje/<comment_id>')
 def index(comment_id):
-    messages = (models.CommentReply
+    replies = (models.CommentReply
                     .query.filter_by(parent=comment_id).all())
     user_id = flask.g.identity.id
 
@@ -110,9 +109,9 @@ def index(comment_id):
 
     return flask.render_template('messages/index.html', **{
         'comment_id': comment_id,
-        'messages': messages,
+        'replies': replies,
         'read_msgs': read_msgs,
-        'can_post_new_message': Permission(need.authenticated).can(),
+        'can_post_new_reply': Permission(need.authenticated).can(),
         'can_set_read_status': Permission(need.authenticated).can(),
-        'can_delete_message': Permission(need.admin).can()
+        'can_delete_reply': Permission(need.admin).can()
     })

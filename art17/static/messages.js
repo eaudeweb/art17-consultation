@@ -1,7 +1,7 @@
 (function() {
 "use strict";
 
-$('.records').on('click', '.records-messagesbtn', function(evt) {
+$('.records').on('click', '.records-repliesbtn', function(evt) {
   evt.preventDefault();
   var link = $(this);
   var url = link.attr('href');
@@ -15,12 +15,12 @@ $('.records').on('click', '.records-messagesbtn', function(evt) {
 $('body').on('click', '.readbox-mark', function(evt) {
   evt.preventDefault();
   var button = $(this);
-  var message = button.parents('.message');
-  var reply_id = message.data('id');
+  var reply = button.parents('.reply');
+  var reply_id = reply.data('id');
   var post = $.post(App.set_read_status_url,
                     {reply_id: reply_id, read: 'on'});
   post.done(function() {
-    message.addClass('message-read');
+    reply.addClass('reply-read');
   });
 });
 
@@ -28,12 +28,12 @@ $('body').on('click', '.readbox-mark', function(evt) {
 $('body').on('click', '.readbox-unmark', function(evt) {
   evt.preventDefault();
   var button = $(this);
-  var message = button.parents('.message');
-  var reply_id = message.data('id');
+  var reply = button.parents('.reply');
+  var reply_id = reply.data('id');
   var post = $.post(App.set_read_status_url,
                     {reply_id: reply_id});
   post.done(function() {
-    message.removeClass('message-read');
+    reply.removeClass('reply-read');
   });
 });
 

@@ -87,8 +87,8 @@
         <td>{{ row.comment_date|local_date }}</td>
         <td>
           {%- set url = url_for('messages.index', comment_id=row.id) %}
-          {%- set count = message_counts[row.id] or 0 %}
-          <a class="records-messagesbtn btn btn-xs btn-default"
+          {%- set count = reply_counts[row.id] or 0 %}
+          <a class="records-repliesbtn btn btn-xs btn-default"
              href="{{ url }}">{{ fonticon('comment') }} {{ count }}</a>
         </td>
       </tr>
