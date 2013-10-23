@@ -35,7 +35,10 @@ class SpeciesIndexView(IndexView):
 
     def parse_request(self):
         super(SpeciesIndexView, self).parse_request()
-        self.group_code = self.subject.lu.group_code
+        if self.subject:
+            self.group_code = self.subject.lu.group_code
+        else:
+            self.group_code = None
 
     def get_comment_next_url(self):
         return flask.url_for('.index', species=self.subject_code,
