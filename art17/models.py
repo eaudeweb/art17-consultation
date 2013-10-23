@@ -205,7 +205,7 @@ class DataHabitattypeRegion(Base):
                       innerjoin=True, uselist=False)
 
 
-class DataHabitattypeConclusion(Base):
+class DataHabitattypeComment(Base):
     __tablename__ = u'data_habitattype_conclusions'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
@@ -274,13 +274,13 @@ class DataHabitattypeConclusion(Base):
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    conclusion_date = Column(DateTime)
+    comment_date = Column('conclusion_date', DateTime)
     user_id = Column(String)
     status = Column(Text, default='new')
     deleted = Column(Boolean, default=False)
 
     habitat = relationship(u'DataHabitat',
-        backref=db.backref('conclusions', lazy='dynamic'))
+        backref=db.backref('comments', lazy='dynamic'))
 
 
 class DataSpecies(Base):
@@ -458,7 +458,7 @@ class DataPressuresThreats(Base):
                       innerjoin=True, uselist=False)
 
 
-class DataSpeciesConclusion(Base):
+class DataSpeciesComment(Base):
     __tablename__ = u'data_species_conclusions'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
@@ -548,16 +548,16 @@ class DataSpeciesConclusion(Base):
     validated = Column(Numeric)
     validation_date = Column(DateTime)
 
-    conclusion_date = Column(DateTime)
+    comment_date = Column('conclusion_date', DateTime)
     user_id = Column(String)
     status = Column(Text, default='new')
     deleted = Column(Boolean, default=False)
 
     species = relationship(u'DataSpecies',
-        backref=db.backref('conclusions', lazy='dynamic'))
+        backref=db.backref('comments', lazy='dynamic'))
 
 
-class ConclusionMessage(Base):
+class CommentReply(Base):
     __tablename__ = u'comment_messages'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
@@ -567,11 +567,11 @@ class ConclusionMessage(Base):
     text = Column(Text)
 
 
-class ConclusionMessageRead(Base):
+class CommentReplyRead(Base):
     __tablename__ = u'comment_messages_read'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
-    message_id = Column(String, ForeignKey(ConclusionMessage.id))
+    message_id = Column(String, ForeignKey(CommentReply.id))
     user_id = Column(String)
 
 

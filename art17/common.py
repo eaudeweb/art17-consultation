@@ -48,26 +48,26 @@ CONCLUSION_COLOR = {
 }
 
 
-def perm_create_conclusion(record):
+def perm_create_comment(record):
     return Permission(need.authenticated)
 
 
-def perm_edit_conclusion(conclusion):
-    if conclusion.user_id:
-        return Permission(need.admin, need.user_id(conclusion.user_id))
+def perm_edit_comment(comment):
+    if comment.user_id:
+        return Permission(need.admin, need.user_id(comment.user_id))
     else:
         return Permission(need.admin)
 
 
-def perm_update_conclusion_status(conclusion):
+def perm_update_comment_status(comment):
     return Permission(need.admin)
 
 
-def perm_delete_conclusion(conclusion):
-    if conclusion.status == APPROVED_STATUS:
+def perm_delete_comment(comment):
+    if comment.status == APPROVED_STATUS:
         return Denial(need.everybody)
-    elif conclusion.user_id:
-        return Permission(need.admin, need.user_id(conclusion.user_id))
+    elif comment.user_id:
+        return Permission(need.admin, need.user_id(comment.user_id))
     else:
         return Permission(need.admin)
 
@@ -78,10 +78,10 @@ common = flask.Blueprint('common', __name__)
 @common.app_context_processor
 def inject_permissions():
     return {
-        'perm_create_conclusion': perm_create_conclusion,
-        'perm_edit_conclusion': perm_edit_conclusion,
-        'perm_update_conclusion_status': perm_update_conclusion_status,
-        'perm_delete_conclusion': perm_delete_conclusion,
+        'perm_create_comment': perm_create_comment,
+        'perm_edit_comment': perm_edit_comment,
+        'perm_update_comment_status': perm_update_comment_status,
+        'perm_delete_comment': perm_delete_comment,
     }
 
 
@@ -162,19 +162,19 @@ class IndexView(flask.views.View):
 
         if self.subject:
             self.records = self.subject.regions
-            self.conclusions = (self.subject.conclusions
+            self.comments = (self.subject.comments
                                             .filter_by(deleted=False))
 
             if self.region:
                 self.records = self.records.filter_by(region=self.region.code)
-                self.conclusions = self.conclusions.filter_by(
+                self.comments = self.comments.filter_by(
                                         region=self.region.code)
 
-            ConclusionMessage = models.ConclusionMessage
+            CommentReply = models.CommentReply
             self.message_counts = dict(models.db.session.query(
-                                    ConclusionMessage.parent,
-                                    func.count(ConclusionMessage.id)
-                                ).group_by(ConclusionMessage.parent))
+                                    CommentReply.parent,
+                                    func.count(CommentReply.id)
+                                ).group_by(CommentReply.parent))
 
         self.subject_list = (self.subject_cls.query
                             .join(self.record_cls)
@@ -188,7 +188,7 @@ class IndexView(flask.views.View):
             'subject_list': self.get_subject_list(),
             'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,
-            'conclusion_next': self.get_conclusion_next_url(),
+            'comment_next': self.get_comment_next_url(),
             'blueprint': self.blueprint,
         })
 
@@ -201,8 +201,8 @@ class IndexView(flask.views.View):
                 'code': self.subject.code,
                 'name': self.subject.lu.display_name,
                 'records': [self.parse_record(r) for r in self.records],
-                'conclusions': [self.parse_record(r, is_conclusion=True)
-                             for r in self.conclusions],
+                'comments': [self.parse_record(r, is_comment=True)
+                             for r in self.comments],
                 'message_counts': self.message_counts,
                 'map_url': self.map_url_template.format(**{
                         self.subject_name: self.subject.code,
@@ -217,26 +217,26 @@ class IndexView(flask.views.View):
         return flask.render_template(self.template, **self.ctx)
 
 
-class ConclusionView(flask.views.View):
+class CommentView(flask.views.View):
 
     methods = ['GET', 'POST']
 
-    def dispatch_request(self, record_id=None, conclusion_id=None):
+    def dispatch_request(self, record_id=None, comment_id=None):
         if record_id:
-            new_conclusion = True
+            new_comment = True
             self.record = self.record_cls.query.get_or_404(record_id)
-            perm_create_conclusion(self.record).test()
-            self.conclusion = self.conclusion_cls(user_id=flask.g.identity.id,
-                                            conclusion_date=datetime.utcnow())
+            perm_create_comment(self.record).test()
+            self.comment = self.comment_cls(user_id=flask.g.identity.id,
+                                            comment_date=datetime.utcnow())
             form = self.form_cls(flask.request.form)
 
-        elif conclusion_id:
-            new_conclusion = False
-            self.conclusion = (self.conclusion_cls
-                                    .query.get_or_404(conclusion_id))
-            perm_edit_conclusion(self.conclusion).test()
-            self.record = self.record_for_conclusion(self.conclusion)
-            old_data = self.parse_conclusionform(self.conclusion)
+        elif comment_id:
+            new_comment = False
+            self.comment = (self.comment_cls
+                                    .query.get_or_404(comment_id))
+            perm_edit_comment(self.comment).test()
+            self.record = self.record_for_comment(self.comment)
+            old_data = self.parse_commentform(self.comment)
             if flask.request.method == 'POST':
                 form_data = flask.request.form
             else:
@@ -245,23 +245,23 @@ class ConclusionView(flask.views.View):
 
         else:
             raise RuntimeError("Need at least one of "
-                               "record_id and conclusion_id")
+                               "record_id and comment_id")
 
         self.setup_template_context()
         self.template_ctx['next_url'] = flask.request.args.get('next')
 
         if flask.request.method == 'POST' and form.validate():
-            self.link_conclusion_to_record()
+            self.link_comment_to_record()
 
-            self.flatten_conclusionform(form.data, self.conclusion)
-            models.db.session.add(self.conclusion)
+            self.flatten_commentform(form.data, self.comment)
+            models.db.session.add(self.comment)
 
             app = flask.current_app._get_current_object()
-            if new_conclusion:
-                self.add_signal.send(app, ob=self.conclusion,
+            if new_comment:
+                self.add_signal.send(app, ob=self.comment,
                                           new_data=form.data)
             else:
-                self.edit_signal.send(app, ob=self.conclusion,
+                self.edit_signal.send(app, ob=self.comment,
                                       old_data=old_data, new_data=form.data)
 
             models.db.session.commit()
@@ -273,37 +273,37 @@ class ConclusionView(flask.views.View):
         return flask.render_template(self.template, **self.template_ctx)
 
 
-class ConclusionStateView(flask.views.View):
+class CommentStateView(flask.views.View):
 
     methods = ['POST']
 
-    def dispatch_request(self, conclusion_id):
-        conclusion = self.conclusion_cls.query.get_or_404(conclusion_id)
+    def dispatch_request(self, comment_id):
+        comment = self.comment_cls.query.get_or_404(comment_id)
         next_url = flask.request.form['next']
         new_status = flask.request.form['status']
         if new_status not in STATUS_VALUES:
             flask.abort(403)
-        old_status = conclusion.status
-        conclusion.status = new_status
+        old_status = comment.status
+        comment.status = new_status
         app = flask.current_app._get_current_object()
-        self.signal.send(app, ob=conclusion,
+        self.signal.send(app, ob=comment,
                          old_data=old_status, new_data=new_status)
         models.db.session.commit()
         return flask.redirect(next_url)
 
 
-class ConclusionDeleteView(flask.views.View):
+class CommentDeleteView(flask.views.View):
 
     methods = ['POST']
 
-    def dispatch_request(self, conclusion_id):
-        conclusion = self.conclusion_cls.query.get_or_404(conclusion_id)
-        perm_delete_conclusion(conclusion).test()
+    def dispatch_request(self, comment_id):
+        comment = self.comment_cls.query.get_or_404(comment_id)
+        perm_delete_comment(comment).test()
         next_url = flask.request.form['next']
-        conclusion.deleted = True
+        comment.deleted = True
         app = flask.current_app._get_current_object()
-        old_data = self.parse_conclusionform(conclusion)
-        old_data['_status'] = conclusion.status
-        self.signal.send(app, ob=conclusion, old_data=old_data)
+        old_data = self.parse_commentform(comment)
+        old_data['_status'] = comment.status
+        self.signal.send(app, ob=comment, old_data=old_data)
         models.db.session.commit()
         return flask.redirect(next_url)

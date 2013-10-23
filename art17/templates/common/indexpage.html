@@ -34,10 +34,10 @@
         {{ record_cell(row) }}
 
         <td colspan=4>  {#- conclusion (author, etc) #}
-          {%- if perm_create_conclusion(row).can() %}
-            {%- set url = url_for(blueprint + '.conclusion',
+          {%- if perm_create_comment(row).can() %}
+            {%- set url = url_for(blueprint + '.comment',
                                   record_id=row.id,
-                                  next=conclusion_next) %}
+                                  next=comment_next) %}
             <a class="records-conclusionbtn"
                href="{{ url }}">adaugǎ concluzie</a>
           {%- endif %}
@@ -47,16 +47,16 @@
 
     {%- block conclusions_header %}{% endblock %}
 
-     {% for row in conclusions %}
+     {% for row in comments %}
       <tr>
         {#- detail #}
         <td>
-          {%- if perm_update_conclusion_status(row.model).can() %}
-            {%- set url = url_for(blueprint + '.conclusion_status',
-                                  conclusion_id=row.id) %}
+          {%- if perm_update_comment_status(row.model).can() %}
+            {%- set url = url_for(blueprint + '.comment_status',
+                                  comment_id=row.id) %}
             <form method="post" action="{{ url }}"
                   class="records-conclusionstatus">
-              <input type="hidden" name="next" value="{{ conclusion_next }}">
+              <input type="hidden" name="next" value="{{ comment_next }}">
               <input type="hidden" name="status" value="{{ row.status }}">
             </form>
           {%- endif %}
@@ -66,27 +66,27 @@
 
         <td>{{ row.user_id }}</td>  {#- conclusion author, etc #}
         <td>
-          {%- if perm_edit_conclusion(row.model).can() %}
-            {%- set url = url_for(blueprint + '.conclusion_edit',
-                                  conclusion_id=row.id,
-                                  next=conclusion_next) %}
+          {%- if perm_edit_comment(row.model).can() %}
+            {%- set url = url_for(blueprint + '.comment_edit',
+                                  comment_id=row.id,
+                                  next=comment_next) %}
             <a href="{{ url }}" class="records-editconclusionbtn">editează</a>
           {%- endif %}
 
-          {%- if perm_delete_conclusion(row.model).can() %}
-            {%- set url = url_for(blueprint + '.conclusion_delete',
-                                  conclusion_id=row.id) %}
+          {%- if perm_delete_comment(row.model).can() %}
+            {%- set url = url_for(blueprint + '.comment_delete',
+                                  comment_id=row.id) %}
             <form method="post" action="{{ url }}"
                   class="records-conclusiondelete">
-              <input type="hidden" name="next" value="{{ conclusion_next }}">
+              <input type="hidden" name="next" value="{{ comment_next }}">
               <button class="btn btn-xs btn-danger"
                       type="submit">șterge</button>
             </form>
           {%- endif %}
         </td>
-        <td>{{ row.conclusion_date|local_date }}</td>
+        <td>{{ row.comment_date|local_date }}</td>
         <td>
-          {%- set url = url_for('messages.index', conclusion_id=row.id) %}
+          {%- set url = url_for('messages.index', comment_id=row.id) %}
           {%- set count = message_counts[row.id] or 0 %}
           <a class="records-messagesbtn btn btn-xs btn-default"
              href="{{ url }}">{{ fonticon('comment') }} {{ count }}</a>

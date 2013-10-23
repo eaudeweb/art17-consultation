@@ -13,9 +13,9 @@ history = flask.Blueprint('history', __name__)
 
 
 TABLE_LABEL = {
-    'data_species_conclusions': u"concluzie specie",
-    'data_habitattype_conclusions': u"concluzie habitat",
-    'conclusion_messages': u"mesaj",
+    'data_species_comments': u"concluzie specie",
+    'data_habitattype_comments': u"concluzie habitat",
+    'comment_messages': u"mesaj",
 }
 
 
@@ -23,28 +23,28 @@ TABLE_LABEL = {
 def register_handlers(state):
     app = state.app
 
-    connect(species.conclusion_added, app,
-            table='data_species_conclusions', action='add')
-    connect(species.conclusion_edited, app,
-            table='data_species_conclusions', action='edit')
-    connect(species.conclusion_status_changed, app,
-            table='data_species_conclusions', action='status')
-    connect(species.conclusion_deleted, app,
-            table='data_species_conclusions', action='delete')
+    connect(species.comment_added, app,
+            table='data_species_comments', action='add')
+    connect(species.comment_edited, app,
+            table='data_species_comments', action='edit')
+    connect(species.comment_status_changed, app,
+            table='data_species_comments', action='status')
+    connect(species.comment_deleted, app,
+            table='data_species_comments', action='delete')
 
-    connect(habitat.conclusion_added, app,
-            table='data_habitattype_conclusions', action='add')
-    connect(habitat.conclusion_edited, app,
-            table='data_habitattype_conclusions', action='edit')
-    connect(habitat.conclusion_status_changed, app,
-            table='data_habitattype_conclusions', action='status')
-    connect(habitat.conclusion_deleted, app,
-            table='data_habitattype_conclusions', action='delete')
+    connect(habitat.comment_added, app,
+            table='data_habitattype_comments', action='add')
+    connect(habitat.comment_edited, app,
+            table='data_habitattype_comments', action='edit')
+    connect(habitat.comment_status_changed, app,
+            table='data_habitattype_comments', action='status')
+    connect(habitat.comment_deleted, app,
+            table='data_habitattype_comments', action='delete')
 
     connect(messages.message_added, app,
-            table='conclusion_messages', action='add')
+            table='comment_messages', action='add')
     connect(messages.message_removed, app,
-            table='conclusion_messages', action='remove')
+            table='comment_messages', action='remove')
 
 
 def connect(signal, sender, **more_kwargs):

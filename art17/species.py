@@ -1,17 +1,17 @@
 import flask
 from blinker import Signal
 from art17 import models
-from art17.common import (IndexView, ConclusionView, ConclusionStateView,
-                          ConclusionDeleteView)
+from art17.common import (IndexView, CommentView, CommentStateView,
+                          CommentDeleteView)
 from art17 import forms
 from art17 import schemas
 
 species = flask.Blueprint('species', __name__)
 
-conclusion_added = Signal()
-conclusion_edited = Signal()
-conclusion_status_changed = Signal()
-conclusion_deleted = Signal()
+comment_added = Signal()
+comment_edited = Signal()
+comment_status_changed = Signal()
+comment_deleted = Signal()
 
 
 @species.route('/specii/regiuni/<int:species_code>')
@@ -37,7 +37,7 @@ class SpeciesIndexView(IndexView):
         super(SpeciesIndexView, self).parse_request()
         self.group_code = self.subject.lu.group_code
 
-    def get_conclusion_next_url(self):
+    def get_comment_next_url(self):
         return flask.url_for('.index', species=self.subject_code,
                                        region=self.region_code)
 
@@ -81,21 +81,21 @@ def detail(record_id):
     })
 
 
-class SpeciesConclusionView(ConclusionView):
+class SpeciesCommentView(CommentView):
 
-    form_cls = forms.SpeciesConclusion
+    form_cls = forms.SpeciesComment
     record_cls = models.DataSpeciesRegion
-    conclusion_cls = models.DataSpeciesConclusion
-    parse_conclusionform = staticmethod(schemas.parse_species_conclusionform)
-    flatten_conclusionform = staticmethod(schemas.flatten_species_conclusionform)
-    template = 'species/conclusion.html'
-    template_saved = 'species/conclusion-saved.html'
-    add_signal = conclusion_added
-    edit_signal = conclusion_edited
+    comment_cls = models.DataSpeciesComment
+    parse_commentform = staticmethod(schemas.parse_species_commentform)
+    flatten_commentform = staticmethod(schemas.flatten_species_commentform)
+    template = 'species/comment.html'
+    template_saved = 'species/comment-saved.html'
+    add_signal = comment_added
+    edit_signal = comment_edited
 
-    def link_conclusion_to_record(self):
-        self.conclusion.species_id = self.record.species_id
-        self.conclusion.region = self.record.region
+    def link_comment_to_record(self):
+        self.comment.species_id = self.record.species_id
+        self.comment.region = self.record.region
 
     def setup_template_context(self):
         self.template_ctx = {
@@ -103,40 +103,40 @@ class SpeciesConclusionView(ConclusionView):
             'record': schemas.parse_species(self.record),
         }
 
-    def record_for_conclusion(self, conclusion):
+    def record_for_comment(self, comment):
         records = (models.DataSpeciesRegion.query
-                            .filter_by(species_id=conclusion.species_id)
-                            .filter_by(region=conclusion.region)
+                            .filter_by(species_id=comment.species_id)
+                            .filter_by(region=comment.region)
                             .all())
         assert len(records) == 1, ("Expected exactly one record "
-                                   "for the conclusion")
+                                   "for the comment")
         return records[0]
 
 
 species.add_url_rule('/specii/detalii/<int:record_id>/concluzii',
-                     view_func=SpeciesConclusionView.as_view('conclusion'))
+                     view_func=SpeciesCommentView.as_view('comment'))
 
 
-species.add_url_rule('/specii/concluzii/<conclusion_id>',
-                 view_func=SpeciesConclusionView.as_view('conclusion_edit'))
+species.add_url_rule('/specii/concluzii/<comment_id>',
+                 view_func=SpeciesCommentView.as_view('comment_edit'))
 
 
-class SpeciesConclusionStateView(ConclusionStateView):
+class SpeciesCommentStateView(CommentStateView):
 
-    conclusion_cls = models.DataSpeciesConclusion
-    signal = conclusion_status_changed
-
-
-species.add_url_rule('/specii/concluzii/<conclusion_id>/stare',
-            view_func=SpeciesConclusionStateView.as_view('conclusion_status'))
+    comment_cls = models.DataSpeciesComment
+    signal = comment_status_changed
 
 
-class SpeciesConclusionDeleteView(ConclusionDeleteView):
-
-    conclusion_cls = models.DataSpeciesConclusion
-    parse_conclusionform = staticmethod(schemas.parse_species_conclusionform)
-    signal = conclusion_deleted
+species.add_url_rule('/specii/concluzii/<comment_id>/stare',
+            view_func=SpeciesCommentStateView.as_view('comment_status'))
 
 
-species.add_url_rule('/specii/concluzii/<conclusion_id>/sterge',
-            view_func=SpeciesConclusionDeleteView.as_view('conclusion_delete'))
+class SpeciesCommentDeleteView(CommentDeleteView):
+
+    comment_cls = models.DataSpeciesComment
+    parse_commentform = staticmethod(schemas.parse_species_commentform)
+    signal = comment_deleted
+
+
+species.add_url_rule('/specii/concluzii/<comment_id>/sterge',
+            view_func=SpeciesCommentDeleteView.as_view('comment_delete'))

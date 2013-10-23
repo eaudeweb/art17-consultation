@@ -2,7 +2,7 @@
 
 import pytest
 
-CONCLUSION_SAVED_TXT = "Concluzia a fost înregistrată"
+COMMENT_SAVED_TXT = "Concluzia a fost înregistrată"
 MISSING_FIELD_TXT = "Suprafața este obligatorie"
 
 HABITAT_STRUCT_DATA = {
@@ -116,7 +116,7 @@ HABITAT_MODEL_DATA = {
 }
 
 
-def _create_habitat_record(habitat_app, conclusion=False):
+def _create_habitat_record(habitat_app, comment=False):
     from art17 import models
     with habitat_app.app_context():
         habitat = models.DataHabitat(id=1, code='1234')
@@ -126,26 +126,26 @@ def _create_habitat_record(habitat_app, conclusion=False):
         record.lu = models.LuBiogeoreg(objectid=1)
         models.db.session.add(record)
 
-        if conclusion:
-            conclusion = models.DataHabitattypeConclusion(
+        if comment:
+            comment = models.DataHabitattypeComment(
                             id='4f799fdd6f5a',
                             habitat_id=1,
                             region='ALP',
                             range_surface_area=1337)
-            models.db.session.add(conclusion)
+            models.db.session.add(comment)
 
         models.db.session.commit()
 
 
-def test_load_conclusions_view(habitat_app):
+def test_load_comments_view(habitat_app):
     _create_habitat_record(habitat_app)
     client = habitat_app.test_client()
     resp = client.get('/habitate/detalii/1/concluzii')
     assert resp.status_code == 200
 
 
-def test_save_conclusion_record(habitat_app):
-    from art17.models import DataHabitattypeConclusion
+def test_save_comment_record(habitat_app):
+    from art17.models import DataHabitattypeComment
     _create_habitat_record(habitat_app)
     client = habitat_app.test_client()
     resp = client.post('/habitate/detalii/1/concluzii',
@@ -155,18 +155,18 @@ def test_save_conclusion_record(habitat_app):
                              'coverage.date': '2001',
                              'coverage.method': '1'})
     assert resp.status_code == 200
-    assert CONCLUSION_SAVED_TXT in resp.data
+    assert COMMENT_SAVED_TXT in resp.data
     with habitat_app.app_context():
-        assert DataHabitattypeConclusion.query.count() == 1
-        conclusion = DataHabitattypeConclusion.query.first()
-        assert conclusion.habitat.code == '1234'
-        assert conclusion.region == 'ALP'
-        assert conclusion.range_surface_area == 50
+        assert DataHabitattypeComment.query.count() == 1
+        comment = DataHabitattypeComment.query.first()
+        assert comment.habitat.code == '1234'
+        assert comment.region == 'ALP'
+        assert comment.range_surface_area == 50
 
 
-def test_edit_conclusion_form(habitat_app):
-    from art17.models import DataHabitattypeConclusion, db
-    _create_habitat_record(habitat_app, conclusion=True)
+def test_edit_comment_form(habitat_app):
+    from art17.models import DataHabitattypeComment, db
+    _create_habitat_record(habitat_app, comment=True)
     client = habitat_app.test_client()
     resp1 = client.get('/habitate/concluzii/f3b4c23bcb88')
     assert resp1.status_code == 404
@@ -175,9 +175,9 @@ def test_edit_conclusion_form(habitat_app):
     assert '1337' in resp2.data
 
 
-def test_edit_conclusion_submit(habitat_app):
-    from art17.models import DataHabitattypeConclusion, db
-    _create_habitat_record(habitat_app, conclusion=True)
+def test_edit_comment_submit(habitat_app):
+    from art17.models import DataHabitattypeComment, db
+    _create_habitat_record(habitat_app, comment=True)
     client = habitat_app.test_client()
     resp = client.post('/habitate/concluzii/4f799fdd6f5a',
                        data={'range.surface_area': '50',
@@ -186,16 +186,16 @@ def test_edit_conclusion_submit(habitat_app):
                              'coverage.date': '2001',
                              'coverage.method': '1'})
     assert resp.status_code == 200
-    assert CONCLUSION_SAVED_TXT in resp.data
+    assert COMMENT_SAVED_TXT in resp.data
     with habitat_app.app_context():
-        conclusion = DataHabitattypeConclusion.query.get('4f799fdd6f5a')
-        assert conclusion.range_surface_area == 50
+        comment = DataHabitattypeComment.query.get('4f799fdd6f5a')
+        assert comment.range_surface_area == 50
 
 
 def test_one_field_required():
     from werkzeug.datastructures import MultiDict
     from art17 import forms
-    form = forms.HabitatConclusion(MultiDict())
+    form = forms.HabitatComment(MultiDict())
     assert not form.validate()
 
 
@@ -203,39 +203,39 @@ def test_save_all_form_fields():
     from art17 import forms
     from art17 import models
     from art17.common import flatten_dict
-    from art17.schemas import flatten_habitat_conclusionform
+    from art17.schemas import flatten_habitat_commentform
     from werkzeug.datastructures import MultiDict
 
     form_data = MultiDict(flatten_dict(HABITAT_STRUCT_DATA))
 
-    form = forms.HabitatConclusion(form_data)
+    form = forms.HabitatComment(form_data)
     assert form.validate()
 
-    conclusion = models.DataHabitattypeConclusion()
-    flatten_habitat_conclusionform(form.data, conclusion)
+    comment = models.DataHabitattypeComment()
+    flatten_habitat_commentform(form.data, comment)
 
     for k, v in HABITAT_MODEL_DATA.items():
-        assert getattr(conclusion, k) == v
+        assert getattr(comment, k) == v
 
 
 def test_flatten():
-    from art17.schemas import flatten_habitat_conclusionform
+    from art17.schemas import flatten_habitat_commentform
     from art17 import models
-    obj = models.DataHabitattypeConclusion()
-    flatten_habitat_conclusionform(HABITAT_STRUCT_DATA, obj)
+    obj = models.DataHabitattypeComment()
+    flatten_habitat_commentform(HABITAT_STRUCT_DATA, obj)
     for k, v in HABITAT_MODEL_DATA.items():
         assert getattr(obj, k) == v
 
 
 def test_parse():
-    from art17.schemas import parse_habitat_conclusionform
+    from art17.schemas import parse_habitat_commentform
     from art17 import models
-    obj = models.DataHabitattypeConclusion(**HABITAT_MODEL_DATA)
-    data = parse_habitat_conclusionform(obj)
+    obj = models.DataHabitattypeComment(**HABITAT_MODEL_DATA)
+    data = parse_habitat_commentform(obj)
     assert data == HABITAT_STRUCT_DATA
 
 
-def test_add_conclusion_message(habitat_app):
+def test_add_comment_message(habitat_app):
     import flask
     from webtest import TestApp
     from art17.messages import messages
@@ -243,7 +243,7 @@ def test_add_conclusion_message(habitat_app):
     from art17.common import common
 
     habitat_app.config['TESTING_USER_ID'] = 'somewho'
-    _create_habitat_record(habitat_app, conclusion=True)
+    _create_habitat_record(habitat_app, comment=True)
     habitat_app.register_blueprint(common)
     habitat_app.register_blueprint(messages)
     client = TestApp(habitat_app)
@@ -253,7 +253,7 @@ def test_add_conclusion_message(habitat_app):
     form.submit()
 
     with habitat_app.app_context():
-        messages = models.ConclusionMessage.query.all()
+        messages = models.CommentReply.query.all()
         assert len(messages) == 1
         msg = messages[0]
         assert msg.text == "hello world!"
