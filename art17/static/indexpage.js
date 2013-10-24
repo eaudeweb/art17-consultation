@@ -58,7 +58,7 @@ App.species_filter = function(species_groups, species_list) {
     species_select.select2('destroy').select2({
       data: species_in_group,
       multiple: false,
-      width: '22em'
+      width: '17em'
     });
 
     App.region_select.update();
@@ -101,7 +101,7 @@ App.habitat_filter = function(habitat_list) {
        var habitat_code = habitat_select.val();
        return habitat_code ? 'regiuni/' + habitat_code : null;
     },
-    width: '15em'
+    width: '10em'
   });
 
   habitat_select.change(function() {
@@ -149,5 +149,12 @@ $('.records-commentdelete').submit(function(evt) {
     evt.preventDefault();
   }
 });
+
+
+$('.helpbox-button').click(function(evt) {
+  evt.preventDefault();
+  $('#helpbox').modal();
+});
+
 
 })();
