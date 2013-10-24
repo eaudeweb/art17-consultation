@@ -62,7 +62,6 @@
 {% block records_header %}
   <tr class="records-header">
     <th rowspan=2></th>
-    <th rowspan=2 title="Regiunea biogeografică">Bio</th>
     <th colspan=5>Areal (km²)</th>
     <th colspan=4>Populație</th>
     <th colspan=6>Habitate (km²)</th>
@@ -104,7 +103,7 @@
 
 {% block comments_header %}
   <tr class="records-header">
-    <th colspan=23>Comentarii</th>
+    <th colspan=22>Comentarii</th>
   </tr>
 {% endblock comments_header %}
 
@@ -114,10 +113,6 @@
       import conclusion_td, reference_value_td, trend_td,
              population_size_td, habitat_quality_td
       with context %}
-
-
-  {#- bio-regiune #}
-  <td>{{ row.region }}</td>
 
   {#- range #}
   {%- set range = row.range %}

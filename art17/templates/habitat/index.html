@@ -50,7 +50,6 @@
 {% block records_header %}
   <tr class="records-header">
     <th rowspan=2></th>
-    <th rowspan=2 title="Regiunea biogeografică">Bio</th>
     <th colspan=5
         title="Proporția habitatului din regiunea biogeografică">Areal</th>
     <th colspan=5
@@ -93,7 +92,7 @@
 
 {% block comments_header %}
   <tr class="records-header">
-    <th colspan=19>Comentarii</th>
+    <th colspan=18>Comentarii</th>
   </tr>
 {% endblock comments_header %}
 
@@ -102,10 +101,6 @@
   {%- from 'common/td.html'
       import conclusion_td, reference_value_td, trend_td, conclusion_td_input
       with context %}
-
-
-  {#- bio-regiune #}
-  <td>{{ row.region }}</td>
 
   {#- range #}
   {%- set range = row.range %}
