@@ -83,8 +83,10 @@ def create_app():
 
 def create_manager(app):
     from art17.models import db_manager
+    from art17.common import cons_manager
     manager = Manager(app)
     manager.add_command('db', db_manager)
+    manager.add_command('cons', cons_manager)
 
     @manager.command
     def waitress():

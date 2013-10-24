@@ -5,17 +5,21 @@ from datetime import datetime
 from dateutil import tz
 from decimal import Decimal
 import urllib
+import logging
 from babel.dates import format_datetime
 from jinja2 import evalcontextfilter, Markup, escape
 import flask
 import flask.views
 from flask.ext.principal import Permission, Denial
+from flask.ext.script import Manager
 from werkzeug.datastructures import MultiDict
 from sqlalchemy import func
 from art17 import models
 from art17.auth import need
 import lookup
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 DATE_FORMAT = {
     'day': u'd\u00a0MMM',
@@ -325,3 +329,51 @@ class CommentDeleteView(flask.views.View):
         self.signal.send(app, ob=comment, old_data=old_data)
         models.db.session.commit()
         return flask.redirect(next_url)
+
+
+cons_manager = Manager()
+
+
+@cons_manager.command
+def create():
+    assessment_map = {}
+
+    for habitat_record in models.DataHabitattypeRegion.query:
+        ass = models.Assessment(
+            type='habitat',
+            region_code=habitat_record.region,
+            habitat_id=habitat_record.habitat_id,
+            habitat_assessment_id=habitat_record.id,
+        )
+        models.db.session.add(ass)
+
+        key = (ass.type, ass.region_code, ass.habitat_id)
+        assessment_map[key] = ass
+        logger.info("Habitat assessment %r", key)
+
+    for species_record in models.DataSpeciesRegion.query:
+        ass = models.Assessment(
+            type='species',
+            region_code=species_record.region,
+            species_id=species_record.species_id,
+            species_assessment_id=species_record.id,
+        )
+        models.db.session.add(ass)
+
+        key = (ass.type, ass.region_code, ass.species_id)
+        assessment_map[key] = ass
+        logger.info("Species assessment %r", key)
+
+    for comment in models.DataHabitattypeComment.query:
+        if comment.cons_assessment_id is None:
+            key = ('habitat', comment.region, comment.habitat_id)
+            comment.cons_assessment = assessment_map.get(key)
+            logger.info("Habitat comment %r %s", key, comment.id)
+
+    for comment in models.DataSpeciesComment.query:
+        if comment.cons_assessment_id is None:
+            key = ('species', comment.region, comment.species_id)
+            comment.cons_assessment = assessment_map.get(key)
+            logger.info("Species comment %r %s", key, comment.id)
+
+    models.db.session.commit()
