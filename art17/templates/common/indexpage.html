@@ -19,64 +19,67 @@
   {% if name %}
     {% block subject_details %}{% endblock %}
 
-    <table class="records table table-bordered">
-    {%- block records_header %}{% endblock records_header %}
+    {% for assessment_row in records %}
+    <h2>{{ assessment_row.region }}</h2>
 
-     {% for row in records %}
+    <table class="records table table-bordered">
+      {%- block records_header %}{% endblock records_header %}
+
       <tr>
         {#- detail #}
         <td>
-          {%- set url = url_for(blueprint + '.detail', record_id=row.id) %}
+          {%- set url = url_for(blueprint + '.detail',
+                                record_id=assessment_row.id) %}
           <button class="records-detailbtn btn btn-xs btn-info"
                   data-url="{{ url }}">detalii</button>
         </td>
 
-        {{ record_cell(row) }}
+        {{ record_cell(assessment_row) }}
 
         <td colspan=4>  {#- conclusion (author, etc) #}
-          {%- if perm_create_comment(row).can() %}
+          {%- if perm_create_comment(assessment_row).can() %}
             {%- set url = url_for(blueprint + '.comment',
-                                  record_id=row.id,
+                                  record_id=assessment_row.id,
                                   next=comment_next) %}
             <a class="records-commentbtn btn btn-xs btn-warning"
                href="{{ url }}">adaugǎ comentariu</a>
           {%- endif %}
         </td>
       </tr>
-     {% endfor %}
 
     {%- block comments_header %}{% endblock %}
 
-     {% for row in comments %}
+     {% for comment_row in comments %}
+     {% if comment_row.region == assessment_row.region %}
       <tr>
         {#- detail #}
         <td>
-          {%- if perm_update_comment_status(row.model).can() %}
+          {%- if perm_update_comment_status(comment_row.model).can() %}
             {%- set url = url_for(blueprint + '.comment_status',
-                                  comment_id=row.id) %}
+                                  comment_id=comment_row.id) %}
             <form method="post" action="{{ url }}"
                   class="records-commentstatus">
               <input type="hidden" name="next" value="{{ comment_next }}">
-              <input type="hidden" name="status" value="{{ row.status }}">
+              <input type="hidden" name="status" value="{{ comment_row.status }}">
             </form>
           {%- endif %}
         </td>
 
-        {{ record_cell(row) }}
+        {{ record_cell(comment_row) }}
 
-        <td>{{ row.user_id }}</td>  {#- conclusion author, etc #}
+        <td>{{ comment_row.user_id }}</td>  {#- conclusion author, etc #}
         <td>
-          {%- if perm_edit_comment(row.model).can() %}
+          {%- if perm_edit_comment(comment_row.model).can() %}
             {%- set url = url_for(blueprint + '.comment_edit',
-                                  comment_id=row.id,
+                                  comment_id=comment_row.id,
                                   next=comment_next) %}
             <a class="records-editcommentbtn btn btn-xs btn-default"
                href="{{ url }}">editează</a>
           {%- endif %}
 
-          {%- if perm_delete_comment(row.model).can() %}
+          {%- if perm_delete_comment(comment_row.model).can() %}
             {%- set url = url_for(blueprint + '.comment_delete',
-                                  comment_id=row.id) %}
+                                  comment_id=comment_row.id) %}
             <form method="post" action="{{ url }}"
                   class="records-commentdelete">
               <input type="hidden" name="next" value="{{ comment_next }}">
@@ -85,16 +88,18 @@
             </form>
           {%- endif %}
         </td>
-        <td>{{ row.comment_date|local_date }}</td>
+        <td>{{ comment_row.comment_date|local_date }}</td>
         <td>
-          {%- set url = url_for('replies.index', comment_id=row.id) %}
-          {%- set count = reply_counts[row.id] or 0 %}
+          {%- set url = url_for('replies.index', comment_id=comment_row.id) %}
+          {%- set count = reply_counts[comment_row.id] or 0 %}
           <a class="records-repliesbtn btn btn-xs btn-default"
              href="{{ url }}">{{ fonticon('comment') }} {{ count }}</a>
         </td>
       </tr>
+     {% endif %}
      {% endfor %}
     </table>
+    {% endfor %}
 
 
     {% include 'common/recorddetail.html' %}
