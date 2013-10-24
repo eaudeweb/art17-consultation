@@ -147,40 +147,54 @@ class IndexView(flask.views.View):
         self.subject_code = flask.request.args.get(self.subject_name)
 
         if self.subject_code:
-            self.subject = (self.subject_cls.query
-                        .filter_by(code=self.subject_code)
-                        .join(models.DataSpecies.lu)
-                        .first_or_404())
+            self.subject = (
+                self.subject_cls.query
+                    .filter_by(code=self.subject_code)
+                    .join(models.DataSpecies.lu)
+                    .first_or_404()
+            )
         else:
             self.subject = None
 
         self.region_code = flask.request.args.get('region', '')
         if self.region_code:
-            self.region = (models.LuBiogeoreg.query
-                        .filter_by(code=self.region_code)
-                        .first_or_404())
+            self.region = (
+                models.LuBiogeoreg.query
+                    .filter_by(code=self.region_code)
+                    .first_or_404()
+            )
         else:
             self.region = None
 
         if self.subject:
             self.records = self.subject.regions
-            self.comments = (self.subject.comments
-                                            .filter_by(deleted=False))
+            self.comments = (
+                self.subject.comments
+                    .filter_by(deleted=False)
+            )
 
             if self.region:
-                self.records = self.records.filter_by(region=self.region.code)
-                self.comments = self.comments.filter_by(
-                                        region=self.region.code)
+                self.records = (
+                    self.records
+                        .filter_by(region=self.region.code)
+                )
+                self.comments = (
+                    self.comments
+                        .filter_by(region=self.region.code)
+                )
 
             CommentReply = models.CommentReply
-            self.reply_counts = dict(models.db.session.query(
-                                    CommentReply.parent,
-                                    func.count(CommentReply.id)
-                                ).group_by(CommentReply.parent))
+            self.reply_counts = dict(
+                models.db.session
+                    .query(CommentReply.parent, func.count(CommentReply.id))
+                    .group_by(CommentReply.parent)
+            )
 
-        self.subject_list = (self.subject_cls.query
-                            .join(self.record_cls)
-                            .order_by(self.subject_cls.code))
+        self.subject_list = (
+            self.subject_cls.query
+                .join(self.record_cls)
+                .order_by(self.subject_cls.code)
+        )
 
     def get_pressures(self, record):
         return record.pressures.all()
@@ -203,13 +217,15 @@ class IndexView(flask.views.View):
                 'code': self.subject.code,
                 'name': self.subject.lu.display_name,
                 'records': [self.parse_record(r) for r in self.records],
-                'comments': [self.parse_record(r, is_comment=True)
-                             for r in self.comments],
+                'comments': [
+                    self.parse_record(r, is_comment=True)
+                    for r in self.comments
+                ],
                 'reply_counts': self.reply_counts,
                 'map_url': self.map_url_template.format(**{
-                        self.subject_name: self.subject.code,
-                        'regions': urllib.quote(flask.json.dumps(map_colors)),
-                    })
+                    self.subject_name: self.subject.code,
+                    'regions': urllib.quote(flask.json.dumps(map_colors)),
+                }),
             })
 
     def dispatch_request(self):
