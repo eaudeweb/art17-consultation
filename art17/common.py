@@ -339,7 +339,7 @@ def create():
     assessment_map = {}
 
     for habitat_record in models.DataHabitattypeRegion.query:
-        ass = models.Assessment(
+        ass = models.AssessmentConsultation(
             type='habitat',
             region_code=habitat_record.region,
             habitat_id=habitat_record.habitat_id,
@@ -352,7 +352,7 @@ def create():
         logger.info("Habitat assessment %r", key)
 
     for species_record in models.DataSpeciesRegion.query:
-        ass = models.Assessment(
+        ass = models.AssessmentConsultation(
             type='species',
             region_code=species_record.region,
             species_id=species_record.species_id,

@@ -420,7 +420,7 @@ class DataPressuresThreatsPollution(Base):
         backref=db.backref('pollutions', lazy='dynamic'))
 
 
-class Assessment(Base):
+class AssessmentConsultation(Base):
     __tablename__ = u'cons_assessments'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
@@ -515,11 +515,11 @@ class DataHabitattypeComment(Base):
     user_id = Column(String)
     status = Column(Text, default='new')
     deleted = Column(Boolean, default=False)
-    cons_assessment_id = Column(ForeignKey(Assessment.id))
+    cons_assessment_id = Column(ForeignKey(AssessmentConsultation.id))
 
     habitat = relationship(u'DataHabitat',
         backref=db.backref('comments', lazy='dynamic'))
-    cons_assessment = relationship('Assessment',
+    cons_assessment = relationship('AssessmentConsultation',
         backref=db.backref('habitat_comments', lazy='dynamic'))
 
 
@@ -617,11 +617,11 @@ class DataSpeciesComment(Base):
     user_id = Column(String)
     status = Column(Text, default='new')
     deleted = Column(Boolean, default=False)
-    cons_assessment_id = Column(ForeignKey(Assessment.id))
+    cons_assessment_id = Column(ForeignKey(AssessmentConsultation.id))
 
     species = relationship(u'DataSpecies',
         backref=db.backref('comments', lazy='dynamic'))
-    cons_assessment = relationship('Assessment',
+    cons_assessment = relationship('AssessmentConsultation',
         backref=db.backref('species_comments', lazy='dynamic'))
 
 
