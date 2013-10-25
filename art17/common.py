@@ -5,17 +5,21 @@ from datetime import datetime
 from dateutil import tz
 from decimal import Decimal
 import urllib
+import logging
 from babel.dates import format_datetime
 from jinja2 import evalcontextfilter, Markup, escape
 import flask
 import flask.views
 from flask.ext.principal import Permission, Denial
+from flask.ext.script import Manager
 from werkzeug.datastructures import MultiDict
 from sqlalchemy import func
 from art17 import models
 from art17.auth import need
 import lookup
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 DATE_FORMAT = {
     'day': u'd\u00a0MMM',
@@ -167,21 +171,7 @@ class IndexView(flask.views.View):
             self.region = None
 
         if self.subject:
-            self.records = self.subject.regions
-            self.comments = (
-                self.subject.comments
-                    .filter_by(deleted=False)
-            )
-
-            if self.region:
-                self.records = (
-                    self.records
-                        .filter_by(region=self.region.code)
-                )
-                self.comments = (
-                    self.comments
-                        .filter_by(region=self.region.code)
-                )
+            self.topic_list = list(self.get_topics(self.subject, self.region))
 
             CommentReply = models.CommentReply
             self.reply_counts = dict(
@@ -201,6 +191,7 @@ class IndexView(flask.views.View):
 
     def prepare_context(self):
         self.ctx.update({
+            'topic_template': self.topic_template,
             'subject_list': self.get_subject_list(),
             'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,
@@ -210,17 +201,15 @@ class IndexView(flask.views.View):
 
         if self.subject:
             map_colors = [{
-                    'region': r.region,
-                    'code': CONCLUSION_COLOR.get(r.conclusion_assessment),
-                } for r in self.records]
+                    'region': t['region'].code,
+                    'code': CONCLUSION_COLOR.get(
+                        t['assessment']['overall_assessment']['value']),
+                } for t in self.topic_list]
+            print(map_colors)
             self.ctx.update({
                 'code': self.subject.code,
                 'name': self.subject.lu.display_name,
-                'records': [self.parse_record(r) for r in self.records],
-                'comments': [
-                    self.parse_record(r, is_comment=True)
-                    for r in self.comments
-                ],
+                'topic_list': self.topic_list,
                 'reply_counts': self.reply_counts,
                 'map_url': self.map_url_template.format(**{
                     self.subject_name: self.subject.code,
@@ -325,3 +314,51 @@ class CommentDeleteView(flask.views.View):
         self.signal.send(app, ob=comment, old_data=old_data)
         models.db.session.commit()
         return flask.redirect(next_url)
+
+
+cons_manager = Manager()
+
+
+@cons_manager.command
+def create():
+    DHC = models.DataHabitattypeComment
+    DSC = models.DataSpeciesComment
+    topic_map = {}
+
+    for habitat_record in models.DataHabitattypeRegion.query:
+        topic = models.Topic(
+            type='habitat',
+            region_code=habitat_record.region,
+            habitat_id=habitat_record.habitat_id,
+            habitat_assessment_id=habitat_record.id,
+        )
+        models.db.session.add(topic)
+
+        key = (topic.type, topic.region_code, topic.habitat_id)
+        topic_map[key] = topic
+        logger.info("Habitat topic %r", key)
+
+    for species_record in models.DataSpeciesRegion.query:
+        topic = models.Topic(
+            type='species',
+            region_code=species_record.region,
+            species_id=species_record.species_id,
+            species_assessment_id=species_record.id,
+        )
+        models.db.session.add(topic)
+
+        key = (topic.type, topic.region_code, topic.species_id)
+        topic_map[key] = topic
+        logger.info("Species topic %r", key)
+
+    for comment in DHC.query.filter(DHC.topic_id == None):
+        key = ('habitat', comment.region, comment.habitat_id)
+        comment.topic = topic_map.get(key)
+        logger.info("Habitat comment %r %s", key, comment.id)
+
+    for comment in DSC.query.filter(DSC.topic_id == None):
+        key = ('species', comment.region, comment.species_id)
+        comment.topic = topic_map.get(key)
+        logger.info("Species comment %r %s", key, comment.id)
+
+    models.db.session.commit()

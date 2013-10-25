@@ -27,11 +27,30 @@ def lookup_regions(species_code):
 class SpeciesIndexView(IndexView):
 
     template = 'species/index.html'
+    topic_template = 'species/topic.html'
     subject_name = 'species'
     subject_cls = models.DataSpecies
     record_cls = models.DataSpeciesRegion
-    parse_record = staticmethod(schemas.parse_species)
     blueprint = 'species'
+
+    def get_topics(self, species, region):
+        topics_query = (
+            models.Topic.query
+            .join(models.Topic.species_assessment)
+            .join(models.Topic.region)
+            .filter(models.Topic.species == species)
+        )
+        if region is not None:
+            topics_query = topics_query.filter(models.Topic.region == region)
+
+        for topic in topics_query:
+            yield {
+                'region': topic.region,
+                'assessment': schemas.parse_species(topic.species_assessment),
+                'comments': [schemas.parse_species(c, is_comment=True)
+                             for c in
+                             topic.species_comments.filter_by(deleted=False)],
+            }
 
     def parse_request(self):
         super(SpeciesIndexView, self).parse_request()

@@ -30,9 +30,9 @@
 
         {% for bioreg in bioreg_list %}
           {%- set key = (subject.id, bioreg.code) %}
-          {%- set available = regions[key] %}
-          {%- if available %}
-            {%- set count = comment_count[key] or 0 %}
+          {%- set acons_id = regions[key] %}
+          {%- if acons_id %}
+            {%- set count = comment_count[acons_id] or 0 %}
             {%- set url = consultation_url(subject, bioreg=bioreg.code) %}
             <td class="dashboard-commentcount">
               <a href="{{ url }}">{{ count }}</a>

@@ -1,5 +1,6 @@
 from collections import defaultdict
 import flask
+from sqlalchemy import func
 from art17 import models
 
 
@@ -48,36 +49,35 @@ def inject_funcs():
 @dashboard.route('/habitate')
 def habitats():
     session = models.db.session
+    Topic = models.Topic
     DH = models.DataHabitat
-    DHR = models.DataHabitattypeRegion
     DHC = models.DataHabitattypeComment
 
     habitat_list = DH.query.join(DH.lu).all()
 
     habitat_regions = {}
-    for row in session.query(DHR.habitat_id, DHR.region):
-        key = (int(row.habitat_id), row.region)
-        habitat_regions[key] = True
+    for acons in Topic.query.filter(Topic.habitat_id != None):
+        habitat_regions[acons.habitat_id, acons.region_code] = acons.id
 
-    habitat_comment_count = defaultdict(int)
-    for row in session.query(DHC.habitat_id, DHC.region):
-        key = (int(row.habitat_id), row.region)
-        habitat_comment_count[key] += 1
+    habitat_comment_count = dict(
+        session.query(DHC.topic_id, func.count('*'))
+            .group_by(DHC.topic_id)
+    )
 
     return flask.render_template('dashboard/habitat.html', **{
         'bioreg_list': models.LuBiogeoreg.query.all(),
         'tabmenu_data': list(get_tabmenu_data()),
         'habitat_list': habitat_list,
         'habitat_regions': habitat_regions,
-        'habitat_comment_count': dict(habitat_comment_count),
+        'habitat_comment_count': habitat_comment_count,
     })
 
 
 @dashboard.route('/specii/<group_code>')
 def species(group_code):
     session = models.db.session
+    Topic = models.Topic
     DS = models.DataSpecies
-    DSR = models.DataSpeciesRegion
     DSC = models.DataSpeciesComment
 
     species_group = (
@@ -94,14 +94,13 @@ def species(group_code):
     )
 
     species_regions = {}
-    for row in session.query(DSR.species_id, DSR.region):
-        key = (int(row.species_id), row.region)
-        species_regions[key] = True
+    for acons in Topic.query.filter(Topic.species_id != None):
+        species_regions[acons.species_id, acons.region_code] = acons.id
 
-    species_comment_count = defaultdict(int)
-    for row in session.query(DSC.species_id, DSC.region):
-        key = (int(row.species_id), row.region)
-        species_comment_count[key] += 1
+    species_comment_count = dict(
+        session.query(DSC.topic_id, func.count('*'))
+            .group_by(DSC.topic_id)
+    )
 
     return flask.render_template('dashboard/species.html', **{
         'bioreg_list': models.LuBiogeoreg.query.all(),
@@ -109,7 +108,7 @@ def species(group_code):
         'species_group': species_group,
         'species_list': species_list,
         'species_regions': species_regions,
-        'species_comment_count': dict(species_comment_count),
+        'species_comment_count': species_comment_count,
     })
 
 
