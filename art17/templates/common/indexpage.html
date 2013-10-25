@@ -14,10 +14,10 @@
   {% if name %}
     {% block subject_details %}{% endblock %}
 
-    {% for assessment_row in records %}
+    {% for topic in topic_list %}
       {{ topic_html(
-        assessment_row,
-        comments,
+        topic.assessment,
+        topic.comments,
         topic_template,
         blueprint,
       ) }}

@@ -31,8 +31,26 @@ class HabitatIndexView(IndexView):
     subject_name = 'habitat'
     subject_cls = models.DataHabitat
     record_cls = models.DataHabitattypeRegion
-    parse_record = staticmethod(schemas.parse_habitat)
     blueprint = 'habitat'
+
+    def get_topics(self, habitat, region):
+        topics_query = (
+            models.Topic.query
+            .join(models.Topic.habitat_assessment)
+            .join(models.Topic.region)
+            .filter(models.Topic.habitat == habitat)
+        )
+        if region is not None:
+            topics_query = topics_query.filter(models.Topic.region == region)
+
+        for topic in topics_query:
+            yield {
+                'region': topic.region,
+                'assessment': schemas.parse_habitat(topic.habitat_assessment),
+                'comments': [schemas.parse_habitat(c, is_comment=True)
+                             for c in
+                             topic.habitat_comments.filter_by(deleted=False)],
+            }
 
     def get_comment_next_url(self):
         return flask.url_for('.index', habitat=self.subject_code,

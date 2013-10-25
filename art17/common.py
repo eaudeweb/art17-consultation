@@ -171,21 +171,7 @@ class IndexView(flask.views.View):
             self.region = None
 
         if self.subject:
-            self.records = self.subject.regions
-            self.comments = (
-                self.subject.comments
-                    .filter_by(deleted=False)
-            )
-
-            if self.region:
-                self.records = (
-                    self.records
-                        .filter_by(region=self.region.code)
-                )
-                self.comments = (
-                    self.comments
-                        .filter_by(region=self.region.code)
-                )
+            self.topic_list = list(self.get_topics(self.subject, self.region))
 
             CommentReply = models.CommentReply
             self.reply_counts = dict(
@@ -215,17 +201,15 @@ class IndexView(flask.views.View):
 
         if self.subject:
             map_colors = [{
-                    'region': r.region,
-                    'code': CONCLUSION_COLOR.get(r.conclusion_assessment),
-                } for r in self.records]
+                    'region': t['region'].code,
+                    'code': CONCLUSION_COLOR.get(
+                        t['assessment']['overall_assessment']['value']),
+                } for t in self.topic_list]
+            print(map_colors)
             self.ctx.update({
                 'code': self.subject.code,
                 'name': self.subject.lu.display_name,
-                'records': [self.parse_record(r) for r in self.records],
-                'comments': [
-                    self.parse_record(r, is_comment=True)
-                    for r in self.comments
-                ],
+                'topic_list': self.topic_list,
                 'reply_counts': self.reply_counts,
                 'map_url': self.map_url_template.format(**{
                     self.subject_name: self.subject.code,
