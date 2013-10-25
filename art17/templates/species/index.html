@@ -62,89 +62,20 @@
 
 
 {% block records_header %}
-  <tr class="records-header">
-    <th rowspan=2></th>
-    <th colspan=5>Areal (km²)</th>
-    <th colspan=4>Populație</th>
-    <th colspan=6>Habitate (km²)</th>
-    <th rowspan=2
-        title="Perspective viitoare"
-        >Persp.</th>
-    <th rowspan=2
-        title="Evaluare generală a stării de conservare"
-        >Eval.</th>
-    <th rowspan=2 colspan=4></th>  {#- conclusion (author, etc) #}
-  </tr>
-
-  <tr class="records-header">
-    {#- detail #}
-    {#- bio-regiune #}
-    {#- range #}
-    <th title="Suprafața">Supr.</th>
-    <th title="Concluzie">Concl.</th>
-    <th title="Tendința pe termen scurt">Tend.<br>t.scurt</th>
-    <th title="Metoda folositǎ">Met.</th>
-    <th title="Arealul de referință favorabil">Ref.</th>
-    {#- population #}
-    <th title="Mărimea populației și unitatea de măsură">Nr.</th>
-    <th title="Concluzie">Concl.</th>
-    <th title="Tendința pe termen scurt">Tend.<br>t.scurt</th>
-    <th title="Populația de referință">Ref.</th>
-    {#- habitat #}
-    <th title="Suprafața estimatǎ">Supr.</th>
-    <th title="Concluzie">Concl.</th>
-    <th title="Zona de referință favorabilă">Ref.</th>
-    <th title="Metoda folositǎ">Met.</th>
-    <th title="Tendința pe termen scurt">Tend.<br>t.scurt</th>
-    <th title="Calitate">Cal.</th>
-    {#- future prospects #}
-    {#- overall assessment #}
-  </tr>
+  {%- from 'species/topic.html' import assessment_header with context %}
+  {{ assessment_header() }}
 {%- endblock records_header %}
 
 
 {% block comments_header %}
-  <tr class="records-header">
-    <th colspan=22>Comentarii</th>
-  </tr>
+  {%- from 'species/topic.html' import comments_header with context %}
+  {{ comments_header() }}
 {% endblock comments_header %}
 
 
 {% block record_cell %}
-  {%- from 'common/td.html'
-      import conclusion_td, reference_value_td, trend_td,
-             population_size_td, habitat_quality_td
-      with context %}
-
-  {#- range #}
-  {%- set range = row.range %}
-  <td>{{ range.surface_area }}</td>
-  {{ conclusion_td(range.conclusion) }}
-  {{ trend_td(range.trend_short) }}
-  <td class="method">{{ range.method }}</td>
-  {{ reference_value_td(range.reference_value) }}
-
-  {#- population #}
-  {%- set population = row.population %}
-  {{ population_size_td(population.size) }}
-  {{ conclusion_td(population.conclusion) }}
-  {{ trend_td(population.trend_short) }}
-  {{ reference_value_td(population.reference_value) }}
-
-  {#- habitat #}
-  {%- set habitat = row.habitat %}
-  <td>{{ habitat.surface_area }}</td>
-  {{ conclusion_td(habitat.conclusion) }}
-  <td>{{ habitat.area_suitable }}</td>
-  <td class="method">{{ habitat.method }}</td>
-  {{ trend_td(habitat.trend_short) }}
-  {{ habitat_quality_td(habitat.quality) }}
-
-  {#- future prospects #}
-  {{ conclusion_td(row.future_prospects) }}
-
-  {#- overall assessment #}
-  {{ conclusion_td(row.overall_assessment) }}
+  {%- from 'species/topic.html' import record with context %}
+  {{ record(row) }}
 {%- endblock %}
 
 
