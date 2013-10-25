@@ -61,24 +61,6 @@
 {% endblock subject_details %}
 
 
-{% block records_header %}
-  {%- from 'species/topic.html' import assessment_header with context %}
-  {{ assessment_header() }}
-{%- endblock records_header %}
-
-
-{% block comments_header %}
-  {%- from 'species/topic.html' import comments_header with context %}
-  {{ comments_header() }}
-{% endblock comments_header %}
-
-
-{% block record_cell %}
-  {%- from 'species/topic.html' import record with context %}
-  {{ record(row) }}
-{%- endblock %}
-
-
 {% block script %}
   {{- super() }}
 

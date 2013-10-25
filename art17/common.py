@@ -205,6 +205,7 @@ class IndexView(flask.views.View):
 
     def prepare_context(self):
         self.ctx.update({
+            'topic_template': self.topic_template,
             'subject_list': self.get_subject_list(),
             'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,

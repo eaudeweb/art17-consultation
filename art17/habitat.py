@@ -27,6 +27,7 @@ def lookup_regions(habitat_code):
 class HabitatIndexView(IndexView):
 
     template = 'habitat/index.html'
+    topic_template = 'habitat/topic.html'
     subject_name = 'habitat'
     subject_cls = models.DataHabitat
     record_cls = models.DataHabitattypeRegion

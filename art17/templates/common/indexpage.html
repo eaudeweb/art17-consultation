@@ -1,16 +1,14 @@
 {% extends "layout.html" %}
 {%- from 'bits.html' import fonticon %}
+{%- from topic_template import
+    assessment_header, comments_header, record
+    with context -%}
 
 
 {% block title %}
 {%- if name %}{{ name }} &mdash; {% endif %}
 {{- super() }}
 {%- endblock title %}
-
-
-{% macro record_cell(row) %}
-{% block record_cell scoped %}{% endblock %}
-{%- endmacro %}
 
 
 {% block content %}
@@ -23,7 +21,7 @@
     <h2>{{ assessment_row.region }}</h2>
 
     <table class="records table table-bordered">
-      {%- block records_header %}{% endblock records_header %}
+      {{ assessment_header() }}
 
       <tr>
         {#- detail #}
@@ -34,7 +32,7 @@
                   data-url="{{ url }}">detalii</button>
         </td>
 
-        {{ record_cell(assessment_row) }}
+        {{ record(assessment_row) }}
 
         <td colspan=4>  {#- conclusion (author, etc) #}
           {%- if perm_create_comment(assessment_row).can() %}
@@ -47,7 +45,7 @@
         </td>
       </tr>
 
-    {%- block comments_header %}{% endblock %}
+      {{ comments_header() }}
 
      {% for comment_row in comments %}
      {% if comment_row.region == assessment_row.region %}
@@ -65,7 +63,7 @@
           {%- endif %}
         </td>
 
-        {{ record_cell(comment_row) }}
+        {{ record(comment_row) }}
 
         <td>{{ comment_row.user_id }}</td>  {#- conclusion author, etc #}
         <td>

@@ -27,6 +27,7 @@ def lookup_regions(species_code):
 class SpeciesIndexView(IndexView):
 
     template = 'species/index.html'
+    topic_template = 'species/topic.html'
     subject_name = 'species'
     subject_cls = models.DataSpecies
     record_cls = models.DataSpeciesRegion
