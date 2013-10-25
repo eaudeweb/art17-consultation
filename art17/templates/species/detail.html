@@ -5,7 +5,7 @@
   ({{ record.region }})
 </h1>
 
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs detail-menu">
   <li class="active"><a href="#recorddetail-range" data-toggle="tab">Areal</a></li>
   <li><a href="#recorddetail-population" data-toggle="tab">Populație</a></li>
   <li><a href="#recorddetail-habitat" data-toggle="tab">Habitat</a></li>
@@ -13,6 +13,7 @@
   <li><a href="#recorddetail-threats" data-toggle="tab">Amenințǎri</a></li>
   <li><a href="#recorddetail-complementary" data-toggle="tab">Informații complementare</a></li>
   <li><a href="#recorddetail-conclusions" data-toggle="tab">Concluzii</a></li>
+  <li><a href="#recorddetail-natura2000" data-toggle="tab">NATURA 2000</a></li>
   <li><a href="#recorddetail-sources" data-toggle="tab">Surse publicate</a></li>
 </ul>
 
@@ -28,9 +29,11 @@
 
   {% include "species/detail-threats.html" with context %}
 
+  {% include "species/detail-complementary.html" with context %}
+
   {% include "species/detail-conclusion.html" with context %}
 
-  {% include "species/detail-complementary.html" with context %}
+  {% include "species/detail-natura2000.html" with context %}
 
   {% include "species/detail-sources.html" with context %}
 

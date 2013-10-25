@@ -63,6 +63,10 @@ fieldset legend {
     padding: 3px 3px;
 }
 
+.detail-menu li a {
+    padding: 8px 10px;
+}
+
 #recorddetail-modal .modal-dialog {
     width: 900px;
     font-size: 12px;

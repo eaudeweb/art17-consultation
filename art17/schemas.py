@@ -142,6 +142,14 @@ def parse_species(row, is_comment=False):
             'reasons_for_change': reasons_for_change(row, 'habitat'),
         }
 
+    rv['natura2000'] = {
+            'population_unit': row.natura2000_population_unit,
+            'population_min': row.natura2000_population_min,
+            'population_max': row.natura2000_population_max,
+            'population_method': row.natura2000_population_method,
+            'population_trend': row.natura2000_population_trend,
+    }
+
     rv['justification'] = row.justification
     rv['other_relevant_information'] = row.other_relevant_information
     rv['transboundary_assessment'] = row.transboundary_assessment

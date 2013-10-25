@@ -117,6 +117,20 @@
 {%- endmacro %}
 
 
+{% macro natura2000_population_size_html(natura2000) %}
+  {%- if natura2000.population_min == natura2000.population_max %}
+    {{- natura2000.population_min }}
+    {{- natura2000.population_unit }}
+  {%- else %}
+    {{- natura2000.population_min -}}
+    -
+    {{- natura2000.population_max -}}
+    &nbsp;
+    {{- natura2000.population_unit -}}
+  {%- endif %}
+{%- endmacro %}
+
+
 {% macro population_size_td(size) -%}
   <td>{{ population_size_html(size) }}</td>
 {%- endmacro %}

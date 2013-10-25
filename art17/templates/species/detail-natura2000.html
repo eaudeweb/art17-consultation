@@ -1,0 +1,31 @@
+<div class="tab-pane" id="recorddetail-natura2000">
+
+  <div class="table-responsive">
+    <table class="table table-bordered recorddetail-table">
+
+      <tr>
+        <th colspan="2">Siturile NATURA 2000</th>
+      </tr>
+
+      <tr>
+        <th>Mărimea populației</th>
+        <td>{{ macros.natura2000_population_size_html(record.natura2000) }}</td>
+      </tr>
+
+      <tr>
+        <th>Metoda utilizată</th>
+        <td>{{ macros.method_html(record.natura2000.population_method) }}</td>
+      </tr>
+
+      <tr>
+        <th title="Tendința pe termen scurt a mărimii populației din rețeaua respectivă">Tendința pe termen scurt</th>
+        <td>
+          {% if record.natura2000.population_trend %}
+            {{- TREND_NAME[record.natura2000.population_trend] -}}
+          {% endif%}
+        </td>
+      </tr>
+
+    </table>
+  </div>
+</div>
