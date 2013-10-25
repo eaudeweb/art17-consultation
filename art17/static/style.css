@@ -64,7 +64,8 @@ fieldset legend {
 }
 
 #recorddetail-modal .modal-dialog {
-    width: 750px;
+    width: 900px;
+    font-size: 12px;
 }
 
 .recorddetail-table {
@@ -73,7 +74,7 @@ fieldset legend {
 
 .recorddetail-table tr,
 .recorddetail-table th {
-    width: 50%;
+    width: 30%;
 }
 
 .table-vertical tr th {

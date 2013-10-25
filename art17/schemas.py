@@ -142,6 +142,10 @@ def parse_species(row, is_comment=False):
             'reasons_for_change': reasons_for_change(row, 'habitat'),
         }
 
+    rv['justification'] = row.justification
+    rv['other_relevant_information'] = row.other_relevant_information
+    rv['transboundary_assessment'] = row.transboundary_assessment
+
     rv['pressures_method'] = row.pressures_method
     rv['threats_method'] = row.threats_method
 

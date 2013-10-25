@@ -1,0 +1,26 @@
+<div class="tab-pane" id="recorddetail-complementary">
+  <div class="table-responsive">
+    <table class="table table-bordered recorddetail-table">
+      <tr>
+        <th>Justificarea procentului de prag pentru tendințe</th>
+      </tr>
+      <tr>
+        <td>{{ record.justification | nl2br }}</td>
+      </tr>
+
+      <tr>
+        <th>Alte informații relevante</th>
+      </tr>
+      <tr>
+        <td>{{ record.other_relevant_information | nl2br }}</td>
+      </tr>
+
+      <tr>
+        <th>Evaluare transfrontalierǎ</th>
+      </tr>
+      <tr>
+        <td>{{ record.transboundary_assessment | nl2br }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
