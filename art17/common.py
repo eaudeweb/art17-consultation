@@ -336,44 +336,44 @@ cons_manager = Manager()
 
 @cons_manager.command
 def create():
-    assessment_map = {}
+    DHC = models.DataHabitattypeComment
+    DSC = models.DataSpeciesComment
+    topic_map = {}
 
     for habitat_record in models.DataHabitattypeRegion.query:
-        ass = models.AssessmentConsultation(
+        topic = models.Topic(
             type='habitat',
             region_code=habitat_record.region,
             habitat_id=habitat_record.habitat_id,
             habitat_assessment_id=habitat_record.id,
         )
-        models.db.session.add(ass)
+        models.db.session.add(topic)
 
-        key = (ass.type, ass.region_code, ass.habitat_id)
-        assessment_map[key] = ass
-        logger.info("Habitat assessment %r", key)
+        key = (topic.type, topic.region_code, topic.habitat_id)
+        topic_map[key] = topic
+        logger.info("Habitat topic %r", key)
 
     for species_record in models.DataSpeciesRegion.query:
-        ass = models.AssessmentConsultation(
+        topic = models.Topic(
             type='species',
             region_code=species_record.region,
             species_id=species_record.species_id,
             species_assessment_id=species_record.id,
         )
-        models.db.session.add(ass)
+        models.db.session.add(topic)
 
-        key = (ass.type, ass.region_code, ass.species_id)
-        assessment_map[key] = ass
-        logger.info("Species assessment %r", key)
+        key = (topic.type, topic.region_code, topic.species_id)
+        topic_map[key] = topic
+        logger.info("Species topic %r", key)
 
-    for comment in models.DataHabitattypeComment.query:
-        if comment.cons_assessment_id is None:
-            key = ('habitat', comment.region, comment.habitat_id)
-            comment.cons_assessment = assessment_map.get(key)
-            logger.info("Habitat comment %r %s", key, comment.id)
+    for comment in DHC.query.filter(DHC.topic_id == None):
+        key = ('habitat', comment.region, comment.habitat_id)
+        comment.topic = topic_map.get(key)
+        logger.info("Habitat comment %r %s", key, comment.id)
 
-    for comment in models.DataSpeciesComment.query:
-        if comment.cons_assessment_id is None:
-            key = ('species', comment.region, comment.species_id)
-            comment.cons_assessment = assessment_map.get(key)
-            logger.info("Species comment %r %s", key, comment.id)
+    for comment in DSC.query.filter(DSC.topic_id == None):
+        key = ('species', comment.region, comment.species_id)
+        comment.topic = topic_map.get(key)
+        logger.info("Species comment %r %s", key, comment.id)
 
     models.db.session.commit()

@@ -49,19 +49,19 @@ def inject_funcs():
 @dashboard.route('/habitate')
 def habitats():
     session = models.db.session
-    ACons = models.AssessmentConsultation
+    Topic = models.Topic
     DH = models.DataHabitat
     DHC = models.DataHabitattypeComment
 
     habitat_list = DH.query.join(DH.lu).all()
 
     habitat_regions = {}
-    for acons in ACons.query.filter(ACons.habitat_id != None):
+    for acons in Topic.query.filter(Topic.habitat_id != None):
         habitat_regions[acons.habitat_id, acons.region_code] = acons.id
 
     habitat_comment_count = dict(
-        session.query(DHC.cons_assessment_id, func.count('*'))
-            .group_by(DHC.cons_assessment_id)
+        session.query(DHC.topic_id, func.count('*'))
+            .group_by(DHC.topic_id)
     )
 
     return flask.render_template('dashboard/habitat.html', **{
@@ -76,7 +76,7 @@ def habitats():
 @dashboard.route('/specii/<group_code>')
 def species(group_code):
     session = models.db.session
-    ACons = models.AssessmentConsultation
+    Topic = models.Topic
     DS = models.DataSpecies
     DSC = models.DataSpeciesComment
 
@@ -94,12 +94,12 @@ def species(group_code):
     )
 
     species_regions = {}
-    for acons in ACons.query.filter(ACons.species_id != None):
+    for acons in Topic.query.filter(Topic.species_id != None):
         species_regions[acons.species_id, acons.region_code] = acons.id
 
     species_comment_count = dict(
-        session.query(DSC.cons_assessment_id, func.count('*'))
-            .group_by(DSC.cons_assessment_id)
+        session.query(DSC.topic_id, func.count('*'))
+            .group_by(DSC.topic_id)
     )
 
     return flask.render_template('dashboard/species.html', **{

@@ -7,7 +7,7 @@ from sqlalchemy.dialects.oracle import NVARCHAR2
 
 
 def upgrade():
-    op.create_table('cons_assessments',
+    op.create_table('consultation_topic',
         sa.Column('objectid', sa.CHAR(32), nullable=False),
         sa.Column('type', NVARCHAR2(255), nullable=True),
         sa.Column('region_code', NVARCHAR2(255), nullable=True),
@@ -22,13 +22,13 @@ def upgrade():
     )
 
     op.add_column('data_habitattype_comments',
-        sa.Column('cons_assessment_id', sa.CHAR(32), nullable=True))
+        sa.Column('consultation_topic_id', sa.CHAR(32), nullable=True))
 
     op.add_column('data_species_comments',
-        sa.Column('cons_assessment_id', sa.CHAR(32), nullable=True))
+        sa.Column('consultation_topic_id', sa.CHAR(32), nullable=True))
 
 
 def downgrade():
-    op.drop_column('data_species_comments', 'cons_assessment_id')
-    op.drop_column('data_habitattype_comments', 'cons_assessment_id')
-    op.drop_table('cons_assessments')
+    op.drop_column('data_species_comments', 'consultation_topic_id')
+    op.drop_column('data_habitattype_comments', 'consultation_topic_id')
+    op.drop_table('consultation_topic')
