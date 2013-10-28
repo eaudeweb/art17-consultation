@@ -68,7 +68,7 @@ fieldset legend {
 }
 
 #recorddetail-modal .modal-dialog {
-    width: 900px;
+    width: 1000px;
     font-size: 12px;
 }
 
@@ -83,6 +83,29 @@ fieldset legend {
 
 .table-vertical tr th {
     width: auto !important;
+}
+
+.data-centered tbody tr th,
+.data-centered tbody tr td {
+    text-align: center;
+    padding: 5px;
+}
+
+.data-centered tbody tr th {
+    vertical-align: middle;
+}
+
+.sub-header td {
+    width: 10px !important;
+}
+
+.data-centered tbody tr,
+.data-centered tbody tr th {
+    width: 10px !important;
+}
+
+.recorddetail-table tr td {
+    white-space: nowrap;
 }
 
 .recordvalue {

@@ -1,0 +1,64 @@
+
+
+<div class="tab-pane" id="recorddetail-measures">
+
+  <div class="table-responsive">
+    <table class="table table-bordered recorddetail-table data-centered">
+      <tr>
+        <th rowspan="2">Measure</th>
+        <th colspan="5">Type</th>
+        <th rowspan="2" title="Ranking" style="width: 20px;">Rank.</th>
+        <th colspan="3">Location</th>
+        <th colspan="6">Broad evaluation</th>
+      </tr>
+
+      <tr class="sub-header">
+        <td title="Legal/Vertical">Lgl.</td>
+        <td title="Administrative">Adm.</td>
+        <td title="Contractual">Contr.</td>
+        <td title="Recurrent">Rec.</td>
+        <td title="One-off">Off.</td>
+
+        <td title="Inside">In.</td>
+        <td title="Outside">Out.</td>
+        <td title="Both inside-outside">Both.</td>
+
+        <td title="Maintain">Maint.</td>
+        <td title="Enhance">Enh.</td>
+        <td title="Long term">L. term</td>
+        <td title="No effect">No eff.</td>
+        <td title="Unknown">Unk.</td>
+        <td title="Not evaluated">Not ev.</td>
+      </tr>
+
+      {% for measure in measures %}
+        <tr>
+          <td style="text-align: left; white-space: normal;">
+            {{- measure.lu.code }} - {{ measure.lu.name -}}
+          </td>
+
+          <td>{{ macros.measure_icon(measure.type_legal) }}</td>
+          <td>{{ macros.measure_icon(measure.type_administrative) }}</td>
+          <td>{{ macros.measure_icon(measure.type_contractual) }}</td>
+          <td>{{ macros.measure_icon(measure.type_recurrent) }}</td>
+          <td>{{ macros.measure_icon(measure.type_oneoff) }}</td>
+
+          <td title="{{ measure.lu_ranking.name }}">
+            {{ measure.lu_ranking.code }}
+          </td>
+
+          <td>{{ macros.measure_icon(measure.location_inside) }}</td>
+          <td>{{ macros.measure_icon(measure.location_outside) }}</td>
+          <td>{{ macros.measure_icon(measure.location_both) }}</td>
+
+          <td>{{ macros.measure_icon(measure.broad_evaluation_maintain) }}</td>
+          <td>{{ macros.measure_icon(measure.broad_evaluation_enhance) }}</td>
+          <td>{{ macros.measure_icon(measure.broad_evaluation_longterm) }}</td>
+          <td>{{ macros.measure_icon(measure.broad_evaluation_noeffect) }}</td>
+          <td>{{ macros.measure_icon(measure.broad_evaluation_unknown) }}</td>
+          <td>{{ macros.measure_icon(measure.broad_evaluation_notevaluat_18) }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>

@@ -74,7 +74,9 @@ def detail(record_id):
     return flask.render_template('habitat/detail.html', **{
         'habitat': record.habitat,
         'record': schemas.parse_habitat(record),
-        'pressures': record.pressures.all(),
+        'pressures': record.pressures.filter_by(type='p').all(),
+        'threats': record.pressures.filter_by(type='t').all(),
+        'measures': record.measures.all(),
     })
 
 

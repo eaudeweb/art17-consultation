@@ -189,6 +189,9 @@ class IndexView(flask.views.View):
     def get_pressures(self, record):
         return record.pressures.all()
 
+    def get_measures(self, record):
+        return record.measures.all()
+
     def prepare_context(self):
         self.ctx.update({
             'topic_template': self.topic_template,

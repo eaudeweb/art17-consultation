@@ -1,3 +1,15 @@
+{%- from 'bits.html' import fonticon %}
+
+
+{% macro measure_icon(measure) -%}
+  {% if measure|int %}
+    {{ fonticon('check') }}
+  {% else %}
+    {{ fonticon('unchecked') }}
+  {% endif %}
+{% endmacro %}
+
+
 {% macro conclusion_td(conclusion) -%}
   <td class="conclusion conclusion-{{ conclusion.value }}">{{ conclusion.value }}</td>
 {%- endmacro %}

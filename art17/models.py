@@ -107,6 +107,15 @@ class LuPollution(Base):
     name = Column(String)
 
 
+class LuMeasures(Base):
+    __tablename__ = u'lu_measures'
+
+    objectid = Column(Integer, primary_key=True, index=True)
+    code = Column(String)
+    name = Column(String)
+    valid_entry = Column(String)
+
+
 class DataHabitat(Base):
     __tablename__ = u'data_habitats'
 
@@ -371,6 +380,50 @@ class DataSpeciesRegion(Base):
 
     lu = relationship(LuBiogeoreg,
                       primaryjoin=(region == foreign(LuBiogeoreg.code)),
+                      innerjoin=True, uselist=False)
+
+
+class DataMeasures(Base):
+    __tablename__ = u'data_measures'
+
+    id = Column('objectid', Integer, primary_key=True, index=True)
+    measurecode = Column(String)
+    measure_sr_id = Column(Numeric,
+                           ForeignKey(DataSpeciesRegion.id),
+                           index=True)
+    measure_hr_id = Column(Numeric,
+                           ForeignKey(DataHabitattypeRegion.id),
+                           index=True)
+    type_legal = Column(Numeric)
+    type_administrative = Column(Numeric)
+    type_contractual = Column(Numeric)
+    type_recurrent = Column(Numeric)
+    type_oneoff = Column(Numeric)
+    rankingcode = Column(String)
+    location_inside = Column(Numeric)
+    location_outside = Column(Numeric)
+    location_both = Column(Numeric)
+    broad_evaluation_maintain = Column(Numeric)
+    broad_evaluation_enhance = Column(Numeric)
+    broad_evaluation_longterm = Column(Numeric)
+    broad_evaluation_noeffect = Column(Numeric)
+    broad_evaluation_unknown = Column(Numeric)
+    broad_evaluation_notevaluat_18 = Column(Numeric)
+    validated = Column(Integer)
+    validation_date = Column(DateTime)
+
+    species = relationship(u'DataSpeciesRegion',
+        backref=db.backref('measures', lazy='dynamic'))
+
+    habitat = relationship(u'DataHabitattypeRegion',
+        backref=db.backref('measures', lazy='dynamic'))
+
+    lu = relationship(LuMeasures,
+                      primaryjoin=(measurecode == foreign(LuMeasures.code)),
+                      innerjoin=True, uselist=False)
+
+    lu_ranking = relationship(LuRanking,
+                      primaryjoin=(rankingcode == foreign(LuRanking.code)),
                       innerjoin=True, uselist=False)
 
 

@@ -101,6 +101,7 @@ def detail(record_id):
         'record': schemas.parse_species(record),
         'pressures': record.pressures.filter_by(type='p').all(),
         'threats': record.pressures.filter_by(type='t').all(),
+        'measures': record.measures.all(),
     })
 
 
