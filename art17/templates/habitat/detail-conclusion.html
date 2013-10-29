@@ -1,0 +1,21 @@
+<div class="tab-pane" id="recorddetail-conclusions">
+  <div class="table-responsive">
+    <table class="table table-bordered recorddetail-table">
+
+      <tr>
+        <th>Structura și funcțiile specifice</th>
+        {{ macros.conclusion_td(record.structure) }}
+      </tr>
+
+      <tr>
+        <th>Perspective viitoare</th>
+        {{ macros.conclusion_td(record.future_prospects) }}
+      </tr>
+
+      <tr>
+        <th>Evaluare generală a stării de conservare</th>
+        {{ macros.conclusion_td(record.overall_assessment) }}
+      </tr>
+    </table>
+  </div>
+</div>

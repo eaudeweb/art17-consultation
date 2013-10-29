@@ -1,0 +1,67 @@
+<div class="tab-pane" id="recorddetail-area">
+  <div class="table-responsive">
+    <table class="table table-bordered recorddetail-table">
+      <tr>
+        <th>Suprafață</th>
+        <td>{{ macros.range_html(record.coverage) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - metoda utilizată</td>
+        <td>{{ record.coverage.method }}</td>
+      </tr>
+
+      <tr>
+        <th>Tendință pe termen scurt</th>
+        <td>{{ macros.trend_detail_html(record.coverage.trend_short) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - perioada</td>
+        <td>{{ macros.period_html(record.coverage.trend_short.period) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - magnitudinea</td>
+        <td>{{ macros.magnitude_html(record.coverage.trend_short.magnitude) }}</td>
+      </tr>
+
+      <tr>
+        <th>Tendință pe termen lung</th>
+        <td>
+          {{ macros.trend_detail_html(record.coverage.trend_long) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - perioada</td>
+        <td>{{ macros.period_html(record.coverage.trend_long.period) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - magnitudinea</td>
+        <td>{{ macros.magnitude_html(record.coverage.trend_long.magnitude) }}</td>
+      </tr>
+
+      <tr>
+        <th>Arealul favorabil de referință</th>
+        <td>{{ macros.reference_value_html(record.coverage.reference_value,
+                unit='km²') }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - metoda utilizată</td>
+        <td>
+          {%- if record.coverage.reference_value.method %}
+            {{ record.coverage.reference_value.method }}
+          {% endif -%}
+        </td>
+      </tr>
+
+      <tr>
+        <th>Concluzie</th>
+        {{ macros.conclusion_td(record.coverage.conclusion) }}
+      </tr>
+
+    </table>
+  </div>
+</div>

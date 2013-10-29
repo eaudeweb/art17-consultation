@@ -1,8 +1,4 @@
-{%- from 'common/td.html'
-    import conclusion_td, range_html, trend_html, trend_detail_html,
-    magnitude_html, population_size_td, reference_value_html, period_html
-    with context %}
-
+{%- import 'common/td.html' as macros with context %}
 
 <h1>
   {{ habitat.lu.name_ro }}
@@ -22,174 +18,13 @@
 
 
 <div class="tab-content">
-  <div class="tab-pane active" id="recorddetail-range">
-    <div class="table-responsive">
-      <table class="table table-bordered recorddetail-table">
-        <tr>
-          <th>Suprafață</th>
-          <td>{{ range_html(record.range) }}</td>
-        </tr>
 
-        <tr>
-          <th> &nbsp; - metoda utilizată</th>
-          <td>{{ record.range.method }}</td>
-        </tr>
+  {% include "habitat/detail-range.html" with context %}
 
-        <tr>
-          <th>Tendință pe termen scurt</th>
-          <td>{{ trend_detail_html(record.range.trend_short) }}</td>
-        </tr>
+  {% include "habitat/detail-area.html" with context %}
 
-        <tr>
-          <th> &nbsp; - perioada</th>
-          <td>{{ period_html(record.range.trend_short.period) }}</td>
-        </tr>
+  {% include "habitat/detail-conclusion.html" with context %}
 
-        <tr>
-          <th> &nbsp; - magnitudinea</th>
-          <td>{{ magnitude_html(record.range.trend_short.magnitude) }}</td>
-        </tr>
+  {% include "habitat/detail-pressures.html" with context %}
 
-        <tr>
-          <th>Tendință pe termen lung</th>
-          <td>
-            {{ trend_detail_html(record.range.trend_long) }}</td>
-        </tr>
-
-        <tr>
-          <th> &nbsp; - perioada</th>
-          <td>{{ period_html(record.range.trend_long.period) }}</td>
-        </tr>
-
-        <tr>
-          <th> &nbsp; - magnitudinea</th>
-          <td>{{ magnitude_html(record.range.trend_long.magnitude) }}</td>
-        </tr>
-
-        <tr>
-          <th>Arealul favorabil de referință</th>
-          <td>{{ reference_value_html(record.range.reference_value,
-                  unit='km²') }}</td>
-        </tr>
-
-        <tr>
-          <th> &nbsp; - metoda utilizată</th>
-          <td>
-            {%- if record.range.reference_value.method %}
-              {{ record.range.reference_value.method }}
-            {% endif -%}
-          </td>
-        </tr>
-
-        <tr>
-          <th>Concluzie</th>
-          {{ conclusion_td(record.range.conclusion) }}
-        </tr>
-
-      </table>
-    </div>
-  </div>
-
-  <div class="tab-pane" id="recorddetail-area">
-    <div class="table-responsive">
-      <table class="table table-bordered recorddetail-table">
-        <tr>
-          <th>Suprafață</th>
-          <td>{{ range_html(record.coverage) }}</td>
-        </tr>
-
-        <tr>
-          <th> &nbsp; - metoda utilizată</th>
-          <td>{{ record.coverage.method }}</td>
-        </tr>
-
-        <tr>
-          <th>Tendință pe termen scurt</th>
-          <td>{{ trend_detail_html(record.coverage.trend_short) }}</td>
-        </tr>
-
-        <tr>
-          <th> &nbsp; - perioada</th>
-          <td>{{ period_html(record.coverage.trend_short.period) }}</td>
-        </tr>
-
-        <tr>
-          <th> &nbsp; - magnitudinea</th>
-          <td>{{ magnitude_html(record.coverage.trend_short.magnitude) }}</td>
-        </tr>
-
-        <tr>
-          <th>Tendință pe termen lung</th>
-          <td>
-            {{ trend_detail_html(record.coverage.trend_long) }}</td>
-        </tr>
-
-        <tr>
-          <th> &nbsp; - perioada</th>
-          <td>{{ period_html(record.coverage.trend_long.period) }}</td>
-        </tr>
-
-        <tr>
-          <th> &nbsp; - magnitudinea</th>
-          <td>{{ magnitude_html(record.coverage.trend_long.magnitude) }}</td>
-        </tr>
-
-        <tr>
-          <th>Arealul favorabil de referință</th>
-          <td>{{ reference_value_html(record.coverage.reference_value,
-                  unit='km²') }}</td>
-        </tr>
-
-        <tr>
-          <th> &nbsp; - metoda utilizată</th>
-          <td>
-            {%- if record.coverage.reference_value.method %}
-              {{ record.coverage.reference_value.method }}
-            {% endif -%}
-          </td>
-        </tr>
-
-        <tr>
-          <th>Concluzie</th>
-          {{ conclusion_td(record.coverage.conclusion) }}
-        </tr>
-
-      </table>
-    </div>
-  </div>
-
-  <div class="tab-pane" id="recorddetail-conclusions">
-    <div class="table-responsive">
-      <table class="table table-bordered recorddetail-table">
-
-        <tr>
-          <th>Structura și funcțiile specifice</th>
-          {{ conclusion_td(record.structure) }}
-        </tr>
-
-        <tr>
-          <th>Perspective viitoare</th>
-          {{ conclusion_td(record.future_prospects) }}
-        </tr>
-
-        <tr>
-          <th>Evaluare generală a stării de conservare</th>
-          {{ conclusion_td(record.overall_assessment) }}
-        </tr>
-      </table>
-    </div>
-  </div>
-
-  <div class="tab-pane" id="recorddetail-pressures">
-    <div class="table-responsive">
-      <table class="table table-bordered recorddetail-table">
-
-        {%- for pressure in pressures %}
-          <tr>
-            <td>{{ pressure }}</td>
-          </tr>
-        {%- endfor %}
-      </table>
-    </div>
-  </div>
 </div>
