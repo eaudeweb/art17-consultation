@@ -242,6 +242,9 @@ def parse_habitat(row, is_comment=False):
                                     'complementary_favourable_area')
                                 # ideal: row.coverage_surface_area
         }
+
+    rv['sources'] = row.published
+
     rv['structure'] = parse_conclusion(row, 'conclusion_structure')
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
