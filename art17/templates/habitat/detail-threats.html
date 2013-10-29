@@ -1,22 +1,22 @@
-<div class="tab-pane" id="recorddetail-pressures">
+<div class="tab-pane" id="recorddetail-threats">
   <div class="table-responsive">
     <table class="table table-bordered recorddetail-table table-vertical">
       <tr>
-        <th>Presiune</th>
+        <th>Amenințare</th>
         <th>Clasificare</th>
         <th>Calificativ de poluare</th>
       </tr>
-      {%- for pressure in pressures %}
+      {%- for threat in threats %}
         <tr>
           <td>
-            {{ pressure.lu.code }} -
-            {{ pressure.lu.name }}
+            {{ threat.lu.code }} -
+            {{ threat.lu.name }}
           </td>
-          <td title="{{ pressure.lu_ranking.name }}">
-            {{ pressure.lu_ranking.code }}
+          <td title="{{ threat.lu_ranking.name }}">
+            {{ threat.lu_ranking.code }}
           </td>
           <td>
-            {% for pol in pressure.pollutions %}
+            {% for pol in threat.pollutions %}
               <span title="{{ pol.lu.name }}">
                 {{ pol.lu.code }}
               </span>
@@ -29,7 +29,7 @@
     <table class="table table-bordered recorddetail-table">
       <tr>
         <th>Metoda utilizată</th>
-        <td>{{ macros.method_pressures_html(record.pressures_method)}}</td>
+        <td>{{ macros.method_threats_html(record.threats_method)}}</td>
       </tr>
     </table>
   </div>

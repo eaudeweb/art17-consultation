@@ -9,6 +9,8 @@
   <li class="active">
     <a href="#recorddetail-range" data-toggle="tab">Proporția</a></li>
   <li><a href="#recorddetail-area" data-toggle="tab">Suprafața</a></li>
+  <li><a href="#recorddetail-pressures" data-toggle="tab">Presiuni</a></li>
+  <li><a href="#recorddetail-threats" data-toggle="tab">Amenințǎri</a></li>
   <li><a href="#recorddetail-conclusions" data-toggle="tab">Concluzii</a></li>
   <li><a href="#recorddetail-pressures" data-toggle="tab">Presiuni</a></li>
   <li><a href="#recorddetail-sources" data-toggle="tab">Surse publicate</a></li>
@@ -20,6 +22,10 @@
   {% include "habitat/detail-range.html" with context %}
 
   {% include "habitat/detail-area.html" with context %}
+
+  {% include "habitat/detail-pressures.html" with context %}
+
+  {% include "habitat/detail-threats.html" with context %}
 
   {% include "habitat/detail-conclusion.html" with context %}
 

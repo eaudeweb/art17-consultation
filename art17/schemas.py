@@ -243,6 +243,9 @@ def parse_habitat(row, is_comment=False):
                                 # ideal: row.coverage_surface_area
         }
 
+    rv['pressures_method'] = row.pressures_method
+    rv['threats_method'] = row.threats_method
+
     rv['sources'] = row.published
 
     rv['structure'] = parse_conclusion(row, 'conclusion_structure')
