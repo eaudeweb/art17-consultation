@@ -8,7 +8,7 @@
 
       <tr>
         <td> &nbsp; - metoda utilizată</td>
-        <td>{{ record.range.method }}</td>
+        <td>{{ macros.method_html(record.range.method) }}</td>
       </tr>
 
       <tr>
@@ -54,6 +54,12 @@
           {%- if record.range.reference_value.method %}
             {{ record.range.reference_value.method }}
           {% endif -%}
+        </td>
+      </tr>
+
+      <tr>
+        <th>Motivul schimbării</th>
+        <td>{{ macros.reasons_for_change_html(record.range) }}
         </td>
       </tr>
 

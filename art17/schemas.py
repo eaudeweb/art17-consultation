@@ -230,8 +230,8 @@ def parse_habitat(row, is_comment=False):
             'trend_long': parse_trend(row, 'range_trend_long', magnitude=True),
             'conclusion': parse_conclusion(row, 'conclusion_range'),
             'reference_value': parse_reference_value(row,
-                                    'complementary_favourable_range')
-                                # ideal: row.range_surface_area
+                                    'complementary_favourable_range'),
+            'reasons_for_change': reasons_for_change(row, 'range')
         }
     rv['coverage'] = {
             'surface_area': row.coverage_surface_area,
