@@ -80,12 +80,12 @@
 {%- endmacro %}
 
 
-{% macro population_magnitude_html(magnitude) -%}
+{% macro magnitude_ci_html(magnitude) -%}
 {% if magnitude.min or magnitude.max %}
     {{ magnitude.min }} - {{ magnitude.max }}
 {% endif %}
 {% if magnitude.ci %}
-  ({{ magnitude.ci|int }}%)
+  <span title="Intervalul de siguranță">({{ magnitude.ci|int }}%)</span>
 {% endif %}
 {%- endmacro %}
 

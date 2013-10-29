@@ -7,8 +7,13 @@
       </tr>
 
       <tr>
-        <td> &nbsp; - metoda utilizată</td>
-        <td>{{ record.coverage.method }}</td>
+        <th>Anul sau perioada</th>
+        <td>{{ record.coverage.coverage_date }}</td>
+      </tr>
+
+      <tr>
+        <th>Metoda utilizată</th>
+        <td>{{ macros.method_html(record.coverage.method) }}</td>
       </tr>
 
       <tr>
@@ -23,7 +28,12 @@
 
       <tr>
         <td> &nbsp; - magnitudinea</td>
-        <td>{{ macros.magnitude_html(record.coverage.trend_short.magnitude) }}</td>
+        <td>{{ macros.magnitude_ci_html(record.coverage.trend_short.magnitude) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - metoda utilizată</td>
+        <td>{{ macros.method_html(record.coverage.trend_short.method) }}</td>
       </tr>
 
       <tr>
@@ -39,7 +49,12 @@
 
       <tr>
         <td> &nbsp; - magnitudinea</td>
-        <td>{{ macros.magnitude_html(record.coverage.trend_long.magnitude) }}</td>
+        <td>{{ macros.magnitude_ci_html(record.coverage.trend_long.magnitude) }}</td>
+      </tr>
+
+      <tr>
+        <td> &nbsp; - metoda utilizată</td>
+        <td>{{ macros.method_html(record.coverage.trend_long.method) }}</td>
       </tr>
 
       <tr>
@@ -54,6 +69,12 @@
           {%- if record.coverage.reference_value.method %}
             {{ record.coverage.reference_value.method }}
           {% endif -%}
+        </td>
+      </tr>
+
+      <tr>
+        <th>Motivul schimbării</th>
+        <td>{{ macros.reasons_for_change_html(record.coverage) }}
         </td>
       </tr>
 

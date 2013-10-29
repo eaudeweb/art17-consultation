@@ -24,7 +24,7 @@ def parse_trend(obj, prefix, magnitude=False):
     return rv
 
 
-def parse_population_trend(obj, prefix):
+def parse_magnitude_ci_trend(obj, prefix):
     rv = parse_trend(obj, prefix, magnitude=True)
     rv['magnitude']['ci'] = getattr(obj, prefix + '_magnitude_ci')
     rv['method'] = getattr(obj, prefix + '_method')
@@ -122,9 +122,9 @@ def parse_species(row, is_comment=False):
             'additional': additional_info(row, 'population'),
             'population_date': row.population_date,
             'conclusion': parse_conclusion(row, 'conclusion_population'),
-            'trend_short': parse_population_trend(row,
+            'trend_short': parse_magnitude_ci_trend(row,
                                                   'population_trend'),
-            'trend_long': parse_population_trend(row,
+            'trend_long': parse_magnitude_ci_trend(row,
                                                  'population_trend_long'),
             'reference_value': parse_reference_value(row,
                                     'complementary_favourable_population')
@@ -235,12 +235,14 @@ def parse_habitat(row, is_comment=False):
         }
     rv['coverage'] = {
             'surface_area': row.coverage_surface_area,
-            'trend_short': parse_trend(row, 'coverage_trend', magnitude=True),
-            'trend_long': parse_trend(row, 'coverage_trend_long', magnitude=True),
+            'coverage_date': row.coverage_date,
+            'method': row.coverage_method,
+            'trend_short': parse_magnitude_ci_trend(row, 'coverage_trend'),
+            'trend_long': parse_magnitude_ci_trend(row, 'coverage_trend_long'),
             'conclusion': parse_conclusion(row, 'conclusion_area'),
             'reference_value': parse_reference_value(row,
-                                    'complementary_favourable_area')
-                                # ideal: row.coverage_surface_area
+                                    'complementary_favourable_area'),
+            'reasons_for_change': reasons_for_change(row, 'area')
         }
 
     rv['pressures_method'] = row.pressures_method
