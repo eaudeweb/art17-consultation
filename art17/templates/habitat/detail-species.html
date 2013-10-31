@@ -1,0 +1,34 @@
+<div class="tab-pane" id="recorddetail-species">
+  <div class="table-responsive">
+
+    <h4>Speciile tipice</h4>
+    <ul>
+      {%- for sp in species %}
+      <li>{{ sp.speciesname }}</li>
+      {%- endfor %}
+    </ul>
+
+    <table class="table table-bordered recorddetail-table">
+      <tr>
+        <th>Speciile tipice <br> - metoda utilizată</th>
+        <td>{{ typical_species_method | nl2br}}</td>
+      </tr>
+
+      <tr>
+        <th>Justificarea modificărilor (%) <br> induse de tendințe</th>
+        <td>{{ justification | nl2br }}</td>
+      </tr>
+
+      <tr>
+        <th>Structura şi funcțiile <br> - metoda utilizată</th>
+        <td>{{ macros.method_html(record.structure_and_functions_method) }}</td>
+      </tr>
+
+      <tr>
+        <th>Alte informații relevante</th>
+        <td>{{ record.pressures_method.other_relevant_information | nl2br }}</td>
+      </tr>
+
+    </table>
+  </div>
+</div>

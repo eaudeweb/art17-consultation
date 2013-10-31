@@ -253,6 +253,11 @@ def parse_habitat(row, is_comment=False):
             'area_trend': row.natura2000_area_trend,
     }
 
+    rv['typical_species_method'] = row.typical_species_method
+    rv['justification'] = row.justification
+    rv['structure_and_functions_method'] = row.structure_and_functions_method
+    rv['other_relevant_information'] = row.other_relevant_information
+
     rv['pressures_method'] = row.pressures_method
     rv['threats_method'] = row.threats_method
 

@@ -77,6 +77,7 @@ def detail(record_id):
         'pressures': record.pressures.filter_by(type='p').all(),
         'threats': record.pressures.filter_by(type='t').all(),
         'measures': record.measures.all(),
+        'species': record.species.all(),
     })
 
 

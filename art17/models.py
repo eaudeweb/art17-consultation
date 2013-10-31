@@ -576,6 +576,22 @@ class DataHabitattypeComment(Base):
         backref=db.backref('habitat_comments', lazy='dynamic'))
 
 
+class DataHabitatSpecies(Base):
+    __tablename__ = u'data_htypical_species'
+
+    id = Column('objectid', Integer, primary_key=True, index=True)
+    habitat_id = Column('species_hr_id', Integer,
+                        ForeignKey(DataHabitattypeRegion.id), index=True)
+    species_id = Column('speciescode', Integer,
+                        ForeignKey(DataSpecies.id), index=True)
+    speciesname = Column(String)
+    validated = Column(Integer)
+    validation_date = Column(DateTime)
+
+    habitats = relationship(u'DataHabitattypeRegion',
+        backref=db.backref('species', lazy='dynamic'))
+
+
 class DataSpeciesComment(Base):
     __tablename__ = u'data_species_comments'
 
