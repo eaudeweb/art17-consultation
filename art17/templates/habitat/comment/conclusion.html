@@ -1,0 +1,64 @@
+{% from 'common/comment_bits.html' import error_cls, errors %}
+
+<div class="tab-pane comment" id="comment-conclusion">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="form-group">
+        {%- set structure = form.structure %}
+        <label for="structure.value">
+          Structura și funcțiile specifice
+        </label>
+
+        {{ errors(structure) }}
+
+        <div class="row">
+          <div class="col-sm-3 {{- error_cls(structure.value) }}">
+            {{ structure.value(class='form-control') }}
+          </div>
+
+          <div class="col-sm-3 {{- error_cls(structure.trend) }}">
+            {{ structure.trend(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set future_prospects = form.future_prospects %}
+        <label for="future_prospects.value">
+          Perspective viitoare
+        </label>
+
+        {{ errors(future_prospects) }}
+
+        <div class="row">
+          <div class="col-sm-3 {{- error_cls(future_prospects.value) }}">
+            {{ future_prospects.value(class='form-control') }}
+          </div>
+
+          <div class="col-sm-3 {{- error_cls(future_prospects.trend) }}">
+            {{ future_prospects.trend(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set overall_assessment = form.overall_assessment %}
+        <label for="overall_assessment.value">
+          Evaluare generală a stării de conservare
+        </label>
+
+        {{ errors(overall_assessment) }}
+
+        <div class="row">
+          <div class="col-sm-3 {{- error_cls(overall_assessment.value) }}">
+            {{ overall_assessment.value(class='form-control') }}
+          </div>
+
+          <div class="col-sm-3 {{- error_cls(overall_assessment.trend) }}">
+            {{ overall_assessment.trend(class='form-control') }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

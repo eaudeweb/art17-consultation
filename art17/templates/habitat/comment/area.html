@@ -1,0 +1,155 @@
+{% from 'common/comment_bits.html' import error_cls, errors %}
+
+<div class="tab-pane comment" id="comment-area">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="form-group">
+        <label for="coverage.surface_area">
+          Suprafață (km²)
+        </label>
+
+        {{ errors(form.coverage.surface_area) }}
+
+        <div class="row">
+          <div class="col-sm-4 {{- error_cls(form.coverage.surface_area) }}">
+            {{ form.coverage.surface_area(class='form-control',
+                    placeholder="suprafața trebuie exprimatǎ in km²") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="coverage.date">
+          Anul/perioada
+        </label>
+
+        {{ errors(form.coverage.date) }}
+
+        <div class="row">
+          <div class="col-sm-4 {{- error_cls(form.coverage.date) }}">
+            {{ form.coverage.date(class='form-control',
+                    placeholder="an sau perioadǎ") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="coverage.method">
+          Metoda utilizată
+        </label>
+
+        {{ errors(form.coverage.method) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(form.coverage.method) }}">
+            {{ form.coverage.method(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set trend_short = form.coverage.trend_short %}
+        <label for="coverage.trend_short.trend">
+          Tendință pe termen scurt
+        </label>
+
+        {{ errors(trend_short) }}
+
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(trend_short.trend) }}">
+            {{ trend_short.trend(class='form-control') }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_short.period.start) }}">
+            {{ trend_short.period.start(class='form-control',
+                    placeholder="an de început") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_short.period.end) }}">
+            {{ trend_short.period.end(class='form-control',
+                    placeholder="an de sfǎrșit") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set trend_long = form.coverage.trend_long %}
+        <label for="coverage.trend_long.trend">
+          Tendință pe termen lung
+        </label>
+
+        {{ errors(trend_long) }}
+
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(trend_long.trend) }}">
+            {{ trend_long.trend(class='form-control') }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_long.period.start) }}">
+            {{ trend_long.period.start(class='form-control',
+                    placeholder="an de început") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_long.period.end) }}">
+            {{ trend_long.period.end(class='form-control',
+                    placeholder="an de sfǎrșit") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set reference_value = form.coverage.reference_value %}
+        <label for="coverage.reference_value.op">
+          Arealul favorabil de referință
+        </label>
+
+        {{ errors(reference_value) }}
+
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(reference_value.op) }}">
+            {{ reference_value.op(class='form-control') }}
+          </div>
+
+          <div class="col-sm-4 {{- error_cls(reference_value.number) }}">
+            {{ reference_value.number(class='form-control',
+                    placeholder="suprafața trebuie exprimatǎ in km²") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="coverage.reference_value.method">
+          Arealul favorabil de referință - Metoda
+        </label>
+
+        {{ errors(form.coverage.reference_value.method) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(form.coverage.reference_value.method) }}">
+            {{ form.coverage.reference_value.method(class='form-control', rows=2) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set conclusion = form.coverage.conclusion %}
+        <label for="coverage.conclusion.value">
+          Concluzie
+        </label>
+
+        {{ errors(conclusion) }}
+
+        <div class="row">
+          <div class="col-sm-3 {{- error_cls(conclusion.value) }}">
+            {{ conclusion.value(class='form-control') }}
+          </div>
+
+          <div class="col-sm-3 {{- error_cls(conclusion.trend) }}">
+            {{ conclusion.trend(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -72,7 +72,8 @@ fieldset legend {
     font-size: 12px;
 }
 
-.recorddetail-table {
+.recorddetail-table,
+.comment {
     margin-top: -1px;
 }
 
