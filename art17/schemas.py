@@ -210,6 +210,7 @@ def parse_species_commentform(row):
             'conclusion': parse_conclusion(row, 'conclusion_habitat'),
     }
 
+
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
 
@@ -244,6 +245,13 @@ def parse_habitat(row, is_comment=False):
                                     'complementary_favourable_area'),
             'reasons_for_change': reasons_for_change(row, 'area')
         }
+
+    rv['natura2000'] = {
+            'area_min': row.natura2000_area_min,
+            'area_max': row.natura2000_area_max,
+            'area_method': row.natura2000_area_method,
+            'area_trend': row.natura2000_area_trend,
+    }
 
     rv['pressures_method'] = row.pressures_method
     rv['threats_method'] = row.threats_method

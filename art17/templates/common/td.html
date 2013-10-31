@@ -143,6 +143,21 @@
 {%- endmacro %}
 
 
+{% macro natura2000_range_html(natura2000) %}
+  {%- if natura2000.area_min or natura2000.area_max %}
+    {%- if natura2000.area_min == natura2000.area_max %}
+      {{- natura2000.area_min }} km<sup>2</sup>
+    {%- else %}
+      {{- natura2000.area_min -}}
+      -
+      {{- natura2000.area_max -}}
+      &nbsp;
+      km<sup>2</sup>
+    {%- endif %}
+  {%- endif %}
+{%- endmacro %}
+
+
 {% macro population_size_td(size) -%}
   <td>{{ population_size_html(size) }}</td>
 {%- endmacro %}
