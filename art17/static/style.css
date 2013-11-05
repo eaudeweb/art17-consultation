@@ -59,6 +59,14 @@ fieldset legend {
     display: inline;
 }
 
+.text-error a,
+.text-error a:active,
+.text-error a:focus,
+.text-error a:hover,
+.text-error a:visited {
+    color: #b94a48 !important;
+}
+
 .records > tbody > tr > td {
     padding: 3px 3px;
 }
