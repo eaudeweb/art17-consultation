@@ -3,7 +3,7 @@ import argparse
 import logging
 from sqlalchemy import (Column, DateTime, ForeignKey, Index, func,
                         String, Table, Text, Numeric, cast, Binary,
-                        Boolean, Integer)
+                        Boolean, Integer, Sequence)
 from sqlalchemy.orm import relationship, foreign
 from sqlalchemy.ext.declarative import declarative_base
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -23,7 +23,7 @@ def create_uuid():
 class LuHabitattypeCodes(Base):
     __tablename__ = u'lu_habitattype_codes'
 
-    objectid = Column(Integer, primary_key=True)
+    objectid = Column(Integer, Sequence('R679'), primary_key=True)
     code = Column(String)
     hd_name = Column(String)
     name_ro = Column('hd_name_ro', Text)
@@ -47,7 +47,7 @@ class LuGrupSpecie(Base):
 class LuHdSpecies(Base):
     __tablename__ = u'lu_hd_species'
 
-    objectid = Column(Integer, primary_key=True)
+    objectid = Column(Integer, Sequence('R680'), primary_key=True)
     code = Column('speciescode', Numeric)
     hdname = Column(String)
     speciesname = Column(String)
@@ -71,7 +71,7 @@ class LuHdSpecies(Base):
 class LuBiogeoreg(Base):
     __tablename__ = u'lu_biogeoreg'
 
-    objectid = Column(Integer, primary_key=True)
+    objectid = Column(Integer, Sequence('R675'), primary_key=True)
     code = Column(String)
     name = Column(String)
     name_ro = Column('nume', String)
@@ -81,7 +81,7 @@ class LuBiogeoreg(Base):
 class LuThreats(Base):
     __tablename__ = u'lu_threats'
 
-    objectid = Column(Integer, primary_key=True)
+    objectid = Column(Integer, Sequence('R692'), primary_key=True)
     code = Column(String)
     name = Column(String)
     note = Column(String)
@@ -92,7 +92,7 @@ class LuThreats(Base):
 class LuRanking(Base):
     __tablename__ = u'lu_ranking'
 
-    objectid = Column(Integer, primary_key=True)
+    objectid = Column(Integer, Sequence('R690'), primary_key=True)
     code = Column(String)
     name = Column(String)
     note = Column(String)
@@ -102,7 +102,7 @@ class LuRanking(Base):
 class LuPollution(Base):
     __tablename__ = u'lu_pollution'
 
-    objectid = Column(Integer, primary_key=True)
+    objectid = Column(Integer, Sequence('R685'), primary_key=True)
     code = Column(String)
     name = Column(String)
 
@@ -110,7 +110,7 @@ class LuPollution(Base):
 class LuMeasures(Base):
     __tablename__ = u'lu_measures'
 
-    objectid = Column(Integer, primary_key=True)
+    objectid = Column(Integer, Sequence('R681'), primary_key=True)
     code = Column(String)
     name = Column(String)
     valid_entry = Column(String)
@@ -119,7 +119,7 @@ class LuMeasures(Base):
 class DataHabitat(Base):
     __tablename__ = u'data_habitats'
 
-    id = Column('objectid', Integer, primary_key=True)
+    id = Column('objectid', Integer, Sequence('R661'), primary_key=True)
     country = Column(String)
     code = Column('habitatcode', String)
     distribution_map = Column(Integer)
@@ -145,7 +145,7 @@ class DataHabitat(Base):
 class DataHabitatsCheckList(Base):
     __tablename__ = u'data_habitats_check_list'
 
-    objectid = Column(Integer, primary_key=True)
+    objectid = Column(Integer, Sequence('R662'), primary_key=True)
     natura_2000_code = Column(String)
     hd_name = Column(String)
     valid_name = Column(String)
@@ -160,7 +160,7 @@ class DataHabitatsCheckList(Base):
 class DataHabitattypeRegion(Base):
     __tablename__ = u'data_habitattype_reg'
 
-    id = Column('objectid', Integer, primary_key=True)
+    id = Column('objectid', Integer, Sequence('R663'), primary_key=True)
     habitat_id = Column('hr_habitat_id', ForeignKey(DataHabitat.id))
     region = Column(String)
     published = Column(Text)
@@ -237,7 +237,7 @@ class DataHabitattypeRegion(Base):
 class DataSpecies(Base):
     __tablename__ = u'data_species'
 
-    id = Column('objectid', Integer, primary_key=True)
+    id = Column('objectid', Integer, Sequence('R669'), primary_key=True)
     country = Column(String)
     code = Column('speciescode', String)
     alternative_speciesname = Column(String)
@@ -271,7 +271,8 @@ class DataSpecies(Base):
 class DataSpeciesCheckList(Base):
     __tablename__ = u'data_species_check_list'
 
-    natura_2000_code = Column(String, primary_key=True)
+    objectid = Column(Integer, Sequence('R670'), primary_key=True)
+    natura_2000_code = Column(String)
     eunis_code = Column(Integer)
     hd_name = Column(String)
     species_name = Column(String)
@@ -289,7 +290,7 @@ class DataSpeciesCheckList(Base):
 class DataSpeciesRegion(Base):
     __tablename__ = u'data_species_regions'
 
-    id = Column('objectid', Integer, primary_key=True)
+    id = Column('objectid', Integer, Sequence('R671'), primary_key=True)
     species_id = Column('sr_species_id', ForeignKey(DataSpecies.id))
     region = Column(String)
     published = Column(Text)
@@ -387,7 +388,7 @@ class DataSpeciesRegion(Base):
 class DataMeasures(Base):
     __tablename__ = u'data_measures'
 
-    id = Column('objectid', Integer, primary_key=True)
+    id = Column('objectid', Integer, Sequence('R665'), primary_key=True)
     measurecode = Column(String)
     measure_sr_id = Column(Numeric, ForeignKey(DataSpeciesRegion.id))
     measure_hr_id = Column(Numeric, ForeignKey(DataHabitattypeRegion.id))
@@ -427,7 +428,7 @@ class DataMeasures(Base):
 class DataPressuresThreats(Base):
     __tablename__ = u'data_pressures_threats'
 
-    id = Column('objectid', Integer, primary_key=True)
+    id = Column('objectid', Integer, Sequence('R667'), primary_key=True)
     habitat_id = Column('pressure_hr_id', Integer,
                         ForeignKey(DataHabitattypeRegion.id))
     species_id = Column('pressure_sr_id', Integer,
@@ -456,7 +457,7 @@ class DataPressuresThreats(Base):
 class DataPressuresThreatsPollution(Base):
     __tablename__ = u'data_pressures_threats_pol'
 
-    id = Column('objectid', Integer, primary_key=True)
+    id = Column('objectid', Integer, Sequence('R668'), primary_key=True)
     pollution_pressure_id = Column(Integer, ForeignKey(DataPressuresThreats.id))
     pollution_qualifier = Column(String)
     validated = Column(Integer)
@@ -576,7 +577,7 @@ class DataHabitattypeComment(Base):
 class DataHabitatSpecies(Base):
     __tablename__ = u'data_htypical_species'
 
-    id = Column('objectid', Integer, primary_key=True)
+    id = Column('objectid', Integer, Sequence('R664'), primary_key=True)
     habitat_id = Column('species_hr_id', Integer,
                         ForeignKey(DataHabitattypeRegion.id))
     species_id = Column('speciescode', Integer,
