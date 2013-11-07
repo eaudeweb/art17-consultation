@@ -226,6 +226,12 @@ class DataHabitattypeRegion(Base):
     validated = Column(Integer)
     validation_date = Column(DateTime)
 
+    cons_role = Column(String)
+    cons_date = Column(DateTime)
+    cons_user_id = Column(String)
+    cons_status = Column(Text, default='new')
+    cons_deleted = Column(Boolean, default=False)
+
     habitat = relationship(u'DataHabitat',
         backref=db.backref('regions', lazy='dynamic'))
 
@@ -376,6 +382,12 @@ class DataSpeciesRegion(Base):
     natura2000_population_trend = Column(String)
     validated = Column(Integer)
     validation_date = Column(DateTime)
+
+    cons_role = Column(String)
+    cons_date = Column(DateTime)
+    cons_user_id = Column(String)
+    cons_status = Column(Text, default='new')
+    cons_deleted = Column(Boolean, default=False)
 
     species = relationship(u'DataSpecies',
         backref=db.backref('regions', lazy='dynamic'))
