@@ -1,0 +1,144 @@
+{% from 'common/comment_bits.html' import error_cls, errors %}
+
+<div class="tab-pane comment active" id="comment-range">
+  <div class="panel panel-default">
+
+    <div class="panel-body">
+      <div class="form-group">
+        <label for="range.surface_area">
+          Suprafață (km²)
+        </label>
+
+        {{ errors(form.range.surface_area) }}
+
+        <div class="row">
+          <div class="col-sm-4 {{- error_cls(form.range.surface_area) }}">
+            {{ form.range.surface_area(class='form-control',
+                    placeholder="suprafața trebuie exprimatǎ in km²") }}
+          </div>
+
+          <div class="col-sm-2"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="range.method">
+          Metoda utilizată - suprafața arealului
+        </label>
+
+        {{ errors(form.range.method) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(form.range.method) }}">
+            {{ form.range.method(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set trend_short = form.range.trend_short %}
+        <label for="range.trend_short.trend">
+          Tendință pe termen scurt
+        </label>
+
+        {{ errors(trend_short) }}
+
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(trend_short.trend) }}">
+            {{ trend_short.trend(class='form-control') }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_short.period.start) }}">
+            {{ trend_short.period.start(class='form-control',
+                    placeholder="an de început") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_short.period.end) }}">
+            {{ trend_short.period.end(class='form-control',
+                    placeholder="an de sfârșit") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set trend_long = form.range.trend_long %}
+        <label for="range.trend_long.trend">
+          Tendință pe termen lung
+        </label>
+
+        {{ errors(trend_long) }}
+
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(trend_long.trend) }}">
+            {{ trend_long.trend(class='form-control') }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_long.period.start) }}">
+            {{ trend_long.period.start(class='form-control',
+                    placeholder="an de început") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_long.period.end) }}">
+            {{ trend_long.period.end(class='form-control',
+                    placeholder="an de sfârșit") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set reference_value = form.range.reference_value %}
+        <label for="range.reference_value.op">
+          Arealul favorabil de referință
+        </label>
+
+        {{ errors(reference_value) }}
+
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(reference_value.op) }}">
+            {{ reference_value.op(class='form-control') }}
+          </div>
+
+          <div class="col-sm-4 {{- error_cls(reference_value.number) }}">
+            {{ reference_value.number(class='form-control',
+                    placeholder="suprafața trebuie exprimatǎ in km²") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="range.reference_value.method">
+          Arealul favorabil de referință - metoda
+        </label>
+
+        {{ errors(form.range.reference_value.method) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(form.range.reference_value.method) }}">
+            {{ form.range.reference_value.method(class='form-control', rows=2) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set conclusion = form.range.conclusion %}
+        <label for="range.conclusion.value">
+          Concluzie
+        </label>
+
+        {{ errors(conclusion) }}
+
+        <div class="row">
+          <div class="col-sm-3 {{- error_cls(conclusion.value) }}">
+            {{ conclusion.value(class='form-control') }}
+          </div>
+
+          <div class="col-sm-3 {{- error_cls(conclusion.trend) }}">
+            {{ conclusion.trend(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

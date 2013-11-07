@@ -1,0 +1,174 @@
+{% from 'common/comment_bits.html' import error_cls, errors %}
+
+<div class="tab-pane comment" id="comment-population">
+  <div class="panel panel-default">
+
+    <div class="panel-body">
+      <div class="form-group">
+        {%- set population = form.population.size.population %}
+        <label for="population.size.population.unit">
+          Estimarea mărimii populației
+        </label>
+
+        {{ errors(population) }}
+
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(population.unit) }}">
+            {{ population.unit(class='form-control') }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(population.min) }}">
+            {{ population.min(class='form-control',
+                    placeholder="numǎr minim") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(population.max) }}">
+            {{ population.max(class='form-control',
+                    placeholder="numǎr maxim") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set population_alt = form.population.size.population_alt %}
+
+        {{ errors(population_alt) }}
+
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(population_alt.unit) }}">
+            {{ population_alt.unit(class='form-control') }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(population_alt.min) }}">
+            {{ population_alt.min(class='form-control',
+                    placeholder="numǎr minim") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(population_alt.max) }}">
+              {{ population_alt.max(class='form-control',
+                    placeholder="numǎr maxim") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="population.method">
+          Metoda utilizată - mărimea populației
+        </label>
+
+        {{ errors(form.population.method) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(form.population.method) }}">
+            {{ form.population.method(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set trend_short = form.population.trend_short %}
+        <label for="population.trend_short.trend">
+          Tendință pe termen scurt
+        </label>
+
+        {{ errors(trend_short) }}
+
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(trend_short.trend) }}">
+            {{ trend_short.trend(class='form-control') }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_short.period.start) }}">
+            {{ trend_short.period.start(class='form-control',
+                    placeholder="an de început") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_short.period.end) }}">
+            {{ trend_short.period.end(class='form-control',
+                    placeholder="an de sfǎrșit") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set trend_long = form.population.trend_long %}
+        <label for="population.trend_long.trend">
+          Tendință pe termen lung
+        </label>
+
+        {{ errors(trend_long) }}
+
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(trend_long.trend) }}">
+            {{ trend_long.trend(class='form-control') }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_long.period.start) }}">
+            {{ trend_long.period.start(class='form-control',
+                    placeholder="an de început") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_long.period.end) }}">
+            {{ trend_long.period.end(class='form-control',
+                    placeholder="an de sfǎrșit") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set reference_value = form.population.reference_value %}
+        <label for="population.reference_value.op">
+          Populația favorabilă de referință
+        </label>
+
+        {{ errors(reference_value) }}
+
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(reference_value.op) }}">
+            {{ reference_value.op(class='form-control') }}
+          </div>
+
+          <div class="col-sm-4 {{- error_cls(reference_value.number) }}">
+            {{ reference_value.number(class='form-control',
+                    placeholder="numărul de indivizi sau unitățile utilizate") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="population.reference_value.method">
+          Populația favorabilă de referință - metoda
+        </label>
+
+        {{ errors(form.population.reference_value.method) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(form.population.reference_value.method) }}">
+            {{ form.population.reference_value.method(class='form-control', rows=2) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set conclusion = form.population.conclusion %}
+        <label for="population.conclusion.value">
+          Concluzie
+        </label>
+
+        {{ errors(conclusion) }}
+
+        <div class="row">
+          <div class="col-sm-3 {{- error_cls(conclusion.value) }}">
+            {{ conclusion.value(class='form-control') }}
+          </div>
+
+          <div class="col-sm-3 {{- error_cls(conclusion.trend) }}">
+            {{ conclusion.trend(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

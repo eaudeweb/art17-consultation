@@ -1,0 +1,172 @@
+{% from 'common/comment_bits.html' import error_cls, errors %}
+
+<div class="tab-pane comment" id="comment-habitat">
+  <div class="panel panel-default">
+
+    <div class="panel-body">
+      <div class="form-group">
+        <label for="habitat.surface_area">
+          Suprafață (km²)
+        </label>
+
+        {{ errors(form.habitat.surface_area) }}
+
+        <div class="row">
+          <div class="col-sm-4 {{- error_cls(form.habitat.surface_area) }}">
+            {{ form.habitat.surface_area(class='form-control',
+                    placeholder="suprafața trebuie exprimatǎ in km²") }}
+          </div>
+
+          <div class="col-sm-2"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="habitat.date">
+          Anul/perioada
+        </label>
+
+        {{ errors(form.habitat.date) }}
+
+        <div class="row">
+          <div class="col-sm-4 {{- error_cls(form.habitat.date) }}">
+            {{ form.habitat.date(class='form-control',
+                    placeholder="an sau perioadǎ") }}
+          </div>
+
+          <div class="col-sm-2"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="habitat.method">
+          Metoda utilizată - habitatul speciei
+        </label>
+
+        {{ errors(form.habitat.method) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(form.habitat.method) }}">
+            {{ form.habitat.method(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="habitat.quality">
+          Calitatea habitatului
+        </label>
+
+        {{ errors(form.habitat.quality) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(form.habitat.quality) }}">
+            {{ form.habitat.quality(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="habitat.quality_explanation">
+          Calitatea habitatului - metoda
+        </label>
+
+        {{ errors(form.habitat.quality_explanation) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(form.habitat.quality_explanation) }}">
+            {{ form.habitat.quality_explanation(class='form-control', rows=2) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set trend_short = form.habitat.trend_short %}
+        <label for="habitat.trend_short.trend">
+          Tendință pe termen scurt
+        </label>
+
+        {{ errors(trend_short) }}
+
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(trend_short.trend) }}">
+            {{ trend_short.trend(class='form-control') }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_short.period.start) }}">
+            {{ trend_short.period.start(class='form-control',
+                    placeholder="an de inceput") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_short.period.end) }}">
+            {{ trend_short.period.end(class='form-control',
+                    placeholder="an de sfǎrșit") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set trend_long = form.habitat.trend_long %}
+        <label for="habitat.trend_long.trend">
+          Tendință pe termen lung
+        </label>
+
+        {{ errors(trend_long) }}
+
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(trend_long.trend) }}">
+            {{ trend_long.trend(class='form-control') }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_long.period.start) }}">
+            {{ trend_long.period.start(class='form-control',
+                    placeholder="an de inceput") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_long.period.end) }}">
+            {{ trend_long.period.end(class='form-control',
+                    placeholder="an de sfǎrșit") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="habitat.area_suitable">
+          Suprafața de habitat adecvată pentru specie (km²)
+        </label>
+
+        {{ errors(form.habitat.area_suitable) }}
+
+        <div class="row">
+          <div class="col-sm-4 {{- error_cls(form.habitat.area_suitable) }}">
+            {{ form.habitat.area_suitable(class='form-control',
+                    placeholder="suprafața trebuie exprimatǎ in km²") }}
+          </div>
+
+          <div class="col-sm-2"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set conclusion = form.habitat.conclusion %}
+        <label for="habitat.conclusion.value">
+          Concluzie
+        </label>
+
+        {{ errors(conclusion) }}
+
+        <div class="row">
+          <div class="col-sm-3 {{- error_cls(conclusion.value) }}">
+            {{ conclusion.value(class='form-control') }}
+          </div>
+
+          <div class="col-sm-3 {{- error_cls(conclusion.trend) }}">
+            {{ conclusion.trend(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
