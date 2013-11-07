@@ -81,7 +81,7 @@ class LuBiogeoreg(Base):
 class LuThreats(Base):
     __tablename__ = u'lu_threats'
 
-    objectid = Column(Integer, primary_key=True, index=True)
+    objectid = Column(Integer, primary_key=True)
     code = Column(String)
     name = Column(String)
     note = Column(String)
@@ -92,7 +92,7 @@ class LuThreats(Base):
 class LuRanking(Base):
     __tablename__ = u'lu_ranking'
 
-    objectid = Column(Integer, primary_key=True, index=True)
+    objectid = Column(Integer, primary_key=True)
     code = Column(String)
     name = Column(String)
     note = Column(String)
@@ -102,7 +102,7 @@ class LuRanking(Base):
 class LuPollution(Base):
     __tablename__ = u'lu_pollution'
 
-    objectid = Column(Integer, primary_key=True, index=True)
+    objectid = Column(Integer, primary_key=True)
     code = Column(String)
     name = Column(String)
 
@@ -110,7 +110,7 @@ class LuPollution(Base):
 class LuMeasures(Base):
     __tablename__ = u'lu_measures'
 
-    objectid = Column(Integer, primary_key=True, index=True)
+    objectid = Column(Integer, primary_key=True)
     code = Column(String)
     name = Column(String)
     valid_entry = Column(String)
@@ -120,22 +120,22 @@ class DataHabitat(Base):
     __tablename__ = u'data_habitats'
 
     id = Column('objectid', Integer, primary_key=True)
-    country = Column(String, index=True)
-    code = Column('habitatcode', String, index=True)
+    country = Column(String)
+    code = Column('habitatcode', String)
     distribution_map = Column(Integer)
-    distribution_method = Column(String, index=True)
+    distribution_method = Column(String)
     distribution_date = Column(String)
     additional_distribution_map = Column(Integer)
     range_map = Column(Integer)
     sys_date_created = Column(DateTime)
     sys_date_modified = Column(DateTime)
     sys_date_imported = Column(DateTime)
-    sys_creator_id = Column(String, index=True)
-    sys_modifier_id = Column(String, index=True)
+    sys_creator_id = Column(String)
+    sys_modifier_id = Column(String)
     validated = Column(Integer)
     validation_date = Column(DateTime)
     export = Column(Integer)
-    import_id = Column(Integer, index=True)
+    import_id = Column(Integer)
 
     lu = relationship(u'LuHabitattypeCodes',
                       primaryjoin=(code == foreign(LuHabitattypeCodes.code)),
@@ -145,11 +145,12 @@ class DataHabitat(Base):
 class DataHabitatsCheckList(Base):
     __tablename__ = u'data_habitats_check_list'
 
-    natura_2000_code = Column(String, primary_key=True, index=True)
+    objectid = Column(Integer, primary_key=True)
+    natura_2000_code = Column(String)
     hd_name = Column(String)
     valid_name = Column(String)
-    ms = Column(String, primary_key=True)
-    bio_region = Column(String, primary_key=True)
+    ms = Column(String)
+    bio_region = Column(String)
     presence = Column(String)
     ms_feedback_etcbd_comments = Column(Text)
     ms_added = Column(Integer)
@@ -160,7 +161,7 @@ class DataHabitattypeRegion(Base):
     __tablename__ = u'data_habitattype_reg'
 
     id = Column('objectid', Integer, primary_key=True)
-    habitat_id = Column('hr_habitat_id', ForeignKey(DataHabitat.id), index=True)
+    habitat_id = Column('hr_habitat_id', ForeignKey(DataHabitat.id))
     region = Column(String)
     published = Column(Text)
     range_surface_area = Column(Numeric)
@@ -236,9 +237,9 @@ class DataHabitattypeRegion(Base):
 class DataSpecies(Base):
     __tablename__ = u'data_species'
 
-    id = Column('objectid', Integer, primary_key=True, index=True)
+    id = Column('objectid', Integer, primary_key=True)
     country = Column(String)
-    code = Column('speciescode', String, index=True)
+    code = Column('speciescode', String)
     alternative_speciesname = Column(String)
     common_speciesname = Column(String)
     distribution_map = Column(Integer)
@@ -252,10 +253,10 @@ class DataSpecies(Base):
     sys_date_created = Column(DateTime)
     sys_date_modified = Column(DateTime)
     sys_date_imported = Column(DateTime)
-    sys_creator_id = Column(String, index=True)
-    sys_modifier_id = Column(String, index=True)
+    sys_creator_id = Column(String)
+    sys_modifier_id = Column(String)
     export = Column(Integer)
-    import_id = Column(Integer, index=True)
+    import_id = Column(Integer)
 
     lu = relationship(LuHdSpecies,
                       primaryjoin=(code == cast(foreign(LuHdSpecies.code),
@@ -270,15 +271,15 @@ class DataSpecies(Base):
 class DataSpeciesCheckList(Base):
     __tablename__ = u'data_species_check_list'
 
-    natura_2000_code = Column(String, primary_key=True, index=True)
-    eunis_code = Column(Integer, index=True)
+    natura_2000_code = Column(String, primary_key=True)
+    eunis_code = Column(Integer)
     hd_name = Column(String)
     species_name = Column(String)
     annex_ii = Column(String)
     annex_iv = Column(String)
     annex_v = Column(String)
-    member_state = Column(String, primary_key=True)
-    bio_region = Column(String, primary_key=True)
+    member_state = Column(String)
+    bio_region = Column(String)
     presence = Column(String)
     comment = Column('comment_', Text)
     ms_added = Column(Integer)
@@ -288,8 +289,8 @@ class DataSpeciesCheckList(Base):
 class DataSpeciesRegion(Base):
     __tablename__ = u'data_species_regions'
 
-    id = Column('objectid', Integer, primary_key=True, index=True)
-    species_id = Column('sr_species_id', ForeignKey(DataSpecies.id), index=True)
+    id = Column('objectid', Integer, primary_key=True)
+    species_id = Column('sr_species_id', ForeignKey(DataSpecies.id))
     region = Column(String)
     published = Column(Text)
     range_surface_area = Column('rsurface_area', Numeric)
@@ -386,14 +387,10 @@ class DataSpeciesRegion(Base):
 class DataMeasures(Base):
     __tablename__ = u'data_measures'
 
-    id = Column('objectid', Integer, primary_key=True, index=True)
+    id = Column('objectid', Integer, primary_key=True)
     measurecode = Column(String)
-    measure_sr_id = Column(Numeric,
-                           ForeignKey(DataSpeciesRegion.id),
-                           index=True)
-    measure_hr_id = Column(Numeric,
-                           ForeignKey(DataHabitattypeRegion.id),
-                           index=True)
+    measure_sr_id = Column(Numeric, ForeignKey(DataSpeciesRegion.id))
+    measure_hr_id = Column(Numeric, ForeignKey(DataHabitattypeRegion.id))
     type_legal = Column(Numeric)
     type_administrative = Column(Numeric)
     type_contractual = Column(Numeric)
@@ -430,11 +427,11 @@ class DataMeasures(Base):
 class DataPressuresThreats(Base):
     __tablename__ = u'data_pressures_threats'
 
-    id = Column('objectid', Integer, primary_key=True, index=True)
+    id = Column('objectid', Integer, primary_key=True)
     habitat_id = Column('pressure_hr_id', Integer,
-                        ForeignKey(DataHabitattypeRegion.id), index=True)
+                        ForeignKey(DataHabitattypeRegion.id))
     species_id = Column('pressure_sr_id', Integer,
-                        ForeignKey(DataSpeciesRegion.id), index=True)
+                        ForeignKey(DataSpeciesRegion.id))
     pressure = Column(String)
     ranking = Column(String)
     type = Column(String)
@@ -459,7 +456,7 @@ class DataPressuresThreats(Base):
 class DataPressuresThreatsPollution(Base):
     __tablename__ = u'data_pressures_threats_pol'
 
-    id = Column('objectid', Integer, primary_key=True, index=True)
+    id = Column('objectid', Integer, primary_key=True)
     pollution_pressure_id = Column(Integer, ForeignKey(DataPressuresThreats.id))
     pollution_qualifier = Column(String)
     validated = Column(Integer)
@@ -499,7 +496,7 @@ class DataHabitattypeComment(Base):
     __tablename__ = u'data_habitattype_comments'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
-    habitat_id = Column('hr_habitat_id', ForeignKey(DataHabitat.id), index=True)
+    habitat_id = Column('hr_habitat_id', ForeignKey(DataHabitat.id))
     region = Column(String)
     published = Column(Text)
     range_surface_area = Column(Numeric)
@@ -579,11 +576,11 @@ class DataHabitattypeComment(Base):
 class DataHabitatSpecies(Base):
     __tablename__ = u'data_htypical_species'
 
-    id = Column('objectid', Integer, primary_key=True, index=True)
+    id = Column('objectid', Integer, primary_key=True)
     habitat_id = Column('species_hr_id', Integer,
-                        ForeignKey(DataHabitattypeRegion.id), index=True)
+                        ForeignKey(DataHabitattypeRegion.id))
     species_id = Column('speciescode', Integer,
-                        ForeignKey(DataSpecies.id), index=True)
+                        ForeignKey(DataSpecies.id))
     speciesname = Column(String)
     validated = Column(Integer)
     validation_date = Column(DateTime)
@@ -596,7 +593,7 @@ class DataSpeciesComment(Base):
     __tablename__ = u'data_species_comments'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
-    species_id = Column('sr_species_id', ForeignKey(DataSpecies.id), index=True)
+    species_id = Column('sr_species_id', ForeignKey(DataSpecies.id))
     region = Column(String)
     published = Column(Text)
     range_surface_area = Column('rsurface_area', Numeric)
