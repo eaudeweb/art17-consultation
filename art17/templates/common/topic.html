@@ -57,7 +57,7 @@
 
       {{ record(comment_row) }}
 
-      <td>{{ comment_row.user_id }}</td>  {#- conclusion author, etc #}
+      <td>{{ comment_row.cons_user_id }}</td>  {#- conclusion author, etc #}
       <td>
         {%- if perm_edit_comment(comment_row.model).can() %}
           {%- set url = url_for(blueprint + '.comment_edit',
