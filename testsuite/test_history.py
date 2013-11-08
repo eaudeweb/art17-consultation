@@ -9,11 +9,11 @@ class species_params(object):
     comment_table = 'data_species_comments'
     comment_create_url = '/specii/detalii/1/comentarii'
     user_id = 'somebody'
-    comment_cls = models.DataSpeciesComment
-    comment_id = '4f799fdd6f5a'
-    comment_edit_url = '/specii/comentarii/4f799fdd6f5a'
-    comment_status_url = '/specii/comentarii/4f799fdd6f5a/stare'
-    comment_delete_url = '/specii/comentarii/4f799fdd6f5a/sterge'
+    comment_cls = models.DataSpeciesRegion
+    comment_id = 2
+    comment_edit_url = '/specii/comentarii/2'
+    comment_status_url = '/specii/comentarii/2/stare'
+    comment_delete_url = '/specii/comentarii/2/sterge'
     comment_data = {'range.surface_area': '50',
                     'range.method': '1',
                     'population.method': '1',
@@ -38,11 +38,11 @@ class habitat_params(object):
     comment_table = 'data_habitattype_comments'
     comment_create_url = '/habitate/detalii/1/comentarii'
     user_id = 'somebody'
-    comment_cls = models.DataHabitattypeComment
-    comment_id = '4f799fdd6f5a'
-    comment_edit_url = '/habitate/comentarii/4f799fdd6f5a'
-    comment_status_url = '/habitate/comentarii/4f799fdd6f5a/stare'
-    comment_delete_url = '/habitate/comentarii/4f799fdd6f5a/sterge'
+    comment_cls = models.DataHabitattypeRegion
+    comment_id = 2
+    comment_edit_url = '/habitate/comentarii/2'
+    comment_status_url = '/habitate/comentarii/2/stare'
+    comment_delete_url = '/habitate/comentarii/2/sterge'
     comment_data = {'range.surface_area': '50',
                     'range.method': '1',
                     'coverage.surface_area': 123,
@@ -69,10 +69,14 @@ def test_comment_add(params, app):
 
     with app.app_context():
         history = models.History.query.all()
-        comment = params.comment_cls.query.first()
+        comment = (
+            params.comment_cls.query
+            .filter_by(cons_role='comment')
+            .first()
+        )
         assert len(history) == 1
         assert history[0].table == params.comment_table
-        assert history[0].object_id == comment.id
+        assert history[0].object_id == str(comment.id)
         assert history[0].action == 'add'
         assert history[0].user_id == params.user_id
         assert json.loads(history[0].new_data)['range']['surface_area'] == 50
@@ -88,10 +92,14 @@ def test_comment_edit(params, app):
 
     with app.app_context():
         history = models.History.query.all()
-        comment = params.comment_cls.query.first()
+        comment = (
+            params.comment_cls.query
+            .filter_by(cons_role='comment')
+            .first()
+        )
         assert len(history) == 1
         assert history[0].table == params.comment_table
-        assert history[0].object_id == comment.id
+        assert history[0].object_id == str(comment.id)
         assert history[0].action == 'edit'
         assert history[0].user_id == params.user_id
         assert json.loads(history[0].old_data)['range']['surface_area'] == 1337
@@ -109,10 +117,14 @@ def test_comment_update_status(params, app):
 
     with app.app_context():
         history = models.History.query.all()
-        comment = params.comment_cls.query.first()
+        comment = (
+            params.comment_cls.query
+            .filter_by(cons_role='comment')
+            .first()
+        )
         assert len(history) == 1
         assert history[0].table == params.comment_table
-        assert history[0].object_id == comment.id
+        assert history[0].object_id == str(comment.id)
         assert history[0].action == 'status'
         assert history[0].user_id == params.user_id
         assert json.loads(history[0].old_data) == 'new'
@@ -129,10 +141,14 @@ def test_comment_delete(params, app):
 
     with app.app_context():
         history = models.History.query.all()
-        comment = params.comment_cls.query.first()
+        comment = (
+            params.comment_cls.query
+            .filter_by(cons_role='comment')
+            .first()
+        )
         assert len(history) == 1
         assert history[0].table == params.comment_table
-        assert history[0].object_id == comment.id
+        assert history[0].object_id == str(comment.id)
         assert history[0].action == 'delete'
         assert history[0].user_id == params.user_id
         assert json.loads(history[0].old_data)['range']['surface_area'] == 1337
