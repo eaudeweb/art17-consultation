@@ -32,29 +32,18 @@ class SpeciesIndexView(IndexView):
     subject_cls = models.DataSpecies
     record_cls = models.DataSpeciesRegion
     blueprint = 'species'
+    parse_record = staticmethod(schemas.parse_species)
 
-    def get_topics(self, species, region):
-        topics_query = (
-            models.Topic.query
-            .join(models.Topic.species_assessment)
-            .join(models.Topic.region)
-            .filter(models.Topic.species == species)
+    def get_records(self, species, region):
+        records_query = (
+            models.DataSpeciesRegion.query
+            .filter_by(species=species)
+            .order_by(models.DataSpeciesRegion.cons_date)
         )
         if region is not None:
-            topics_query = topics_query.filter(models.Topic.region == region)
+            records_query = records_query.filter_by(region=region)
 
-        for topic in topics_query:
-            yield {
-                'region': topic.region,
-                'assessment': schemas.parse_species(topic.species_assessment),
-                'comments': [
-                    schemas.parse_species(c, is_comment=True)
-                    for c in (
-                        topic.species_comments
-                        .filter_by(cons_deleted=False)
-                    )
-                ],
-            }
+        return iter(records_query)
 
     def parse_request(self):
         super(SpeciesIndexView, self).parse_request()

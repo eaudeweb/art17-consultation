@@ -171,20 +171,43 @@ class IndexView(flask.views.View):
             self.region = None
 
         if self.subject:
-            self.topic_list = list(self.get_topics(self.subject, self.region))
+            self.topic_list = self.get_topics(self.subject, self.region)
 
             CommentReply = models.CommentReply
-            self.reply_counts = dict(
+            reply_query = (
                 models.db.session
-                    .query(CommentReply.parent, func.count(CommentReply.id))
-                    .group_by(CommentReply.parent)
+                .query(CommentReply.parent_id, func.count(CommentReply.id))
+                .filter(CommentReply.parent_table == self.blueprint)
+                .group_by(CommentReply.parent_id)
             )
+            self.reply_counts = dict(reply_query)
 
         self.subject_list = (
             self.subject_cls.query
                 .join(self.record_cls)
                 .order_by(self.subject_cls.code)
         )
+
+    def get_topics(self, subject, region):
+        region_data_map = {}
+        for record in self.get_records(subject, region):
+            if record.region not in region_data_map:
+                region_data_map[record.region] = {
+                    'region': record.lu,
+                    'comments': [],
+                }
+
+            region_data = region_data_map[record.region]
+
+            if record.cons_role == 'assessment':
+                region_data['assessment'] = self.parse_record(record)
+
+            else:
+                if not record.cons_deleted:
+                    r = self.parse_record(record, is_comment=True)
+                    region_data['comments'].append(r)
+
+        return list(region_data_map.values())
 
     def get_pressures(self, record):
         return record.pressures.all()

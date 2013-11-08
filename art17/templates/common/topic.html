@@ -80,8 +80,12 @@
       </td>
       <td>{{ comment_row.comment_date|local_date }}</td>
       <td>
-        {%- set url = url_for('replies.index', comment_id=comment_row.id) %}
-        {%- set count = reply_counts[comment_row.id] or 0 %}
+        {%- set url = url_for(
+              'replies.index',
+              parent_table=blueprint,
+              parent_id=comment_row.id,
+            ) %}
+        {%- set count = reply_counts[comment_row.id|string] or 0 %}
         <a class="records-repliesbtn btn btn-xs btn-default"
            href="{{ url }}">{{ fonticon('comment') }} {{ count }}</a>
       </td>

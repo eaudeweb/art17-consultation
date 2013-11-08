@@ -229,7 +229,7 @@ class DataHabitattypeRegion(Base):
     cons_role = Column(String)
     cons_date = Column(DateTime)
     cons_user_id = Column(String)
-    cons_status = Column(Text, default='new')
+    cons_status = Column(String, default='new')
     cons_deleted = Column(Boolean, default=False)
 
     habitat = relationship(u'DataHabitat',
@@ -386,7 +386,7 @@ class DataSpeciesRegion(Base):
     cons_role = Column(String)
     cons_date = Column(DateTime)
     cons_user_id = Column(String)
-    cons_status = Column(Text, default='new')
+    cons_status = Column(String, default='new')
     cons_deleted = Column(Boolean, default=False)
 
     species = relationship(u'DataSpecies',
