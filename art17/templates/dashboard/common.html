@@ -9,7 +9,7 @@
 {%- endmacro %}
 
 
-{%- macro table(bioreg_list, subject_list, regions, comment_count) %}
+{%- macro table(bioreg_list, subject_list, regions) %}
   <table class="table table-bordered">
     <thead>
       <th></th>
@@ -30,12 +30,10 @@
 
         {% for bioreg in bioreg_list %}
           {%- set key = (subject.id, bioreg.code) %}
-          {%- set acons_id = regions[key] %}
-          {%- if acons_id %}
-            {%- set count = comment_count[acons_id] or 0 %}
+          {%- if key in regions %}
             {%- set url = consultation_url(subject, bioreg=bioreg.code) %}
             <td class="dashboard-commentcount">
-              <a href="{{ url }}">{{ count }}</a>
+              <a href="{{ url }}">{{ regions[key] }}</a>
             </td>
           {%- else %}
             <td class="dashboard-missingrecord"></td>

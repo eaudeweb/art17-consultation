@@ -32,25 +32,18 @@ class HabitatIndexView(IndexView):
     subject_cls = models.DataHabitat
     record_cls = models.DataHabitattypeRegion
     blueprint = 'habitat'
+    parse_record = staticmethod(schemas.parse_habitat)
 
-    def get_topics(self, habitat, region):
-        topics_query = (
-            models.Topic.query
-            .join(models.Topic.habitat_assessment)
-            .join(models.Topic.region)
-            .filter(models.Topic.habitat == habitat)
+    def get_records(self, habitat, region):
+        records_query = (
+            models.DataHabitattypeRegion.query
+            .filter_by(habitat=habitat)
+            .order_by(models.DataHabitattypeRegion.cons_date)
         )
         if region is not None:
-            topics_query = topics_query.filter(models.Topic.region == region)
+            records_query = records_query.filter_by(region=region)
 
-        for topic in topics_query:
-            yield {
-                'region': topic.region,
-                'assessment': schemas.parse_habitat(topic.habitat_assessment),
-                'comments': [schemas.parse_habitat(c, is_comment=True)
-                             for c in
-                             topic.habitat_comments.filter_by(deleted=False)],
-            }
+        return iter(records_query)
 
     def get_comment_next_url(self):
         return flask.url_for('.index', habitat=self.subject_code,
@@ -85,7 +78,7 @@ class HabitatCommentView(CommentView):
 
     form_cls = forms.HabitatComment
     record_cls = models.DataHabitattypeRegion
-    comment_cls = models.DataHabitattypeComment
+    comment_cls = models.DataHabitattypeRegion
     parse_commentform = staticmethod(schemas.parse_habitat_commentform)
     flatten_commentform = staticmethod(schemas.flatten_habitat_commentform)
     template = 'habitat/comment.html'
@@ -105,6 +98,7 @@ class HabitatCommentView(CommentView):
 
     def record_for_comment(self, comment):
         records = (models.DataHabitattypeRegion.query
+                            .filter_by(cons_role='assessment')
                             .filter_by(habitat_id=comment.habitat_id)
                             .filter_by(region=comment.region)
                             .all())
@@ -117,26 +111,26 @@ habitat.add_url_rule('/habitate/detalii/<int:record_id>/comentarii',
                      view_func=HabitatCommentView.as_view('comment'))
 
 
-habitat.add_url_rule('/habitate/comentarii/<comment_id>',
+habitat.add_url_rule('/habitate/comentarii/<int:comment_id>',
                      view_func=HabitatCommentView.as_view('comment_edit'))
 
 
 class HabitatCommentStateView(CommentStateView):
 
-    comment_cls = models.DataHabitattypeComment
+    comment_cls = models.DataHabitattypeRegion
     signal = comment_status_changed
 
 
-habitat.add_url_rule('/habitate/comentarii/<comment_id>/stare',
+habitat.add_url_rule('/habitate/comentarii/<int:comment_id>/stare',
             view_func=HabitatCommentStateView.as_view('comment_status'))
 
 
 class HabitatCommentDeleteView(CommentDeleteView):
 
-    comment_cls = models.DataHabitattypeComment
+    comment_cls = models.DataHabitattypeRegion
     parse_commentform = staticmethod(schemas.parse_habitat_commentform)
     signal = comment_deleted
 
 
-habitat.add_url_rule('/habitate/comentarii/<comment_id>/sterge',
+habitat.add_url_rule('/habitate/comentarii/<int:comment_id>/sterge',
             view_func=HabitatCommentDeleteView.as_view('comment_delete'))

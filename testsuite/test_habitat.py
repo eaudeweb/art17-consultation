@@ -121,17 +121,23 @@ def _create_habitat_record(habitat_app, comment=False):
     with habitat_app.app_context():
         habitat = models.DataHabitat(id=1, code='1234')
         habitat.lu = models.LuHabitattypeCodes(objectid=1, code=1234)
-        record = models.DataHabitattypeRegion(id=1, habitat=habitat,
-                                              region='ALP')
+        record = models.DataHabitattypeRegion(
+            id=1,
+            habitat=habitat,
+            cons_role='assessment',
+            region='ALP',
+        )
         record.lu = models.LuBiogeoreg(objectid=1)
         models.db.session.add(record)
 
         if comment:
-            comment = models.DataHabitattypeComment(
-                            id='4f799fdd6f5a',
-                            habitat_id=1,
-                            region='ALP',
-                            range_surface_area=1337)
+            comment = models.DataHabitattypeRegion(
+                id=2,
+                habitat_id=1,
+                cons_role='comment',
+                region='ALP',
+                range_surface_area=1337,
+            )
             models.db.session.add(comment)
 
         models.db.session.commit()
@@ -145,7 +151,8 @@ def test_load_comments_view(habitat_app):
 
 
 def test_save_comment_record(habitat_app):
-    from art17.models import DataHabitattypeComment
+    from art17.models import DataHabitattypeRegion
+    habitat_app.config['TESTING_USER_ID'] = 'smith'
     _create_habitat_record(habitat_app)
     client = habitat_app.test_client()
     resp = client.post('/habitate/detalii/1/comentarii',
@@ -157,29 +164,29 @@ def test_save_comment_record(habitat_app):
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with habitat_app.app_context():
-        assert DataHabitattypeComment.query.count() == 1
-        comment = DataHabitattypeComment.query.first()
+        comment = DataHabitattypeRegion.query.get(2)
+        assert comment.cons_role == 'comment'
+        assert comment.cons_user_id == 'smith'
         assert comment.habitat.code == '1234'
         assert comment.region == 'ALP'
         assert comment.range_surface_area == 50
 
 
 def test_edit_comment_form(habitat_app):
-    from art17.models import DataHabitattypeComment, db
     _create_habitat_record(habitat_app, comment=True)
     client = habitat_app.test_client()
     resp1 = client.get('/habitate/comentarii/f3b4c23bcb88')
     assert resp1.status_code == 404
-    resp2 = client.get('/habitate/comentarii/4f799fdd6f5a')
+    resp2 = client.get('/habitate/comentarii/2')
     assert resp2.status_code == 200
     assert '1337' in resp2.data
 
 
 def test_edit_comment_submit(habitat_app):
-    from art17.models import DataHabitattypeComment, db
+    from art17.models import DataHabitattypeRegion
     _create_habitat_record(habitat_app, comment=True)
     client = habitat_app.test_client()
-    resp = client.post('/habitate/comentarii/4f799fdd6f5a',
+    resp = client.post('/habitate/comentarii/2',
                        data={'range.surface_area': '50',
                              'range.method': '1',
                              'coverage.surface_area': 123,
@@ -188,7 +195,7 @@ def test_edit_comment_submit(habitat_app):
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with habitat_app.app_context():
-        comment = DataHabitattypeComment.query.get('4f799fdd6f5a')
+        comment = DataHabitattypeRegion.query.get(2)
         assert comment.range_surface_area == 50
 
 
@@ -211,7 +218,7 @@ def test_save_all_form_fields():
     form = forms.HabitatComment(form_data)
     assert form.validate()
 
-    comment = models.DataHabitattypeComment()
+    comment = models.DataHabitattypeRegion()
     flatten_habitat_commentform(form.data, comment)
 
     for k, v in HABITAT_MODEL_DATA.items():
@@ -221,7 +228,7 @@ def test_save_all_form_fields():
 def test_flatten():
     from art17.schemas import flatten_habitat_commentform
     from art17 import models
-    obj = models.DataHabitattypeComment()
+    obj = models.DataHabitattypeRegion()
     flatten_habitat_commentform(HABITAT_STRUCT_DATA, obj)
     for k, v in HABITAT_MODEL_DATA.items():
         assert getattr(obj, k) == v
@@ -230,7 +237,7 @@ def test_flatten():
 def test_parse():
     from art17.schemas import parse_habitat_commentform
     from art17 import models
-    obj = models.DataHabitattypeComment(**HABITAT_MODEL_DATA)
+    obj = models.DataHabitattypeRegion(**HABITAT_MODEL_DATA)
     data = parse_habitat_commentform(obj)
     assert data == HABITAT_STRUCT_DATA
 
@@ -247,7 +254,7 @@ def test_add_comment_reply(habitat_app):
     habitat_app.register_blueprint(common)
     habitat_app.register_blueprint(replies)
     client = TestApp(habitat_app)
-    page = client.get('/replici/4f799fdd6f5a')
+    page = client.get('/replici/habitate/2')
     form = page.forms['reply-form']
     form['text'] = "hello world!"
     form.submit()
@@ -258,4 +265,5 @@ def test_add_comment_reply(habitat_app):
         msg = replies[0]
         assert msg.text == "hello world!"
         assert msg.user_id == 'somewho'
-        assert msg.parent == '4f799fdd6f5a'
+        assert msg.parent_table == 'habitat'
+        assert msg.parent_id == '2'

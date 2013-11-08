@@ -32,25 +32,18 @@ class SpeciesIndexView(IndexView):
     subject_cls = models.DataSpecies
     record_cls = models.DataSpeciesRegion
     blueprint = 'species'
+    parse_record = staticmethod(schemas.parse_species)
 
-    def get_topics(self, species, region):
-        topics_query = (
-            models.Topic.query
-            .join(models.Topic.species_assessment)
-            .join(models.Topic.region)
-            .filter(models.Topic.species == species)
+    def get_records(self, species, region):
+        records_query = (
+            models.DataSpeciesRegion.query
+            .filter_by(species=species)
+            .order_by(models.DataSpeciesRegion.cons_date)
         )
         if region is not None:
-            topics_query = topics_query.filter(models.Topic.region == region)
+            records_query = records_query.filter_by(region=region)
 
-        for topic in topics_query:
-            yield {
-                'region': topic.region,
-                'assessment': schemas.parse_species(topic.species_assessment),
-                'comments': [schemas.parse_species(c, is_comment=True)
-                             for c in
-                             topic.species_comments.filter_by(deleted=False)],
-            }
+        return iter(records_query)
 
     def parse_request(self):
         super(SpeciesIndexView, self).parse_request()
@@ -109,7 +102,7 @@ class SpeciesCommentView(CommentView):
 
     form_cls = forms.SpeciesComment
     record_cls = models.DataSpeciesRegion
-    comment_cls = models.DataSpeciesComment
+    comment_cls = models.DataSpeciesRegion
     parse_commentform = staticmethod(schemas.parse_species_commentform)
     flatten_commentform = staticmethod(schemas.flatten_species_commentform)
     template = 'species/comment.html'
@@ -129,6 +122,7 @@ class SpeciesCommentView(CommentView):
 
     def record_for_comment(self, comment):
         records = (models.DataSpeciesRegion.query
+                            .filter_by(cons_role='assessment')
                             .filter_by(species_id=comment.species_id)
                             .filter_by(region=comment.region)
                             .all())
@@ -141,26 +135,26 @@ species.add_url_rule('/specii/detalii/<int:record_id>/comentarii',
                      view_func=SpeciesCommentView.as_view('comment'))
 
 
-species.add_url_rule('/specii/comentarii/<comment_id>',
+species.add_url_rule('/specii/comentarii/<int:comment_id>',
                  view_func=SpeciesCommentView.as_view('comment_edit'))
 
 
 class SpeciesCommentStateView(CommentStateView):
 
-    comment_cls = models.DataSpeciesComment
+    comment_cls = models.DataSpeciesRegion
     signal = comment_status_changed
 
 
-species.add_url_rule('/specii/comentarii/<comment_id>/stare',
+species.add_url_rule('/specii/comentarii/<int:comment_id>/stare',
             view_func=SpeciesCommentStateView.as_view('comment_status'))
 
 
 class SpeciesCommentDeleteView(CommentDeleteView):
 
-    comment_cls = models.DataSpeciesComment
+    comment_cls = models.DataSpeciesRegion
     parse_commentform = staticmethod(schemas.parse_species_commentform)
     signal = comment_deleted
 
 
-species.add_url_rule('/specii/comentarii/<comment_id>/sterge',
+species.add_url_rule('/specii/comentarii/<int:comment_id>/sterge',
             view_func=SpeciesCommentDeleteView.as_view('comment_delete'))

@@ -57,8 +57,8 @@ def perm_create_comment(record):
 
 
 def perm_edit_comment(comment):
-    if comment.user_id:
-        return Permission(need.admin, need.user_id(comment.user_id))
+    if comment.cons_user_id:
+        return Permission(need.admin, need.user_id(comment.cons_user_id))
     else:
         return Permission(need.admin)
 
@@ -68,10 +68,10 @@ def perm_update_comment_status(comment):
 
 
 def perm_delete_comment(comment):
-    if comment.status == APPROVED_STATUS:
+    if comment.cons_status == APPROVED_STATUS:
         return Denial(need.everybody)
-    elif comment.user_id:
-        return Permission(need.admin, need.user_id(comment.user_id))
+    elif comment.cons_user_id:
+        return Permission(need.admin, need.user_id(comment.cons_user_id))
     else:
         return Permission(need.admin)
 
@@ -171,20 +171,43 @@ class IndexView(flask.views.View):
             self.region = None
 
         if self.subject:
-            self.topic_list = list(self.get_topics(self.subject, self.region))
+            self.topic_list = self.get_topics(self.subject, self.region)
 
             CommentReply = models.CommentReply
-            self.reply_counts = dict(
+            reply_query = (
                 models.db.session
-                    .query(CommentReply.parent, func.count(CommentReply.id))
-                    .group_by(CommentReply.parent)
+                .query(CommentReply.parent_id, func.count(CommentReply.id))
+                .filter(CommentReply.parent_table == self.blueprint)
+                .group_by(CommentReply.parent_id)
             )
+            self.reply_counts = dict(reply_query)
 
         self.subject_list = (
             self.subject_cls.query
                 .join(self.record_cls)
                 .order_by(self.subject_cls.code)
         )
+
+    def get_topics(self, subject, region):
+        region_data_map = {}
+        for record in self.get_records(subject, region):
+            if record.region not in region_data_map:
+                region_data_map[record.region] = {
+                    'region': record.lu,
+                    'comments': [],
+                }
+
+            region_data = region_data_map[record.region]
+
+            if record.cons_role == 'assessment':
+                region_data['assessment'] = self.parse_record(record)
+
+            else:
+                if not record.cons_deleted:
+                    r = self.parse_record(record, is_comment=True)
+                    region_data['comments'].append(r)
+
+        return list(region_data_map.values())
 
     def get_pressures(self, record):
         return record.pressures.all()
@@ -236,8 +259,11 @@ class CommentView(flask.views.View):
             new_comment = True
             self.record = self.record_cls.query.get_or_404(record_id)
             perm_create_comment(self.record).test()
-            self.comment = self.comment_cls(user_id=flask.g.identity.id,
-                                            comment_date=datetime.utcnow())
+            self.comment = self.comment_cls(
+                cons_role='comment',
+                cons_user_id=flask.g.identity.id,
+                cons_date=datetime.utcnow(),
+            )
             form = self.form_cls(flask.request.form)
 
         elif comment_id:
@@ -293,8 +319,8 @@ class CommentStateView(flask.views.View):
         new_status = flask.request.form['status']
         if new_status not in STATUS_VALUES:
             flask.abort(403)
-        old_status = comment.status
-        comment.status = new_status
+        old_status = comment.cons_status
+        comment.cons_status = new_status
         app = flask.current_app._get_current_object()
         self.signal.send(app, ob=comment,
                          old_data=old_status, new_data=new_status)
@@ -310,58 +336,13 @@ class CommentDeleteView(flask.views.View):
         comment = self.comment_cls.query.get_or_404(comment_id)
         perm_delete_comment(comment).test()
         next_url = flask.request.form['next']
-        comment.deleted = True
+        comment.cons_deleted = True
         app = flask.current_app._get_current_object()
         old_data = self.parse_commentform(comment)
-        old_data['_status'] = comment.status
+        old_data['_status'] = comment.cons_status
         self.signal.send(app, ob=comment, old_data=old_data)
         models.db.session.commit()
         return flask.redirect(next_url)
 
 
 cons_manager = Manager()
-
-
-@cons_manager.command
-def create():
-    DHC = models.DataHabitattypeComment
-    DSC = models.DataSpeciesComment
-    topic_map = {}
-
-    for habitat_record in models.DataHabitattypeRegion.query:
-        topic = models.Topic(
-            type='habitat',
-            region_code=habitat_record.region,
-            habitat_id=habitat_record.habitat_id,
-            habitat_assessment_id=habitat_record.id,
-        )
-        models.db.session.add(topic)
-
-        key = (topic.type, topic.region_code, topic.habitat_id)
-        topic_map[key] = topic
-        logger.info("Habitat topic %r", key)
-
-    for species_record in models.DataSpeciesRegion.query:
-        topic = models.Topic(
-            type='species',
-            region_code=species_record.region,
-            species_id=species_record.species_id,
-            species_assessment_id=species_record.id,
-        )
-        models.db.session.add(topic)
-
-        key = (topic.type, topic.region_code, topic.species_id)
-        topic_map[key] = topic
-        logger.info("Species topic %r", key)
-
-    for comment in DHC.query.filter(DHC.topic_id == None):
-        key = ('habitat', comment.region, comment.habitat_id)
-        comment.topic = topic_map.get(key)
-        logger.info("Habitat comment %r %s", key, comment.id)
-
-    for comment in DSC.query.filter(DSC.topic_id == None):
-        key = ('species', comment.region, comment.species_id)
-        comment.topic = topic_map.get(key)
-        logger.info("Species comment %r %s", key, comment.id)
-
-    models.db.session.commit()

@@ -13,42 +13,60 @@ reply_added = Signal()
 reply_removed = Signal()
 
 
-def _get_comment_or_404(comment_id):
-    for cls in [models.DataSpeciesComment,
-                models.DataHabitattypeComment]:
-        comment = cls.query.get(comment_id)
-        if comment is not None:
-            return comment
+def _get_comment_or_404(parent_table, parent_id):
+    if parent_table == 'habitat':
+        return models.DataHabitattypeRegion.query.get_or_404(parent_id)
+
+    elif parent_table == 'species':
+        return models.DataSpeciesRegion.query.get_or_404(parent_id)
 
     else:
         flask.abort(404)
 
 
 def _dump_reply_data(reply):
-    return {k: getattr(reply, k)
-            for k in ['text', 'user_id', 'parent', 'date']}
+    attributes = ['text', 'user_id', 'parent_table', 'parent_id', 'date']
+    return {k: getattr(reply, k) for k in attributes}
 
 
-@replies.route('/replici/<comment_id>/nou', methods=['POST'])
+@replies.route(
+    '/replici/habitate/<parent_id>/nou',
+    defaults={'parent_table': 'habitat'},
+    methods=['POST'],
+)
+@replies.route(
+    '/replici/specii/<parent_id>/nou',
+    defaults={'parent_table': 'species'},
+    methods=['POST'],
+)
 @require(Permission(need.authenticated))
-def new(comment_id):
-    comment = _get_comment_or_404(comment_id)
+def new(parent_table, parent_id):
+    comment = _get_comment_or_404(parent_table, parent_id)
 
-    if flask.request.method == 'POST':
-        reply = models.CommentReply(
-            text=flask.request.form['text'],
-            user_id=flask.g.identity.id,
-            date=datetime.utcnow(),
-            parent=comment.id)
-        models.db.session.add(reply)
-        app = flask.current_app._get_current_object()
-        reply_added.send(app, ob=reply,
-                           new_data=_dump_reply_data(reply))
-        models.db.session.commit()
-        url = flask.url_for('.index', comment_id=comment_id)
-        return flask.redirect(url)
+    reply = models.CommentReply(
+        text=flask.request.form['text'],
+        user_id=flask.g.identity.id,
+        date=datetime.utcnow(),
+        parent_table=parent_table,
+        parent_id=comment.id,
+    )
 
-    return flask.render_template('replies/new.html')
+    models.db.session.add(reply)
+    app = flask.current_app._get_current_object()
+
+    reply_added.send(
+        app,
+        ob=reply,
+        new_data=_dump_reply_data(reply),
+    )
+
+    models.db.session.commit()
+    url = flask.url_for(
+        '.index',
+        parent_table=parent_table,
+        parent_id=parent_id,
+    )
+    return flask.redirect(url)
 
 
 @replies.route('/replici/sterge', methods=['POST'])
@@ -93,10 +111,21 @@ def set_read_status():
     return flask.jsonify(read=read)
 
 
-@replies.route('/replici/<comment_id>')
-def index(comment_id):
-    replies = (models.CommentReply
-                    .query.filter_by(parent=comment_id).all())
+@replies.route(
+    '/replici/habitate/<parent_id>',
+    defaults={'parent_table': 'habitat'},
+)
+@replies.route(
+    '/replici/specii/<parent_id>',
+    defaults={'parent_table': 'species'},
+)
+def index(parent_table, parent_id):
+    replies = (
+        models.CommentReply.query
+        .filter_by(parent_table=parent_table)
+        .filter_by(parent_id=parent_id)
+        .all()
+    )
     user_id = flask.g.identity.id
 
     if user_id:
@@ -108,7 +137,8 @@ def index(comment_id):
         read_msgs = []
 
     return flask.render_template('replies/index.html', **{
-        'comment_id': comment_id,
+        'parent_id': parent_id,
+        'parent_table': parent_table,
         'replies': replies,
         'read_msgs': read_msgs,
         'can_post_new_reply': Permission(need.authenticated).can(),

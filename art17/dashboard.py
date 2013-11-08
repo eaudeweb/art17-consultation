@@ -48,37 +48,41 @@ def inject_funcs():
 
 @dashboard.route('/habitate')
 def habitats():
-    session = models.db.session
-    Topic = models.Topic
     DH = models.DataHabitat
-    DHC = models.DataHabitattypeComment
+    DHR = models.DataHabitattypeRegion
 
     habitat_list = DH.query.join(DH.lu).all()
 
     habitat_regions = {}
-    for acons in Topic.query.filter(Topic.habitat_id != None):
-        habitat_regions[acons.habitat_id, acons.region_code] = acons.id
-
-    habitat_comment_count = dict(
-        session.query(DHC.topic_id, func.count('*'))
-            .group_by(DHC.topic_id)
+    habitat_regions_query = (
+        models.db.session
+        .query(DHR.habitat_id, DHR.region)
+        .filter_by(cons_role='assessment')
     )
+    for key in habitat_regions_query:
+        habitat_regions[key] = 0
+
+    habitat_comment_count_query = (
+        models.db.session
+        .query(DHR.habitat_id, DHR.region, func.count('*'))
+        .filter_by(cons_role='comment')
+        .group_by(DHR.habitat_id, DHR.region)
+    )
+    for (habitat_id, region_code, count) in habitat_comment_count_query:
+        habitat_regions[habitat_id, region_code] = count
 
     return flask.render_template('dashboard/habitat.html', **{
         'bioreg_list': models.LuBiogeoreg.query.all(),
         'tabmenu_data': list(get_tabmenu_data()),
         'habitat_list': habitat_list,
         'habitat_regions': habitat_regions,
-        'habitat_comment_count': habitat_comment_count,
     })
 
 
 @dashboard.route('/specii/<group_code>')
 def species(group_code):
-    session = models.db.session
-    Topic = models.Topic
     DS = models.DataSpecies
-    DSC = models.DataSpeciesComment
+    DSR = models.DataSpeciesRegion
 
     species_group = (
         models.LuGrupSpecie.query
@@ -94,13 +98,22 @@ def species(group_code):
     )
 
     species_regions = {}
-    for acons in Topic.query.filter(Topic.species_id != None):
-        species_regions[acons.species_id, acons.region_code] = acons.id
-
-    species_comment_count = dict(
-        session.query(DSC.topic_id, func.count('*'))
-            .group_by(DSC.topic_id)
+    species_regions_query = (
+        models.db.session
+        .query(DSR.species_id, DSR.region)
+        .filter_by(cons_role='assessment')
     )
+    for key in species_regions_query:
+        species_regions[key] = 0
+
+    species_comment_count_query = (
+        models.db.session
+        .query(DSR.species_id, DSR.region, func.count('*'))
+        .filter_by(cons_role='comment')
+        .group_by(DSR.species_id, DSR.region)
+    )
+    for (species_id, region_code, count) in species_comment_count_query:
+        species_regions[species_id, region_code] = count
 
     return flask.render_template('dashboard/species.html', **{
         'bioreg_list': models.LuBiogeoreg.query.all(),
@@ -108,7 +121,6 @@ def species(group_code):
         'species_group': species_group,
         'species_list': species_list,
         'species_regions': species_regions,
-        'species_comment_count': species_comment_count,
     })
 
 
