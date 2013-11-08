@@ -68,7 +68,7 @@ def perm_update_comment_status(comment):
 
 
 def perm_delete_comment(comment):
-    if comment.status == APPROVED_STATUS:
+    if comment.cons_status == APPROVED_STATUS:
         return Denial(need.everybody)
     elif comment.cons_user_id:
         return Permission(need.admin, need.user_id(comment.cons_user_id))
@@ -296,8 +296,8 @@ class CommentStateView(flask.views.View):
         new_status = flask.request.form['status']
         if new_status not in STATUS_VALUES:
             flask.abort(403)
-        old_status = comment.status
-        comment.status = new_status
+        old_status = comment.cons_status
+        comment.cons_status = new_status
         app = flask.current_app._get_current_object()
         self.signal.send(app, ob=comment,
                          old_data=old_status, new_data=new_status)
@@ -316,7 +316,7 @@ class CommentDeleteView(flask.views.View):
         comment.deleted = True
         app = flask.current_app._get_current_object()
         old_data = self.parse_commentform(comment)
-        old_data['_status'] = comment.status
+        old_data['_status'] = comment.cons_status
         self.signal.send(app, ob=comment, old_data=old_data)
         models.db.session.commit()
         return flask.redirect(next_url)
