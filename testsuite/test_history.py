@@ -161,7 +161,7 @@ def test_reply_add(app):
     app.register_blueprint(replies.replies)
     params.setup(app, comment=True)
     client = app.test_client()
-    resp = client.post('/replici/%s/nou' % params.comment_id,
+    resp = client.post('/replici/specii/%s/nou' % params.comment_id,
                        data={'text': "hello world"})
     assert resp.status_code == 302
 
@@ -176,7 +176,8 @@ def test_reply_add(app):
         new_data = json.loads(history[0].new_data)
         assert new_data['text'] == 'hello world'
         assert new_data['user_id'] == params.user_id
-        assert new_data['parent'] == params.comment_id
+        assert new_data['parent_table'] == 'species'
+        assert new_data['parent_id'] == params.comment_id
 
 
 def test_reply_remove(app):
@@ -188,7 +189,8 @@ def test_reply_remove(app):
     with app.app_context():
         reply = models.CommentReply(text='hello foo',
                                            user_id='somewho',
-                                           parent='123',
+                                           parent_table='species',
+                                           parent_id='123',
                                            date=datetime(2010, 1, 4))
         models.db.session.add(reply)
         models.db.session.commit()
@@ -208,6 +210,7 @@ def test_reply_remove(app):
         assert json.loads(history_items[0].old_data) == {
             'text': 'hello foo',
             'user_id': 'somewho',
-            'parent': '123',
+            'parent_table': 'species',
+            'parent_id': '123',
             'date': datetime(2010, 1, 4).isoformat(),
         }

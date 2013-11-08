@@ -46,7 +46,12 @@
   <div class="panel panel-default">
     <div class="panel-heading">Adaugǎ comentariu</div>
     <div class="panel-body">
-      <form method="post" action="{{ url_for('.new', comment_id=comment_id) }}"
+      {% set url = url_for(
+            '.new',
+            parent_id=parent_id,
+            parent_table=parent_table,
+        ) %}
+      <form method="post" action="{{ url }}"
             class="form" id="reply-form">
         <div class="form-group">
           <textarea name="text" class="form-control" rows=4></textarea>

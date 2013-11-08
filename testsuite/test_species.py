@@ -308,7 +308,7 @@ def test_add_comment_reply(species_app):
     species_app.register_blueprint(replies)
     species_app.register_blueprint(common)
     client = TestApp(species_app)
-    page = client.get('/replici/2')
+    page = client.get('/replici/specii/2')
     form = page.forms['reply-form']
     form['text'] = "hello world!"
     form.submit()
@@ -319,4 +319,5 @@ def test_add_comment_reply(species_app):
         msg = replies[0]
         assert msg.text == "hello world!"
         assert msg.user_id == 'somewho'
-        assert msg.parent == '2'
+        assert msg.parent_table == 'species'
+        assert msg.parent_id == '2'

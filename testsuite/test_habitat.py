@@ -254,7 +254,7 @@ def test_add_comment_reply(habitat_app):
     habitat_app.register_blueprint(common)
     habitat_app.register_blueprint(replies)
     client = TestApp(habitat_app)
-    page = client.get('/replici/2')
+    page = client.get('/replici/habitate/2')
     form = page.forms['reply-form']
     form['text'] = "hello world!"
     form.submit()
@@ -265,4 +265,5 @@ def test_add_comment_reply(habitat_app):
         msg = replies[0]
         assert msg.text == "hello world!"
         assert msg.user_id == 'somewho'
-        assert msg.parent == '2'
+        assert msg.parent_table == 'habitat'
+        assert msg.parent_id == '2'

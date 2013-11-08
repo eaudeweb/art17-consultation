@@ -708,7 +708,8 @@ class CommentReply(Base):
     __tablename__ = u'comment_replies'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
-    parent = Column(String)
+    parent_table = Column(String)
+    parent_id = Column(String)
     user_id = Column(String)
     date = Column(DateTime)
     text = Column(Text)
