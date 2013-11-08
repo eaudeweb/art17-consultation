@@ -47,9 +47,13 @@ class SpeciesIndexView(IndexView):
             yield {
                 'region': topic.region,
                 'assessment': schemas.parse_species(topic.species_assessment),
-                'comments': [schemas.parse_species(c, is_comment=True)
-                             for c in
-                             topic.species_comments.filter_by(deleted=False)],
+                'comments': [
+                    schemas.parse_species(c, is_comment=True)
+                    for c in (
+                        topic.species_comments
+                        .filter_by(cons_deleted=False)
+                    )
+                ],
             }
 
     def parse_request(self):

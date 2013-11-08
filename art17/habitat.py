@@ -47,9 +47,13 @@ class HabitatIndexView(IndexView):
             yield {
                 'region': topic.region,
                 'assessment': schemas.parse_habitat(topic.habitat_assessment),
-                'comments': [schemas.parse_habitat(c, is_comment=True)
-                             for c in
-                             topic.habitat_comments.filter_by(deleted=False)],
+                'comments': [
+                    schemas.parse_habitat(c, is_comment=True)
+                    for c in (
+                        topic.habitat_comments
+                        .filter_by(cons_deleted=False)
+                    )
+                ],
             }
 
     def get_comment_next_url(self):

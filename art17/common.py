@@ -313,7 +313,7 @@ class CommentDeleteView(flask.views.View):
         comment = self.comment_cls.query.get_or_404(comment_id)
         perm_delete_comment(comment).test()
         next_url = flask.request.form['next']
-        comment.deleted = True
+        comment.cons_deleted = True
         app = flask.current_app._get_current_object()
         old_data = self.parse_commentform(comment)
         old_data['_status'] = comment.cons_status
