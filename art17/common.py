@@ -57,8 +57,8 @@ def perm_create_comment(record):
 
 
 def perm_edit_comment(comment):
-    if comment.user_id:
-        return Permission(need.admin, need.user_id(comment.user_id))
+    if comment.cons_user_id:
+        return Permission(need.admin, need.user_id(comment.cons_user_id))
     else:
         return Permission(need.admin)
 
@@ -70,8 +70,8 @@ def perm_update_comment_status(comment):
 def perm_delete_comment(comment):
     if comment.status == APPROVED_STATUS:
         return Denial(need.everybody)
-    elif comment.user_id:
-        return Permission(need.admin, need.user_id(comment.user_id))
+    elif comment.cons_user_id:
+        return Permission(need.admin, need.user_id(comment.cons_user_id))
     else:
         return Permission(need.admin)
 
@@ -236,8 +236,11 @@ class CommentView(flask.views.View):
             new_comment = True
             self.record = self.record_cls.query.get_or_404(record_id)
             perm_create_comment(self.record).test()
-            self.comment = self.comment_cls(user_id=flask.g.identity.id,
-                                            comment_date=datetime.utcnow())
+            self.comment = self.comment_cls(
+                cons_role='comment',
+                cons_user_id=flask.g.identity.id,
+                cons_date=datetime.utcnow(),
+            )
             form = self.form_cls(flask.request.form)
 
         elif comment_id:
