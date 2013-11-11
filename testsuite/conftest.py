@@ -13,6 +13,7 @@ def app():
     app.config['TESTING'] = True
     app.config['SECRET_KEY'] = 'foo'
     app.config['TESTING_USER_ID'] = None
+    app.config['MAIL_DEFAULT_SENDER'] = 'no-reply@example.com'
     @app.before_request
     def set_identity():
         user_id = flask.current_app.config['TESTING_USER_ID']

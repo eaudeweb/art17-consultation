@@ -1,14 +1,18 @@
 # encoding: utf-8
 
 import flask
+from flask.ext.mail import Mail, Message
 from art17 import species
 from art17 import models
 
 notifications = flask.Blueprint('notifications', __name__)
+mail = Mail()
+
 
 @notifications.record
 def register_handlers(state):
     app = state.app
+    mail.init_app(app)
 
     connect(species.comment_added, app,
             table='data_species_regions', action='add')
@@ -27,11 +31,12 @@ def handle_signal(table, action, ob, **extra):
         assert ob.id
 
     recipients = models.NotificationUser.query.all()
-    emails = {}
     for r in recipients:
-        emails[r.email] = create_message(table, action, ob, r)
-    # now send them all, TODO
-
+        msg = Message(body=create_message(table, action, ob, r),
+                subject='Notificare',
+                recipients=[r.email]
+        )
+        mail.send(msg)
 
 def create_message(table, action, ob, user):
     tpl = 'unknown.html'
