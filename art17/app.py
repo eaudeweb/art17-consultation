@@ -57,6 +57,7 @@ def create_app():
     from art17.replies import replies
     from art17.history import history
     from art17.dashboard import dashboard
+    from art17.notifications import notifications
 
     app = flask.Flask(__name__, instance_relative_config=True)
     app.jinja_options = dict(
@@ -73,6 +74,7 @@ def create_app():
     app.register_blueprint(replies)
     app.register_blueprint(history)
     app.register_blueprint(dashboard, url_prefix='/dashboard')
+    app.register_blueprint(notifications)
     models.db.init_app(app)
     admin.init_app(app)
 
