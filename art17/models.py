@@ -390,6 +390,7 @@ class DataSpeciesRegion(Base):
     cons_status = Column(String, default='new')
     cons_deleted = Column(Boolean, default=False)
     cons_report_observation = Column(Text)
+    cons_generalstatus = Column(String)
 
     species = relationship(u'DataSpecies',
         backref=db.backref('regions', lazy='dynamic'))
