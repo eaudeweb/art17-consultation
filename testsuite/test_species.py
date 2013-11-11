@@ -107,6 +107,7 @@ SPECIES_STRUCT_DATA = {
         'value': 'U2',
         'trend': '+',
     },
+    'report_observation': 'None',
 }
 
 
@@ -158,6 +159,8 @@ SPECIES_MODEL_DATA = {
 
     'conclusion_assessment': 'U2',
     'conclusion_assessment_trend': '+',
+
+    'cons_report_observation': 'None',
 }
 
 
