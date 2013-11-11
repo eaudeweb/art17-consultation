@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "common/comment.html" %}
 
 
 {% block title %}
@@ -17,57 +17,33 @@
 {% endblock breadcrumbs %}
 
 
-{% block content %}
-  <h4>
-    Adaugǎ comentariu pentru habitatul
-    <em>{{ habitat.lu.code }} - {{ habitat.lu.name_ro }}</em> in
-    <em>{{ record.model.lu.name_ro }}</em>
-  </h4>
+{% block headline %}
+  Adaugǎ comentariu pentru habitatul
+  <em>{{ habitat.lu.code }} - {{ habitat.lu.name_ro }}</em> în
+  <em>{{ record.model.lu.name_ro }}</em>
+{% endblock headline %}
 
-  <form method="post">
-    {%- if not config.TESTING %}
-    <p class="comment-info">
-      Toate câmpurile sunt opționale.
-      Aceste câmpuri și valorile lor sunt conforme cu
-      <a href="{{ url_for('views.guide') }}" target="_blank">
-        ghidul de raportare</a>
-      al Comisiei Europene.
-    </p>
-    {%- endif %}
 
-    {% if form.errors %}
-      <div class="alert alert-danger">
-        Formularul conține erori. Taburile cu titlu roșu conțin erori, detaliile lor fiind afișate lângă fiecare câmp cu probleme.
-      </div>
-    {% endif %}
+{% block form_content %}
+  <ul class="nav nav-tabs">
+    <li class="active {% if form.range.errors %}text-error{% endif %}">
+      <a href="#comment-range" data-toggle="tab">Proporția</a>
+    </li>
+    <li {% if form.coverage.errors %}class="text-error"{% endif %}>
+      <a href="#comment-area" data-toggle="tab">Suprafața</a>
+    </li>
+    <li {% if form.structure.errors or
+              form.future_prospects.errors or
+              form.overall_assessment.errors -%}
+            class="text-error"
+        {%- endif %}>
+      <a href="#comment-conclusion" data-toggle="tab">Concluzii</a>
+    </li>
+  </ul>
 
-    <ul class="nav nav-tabs">
-      <li class="active {% if form.range.errors %}text-error{% endif %}">
-        <a href="#comment-range" data-toggle="tab">Proporția</a>
-      </li>
-      <li {% if form.coverage.errors %}class="text-error"{% endif %}>
-        <a href="#comment-area" data-toggle="tab">Suprafața</a>
-      </li>
-      <li {% if form.structure.errors or
-                form.future_prospects.errors or
-                form.overall_assessment.errors -%}
-              class="text-error"
-          {%- endif %}>
-        <a href="#comment-conclusion" data-toggle="tab">Concluzii</a>
-      </li>
-    </ul>
-
-    <div class="tab-content">
-      {% include "habitat/comment/range.html" with context %}
-      {% include "habitat/comment/area.html" with context %}
-      {% include "habitat/comment/conclusion.html" with context %}
-    </div>
-
-    {%- if next_url %}
-      <input type="hidden" name="next" value="{{ next_url }}">
-    {%- endif %}
-
-    <button type="submit" class="btn btn-primary">Salveazǎ schimbǎrile</button>
-
-  </form>
-{% endblock content %}
+  <div class="tab-content">
+    {% include "habitat/comment/range.html" with context %}
+    {% include "habitat/comment/area.html" with context %}
+    {% include "habitat/comment/conclusion.html" with context %}
+  </div>
+{% endblock form_content %}

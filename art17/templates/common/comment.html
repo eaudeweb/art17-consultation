@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+  <h4>{% block headline %}{% endblock %}</h4>
+
+  <form method="post">
+    {%- if not config.TESTING %}
+    <p class="comment-info">
+      Toate câmpurile sunt opționale.
+      Aceste câmpuri și valorile lor sunt conforme cu
+      <a href="{{ url_for('views.guide') }}" target="_blank">
+        ghidul de raportare</a>
+      al Comisiei Europene.
+    </p>
+    {%- endif %}
+
+    {% if form.errors %}
+      <div class="alert alert-danger">
+        Formularul conține erori. Taburile cu titlu roșu conțin erori,
+        detaliile lor fiind afișate lângă fiecare câmp cu probleme.
+      </div>
+    {% endif %}
+
+    {% block form_content %}{% endblock %}
+
+    {%- if next_url %}
+      <input type="hidden" name="next" value="{{ next_url }}">
+    {%- endif %}
+
+    <button type="submit" class="btn btn-primary">Salveazǎ schimbǎrile</button>
+  </form>
+{% endblock content %}
