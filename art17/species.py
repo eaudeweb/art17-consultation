@@ -41,7 +41,7 @@ class SpeciesIndexView(IndexView):
             .order_by(models.DataSpeciesRegion.cons_date)
         )
         if region is not None:
-            records_query = records_query.filter_by(region=region)
+            records_query = records_query.filter_by(region=region.code)
 
         return iter(records_query)
 
