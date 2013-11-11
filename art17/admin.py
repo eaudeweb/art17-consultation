@@ -16,7 +16,7 @@ class ModelView(ModelView_base):
             setattr(self, k, v)
 
     def is_accessible(self):
-        return Principal(need.admin).can()
+        return Permission(need.admin).can()
 
 
 admin.add_view(ModelView(models.DataSpeciesRegion))
