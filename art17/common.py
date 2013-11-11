@@ -36,7 +36,6 @@ STATUS_OPTIONS = [
     ('rejected',    u"REJ refuzat, motive în replică"),
     ('invalid',     u"NO invalid"),
     ('question',    u"?? discutabil"),
-    ('final',       u"FIN raport modificat în urma consultării"),
 ]
 
 STATUS_VALUES = list(dict(STATUS_OPTIONS))
