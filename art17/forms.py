@@ -4,17 +4,20 @@ from wtforms import (Form as Form_base, FormField as FormField_base,
                      TextField, TextAreaField, DecimalField, SelectField,
                      IntegerField)
 from wtforms.validators import Required, Optional, NumberRange
-from art17.lookup import (TREND_OPTIONS,
-                          CONCLUSION_OPTIONS,
-                          METHODS_USED_OPTIONS,
-                          LU_FV_RANGE_OP_OPTIONS,
-                          LU_FV_RANGE_OP_FUNCT_OPTIONS,
-                          LU_POP_NUMBER_OPTIONS,
-                          LU_POP_NUMBER_RESTRICTED_OPTIONS,
-                          LU_REASONS_FOR_CHANGE_OPTIONS,
-                          QUALITY_OPTIONS,
-                          METHODS_PRESSURES_OPTIONS,
-                          METHODS_THREATS_OPTIONS)
+from art17.lookup import (
+    TREND_OPTIONS,
+    CONCLUSION_OPTIONS,
+    METHODS_USED_OPTIONS,
+    LU_FV_RANGE_OP_OPTIONS,
+    LU_FV_RANGE_OP_FUNCT_OPTIONS,
+    LU_POP_NUMBER_OPTIONS,
+    LU_POP_NUMBER_RESTRICTED_OPTIONS,
+    LU_REASONS_FOR_CHANGE_OPTIONS,
+    QUALITY_OPTIONS,
+    METHODS_PRESSURES_OPTIONS,
+    METHODS_THREATS_OPTIONS,
+    GENERALSTATUS_CHOICES,
+)
 from art17 import schemas
 
 EMPTY_CHOICE = [('', "")]
@@ -196,9 +199,11 @@ class SpeciesComment(Form):
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)
     report_observation = TextAreaField(validators=[Optional()])
+    generalstatus = SelectField(default='ok', choices=GENERALSTATUS_CHOICES)
 
     def custom_validate(self):
-        fields = list(all_fields(self))
+        generalstatus_field = self.generalstatus
+        fields = list(f for f in all_fields(self) if f != generalstatus_field)
         empty = [f for f in fields if not f.data]
 
         if empty and len(empty) == len(fields):

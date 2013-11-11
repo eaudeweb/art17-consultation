@@ -27,14 +27,7 @@
 {% block form_content %}
   <div class="row">
     <p class="col-sm-4">
-      <select
-          class="form-control comment-species-generalstatus"
-          name="generalstatus">
-        <option value="ok">specia este prezentă</option>
-        <option value="x-taxonomic">rezervă taxonomică</option>
-        <option value="x-scientific">rezervă științifică</option>
-        <option value="x-extinct">specia a dispărut</option>
-      </select>
+      {{ form.generalstatus(class='form-control') }}
     </p>
   </div>
 
@@ -72,7 +65,7 @@
 <script>
 (function() {
   "use strict";
-  var select = $('.comment-species-generalstatus');
+  var select = $('[name=generalstatus]');
   var form_content = $('.comment-species-report');
 
   select.change(function() {
