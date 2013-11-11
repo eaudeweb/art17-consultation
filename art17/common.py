@@ -230,7 +230,6 @@ class IndexView(flask.views.View):
                     'code': CONCLUSION_COLOR.get(
                         t['assessment']['overall_assessment']['value']),
                 } for t in self.topic_list]
-            print(map_colors)
             self.ctx.update({
                 'code': self.subject.code,
                 'name': self.subject.lu.display_name,
