@@ -1,5 +1,4 @@
 {% extends "layout.html" %}
-{% from 'common/comment_bits.html' import error_cls, errors %}
 
 
 {% block title %}
@@ -19,16 +18,11 @@
 
 
 {% block content %}
-{%- from 'common/td.html' import
-    range_html, trend_detail_html, reference_value_html, period_html,
-    population_size_html, method_html, conclusions_html, habitat_quality_html
-    with context %}
-
-  <h2>
+  <h4>
     Adaugǎ comentariu pentru
     <em>{{ species.lu.speciesname }}</em> in
     <em>{{ record.model.lu.name_ro }}</em>
-  </h2>
+  </h4>
 
   <form method="post">
     {%- if not config.TESTING %}
