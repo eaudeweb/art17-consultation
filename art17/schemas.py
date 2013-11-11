@@ -160,6 +160,7 @@ def parse_species(row, is_comment=False):
     rv['sources'] = row.published
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
+    rv['generalstatus'] = row.cons_generalstatus
     return rv
 
 

@@ -168,3 +168,7 @@ fieldset legend {
 .comment-info {
     color: #888;
 }
+
+.generalstatus {
+    text-align: center;
+}

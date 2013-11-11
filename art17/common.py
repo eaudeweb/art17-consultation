@@ -101,17 +101,20 @@ def inject_permissions():
 
 @common.app_context_processor
 def inject_constants():
-    return {'TREND_NAME': lookup.TREND_NAME,
-            'METHODS_USED': lookup.METHODS_USED,
-            'LU_FV_RANGE_OP': lookup.LU_FV_RANGE_OP,
-            'LU_FV_RANGE_OP_FUNCT': lookup.LU_FV_RANGE_OP_FUNCT,
-            'LU_POP_NUMBER': lookup.LU_POP_NUMBER,
-            'CONCLUSIONS': lookup.CONCLUSIONS,
-            'LU_REASONS_FOR_CHANGE': lookup.LU_REASONS_FOR_CHANGE,
-            'QUALITY': lookup.QUALITY,
-            'STATUS_OPTIONS': STATUS_OPTIONS,
-            'METHODS_PRESSURES': lookup.METHODS_PRESSURES,
-            'METHODS_THREATS': lookup.METHODS_THREATS}
+    return {
+        'TREND_NAME': lookup.TREND_NAME,
+        'METHODS_USED': lookup.METHODS_USED,
+        'LU_FV_RANGE_OP': lookup.LU_FV_RANGE_OP,
+        'LU_FV_RANGE_OP_FUNCT': lookup.LU_FV_RANGE_OP_FUNCT,
+        'LU_POP_NUMBER': lookup.LU_POP_NUMBER,
+        'CONCLUSIONS': lookup.CONCLUSIONS,
+        'LU_REASONS_FOR_CHANGE': lookup.LU_REASONS_FOR_CHANGE,
+        'QUALITY': lookup.QUALITY,
+        'STATUS_OPTIONS': STATUS_OPTIONS,
+        'METHODS_PRESSURES': lookup.METHODS_PRESSURES,
+        'METHODS_THREATS': lookup.METHODS_THREATS,
+        'GENERALSTATUS_CHOICES': dict(lookup.GENERALSTATUS_CHOICES),
+    }
 
 
 @common.app_template_filter('local_date')
