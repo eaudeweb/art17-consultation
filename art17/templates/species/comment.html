@@ -25,28 +25,64 @@
 
 
 {% block form_content %}
-  <ul class="nav nav-tabs">
-    <li class="active {% if form.range.errors %}text-error{% endif %}">
-      <a href="#comment-range" data-toggle="tab">Areal</a>
-    </li>
-    <li {% if form.population.errors %}class="text-error"{% endif %}>
-      <a href="#comment-population" data-toggle="tab">Populație</a>
-    </li>
-    <li {% if form.habitat.errors %}class="text-error"{% endif %}>
-      <a href="#comment-habitat" data-toggle="tab">Habitat</a>
-    </li>
-    <li {% if form.future_prospects.errors or
-              form.overall_assessment.errors -%}
-            class="text-error"
-        {%- endif %}>
-      <a href="#comment-conclusion" data-toggle="tab">Concluzii</a>
-    </li>
-  </ul>
+  <div class="row">
+    <p class="col-sm-4">
+      <select
+          class="form-control comment-species-generalstatus"
+          name="generalstatus">
+        <option value="ok">specia este prezentă</option>
+        <option value="x-taxonomic">rezervă taxonomică</option>
+        <option value="x-scientific">rezervă științifică</option>
+        <option value="x-extinct">specia a dispărut</option>
+      </select>
+    </p>
+  </div>
 
-  <div class="tab-content">
-    {% include "species/comment/range.html" with context %}
-    {% include "species/comment/population.html" with context %}
-    {% include "species/comment/habitat.html" with context %}
-    {% include "species/comment/conclusion.html" with context %}
+  <div class="comment-species-report">
+    <ul class="nav nav-tabs">
+      <li class="active {% if form.range.errors %}text-error{% endif %}">
+        <a href="#comment-range" data-toggle="tab">Areal</a>
+      </li>
+      <li {% if form.population.errors %}class="text-error"{% endif %}>
+        <a href="#comment-population" data-toggle="tab">Populație</a>
+      </li>
+      <li {% if form.habitat.errors %}class="text-error"{% endif %}>
+        <a href="#comment-habitat" data-toggle="tab">Habitat</a>
+      </li>
+      <li {% if form.future_prospects.errors or
+                form.overall_assessment.errors -%}
+              class="text-error"
+          {%- endif %}>
+        <a href="#comment-conclusion" data-toggle="tab">Concluzii</a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      {% include "species/comment/range.html" with context %}
+      {% include "species/comment/population.html" with context %}
+      {% include "species/comment/habitat.html" with context %}
+      {% include "species/comment/conclusion.html" with context %}
+    </div>
   </div>
 {% endblock form_content %}
+
+
+{% block script %}
+{{- super() }}
+<script>
+(function() {
+  "use strict";
+  var select = $('.comment-species-generalstatus');
+  var form_content = $('.comment-species-report');
+
+  select.change(function() {
+    if(select.val() == 'ok') {
+      form_content.show();
+    }
+    else {
+      form_content.hide();
+    }
+  });
+})();
+</script>
+{% endblock script %}
