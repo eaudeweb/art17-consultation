@@ -108,6 +108,7 @@ SPECIES_STRUCT_DATA = {
         'trend': '+',
     },
     'report_observation': 'None',
+    'generalstatus': 'ok',
 }
 
 
@@ -161,6 +162,7 @@ SPECIES_MODEL_DATA = {
     'conclusion_assessment_trend': '+',
 
     'cons_report_observation': 'None',
+    'cons_generalstatus': 'ok',
 }
 
 
@@ -324,3 +326,19 @@ def test_add_comment_reply(species_app):
         assert msg.user_id == 'somewho'
         assert msg.parent_table == 'species'
         assert msg.parent_id == '2'
+
+
+def test_save_taxonomic_reserve_comment(species_app):
+    from art17.models import DataSpeciesRegion
+    #species_app.config['TESTING_USER_ID'] = 'smith'
+    _create_species_record(species_app)
+    client = species_app.test_client()
+    resp = client.post(
+        '/specii/detalii/1/comentarii',
+        data={'generalstatus': 'x-taxonomic'},
+    )
+    assert resp.status_code == 200
+    assert COMMENT_SAVED_TXT in resp.data
+    with species_app.app_context():
+        comment = DataSpeciesRegion.query.get(2)
+        assert comment.cons_generalstatus == 'x-taxonomic'

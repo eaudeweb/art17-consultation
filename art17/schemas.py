@@ -214,6 +214,7 @@ def parse_species_commentform(row):
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
     rv['report_observation'] = row.cons_report_observation
+    rv['generalstatus'] = row.cons_generalstatus
 
     return rv
 
@@ -376,6 +377,7 @@ def flatten_species_commentform(struct, obj):
     flatten_conclusion(struct['overall_assessment'], obj,
                     'conclusion_assessment')
     obj.cons_report_observation = struct['report_observation']
+    obj.cons_generalstatus = struct['generalstatus']
 
 def flatten_habitat_commentform(struct, obj):
     obj.range_surface_area = struct['range']['surface_area']

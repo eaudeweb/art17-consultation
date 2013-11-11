@@ -207,8 +207,9 @@ class SpeciesComment(Form):
         empty = [f for f in fields if not f.data]
 
         if empty and len(empty) == len(fields):
-            fields[0].errors.append(u"Completați cel puțin o valoare.")
-            return False
+            if generalstatus_field.data == 'ok':
+                fields[0].errors.append(u"Completați cel puțin o valoare.")
+                return False
 
         return True
 
