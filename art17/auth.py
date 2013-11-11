@@ -13,6 +13,7 @@ class need(object):
     everybody = RoleNeed('everybody')
     admin = RoleNeed('admin')
     authenticated = RoleNeed('authenticated')
+    impossible = RoleNeed('impossible')
 
     @staticmethod
     def user_id(user_id):
@@ -20,6 +21,7 @@ class need(object):
 
 
 admin_permission = Permission(need.admin)
+impossible_permission = Permission(need.impossible)
 
 
 def user_permission(user_id):

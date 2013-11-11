@@ -38,6 +38,8 @@ STATUS_OPTIONS = [
     ('question',    u"?? discutabil"),
 ]
 
+EDITABLE_STATUS_LIST = ['new', 'investigate', 'incomplete', 'question']
+
 STATUS_VALUES = list(dict(STATUS_OPTIONS))
 
 APPROVED_STATUS = 'approved'
@@ -56,8 +58,12 @@ def perm_create_comment(record):
 
 
 def perm_edit_comment(comment):
+    if comment.cons_status not in EDITABLE_STATUS_LIST:
+        return Permission(need.impossible)
+
     if comment.cons_user_id:
         return Permission(need.admin, need.user_id(comment.cons_user_id))
+
     else:
         return Permission(need.admin)
 
@@ -67,10 +73,15 @@ def perm_update_comment_status(comment):
 
 
 def perm_delete_comment(comment):
+    if comment.cons_status not in EDITABLE_STATUS_LIST:
+        return Permission(need.impossible)
+
     if comment.cons_status == APPROVED_STATUS:
         return Denial(need.everybody)
+
     elif comment.cons_user_id:
         return Permission(need.admin, need.user_id(comment.cons_user_id))
+
     else:
         return Permission(need.admin)
 
