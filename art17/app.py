@@ -3,6 +3,7 @@ from flask.ext.script import Manager
 from path import path
 
 views = flask.Blueprint('views', __name__)
+REPO_ROOT = path(__file__).abspath().parent.parent
 
 
 @views.route('/')
@@ -63,6 +64,7 @@ def create_app():
         extensions=app.jinja_options['extensions'] + ['jinja2.ext.do'],
         finalize=none_as_blank)
     app.config.from_pyfile('settings.py', silent=True)
+    app.config.from_pyfile(REPO_ROOT / 'settings.py', silent=True)
     app.register_blueprint(auth)
     app.register_blueprint(views)
     app.register_blueprint(common)
