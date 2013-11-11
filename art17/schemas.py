@@ -296,6 +296,7 @@ def parse_habitat_commentform(row):
     rv['structure'] = parse_conclusion(row, 'conclusion_structure')
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
+    rv['report_observation'] = row.cons_report_observation
 
     return rv
 
@@ -405,3 +406,4 @@ def flatten_habitat_commentform(struct, obj):
                     'conclusion_future')
     flatten_conclusion(struct['overall_assessment'], obj,
                     'conclusion_assessment')
+    obj.cons_report_observation = struct['report_observation']

@@ -215,6 +215,7 @@ class HabitatComment(Form):
     structure = FormField(Conclusion)
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)
+    report_observation = TextAreaField(validators=[Optional()])
 
     def custom_validate(self):
         fields = list(all_fields(self))
