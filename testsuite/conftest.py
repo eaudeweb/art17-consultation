@@ -13,6 +13,7 @@ def app():
     app.config['TESTING'] = True
     app.config['SECRET_KEY'] = 'foo'
     app.config['TESTING_USER_ID'] = None
+    app.config['MAIL_DEFAULT_SENDER'] = 'no-reply@example.com'
     @app.before_request
     def set_identity():
         user_id = flask.current_app.config['TESTING_USER_ID']
@@ -35,4 +36,13 @@ def species_app(app):
 def habitat_app(app):
     from art17.habitat import habitat
     app.register_blueprint(habitat)
+    return app
+
+
+@pytest.fixture
+def notifications_app(app):
+    from art17.species import species
+    from art17.notifications import notifications
+    app.register_blueprint(species)
+    app.register_blueprint(notifications)
     return app

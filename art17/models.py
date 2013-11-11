@@ -534,6 +534,14 @@ class History(Base):
     new_data = Column(Text)
 
 
+class NotificationUser(Base):
+    __tablename__ = u'notification_user'
+
+    id = Column('objectid', String, primary_key=True, default=create_uuid)
+    email = Column(String)
+    full_name = Column(String)
+
+
 @db_manager.option('alembic_args', nargs=argparse.REMAINDER)
 def alembic(alembic_args):
     from alembic.config import CommandLine
