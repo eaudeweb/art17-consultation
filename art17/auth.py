@@ -53,14 +53,22 @@ def debug():
         flask.abort(404)
 
     if flask.request.method == 'POST':
-        set_session_auth(flask.request.form['user_id'],
-                         flask.request.form.getlist('roles'))
+        user_id = flask.request.form['user_id']
+        roles = flask.request.form['roles'].strip().split()
+        set_session_auth(user_id, roles)
         return flask.redirect(flask.url_for('.debug'))
 
     roles = flask.session.get('auth', {}).get('roles', [])
-    return flask.render_template('auth/debug.html',
-                                 user_id=flask.g.identity.id,
-                                 roles=roles)
+    return flask.render_template('auth/debug.html', **{
+        'user_id': flask.g.identity.id,
+        'roles_txt': ''.join('%s\n' % r for r in roles),
+        'roles_example': (
+            'admin\n'
+            'expert:species:M\n'
+            'expert:species:M:1353\n'
+            'reviewer:habitat:8230\n'
+        ),
+    })
 
 
 def set_session_auth(user_id=None, roles=[]):
