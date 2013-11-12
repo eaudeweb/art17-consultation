@@ -1,8 +1,9 @@
 revision = '17d03b52364a'
-down_revision = '39f65264570c'
+down_revision = '4eccf01743b2'
 
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy.dialects.oracle import NVARCHAR2
 
 
 def upgrade():
@@ -10,6 +11,7 @@ def upgrade():
         'data_species_regions',
         sa.Column('cons_generalstatus', NVARCHAR2(255), nullable=True),
     )
+    op.execute("update data_species_regions set cons_generalstatus = 'ok'")
 
 
 def downgrade():
