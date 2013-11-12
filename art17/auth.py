@@ -19,6 +19,10 @@ class need(object):
     def user_id(user_id):
         return UserNeed(user_id)
 
+    @staticmethod
+    def role(role):
+        return RoleNeed(role)
+
 
 admin_permission = Permission(need.admin)
 impossible_permission = Permission(need.impossible)
