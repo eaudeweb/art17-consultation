@@ -64,6 +64,7 @@ def create_app():
         app.jinja_options,
         extensions=app.jinja_options['extensions'] + ['jinja2.ext.do'],
         finalize=none_as_blank)
+    app.config['SQLALCHEMY_POOL_RECYCLE'] = 240  # 4 minutes
     app.config.from_pyfile('settings.py', silent=True)
     app.config.from_pyfile(REPO_ROOT / 'settings.py', silent=True)
     app.register_blueprint(auth)
