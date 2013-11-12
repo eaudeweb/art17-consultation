@@ -17,15 +17,7 @@ def test_add_species_region_comment(notifications_app):
     client = notifications_app.test_client()
     with mail.record_messages() as outbox:
         resp = client.post('/specii/detalii/2/comentarii',
-                       data={'range.surface_area': '50',
-                             'range.method': '1',
-                             'population.method': '1',
-                             'habitat.surface_area': '100',
-                             'habitat.date': '2000-2001',
-                             'habitat.method': '1',
-                             'habitat.quality': '2',
-                             'habitat.quality_explanation': 'foo explanation',
-                             'habitat.area_suitable': 1000})
+                       data={'range.surface_area': '50'})
         assert resp.status_code == 200
         assert len(outbox) == 1
         assert 'user@example.com' in outbox[0].recipients
