@@ -6,7 +6,7 @@ from art17 import models, species, habitat, history
 
 class species_params(object):
     blueprint = species.species
-    comment_table = 'data_species_comments'
+    comment_table = 'data_species_regions'
     comment_create_url = '/specii/detalii/1/comentarii'
     user_id = 'somebody'
     comment_cls = models.DataSpeciesRegion
@@ -35,7 +35,7 @@ class species_params(object):
 
 class habitat_params(object):
     blueprint = habitat.habitat
-    comment_table = 'data_habitattype_comments'
+    comment_table = 'data_habitattype_regions'
     comment_create_url = '/habitate/detalii/1/comentarii'
     user_id = 'somebody'
     comment_cls = models.DataHabitattypeRegion
