@@ -11,6 +11,7 @@ class notif_species_params(species_params):
     @classmethod
     def setup(cls, app, comment=False):
         from test_species import _create_species_record
+
         app.register_blueprint(species.species)
         app.register_blueprint(notifications.notifications)
         _create_species_record(app, comment)
@@ -21,6 +22,7 @@ class notif_habitat_params(habitat_params):
     @classmethod
     def setup(cls, app, comment=False):
         from test_habitat import _create_habitat_record
+
         app.register_blueprint(habitat.habitat)
         app.register_blueprint(notifications.notifications)
         _create_habitat_record(app, comment)
@@ -41,7 +43,45 @@ def test_comment_add(params, app):
 
     with mail.record_messages() as outbox:
         resp = client.post(params.comment_create_url,
-                            data=params.comment_data)
+                           data=params.comment_data)
         assert resp.status_code == 200
+        assert len(outbox) == 1
+        assert 'user@example.com' in outbox[0].recipients
+
+
+@pytest.mark.parametrize(['params'], [[notif_species_params], [notif_habitat_params]])
+def test_comment_edit(params, app):
+    params.setup(app, comment=True)
+    client = app.test_client()
+
+    with mail.record_messages() as outbox:
+        resp = client.post(params.comment_edit_url, data=params.comment_data)
+        assert resp.status_code == 200
+        assert len(outbox) == 1
+        assert 'user@example.com' in outbox[0].recipients
+
+
+@pytest.mark.parametrize(['params'], [[notif_species_params], [notif_habitat_params]])
+def test_comment_update_status(params, app):
+    params.setup(app, comment=True)
+    client = app.test_client()
+
+    with mail.record_messages() as outbox:
+        resp = client.post(params.comment_status_url,
+                           data={'status': 'approved', 'next': '/'}
+        )
+        assert resp.status_code == 302
+        assert len(outbox) == 1
+        assert 'user@example.com' in outbox[0].recipients
+
+
+@pytest.mark.parametrize(['params'], [[notif_species_params], [notif_habitat_params]])
+def test_comment_delete(params, app):
+    params.setup(app, comment=True)
+    client = app.test_client()
+
+    with mail.record_messages() as outbox:
+        resp = client.post(params.comment_delete_url, data={'next': '/'})
+        assert resp.status_code == 302
         assert len(outbox) == 1
         assert 'user@example.com' in outbox[0].recipients
