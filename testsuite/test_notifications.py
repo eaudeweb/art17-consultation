@@ -4,6 +4,15 @@ from art17.notifications import mail
 from test_species import _create_species_record
 
 
+@pytest.fixture
+def notifications_app(app):
+    from art17.species import species
+    from art17.notifications import notifications
+    app.register_blueprint(species)
+    app.register_blueprint(notifications)
+    return app
+
+
 def _create_user_record(app):
     with app.app_context():
         user = models.NotificationUser(id=1, email='user@example.com', full_name='Prenume Nume')

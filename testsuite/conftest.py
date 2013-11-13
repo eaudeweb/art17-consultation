@@ -37,12 +37,3 @@ def habitat_app(app):
     from art17.habitat import habitat
     app.register_blueprint(habitat)
     return app
-
-
-@pytest.fixture
-def notifications_app(app):
-    from art17.species import species
-    from art17.notifications import notifications
-    app.register_blueprint(species)
-    app.register_blueprint(notifications)
-    return app
