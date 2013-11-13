@@ -24,14 +24,10 @@ def lookup_regions(species_code):
     return flask.jsonify(options=regions)
 
 
-class SpeciesIndexView(IndexView):
+class SpeciesMixin(object):
 
-    template = 'species/index.html'
-    topic_template = 'species/topic.html'
-    subject_name = 'species'
-    subject_cls = models.DataSpecies
-    record_cls = models.DataSpeciesRegion
     blueprint = 'species'
+    subject_name = 'species'
     parse_record = staticmethod(schemas.parse_species)
 
     def get_records(self, species, region):
@@ -45,6 +41,18 @@ class SpeciesIndexView(IndexView):
 
         return iter(records_query)
 
+    @property
+    def map_url_template(self):
+        return flask.current_app.config['SPECIES_MAP_URL']
+
+
+class SpeciesIndexView(IndexView, SpeciesMixin):
+
+    template = 'species/index.html'
+    topic_template = 'species/topic.html'
+    subject_cls = models.DataSpecies
+    record_cls = models.DataSpeciesRegion
+
     def parse_request(self):
         super(SpeciesIndexView, self).parse_request()
         if self.subject:
@@ -55,10 +63,6 @@ class SpeciesIndexView(IndexView):
     def get_comment_next_url(self):
         return flask.url_for('.index', species=self.subject_code,
                                        region=self.region_code)
-
-    @property
-    def map_url_template(self):
-        return flask.current_app.config['SPECIES_MAP_URL']
 
     def prepare_context(self):
         super(SpeciesIndexView, self).prepare_context()
@@ -98,7 +102,7 @@ def detail(record_id):
     })
 
 
-class SpeciesCommentView(CommentView):
+class SpeciesCommentView(CommentView, SpeciesMixin):
 
     form_cls = forms.SpeciesComment
     record_cls = models.DataSpeciesRegion
@@ -109,16 +113,18 @@ class SpeciesCommentView(CommentView):
     template_saved = 'species/comment-saved.html'
     add_signal = comment_added
     edit_signal = comment_edited
-    blueprint = 'species'
 
     def link_comment_to_record(self):
         self.comment.species_id = self.record.species_id
         self.comment.region = self.record.region
 
     def setup_template_context(self):
+        region = models.LuBiogeoreg.query.filter_by(code=self.record.region).first_or_404()
+        self.topic_list = self.get_topics(self.record.species, region)
         self.template_ctx = {
             'species': self.record.species,
             'record': schemas.parse_species(self.record),
+            'map_url': self.get_map_url(region.code)
         }
 
     def record_for_comment(self, comment):
