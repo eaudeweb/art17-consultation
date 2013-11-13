@@ -110,17 +110,6 @@ App.habitat_filter = function(habitat_list) {
 };
 
 
-$('body').on('click', '.showmap', function(evt) {
-  evt.preventDefault();
-  var link = $(this);
-  var url = link.attr('href');
-  var title = "Hartă";
-  var params = 'height=650,width=850,screenX=100,screenY=100';
-  var popup = window.open(url, title, params);
-  popup.focus();
-});
-
-
 _($('.records-commentstatus [name=status]')).forEach(function(el) {
   var hidden_input = $(el);
   var data = _(App.STATUS_OPTIONS).map(function(item) {
