@@ -11,7 +11,7 @@ def upgrade():
         'data_species_regions',
         sa.Column('cons_generalstatus', NVARCHAR2(255), nullable=True),
     )
-    op.execute("update data_species_regions set cons_generalstatus = 'ok'")
+    op.execute("update data_species_regions set cons_generalstatus = '1'")
 
 
 def downgrade():

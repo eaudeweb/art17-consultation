@@ -116,6 +116,19 @@ class LuMeasures(Base):
     valid_entry = Column(String)
 
 
+class LuPresence(Base):
+    __tablename__ = u'lu_presence'
+
+    objectid = Column(Integer, Sequence('R688'), primary_key=True)
+    code = Column(String)
+    name = Column(String)
+    order_ = Column(Integer)
+    reporting = Column(String)
+    habitat_reporting = Column(String)
+    species_reporting = Column(String)
+    bird_reporting = Column(String)
+
+
 class DataHabitat(Base):
     __tablename__ = u'data_habitats'
 

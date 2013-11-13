@@ -4,6 +4,8 @@ from wtforms import (Form as Form_base, FormField as FormField_base,
                      TextField, TextAreaField, DecimalField, SelectField,
                      IntegerField)
 from wtforms.validators import Required, Optional, NumberRange
+
+from art17 import models
 from art17.lookup import (
     TREND_OPTIONS,
     CONCLUSION_OPTIONS,
@@ -15,8 +17,7 @@ from art17.lookup import (
     LU_REASONS_FOR_CHANGE_OPTIONS,
     QUALITY_OPTIONS,
     METHODS_PRESSURES_OPTIONS,
-    METHODS_THREATS_OPTIONS,
-    GENERALSTATUS_CHOICES,
+    METHODS_THREATS_OPTIONS
 )
 from art17 import schemas
 
@@ -191,6 +192,7 @@ class Coverage(Form):
         super(Coverage, self).__init__(*args, **kwargs)
         self.reference_value.op.choices=EMPTY_CHOICE + LU_FV_RANGE_OP_FUNCT_OPTIONS
 
+
 class SpeciesComment(Form):
 
     range = FormField(Range)
@@ -199,7 +201,13 @@ class SpeciesComment(Form):
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)
     report_observation = TextAreaField(validators=[Optional()])
-    generalstatus = SelectField(default='ok', choices=GENERALSTATUS_CHOICES)
+    generalstatus = SelectField(default='1')
+
+    def __init__(self, *args, **kwargs):
+        super(SpeciesComment, self).__init__(*args, **kwargs)
+        self.generalstatus.choices=models.db.session.query(
+                                            models.LuPresence.code,
+                                            models.LuPresence.name)
 
     def custom_validate(self):
         generalstatus_field = self.generalstatus
@@ -207,7 +215,7 @@ class SpeciesComment(Form):
         empty = [f for f in fields if not f.data]
 
         if empty and len(empty) == len(fields):
-            if generalstatus_field.data == 'ok':
+            if generalstatus_field.data == '1':
                 fields[0].errors.append(u"Completați cel puțin o valoare.")
                 return False
 

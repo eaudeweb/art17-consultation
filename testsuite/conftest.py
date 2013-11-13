@@ -18,10 +18,18 @@ def app():
     def set_identity():
         user_id = flask.current_app.config['TESTING_USER_ID']
         flask.g.identity = Mock(id=user_id)
-    from art17.models import db
+    from art17.models import db, LuPresence
     db.init_app(app)
     with app.app_context():
         db.create_all()
+        rec1 = LuPresence(objectid=1, code='1', name='Present')
+        db.session.add(rec1)
+
+        rec2 = LuPresence(objectid=2,
+                                    code='SR TAX',
+                                    name='Taxonomical reserve')
+        db.session.add(rec2)
+        db.session.commit()
     return app
 
 

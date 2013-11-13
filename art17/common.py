@@ -113,7 +113,9 @@ def inject_constants():
         'STATUS_OPTIONS': STATUS_OPTIONS,
         'METHODS_PRESSURES': lookup.METHODS_PRESSURES,
         'METHODS_THREATS': lookup.METHODS_THREATS,
-        'GENERALSTATUS_CHOICES': dict(lookup.GENERALSTATUS_CHOICES),
+        'GENERALSTATUS_CHOICES': dict(models.db.session.query(
+                                    models.LuPresence.code,
+                                    models.LuPresence.name).all())
     }
 
 

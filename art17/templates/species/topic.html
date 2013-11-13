@@ -54,7 +54,7 @@
 
 
 {% macro record(row) %}
-  {%- if row.generalstatus == 'ok' %}
+  {%- if row.generalstatus == '1' %}
     {#- range #}
     {%- set range = row.range %}
     <td>{{ range.surface_area }}</td>

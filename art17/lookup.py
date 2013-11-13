@@ -120,11 +120,3 @@ METHODS_THREATS_OPTIONS = [
 ]
 
 METHODS_THREATS = dict(METHODS_THREATS_OPTIONS)
-
-
-GENERALSTATUS_CHOICES = [
-    ('ok', u"specia este prezentă"),
-    ('x-taxonomic', u"rezervă taxonomică"),
-    ('x-scientific', u"rezervă științifică"),
-    ('x-extinct', u"specia a dispărut"),
-]

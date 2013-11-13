@@ -108,7 +108,7 @@ SPECIES_STRUCT_DATA = {
         'trend': '+',
     },
     'report_observation': 'nothing to add',
-    'generalstatus': 'ok',
+    'generalstatus': '1',
 }
 
 
@@ -162,7 +162,7 @@ SPECIES_MODEL_DATA = {
     'conclusion_assessment_trend': '+',
 
     'cons_report_observation': 'nothing to add',
-    'cons_generalstatus': 'ok',
+    'cons_generalstatus': '1',
 }
 
 
@@ -179,6 +179,7 @@ def _create_species_record(species_app, comment=False):
         )
         record.lu = models.LuBiogeoreg(objectid=1)
         models.db.session.add(record)
+
 
         if comment:
             comment = models.DataSpeciesRegion(
@@ -258,14 +259,15 @@ def test_edit_comment_submit(species_app):
         assert comment.range_surface_area == 50
 
 
-def test_one_field_required():
+def test_one_field_required(species_app):
     from werkzeug.datastructures import MultiDict
     from art17 import forms
-    form = forms.SpeciesComment(MultiDict())
-    assert not form.validate()
+    with species_app.app_context():
+        form = forms.SpeciesComment(MultiDict())
+        assert not form.validate()
 
 
-def test_save_all_form_fields():
+def test_save_all_form_fields(species_app):
     from art17 import forms
     from art17 import models
     from art17.common import flatten_dict
@@ -274,8 +276,9 @@ def test_save_all_form_fields():
 
     form_data = MultiDict(flatten_dict(SPECIES_STRUCT_DATA))
 
-    form = forms.SpeciesComment(form_data)
-    assert form.validate()
+    with species_app.app_context():
+        form = forms.SpeciesComment(form_data)
+        assert form.validate()
 
     comment = models.DataSpeciesRegion()
     flatten_species_commentform(form.data, comment)
@@ -335,10 +338,10 @@ def test_save_taxonomic_reserve_comment(species_app):
     client = species_app.test_client()
     resp = client.post(
         '/specii/detalii/1/comentarii',
-        data={'generalstatus': 'x-taxonomic'},
+        data={'generalstatus': 'SR TAX'},
     )
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
         comment = DataSpeciesRegion.query.get(2)
-        assert comment.cons_generalstatus == 'x-taxonomic'
+        assert comment.cons_generalstatus == 'SR TAX'
