@@ -1,3 +1,4 @@
+import urllib
 import flask
 from blinker import Signal
 from art17 import models
@@ -24,13 +25,9 @@ def lookup_regions(habitat_code):
     return flask.jsonify(options=regions)
 
 
-class HabitatIndexView(IndexView):
+class HabitatMixin(object):
 
-    template = 'habitat/index.html'
-    topic_template = 'habitat/topic.html'
     subject_name = 'habitat'
-    subject_cls = models.DataHabitat
-    record_cls = models.DataHabitattypeRegion
     blueprint = 'habitat'
     parse_record = staticmethod(schemas.parse_habitat)
 
@@ -45,13 +42,21 @@ class HabitatIndexView(IndexView):
 
         return iter(records_query)
 
-    def get_comment_next_url(self):
-        return flask.url_for('.index', habitat=self.subject_code,
-                                       region=self.region_code)
-
     @property
     def map_url_template(self):
         return flask.current_app.config['HABITAT_MAP_URL']
+
+
+class HabitatIndexView(IndexView, HabitatMixin):
+
+    template = 'habitat/index.html'
+    topic_template = 'habitat/topic.html'
+    subject_cls = models.DataHabitat
+    record_cls = models.DataHabitattypeRegion
+
+    def get_comment_next_url(self):
+        return flask.url_for('.index', habitat=self.subject_code,
+                                       region=self.region_code)
 
     def get_subject_list(self):
         return [{'id': h.code, 'text': h.lu.display_name}
@@ -74,7 +79,7 @@ def detail(record_id):
     })
 
 
-class HabitatCommentView(CommentView):
+class HabitatCommentView(CommentView, HabitatMixin):
 
     form_cls = forms.HabitatComment
     record_cls = models.DataHabitattypeRegion
@@ -91,9 +96,12 @@ class HabitatCommentView(CommentView):
         self.comment.region = self.record.region
 
     def setup_template_context(self):
+        region = models.LuBiogeoreg.query.filter_by(code=self.record.region).first_or_404()
+        self.topic_list = self.get_topics(self.record.habitat, region)
         self.template_ctx = {
             'habitat': self.record.habitat,
             'record': schemas.parse_habitat(self.record),
+            'map_url': self.get_map_url(region.code)
         }
 
     def record_for_comment(self, comment):

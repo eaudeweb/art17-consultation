@@ -4,6 +4,19 @@
 {% block content %}
   <h4>{% block headline %}{% endblock %}</h4>
 
+  <div class="form-group">
+    {%- if record_id %}
+    {%- set url = url_for(blueprint + '.detail',
+                          record_id=record_id) %}
+    <button class="records-detailbtn btn btn-sm btn-info"
+            data-url="{{ url }}">detalii</button>
+    {% endif %}
+    {%- if map_url %}
+    <a class="showmap btn btn-sm btn-info"
+       href="{{ map_url }}">vezi harta</a>
+    {%- endif %}
+  </div>
+
   <form method="post">
     {%- if not config.TESTING %}
     <p class="comment-info">
@@ -30,4 +43,12 @@
 
     <button type="submit" class="btn btn-primary">Salveazǎ schimbǎrile</button>
   </form>
+
+  {% include 'common/recorddetail.html' %}
 {% endblock content %}
+
+{% block script %}
+  {%- from 'bits.html' import script %}
+  {{- super() }}
+  {{ script('detail.js') }}
+{% endblock script %}

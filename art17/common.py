@@ -171,8 +171,42 @@ def json_encode_more(value):
     raise TypeError
 
 
-class IndexView(flask.views.View):
+class IndexMixin(object):
 
+    def get_topics(self, subject, region):
+        region_data_map = {}
+        for record in self.get_records(subject, region):
+            if record.region not in region_data_map:
+                region_data_map[record.region] = {
+                    'region': record.lu,
+                    'comments': [],
+                }
+
+            region_data = region_data_map[record.region]
+
+            if record.cons_role == 'assessment':
+                region_data['assessment'] = self.parse_record(record)
+
+            else:
+                if not record.cons_deleted:
+                    r = self.parse_record(record, is_comment=True)
+                    region_data['comments'].append(r)
+
+        return list(region_data_map.values())
+
+    def get_map_url(self, subject_code):
+        map_colors = [{
+                          'region': t['region'].code,
+                          'code': CONCLUSION_COLOR.get(
+                              t['assessment']['overall_assessment']['value']),
+                      } for t in self.topic_list]
+        return self.map_url_template.format(**{
+            self.subject_name: subject_code,
+            'regions': urllib.quote(flask.json.dumps(map_colors)),
+        })
+
+
+class IndexView(flask.views.View, IndexMixin):
     def parse_request(self):
         self.subject_code = flask.request.args.get(self.subject_name)
 
@@ -214,27 +248,6 @@ class IndexView(flask.views.View):
                 .order_by(self.subject_cls.code)
         )
 
-    def get_topics(self, subject, region):
-        region_data_map = {}
-        for record in self.get_records(subject, region):
-            if record.region not in region_data_map:
-                region_data_map[record.region] = {
-                    'region': record.lu,
-                    'comments': [],
-                }
-
-            region_data = region_data_map[record.region]
-
-            if record.cons_role == 'assessment':
-                region_data['assessment'] = self.parse_record(record)
-
-            else:
-                if not record.cons_deleted:
-                    r = self.parse_record(record, is_comment=True)
-                    region_data['comments'].append(r)
-
-        return list(region_data_map.values())
-
     def get_pressures(self, record):
         return record.pressures.all()
 
@@ -252,20 +265,12 @@ class IndexView(flask.views.View):
         })
 
         if self.subject:
-            map_colors = [{
-                    'region': t['region'].code,
-                    'code': CONCLUSION_COLOR.get(
-                        t['assessment']['overall_assessment']['value']),
-                } for t in self.topic_list]
             self.ctx.update({
                 'code': self.subject.code,
                 'name': self.subject.lu.display_name,
                 'topic_list': self.topic_list,
                 'reply_counts': self.reply_counts,
-                'map_url': self.map_url_template.format(**{
-                    self.subject_name: self.subject.code,
-                    'regions': urllib.quote(flask.json.dumps(map_colors)),
-                }),
+                'map_url': self.get_map_url(self.subject.code)
             })
 
     def dispatch_request(self):
@@ -275,7 +280,7 @@ class IndexView(flask.views.View):
         return flask.render_template(self.template, **self.ctx)
 
 
-class CommentView(flask.views.View):
+class CommentView(IndexMixin, flask.views.View):
 
     methods = ['GET', 'POST']
 
@@ -310,6 +315,8 @@ class CommentView(flask.views.View):
 
         self.setup_template_context()
         self.template_ctx['next_url'] = flask.request.args.get('next')
+        self.template_ctx['blueprint'] = self.blueprint
+        self.template_ctx['record_id'] = record_id
 
         if flask.request.method == 'POST' and form.validate():
             self.link_comment_to_record()

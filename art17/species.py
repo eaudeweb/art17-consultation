@@ -109,6 +109,7 @@ class SpeciesCommentView(CommentView):
     template_saved = 'species/comment-saved.html'
     add_signal = comment_added
     edit_signal = comment_edited
+    blueprint = 'species'
 
     def link_comment_to_record(self):
         self.comment.species_id = self.record.species_id
