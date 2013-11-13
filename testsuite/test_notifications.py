@@ -85,3 +85,16 @@ def test_comment_delete(params, app):
         assert resp.status_code == 302
         assert len(outbox) == 1
         assert 'user@example.com' in outbox[0].recipients
+
+
+def test_reply_add(app):
+    from art17 import replies
+    params = notif_species_params
+    app.register_blueprint(replies.replies)
+    params.setup(app, comment=True)
+    client = app.test_client()
+    with mail.record_messages() as outbox:
+        resp = client.post('/replici/specii/%s/nou' % params.comment_id,
+                           data={'text': "hello world"})
+        assert resp.status_code == 302
+        assert len(outbox) == 1

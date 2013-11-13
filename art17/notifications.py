@@ -36,8 +36,8 @@ def register_handlers(state):
 
     connect(replies.reply_added, app,
             table='comment_replies', action='add')
-    connect(replies.reply_removed, app,
-            table='comment_replies', action='remove')
+    #connect(replies.reply_removed, app,
+    #        table='comment_replies', action='remove')
 
 
 def connect(signal, sender, **more_kwargs):
