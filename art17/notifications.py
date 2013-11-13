@@ -52,7 +52,7 @@ def handle_signal(table, action, ob, **extra):
         models.db.session.flush()
         assert ob.id
 
-    recipients = models.NotificationUser.query.all()
+    recipients = get_notification_emails(ob)
     for r in recipients:
         msg = Message(body=create_message(table, action, ob, r),
                 subject='Notificare',
@@ -74,10 +74,27 @@ def create_message(table, action, ob, user):
 
 @notifications.app_template_global('resource_url')
 def resource_url(table, objectid, _external=False):
+    obj = get_parent_object(table, objectid)
     if table == 'species':
-        species = models.DataSpeciesRegion.query.get(objectid)
-        return flask.url_for('species.index', _external=_external) + '?species=' + str(species.species.code)
+        return flask.url_for('species.index', _external=_external) + '?species=' + str(obj.species.code)
     if table == 'habitat':
-        habitat = models.DataHabitattypeRegion.query.get(objectid)
-        return flask.url_for('habitat.index', _external=_external) + '?habitat=' + str(habitat.habitat.code)
+        return flask.url_for('habitat.index', _external=_external) + '?habitat=' + str(obj.habitat.code)
     return ''
+
+
+def get_parent_object(table, objectid):
+    if table == 'species':
+        return models.DataSpeciesRegion.query.get(objectid)
+    if table == 'habitat':
+        return models.DataHabitattypeRegion.query.get(objectid)
+    return None
+
+
+def get_notification_emails(obj):
+    if isinstance(obj, models.CommentReply):
+        parent = get_parent_object(obj.parent_table, obj.parent_id)
+        identifier = parent.identifier
+    else:
+        identifier = obj.identifier
+    # TODO: get emails from SharePoint, using identity
+    return models.NotificationUser.query.all()
