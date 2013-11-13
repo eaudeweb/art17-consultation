@@ -69,5 +69,15 @@ def create_message(table, action, ob, user):
         tpl = 'notifications/habitat.html'
     elif table == 'comment_replies':
         tpl = 'notifications/comment.html'
-    print "AICI", table, action, tpl
     return flask.render_template(tpl, **{'object': ob, 'user': user, 'action': action})
+
+
+@notifications.app_template_global('resource_url')
+def resource_url(table, objectid, _external=False):
+    if table == 'species':
+        species = models.DataSpeciesRegion.query.get(objectid)
+        return flask.url_for('species.index', _external=_external) + '?species=' + str(species.species.code)
+    if table == 'habitat':
+        habitat = models.DataHabitattypeRegion.query.get(objectid)
+        return flask.url_for('habitat.index', _external=_external) + '?habitat=' + str(habitat.habitat.code)
+    return ''
