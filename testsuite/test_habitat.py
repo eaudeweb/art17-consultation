@@ -138,6 +138,7 @@ def _create_habitat_record(habitat_app, comment=False):
                 id=2,
                 habitat_id=1,
                 cons_role='comment',
+                cons_user_id='smith',
                 region='ALP',
                 range_surface_area=1337,
             )
@@ -270,3 +271,37 @@ def test_add_comment_reply(habitat_app):
         assert msg.user_id == 'somewho'
         assert msg.parent_table == 'habitat'
         assert msg.parent_id == '2'
+
+
+def test_permissions(habitat_app):
+    from art17 import models, common
+    from flask.ext.principal import RoleNeed, UserNeed
+    _create_habitat_record(habitat_app, comment=True)
+
+    with habitat_app.app_context():
+        row = models.DataHabitattypeRegion.query.get(1)
+        comment = models.DataHabitattypeRegion.query.get(2)
+
+        assert common.perm_create_comment(row).needs == set([
+            RoleNeed('admin'),
+            RoleNeed('expert'),
+            RoleNeed('expert:habitat'),
+            RoleNeed('expert:habitat:1234'),
+        ])
+
+        assert common.perm_edit_comment(comment).needs == set([
+            RoleNeed('admin'),
+            UserNeed('smith'),
+        ])
+
+        assert common.perm_update_comment_status(comment).needs == set([
+            RoleNeed('admin'),
+            RoleNeed('reviewer'),
+            RoleNeed('reviewer:habitat'),
+            RoleNeed('reviewer:habitat:1234'),
+        ])
+
+        assert common.perm_delete_comment(comment).needs == set([
+            RoleNeed('admin'),
+            UserNeed('smith'),
+        ])

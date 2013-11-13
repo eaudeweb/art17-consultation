@@ -240,6 +240,10 @@ class DataHabitattypeRegion(Base):
                       primaryjoin=(region == foreign(LuBiogeoreg.code)),
                       innerjoin=True, uselist=False)
 
+    @property
+    def identifier(self):
+        return 'habitat:%s' % (self.habitat.lu.code,)
+
 
 class DataSpecies(Base):
     __tablename__ = u'data_species'
@@ -398,6 +402,13 @@ class DataSpeciesRegion(Base):
     lu = relationship(LuBiogeoreg,
                       primaryjoin=(region == foreign(LuBiogeoreg.code)),
                       innerjoin=True, uselist=False)
+
+    @property
+    def identifier(self):
+        return 'species:%s:%s' % (
+            self.species.lu.group_code,
+            int(self.species.lu.code),
+        )
 
 
 class DataMeasures(Base):

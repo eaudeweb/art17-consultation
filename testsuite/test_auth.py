@@ -43,7 +43,7 @@ def test_anonymous_has_no_needs(app):
 
 def test_authenticated_has_some_needs(app):
     client = app.test_client()
-    client.post('/auth_debug', data={'user_id': 'foo'})
+    client.post('/auth_debug', data={'user_id': 'foo', 'roles': ''})
     assert get_needs_json(client) == {
         'everybody': True,
         'authenticated': True,
