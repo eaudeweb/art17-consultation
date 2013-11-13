@@ -1,0 +1,9 @@
+{% extends 'notifications/email.html' %}
+
+{% block content %}
+{{ user.full_name }},
+
+Un nou comentariu a fost adăugat pentru specia {{ object.species.code }}.
+
+Pentru a-l vizualiza faceți click aici: {{ resource_url('species', object.id, _external=True) }} .
+{% endblock %}

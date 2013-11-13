@@ -31,14 +31,14 @@
     </div>
 
     <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-4">
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="roles" value="admin"
-                   {%- if 'admin' in roles %} checked{% endif %}>
-            Role: <code>admin</code>
-          </label>
-        </div>
+      <label class="col-sm-2 control-label" for="roles">Roluri</label>
+      <div class="col-sm-4">
+        <textarea class="form-control" rows="10" id="roles" name="roles">
+            {{- roles_txt -}}
+        </textarea>
+      </div>
+      <div class="col-sm-4">
+        Exemple: <pre>{{ roles_example }}</pre>
       </div>
     </div>
 

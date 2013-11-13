@@ -53,8 +53,19 @@ CONCLUSION_COLOR = {
 }
 
 
+def calculate_identifier_steps(identifier):
+    bits = identifier.split(':')
+    return [':'.join(bits[:c+1]) for c in range(len(bits))]
+
+
+def get_roles_for_record(role_base, comment):
+    full_name = '%s:%s' % (role_base, comment.identifier)
+    steps = calculate_identifier_steps(full_name)
+    return [need.role(s) for s in steps]
+
+
 def perm_create_comment(record):
-    return Permission(need.authenticated)
+    return Permission(need.admin, *get_roles_for_record('expert', record))
 
 
 def perm_edit_comment(comment):
@@ -69,7 +80,7 @@ def perm_edit_comment(comment):
 
 
 def perm_update_comment_status(comment):
-    return Permission(need.admin)
+    return Permission(need.admin, *get_roles_for_record('reviewer', comment))
 
 
 def perm_delete_comment(comment):

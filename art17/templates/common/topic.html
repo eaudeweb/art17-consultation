@@ -27,7 +27,7 @@
       {{ record(assessment_row) }}
 
       <td colspan=4>  {#- conclusion (author, etc) #}
-        {%- if perm_create_comment(assessment_row).can() %}
+        {%- if perm_create_comment(assessment_row['model']).can() %}
           {%- set url = url_for(blueprint + '.comment',
                                 record_id=assessment_row.id,
                                 next=comment_next) %}

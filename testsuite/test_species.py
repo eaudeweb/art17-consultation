@@ -170,7 +170,7 @@ def _create_species_record(species_app, comment=False):
     from art17 import models
     with species_app.app_context():
         species = models.DataSpecies(id=1, code='1234')
-        species.lu = models.LuHdSpecies(objectid=1, code=1234)
+        species.lu = models.LuHdSpecies(objectid=1, code=1234, group_code='M')
         record = models.DataSpeciesRegion(
             id=1,
             species=species,
@@ -186,6 +186,7 @@ def _create_species_record(species_app, comment=False):
                 id=2,
                 species_id=1,
                 cons_role='comment',
+                cons_user_id='smith',
                 region='ALP',
                 range_surface_area=1337,
             )
@@ -345,3 +346,39 @@ def test_save_taxonomic_reserve_comment(species_app):
     with species_app.app_context():
         comment = DataSpeciesRegion.query.get(2)
         assert comment.cons_generalstatus == 'SR TAX'
+
+
+def test_permissions(species_app):
+    from art17 import models, common
+    from flask.ext.principal import RoleNeed, UserNeed
+    _create_species_record(species_app, comment=True)
+
+    with species_app.app_context():
+        row = models.DataSpeciesRegion.query.get(1)
+        comment = models.DataSpeciesRegion.query.get(2)
+
+        assert common.perm_create_comment(row).needs == set([
+            RoleNeed('admin'),
+            RoleNeed('expert'),
+            RoleNeed('expert:species'),
+            RoleNeed('expert:species:M'),
+            RoleNeed('expert:species:M:1234'),
+        ])
+
+        assert common.perm_edit_comment(comment).needs == set([
+            RoleNeed('admin'),
+            UserNeed('smith'),
+        ])
+
+        assert common.perm_update_comment_status(comment).needs == set([
+            RoleNeed('admin'),
+            RoleNeed('reviewer'),
+            RoleNeed('reviewer:species'),
+            RoleNeed('reviewer:species:M'),
+            RoleNeed('reviewer:species:M:1234'),
+        ])
+
+        assert common.perm_delete_comment(comment).needs == set([
+            RoleNeed('admin'),
+            UserNeed('smith'),
+        ])

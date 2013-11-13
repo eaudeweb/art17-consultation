@@ -1,0 +1,9 @@
+{% extends 'notifications/email.html' %}
+
+{% block content %}
+{{ user.full_name }},
+
+Un nou comentariu a fost adăugat pentru habitatul {{ object.habitat.code }}.
+
+Pentru a-l vizualiza faceți click aici: {{ resource_url('habitat', object.id, _external=True) }} .
+{% endblock %}
