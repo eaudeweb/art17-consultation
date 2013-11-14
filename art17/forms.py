@@ -2,7 +2,7 @@
 
 from wtforms import (Form as Form_base, FormField as FormField_base,
                      TextField, TextAreaField, DecimalField, SelectField,
-                     IntegerField)
+                     IntegerField, SelectMultipleField)
 from wtforms.validators import Required, Optional, NumberRange
 
 from art17 import models
@@ -31,6 +31,14 @@ def all_fields(form):
                yield subfield
         else:
             yield field
+
+
+class PressuresField(SelectMultipleField):
+    def iter_choices(self):
+        return []
+
+    def pre_validate(self, form):
+        return True
 
 
 class FormField(FormField_base):
@@ -197,9 +205,22 @@ class Pressures(Form):
 
     pressures_method = SelectField(default='',
                                    choices=EMPTY_CHOICE + METHODS_PRESSURES_OPTIONS)
+    add_pressure = SelectField(default='', validators=[Optional()])
+    add_ranking = SelectField(default='', validators=[Optional()])
+    add_pollution = SelectMultipleField(default='', validators=[Optional()])
+    add_data = PressuresField(default='', validators=[Optional()])
 
     def __init__(self, *args, **kwargs):
         super(Pressures, self).__init__(*args, **kwargs)
+        self.add_pressure.choices = EMPTY_CHOICE + [(p[0], '%s. %s' % p) for p in models.db.session.query(
+                                            models.LuThreats.code,
+                                            models.LuThreats.name)]
+        self.add_ranking.choices = EMPTY_CHOICE + list(models.db.session.query(
+                                            models.LuRanking.code,
+                                            models.LuRanking.name))
+        self.add_pollution.choices = EMPTY_CHOICE + [(p[0], '%s %s' % p) for p in models.db.session.query(
+                                            models.LuPollution.code,
+                                            models.LuPollution.name)]
 
 
 class SpeciesComment(Form):

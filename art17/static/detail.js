@@ -32,4 +32,37 @@ $('body').on('click', '.showmap', function(evt) {
   popup.focus();
 });
 
+$('.add-pressuresbtn').click(function(evt) {
+    evt.preventDefault();
+    var html = $('<div>').attr('class', 'row');
+    var pressure = $('select[name="pressures.add_pressure"]').val();
+    var ranking = $('select[name="pressures.add_ranking"]').val();
+    var pollution = $('select[name="pressures.add_pollution"]').val();
+    var data = {pressure: pressure, ranking: ranking, pollution: pollution};
+
+    $('<input>').attr({
+        type: "hidden",
+        name: "pressures.add_data",
+        value: JSON.stringify(data)
+    }).appendTo('form');
+
+    $('<div>').attr("class", "col-sm-2").html(pressure).appendTo(html);
+    $('<div>').attr("class", "col-sm-2").html(ranking).appendTo(html);
+    $('<div>').attr("class", "col-sm-2").html(pollution).appendTo(html);
+
+    var actions = $('<div>').attr("class", "col-sm-2");
+    $('<button>').attr({
+        class: "close hidepressure",
+        type: "button"
+    }).html('&times;').appendTo(actions);
+    actions.appendTo(html);
+
+    html.appendTo('#pressures_container');
+});
+
+$('body').on('click', '.hidepressure', function(evt) {
+  evt.preventDefault();
+  $(this).parent().parent().remove();
+});
+
 })();

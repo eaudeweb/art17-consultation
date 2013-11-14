@@ -3,17 +3,49 @@
 <div class="tab-pane comment" id="comment-pressures">
   <div class="panel panel-default">
 
+    {%- set pressures = form.pressures %}
     <div class="panel-body">
+      <div class="form-group">
+        <div class="col-sm-2 {{- error_cls(pressures.add_pressure) }}">
+          <label for="pressures.add_pressures">Presiune</label>
+        </div>
+        <div class="col-sm-2 {{- error_cls(pressures.add_ranking) }}">
+          <label for="pressures.add_ranking">Clasificare</label>
+        </div>
+        <div class="col-sm-2 {{- error_cls(pressures.add_pollution) }}">
+          <label for="pressures.add_pollution">Calificativ de poluare</label>
+        </div>
+      </div>
+      <div class="form-group" id="pressures_container">
+      -
+      </div>
+      <div class="form-group">
+         <div class="row">
+          <div class="col-sm-2 {{- error_cls(pressures.add_pressure) }}">
+            {{ pressures.add_pressure(class='form-control') }}
+          </div>
+          <div class="col-sm-2 {{- error_cls(pressures.add_ranking) }}">
+            {{ pressures.add_ranking(class='form-control') }}
+          </div>
+          <div class="col-sm-2 {{- error_cls(pressures.add_pollution) }}">
+            {{ pressures.add_pollution(class='form-control') }}
+          </div>
+          <div class="col-sm-2">
+            <button class="btn btn-primary add-pressuresbtn">Adaugă presiune</button>
+          </div>
+        </div>
+      </div>
+
       <div class="form-group">
         <label for="pressures.pressures_method">
           Metoda utilizată:
         </label>
 
-        {{ errors(form.pressures.pressures_method) }}
+        {{ errors(pressures.pressures_method) }}
 
         <div class="row">
-          <div class="col-sm-4 {{- error_cls(form.pressures.pressures_method) }}">
-            {{ form.pressures.pressures_method(class='form-control') }}
+          <div class="col-sm-4 {{- error_cls(pressures.pressures_method) }}">
+            {{ pressures.pressures_method(class='form-control') }}
           </div>
 
           <div class="col-sm-2"></div>
