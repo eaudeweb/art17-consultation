@@ -215,7 +215,8 @@ def parse_species_commentform(row):
 
     rv['pressures'] = {
             'add_data': [
-                json.dumps({'pressure': p.pressure,
+                json.dumps({'id': p.id,
+                            'pressure': p.pressure,
                             'ranking': p.ranking,
                             'pollutions': [pol.pollution_qualifier for pol in p.pollutions]})
                 for p in row.pressures

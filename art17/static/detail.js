@@ -65,4 +65,15 @@ $('body').on('click', '.hidepressure', function(evt) {
   $(this).parent().parent().remove();
 });
 
+$('body').on('click', '.delpressure', function(evt) {
+  evt.preventDefault();
+  var pressure_id = $(this).parent().parent().data('id');
+  $('<input>').attr({
+        type: "hidden",
+        name: "pressures.del_data",
+        value: pressure_id
+  }).appendTo('form');
+  $(this).parent().parent().remove();
+});
+
 })();

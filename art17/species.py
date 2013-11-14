@@ -138,6 +138,11 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
         return records[0]
 
     def process_extra_fields(self, struct, comment):
+        for pressure in struct['pressures']['del_data']:
+            pressure_obj = models.DataPressuresThreats.query.get(pressure)
+            for pollution in pressure_obj.pollutions:
+                models.db.session.delete(pollution)
+            models.db.session.delete(pressure_obj)
         for pressure in struct['pressures']['add_data']:
             pressure_obj = models.DataPressuresThreats(species_id=comment.id,
                                                        pressure=pressure['pressure'],

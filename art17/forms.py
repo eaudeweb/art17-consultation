@@ -215,6 +215,7 @@ class Pressures(Form):
     add_ranking = SelectField(default='', validators=[Optional()])
     add_pollution = SelectMultipleField(default='', validators=[Optional()])
     add_data = PressuresField(default='', validators=[Optional()])
+    del_data = PressuresField(default='', validators=[Optional()])
 
     def __init__(self, *args, **kwargs):
         super(Pressures, self).__init__(*args, **kwargs)
