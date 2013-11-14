@@ -114,6 +114,9 @@ class HabitatCommentView(CommentView, HabitatMixin):
                                    "for the conclusion")
         return records[0]
 
+    def process_extra_fields(self, struct, comment):
+        pass
+
 
 habitat.add_url_rule('/habitate/detalii/<int:record_id>/comentarii',
                      view_func=HabitatCommentView.as_view('comment'))

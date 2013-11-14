@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+import json
 from wtforms import (Form as Form_base, FormField as FormField_base,
                      TextField, TextAreaField, DecimalField, SelectField,
                      IntegerField, SelectMultipleField)
@@ -34,6 +35,11 @@ def all_fields(form):
 
 
 class PressuresField(SelectMultipleField):
+
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('coerce', json.loads)
+        super(PressuresField, self).__init__(*args, **kwargs)
+
     def iter_choices(self):
         return []
 

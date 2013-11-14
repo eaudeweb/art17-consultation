@@ -334,6 +334,8 @@ class CommentView(IndexMixin, flask.views.View):
 
             models.db.session.commit()
 
+            self.process_extra_fields(form.data, self.comment)
+
             return flask.render_template(self.template_saved,
                                          **self.template_ctx)
 

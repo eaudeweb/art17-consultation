@@ -6,18 +6,40 @@
     {%- set pressures = form.pressures %}
     <div class="panel-body">
       <div class="form-group">
-        <div class="col-sm-2 {{- error_cls(pressures.add_pressure) }}">
-          <label for="pressures.add_pressures">Presiune</label>
-        </div>
-        <div class="col-sm-2 {{- error_cls(pressures.add_ranking) }}">
-          <label for="pressures.add_ranking">Clasificare</label>
-        </div>
-        <div class="col-sm-2 {{- error_cls(pressures.add_pollution) }}">
-          <label for="pressures.add_pollution">Calificativ de poluare</label>
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(pressures.add_pressure) }}">
+            <label for="pressures.add_pressures">Presiune</label>
+          </div>
+          <div class="col-sm-2 {{- error_cls(pressures.add_ranking) }}">
+            <label for="pressures.add_ranking">Clasificare</label>
+          </div>
+          <div class="col-sm-2 {{- error_cls(pressures.add_pollution) }}">
+            <label for="pressures.add_pollution">Calificativ de poluare</label>
+          </div>
         </div>
       </div>
+
       <div class="form-group" id="pressures_container">
-      -
+        {%- if comment %}
+        {% for p in comment.pressures %}
+        <div class="row">
+          <div class="col-sm-2">
+            {{ p.pressure }}
+          </div>
+          <div class="col-sm-2">
+            {{ p.ranking }}
+          </div>
+          <div class="col-sm-2">
+            {% for pol in p.pollutions %}
+              {{ pol.pollution_qualifier }}
+            {% endfor %}
+          </div>
+          <div class="col-sm-2">
+            <button type="button" class="close hidepressure">&times;</button>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
       </div>
       <div class="form-group">
          <div class="row">
