@@ -125,7 +125,6 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
             'species': self.record.species,
             'record': schemas.parse_species(self.record),
             'map_url': self.get_map_url(region.code),
-            'comment': self.comment
         }
 
     def record_for_comment(self, comment):

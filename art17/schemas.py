@@ -1,3 +1,5 @@
+import json
+
 def parse_period(obj, prefix):
     year_string = getattr(obj, prefix)
 
@@ -211,7 +213,14 @@ def parse_species_commentform(row):
             'conclusion': parse_conclusion(row, 'conclusion_habitat'),
     }
 
-    rv['pressures'] = {}
+    rv['pressures'] = {
+            'add_data': [
+                json.dumps({'pressure': p.pressure,
+                            'ranking': p.ranking,
+                            'pollutions': [pol.pollution_qualifier for pol in p.pollutions]})
+                for p in row.pressures
+            ]
+    } if row.pressures.count() else {}
     rv['pressures']['pressures_method'] = row.pressures_method
 
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')

@@ -156,6 +156,8 @@ def flatten_dict(data):
         if isinstance(v, dict):
             for kx, vx in flatten_dict(v).items():
                 rv[k + '.' + kx] = vx
+        elif isinstance(v, list):
+            rv[k] = v
         else:
             rv[k] = '' if v is None else unicode(v)
     return rv
