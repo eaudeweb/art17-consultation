@@ -316,7 +316,7 @@ class CommentView(IndexMixin, flask.views.View):
         self.setup_template_context()
         self.template_ctx['next_url'] = flask.request.args.get('next')
         self.template_ctx['blueprint'] = self.blueprint
-        self.template_ctx['record_id'] = record_id
+        self.template_ctx['record_id'] = self.record.id
 
         if flask.request.method == 'POST' and form.validate():
             self.link_comment_to_record()
