@@ -193,11 +193,21 @@ class Coverage(Form):
         self.reference_value.op.choices=EMPTY_CHOICE + LU_FV_RANGE_OP_FUNCT_OPTIONS
 
 
+class Pressures(Form):
+
+    pressures_method = SelectField(default='',
+                                   choices=EMPTY_CHOICE + METHODS_PRESSURES_OPTIONS)
+
+    def __init__(self, *args, **kwargs):
+        super(Pressures, self).__init__(*args, **kwargs)
+
+
 class SpeciesComment(Form):
 
     range = FormField(Range)
     population = FormField(Population)
     habitat = FormField(Habitat)
+    pressures = FormField(Pressures)
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)
     report_observation = TextAreaField(validators=[Optional()])
@@ -205,7 +215,7 @@ class SpeciesComment(Form):
 
     def __init__(self, *args, **kwargs):
         super(SpeciesComment, self).__init__(*args, **kwargs)
-        self.generalstatus.choices=models.db.session.query(
+        self.generalstatus.choices = models.db.session.query(
                                             models.LuPresence.code,
                                             models.LuPresence.name)
 

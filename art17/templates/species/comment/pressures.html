@@ -1,0 +1,26 @@
+{% from 'common/comment_bits.html' import error_cls, errors %}
+
+<div class="tab-pane comment" id="comment-pressures">
+  <div class="panel panel-default">
+
+    <div class="panel-body">
+      <div class="form-group">
+        <label for="pressures.pressures_method">
+          Metoda utilizată:
+        </label>
+
+        {{ errors(form.pressures.pressures_method) }}
+
+        <div class="row">
+          <div class="col-sm-4 {{- error_cls(form.pressures.pressures_method) }}">
+            {{ form.pressures.pressures_method(class='form-control') }}
+          </div>
+
+          <div class="col-sm-2"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
