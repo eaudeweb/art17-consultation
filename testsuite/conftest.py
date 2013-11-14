@@ -15,6 +15,7 @@ def app():
     app.config['TESTING_USER_ID'] = None
     app.config['MAIL_DEFAULT_SENDER'] = 'no-reply@example.com'
     app.config['HABITAT_MAP_URL'] = ''
+    app.config['SPECIES_MAP_URL'] = ''
     @app.before_request
     def set_identity():
         user_id = flask.current_app.config['TESTING_USER_ID']
