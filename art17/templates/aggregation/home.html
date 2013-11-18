@@ -20,4 +20,22 @@
     </p>
   </div>
 </div>
+
+
+<h2>Seturi de date</h2>
+
+<table class="table table-bordered">
+  <thead>
+    <th>Dată</th>
+    <th></th>
+  </thead>
+
+  {%- for dataset in dataset_list %}
+    {%- set url = url_for('.dataset', dataset_id=dataset.id) %}
+    <tr>
+      <td><a href="{{ url }}">{{ dataset.date }}</a></td>
+      <td>{{ dataset.comment|truncate(100) }}</td>
+    </tr>
+  {%- endfor %}
+</table>
 {% endblock content %}

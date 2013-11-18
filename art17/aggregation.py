@@ -1,4 +1,5 @@
 import flask
+from art17 import models
 
 aggregation = flask.Blueprint('aggregation', __name__)
 
@@ -10,7 +11,9 @@ def inject_home_url():
 
 @aggregation.route('/')
 def home():
-    return flask.render_template('aggregation/home.html')
+    return flask.render_template('aggregation/home.html', **{
+        'dataset_list': models.Dataset.query.all(),
+    })
 
 
 @aggregation.route('/agregare', methods=['GET', 'POST'])
@@ -26,8 +29,15 @@ def aggregate():
     })
 
 
+@aggregation.route('/dataset/<int:dataset_id>')
+def dataset(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+    return flask.render_template('aggregation/dataset.html', **{
+        'dataset': dataset,
+    })
+
+
 def execute_on_primary(query):
-    from art17.models import db
     app = flask.current_app
-    aggregation_engine = db.get_engine(app, 'primary')
-    return db.session.execute(query, bind=aggregation_engine)
+    aggregation_engine = models.db.get_engine(app, 'primary')
+    return models.db.session.execute(query, bind=aggregation_engine)
