@@ -18,7 +18,8 @@
 
 
 {% block headline %}
-  Adaugǎ comentariu pentru
+  {% if new_comment -%} Adaugă {%- else -%} Modifică {%- endif %}
+  comentariu pentru
   <em>{{ species.lu.speciesname }}</em> în
   <em>{{ record.model.lu.name_ro }}</em>
 {% endblock headline %}

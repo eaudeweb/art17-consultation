@@ -342,6 +342,7 @@ class CommentView(IndexMixin, flask.views.View):
                                          **self.template_ctx)
 
         self.template_ctx['form'] = form
+        self.template_ctx['new_comment'] = new_comment
         return flask.render_template(self.template, **self.template_ctx)
 
 
