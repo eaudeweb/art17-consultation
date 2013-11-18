@@ -19,7 +19,7 @@
         </tr>
         {% for p in pressures.pressures.data %}
         <tr data-id="{{ p.id }}">
-          <td>{{ p.pressure }}</td>
+          <td>{{ PRESSURES[p.pressure] }}</td>
           <td>{{ p.ranking }}</td>
           <td>
             {% for pol in p.pollutions %}

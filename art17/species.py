@@ -121,11 +121,13 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
     def setup_template_context(self):
         region = models.LuBiogeoreg.query.filter_by(code=self.record.region).first_or_404()
         self.topic_list = self.get_topics(self.record.species, region)
+        addform = forms.PressureForm(prefix='addform.')
         self.template_ctx = {
             'species': self.record.species,
             'record': schemas.parse_species(self.record),
             'map_url': self.get_map_url(region.code),
-            'addform': forms.PressureForm(prefix='addform.')
+            'addform': addform,
+            'PRESSURES': dict(addform.pressure.choices),
         }
 
     def record_for_comment(self, comment):
