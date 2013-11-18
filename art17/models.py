@@ -558,6 +558,16 @@ class History(Base):
     new_data = Column(Text)
 
 
+class Dataset(Base):
+    __tablename__ = u'datasets'
+
+    id = Column('objectid', Integer, Sequence('datasets_seq'),
+                primary_key=True)
+    user_id = Column(String)
+    date = Column(DateTime)
+    comment = Column(Text)
+
+
 class NotificationUser(Base):
     __tablename__ = u'notification_user'
 
