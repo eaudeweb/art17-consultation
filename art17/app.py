@@ -2,48 +2,7 @@ import flask
 from flask.ext.script import Manager, Server, Option
 from path import path
 
-consultation = flask.Blueprint('consultation', __name__)
 REPO_ROOT = path(__file__).abspath().parent.parent
-
-
-@consultation.app_context_processor
-def inject_home_url():
-    return dict(home_url=flask.url_for('consultation.home'))
-
-
-@consultation.route('/')
-def home():
-    return flask.render_template('home.html')
-
-
-@consultation.route('/_crashme')
-def crashme():
-    raise RuntimeError("Crashing, as requested.")
-
-
-@consultation.route('/_ping')
-def ping():
-    from art17 import models
-    from datetime import datetime
-    count = models.History.query.count()
-    now = datetime.utcnow().isoformat()
-    return "art17 consultation is up; %s; %d history items" % (now, count)
-
-
-@consultation.route('/guide')
-def guide():
-    return flask.render_template('guide.html')
-
-
-@consultation.app_url_defaults
-def bust_cache(endpoint, values):
-    if endpoint == 'static':
-        filename = values['filename']
-        file_path = path(flask.current_app.static_folder) / filename
-        if file_path.exists():
-            mtime = file_path.stat().st_mtime
-            key = ('%x' % mtime)[-6:]
-            values['t'] = key
 
 
 def none_as_blank(value):
@@ -75,6 +34,7 @@ def create_app():
 
 
 def create_consultation_app():
+    from art17.consultation import consultation
     from art17.common import common
     from art17.species import species
     from art17.habitat import habitat
