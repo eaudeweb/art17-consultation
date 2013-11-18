@@ -1,0 +1,80 @@
+{% from 'common/comment_bits.html' import error_cls, errors %}
+
+<div class="tab-pane comment" id="comment-measures">
+  <div class="panel panel-default">
+
+    {%- set measures = form.measures %}
+    <div class="panel-body">
+
+      <div class="form-group {{- error_cls(measures.measures) }}">
+
+        {{ errors(measures.measures) }}
+
+        <table class="table table-bordered recorddetail-table table-vertical" id="measures_container">
+         <tr>
+          <th rowspan="2">Measure</th>
+          <th colspan="5">Type</th>
+          <th rowspan="2" title="Ranking" style="width: 20px;">Rank.</th>
+          <th colspan="3">Location</th>
+          <th colspan="6">Broad evaluation</th>
+          <th rowspan="2">Actions</th>
+        </tr>
+
+        <tr class="sub-header">
+          <td title="Legal/Vertical">Lgl.</td>
+          <td title="Administrative">Adm.</td>
+          <td title="Contractual">Contr.</td>
+          <td title="Recurrent">Rec.</td>
+          <td title="One-off">Off.</td>
+
+          <td title="Inside">In.</td>
+          <td title="Outside">Out.</td>
+          <td title="Both inside-outside">Both.</td>
+
+          <td title="Maintain">Maint.</td>
+          <td title="Enhance">Enh.</td>
+          <td title="Long term">L. term</td>
+          <td title="No effect">No eff.</td>
+          <td title="Unknown">Unk.</td>
+          <td title="Not evaluated">Not ev.</td>
+        </tr>
+
+        {% for m in measures.measures.data %}
+        <tr data-id="{{ m.id }}">
+          <td>{{ m.measurecode }}</td>
+          <td>{{ m.type_legal }}</td>
+          <td>{{ m.type_administrative }}</td>
+          <td>{{ m.type_contractual }}</td>
+          <td>{{ m.type_recurrent }}</td>
+          <td>{{ m.type_oneoff }}</td>
+          <td>{{ m.rankingcode }}</td>
+          <td>{{ m.location_inside }}</td>
+          <td>{{ m.location_outside }}</td>
+          <td>{{ m.location_both }}</td>
+          <td>{{ m.broad_evaluation_maintain }}</td>
+          <td>{{ m.broad_evaluation_enhance }}</td>
+          <td>{{ m.broad_evaluation_longterm }}</td>
+          <td>{{ m.broad_evaluation_noeffect }}</td>
+          <td>{{ m.broad_evaluation_unknown }}</td>
+          <td>{{ m.broad_evaluation_notevaluat_18 }}</td>
+          <td>
+            <button type="button" class="btn btn-danger btn-sm hidepressure">Șterge</button>
+            {{ measures.measures.render_input(m) }}
+          </td>
+        </tr>
+        {% endfor %}
+
+        <tr id="measuresform">
+          {% for field in addform_measure %}
+          <td>{{ field(class='form-control') }}</td>
+          {% endfor %}
+          <td>
+            <button class="btn btn-primary add-measurebtn">Adaugă măsurătoare</button>
+          </td>
+        </tr>
+      </table>
+
+      </div>
+    </div>
+  </div>
+</div>

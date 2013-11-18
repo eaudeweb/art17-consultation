@@ -223,6 +223,28 @@ def parse_species_commentform(row):
             ]
     } if row.pressures.count() else {}
     rv['pressures']['pressures_method'] = row.pressures_method
+    rv['measures'] = {
+            'measures': [
+                json.dumps({
+                    'measurecode': m.measurecode,
+                    'type_legal': int(m.type_legal) if m.type_legal else '',
+                    'type_administrative': int(m.type_administrative),
+                    'type_contractual': int(m.type_contractual),
+                    'type_recurrent': int(m.type_recurrent),
+                    'type_oneoff': int(m.type_oneoff),
+                    'rankingcode': m.rankingcode,
+                    'location_inside': int(m.location_inside),
+                    'location_outside': int(m.location_outside),
+                    'location_both': int(m.location_both),
+                    'broad_evaluation_maintain': int(m.broad_evaluation_maintain),
+                    'broad_evaluation_enhance': int(m.broad_evaluation_enhance),
+                    'broad_evaluation_longterm': int(m.broad_evaluation_longterm),
+                    'broad_evaluation_noeffect': int(m.broad_evaluation_noeffect),
+                    'broad_evaluation_unknown': int(m.broad_evaluation_unknown),
+                    'broad_evaluation_notevaluat_18': int(m.broad_evaluation_notevaluat_18)})
+                for m in row.measures
+            ]
+    } if row.measures.count() else {}
 
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')

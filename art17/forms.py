@@ -3,7 +3,7 @@
 import json
 from wtforms import (Form as Form_base, FormField as FormField_base,
                      TextField, TextAreaField, DecimalField, SelectField,
-                     IntegerField, SelectMultipleField)
+                     IntegerField, SelectMultipleField, BooleanField)
 from wtforms.validators import Required, Optional, NumberRange
 from wtforms.widgets import HTMLString, html_params
 from werkzeug.datastructures import MultiDict
@@ -76,6 +76,12 @@ class MultipleJSONField(SelectMultipleField):
         return self.widget.render_input(self, val)
 
 
+class MeasureField(BooleanField):
+
+    def _value(self):
+        return '1'
+
+    
 class FormValidator(object):
 
     def __init__(self, form):
@@ -276,12 +282,47 @@ class Pressures(Form):
     pressures = MultipleJSONField(default='', validators=[FormValidator(PressureForm)])
 
 
+class MeasuresForm(Form):
+
+    measurecode = SelectField(default='')
+    type_legal = MeasureField(default=False)
+    type_administrative = MeasureField(default=False)
+    type_contractual = MeasureField(default=False)
+    type_recurrent = MeasureField(default=False)
+    type_oneoff = MeasureField(default=False)
+    rankingcode = SelectField(default='')
+    location_inside = MeasureField(default=False)
+    location_outside = MeasureField(default=False)
+    location_both = MeasureField(default=False)
+    broad_evaluation_maintain = MeasureField(default=False)
+    broad_evaluation_enhance = MeasureField(default=False)
+    broad_evaluation_longterm = MeasureField(default=False)
+    broad_evaluation_noeffect = MeasureField(default=False)
+    broad_evaluation_unknown = MeasureField(default=False)
+    broad_evaluation_notevaluat_18 = MeasureField(default=False)
+
+    def __init__(self, *args, **kwargs):
+        super(MeasuresForm, self).__init__(*args, **kwargs)
+        self.measurecode.choices = EMPTY_CHOICE + list(models.db.session.query(
+                                                       models.LuMeasures.code,
+                                                       models.LuMeasures.name))
+        self.rankingcode.choices = EMPTY_CHOICE + list(models.db.session.query(
+                                                       models.LuRanking.code,
+                                                       models.LuRanking.name))
+
+
+class Measures(Form):
+
+    measures = MultipleJSONField(default='')
+
+
 class SpeciesComment(Form):
 
     range = FormField(Range)
     population = FormField(Population)
     habitat = FormField(Habitat)
     pressures = FormField(Pressures)
+    measures = FormField(Measures)
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)
     report_observation = TextAreaField(validators=[Optional()])

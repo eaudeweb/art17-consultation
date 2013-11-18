@@ -35,9 +35,9 @@ $('body').on('click', '.showmap', function(evt) {
 $('.add-pressuresbtn').click(function(evt) {
     evt.preventDefault();
     var html = $('<tr>');
-    var pressure = $('select[name="addform.pressure"]').val();
-    var ranking = $('select[name="addform.ranking"]').val();
-    var pollutions = $('select[name="addform.pollutions"]').val();
+    var pressure = $('select[name="addform_pressure.pressure"]').val();
+    var ranking = $('select[name="addform_pressure.ranking"]').val();
+    var pollutions = $('select[name="addform_pressure.pollutions"]').val();
 
     if (!pressure) {
         return alert('Nu ați selectat presiunea');
@@ -67,14 +67,41 @@ $('.add-pressuresbtn').click(function(evt) {
     $('#pressures_container tr:last').before(html);
 
     // reset form
-    $('select[name="addform.pressure"]').val('');
-    $('select[name="addform.ranking"]').val('');
-    $('select[name="addform.pollutions"] option:selected').removeAttr('selected');
+    $('select[name="addform_pressure.pressure"]').val('');
+    $('select[name="addform_pressure.ranking"]').val('');
+    $('select[name="addform_pressure.pollutions"] option:selected').removeAttr('selected');
 });
 
 $('body').on('click', '.hidepressure', function(evt) {
   evt.preventDefault();
   $(this).parent().parent().remove();
+});
+
+$('.add-measurebtn').click(function(evt) {
+    evt.preventDefault();
+
+    var html = $('<tr>');
+    var data = {};
+    $('#measuresform').find('.form-control').each(function () {
+        var name = $(this).attr('name');
+        name = name.substr(name.indexOf('.') + 1);
+        data[name] = $(this).val();
+
+        $('<td>').html($(this).val()).appendTo(html);
+    });
+    var actions = $('<td>');
+    $('<button>').attr({
+        class: "btn btn-danger btn-sm hidepressure",
+        type: "button"
+    }).html('Șterge').appendTo(actions);
+
+    actions.appendTo(html);
+    $('#measures_container tr:last').before(html);
+    $('<input>').attr({
+        type: "hidden",
+        name: "measures.measures",
+        value: JSON.stringify(data)
+    }).appendTo('form');
 });
 
 })();

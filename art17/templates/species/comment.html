@@ -46,8 +46,12 @@
       <li {% if form.pressures.errors %}class="text-error"{% endif %}>
         <a href="#comment-pressures" data-toggle="tab">Presiuni</a>
       </li>
+      <li {% if form.measures.errors %}class="text-error"{% endif %}>
+        <a href="#comment-measures" data-toggle="tab">Măsurători</a>
+      </li>
       <li {% if form.future_prospects.errors or
-                form.overall_assessment.errors -%}
+                form.overall_assessment.errors or
+                form.report_observation.errors -%}
               class="text-error"
           {%- endif %}>
         <a href="#comment-conclusion" data-toggle="tab">Concluzii</a>
@@ -59,6 +63,7 @@
       {% include "species/comment/population.html" with context %}
       {% include "species/comment/habitat.html" with context %}
       {% include "species/comment/pressures.html" with context %}
+      {% include "species/comment/measures.html" with context %}
       {% include "species/comment/conclusion.html" with context %}
     </div>
   </div>

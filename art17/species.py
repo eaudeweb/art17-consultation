@@ -121,13 +121,15 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
     def setup_template_context(self):
         region = models.LuBiogeoreg.query.filter_by(code=self.record.region).first_or_404()
         self.topic_list = self.get_topics(self.record.species, region)
-        addform = forms.PressureForm(prefix='addform.')
+        addform_pressure = forms.PressureForm(prefix='addform_pressure.')
+        addform_measure = forms.MeasuresForm(prefix='addform_measure.')
         self.template_ctx = {
             'species': self.record.species,
             'record': schemas.parse_species(self.record),
             'map_url': self.get_map_url(region.code),
-            'addform': addform,
-            'PRESSURES': dict(addform.pressure.choices),
+            'addform_pressure': addform_pressure,
+            'addform_measure': addform_measure,
+            'PRESSURES': dict(addform_pressure.pressure.choices),
         }
 
     def record_for_comment(self, comment):
@@ -154,6 +156,13 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
                 pollution_obj = models.DataPressuresThreatsPollution(pollution_pressure_id=pressure_obj.id,
                                                                      pollution_qualifier=pollution)
                 models.db.session.add(pollution_obj)
+
+        for measure in comment.measures:
+            models.db.session.delete(measure)
+
+        for measure in struct['measures']['measures']:
+            measure_obj = models.DataMeasures(measure_sr_id=comment.id, **measure)
+            models.db.session.add(measure_obj)
         models.db.session.commit()
 
 
