@@ -140,9 +140,6 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
 
     def process_extra_fields(self, struct, comment):
         for pressure in comment.pressures:
-            # Prevent Lu fuckup
-            pressure.lu = None
-            pressure.lu_ranking = None
             models.db.session.delete(pressure)
 
         for pressure in struct['pressures']['pressures']:

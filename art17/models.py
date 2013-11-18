@@ -457,11 +457,11 @@ class DataMeasures(Base):
 
     lu = relationship(LuMeasures,
                       primaryjoin=(measurecode == foreign(LuMeasures.code)),
-                      innerjoin=True, uselist=False)
+                      innerjoin=True, uselist=False, passive_deletes=True)
 
     lu_ranking = relationship(LuRanking,
                       primaryjoin=(rankingcode == foreign(LuRanking.code)),
-                      innerjoin=True, uselist=False)
+                      innerjoin=True, uselist=False, passive_deletes=True)
 
 
 class DataPressuresThreats(Base):
@@ -486,11 +486,11 @@ class DataPressuresThreats(Base):
 
     lu = relationship(LuThreats,
                       primaryjoin=(pressure == foreign(LuThreats.code)),
-                      innerjoin=True, uselist=False)
+                      innerjoin=True, uselist=False, passive_deletes=True)
 
     lu_ranking = relationship(LuRanking,
                       primaryjoin=(ranking == foreign(LuRanking.code)),
-                      innerjoin=True, uselist=False)
+                      innerjoin=True, uselist=False, passive_deletes=True)
 
 
 class DataPressuresThreatsPollution(Base):
@@ -504,7 +504,7 @@ class DataPressuresThreatsPollution(Base):
 
     lu = relationship(LuPollution,
             primaryjoin=(pollution_qualifier == foreign(LuPollution.code)),
-            innerjoin=True, uselist=False)
+            innerjoin=True, uselist=False, passive_deletes=True)
 
     pressure = relationship(u'DataPressuresThreats',
         backref=db.backref('pollutions', lazy='dynamic', cascade='all'))
