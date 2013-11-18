@@ -34,7 +34,7 @@ $('body').on('click', '.showmap', function(evt) {
 
 $('.add-pressuresbtn').click(function(evt) {
     evt.preventDefault();
-    var html = $('<div>').attr('class', 'row');
+    var html = $('<tr>');
     var pressure = $('select[name="addform.pressure"]').val();
     var ranking = $('select[name="addform.ranking"]').val();
     var pollutions = $('select[name="addform.pollutions"]').val();
@@ -46,18 +46,18 @@ $('.add-pressuresbtn').click(function(evt) {
         value: JSON.stringify(data)
     }).appendTo('form');
 
-    $('<div>').attr("class", "col-sm-2").html(pressure).appendTo(html);
-    $('<div>').attr("class", "col-sm-2").html(ranking).appendTo(html);
-    $('<div>').attr("class", "col-sm-2").html(pollutions).appendTo(html);
+    $('<td>').html(pressure).appendTo(html);
+    $('<td>').html(ranking).appendTo(html);
+    $('<td>').html(pollutions).appendTo(html);
 
-    var actions = $('<div>').attr("class", "col-sm-2");
+    var actions = $('<td>');
     $('<button>').attr({
-        class: "close hidepressure",
+        class: "btn btn-danger btn-sm hidepressure",
         type: "button"
-    }).html('&times;').appendTo(actions);
+    }).html('Șterge').appendTo(actions);
     actions.appendTo(html);
 
-    html.appendTo('#pressures_container');
+    $('#pressures_container tr:last').before(html);
 });
 
 $('body').on('click', '.hidepressure', function(evt) {

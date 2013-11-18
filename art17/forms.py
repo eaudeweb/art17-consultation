@@ -265,7 +265,7 @@ class PressureForm(Form):
         self.ranking.choices = EMPTY_CHOICE + list(models.db.session.query(
                                             models.LuRanking.code,
                                             models.LuRanking.name))
-        self.pollutions.choices = EMPTY_CHOICE + [(p[0], '%s %s' % p) for p in models.db.session.query(
+        self.pollutions.choices = [(p[0], '%s %s' % p) for p in models.db.session.query(
                                             models.LuPollution.code,
                                             models.LuPollution.name)]
 
