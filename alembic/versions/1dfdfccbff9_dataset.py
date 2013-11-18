@@ -5,7 +5,7 @@ down_revision = '17d03b52364a'
 
 from alembic import op
 import sqlalchemy as sa
-from sqlalchemy.dialects.oracle import NVARCHAR2
+from sqlalchemy.dialects.oracle import NVARCHAR2, NCLOB
 
 
 def upgrade():
@@ -14,7 +14,7 @@ def upgrade():
         sa.Column('OBJECTID', sa.Integer, nullable=False),
         sa.Column('USER_ID', NVARCHAR2(255), nullable=True),
         sa.Column('DATE', sa.DateTime, nullable=True),
-        sa.Column('COMMENT', sa.Text, nullable=True),
+        sa.Column('COMMENT', NCLOB, nullable=True),
         sa.PrimaryKeyConstraint('OBJECTID'),
     )
     op.execute(

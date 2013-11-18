@@ -564,8 +564,8 @@ class Dataset(Base):
     id = Column('objectid', Integer, Sequence('datasets_seq'),
                 primary_key=True)
     user_id = Column(String)
-    date = Column(DateTime)
-    comment = Column(Text)
+    date = Column('DATE', DateTime)
+    comment = Column('COMMENT', Text)
 
 
 class NotificationUser(Base):
