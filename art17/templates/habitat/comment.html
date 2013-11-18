@@ -10,7 +10,7 @@
 {% block breadcrumbs %}
   {%- from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
-          ('acasǎ', url_for('views.home')),
+          ('acasǎ', home_url),
           ('habitat', next_url or url_for('.index')),
           ('comentariu', None),
       ]) }}

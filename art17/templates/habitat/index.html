@@ -4,7 +4,7 @@
 {% block breadcrumbs %}
   {%- from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
-          ('acasǎ', url_for('views.home')),
+          ('acasǎ', home_url),
           ('habitate', None),
       ]) }}
 {% endblock breadcrumbs %}

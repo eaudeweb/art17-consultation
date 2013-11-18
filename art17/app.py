@@ -6,6 +6,11 @@ views = flask.Blueprint('views', __name__)
 REPO_ROOT = path(__file__).abspath().parent.parent
 
 
+@views.app_context_processor
+def inject_home_url():
+    return dict(home_url=flask.url_for('views.home'))
+
+
 @views.route('/')
 def home():
     return flask.render_template('home.html')
