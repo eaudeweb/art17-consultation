@@ -2,26 +2,26 @@ import flask
 from flask.ext.script import Manager
 from path import path
 
-views = flask.Blueprint('views', __name__)
+consultation = flask.Blueprint('consultation', __name__)
 REPO_ROOT = path(__file__).abspath().parent.parent
 
 
-@views.app_context_processor
+@consultation.app_context_processor
 def inject_home_url():
-    return dict(home_url=flask.url_for('views.home'))
+    return dict(home_url=flask.url_for('consultation.home'))
 
 
-@views.route('/')
+@consultation.route('/')
 def home():
     return flask.render_template('home.html')
 
 
-@views.route('/_crashme')
+@consultation.route('/_crashme')
 def crashme():
     raise RuntimeError("Crashing, as requested.")
 
 
-@views.route('/_ping')
+@consultation.route('/_ping')
 def ping():
     from art17 import models
     from datetime import datetime
@@ -30,12 +30,12 @@ def ping():
     return "art17 consultation is up; %s; %d history items" % (now, count)
 
 
-@views.route('/guide')
+@consultation.route('/guide')
 def guide():
     return flask.render_template('guide.html')
 
 
-@views.app_url_defaults
+@consultation.app_url_defaults
 def bust_cache(endpoint, values):
     if endpoint == 'static':
         filename = values['filename']
@@ -73,7 +73,7 @@ def create_app():
     app.config.from_pyfile('settings.py', silent=True)
     app.config.from_pyfile(REPO_ROOT / 'settings.py', silent=True)
     app.register_blueprint(auth)
-    app.register_blueprint(views)
+    app.register_blueprint(consultation)
     app.register_blueprint(common)
     app.register_blueprint(species)
     app.register_blueprint(habitat)
