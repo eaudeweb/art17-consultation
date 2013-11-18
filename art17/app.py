@@ -109,5 +109,13 @@ def create_manager(app):
     return manager
 
 
-if __name__ == '__main__':
-    manager.run()
+def main(app_factory):
+    import os
+    import logging
+    os.environ['NLS_LANG'] = 'AMERICAN_AMERICA.UTF8'  # encoding for cx_oracle
+    logging.basicConfig()
+    logging.getLogger('werkzeug').setLevel(logging.INFO)
+    app = app_factory()
+    if app.config.get('SQL_DEBUG'):
+        logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+    create_manager(app).run()
