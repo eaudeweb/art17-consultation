@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+<div class="jumbotron">
+  <div class="container">
+    <h2>
+      Agregarea datelor primare
+      pentru Articolul 17 din Directiva Habitate
+    </h2>
+
+    <p>
+      {% if config['AUTH_DEBUG'] %}
+        <a class="btn btn-danger"
+           href="{{ url_for('auth.debug') }}">autentificare (debug)</a>
+      {% endif %}
+    </p>
+  </div>
+</div>
+{% endblock content %}
