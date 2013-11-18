@@ -37,8 +37,8 @@ $('.add-pressuresbtn').click(function(evt) {
     var html = $('<div>').attr('class', 'row');
     var pressure = $('select[name="addform.pressure"]').val();
     var ranking = $('select[name="addform.ranking"]').val();
-    var pollution = $('select[name="addform.pollution"]').val();
-    var data = {pressure: pressure, ranking: ranking, pollutions: pollution};
+    var pollutions = $('select[name="addform.pollutions"]').val();
+    var data = {pressure: pressure, ranking: ranking, pollutions: pollutions};
 
     $('<input>').attr({
         type: "hidden",
@@ -48,7 +48,7 @@ $('.add-pressuresbtn').click(function(evt) {
 
     $('<div>').attr("class", "col-sm-2").html(pressure).appendTo(html);
     $('<div>').attr("class", "col-sm-2").html(ranking).appendTo(html);
-    $('<div>').attr("class", "col-sm-2").html(pollution).appendTo(html);
+    $('<div>').attr("class", "col-sm-2").html(pollutions).appendTo(html);
 
     var actions = $('<div>').attr("class", "col-sm-2");
     $('<button>').attr({

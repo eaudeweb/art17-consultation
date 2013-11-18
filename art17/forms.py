@@ -6,6 +6,7 @@ from wtforms import (Form as Form_base, FormField as FormField_base,
                      IntegerField, SelectMultipleField)
 from wtforms.validators import Required, Optional, NumberRange
 from wtforms.widgets import HTMLString, html_params
+from werkzeug.datastructures import MultiDict
 
 from art17 import models
 from art17.lookup import (
@@ -64,10 +65,30 @@ class MultipleJSONField(SelectMultipleField):
         return []
 
     def pre_validate(self, form):
-        return True
+        if self.data:
+            check_list = []
+            for obj in self.data:
+                if obj in check_list:
+                    raise ValueError('Duplicate values')
+                check_list.append(obj)
 
     def render_input(self, val):
         return self.widget.render_input(self, val)
+
+
+class FormValidator(object):
+
+    def __init__(self, form):
+        self.validation_form = form
+
+    def __call__(self, form, field):
+        data = field.data
+
+        form = self.validation_form()
+        for i,d in enumerate(data):
+            form.process(MultiDict(d))
+            if not form.validate():
+                raise ValueError('Invalid values on line ' + str(i + 1))
 
 
 class FormField(FormField_base):
@@ -232,9 +253,9 @@ class Coverage(Form):
 
 class PressureForm(Form):
 
-    pressure = SelectField(default='', validators=[Optional()])
-    ranking = SelectField(default='', validators=[Optional()])
-    pollution = SelectMultipleField(default='', validators=[Optional()])
+    pressure = SelectField(default='')
+    ranking = SelectField(default='')
+    pollutions = SelectMultipleField(default='')
 
     def __init__(self, *args, **kwargs):
         super(PressureForm, self).__init__(*args, **kwargs)
@@ -244,7 +265,7 @@ class PressureForm(Form):
         self.ranking.choices = EMPTY_CHOICE + list(models.db.session.query(
                                             models.LuRanking.code,
                                             models.LuRanking.name))
-        self.pollution.choices = EMPTY_CHOICE + [(p[0], '%s %s' % p) for p in models.db.session.query(
+        self.pollutions.choices = EMPTY_CHOICE + [(p[0], '%s %s' % p) for p in models.db.session.query(
                                             models.LuPollution.code,
                                             models.LuPollution.name)]
 
@@ -252,7 +273,7 @@ class PressureForm(Form):
 class Pressures(Form):
 
     pressures_method = SelectField(default='', choices=EMPTY_CHOICE + METHODS_PRESSURES_OPTIONS)
-    pressures = MultipleJSONField(default='', validators=[Optional()])
+    pressures = MultipleJSONField(default='', validators=[FormValidator(PressureForm)])
 
 
 class SpeciesComment(Form):
