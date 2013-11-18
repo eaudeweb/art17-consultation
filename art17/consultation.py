@@ -11,7 +11,7 @@ def inject_home_url():
 
 @consultation.route('/')
 def home():
-    return flask.render_template('home.html')
+    return flask.render_template('consultation/home.html')
 
 
 @consultation.route('/_crashme')
@@ -30,7 +30,7 @@ def ping():
 
 @consultation.route('/guide')
 def guide():
-    return flask.render_template('guide.html')
+    return flask.render_template('consultation/guide.html')
 
 
 @consultation.app_url_defaults
