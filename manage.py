@@ -2,5 +2,5 @@
 
 
 if __name__ == '__main__':
-    from art17.app import create_app, main
-    main(create_app)
+    from art17.app import main
+    main()
