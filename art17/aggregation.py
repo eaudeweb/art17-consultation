@@ -34,6 +34,8 @@ def dataset(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     return flask.render_template('aggregation/dataset.html', **{
         'dataset': dataset,
+        'habitat_count': dataset.habitat_objs.count(),
+        'species_count': dataset.species_objs.count(),
     })
 
 
