@@ -11,61 +11,62 @@
         {{ errors(pressures.pressures) }}
 
         <table class="table table-bordered recorddetail-table table-vertical" id="pressures_container">
-        <tr>
-          <th>Presiune</th>
-          <th>Clasificare</th>
-          <th>Calificativ de poluare</th>
-          <th>Acțiuni</th>
-        </tr>
-        {% for p in pressures.pressures.data %}
-        <tr data-id="{{ p.id }}">
-          <td>{{ PRESSURES[p.pressure] }}</td>
-          <td>{{ p.ranking }}</td>
-          <td>
-            {% for pol in p.pollutions %}
+          <tr>
+            <th>Presiune</th>
+            <th>Clasificare</th>
+            <th>Calificativ de poluare</th>
+            <th>Acțiuni</th>
+          </tr>
+          {% for p in pressures.pressures.data %}
+          <tr data-id="{{ p.id }}">
+            <td>{{ PRESSURES[p.pressure] }}</td>
+            <td>{{ p.ranking }}</td>
+            <td>
+              {% for pol in p.pollutions %}
               {{ pol }}
-            {% endfor %}
-          </td>
-          <td>
-            <button type="button" class="btn btn-danger btn-sm hidepressure">Șterge</button>
-          {{ pressures.pressures.render_input(p) }}
-          </td>
-        </tr>
-        {% endfor %}
+              {% endfor %}
+            </td>
+            <td>
+              <button type="button" class="btn btn-danger btn-sm hidepressure">Șterge</button>
+              {{ pressures.pressures.render_input(p) }}
+            </td>
+          </tr>
+          {% endfor %}
 
-        <tr>
-          <td>
-            {{ addform.pressure(class='form-control') }}
-          </td>
-          <td>
-            {{ addform.ranking(class='form-control') }}
-          </td>
-          <td>
-            {{ addform.pollutions(class='form-control') }}
-          </td>
-          <td>
-            <button class="btn btn-primary add-pressuresbtn">Adaugă presiune</button>
-          </td>
-        </tr>
-      </table>
+          <tr>
+            <td>
+              {{ addform.pressure(class='form-control') }}
+            </td>
+            <td>
+              {{ addform.ranking(class='form-control') }}
+            </td>
+            <td>
+              {{ addform.pollutions(class='form-control') }}
+            </td>
+            <td>
+              <button class="btn btn-primary add-pressuresbtn">Adaugă presiune</button>
+            </td>
+          </tr>
+        </table>
 
-      <div class="form-group">
-        <label for="pressures.pressures_method">
-          Metoda utilizată:
-        </label>
+        <div class="form-group">
+          <label for="pressures.pressures_method">
+            Metoda utilizată:
+          </label>
 
-        {{ errors(pressures.pressures_method) }}
+          {{ errors(pressures.pressures_method) }}
 
-        <div class="row">
-          <div class="col-sm-4 {{- error_cls(pressures.pressures_method) }}">
-            {{ pressures.pressures_method(class='form-control') }}
+          <div class="row">
+            <div class="col-sm-4 {{- error_cls(pressures.pressures_method) }}">
+              {{ pressures.pressures_method(class='form-control') }}
+            </div>
+
+            <div class="col-sm-2"></div>
           </div>
-
-          <div class="col-sm-2"></div>
         </div>
+
       </div>
 
     </div>
-
   </div>
 </div>
