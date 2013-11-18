@@ -264,6 +264,36 @@ def test_edit_comment_submit(species_app):
         assert comment.range_surface_area == 50
 
 
+def test_extra_fields_save(species_app):
+    import json
+    from art17.models import DataSpeciesRegion, LuThreats, LuRanking, LuPollution
+    from art17 import models
+    species_app.config['TESTING_USER_ID'] = 'smith'
+    _create_species_record(species_app)
+    with species_app.app_context():
+        pressure = LuThreats(code='1')
+        ranking = LuRanking(code='M')
+        pollution = LuPollution(code='A')
+        models.db.session.add(pressure)
+        models.db.session.add(ranking)
+        models.db.session.add(pollution)
+        models.db.session.commit()
+    pressure_data = json.dumps({'pressure': '1', 'ranking': 'M', 'pollutions': ['A']})
+    client = species_app.test_client()
+    resp = client.post('/specii/detalii/1/comentarii',
+                       data={'pressures.pressures': [pressure_data]})
+    assert resp.status_code == 200
+    assert COMMENT_SAVED_TXT in resp.data
+    with species_app.app_context():
+        comment = DataSpeciesRegion.query.get(2)
+        assert comment.cons_role == 'comment'
+        assert comment.cons_user_id == 'smith'
+        assert len(list(comment.pressures)) == 1
+        assert comment.pressures[0].pressure == '1'
+        assert comment.pressures[0].ranking == 'M'
+        assert comment.pressures[0].pollutions[0].pollution_qualifier == 'A'
+
+
 def test_one_field_required(species_app):
     from werkzeug.datastructures import MultiDict
     from art17 import forms
