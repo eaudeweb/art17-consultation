@@ -4,5 +4,17 @@
 {% block content %}
   <h2>Agregare</h2>
 
-  <pre>{{ result }}</pre>
+  {% if result is none %}
+
+    <form method="post">
+      <button type="submit" class="btn btn-warning">Execută agregarea</button>
+    </form>
+
+  {% else %}
+
+    <p>Rezultatul agregării:</p>
+
+    <pre>{{ result }}</pre>
+
+  {% endif %}
 {% endblock content %}

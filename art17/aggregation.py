@@ -13,11 +13,16 @@ def home():
     return flask.render_template('aggregation/home.html')
 
 
-@aggregation.route('/agregare')
+@aggregation.route('/agregare', methods=['GET', 'POST'])
 def aggregate():
-    q = "SELECT SYS_CONTEXT('USERENV', 'SESSION_USER') FROM DUAL"
+    result = None
+
+    if flask.request.method == 'POST':
+        q = "SELECT SYS_CONTEXT('USERENV', 'SESSION_USER') FROM DUAL"
+        result = execute_on_primary(q).scalar()
+
     return flask.render_template('aggregation/aggregate.html', **{
-        'result': execute_on_primary(q).scalar(),
+        'result': result,
     })
 
 
