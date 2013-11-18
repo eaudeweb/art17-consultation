@@ -245,6 +245,7 @@ class DataHabitattypeRegion(Base):
     cons_status = Column(String, default='new')
     cons_deleted = Column(Boolean, default=False)
     cons_report_observation = Column(Text)
+    cons_dataset_id = Column(ForeignKey('datasets.objectid'))
 
     habitat = relationship(u'DataHabitat',
         backref=db.backref('regions', lazy='dynamic'))
@@ -252,6 +253,9 @@ class DataHabitattypeRegion(Base):
     lu = relationship(LuBiogeoreg,
                       primaryjoin=(region == foreign(LuBiogeoreg.code)),
                       innerjoin=True, uselist=False)
+
+    dataset = relationship('Dataset',
+        backref=db.backref('species_objs', lazy='dynamic'))
 
     @property
     def identifier(self):
@@ -408,6 +412,7 @@ class DataSpeciesRegion(Base):
     cons_deleted = Column(Boolean, default=False)
     cons_report_observation = Column(Text)
     cons_generalstatus = Column(String)
+    cons_dataset_id = Column(ForeignKey('datasets.objectid'))
 
     species = relationship(u'DataSpecies',
         backref=db.backref('regions', lazy='dynamic'))
@@ -415,6 +420,9 @@ class DataSpeciesRegion(Base):
     lu = relationship(LuBiogeoreg,
                       primaryjoin=(region == foreign(LuBiogeoreg.code)),
                       innerjoin=True, uselist=False)
+
+    dataset = relationship('Dataset',
+        backref=db.backref('habitat_objs', lazy='dynamic'))
 
     @property
     def identifier(self):

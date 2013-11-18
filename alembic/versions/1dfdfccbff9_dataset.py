@@ -17,6 +17,14 @@ def upgrade():
         sa.Column('COMMENT', NCLOB, nullable=True),
         sa.PrimaryKeyConstraint('OBJECTID'),
     )
+    op.add_column(
+        'data_habitattype_reg',
+        sa.Column('cons_dataset_id', sa.Integer, nullable=True),
+    )
+    op.add_column(
+        'data_species_regions',
+        sa.Column('cons_dataset_id', sa.Integer, nullable=True),
+    )
     op.execute(
         u"INSERT INTO DATASETS(OBJECTID, \"DATE\", \"COMMENT\") "
         u"VALUES ("
@@ -25,8 +33,18 @@ def upgrade():
             u"'Consultare publică'"
         u") "
     )
+    op.execute(
+        "UPDATE data_habitattype_reg "
+            "SET cons_dataset_id = (SELECT objectid FROM datasets)"
+    )
+    op.execute(
+        "UPDATE data_species_regions "
+            "SET cons_dataset_id = (SELECT objectid FROM datasets)"
+    )
 
 
 def downgrade():
+    op.drop_column('data_species_regions', 'cons_dataset_id')
+    op.drop_column('data_habitattype_reg', 'cons_dataset_id')
     op.drop_table('datasets')
     op.execute("DROP SEQUENCE datasets_seq")
