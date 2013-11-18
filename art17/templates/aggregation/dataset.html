@@ -1,8 +1,20 @@
 {% extends "layout.html" %}
 
 
+{% block title %}Set de date &mdash; {{ super() }}{% endblock title %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('set de date', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
 {% block content %}
-  <h2>Set de date, {{ dataset.date }}</h2>
+  <h2>Set de date, {{ dataset.user_id or "-" }}, {{ dataset.date }}</h2>
 
   <p>{{ dataset.comment }}</p>
 
