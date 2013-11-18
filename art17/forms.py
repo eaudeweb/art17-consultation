@@ -5,6 +5,7 @@ from wtforms import (Form as Form_base, FormField as FormField_base,
                      TextField, TextAreaField, DecimalField, SelectField,
                      IntegerField, SelectMultipleField)
 from wtforms.validators import Required, Optional, NumberRange
+from wtforms.widgets import HTMLString, html_params
 
 from art17 import models
 from art17.lookup import (
@@ -34,17 +35,39 @@ def all_fields(form):
             yield field
 
 
-class PressuresField(SelectMultipleField):
+class MultipleHiddenWidget(object):
+
+    def __call__(self, field, **kwargs):
+        kwargs.setdefault('id', field.id)
+        html = []
+        for val in field.data:
+            html.append(self.render_input(field, val))
+        return HTMLString(''.join(html))
+
+    @classmethod
+    def render_input(cls, field, val):
+        val = json.dumps(val)
+        return HTMLString('<input type="hidden" %s %s />' % (
+                                                html_params(name=field.name),
+                                                html_params(value=val)))
+
+
+class MultipleJSONField(SelectMultipleField):
+
+    widget = MultipleHiddenWidget()
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('coerce', json.loads)
-        super(PressuresField, self).__init__(*args, **kwargs)
+        super(MultipleJSONField, self).__init__(*args, **kwargs)
 
     def iter_choices(self):
         return []
 
     def pre_validate(self, form):
         return True
+
+    def render_input(self, val):
+        return self.widget.render_input(self, val)
 
 
 class FormField(FormField_base):
@@ -207,27 +230,29 @@ class Coverage(Form):
         self.reference_value.op.choices=EMPTY_CHOICE + LU_FV_RANGE_OP_FUNCT_OPTIONS
 
 
-class Pressures(Form):
+class PressureForm(Form):
 
-    pressures_method = SelectField(default='',
-                                   choices=EMPTY_CHOICE + METHODS_PRESSURES_OPTIONS)
-    add_pressure = SelectField(default='', validators=[Optional()])
-    add_ranking = SelectField(default='', validators=[Optional()])
-    add_pollution = SelectMultipleField(default='', validators=[Optional()])
-    add_data = PressuresField(default='', validators=[Optional()])
-    del_data = PressuresField(default='', validators=[Optional()])
+    pressure = SelectField(default='', validators=[Optional()])
+    ranking = SelectField(default='', validators=[Optional()])
+    pollution = SelectMultipleField(default='', validators=[Optional()])
 
     def __init__(self, *args, **kwargs):
-        super(Pressures, self).__init__(*args, **kwargs)
-        self.add_pressure.choices = EMPTY_CHOICE + [(p[0], '%s. %s' % p) for p in models.db.session.query(
+        super(PressureForm, self).__init__(*args, **kwargs)
+        self.pressure.choices = EMPTY_CHOICE + [(p[0], '%s. %s' % p) for p in models.db.session.query(
                                             models.LuThreats.code,
                                             models.LuThreats.name)]
-        self.add_ranking.choices = EMPTY_CHOICE + list(models.db.session.query(
+        self.ranking.choices = EMPTY_CHOICE + list(models.db.session.query(
                                             models.LuRanking.code,
                                             models.LuRanking.name))
-        self.add_pollution.choices = EMPTY_CHOICE + [(p[0], '%s %s' % p) for p in models.db.session.query(
+        self.pollution.choices = EMPTY_CHOICE + [(p[0], '%s %s' % p) for p in models.db.session.query(
                                             models.LuPollution.code,
                                             models.LuPollution.name)]
+
+
+class Pressures(Form):
+
+    pressures_method = SelectField(default='', choices=EMPTY_CHOICE + METHODS_PRESSURES_OPTIONS)
+    pressures = MultipleJSONField(default='', validators=[Optional()])
 
 
 class SpeciesComment(Form):

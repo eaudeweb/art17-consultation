@@ -125,6 +125,7 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
             'species': self.record.species,
             'record': schemas.parse_species(self.record),
             'map_url': self.get_map_url(region.code),
+            'addform': forms.PressureForm(prefix='addform.')
         }
 
     def record_for_comment(self, comment):
@@ -138,22 +139,24 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
         return records[0]
 
     def process_extra_fields(self, struct, comment):
-        for pressure in struct['pressures']['del_data']:
-            pressure_obj = models.DataPressuresThreats.query.get(pressure)
-            for pollution in pressure_obj.pollutions:
-                models.db.session.delete(pollution)
-            models.db.session.delete(pressure_obj)
-        for pressure in struct['pressures']['add_data']:
+        for pressure in comment.pressures:
+            # Prevent Lu fuckup
+            pressure.lu = None
+            pressure.lu_ranking = None
+            models.db.session.delete(pressure)
+
+        for pressure in struct['pressures']['pressures']:
             pressure_obj = models.DataPressuresThreats(species_id=comment.id,
                                                        pressure=pressure['pressure'],
                                                        ranking=pressure['ranking'])
             models.db.session.add(pressure_obj)
-            models.db.session.commit()
-            for pollution in pressure['pollution']:
+            models.db.session.flush()
+            for pollution in pressure['pollutions']:
                 pollution_obj = models.DataPressuresThreatsPollution(pollution_pressure_id=pressure_obj.id,
                                                                      pollution_qualifier=pollution)
                 models.db.session.add(pollution_obj)
         models.db.session.commit()
+
 
 species.add_url_rule('/specii/detalii/<int:record_id>/comentarii',
                      view_func=SpeciesCommentView.as_view('comment'))

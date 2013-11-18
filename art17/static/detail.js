@@ -35,14 +35,14 @@ $('body').on('click', '.showmap', function(evt) {
 $('.add-pressuresbtn').click(function(evt) {
     evt.preventDefault();
     var html = $('<div>').attr('class', 'row');
-    var pressure = $('select[name="pressures.add_pressure"]').val();
-    var ranking = $('select[name="pressures.add_ranking"]').val();
-    var pollution = $('select[name="pressures.add_pollution"]').val();
-    var data = {pressure: pressure, ranking: ranking, pollution: pollution};
+    var pressure = $('select[name="addform.pressure"]').val();
+    var ranking = $('select[name="addform.ranking"]').val();
+    var pollution = $('select[name="addform.pollution"]').val();
+    var data = {pressure: pressure, ranking: ranking, pollutions: pollution};
 
     $('<input>').attr({
         type: "hidden",
-        name: "pressures.add_data",
+        name: "pressures.pressures",
         value: JSON.stringify(data)
     }).appendTo('form');
 
@@ -62,17 +62,6 @@ $('.add-pressuresbtn').click(function(evt) {
 
 $('body').on('click', '.hidepressure', function(evt) {
   evt.preventDefault();
-  $(this).parent().parent().remove();
-});
-
-$('body').on('click', '.delpressure', function(evt) {
-  evt.preventDefault();
-  var pressure_id = $(this).parent().parent().data('id');
-  $('<input>').attr({
-        type: "hidden",
-        name: "pressures.del_data",
-        value: pressure_id
-  }).appendTo('form');
   $(this).parent().parent().remove();
 });
 

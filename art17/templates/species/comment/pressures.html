@@ -7,20 +7,20 @@
     <div class="panel-body">
       <div class="form-group">
         <div class="row">
-          <div class="col-sm-2 {{- error_cls(pressures.add_pressure) }}">
-            <label for="pressures.add_pressures">Presiune</label>
+          <div class="col-sm-2">
+            <label>Presiune</label>
           </div>
-          <div class="col-sm-2 {{- error_cls(pressures.add_ranking) }}">
-            <label for="pressures.add_ranking">Clasificare</label>
+          <div class="col-sm-2">
+            <label>Clasificare</label>
           </div>
-          <div class="col-sm-2 {{- error_cls(pressures.add_pollution) }}">
-            <label for="pressures.add_pollution">Calificativ de poluare</label>
+          <div class="col-sm-2">
+            <label>Calificativ de poluare</label>
           </div>
         </div>
       </div>
 
-      <div class="form-group" id="pressures_container">
-        {% for p in pressures.add_data.data %}
+      <div class="form-group {{- error_cls(pressures.pressures) }}" id="pressures_container">
+        {% for p in pressures.pressures.data %}
         <div class="row" data-id="{{ p.id }}">
           <div class="col-sm-2">
             {{ p.pressure }}
@@ -34,21 +34,25 @@
             {% endfor %}
           </div>
           <div class="col-sm-2">
-            <button type="button" class="close delpressure">&times;</button>
+            <button type="button" class="close hidepressure">&times;</button>
           </div>
+          {{ pressures.pressures.render_input(p) }}
         </div>
         {% endfor %}
+
+        {{ errors(pressures.pressures) }}
+
       </div>
       <div class="form-group">
          <div class="row">
-          <div class="col-sm-2 {{- error_cls(pressures.add_pressure) }}">
-            {{ pressures.add_pressure(class='form-control') }}
+          <div class="col-sm-2 {{- error_cls(addform.pressure) }}">
+            {{ addform.pressure(class='form-control') }}
           </div>
-          <div class="col-sm-2 {{- error_cls(pressures.add_ranking) }}">
-            {{ pressures.add_ranking(class='form-control') }}
+          <div class="col-sm-2 {{- error_cls(addform.ranking) }}">
+            {{ addform.ranking(class='form-control') }}
           </div>
-          <div class="col-sm-2 {{- error_cls(pressures.add_pollution) }}">
-            {{ pressures.add_pollution(class='form-control') }}
+          <div class="col-sm-2 {{- error_cls(addform.pollution) }}">
+            {{ addform.pollution(class='form-control') }}
           </div>
           <div class="col-sm-2">
             <button class="btn btn-primary add-pressuresbtn">Adaugă presiune</button>

@@ -507,7 +507,7 @@ class DataPressuresThreatsPollution(Base):
             innerjoin=True, uselist=False)
 
     pressure = relationship(u'DataPressuresThreats',
-        backref=db.backref('pollutions', lazy='dynamic'))
+        backref=db.backref('pollutions', lazy='dynamic', cascade='all'))
 
 
 class DataHabitatSpecies(Base):
