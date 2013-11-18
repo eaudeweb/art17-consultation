@@ -1,3 +1,4 @@
+from datetime import datetime
 import flask
 from art17 import models
 
@@ -18,14 +19,23 @@ def home():
 
 @aggregation.route('/agregare', methods=['GET', 'POST'])
 def aggregate():
-    result = None
-
     if flask.request.method == 'POST':
         q = "SELECT SYS_CONTEXT('USERENV', 'SESSION_USER') FROM DUAL"
         result = execute_on_primary(q).scalar()
+        dataset = models.Dataset(
+            date=datetime.utcnow(),
+            user_id=flask.g.identity.id,
+        )
+        models.db.session.add(dataset)
+        models.db.session.commit()
+
+    else:
+        result = None
+        dataset = None
 
     return flask.render_template('aggregation/aggregate.html', **{
         'result': result,
+        'dataset': dataset,
     })
 
 

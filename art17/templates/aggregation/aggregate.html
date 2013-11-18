@@ -26,6 +26,12 @@
 
     <p>Rezultatul agregării:</p>
 
+    <p>
+      Setul de date:
+      {%- set url = url_for('.dataset', dataset_id=dataset.id) %}
+      <a href="{{ url }}">{{ dataset.date }}</a>
+    </p>
+
     <pre>{{ result }}</pre>
 
   {% endif %}
