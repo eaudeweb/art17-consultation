@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+
+{% block title %}Agregare &mdash; {{ super() }}{% endblock title %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('agregare', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
+{% block content %}
+  <h2>Agregare</h2>
+
+  {% if result is none %}
+
+    <form method="post">
+      <button type="submit" class="btn btn-warning">Execută agregarea</button>
+    </form>
+
+  {% else %}
+
+    <p>Rezultatul agregării:</p>
+
+    <pre>{{ result }}</pre>
+
+  {% endif %}
+{% endblock content %}
