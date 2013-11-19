@@ -257,6 +257,12 @@ class DataHabitattypeRegion(Base):
     dataset = relationship('Dataset',
         backref=db.backref('species_objs', lazy='dynamic'))
 
+    def get_pressures(self):
+        return self.pressures.filter_by(type='p')
+
+    def get_threats(self):
+        return self.pressures.filter_by(type='t')
+
     @property
     def identifier(self):
         return 'habitat:%s' % (self.habitat.lu.code,)
@@ -423,6 +429,12 @@ class DataSpeciesRegion(Base):
 
     dataset = relationship('Dataset',
         backref=db.backref('habitat_objs', lazy='dynamic'))
+
+    def get_pressures(self):
+        return self.pressures.filter_by(type='p')
+
+    def get_threats(self):
+        return self.pressures.filter_by(type='t')
 
     @property
     def identifier(self):

@@ -97,8 +97,8 @@ def detail(record_id):
     return flask.render_template('species/detail.html', **{
         'species': record.species,
         'record': schemas.parse_species(record),
-        'pressures': record.pressures.filter_by(type='p').all(),
-        'threats': record.pressures.filter_by(type='t').all(),
+        'pressures': record.get_pressures().all(),
+        'threats': record.get_threats().all(),
         'measures': record.measures.all(),
     })
 
@@ -151,7 +151,8 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
         for pressure in struct['pressures']['pressures']:
             pressure_obj = models.DataPressuresThreats(species_id=comment.id,
                                                        pressure=pressure['pressure'],
-                                                       ranking=pressure['ranking'])
+                                                       ranking=pressure['ranking'],
+                                                       type='p')
             models.db.session.add(pressure_obj)
             models.db.session.flush()
             for pollution in pressure['pollutions']:
