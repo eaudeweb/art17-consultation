@@ -348,6 +348,9 @@ class SpeciesComment(Form):
 class HabitatComment(Form):
     range = FormField(Range)
     coverage = FormField(Coverage)
+    pressures = FormField(Pressures)
+    threats = FormField(Threats)
+    measures = FormField(Measures)
     structure = FormField(Conclusion)
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)

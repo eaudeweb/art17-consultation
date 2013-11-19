@@ -67,6 +67,13 @@ HABITAT_STRUCT_DATA = {
         'value': 'U2',
         'trend': '+',
     },
+    'pressures': {
+        'pressures_method': '1',
+    },
+    'threats': {
+        'threats_method': '1',
+    },
+    'measures': {},
     'future_prospects': {
         'value': 'U2',
         'trend': '+',
@@ -103,6 +110,8 @@ HABITAT_MODEL_DATA = {
     'complementary_favourable_area_op': '<',
     'complementary_favourable_area': 123,
     'complementary_favourable_area_method': 'foo method',
+    'pressures_method': '1',
+    'threats_method': '1',
     'conclusion_area': 'U2',
     'conclusion_area_trend': '+',
 
@@ -203,14 +212,15 @@ def test_edit_comment_submit(habitat_app):
         assert comment.range_surface_area == 50
 
 
-def test_one_field_required():
+def test_one_field_required(habitat_app):
     from werkzeug.datastructures import MultiDict
     from art17 import forms
-    form = forms.HabitatComment(MultiDict())
-    assert not form.validate()
+    with habitat_app.app_context():
+        form = forms.HabitatComment(MultiDict())
+        assert not form.validate()
 
 
-def test_save_all_form_fields():
+def test_save_all_form_fields(habitat_app):
     from art17 import forms
     from art17 import models
     from art17.common import flatten_dict
@@ -219,8 +229,9 @@ def test_save_all_form_fields():
 
     form_data = MultiDict(flatten_dict(HABITAT_STRUCT_DATA))
 
-    form = forms.HabitatComment(form_data)
-    assert form.validate()
+    with habitat_app.app_context():
+        form = forms.HabitatComment(form_data)
+        assert form.validate()
 
     comment = models.DataHabitattypeRegion()
     flatten_habitat_commentform(form.data, comment)

@@ -16,6 +16,7 @@ from werkzeug.datastructures import MultiDict
 from sqlalchemy import func
 from art17 import models
 from art17.auth import need
+from art17 import forms
 import lookup
 
 logger = logging.getLogger(__name__)
@@ -347,6 +348,15 @@ class CommentView(IndexMixin, flask.views.View):
 
         self.template_ctx['form'] = form
         self.template_ctx['new_comment'] = new_comment
+
+        addform_pressure = forms.PressureForm(prefix='addform_pressure.')
+        addform_measure = forms.MeasuresForm(prefix='addform_measure.')
+        self.template_ctx.update({
+                'addform_pressure': addform_pressure,
+                'addform_threat': forms.PressureForm(prefix='addform_threat.'),
+                'addform_measure': addform_measure,
+                'PRESSURES': dict(addform_pressure.pressure.choices),
+                'MEASURES': dict(addform_measure.measurecode.choices)})
         return flask.render_template(self.template, **self.template_ctx)
 
 

@@ -110,8 +110,6 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
         self.comment.region = self.record.region
 
     def setup_template_context(self):
-        addform_pressure = forms.PressureForm(prefix='addform_pressure.')
-        addform_measure = forms.MeasuresForm(prefix='addform_measure.')
         self.template_ctx = {
             'species': self.record.species,
             'record': schemas.parse_species(self.record),
@@ -119,11 +117,6 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
                 self.record.species.code,
                 region_code=self.record.region,
             ),
-            'addform_pressure': addform_pressure,
-            'addform_threat': forms.PressureForm(prefix='addform_threat.'),
-            'addform_measure': addform_measure,
-            'PRESSURES': dict(addform_pressure.pressure.choices),
-            'MEASURES': dict(addform_measure.measurecode.choices),
         }
 
     def record_for_comment(self, comment):
@@ -141,37 +134,47 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
             models.db.session.delete(pressure)
 
         for pressure in struct['pressures']['pressures']:
-            pressure_obj = models.DataPressuresThreats(species_id=comment.id,
-                                                       pressure=pressure['pressure'],
-                                                       ranking=pressure['ranking'],
-                                                       type='p')
+            pressure_obj = models.DataPressuresThreats(
+                species_id=comment.id,
+                pressure=pressure['pressure'],
+                ranking=pressure['ranking'],
+                type='p',
+            )
             models.db.session.add(pressure_obj)
             models.db.session.flush()
             for pollution in pressure['pollutions']:
-                pollution_obj = models.DataPressuresThreatsPollution(pollution_pressure_id=pressure_obj.id,
-                                                                     pollution_qualifier=pollution)
+                pollution_obj = models.DataPressuresThreatsPollution(
+                    pollution_pressure_id=pressure_obj.id,
+                    pollution_qualifier=pollution,
+                )
                 models.db.session.add(pollution_obj)
 
         for threat in comment.get_threats():
             models.db.session.delete(threat)
 
         for threat in struct['threats']['threats']:
-            threat_obj = models.DataPressuresThreats(species_id=comment.id,
-                                                     pressure=threat['pressure'],
-                                                     ranking=threat['ranking'],
-                                                     type='t')
+            threat_obj = models.DataPressuresThreats(
+                species_id=comment.id,
+                pressure=threat['pressure'],
+                ranking=threat['ranking'],
+                type='t',
+            )
             models.db.session.add(threat_obj)
             models.db.session.flush()
             for pollution in threat['pollutions']:
-                pollution_obj = models.DataPressuresThreatsPollution(pollution_pressure_id=threat_obj.id,
-                                                                     pollution_qualifier=pollution)
+                pollution_obj = models.DataPressuresThreatsPollution(
+                    pollution_pressure_id=threat_obj.id,
+                    pollution_qualifier=pollution,
+                )
                 models.db.session.add(pollution_obj)
 
         for measure in comment.measures:
             models.db.session.delete(measure)
 
         for measure in struct['measures']['measures']:
-            measure_obj = models.DataMeasures(measure_sr_id=comment.id, **measure)
+            measure_obj = models.DataMeasures(measure_sr_id=comment.id,
+                                              **measure
+            )
             models.db.session.add(measure_obj)
         models.db.session.commit()
 

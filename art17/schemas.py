@@ -338,7 +338,48 @@ def parse_habitat_commentform(row):
                                     'complementary_favourable_area'),
             'conclusion': parse_conclusion(row, 'conclusion_area')
         }
-
+    rv['pressures'] = {
+            'pressures': [
+                json.dumps({'id': p.id,
+                            'pressure': p.pressure,
+                            'ranking': p.ranking,
+                            'pollutions': [pol.pollution_qualifier for pol in p.pollutions]})
+                for p in row.get_pressures()
+            ]
+    } if row.pressures.count() else {}
+    rv['pressures']['pressures_method'] = row.pressures_method
+    rv['threats'] = {
+            'threats': [
+                json.dumps({'id': p.id,
+                            'pressure': p.pressure,
+                            'ranking': p.ranking,
+                            'pollutions': [pol.pollution_qualifier for pol in p.pollutions]})
+                for p in row.get_threats()
+            ]
+    } if row.pressures.count() else {}
+    rv['threats']['threats_method'] = row.threats_method
+    rv['measures'] = {
+            'measures': [
+                json.dumps({
+                    'measurecode': m.measurecode,
+                    'type_legal': int(m.type_legal) if m.type_legal else '',
+                    'type_administrative': int(m.type_administrative),
+                    'type_contractual': int(m.type_contractual),
+                    'type_recurrent': int(m.type_recurrent),
+                    'type_oneoff': int(m.type_oneoff),
+                    'rankingcode': m.rankingcode,
+                    'location_inside': int(m.location_inside),
+                    'location_outside': int(m.location_outside),
+                    'location_both': int(m.location_both),
+                    'broad_evaluation_maintain': int(m.broad_evaluation_maintain),
+                    'broad_evaluation_enhance': int(m.broad_evaluation_enhance),
+                    'broad_evaluation_longterm': int(m.broad_evaluation_longterm),
+                    'broad_evaluation_noeffect': int(m.broad_evaluation_noeffect),
+                    'broad_evaluation_unknown': int(m.broad_evaluation_unknown),
+                    'broad_evaluation_notevaluat_18': int(m.broad_evaluation_notevaluat_18)})
+                for m in row.measures
+            ]
+    } if row.measures.count() else {}
     rv['structure'] = parse_conclusion(row, 'conclusion_structure')
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
@@ -456,3 +497,5 @@ def flatten_habitat_commentform(struct, obj):
     flatten_conclusion(struct['overall_assessment'], obj,
                     'conclusion_assessment')
     obj.cons_report_observation = struct['report_observation']
+    obj.pressures_method = struct['pressures']['pressures_method']
+    obj.threats_method = struct['threats']['threats_method']
