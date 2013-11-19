@@ -15,6 +15,7 @@ from flask.ext.script import Manager
 from werkzeug.datastructures import MultiDict
 from sqlalchemy import func
 from art17 import models
+from art17 import dal
 from art17.auth import need
 from art17 import forms
 import lookup
@@ -198,17 +199,11 @@ class IndexView(flask.views.View, IndexMixin):
         self.subject_code = flask.request.args[self.subject_name]
         self.region_code = flask.request.args['region']
 
-        self.subject = (
-            self.subject_cls.query
-                .filter_by(code=self.subject_code)
-                .first_or_404()
-        )
+        self.subject = self.dataset.get_subject(self.subject_code)
+        self.region = dal.get_biogeo_region(self.region_code)
 
-        self.region = (
-            models.LuBiogeoreg.query
-                .filter_by(code=self.region_code)
-                .first_or_404()
-        )
+        if self.subject is None or self.region is None:
+            flask.abort(404)
 
         self.topic = self.get_topic(self.subject, self.region)
 

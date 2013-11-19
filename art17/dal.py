@@ -11,8 +11,16 @@ from art17.models import (
 )
 
 
-def get_biogeo_regions():
+def get_biogeo_region_list():
     return LuBiogeoreg.query.all()
+
+
+def get_biogeo_region(region_code):
+    return (
+        LuBiogeoreg.query
+        .filter_by(code=region_code)
+        .first()
+    )
 
 
 def get_species_groups():
@@ -45,6 +53,13 @@ def get_species_group(group_code):
 
 
 class BaseDataset(object):
+
+    def get_subject(self, subject_code):
+        return (
+            self.subject_model.query
+            .filter_by(code=subject_code)
+            .first()
+        )
 
     def get_subject_region_overview(self):
         overview = {}

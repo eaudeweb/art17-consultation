@@ -53,7 +53,7 @@ def habitats():
     habitat_dataset = dal.HabitatDataset()
 
     return flask.render_template('dashboard/habitat.html', **{
-        'bioreg_list': dal.get_biogeo_regions(),
+        'bioreg_list': dal.get_biogeo_region_list(),
         'tabmenu_data': list(get_tabmenu_data()),
         'habitat_list': dal.get_habitat_list(),
         'habitat_regions': habitat_dataset.get_subject_region_overview(),
@@ -65,7 +65,7 @@ def species(group_code):
     species_dataset = dal.SpeciesDataset()
 
     return flask.render_template('dashboard/species.html', **{
-        'bioreg_list': dal.get_biogeo_regions(),
+        'bioreg_list': dal.get_biogeo_region_list(),
         'tabmenu_data': list(get_tabmenu_data()),
         'species_group': dal.get_species_group(group_code),
         'species_list': dal.get_species_list(group_code=group_code),
