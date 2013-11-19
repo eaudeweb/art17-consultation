@@ -205,23 +205,20 @@ class IndexView(flask.views.View, IndexMixin):
         if self.subject is None or self.region is None:
             flask.abort(404)
 
-        self.topic = self.get_topic(self.subject, self.region)
-
         self.reply_counts = self.dataset.get_reply_counts()
 
-    def get_topic(self, subject, region):
-        rv = {'comments': []}
+        self.topic = {'comments': []}
 
-        for record in self.dataset.get_topic_records(subject, region):
+        for record in self.dataset.get_topic_records(self.subject, self.region):
             if record.cons_role == 'assessment':
-                rv['assessment'] = self.parse_record(record)
+                self.topic['assessment'] = self.parse_record(record)
 
             else:
                 if not record.cons_deleted:
                     r = self.parse_record(record, is_comment=True)
-                    rv['comments'].append(r)
+                    self.topic['comments'].append(r)
 
-        return rv
+        return self.topic
 
     def prepare_context(self):
         self.ctx.update({
