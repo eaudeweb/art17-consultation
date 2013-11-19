@@ -195,48 +195,41 @@ class IndexMixin(object):
 
 class IndexView(flask.views.View, IndexMixin):
 
-    def parse_request(self):
-        self.subject_code = flask.request.args[self.subject_name]
-        self.region_code = flask.request.args['region']
+    def dispatch_request(self):
+        subject_code = flask.request.args[self.subject_name]
+        region_code = flask.request.args['region']
 
-        self.subject = self.dataset.get_subject(self.subject_code)
-        self.region = dal.get_biogeo_region(self.region_code)
+        subject = self.dataset.get_subject(subject_code)
+        region = dal.get_biogeo_region(region_code)
 
-        if self.subject is None or self.region is None:
+        if subject is None or region is None:
             flask.abort(404)
 
-        self.reply_counts = self.dataset.get_reply_counts()
+        reply_counts = self.dataset.get_reply_counts()
 
-        self.topic = {'comments': []}
+        topic = {'comments': []}
 
-        for record in self.dataset.get_topic_records(self.subject, self.region):
+        for record in self.dataset.get_topic_records(subject, region):
             if record.cons_role == 'assessment':
-                self.topic['assessment'] = self.parse_record(record)
+                topic['assessment'] = self.parse_record(record)
 
             else:
                 if not record.cons_deleted:
                     r = self.parse_record(record, is_comment=True)
-                    self.topic['comments'].append(r)
+                    topic['comments'].append(r)
 
-        return self.topic
+        comment_next = self.get_comment_next_url(subject_code, region_code)
 
-    def prepare_context(self):
-        self.ctx.update({
-            'subject': self.subject,
-            'region': self.region,
+        return flask.render_template('common/indexpage.html', **{
+            'subject': subject,
+            'region': region,
             'topic_template': self.topic_template,
-            'comment_next': self.get_comment_next_url(),
+            'comment_next': comment_next,
             'blueprint': self.blueprint,
-            'topic': self.topic,
-            'reply_counts': self.reply_counts,
-            'map_url': self.get_map_url(self.subject.code)
+            'topic': topic,
+            'reply_counts': reply_counts,
+            'map_url': self.get_map_url(subject.code)
         })
-
-    def dispatch_request(self):
-        self.parse_request()
-        self.ctx = {}
-        self.prepare_context()
-        return flask.render_template('common/indexpage.html', **self.ctx)
 
 
 class CommentView(IndexMixin, flask.views.View):

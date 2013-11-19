@@ -30,12 +30,10 @@ class SpeciesMixin(object):
 class SpeciesIndexView(IndexView, SpeciesMixin):
 
     topic_template = 'species/topic.html'
-    subject_cls = models.DataSpecies
-    record_cls = models.DataSpeciesRegion
 
-    def get_comment_next_url(self):
-        return flask.url_for('.index', species=self.subject_code,
-                                       region=self.region_code)
+    def get_comment_next_url(self, subject_code, region_code):
+        return flask.url_for('.index', species=subject_code,
+                                       region=region_code)
 
 
 species.add_url_rule('/specii/', view_func=SpeciesIndexView.as_view('index'))
