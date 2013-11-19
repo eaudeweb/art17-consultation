@@ -49,10 +49,7 @@ def inject_funcs():
 
 @dashboard.route('/habitate')
 def habitats():
-    DH = models.DataHabitat
     DHR = models.DataHabitattypeRegion
-
-    habitat_list = DH.query.join(DH.lu).all()
 
     habitat_regions = {}
     habitat_regions_query = (
@@ -75,28 +72,14 @@ def habitats():
     return flask.render_template('dashboard/habitat.html', **{
         'bioreg_list': dal.get_biogeo_regions(),
         'tabmenu_data': list(get_tabmenu_data()),
-        'habitat_list': habitat_list,
+        'habitat_list': dal.get_habitat_list(),
         'habitat_regions': habitat_regions,
     })
 
 
 @dashboard.route('/specii/<group_code>')
 def species(group_code):
-    DS = models.DataSpecies
     DSR = models.DataSpeciesRegion
-
-    species_group = (
-        models.LuGrupSpecie.query
-        .filter_by(code=group_code)
-        .first()
-    )
-
-    species_list = (
-        DS.query
-        .join(DS.lu)
-        .filter(models.LuHdSpecies.group_code == group_code)
-        .all()
-    )
 
     species_regions = {}
     species_regions_query = (
@@ -119,8 +102,8 @@ def species(group_code):
     return flask.render_template('dashboard/species.html', **{
         'bioreg_list': dal.get_biogeo_regions(),
         'tabmenu_data': list(get_tabmenu_data()),
-        'species_group': species_group,
-        'species_list': species_list,
+        'species_group': dal.get_species_group(group_code),
+        'species_list': dal.get_species_list(group_code=group_code),
         'species_regions': species_regions,
     })
 
