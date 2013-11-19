@@ -16,16 +16,6 @@ comment_status_changed = Signal()
 comment_deleted = Signal()
 
 
-@habitat.route('/habitate/regiuni/<int:habitat_code>')
-def lookup_regions(habitat_code):
-    habitat = (models.DataHabitat.query
-                .filter_by(code=habitat_code)
-                .first_or_404())
-    regions = [{'id': r.lu.code, 'text': r.lu.name_ro}
-               for r in habitat.regions.join(models.DataHabitattypeRegion.lu)]
-    return flask.jsonify(options=regions)
-
-
 class HabitatMixin(object):
 
     subject_name = 'habitat'

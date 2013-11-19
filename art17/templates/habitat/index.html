@@ -10,53 +10,9 @@
 {% endblock breadcrumbs %}
 
 
-{% block form %}
-  <form class="habitatfilter form-inline">
-    <fieldset>
-      <legend>Filtrare habitate</legend>
-
-      <div class="form-group">
-        <label for="habitatfilter-group">Habitat</label>
-        <input name="habitat" value="{{ current_subject_code or '' }}"
-               type="hidden" id="habitatfilter-group">
-      </div>
-
-      <div class="form-group">
-        <label for="habitatfilter-region">Bioregiuni</label>
-        <input name="region" value="{{ current_region_code }}"
-               type="hidden" id="habitatfilter-region">
-      </div>
-
-      <div class="form-group">
-        <button type="submit" class="btn btn-sm btn-primary">filtrează</button>
-        {%- if map_url %}
-          <a class="showmap btn btn-sm btn-info"
-             href="{{ map_url }}">vezi harta</a>
-        {%- endif %}
-        <a class="helpbox-button btn btn-sm btn-default"
-           href="#">ajutor</a>
-      </div>
-    </fieldset>
-  </form>
-{% endblock form %}
-
-
 {% block subject_details %}
   <p class="subject-details">
     <strong>{{ name }}</strong>,
     cod: {{ code }}
   </p>
 {% endblock subject_details %}
-
-
-{% block script %}
-  {{- super() }}
-
-  <script>
-    (function() {
-      "use strict";
-      var habitat_list = {{ subject_list|tojson|safe }};
-      App.habitat_filter(habitat_list);
-    })();
-  </script>
-{% endblock script %}

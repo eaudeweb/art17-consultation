@@ -10,43 +10,6 @@
 {% endblock breadcrumbs %}
 
 
-{% block form %}
-  <form class="speciesfilter form-inline">
-    <fieldset>
-      <legend>Filtrare specii</legend>
-
-      <div class="form-group">
-        <label for="speciesfilter-group">Grup</label>
-        <input name="group" value="{{ current_group_code }}"
-               type="hidden" id="speciesfilter-group">
-      </div>
-
-      <div class="form-group">
-        <label for="speciesfilter-species">Specie</label>
-        <input name="species" value="{{ current_subject_code or '' }}"
-               type="hidden" id="speciesfilter-species">
-      </div>
-
-      <div class="form-group">
-        <label for="speciesfilter-region">Bioregiuni</label>
-        <input name="region" value="{{ current_region_code }}"
-               type="hidden" id="speciesfilter-region">
-      </div>
-
-      <div class="form-group">
-        <button type="submit" class="btn btn-sm btn-primary">filtrează</button>
-        {%- if map_url %}
-          <a class="showmap btn btn-sm btn-info"
-             href="{{ map_url }}">vezi harta</a>
-        {%- endif %}
-        <a class="helpbox-button btn btn-sm btn-default"
-           href="#">ajutor</a>
-      </div>
-    </fieldset>
-  </form>
-{% endblock form %}
-
-
 {% block subject_details %}
   <p class="subject-details">
     {%- set annex_list =
@@ -59,17 +22,3 @@
     anexe: {{ ", ".join(annex_list) if annex_list else "--" }}
   </p>
 {% endblock subject_details %}
-
-
-{% block script %}
-  {{- super() }}
-
-  <script>
-    (function() {
-      "use strict";
-      var species_groups = {{ species_groups|tojson|safe }};
-      var species_list = {{ subject_list|tojson|safe }};
-      App.species_filter(species_groups, species_list);
-    })();
-  </script>
-{% endblock script %}

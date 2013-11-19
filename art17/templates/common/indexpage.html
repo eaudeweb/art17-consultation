@@ -9,24 +9,23 @@
 
 
 {% block content %}
-  {% block form %}{% endblock %}
+  <p>
+    <a class="showmap btn btn-sm btn-info" href="{{ map_url }}">vezi harta</a>
+    <a class="helpbox-button btn btn-sm btn-default" href="#">ajutor</a>
+  </p>
 
-  {% if name %}
-    {% block subject_details %}{% endblock %}
+  {% block subject_details %}{% endblock %}
 
-    {% for topic in topic_list %}
-      {{ topic_html(
-        topic.assessment,
-        topic.comments,
-        topic_template,
-        blueprint,
-      ) }}
-    {% endfor %}
+  {{ topic_html(
+    topic.assessment,
+    topic.comments,
+    topic_template,
+    blueprint,
+  ) }}
 
 
-    {% include 'common/recorddetail.html' %}
-    {% include 'common/helpbox.html' %}
-  {%- endif %}
+  {% include 'common/recorddetail.html' %}
+  {% include 'common/helpbox.html' %}
 {%- endblock content %}
 
 

@@ -195,65 +195,44 @@ class IndexMixin(object):
 class IndexView(flask.views.View, IndexMixin):
 
     def parse_request(self):
-        self.subject_code = flask.request.args.get(self.subject_name)
-
-        if self.subject_code:
-            self.subject = (
-                self.subject_cls.query
-                    .filter_by(code=self.subject_code)
-                    .first_or_404()
-            )
-        else:
-            self.subject = None
-
-        self.region_code = flask.request.args.get('region', '')
-        if self.region_code:
-            self.region = (
-                models.LuBiogeoreg.query
-                    .filter_by(code=self.region_code)
-                    .first_or_404()
-            )
-        else:
-            self.region = None
-
-        if self.subject:
-            self.topic_list = self.get_topics(self.subject, self.region)
-
-            CommentReply = models.CommentReply
-            reply_query = (
-                models.db.session
-                .query(CommentReply.parent_id, func.count(CommentReply.id))
-                .filter(CommentReply.parent_table == self.blueprint)
-                .group_by(CommentReply.parent_id)
-            )
-            self.reply_counts = dict(reply_query)
-
-        self.subject_list = (
+        self.subject_code = flask.request.args[self.subject_name]
+        self.subject = (
             self.subject_cls.query
-                .join(self.record_cls)
-                .order_by(self.subject_cls.code)
+                .filter_by(code=self.subject_code)
+                .first_or_404()
         )
 
-    def get_topics(self, subject, region):
-        region_data_map = {}
+        self.region_code = flask.request.args['region']
+        self.region = (
+            models.LuBiogeoreg.query
+                .filter_by(code=self.region_code)
+                .first_or_404()
+        )
+
+        self.topic = self.get_topic(self.subject, self.region)
+
+        CommentReply = models.CommentReply
+        reply_query = (
+            models.db.session
+            .query(CommentReply.parent_id, func.count(CommentReply.id))
+            .filter(CommentReply.parent_table == self.blueprint)
+            .group_by(CommentReply.parent_id)
+        )
+        self.reply_counts = dict(reply_query)
+
+    def get_topic(self, subject, region):
+        rv = {'comments': []}
+
         for record in self.dataset.get_topic_records(subject, region):
-            if record.region not in region_data_map:
-                region_data_map[record.region] = {
-                    'region': record.lu,
-                    'comments': [],
-                }
-
-            region_data = region_data_map[record.region]
-
             if record.cons_role == 'assessment':
-                region_data['assessment'] = self.parse_record(record)
+                rv['assessment'] = self.parse_record(record)
 
             else:
                 if not record.cons_deleted:
                     r = self.parse_record(record, is_comment=True)
-                    region_data['comments'].append(r)
+                    rv['comments'].append(r)
 
-        return list(region_data_map.values())
+        return rv
 
     def get_pressures(self, record):
         return record.pressures.all()
@@ -264,21 +243,16 @@ class IndexView(flask.views.View, IndexMixin):
     def prepare_context(self):
         self.ctx.update({
             'topic_template': self.topic_template,
-            'subject_list': self.get_subject_list(),
             'current_subject_code': self.subject_code,
             'current_region_code': self.region_code,
             'comment_next': self.get_comment_next_url(),
             'blueprint': self.blueprint,
+            'code': self.subject.code,
+            'name': self.subject.lu.display_name,
+            'topic': self.topic,
+            'reply_counts': self.reply_counts,
+            'map_url': self.get_map_url(self.subject.code)
         })
-
-        if self.subject:
-            self.ctx.update({
-                'code': self.subject.code,
-                'name': self.subject.lu.display_name,
-                'topic_list': self.topic_list,
-                'reply_counts': self.reply_counts,
-                'map_url': self.get_map_url(self.subject.code)
-            })
 
     def dispatch_request(self):
         self.parse_request()

@@ -15,16 +15,6 @@ comment_status_changed = Signal()
 comment_deleted = Signal()
 
 
-@species.route('/specii/regiuni/<int:species_code>')
-def lookup_regions(species_code):
-    species = (models.DataSpecies.query
-                .filter_by(code=species_code)
-                .first_or_404())
-    regions = [{'id': r.lu.code, 'text': r.lu.name_ro}
-               for r in species.regions.join(models.DataSpeciesRegion.lu)]
-    return flask.jsonify(options=regions)
-
-
 class SpeciesMixin(object):
 
     subject_name = 'species'
@@ -46,10 +36,7 @@ class SpeciesIndexView(IndexView, SpeciesMixin):
 
     def parse_request(self):
         super(SpeciesIndexView, self).parse_request()
-        if self.subject:
-            self.group_code = self.subject.lu.group_code
-        else:
-            self.group_code = None
+        self.group_code = self.subject.lu.group_code
 
     def get_comment_next_url(self):
         return flask.url_for('.index', species=self.subject_code,
@@ -62,14 +49,10 @@ class SpeciesIndexView(IndexView, SpeciesMixin):
                                 'text': g.description}
                                for g in dal.get_species_groups()],
             'current_group_code': self.group_code,
+            'annex_II': self.subject.lu.annexii == 'Y',
+            'annex_IV': self.subject.lu.annexiv == 'Y',
+            'annex_V': self.subject.lu.annexv == 'Y',
         })
-
-        if self.subject:
-            self.ctx.update({
-                'annex_II': self.subject.lu.annexii == 'Y',
-                'annex_IV': self.subject.lu.annexiv == 'Y',
-                'annex_V': self.subject.lu.annexv == 'Y',
-            })
 
     def get_subject_list(self):
         return [{'id': s.code,
