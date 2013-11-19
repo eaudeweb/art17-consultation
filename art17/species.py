@@ -1,6 +1,7 @@
 import flask
 from blinker import Signal
 from art17 import models
+from art17 import dal
 from art17.common import (IndexView, CommentView, CommentStateView,
                           CommentDeleteView)
 from art17 import forms
@@ -69,7 +70,7 @@ class SpeciesIndexView(IndexView, SpeciesMixin):
         self.ctx.update({
             'species_groups': [{'id': g.code,
                                 'text': g.description}
-                               for g in models.LuGrupSpecie.query],
+                               for g in dal.get_species_groups()],
             'current_group_code': self.group_code,
         })
 

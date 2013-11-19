@@ -14,7 +14,7 @@ def get_tabmenu_data():
         'label': "Habitate",
         'code': 'H',
     }
-    for group in models.LuGrupSpecie.query:
+    for group in dal.get_species_groups():
         yield {
             'url': flask.url_for('.species', group_code=group.code),
             'label': group.description,
