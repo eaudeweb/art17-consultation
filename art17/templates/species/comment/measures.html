@@ -41,22 +41,22 @@
 
         {% for m in measures.measures.data %}
         <tr data-id="{{ m.id }}">
-          <td>{{ m.measurecode }}</td>
-          <td>{{ m.type_legal }}</td>
-          <td>{{ m.type_administrative }}</td>
-          <td>{{ m.type_contractual }}</td>
-          <td>{{ m.type_recurrent }}</td>
-          <td>{{ m.type_oneoff }}</td>
+          <td>{{ MEASURES[m.measurecode] }}</td>
+          <td><input type="checkbox" value="1" disabled="disabled" {% if m.type_legal %}checked{% endif %} /></td>
+          <td><input type="checkbox" value="1" disabled="disabled" {% if m.type_administrative %}checked{% endif %} /></td>
+          <td><input type="checkbox" value="1" disabled="disabled" {% if m.type_contractual %}checked{% endif %} /></td>
+          <td><input type="checkbox" value="1" disabled="disabled" {% if m.type_recurrent %}checked{% endif %} /></td>
+          <td><input type="checkbox" value="1" disabled="disabled" {% if m.type_oneoff %}checked{% endif %} /></td>
           <td>{{ m.rankingcode }}</td>
-          <td>{{ m.location_inside }}</td>
-          <td>{{ m.location_outside }}</td>
-          <td>{{ m.location_both }}</td>
-          <td>{{ m.broad_evaluation_maintain }}</td>
-          <td>{{ m.broad_evaluation_enhance }}</td>
-          <td>{{ m.broad_evaluation_longterm }}</td>
-          <td>{{ m.broad_evaluation_noeffect }}</td>
-          <td>{{ m.broad_evaluation_unknown }}</td>
-          <td>{{ m.broad_evaluation_notevaluat_18 }}</td>
+          <td><input type="checkbox" value="1" disabled="disabled" {% if m.location_inside %}checked{% endif %} /></td>
+          <td><input type="checkbox" value="1" disabled="disabled" {% if m.location_outside %}checked{% endif %} /></td>
+          <td><input type="checkbox" value="1" disabled="disabled" {% if m.location_both %}checked{% endif %} /></td>
+          <td><input type="checkbox" value="1" disabled="disabled" {% if m.broad_evaluation_maintain %}checked{% endif %} /></td>
+          <td><input type="checkbox" value="1" disabled="disabled" {% if m.broad_evaluation_enhance %}checked{% endif %} /></td>
+          <td><input type="checkbox" value="1" disabled="disabled" {% if m.broad_evaluation_longterm %}checked{% endif %} /></td>
+          <td><input type="checkbox" value="1" disabled="disabled" {% if m.broad_evaluation_noeffect %}checked{% endif %} /></td>
+          <td><input type="checkbox" value="1" disabled="disabled" {% if m.broad_evaluation_unknown %}checked{% endif %} /></td>
+          <td><input type="checkbox" value="1" disabled="disabled" {% if m.broad_evaluation_notevaluat_18 %}checked{% endif %} /></td>
           <td>
             <button type="button" class="btn btn-danger btn-sm hidepressure">Șterge</button>
             {{ measures.measures.render_input(m) }}
