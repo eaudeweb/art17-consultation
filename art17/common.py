@@ -350,7 +350,7 @@ class CommentStateView(flask.views.View):
     methods = ['POST']
 
     def dispatch_request(self, comment_id):
-        comment = self.comment_cls.query.get_or_404(comment_id)
+        comment = self.dataset.get_comment(comment_id) or flask.abort(404)
         next_url = flask.request.form['next']
         new_status = flask.request.form['status']
         if new_status not in STATUS_VALUES:
@@ -369,7 +369,7 @@ class CommentDeleteView(flask.views.View):
     methods = ['POST']
 
     def dispatch_request(self, comment_id):
-        comment = self.comment_cls.query.get_or_404(comment_id)
+        comment = self.dataset.get_comment(comment_id) or flask.abort(404)
         perm_delete_comment(comment).test()
         next_url = flask.request.form['next']
         comment.cons_deleted = True

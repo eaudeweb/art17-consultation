@@ -2,6 +2,7 @@ import urllib
 import flask
 from blinker import Signal
 from art17 import models
+from art17 import dal
 from art17.common import (IndexView, CommentView, CommentStateView,
                           CommentDeleteView)
 from art17 import forms
@@ -128,7 +129,7 @@ habitat.add_url_rule('/habitate/comentarii/<int:comment_id>',
 
 class HabitatCommentStateView(CommentStateView):
 
-    comment_cls = models.DataHabitattypeRegion
+    dataset = dal.HabitatDataset()
     signal = comment_status_changed
 
 
@@ -138,7 +139,7 @@ habitat.add_url_rule('/habitate/comentarii/<int:comment_id>/stare',
 
 class HabitatCommentDeleteView(CommentDeleteView):
 
-    comment_cls = models.DataHabitattypeRegion
+    dataset = dal.HabitatDataset()
     parse_commentform = staticmethod(schemas.parse_habitat_commentform)
     signal = comment_deleted
 

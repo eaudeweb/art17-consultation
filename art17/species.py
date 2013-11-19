@@ -177,7 +177,7 @@ species.add_url_rule('/specii/comentarii/<int:comment_id>',
 
 class SpeciesCommentStateView(CommentStateView):
 
-    comment_cls = models.DataSpeciesRegion
+    dataset = dal.SpeciesDataset()
     signal = comment_status_changed
 
 
@@ -187,7 +187,7 @@ species.add_url_rule('/specii/comentarii/<int:comment_id>/stare',
 
 class SpeciesCommentDeleteView(CommentDeleteView):
 
-    comment_cls = models.DataSpeciesRegion
+    dataset = dal.SpeciesDataset()
     parse_commentform = staticmethod(schemas.parse_species_commentform)
     signal = comment_deleted
 

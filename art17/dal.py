@@ -77,6 +77,9 @@ class HabitatDataset():
 
         return habitat_regions
 
+    def get_comment(self, comment_id):
+        return DataHabitattypeRegion.query.get(comment_id)
+
 
 
 class SpeciesDataset():
@@ -111,3 +114,6 @@ class SpeciesDataset():
             species_regions[species_id, region_code] = count
 
         return species_regions
+
+    def get_comment(self, comment_id):
+        return DataSpeciesRegion.query.get(comment_id)
