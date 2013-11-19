@@ -130,7 +130,7 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
             models.db.session.delete(measure)
 
         for measure in struct['measures']['measures']:
-            measure_obj = models.DataMeasures(measure_sr_id=comment.id,
+            measure_obj = models.DataMeasures(species_id=comment.id,
                                               **measure
             )
             models.db.session.add(measure_obj)

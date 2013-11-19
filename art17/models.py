@@ -449,8 +449,8 @@ class DataMeasures(Base):
 
     id = Column('objectid', Integer, Sequence('R665'), primary_key=True)
     measurecode = Column(String)
-    measure_sr_id = Column(Numeric, ForeignKey(DataSpeciesRegion.id))
-    measure_hr_id = Column(Numeric, ForeignKey(DataHabitattypeRegion.id))
+    species_id = Column('measure_sr_id', Numeric, ForeignKey(DataSpeciesRegion.id))
+    habitat_id = Column('measure_hr_id', Numeric, ForeignKey(DataHabitattypeRegion.id))
     type_legal = Column(Numeric)
     type_administrative = Column(Numeric)
     type_contractual = Column(Numeric)

@@ -133,7 +133,7 @@ class HabitatCommentView(CommentView, HabitatMixin):
 
         for measure in struct['measures']['measures']:
             measure_obj = models.DataMeasures(
-                measure_hr_id=comment.id, **measure
+                habitat_id=comment.id, **measure
             )
             models.db.session.add(measure_obj)
         models.db.session.commit()
