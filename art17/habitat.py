@@ -87,12 +87,13 @@ class HabitatCommentView(CommentView, HabitatMixin):
         self.comment.region = self.record.region
 
     def setup_template_context(self):
-        region = models.LuBiogeoreg.query.filter_by(code=self.record.region).first_or_404()
-        self.topic_list = self.get_topics(self.record.habitat, region)
         self.template_ctx = {
             'habitat': self.record.habitat,
             'record': schemas.parse_habitat(self.record),
-            'map_url': self.get_map_url(region.code)
+            'map_url': self.get_map_url(
+                self.record.habitat.code,
+                region_code=self.record.region,
+            ),
         }
 
     def record_for_comment(self, comment):

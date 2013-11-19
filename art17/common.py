@@ -196,12 +196,16 @@ class IndexMixin(object):
 
         return list(region_data_map.values())
 
-    def get_map_url(self, subject_code):
-        map_colors = [{
-                          'region': t['region'].code,
-                          'code': CONCLUSION_COLOR.get(
-                              t['assessment']['overall_assessment']['value']),
-                      } for t in self.topic_list]
+    def get_map_url(self, subject_code, region_code=None):
+        map_colors = [
+            {
+                'region': record_region_core,
+                'code': CONCLUSION_COLOR.get(record_status),
+            }
+            for record_status, record_region_core in
+            self.dataset.get_assessment_for_all_regions(subject_code)
+            if region_code is None or record_region_core == region_code
+        ]
         return self.map_url_template.format(**{
             self.subject_name: subject_code,
             'regions': urllib.quote(flask.json.dumps(map_colors)),

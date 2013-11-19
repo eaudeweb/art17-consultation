@@ -88,6 +88,18 @@ class HabitatDataset():
 
         return iter(records_query)
 
+    def get_assessment_for_all_regions(self, habitat_code):
+        assessment_query = (
+            db.session.query(
+                DataHabitattypeRegion.conclusion_assessment,
+                DataHabitattypeRegion.region,
+            )
+            .join(DataHabitattypeRegion.habitat)
+            .filter(DataHabitat.code == habitat_code)
+            .filter(DataHabitattypeRegion.conclusion_assessment != None)
+        )
+        return assessment_query.all()
+
     def get_comment(self, comment_id):
         return DataHabitattypeRegion.query.get(comment_id)
 
@@ -136,6 +148,18 @@ class SpeciesDataset():
             records_query = records_query.filter_by(region=region.code)
 
         return iter(records_query)
+
+    def get_assessment_for_all_regions(self, species_code):
+        assessment_query = (
+            db.session.query(
+                DataSpeciesRegion.conclusion_assessment,
+                DataSpeciesRegion.region,
+            )
+            .join(DataSpeciesRegion.species)
+            .filter(DataSpecies.code == species_code)
+            .filter(DataSpeciesRegion.conclusion_assessment != None)
+        )
+        return assessment_query.all()
 
     def get_comment(self, comment_id):
         return DataSpeciesRegion.query.get(comment_id)
