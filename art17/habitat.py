@@ -31,17 +31,7 @@ class HabitatMixin(object):
     subject_name = 'habitat'
     blueprint = 'habitat'
     parse_record = staticmethod(schemas.parse_habitat)
-
-    def get_records(self, habitat, region):
-        records_query = (
-            models.DataHabitattypeRegion.query
-            .filter_by(habitat=habitat)
-            .order_by(models.DataHabitattypeRegion.cons_date)
-        )
-        if region is not None:
-            records_query = records_query.filter_by(region=region.code)
-
-        return iter(records_query)
+    dataset = dal.HabitatDataset()
 
     @property
     def map_url_template(self):

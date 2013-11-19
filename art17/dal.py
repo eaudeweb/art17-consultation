@@ -77,6 +77,17 @@ class HabitatDataset():
 
         return habitat_regions
 
+    def get_topic_records(self, habitat, region):
+        records_query = (
+            DataHabitattypeRegion.query
+            .filter_by(habitat=habitat)
+            .order_by(DataHabitattypeRegion.cons_date)
+        )
+        if region is not None:
+            records_query = records_query.filter_by(region=region.code)
+
+        return iter(records_query)
+
     def get_comment(self, comment_id):
         return DataHabitattypeRegion.query.get(comment_id)
 
@@ -114,6 +125,17 @@ class SpeciesDataset():
             species_regions[species_id, region_code] = count
 
         return species_regions
+
+    def get_topic_records(self, species, region):
+        records_query = (
+            DataSpeciesRegion.query
+            .filter_by(species=species)
+            .order_by(DataSpeciesRegion.cons_date)
+        )
+        if region is not None:
+            records_query = records_query.filter_by(region=region.code)
+
+        return iter(records_query)
 
     def get_comment(self, comment_id):
         return DataSpeciesRegion.query.get(comment_id)

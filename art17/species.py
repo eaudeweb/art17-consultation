@@ -27,20 +27,10 @@ def lookup_regions(species_code):
 
 class SpeciesMixin(object):
 
-    blueprint = 'species'
     subject_name = 'species'
+    blueprint = 'species'
     parse_record = staticmethod(schemas.parse_species)
-
-    def get_records(self, species, region):
-        records_query = (
-            models.DataSpeciesRegion.query
-            .filter_by(species=species)
-            .order_by(models.DataSpeciesRegion.cons_date)
-        )
-        if region is not None:
-            records_query = records_query.filter_by(region=region.code)
-
-        return iter(records_query)
+    dataset = dal.SpeciesDataset()
 
     @property
     def map_url_template(self):

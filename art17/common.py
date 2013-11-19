@@ -177,7 +177,7 @@ class IndexMixin(object):
 
     def get_topics(self, subject, region):
         region_data_map = {}
-        for record in self.get_records(subject, region):
+        for record in self.dataset.get_topic_records(subject, region):
             if record.region not in region_data_map:
                 region_data_map[record.region] = {
                     'region': record.lu,
