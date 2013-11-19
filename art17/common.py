@@ -243,8 +243,6 @@ class IndexView(flask.views.View, IndexMixin):
     def prepare_context(self):
         self.ctx.update({
             'topic_template': self.topic_template,
-            'current_subject_code': self.subject_code,
-            'current_region_code': self.region_code,
             'comment_next': self.get_comment_next_url(),
             'blueprint': self.blueprint,
             'code': self.subject.code,

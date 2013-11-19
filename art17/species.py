@@ -34,10 +34,6 @@ class SpeciesIndexView(IndexView, SpeciesMixin):
     subject_cls = models.DataSpecies
     record_cls = models.DataSpeciesRegion
 
-    def parse_request(self):
-        super(SpeciesIndexView, self).parse_request()
-        self.group_code = self.subject.lu.group_code
-
     def get_comment_next_url(self):
         return flask.url_for('.index', species=self.subject_code,
                                        region=self.region_code)
@@ -48,17 +44,10 @@ class SpeciesIndexView(IndexView, SpeciesMixin):
             'species_groups': [{'id': g.code,
                                 'text': g.description}
                                for g in dal.get_species_groups()],
-            'current_group_code': self.group_code,
             'annex_II': self.subject.lu.annexii == 'Y',
             'annex_IV': self.subject.lu.annexiv == 'Y',
             'annex_V': self.subject.lu.annexv == 'Y',
         })
-
-    def get_subject_list(self):
-        return [{'id': s.code,
-                 'group_id': s.lu.group_code,
-                 'text': s.lu.display_name}
-                for s in self.subject_list]
 
 
 species.add_url_rule('/specii/', view_func=SpeciesIndexView.as_view('index'))

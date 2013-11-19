@@ -21,18 +21,20 @@ def get_tabmenu_data():
         }
 
 
-def consultation_url(subject, bioreg=None):
-    args = {}
-    if bioreg:
-        args['region'] = bioreg
-
+def consultation_url(subject, bioreg):
     if isinstance(subject, models.DataHabitat):
-        args['habitat'] = subject.code
-        return flask.url_for('habitat.index', **args)
+        return flask.url_for(
+            'habitat.index',
+            region=bioreg,
+            habitat=subject.code,
+        )
 
     elif isinstance(subject, models.DataSpecies):
-        args['species'] = subject.code
-        return flask.url_for('species.index', **args)
+        return flask.url_for(
+            'species.index',
+            region=bioreg,
+            species=subject.code,
+        )
 
     else:
         raise RuntimeError("Unknown object %r" % subject)

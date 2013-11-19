@@ -23,9 +23,8 @@
     {% for subject in subject_list %}
       <tr>
         {%- set name = subject.lu.name_ro or subject.lu.speciesname %}
-        {%- set url = consultation_url(subject) %}
         <td title="{{ name }}">
-          <a href="{{ url }}">{{ name|truncate(60) }}</a>
+          {{ name|truncate(60) }}
         </td>
 
         {% for bioreg in bioreg_list %}
