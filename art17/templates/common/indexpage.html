@@ -8,13 +8,26 @@
 {%- endblock title %}
 
 
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('consultare', None),
+          (subject.lu.code, None),
+          (region.code, None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
 {% block content %}
+  <p>{{ subject.lu.display_name }}</p>
+
+  <p>{{ region.name_ro }}</p>
+
   <p>
     <a class="showmap btn btn-sm btn-info" href="{{ map_url }}">vezi harta</a>
     <a class="helpbox-button btn btn-sm btn-default" href="#">ajutor</a>
   </p>
-
-  {% block subject_details %}{% endblock %}
 
   {{ topic_html(
     topic.assessment,

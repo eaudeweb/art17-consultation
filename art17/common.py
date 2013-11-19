@@ -242,11 +242,11 @@ class IndexView(flask.views.View, IndexMixin):
 
     def prepare_context(self):
         self.ctx.update({
+            'subject': self.subject,
+            'region': self.region,
             'topic_template': self.topic_template,
             'comment_next': self.get_comment_next_url(),
             'blueprint': self.blueprint,
-            'code': self.subject.code,
-            'name': self.subject.lu.display_name,
             'topic': self.topic,
             'reply_counts': self.reply_counts,
             'map_url': self.get_map_url(self.subject.code)
@@ -256,7 +256,7 @@ class IndexView(flask.views.View, IndexMixin):
         self.parse_request()
         self.ctx = {}
         self.prepare_context()
-        return flask.render_template(self.template, **self.ctx)
+        return flask.render_template('common/indexpage.html', **self.ctx)
 
 
 class CommentView(IndexMixin, flask.views.View):

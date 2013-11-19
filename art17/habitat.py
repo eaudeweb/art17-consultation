@@ -30,7 +30,6 @@ class HabitatMixin(object):
 
 class HabitatIndexView(IndexView, HabitatMixin):
 
-    template = 'habitat/index.html'
     topic_template = 'habitat/topic.html'
     subject_cls = models.DataHabitat
     record_cls = models.DataHabitattypeRegion
@@ -38,10 +37,6 @@ class HabitatIndexView(IndexView, HabitatMixin):
     def get_comment_next_url(self):
         return flask.url_for('.index', habitat=self.subject_code,
                                        region=self.region_code)
-
-    def get_subject_list(self):
-        return [{'id': h.code, 'text': h.lu.display_name}
-                for h in self.subject_list]
 
 
 habitat.add_url_rule('/habitate/', view_func=HabitatIndexView.as_view('index'))
