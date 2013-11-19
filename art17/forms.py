@@ -268,9 +268,18 @@ class PressureForm(Form):
 
 class Pressures(Form):
     pressures_method = SelectField(default='',
-                                   choices=EMPTY_CHOICE + METHODS_PRESSURES_OPTIONS)
+                                   choices=EMPTY_CHOICE +
+                                           METHODS_PRESSURES_OPTIONS)
     pressures = MultipleJSONField(default='',
                                   validators=[FormValidator(PressureForm)])
+
+
+class Threats(Form):
+    threats_method = SelectField(default='',
+                                 choices=EMPTY_CHOICE +
+                                         METHODS_PRESSURES_OPTIONS)
+    threats = MultipleJSONField(default='',
+                                validators=[FormValidator(PressureForm)])
 
 
 class MeasuresForm(Form):
@@ -310,6 +319,7 @@ class SpeciesComment(Form):
     population = FormField(Population)
     habitat = FormField(Habitat)
     pressures = FormField(Pressures)
+    threats = FormField(Threats)
     measures = FormField(Measures)
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)

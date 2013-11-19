@@ -120,6 +120,7 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
                 region_code=self.record.region,
             ),
             'addform_pressure': addform_pressure,
+            'addform_threat': forms.PressureForm(prefix='addform_threat.'),
             'addform_measure': addform_measure,
             'PRESSURES': dict(addform_pressure.pressure.choices),
             'MEASURES': dict(addform_measure.measurecode.choices),
@@ -136,7 +137,7 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
         return records[0]
 
     def process_extra_fields(self, struct, comment):
-        for pressure in comment.pressures:
+        for pressure in comment.get_pressures():
             models.db.session.delete(pressure)
 
         for pressure in struct['pressures']['pressures']:
@@ -148,6 +149,21 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
             models.db.session.flush()
             for pollution in pressure['pollutions']:
                 pollution_obj = models.DataPressuresThreatsPollution(pollution_pressure_id=pressure_obj.id,
+                                                                     pollution_qualifier=pollution)
+                models.db.session.add(pollution_obj)
+
+        for threat in comment.get_threats():
+            models.db.session.delete(threat)
+
+        for threat in struct['threats']['threats']:
+            threat_obj = models.DataPressuresThreats(species_id=comment.id,
+                                                     pressure=threat['pressure'],
+                                                     ranking=threat['ranking'],
+                                                     type='t')
+            models.db.session.add(threat_obj)
+            models.db.session.flush()
+            for pollution in threat['pollutions']:
+                pollution_obj = models.DataPressuresThreatsPollution(pollution_pressure_id=threat_obj.id,
                                                                      pollution_qualifier=pollution)
                 models.db.session.add(pollution_obj)
 

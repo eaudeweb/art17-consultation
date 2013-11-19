@@ -34,11 +34,13 @@ $('body').on('click', '.showmap', function(evt) {
 
 $('.add-pressuresbtn').click(function(evt) {
     evt.preventDefault();
+    var container = $(this).parent().parent();
+    var html_container = $(this).data('container');
     var html = $('<tr>');
-    var pressure = $('select[name="addform_pressure.pressure"]').val();
-    var pressure_text = $('select[name="addform_pressure.pressure"] option:selected').text();
-    var ranking = $('select[name="addform_pressure.ranking"]').val();
-    var pollutions = $('select[name="addform_pressure.pollutions"]').val();
+    var pressure = container.find('select[name="addform_pressure.pressure"]').val();
+    var pressure_text = container.find('select[name="addform_pressure.pressure"] option:selected').text();
+    var ranking = container.find('select[name="addform_pressure.ranking"]').val();
+    var pollutions = container.find('select[name="addform_pressure.pollutions"]').val();
 
     if (!pressure) {
         return alert('Nu ați selectat presiunea');
@@ -50,7 +52,7 @@ $('.add-pressuresbtn').click(function(evt) {
 
     $('<input>').attr({
         type: "hidden",
-        name: "pressures.pressures",
+        name: $(this).data('inputname'),
         value: JSON.stringify(data)
     }).appendTo('form');
 
@@ -65,7 +67,7 @@ $('.add-pressuresbtn').click(function(evt) {
     }).html('Șterge').appendTo(actions);
     actions.appendTo(html);
 
-    $('#pressures_container tr:last').before(html);
+    $(html_container + ' tr:last').before(html);
 
     // reset form
     $('select[name="addform_pressure.pressure"]').val('');

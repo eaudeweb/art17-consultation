@@ -102,6 +102,9 @@ SPECIES_STRUCT_DATA = {
     'pressures': {
         'pressures_method': '1'
     },
+    'threats': {
+        'threats_method': '1'
+    },
     'measures': {
     },
     'future_prospects': {
@@ -158,6 +161,7 @@ SPECIES_MODEL_DATA = {
     'habitat_trend_long_period': '20062007',
     'habitat_area_suitable': 1000,
     'pressures_method': '1',
+    'threats_method': '1',
     'conclusion_habitat': 'U1',
     'conclusion_habitat_trend': '-',
 

@@ -219,10 +219,20 @@ def parse_species_commentform(row):
                             'pressure': p.pressure,
                             'ranking': p.ranking,
                             'pollutions': [pol.pollution_qualifier for pol in p.pollutions]})
-                for p in row.pressures
+                for p in row.get_pressures()
             ]
     } if row.pressures.count() else {}
     rv['pressures']['pressures_method'] = row.pressures_method
+    rv['threats'] = {
+            'threats': [
+                json.dumps({'id': p.id,
+                            'pressure': p.pressure,
+                            'ranking': p.ranking,
+                            'pollutions': [pol.pollution_qualifier for pol in p.pollutions]})
+                for p in row.get_threats()
+            ]
+    } if row.pressures.count() else {}
+    rv['threats']['threats_method'] = row.threats_method
     rv['measures'] = {
             'measures': [
                 json.dumps({
@@ -405,6 +415,7 @@ def flatten_species_commentform(struct, obj):
                     'habitat_trend_long')
     obj.habitat_area_suitable = struct['habitat']['area_suitable']
     obj.pressures_method = struct['pressures']['pressures_method']
+    obj.threats_method = struct['threats']['threats_method']
     flatten_conclusion(struct['habitat']['conclusion'], obj,
                     'conclusion_habitat')
 

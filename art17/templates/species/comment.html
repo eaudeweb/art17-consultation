@@ -46,6 +46,9 @@
       <li {% if form.pressures.errors %}class="text-error"{% endif %}>
         <a href="#comment-pressures" data-toggle="tab">Presiuni</a>
       </li>
+      <li {% if form.threats.errors %}class="text-error"{% endif %}>
+        <a href="#comment-threats" data-toggle="tab">Amenințări</a>
+      </li>
       <li {% if form.measures.errors %}class="text-error"{% endif %}>
         <a href="#comment-measures" data-toggle="tab">Măsurători</a>
       </li>
@@ -63,6 +66,7 @@
       {% include "species/comment/population.html" with context %}
       {% include "species/comment/habitat.html" with context %}
       {% include "species/comment/pressures.html" with context %}
+      {% include "species/comment/threats.html" with context %}
       {% include "species/comment/measures.html" with context %}
       {% include "species/comment/conclusion.html" with context %}
     </div>
