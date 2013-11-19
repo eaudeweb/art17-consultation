@@ -216,7 +216,6 @@ class IndexView(flask.views.View, IndexMixin):
             self.subject = (
                 self.subject_cls.query
                     .filter_by(code=self.subject_code)
-                    .join(models.DataSpecies.lu)
                     .first_or_404()
             )
         else:
