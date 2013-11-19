@@ -175,27 +175,6 @@ def json_encode_more(value):
 
 class IndexMixin(object):
 
-    def get_topics(self, subject, region):
-        region_data_map = {}
-        for record in self.dataset.get_topic_records(subject, region):
-            if record.region not in region_data_map:
-                region_data_map[record.region] = {
-                    'region': record.lu,
-                    'comments': [],
-                }
-
-            region_data = region_data_map[record.region]
-
-            if record.cons_role == 'assessment':
-                region_data['assessment'] = self.parse_record(record)
-
-            else:
-                if not record.cons_deleted:
-                    r = self.parse_record(record, is_comment=True)
-                    region_data['comments'].append(r)
-
-        return list(region_data_map.values())
-
     def get_map_url(self, subject_code, region_code=None):
         map_colors = [
             {
@@ -213,6 +192,7 @@ class IndexMixin(object):
 
 
 class IndexView(flask.views.View, IndexMixin):
+
     def parse_request(self):
         self.subject_code = flask.request.args.get(self.subject_name)
 
@@ -252,6 +232,27 @@ class IndexView(flask.views.View, IndexMixin):
                 .join(self.record_cls)
                 .order_by(self.subject_cls.code)
         )
+
+    def get_topics(self, subject, region):
+        region_data_map = {}
+        for record in self.dataset.get_topic_records(subject, region):
+            if record.region not in region_data_map:
+                region_data_map[record.region] = {
+                    'region': record.lu,
+                    'comments': [],
+                }
+
+            region_data = region_data_map[record.region]
+
+            if record.cons_role == 'assessment':
+                region_data['assessment'] = self.parse_record(record)
+
+            else:
+                if not record.cons_deleted:
+                    r = self.parse_record(record, is_comment=True)
+                    region_data['comments'].append(r)
+
+        return list(region_data_map.values())
 
     def get_pressures(self, record):
         return record.pressures.all()
