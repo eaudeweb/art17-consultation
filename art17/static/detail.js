@@ -36,6 +36,7 @@ $('.add-pressuresbtn').click(function(evt) {
     evt.preventDefault();
     var html = $('<tr>');
     var pressure = $('select[name="addform_pressure.pressure"]').val();
+    var pressure_text = $('select[name="addform_pressure.pressure"] option:selected').text();
     var ranking = $('select[name="addform_pressure.ranking"]').val();
     var pollutions = $('select[name="addform_pressure.pollutions"]').val();
 
@@ -53,7 +54,7 @@ $('.add-pressuresbtn').click(function(evt) {
         value: JSON.stringify(data)
     }).appendTo('form');
 
-    $('<td>').html(pressure).appendTo(html);
+    $('<td>').html(pressure_text).appendTo(html);
     $('<td>').html(ranking).appendTo(html);
     $('<td>').html(pollutions).appendTo(html);
 
@@ -82,12 +83,39 @@ $('.add-measurebtn').click(function(evt) {
 
     var html = $('<tr>');
     var data = {};
-    $('#measuresform').find('.form-control').each(function () {
+    var valid = true;
+
+    $('#measuresform').find('select.form-control').each(function () {
         var name = $(this).attr('name');
         name = name.substr(name.indexOf('.') + 1);
-        data[name] = $(this).val();
 
-        $('<td>').html($(this).val()).appendTo(html);
+        if (valid && !$(this).val()) {
+            alert('Please select '+ name +' value');
+            valid = false;
+        }
+    });
+    if (!valid)
+        return;
+
+    $('#measuresform').find('.form-control').each(function () {
+        var name = $(this).attr('name');
+        var html_data = '';
+        name = name.substr(name.indexOf('.') + 1);
+
+        if ($(this).is('input')) {
+            data[name] = $(this).is(':checked')?'1':'0';
+            html_data = $('<input>').attr({
+                disabled: "disabled",
+                type: "checkbox",
+                checked: $(this).is(':checked')
+            });
+            $(this).attr('checked', false);
+        } else {
+            data[name] = $(this).val();
+            html_data = $(this).find('option:selected').text();
+            $(this).val('');
+        }
+        $('<td>').html(html_data).appendTo(html);
     });
     var actions = $('<td>');
     $('<button>').attr({

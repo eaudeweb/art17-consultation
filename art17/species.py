@@ -131,6 +131,7 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
             'addform_pressure': addform_pressure,
             'addform_measure': addform_measure,
             'PRESSURES': dict(addform_pressure.pressure.choices),
+            'MEASURES': dict(addform_measure.measurecode.choices),
         }
 
     def record_for_comment(self, comment):
