@@ -102,6 +102,8 @@ SPECIES_STRUCT_DATA = {
     'pressures': {
         'pressures_method': '1'
     },
+    'measures': {
+    },
     'future_prospects': {
         'value': 'U2',
         'trend': '+',
