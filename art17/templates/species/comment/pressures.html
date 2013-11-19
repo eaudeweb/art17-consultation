@@ -22,9 +22,11 @@
             <td>{{ PRESSURES[p.pressure] }}</td>
             <td>{{ p.ranking }}</td>
             <td>
+              {% if p.pollutions %}
               {% for pol in p.pollutions %}
               {{ pol }}
               {% endfor %}
+              {% endif %}
             </td>
             <td>
               <button type="button" class="btn btn-danger btn-sm hidepressure">Șterge</button>
