@@ -207,14 +207,7 @@ class IndexView(flask.views.View, IndexMixin):
 
         self.topic = self.get_topic(self.subject, self.region)
 
-        CommentReply = models.CommentReply
-        reply_query = (
-            models.db.session
-            .query(CommentReply.parent_id, func.count(CommentReply.id))
-            .filter(CommentReply.parent_table == self.blueprint)
-            .group_by(CommentReply.parent_id)
-        )
-        self.reply_counts = dict(reply_query)
+        self.reply_counts = self.dataset.get_reply_counts()
 
     def get_topic(self, subject, region):
         rv = {'comments': []}

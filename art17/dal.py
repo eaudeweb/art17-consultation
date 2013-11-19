@@ -8,6 +8,7 @@ from art17.models import (
     DataSpecies,
     DataHabitattypeRegion,
     DataSpeciesRegion,
+    CommentReply,
 )
 
 
@@ -118,11 +119,23 @@ class BaseDataset(object):
     def get_comment(self, comment_id):
         return self.record_model.query.get(comment_id)
 
+    def get_reply_counts(self):
+        reply_query = (
+            db.session.query(
+                CommentReply.parent_id,
+                func.count(CommentReply.id),
+            )
+            .filter(CommentReply.parent_table == self.reply_parent_table)
+            .group_by(CommentReply.parent_id)
+        )
+        return dict(reply_query)
+
 
 class HabitatDataset(BaseDataset):
 
     subject_model = DataHabitat
     record_model = DataHabitattypeRegion
+    reply_parent_table = 'habitat'
 
     @property
     def record_model_subject_id(self):
@@ -134,6 +147,7 @@ class SpeciesDataset(BaseDataset):
 
     subject_model = DataSpecies
     record_model = DataSpeciesRegion
+    reply_parent_table = 'species'
 
     @property
     def record_model_subject_id(self):
