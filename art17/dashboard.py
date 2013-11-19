@@ -2,6 +2,7 @@ from collections import defaultdict
 import flask
 from sqlalchemy import func
 from art17 import models
+from art17 import dal
 
 
 dashboard = flask.Blueprint('dashboard', __name__)
@@ -72,7 +73,7 @@ def habitats():
         habitat_regions[habitat_id, region_code] = count
 
     return flask.render_template('dashboard/habitat.html', **{
-        'bioreg_list': models.LuBiogeoreg.query.all(),
+        'bioreg_list': dal.get_biogeo_regions(),
         'tabmenu_data': list(get_tabmenu_data()),
         'habitat_list': habitat_list,
         'habitat_regions': habitat_regions,
@@ -116,7 +117,7 @@ def species(group_code):
         species_regions[species_id, region_code] = count
 
     return flask.render_template('dashboard/species.html', **{
-        'bioreg_list': models.LuBiogeoreg.query.all(),
+        'bioreg_list': dal.get_biogeo_regions(),
         'tabmenu_data': list(get_tabmenu_data()),
         'species_group': species_group,
         'species_list': species_list,
