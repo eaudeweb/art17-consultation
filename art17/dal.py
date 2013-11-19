@@ -9,6 +9,9 @@ from art17.models import (
     DataHabitattypeRegion,
     DataSpeciesRegion,
     CommentReply,
+    DataPressuresThreats,
+    DataPressuresThreatsPollution,
+    DataMeasures
 )
 
 
@@ -129,6 +132,53 @@ class BaseDataset(object):
             .group_by(CommentReply.parent_id)
         )
         return dict(reply_query)
+    
+    @classmethod
+    def update_extra_fields(cls, struct, comment):
+        for pressure in comment.get_pressures():
+            db.session.delete(pressure)
+        for pressure in struct['pressures']['pressures']:
+            pressure_obj = DataPressuresThreats(**{
+                cls.rel_id: comment.id,
+                'pressure': pressure['pressure'],
+                'ranking': pressure['ranking'],
+                'type': 'p',
+            })
+            db.session.add(pressure_obj)
+            db.session.flush()
+            for pollution in pressure['pollutions']:
+                pollution_obj = DataPressuresThreatsPollution(
+                    pollution_pressure_id=pressure_obj.id,
+                    pollution_qualifier=pollution,
+                )
+                db.session.add(pollution_obj)
+
+        for threat in comment.get_threats():
+            db.session.delete(threat)
+        for threat in struct['threats']['threats']:
+            threat_obj = DataPressuresThreats(**{
+                cls.rel_id: comment.id,
+                'pressure': pressure['pressure'],
+                'ranking': pressure['ranking'],
+                'type': 't',
+            })
+            db.session.add(threat_obj)
+            db.session.flush()
+            for pollution in threat['pollutions']:
+                pollution_obj = DataPressuresThreatsPollution(
+                    pollution_pressure_id=threat_obj.id,
+                    pollution_qualifier=pollution,
+                )
+                db.session.add(pollution_obj)
+
+        for measure in comment.measures:
+            db.session.delete(measure)
+        for measure in struct['measures']['measures']:
+            measure_data = {cls.rel_id: comment.id}
+            measure_data.update(measure)
+            measure_obj = DataMeasures(**measure_data)
+            db.session.add(measure_obj)
+        db.session.commit()
 
 
 class HabitatDataset(BaseDataset):
@@ -136,6 +186,7 @@ class HabitatDataset(BaseDataset):
     subject_model = DataHabitat
     record_model = DataHabitattypeRegion
     reply_parent_table = 'habitat'
+    rel_id = 'habitat_id'
 
     @property
     def record_model_subject_id(self):
@@ -148,6 +199,7 @@ class SpeciesDataset(BaseDataset):
     subject_model = DataSpecies
     record_model = DataSpeciesRegion
     reply_parent_table = 'species'
+    rel_id = 'species_id'
 
     @property
     def record_model_subject_id(self):
