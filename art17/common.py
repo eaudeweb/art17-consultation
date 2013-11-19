@@ -223,12 +223,6 @@ class IndexView(flask.views.View, IndexMixin):
 
         return rv
 
-    def get_pressures(self, record):
-        return record.pressures.all()
-
-    def get_measures(self, record):
-        return record.measures.all()
-
     def prepare_context(self):
         self.ctx.update({
             'subject': self.subject,
