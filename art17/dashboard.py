@@ -1,6 +1,5 @@
 from collections import defaultdict
 import flask
-from sqlalchemy import func
 from art17 import models
 from art17 import dal
 
@@ -49,62 +48,26 @@ def inject_funcs():
 
 @dashboard.route('/habitate')
 def habitats():
-    DHR = models.DataHabitattypeRegion
-
-    habitat_regions = {}
-    habitat_regions_query = (
-        models.db.session
-        .query(DHR.habitat_id, DHR.region)
-        .filter_by(cons_role='assessment')
-    )
-    for key in habitat_regions_query:
-        habitat_regions[key] = 0
-
-    habitat_comment_count_query = (
-        models.db.session
-        .query(DHR.habitat_id, DHR.region, func.count('*'))
-        .filter_by(cons_role='comment')
-        .group_by(DHR.habitat_id, DHR.region)
-    )
-    for (habitat_id, region_code, count) in habitat_comment_count_query:
-        habitat_regions[habitat_id, region_code] = count
+    habitat_dataset = dal.HabitatDataset()
 
     return flask.render_template('dashboard/habitat.html', **{
         'bioreg_list': dal.get_biogeo_regions(),
         'tabmenu_data': list(get_tabmenu_data()),
         'habitat_list': dal.get_habitat_list(),
-        'habitat_regions': habitat_regions,
+        'habitat_regions': habitat_dataset.get_habitat_region_overview(),
     })
 
 
 @dashboard.route('/specii/<group_code>')
 def species(group_code):
-    DSR = models.DataSpeciesRegion
-
-    species_regions = {}
-    species_regions_query = (
-        models.db.session
-        .query(DSR.species_id, DSR.region)
-        .filter_by(cons_role='assessment')
-    )
-    for key in species_regions_query:
-        species_regions[key] = 0
-
-    species_comment_count_query = (
-        models.db.session
-        .query(DSR.species_id, DSR.region, func.count('*'))
-        .filter_by(cons_role='comment')
-        .group_by(DSR.species_id, DSR.region)
-    )
-    for (species_id, region_code, count) in species_comment_count_query:
-        species_regions[species_id, region_code] = count
+    species_dataset = dal.SpeciesDataset()
 
     return flask.render_template('dashboard/species.html', **{
         'bioreg_list': dal.get_biogeo_regions(),
         'tabmenu_data': list(get_tabmenu_data()),
         'species_group': dal.get_species_group(group_code),
         'species_list': dal.get_species_list(group_code=group_code),
-        'species_regions': species_regions,
+        'species_regions': species_dataset.get_species_region_overview(),
     })
 
 
