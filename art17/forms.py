@@ -21,7 +21,7 @@ from art17.lookup import (
     QUALITY_OPTIONS,
     METHODS_PRESSURES_OPTIONS,
     METHODS_THREATS_OPTIONS
-)
+    )
 from art17 import schemas
 
 EMPTY_CHOICE = [('', "")]
@@ -31,13 +31,12 @@ def all_fields(form):
     for field in form:
         if hasattr(field, 'form'):
             for subfield in all_fields(field.form):
-               yield subfield
+                yield subfield
         else:
             yield field
 
 
 class MultipleHiddenWidget(object):
-
     def __call__(self, field, **kwargs):
         kwargs.setdefault('id', field.id)
         html = []
@@ -49,12 +48,11 @@ class MultipleHiddenWidget(object):
     def render_input(cls, field, val):
         val = json.dumps(val)
         return HTMLString('<input type="hidden" %s %s />' % (
-                                                html_params(name=field.name),
-                                                html_params(value=val)))
+            html_params(name=field.name),
+            html_params(value=val)))
 
 
 class MultipleJSONField(SelectMultipleField):
-
     widget = MultipleHiddenWidget()
 
     def __init__(self, *args, **kwargs):
@@ -77,13 +75,11 @@ class MultipleJSONField(SelectMultipleField):
 
 
 class MeasureField(BooleanField):
-
     def _value(self):
         return '1'
 
-    
-class FormValidator(object):
 
+class FormValidator(object):
     def __init__(self, form):
         self.validation_form = form
 
@@ -91,21 +87,19 @@ class FormValidator(object):
         data = field.data
 
         form = self.validation_form()
-        for i,d in enumerate(data):
+        for i, d in enumerate(data):
             form.process(MultiDict(d))
             if not form.validate():
                 raise ValueError('Invalid values on line ' + str(i + 1))
 
 
 class FormField(FormField_base):
-
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('separator', '.')
         super(FormField, self).__init__(*args, **kwargs)
 
 
 class Form(Form_base):
-
     def validate(self):
         if not super(Form, self).validate():
             return False
@@ -117,7 +111,6 @@ class Form(Form_base):
 
 
 class Period(Form):
-
     start = IntegerField(label=u"an de început",
                          validators=[Optional(), NumberRange(1900, 2100)])
     end = IntegerField(label=u"an de sfârșit",
@@ -130,7 +123,6 @@ def set_required_error_message(field):
 
 
 class Trend(Form):
-
     trend = SelectField(choices=EMPTY_CHOICE + TREND_OPTIONS,
                         default='',
                         label=u"tendință",
@@ -150,7 +142,6 @@ class Trend(Form):
 
 
 class ReferenceValue(Form):
-
     op = SelectField(default='', label=u"operator", validators=[Optional()])
     number = DecimalField(label=u"suprafață", validators=[Optional()])
     method = TextAreaField()
@@ -168,7 +159,6 @@ class ReferenceValue(Form):
 
 
 class Conclusion(Form):
-
     value = SelectField(choices=EMPTY_CHOICE + CONCLUSION_OPTIONS,
                         default='',
                         validators=[Optional()])
@@ -180,9 +170,9 @@ class Conclusion(Form):
 class PopulationValue(Form):
     unit = SelectField(default='', validators=[Optional()])
     min = DecimalField(
-            validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
     max = DecimalField(
-            validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
 
 
 class PopulationSize(Form):
@@ -196,9 +186,8 @@ class PopulationSize(Form):
 
 
 class Range(Form):
-
     surface_area = DecimalField(
-            validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
     method = SelectField(default='',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
     trend_short = FormField(Trend)
@@ -208,7 +197,7 @@ class Range(Form):
 
     def __init__(self, *args, **kwargs):
         super(Range, self).__init__(*args, **kwargs)
-        self.reference_value.op.choices=EMPTY_CHOICE + LU_FV_RANGE_OP_OPTIONS
+        self.reference_value.op.choices = EMPTY_CHOICE + LU_FV_RANGE_OP_OPTIONS
 
 
 class Population(Form):
@@ -222,12 +211,12 @@ class Population(Form):
 
     def __init__(self, *args, **kwargs):
         super(Population, self).__init__(*args, **kwargs)
-        self.reference_value.op.choices=EMPTY_CHOICE + LU_FV_RANGE_OP_FUNCT_OPTIONS
+        self.reference_value.op.choices = EMPTY_CHOICE + LU_FV_RANGE_OP_FUNCT_OPTIONS
 
 
 class Habitat(Form):
     surface_area = DecimalField(
-            validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
     date = TextField(validators=[Optional()])
     method = SelectField(default='',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
@@ -237,13 +226,13 @@ class Habitat(Form):
     trend_short = FormField(Trend)
     trend_long = FormField(Trend)
     area_suitable = DecimalField(
-            validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
     conclusion = FormField(Conclusion)
 
 
 class Coverage(Form):
     surface_area = DecimalField(
-            validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
     date = TextField(validators=[Optional()])
     method = SelectField(default='',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
@@ -254,36 +243,37 @@ class Coverage(Form):
 
     def __init__(self, *args, **kwargs):
         super(Coverage, self).__init__(*args, **kwargs)
-        self.reference_value.op.choices=EMPTY_CHOICE + LU_FV_RANGE_OP_FUNCT_OPTIONS
+        self.reference_value.op.choices = EMPTY_CHOICE + LU_FV_RANGE_OP_FUNCT_OPTIONS
 
 
 class PressureForm(Form):
-
     pressure = SelectField(default='')
     ranking = SelectField(default='')
     pollutions = SelectMultipleField(default='')
 
     def __init__(self, *args, **kwargs):
         super(PressureForm, self).__init__(*args, **kwargs)
-        self.pressure.choices = EMPTY_CHOICE + [(p[0], '%s. %s' % p) for p in models.db.session.query(
-                                            models.LuThreats.code,
-                                            models.LuThreats.name)]
+        self.pressure.choices = EMPTY_CHOICE + [(p[0], '%s. %s' % p) for p in
+                                                models.db.session.query(
+                                                    models.LuThreats.code,
+                                                    models.LuThreats.name)]
         self.ranking.choices = EMPTY_CHOICE + list(models.db.session.query(
-                                            models.LuRanking.code,
-                                            models.LuRanking.name))
-        self.pollutions.choices = [(p[0], '%s %s' % p) for p in models.db.session.query(
-                                            models.LuPollution.code,
-                                            models.LuPollution.name)]
+            models.LuRanking.code,
+            models.LuRanking.name))
+        self.pollutions.choices = [(p[0], '%s %s' % p) for p in
+                                   models.db.session.query(
+                                       models.LuPollution.code,
+                                       models.LuPollution.name)]
 
 
 class Pressures(Form):
-
-    pressures_method = SelectField(default='', choices=EMPTY_CHOICE + METHODS_PRESSURES_OPTIONS)
-    pressures = MultipleJSONField(default='', validators=[FormValidator(PressureForm)])
+    pressures_method = SelectField(default='',
+                                   choices=EMPTY_CHOICE + METHODS_PRESSURES_OPTIONS)
+    pressures = MultipleJSONField(default='',
+                                  validators=[FormValidator(PressureForm)])
 
 
 class MeasuresForm(Form):
-
     measurecode = SelectField(default='')
     type_legal = MeasureField(default=False)
     type_administrative = MeasureField(default=False)
@@ -304,20 +294,18 @@ class MeasuresForm(Form):
     def __init__(self, *args, **kwargs):
         super(MeasuresForm, self).__init__(*args, **kwargs)
         self.measurecode.choices = EMPTY_CHOICE + list(models.db.session.query(
-                                                       models.LuMeasures.code,
-                                                       models.LuMeasures.name))
+            models.LuMeasures.code,
+            models.LuMeasures.name))
         self.rankingcode.choices = EMPTY_CHOICE + list(models.db.session.query(
-                                                       models.LuRanking.code,
-                                                       models.LuRanking.name))
+            models.LuRanking.code,
+            models.LuRanking.name))
 
 
 class Measures(Form):
-
     measures = MultipleJSONField(default='')
 
 
 class SpeciesComment(Form):
-
     range = FormField(Range)
     population = FormField(Population)
     habitat = FormField(Habitat)
@@ -331,8 +319,8 @@ class SpeciesComment(Form):
     def __init__(self, *args, **kwargs):
         super(SpeciesComment, self).__init__(*args, **kwargs)
         self.generalstatus.choices = models.db.session.query(
-                                            models.LuPresence.code,
-                                            models.LuPresence.name)
+            models.LuPresence.code,
+            models.LuPresence.name)
 
     def custom_validate(self):
         generalstatus_field = self.generalstatus
@@ -348,7 +336,6 @@ class SpeciesComment(Form):
 
 
 class HabitatComment(Form):
-
     range = FormField(Range)
     coverage = FormField(Coverage)
     structure = FormField(Conclusion)
