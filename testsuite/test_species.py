@@ -285,9 +285,11 @@ def test_extra_fields_save(species_app):
         models.db.session.add(pollution)
         models.db.session.commit()
     pressure_data = json.dumps({'pressure': '1', 'ranking': 'M', 'pollutions': ['A']})
+    measure_data = json.dumps({'measurecode': '1', 'rankingcode': 'M'})
     client = species_app.test_client()
     resp = client.post('/specii/detalii/1/comentarii',
-                       data={'pressures.pressures': [pressure_data]})
+                       data={'pressures.pressures': [pressure_data],
+                             'measures.measures': [measure_data]})
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
@@ -298,6 +300,7 @@ def test_extra_fields_save(species_app):
         assert comment.pressures[0].pressure == '1'
         assert comment.pressures[0].ranking == 'M'
         assert comment.pressures[0].pollutions[0].pollution_qualifier == 'A'
+        assert comment.measures[0].measurecode == '1'
 
 
 def test_one_field_required(species_app):

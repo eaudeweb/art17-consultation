@@ -212,6 +212,39 @@ def test_edit_comment_submit(habitat_app):
         assert comment.range_surface_area == 50
 
 
+def test_extra_fields_save(habitat_app):
+    import json
+    from art17.models import DataHabitattypeRegion, LuThreats, LuRanking, LuPollution
+    from art17 import models
+    habitat_app.config['TESTING_USER_ID'] = 'smith'
+    _create_habitat_record(habitat_app)
+    with habitat_app.app_context():
+        pressure = LuThreats(code='1')
+        ranking = LuRanking(code='M')
+        pollution = LuPollution(code='A')
+        models.db.session.add(pressure)
+        models.db.session.add(ranking)
+        models.db.session.add(pollution)
+        models.db.session.commit()
+    pressure_data = json.dumps({'pressure': '1', 'ranking': 'M', 'pollutions': ['A']})
+    measure_data = json.dumps({'measurecode': '1', 'rankingcode': 'M'})
+    client = habitat_app.test_client()
+    resp = client.post('/habitate/detalii/1/comentarii',
+                       data={'pressures.pressures': [pressure_data],
+                             'measures.measures': [measure_data]})
+    assert resp.status_code == 200
+    assert COMMENT_SAVED_TXT in resp.data
+    with habitat_app.app_context():
+        comment = DataHabitattypeRegion.query.get(2)
+        assert comment.cons_role == 'comment'
+        assert comment.cons_user_id == 'smith'
+        assert len(list(comment.pressures)) == 1
+        assert comment.pressures[0].pressure == '1'
+        assert comment.pressures[0].ranking == 'M'
+        assert comment.pressures[0].pollutions[0].pollution_qualifier == 'A'
+        assert comment.measures[0].measurecode == '1'
+
+
 def test_one_field_required(habitat_app):
     from werkzeug.datastructures import MultiDict
     from art17 import forms
