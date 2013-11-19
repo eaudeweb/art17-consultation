@@ -196,13 +196,14 @@ class IndexView(flask.views.View, IndexMixin):
 
     def parse_request(self):
         self.subject_code = flask.request.args[self.subject_name]
+        self.region_code = flask.request.args['region']
+
         self.subject = (
             self.subject_cls.query
                 .filter_by(code=self.subject_code)
                 .first_or_404()
         )
 
-        self.region_code = flask.request.args['region']
         self.region = (
             models.LuBiogeoreg.query
                 .filter_by(code=self.region_code)

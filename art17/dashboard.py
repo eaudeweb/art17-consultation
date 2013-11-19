@@ -56,7 +56,7 @@ def habitats():
         'bioreg_list': dal.get_biogeo_regions(),
         'tabmenu_data': list(get_tabmenu_data()),
         'habitat_list': dal.get_habitat_list(),
-        'habitat_regions': habitat_dataset.get_habitat_region_overview(),
+        'habitat_regions': habitat_dataset.get_subject_region_overview(),
     })
 
 
@@ -69,7 +69,7 @@ def species(group_code):
         'tabmenu_data': list(get_tabmenu_data()),
         'species_group': dal.get_species_group(group_code),
         'species_list': dal.get_species_list(group_code=group_code),
-        'species_regions': species_dataset.get_species_region_overview(),
+        'species_regions': species_dataset.get_subject_region_overview(),
     })
 
 

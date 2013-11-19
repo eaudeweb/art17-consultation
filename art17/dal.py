@@ -44,122 +44,82 @@ def get_species_group(group_code):
     )
 
 
-class HabitatDataset():
+class BaseDataset(object):
 
-    def get_habitat_region_overview(self):
-        habitat_regions = {}
-        habitat_regions_query = (
+    def get_subject_region_overview(self):
+        overview = {}
+        regions_query = (
             db.session
             .query(
-                DataHabitattypeRegion.habitat_id,
-                DataHabitattypeRegion.region,
+                self.record_model_subject_id,
+                self.record_model.region,
             )
             .filter_by(cons_role='assessment')
         )
-        for key in habitat_regions_query:
-            habitat_regions[key] = 0
+        for key in regions_query:
+            overview[key] = 0
 
-        habitat_comment_count_query = (
+        comment_count_query = (
             db.session
             .query(
-                DataHabitattypeRegion.habitat_id,
-                DataHabitattypeRegion.region,
+                self.record_model_subject_id,
+                self.record_model.region,
                 func.count('*'),
             )
             .filter_by(cons_role='comment')
             .group_by(
-                DataHabitattypeRegion.habitat_id,
-                DataHabitattypeRegion.region,
+                self.record_model_subject_id,
+                self.record_model.region,
             )
         )
-        for (habitat_id, region_code, count) in habitat_comment_count_query:
-            habitat_regions[habitat_id, region_code] = count
+        for (subject_id, region_code, count) in comment_count_query:
+            overview[subject_id, region_code] = count
 
-        return habitat_regions
+        return overview
 
-    def get_topic_records(self, habitat, region):
+    def get_topic_records(self, subject, region):
         records_query = (
-            DataHabitattypeRegion.query
-            .filter_by(habitat=habitat)
-            .order_by(DataHabitattypeRegion.cons_date)
+            self.record_model.query
+            .filter(self.record_model_subject_id == subject.id)
+            .order_by(self.record_model.cons_date)
         )
         if region is not None:
             records_query = records_query.filter_by(region=region.code)
 
         return iter(records_query)
 
-    def get_assessment_for_all_regions(self, habitat_code):
+    def get_assessment_for_all_regions(self, subject_code):
         assessment_query = (
             db.session.query(
-                DataHabitattypeRegion.conclusion_assessment,
-                DataHabitattypeRegion.region,
+                self.record_model.conclusion_assessment,
+                self.record_model.region,
             )
-            .join(DataHabitattypeRegion.habitat)
-            .filter(DataHabitat.code == habitat_code)
-            .filter(DataHabitattypeRegion.conclusion_assessment != None)
+            .join(self.subject_model)
+            .filter(self.subject_model.code == subject_code)
+            .filter(self.record_model.conclusion_assessment != None)
         )
         return assessment_query.all()
 
     def get_comment(self, comment_id):
-        return DataHabitattypeRegion.query.get(comment_id)
+        return self.record_model.query.get(comment_id)
+
+
+class HabitatDataset(BaseDataset):
+
+    subject_model = DataHabitat
+    record_model = DataHabitattypeRegion
+
+    @property
+    def record_model_subject_id(self):
+        return DataHabitattypeRegion.habitat_id
 
 
 
-class SpeciesDataset():
+class SpeciesDataset(BaseDataset):
 
-    def get_species_region_overview(self):
-        species_regions = {}
-        species_regions_query = (
-            db.session
-            .query(
-                DataSpeciesRegion.species_id,
-                DataSpeciesRegion.region,
-            )
-            .filter_by(cons_role='assessment')
-        )
-        for key in species_regions_query:
-            species_regions[key] = 0
+    subject_model = DataSpecies
+    record_model = DataSpeciesRegion
 
-        species_comment_count_query = (
-            db.session
-            .query(
-                DataSpeciesRegion.species_id,
-                DataSpeciesRegion.region,
-                func.count('*'),
-            )
-            .filter_by(cons_role='comment')
-            .group_by(
-                DataSpeciesRegion.species_id,
-                DataSpeciesRegion.region,
-            )
-        )
-        for (species_id, region_code, count) in species_comment_count_query:
-            species_regions[species_id, region_code] = count
-
-        return species_regions
-
-    def get_topic_records(self, species, region):
-        records_query = (
-            DataSpeciesRegion.query
-            .filter_by(species=species)
-            .order_by(DataSpeciesRegion.cons_date)
-        )
-        if region is not None:
-            records_query = records_query.filter_by(region=region.code)
-
-        return iter(records_query)
-
-    def get_assessment_for_all_regions(self, species_code):
-        assessment_query = (
-            db.session.query(
-                DataSpeciesRegion.conclusion_assessment,
-                DataSpeciesRegion.region,
-            )
-            .join(DataSpeciesRegion.species)
-            .filter(DataSpecies.code == species_code)
-            .filter(DataSpeciesRegion.conclusion_assessment != None)
-        )
-        return assessment_query.all()
-
-    def get_comment(self, comment_id):
-        return DataSpeciesRegion.query.get(comment_id)
+    @property
+    def record_model_subject_id(self):
+        return DataSpeciesRegion.species_id
