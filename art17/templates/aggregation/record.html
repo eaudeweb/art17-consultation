@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+  <h4>{% block headline %}{% endblock %}</h4>
+
+  <div class="form-group">
+    {%- if map_url %}
+    <a class="showmap btn btn-sm btn-info"
+       href="{{ map_url }}">vezi harta</a>
+    {%- endif %}
+  </div>
+
+  <form method="post">
+    {%- if not config.TESTING %}
+    <p class="comment-info">
+      Toate câmpurile sunt opționale.
+      Aceste câmpuri și valorile lor sunt conforme cu
+      <a href="# TODO  url_for('consultation.guide')" target="_blank">
+        ghidul de raportare</a>
+      al Comisiei Europene.
+    </p>
+    {%- endif %}
+
+    {% if form.errors %}
+      <div class="alert alert-danger">
+        Formularul conține erori. Taburile cu titlu roșu conțin erori,
+        detaliile lor fiind afișate lângă fiecare câmp cu probleme.
+      </div>
+    {% endif %}
+
+    {% block form_content %}{% endblock %}
+
+    {%- if next_url %}
+      <input type="hidden" name="next" value="{{ next_url }}">
+    {%- endif %}
+
+    <button type="submit" class="btn btn-primary">Salveazǎ schimbǎrile</button>
+  </form>
+
+  {% include 'common/recorddetail.html' %}
+{% endblock content %}
+
+{% block script %}
+  {%- from 'bits.html' import script %}
+  {{- super() }}
+  {{ script('detail.js') }}
+{% endblock script %}

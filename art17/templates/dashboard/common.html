@@ -65,7 +65,7 @@
         {% for bioreg in bioreg_list %}
           {%- set key = (subject.id, bioreg.code) %}
           {%- if key in regions %}
-            {%- set url = '#' %}
+            {%- set url = record_edit_url(subject, bioreg, dataset_id) %}
             <td class="dashboard-commentcount">
               <a href="{{ url }}">{{ regions[key] }}</a>
             </td>

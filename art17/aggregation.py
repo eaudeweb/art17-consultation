@@ -2,6 +2,7 @@ from datetime import datetime
 import flask
 import flask.views
 from art17 import models, dal
+from art17.habitat import HabitatCommentView
 
 aggregation = flask.Blueprint('aggregation', __name__)
 
@@ -22,9 +23,37 @@ def get_tabmenu_data(dataset_id):
         }
 
 
+def record_edit_url(subject, region, dataset_id):
+    if isinstance(subject, models.DataHabitat):
+        habitat = models.DataHabitattypeRegion.query.filter_by(
+            cons_dataset_id=dataset_id,
+            habitat=subject,
+            region=region.code,
+        ).first()
+        if habitat:
+            return flask.url_for('.habitat',
+                                 dataset_id=dataset_id,
+                                 record_id=habitat.id,
+            )
+    if isinstance(subject, models.DataSpecies):
+        species = models.DataSpeciesRegion.query.filter_by(
+            cons_dataset_id=dataset_id,
+            species=subject,
+            region=region.code,
+        )
+        if species:
+            return flask.url_for('.species',
+                                 dataset_id=dataset_id,
+                                 record_id=species.id,
+            )
+    return '#TODO'
+
+
 @aggregation.app_context_processor
-def inject_home_url():
-    return dict(home_url=flask.url_for('aggregation.home'))
+def inject_funcs():
+    return dict(home_url=flask.url_for('aggregation.home'),
+                record_edit_url=record_edit_url,
+    )
 
 
 @aggregation.route('/')
@@ -108,6 +137,7 @@ class DashboardView(flask.views.View):
             'bioreg_list': dal.get_biogeo_region_list(),
             'tabmenu_data': list(get_tabmenu_data(self.dataset_id)),
             'dataset_url': flask.url_for('.dataset', dataset_id=self.dataset_id),
+            'dataset_id': self.dataset_id,
             'object_list': self.get_object_list(),
             'object_regions': dataset.get_subject_region_overview(),
         }
@@ -127,7 +157,7 @@ class HabitatsDashboard(DashboardView):
     def get_object_list(self):
         return dal.get_habitat_list()
 
-aggregation.add_url_rule('/dataset/<int:dataset_id>/dashboard/habitate/',
+aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/',
                          view_func=HabitatsDashboard.as_view('habitats'))
 
 
@@ -143,6 +173,24 @@ class SpeciesDashboard(DashboardView):
         self.current_tab = 'S' + self.group_code
         return super(SpeciesDashboard, self).dispatch_request(*args, **kwargs)
 
-aggregation.add_url_rule('/dataset/<int:dataset_id>/dashboard/'
-                         'species/<group_code>',
+aggregation.add_url_rule('/dataset/<int:dataset_id>/species/<group_code>',
                          view_func=SpeciesDashboard.as_view('species'))
+
+
+class HabitatRecordView(HabitatCommentView):
+
+    template = 'aggregation/record-habitat.html'
+    template_base = 'aggregation/record.html'
+
+    def get_next_url(self):
+        return flask.url_for('.habitats', dataset_id=self.dataset_id)
+
+    def setup_template_context(self):
+        super(HabitatRecordView, self).setup_template_context()
+        self.template_ctx.update(**{
+            'dataset_id': self.dataset_id
+        })
+
+
+aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>/',
+                         view_func=HabitatRecordView.as_view('habitat'))
