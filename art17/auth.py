@@ -166,3 +166,18 @@ class LdapServer(object):
             'company': get_value(attrs, 'company', None),
             'groups': list(get_member_groups(attrs)),
         }
+
+    def get_emails_for_group(self, group_name):
+        results = self.conn.search_s(
+            self.base_dn,
+            ldap.SCOPE_SUBTREE,
+            '(objectClass=user)',
+            ['memberOf', 'mail'],
+        )
+        rv = []
+        for dn, attrs in results:
+            if group_name in get_member_groups(attrs):
+                email = get_value(attrs, 'mail', None)
+                if email:
+                    rv.append(email)
+        return rv
