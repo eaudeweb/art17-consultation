@@ -34,7 +34,7 @@ caractere random)::
 
 Rularea aplicației::
 
-    $ ./manage.py waitress
+    $ ./manage.py waitress consultation
 
 
 Instalare offline
