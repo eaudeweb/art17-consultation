@@ -1,6 +1,8 @@
+from contextlib import contextmanager
 import flask
 from flask.ext.principal import (Principal, Permission, Identity,
                                  RoleNeed, UserNeed, PermissionDenied)
+import ldap, ldap.filter
 
 auth = flask.Blueprint('auth', __name__)
 
@@ -102,3 +104,63 @@ def load_debug_auth():
 @auth.app_errorhandler(PermissionDenied)
 def handle_permission_denied(error):
     return flask.render_template('auth/denied.html')
+
+
+@contextmanager
+def open_ldap_server():
+    app = flask.current_app
+    ldap_server = LdapServer(
+        app.config.get('LDAP_SERVER', 'ldap://localhost'),
+        app.config.get('LDAP_BASE_DN', ''),
+        app.config.get('LDAP_LOGIN'),
+    )
+    try:
+        yield ldap_server
+    finally:
+        ldap_server.close()
+
+
+def get_value(attrs, name, default=None):
+    values = attrs.get(name)
+    return values[0].decode('utf-8') if values else default
+
+
+class LdapServer(object):
+
+    def __init__(self, uri, base_dn, login=None):
+        self.conn = ldap.initialize(uri)
+        self.base_dn = base_dn
+        if login is not None:
+            (username, password) = login
+            result = self.conn.bind_s(username, password)
+            if result != (97, []):
+                raise RuntimeError("LDAP login failed")
+
+    def close(self):
+        self.conn.unbind_s()
+
+    def get_user_info(self, user_id):
+        filters = ldap.filter.filter_format(
+            '(&(objectClass=user)(cn=%s))',
+            [user_id],
+        )
+        results = self.conn.search_s(
+            self.base_dn,
+            ldap.SCOPE_SUBTREE,
+            filters,
+            ['memberOf', 'givenName', 'mail', 'company'],
+        )
+        if len(results) < 1:
+            raise RuntimeError("User %r not found", user_id)
+        dn, attrs = results[0]
+        rv = {
+            'name': get_value(attrs, 'givenName', ''),
+            'email': get_value(attrs, 'mail', None),
+            'company': get_value(attrs, 'company', None),
+            'groups': [],
+        }
+        for group_dn in attrs.get('memberOf', []):
+            (attr, group_name) = group_dn.split(',', 1)[0].split('=')
+            assert attr.lower() == 'cn'
+            rv['groups'].append(group_name)
+        return rv

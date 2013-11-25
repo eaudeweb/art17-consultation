@@ -19,6 +19,7 @@ MarkupSafe==0.18
 mock==1.0.1
 path.py==4.3
 python-dateutil==2.1
+python-ldap==2.4.13
 pytz==2013d
 raven==2.0.12.2
 six==1.4.1
