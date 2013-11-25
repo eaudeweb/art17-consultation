@@ -22,11 +22,7 @@ def aggregate():
     if flask.request.method == 'POST':
         q = "SELECT SYS_CONTEXT('USERENV', 'SESSION_USER') FROM DUAL"
         result = execute_on_primary(q).scalar()
-        dataset = models.Dataset(
-            date=datetime.utcnow(),
-            user_id=flask.g.identity.id,
-        )
-        models.db.session.add(dataset)
+        dataset = create_aggregation(datetime.utcnow(), flask.g.identity.id)
         models.db.session.commit()
 
     else:
@@ -53,3 +49,31 @@ def execute_on_primary(query):
     app = flask.current_app
     aggregation_engine = models.db.get_engine(app, 'primary')
     return models.db.session.execute(query, bind=aggregation_engine)
+
+
+def create_aggregation(timestamp, user_id):
+    dataset = models.Dataset(
+        date=timestamp,
+        user_id=user_id,
+    )
+    models.db.session.add(dataset)
+
+    habitat_row = models.DataHabitattypeRegion(
+        dataset=dataset,
+        habitat=models.DataHabitat.query.filter_by(code='8230').first(),
+        region='MBLS',
+        cons_role='assessment',
+        cons_date=timestamp,
+        cons_user_id=user_id,
+    )
+
+    species_row = models.DataSpeciesRegion(
+        dataset=dataset,
+        species=models.DataSpecies.query.filter_by(code='1353').first(),
+        region='MBLS',
+        cons_role='assessment',
+        cons_date=timestamp,
+        cons_user_id=user_id,
+    )
+
+    return dataset
