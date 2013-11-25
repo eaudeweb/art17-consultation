@@ -125,6 +125,13 @@ def get_value(attrs, name, default=None):
     return values[0].decode('utf-8') if values else default
 
 
+def get_member_groups(attrs):
+    for group_dn in attrs.get('memberOf', []):
+        (attr, group_name) = group_dn.split(',', 1)[0].split('=')
+        assert attr.lower() == 'cn'
+        yield group_name
+
+
 class LdapServer(object):
 
     def __init__(self, uri, base_dn, login=None):
@@ -153,14 +160,9 @@ class LdapServer(object):
         if len(results) < 1:
             raise RuntimeError("User %r not found", user_id)
         dn, attrs = results[0]
-        rv = {
+        return {
             'name': get_value(attrs, 'givenName', ''),
             'email': get_value(attrs, 'mail', None),
             'company': get_value(attrs, 'company', None),
-            'groups': [],
+            'groups': list(get_member_groups(attrs)),
         }
-        for group_dn in attrs.get('memberOf', []):
-            (attr, group_name) = group_dn.split(',', 1)[0].split('=')
-            assert attr.lower() == 'cn'
-            rv['groups'].append(group_name)
-        return rv
