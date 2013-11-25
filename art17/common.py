@@ -228,7 +228,8 @@ class IndexView(flask.views.View, IndexMixin):
             'blueprint': self.blueprint,
             'topic': topic,
             'reply_counts': reply_counts,
-            'map_url': self.get_map_url(subject.code)
+            'map_url': self.get_map_url(subject.code),
+            'dashboard_url': self.get_dashboard_url(subject),
         })
 
 

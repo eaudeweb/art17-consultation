@@ -35,6 +35,12 @@ class SpeciesIndexView(IndexView, SpeciesMixin):
         return flask.url_for('.index', species=subject_code,
                                        region=region_code)
 
+    def get_dashboard_url(self, subject):
+        return flask.url_for(
+            'dashboard.species',
+            group_code=subject.lu.group_code,
+        )
+
 
 species.add_url_rule('/specii/', view_func=SpeciesIndexView.as_view('index'))
 

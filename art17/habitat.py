@@ -36,6 +36,9 @@ class HabitatIndexView(IndexView, HabitatMixin):
         return flask.url_for('.index', habitat=subject_code,
                                        region=region_code)
 
+    def get_dashboard_url(self, subject):
+        return flask.url_for('dashboard.habitats')
+
 
 habitat.add_url_rule('/habitate/', view_func=HabitatIndexView.as_view('index'))
 
