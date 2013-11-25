@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+
+{% block title %}Dashboard &mdash; {{ super() }}{% endblock title %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('dashboard', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
+{% block content %}
+  {%- from 'dashboard/common.html' import table_aggregation, tabmenu with context %}
+  {{ tabmenu(current=current_tab) }}
+
+  {{ table_aggregation(
+      bioreg_list,
+      object_list,
+      object_regions,
+  ) }}
+{% endblock content %}

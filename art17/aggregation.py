@@ -1,8 +1,25 @@
 from datetime import datetime
 import flask
-from art17 import models
+import flask.views
+from art17 import models, dal
 
 aggregation = flask.Blueprint('aggregation', __name__)
+
+
+def get_tabmenu_data(dataset_id):
+    yield {
+        'url': flask.url_for('.habitats', dataset_id=dataset_id),
+        'label': "Habitate",
+        'code': 'H',
+    }
+    for group in dal.get_species_groups():
+        yield {
+            'url': flask.url_for('.species',
+                                 group_code=group.code,
+                                 dataset_id=dataset_id),
+            'label': group.description,
+            'code': 'S' + group.code,
+        }
 
 
 @aggregation.app_context_processor
@@ -78,3 +95,53 @@ def create_aggregation(timestamp, user_id):
     )
 
     return dataset
+
+
+class DashboardView(flask.views.View):
+
+    methods = ['GET']
+
+    def get_context_data(self):
+        dataset = self.ds_model(self.dataset_id)
+        return {
+            'current_tab': self.current_tab,
+            'bioreg_list': dal.get_biogeo_region_list(),
+            'tabmenu_data': list(get_tabmenu_data(self.dataset_id)),
+            'object_list': self.get_object_list(),
+            'object_regions': dataset.get_subject_region_overview(),
+        }
+
+    def dispatch_request(self, *args, **kwargs):
+        self.dataset_id = kwargs['dataset_id']
+        return flask.render_template('aggregation/dashboard.html',
+                                     **self.get_context_data()
+        )
+
+
+class HabitatsDashboard(DashboardView):
+
+    current_tab = 'H'
+    ds_model = dal.HabitatDataset
+
+    def get_object_list(self):
+        return dal.get_habitat_list()
+
+aggregation.add_url_rule('/dataset/<int:dataset_id>/dashboard/habitate/',
+                         view_func=HabitatsDashboard.as_view('habitats'))
+
+
+class SpeciesDashboard(DashboardView):
+
+    ds_model = dal.SpeciesDataset
+
+    def get_object_list(self):
+        return dal.get_species_list(self.group_code)
+
+    def dispatch_request(self, *args, **kwargs):
+        self.group_code = kwargs['group_code']
+        self.current_tab = 'S' + self.group_code
+        return super(SpeciesDashboard, self).dispatch_request(*args, **kwargs)
+
+aggregation.add_url_rule('/dataset/<int:dataset_id>/dashboard/'
+                         'species/<group_code>',
+                         view_func=SpeciesDashboard.as_view('species'))

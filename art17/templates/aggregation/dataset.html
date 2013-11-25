@@ -24,4 +24,7 @@
     habitate {{ habitat_count }}
   </p>
 
+  <a class="btn btn-primary"
+     href="{{ url_for('.habitats', dataset_id=dataset.id) }}">Dashboard</a>
+
 {% endblock content %}
