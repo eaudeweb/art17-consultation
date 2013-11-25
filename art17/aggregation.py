@@ -107,6 +107,7 @@ class DashboardView(flask.views.View):
             'current_tab': self.current_tab,
             'bioreg_list': dal.get_biogeo_region_list(),
             'tabmenu_data': list(get_tabmenu_data(self.dataset_id)),
+            'dataset_url': flask.url_for('.dataset', dataset_id=self.dataset_id),
             'object_list': self.get_object_list(),
             'object_regions': dataset.get_subject_region_overview(),
         }
