@@ -58,6 +58,9 @@ def get_species_group(group_code):
 
 class BaseDataset(object):
 
+    def __init__(self, dataset_id=1):
+        self.dataset_id = dataset_id
+
     def get_subject(self, subject_code):
         return (
             self.subject_model.query
@@ -74,6 +77,7 @@ class BaseDataset(object):
                 self.record_model.region,
             )
             .filter_by(cons_role='assessment')
+            .filter_by(cons_dataset_id=self.dataset_id)
         )
         for key in regions_query:
             overview[key] = 0
@@ -86,6 +90,7 @@ class BaseDataset(object):
                 func.count('*'),
             )
             .filter_by(cons_role='comment')
+            .filter_by(cons_dataset_id=self.dataset_id)
             .group_by(
                 self.record_model_subject_id,
                 self.record_model.region,
@@ -100,6 +105,7 @@ class BaseDataset(object):
         records_query = (
             self.record_model.query
             .filter(self.record_model_subject_id == subject.id)
+            .filter_by(cons_dataset_id=self.dataset_id)
             .order_by(self.record_model.cons_date)
         )
         if region is not None:
@@ -113,6 +119,7 @@ class BaseDataset(object):
                 self.record_model.conclusion_assessment,
                 self.record_model.region,
             )
+            .filter_by(cons_dataset_id=self.dataset_id)
             .join(self.subject_model)
             .filter(self.subject_model.code == subject_code)
             .filter(self.record_model.conclusion_assessment != None)

@@ -12,8 +12,9 @@ def inject_home_url():
 
 @aggregation.route('/')
 def home():
+    dataset_list = models.Dataset.query.order_by(models.Dataset.date).all()
     return flask.render_template('aggregation/home.html', **{
-        'dataset_list': models.Dataset.query.all(),
+        'dataset_list': dataset_list,
     })
 
 
