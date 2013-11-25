@@ -236,8 +236,10 @@ class IndexView(flask.views.View, IndexMixin):
 class CommentView(IndexMixin, flask.views.View):
 
     methods = ['GET', 'POST']
+    template_base = "common/comment.html"
 
-    def dispatch_request(self, record_id=None, comment_id=None):
+    def dispatch_request(self, record_id=None, comment_id=None,
+                         dataset_id=None):
         if record_id:
             new_comment = True
             self.record = self.record_cls.query.get_or_404(record_id)
@@ -266,8 +268,10 @@ class CommentView(IndexMixin, flask.views.View):
             raise RuntimeError("Need at least one of "
                                "record_id and comment_id")
 
+        self.dataset_id = dataset_id
         self.setup_template_context()
-        self.template_ctx['next_url'] = flask.request.args.get('next')
+        self.template_ctx['next_url'] = flask.request.args.get('next') or \
+                                        self.get_next_url()
         self.template_ctx['blueprint'] = self.blueprint
         self.template_ctx['record_id'] = self.record.id
 
@@ -294,6 +298,7 @@ class CommentView(IndexMixin, flask.views.View):
 
         self.template_ctx['form'] = form
         self.template_ctx['new_comment'] = new_comment
+        self.template_ctx['template_base'] = self.template_base
 
         addform_pressure = forms.PressureForm(prefix='addform_pressure.')
         addform_measure = forms.MeasuresForm(prefix='addform_measure.')

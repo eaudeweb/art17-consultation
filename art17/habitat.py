@@ -68,6 +68,9 @@ class HabitatCommentView(CommentView, HabitatMixin):
     add_signal = comment_added
     edit_signal = comment_edited
 
+    def get_next_url(self):
+        return flask.url_for('.index')
+
     def link_comment_to_record(self):
         self.comment.habitat_id = self.record.habitat_id
         self.comment.region = self.record.region

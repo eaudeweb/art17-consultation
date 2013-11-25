@@ -1,4 +1,4 @@
-{% extends "common/comment.html" %}
+{% extends template_base %}
 
 
 {% block title %}
@@ -11,7 +11,7 @@
   {%- from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
           ('acasǎ', home_url),
-          ('habitat', next_url or url_for('.index')),
+          ('habitat', next_url),
           ('comentariu', None),
       ]) }}
 {% endblock breadcrumbs %}
