@@ -82,15 +82,10 @@ def set_session_auth(user_id=None, roles=[]):
     flask.session['auth'] = {'user_id': user_id, 'roles': roles}
 
 
-@auth.before_app_request
 def load_debug_auth():
-    if not flask.current_app.config.get('AUTH_DEBUG'):
-        return
-
     auth_data = flask.session.get('auth')
     if auth_data and auth_data.get('user_id'):
-        identity = Identity(id=auth_data['user_id'],
-                            auth_type='session')
+        identity = Identity(id=auth_data['user_id'], auth_type='debug')
         principals.set_identity(identity)
 
         identity.provides.add(need.user_id(identity.id))
@@ -98,8 +93,18 @@ def load_debug_auth():
         for role_name in auth_data.get('roles', []):
             identity.provides.add(RoleNeed(role_name))
 
-    if 'identity' in flask.g:
-        flask.g.identity.provides.add(need.everybody)
+
+
+@auth.record
+def setup_auth_handlers(state):
+    app = state.app
+    if app.config.get('AUTH_DEBUG'):
+        app.before_request(load_debug_auth)
+
+    @app.before_request
+    def set_everybody_need():
+        if 'identity' in flask.g:
+            flask.g.identity.provides.add(need.everybody)
 
 
 @auth.app_errorhandler(PermissionDenied)
