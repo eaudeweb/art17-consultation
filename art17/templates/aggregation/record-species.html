@@ -9,3 +9,10 @@
           ('specie', None)
       ]) }}
 {% endblock breadcrumbs %}
+
+{% block headline %}
+  {% if new_comment -%} Adaugă {%- else -%} Modifică {%- endif %}
+  înregistrare pentru
+  <em>{{ species.lu.speciesname }}</em> în
+  <em>{{ record.model.lu.name_ro }}</em>
+{% endblock headline %}

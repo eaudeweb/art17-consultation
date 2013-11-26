@@ -9,3 +9,10 @@
           ('habitat', None)
       ]) }}
 {% endblock breadcrumbs %}
+
+{% block headline %}
+  {% if new_comment -%} Adaugă {%- else -%} Modifică {%- endif %}
+  înregistrare pentru
+ <em>{{ habitat.lu.code }} - {{ habitat.lu.name_ro }}</em> în
+  <em>{{ record.model.lu.name_ro }}</em>
+{% endblock headline %}

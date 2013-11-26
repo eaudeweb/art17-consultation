@@ -56,3 +56,10 @@ def notifications_app(app):
     app.register_blueprint(species)
     app.register_blueprint(notifications)
     return app
+
+
+@pytest.fixture
+def aggregation_app(app):
+    from art17.aggregation import aggregation
+    app.register_blueprint(aggregation)
+    return app

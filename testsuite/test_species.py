@@ -186,6 +186,7 @@ def _create_species_record(species_app, comment=False):
             species=species,
             cons_role='assessment',
             region='ALP',
+            cons_dataset_id=1,
         )
         record.lu = models.LuBiogeoreg(objectid=1)
         models.db.session.add(record)

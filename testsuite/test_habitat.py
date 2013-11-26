@@ -150,6 +150,7 @@ def _create_habitat_record(habitat_app, comment=False):
                 cons_user_id='smith',
                 region='ALP',
                 range_surface_area=1337,
+                cons_dataset_id=1,
             )
             models.db.session.add(comment)
 

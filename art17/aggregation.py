@@ -1,7 +1,9 @@
 from datetime import datetime
 import flask
 import flask.views
+from werkzeug.datastructures import MultiDict
 from art17 import models, dal
+from art17.common import flatten_dict, perm_edit_record
 from art17.habitat import HabitatCommentView
 from art17.species import SpeciesCommentView
 
@@ -178,7 +180,27 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/species/<group_code>',
                          view_func=SpeciesDashboard.as_view('species'))
 
 
-class HabitatRecordView(HabitatCommentView):
+class RecordViewMixin(object):
+
+    def setup_record_and_form(self, record_id=None, comment_id=None):
+        if record_id:
+            self.new_record = False
+            self.record = self.record_cls.query.get_or_404(record_id)
+            perm_edit_record(self.record).test()
+            self.object = self.record
+            self.original_data = self.parse_commentform(self.object)
+            if flask.request.method == 'POST':
+                form_data = flask.request.form
+            else:
+                form_data = MultiDict(flatten_dict(self.original_data))
+            self.form = self.form_cls(form_data)
+
+        else:
+            raise RuntimeError("Need at least one of "
+                               "record_id and comment_id")
+
+
+class HabitatRecordView(HabitatCommentView, RecordViewMixin):
 
     template = 'aggregation/record-habitat.html'
     template_base = 'aggregation/record.html'
@@ -197,14 +219,14 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>/',
                          view_func=HabitatRecordView.as_view('habitat'))
 
 
-class SpeciesRecordView(SpeciesCommentView):
+class SpeciesRecordView(SpeciesCommentView, RecordViewMixin):
 
     template = 'aggregation/record-species.html'
     template_base = 'aggregation/record.html'
 
     def get_next_url(self):
-        return flask.url_for('.species', dataset_id=self.record.dataset.id,
-                             group_code=self.dataset_id)
+        return flask.url_for('.species', dataset_id=self.record.cons_dataset_id,
+                             group_code=self.record.species.lu.group_code)
 
     def setup_template_context(self):
         super(SpeciesRecordView, self).setup_template_context()
