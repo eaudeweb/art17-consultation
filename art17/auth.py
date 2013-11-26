@@ -94,12 +94,29 @@ def load_debug_auth():
             identity.provides.add(RoleNeed(role_name))
 
 
+def load_reverse_proxy_auth():
+    user_id = flask.request.headers.get('X-RP-AuthUser')
+    if user_id:
+        with open_ldap_server() as ldap_server:
+            user_info = ldap_server.get_user_info(user_id)
+
+        identity = Identity(id=user_id, auth_type='reverse-proxy')
+        principals.set_identity(identity)
+
+        identity.provides.add(need.user_id(identity.id))
+        identity.provides.add(need.authenticated)
+        for group_name in user_info['groups']:
+            identity.provides.add(RoleNeed(group_name))
+
 
 @auth.record
 def setup_auth_handlers(state):
     app = state.app
     if app.config.get('AUTH_DEBUG'):
         app.before_request(load_debug_auth)
+
+    if app.config.get('AUTH_REVERSE_PROXY'):
+        app.before_request(load_reverse_proxy_auth)
 
     @app.before_request
     def set_everybody_need():
