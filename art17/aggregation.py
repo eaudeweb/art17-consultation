@@ -200,7 +200,7 @@ class RecordViewMixin(object):
                                "record_id and comment_id")
 
 
-class HabitatRecordView(HabitatCommentView, RecordViewMixin):
+class HabitatRecordView(RecordViewMixin, HabitatCommentView):
 
     template = 'aggregation/record-habitat.html'
     template_base = 'aggregation/record.html'
@@ -219,7 +219,7 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>/',
                          view_func=HabitatRecordView.as_view('habitat'))
 
 
-class SpeciesRecordView(SpeciesCommentView, RecordViewMixin):
+class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
 
     template = 'aggregation/record-species.html'
     template_base = 'aggregation/record.html'
