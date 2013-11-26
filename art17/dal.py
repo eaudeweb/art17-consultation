@@ -1,4 +1,4 @@
-from sqlalchemy import func
+from sqlalchemy import func, cast, CHAR
 from art17.models import (
     db,
     LuBiogeoreg,
@@ -11,7 +11,8 @@ from art17.models import (
     CommentReply,
     DataPressuresThreats,
     DataPressuresThreatsPollution,
-    DataMeasures
+    DataMeasures,
+    History,
 )
 
 
@@ -67,6 +68,24 @@ class BaseDataset(object):
             .filter_by(code=subject_code)
             .first()
         )
+
+    def get_history(self, subject_code, region_code):
+        query = (
+            History.query
+            .filter_by(table=cast(self.history_table_name, CHAR(128)))
+            .join(
+                self.record_model,
+                History.object_id == cast(self.record_model.id, CHAR(32)),
+            )
+            .join(
+                self.subject_model,
+                self.record_model_subject_id == self.subject_model.id,
+            )
+            .filter(self.subject_model.code == subject_code)
+            .filter(self.record_model.region == region_code)
+            .order_by(History.date.desc())
+        )
+        return query.all()
 
     def get_subject_region_overview(self):
         overview = {}
@@ -194,6 +213,7 @@ class HabitatDataset(BaseDataset):
     record_model = DataHabitattypeRegion
     reply_parent_table = 'habitat'
     rel_id = 'habitat_id'
+    history_table_name = 'data_habitattype_regions'
 
     @property
     def record_model_subject_id(self):
@@ -207,6 +227,7 @@ class SpeciesDataset(BaseDataset):
     record_model = DataSpeciesRegion
     reply_parent_table = 'species'
     rel_id = 'species_id'
+    history_table_name = 'data_species_regions'
 
     @property
     def record_model_subject_id(self):

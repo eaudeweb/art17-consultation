@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+
+{% block title %}Activitate &mdash; {{ super() }}{% endblock title %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('activitate', None),
+          (subject_category, None),
+          (subject_name, None),
+          (region_code, None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
+{% set CLASS_FOR_ACTION = {'add': 'success',
+                           'edit': 'warning',
+                           'remove': 'danger',
+                           'status': 'warning'} %}
+
+
+{% block content %}
+  <table class="table table-hover table-condensed">
+    <thead>
+      <th>dată</th>
+      <th>obiect</th>
+      <th>acțiune</th>
+      <th>user_id</th>
+    </thead>
+
+    <tbody>
+    {%- for item in history_items %}
+      <tr class="{{ CLASS_FOR_ACTION[item.action] }} history_row">
+        {%- set date = item.date|local_date('long') %}
+        {%- set url = url_for('.delta', item_id=item.id) %}
+        <td><a href="{{ url }}">{{ date }}</a></td>
+        <td>{{ item.object_id }}</td>
+        <td>{{ item.action }}</td>
+        <td>{{ item.user_id }}</td>
+      </tr>
+    {%- endfor %}
+    </tbody>
+  </table>
+{% endblock content %}

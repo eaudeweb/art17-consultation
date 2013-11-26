@@ -3,6 +3,7 @@
 from datetime import datetime
 import flask
 from art17 import models
+from art17 import dal
 from art17 import species
 from art17 import habitat
 from art17 import replies
@@ -98,3 +99,29 @@ def delta(item_id):
 def pretty_json_data(json_data):
     data = flask.json.loads(json_data)
     return flask.json.dumps(data, indent=2, sort_keys=True)
+
+
+@history.route('/activitate/specii/<species_code>/<region_code>')
+def species_activity(species_code, region_code):
+    dataset = dal.SpeciesDataset()
+    species = dataset.get_subject(species_code)
+    items = dataset.get_history(species_code, region_code)
+    return flask.render_template('history/comments.html', **{
+        'history_items': items,
+        'subject_category': 'specii',
+        'subject_name': species.lu.display_name,
+        'region_code': region_code,
+    })
+
+
+@history.route('/activitate/habitate/<habitat_code>/<region_code>')
+def habitat_activity(habitat_code, region_code):
+    dataset = dal.HabitatDataset()
+    habitat = dataset.get_subject(habitat_code)
+    items = dataset.get_history(habitat_code, region_code)
+    return flask.render_template('history/comments.html', **{
+        'history_items': items,
+        'subject_category': 'habitate',
+        'subject_name': habitat.lu.display_name,
+        'region_code': region_code,
+    })
