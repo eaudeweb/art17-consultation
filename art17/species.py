@@ -21,6 +21,7 @@ class SpeciesMixin(object):
     blueprint = 'species'
     parse_record = staticmethod(schemas.parse_species)
     dataset = dal.SpeciesDataset()
+    comment_history_view = 'history.species_comments'
 
     @property
     def map_url_template(self):

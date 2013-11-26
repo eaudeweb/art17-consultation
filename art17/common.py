@@ -16,7 +16,7 @@ from werkzeug.datastructures import MultiDict
 from sqlalchemy import func
 from art17 import models
 from art17 import dal
-from art17.auth import need
+from art17.auth import need, admin_permission
 from art17 import forms
 import lookup
 
@@ -113,6 +113,7 @@ def inject_permissions():
         'perm_edit_comment': perm_edit_comment,
         'perm_update_comment_status': perm_update_comment_status,
         'perm_delete_comment': perm_delete_comment,
+        'perm_view_history': admin_permission,
     }
 
 
@@ -234,6 +235,7 @@ class IndexView(flask.views.View, IndexMixin):
             'reply_counts': reply_counts,
             'map_url': self.get_map_url(subject.code),
             'dashboard_url': self.get_dashboard_url(subject),
+            'comment_history_view': self.comment_history_view,
         })
 
 

@@ -22,6 +22,7 @@ class HabitatMixin(object):
     blueprint = 'habitat'
     parse_record = staticmethod(schemas.parse_habitat)
     dataset = dal.HabitatDataset()
+    comment_history_view = 'history.habitat_comments'
 
     @property
     def map_url_template(self):

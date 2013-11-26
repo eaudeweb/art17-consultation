@@ -27,6 +27,14 @@
   <p>
     <a class="showmap btn btn-sm btn-info" href="{{ map_url }}">vezi harta</a>
     <a class="helpbox-button btn btn-sm btn-default" href="#">ajutor</a>
+    {%- if perm_view_history.can() %}
+      {%- set history_url = url_for(
+          comment_history_view,
+          subject_code=subject.lu.code,
+          region_code=region.code,
+        ) %}
+      <a class="btn btn-sm btn-danger" href="{{ history_url }}">istorie</a>
+    {%- endif %}
   </p>
 
   {{ topic_html(
