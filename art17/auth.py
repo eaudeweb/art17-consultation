@@ -55,10 +55,10 @@ def inject_permissions():
 
 @auth.route('/auth_debug', methods=['GET', 'POST'])
 def debug():
-    if not flask.current_app.config.get('AUTH_DEBUG'):
-        flask.abort(404)
-
+    auth_debug_allowed = bool(flask.current_app.config.get('AUTH_DEBUG'))
     if flask.request.method == 'POST':
+        if not auth_debug_allowed:
+            flask.abort(403)
         user_id = flask.request.form['user_id']
         roles = flask.request.form['roles'].strip().split()
         set_session_auth(user_id, roles)
@@ -74,6 +74,7 @@ def debug():
             'expert:species:M:1353\n'
             'reviewer:habitat:8230\n'
         ),
+        'auth_debug_allowed': auth_debug_allowed,
     })
 
 

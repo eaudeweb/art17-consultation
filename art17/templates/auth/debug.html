@@ -21,6 +21,7 @@
     <code style="white-space: pre-wrap">{{ g.identity }}</code>
   </p>
 
+  {% if auth_debug_allowed %}
   <form method="post" class="form-horizontal">
     <div class="form-group">
       <label class="col-sm-2 control-label" for="user_id">User ID</label>
@@ -48,4 +49,5 @@
       </div>
     </div>
   </form>
+  {% endif %}
 {% endblock content %}
