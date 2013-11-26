@@ -28,13 +28,19 @@ caractere random)::
     $ echo > instance/settings.py <<EOF
     SQLALCHEMY_DATABASE_URI = 'oracle://user:pass@host:1521/XE'
     SECRET_KEY = 'secret'
-    ART17_LISTEN_HOST = '127.0.0.1'
-    ART17_LISTEN_PORT = 5000
     EOF
 
-Rularea aplicației::
+Rularea aplicației
+------------------
+Serverul de aplicație se pornește cu comanda::
 
     $ ./manage.py waitress consultation
+
+Comanda primește următoarele argumente opționale:
+
+* ``-p 5000`` portul pe care să asculte serverul http
+* ``-l localhost`` adresele pe care să asculte serverul http
+* ``-u /url/prefix`` prefixul de url unde este servită aplicația
 
 
 Instalare offline
