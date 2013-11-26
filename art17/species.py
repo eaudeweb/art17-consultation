@@ -2,8 +2,8 @@ import flask
 from blinker import Signal
 from art17 import models
 from art17 import dal
-from art17.common import (IndexView, CommentView, CommentStateView,
-                          CommentDeleteView)
+from art17.common import (IndexView, CommentStateView,
+                          CommentDeleteView, RecordView, CommentViewMixin)
 from art17 import forms
 from art17 import schemas
 
@@ -57,7 +57,7 @@ def detail(record_id):
     })
 
 
-class SpeciesCommentView(CommentView, SpeciesMixin):
+class SpeciesCommentView(RecordView, CommentViewMixin, SpeciesMixin):
 
     form_cls = forms.SpeciesComment
     record_cls = models.DataSpeciesRegion
@@ -73,8 +73,8 @@ class SpeciesCommentView(CommentView, SpeciesMixin):
         return flask.url_for('.index')
 
     def link_comment_to_record(self):
-        self.comment.species_id = self.record.species_id
-        self.comment.region = self.record.region
+        self.object.species_id = self.record.species_id
+        self.object.region = self.record.region
 
     def setup_template_context(self):
         self.template_ctx = {

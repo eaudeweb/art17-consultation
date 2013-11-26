@@ -3,8 +3,8 @@ import flask
 from blinker import Signal
 from art17 import models
 from art17 import dal
-from art17.common import (IndexView, CommentView, CommentStateView,
-                          CommentDeleteView)
+from art17.common import (IndexView, CommentStateView,
+                          CommentDeleteView, RecordView, CommentViewMixin)
 from art17 import forms
 from art17 import schemas
 
@@ -56,7 +56,7 @@ def detail(record_id):
     })
 
 
-class HabitatCommentView(CommentView, HabitatMixin):
+class HabitatCommentView(RecordView, CommentViewMixin, HabitatMixin):
 
     form_cls = forms.HabitatComment
     record_cls = models.DataHabitattypeRegion
@@ -72,8 +72,8 @@ class HabitatCommentView(CommentView, HabitatMixin):
         return flask.url_for('.index')
 
     def link_comment_to_record(self):
-        self.comment.habitat_id = self.record.habitat_id
-        self.comment.region = self.record.region
+        self.object.habitat_id = self.record.habitat_id
+        self.object.region = self.record.region
 
     def setup_template_context(self):
         self.template_ctx = {

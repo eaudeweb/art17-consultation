@@ -99,6 +99,10 @@ def perm_delete_comment(comment):
         return Permission(need.admin)
 
 
+def perm_edit_record(record):
+    return Permission(need.admin)
+
+
 common = flask.Blueprint('common', __name__)
 
 
@@ -233,71 +237,43 @@ class IndexView(flask.views.View, IndexMixin):
         })
 
 
-class CommentView(IndexMixin, flask.views.View):
+class RecordView(IndexMixin, flask.views.View):
 
     methods = ['GET', 'POST']
-    template_base = "common/comment.html"
 
     def dispatch_request(self, record_id=None, comment_id=None,
                          dataset_id=None):
-        if record_id:
-            new_comment = True
-            self.record = self.record_cls.query.get_or_404(record_id)
-            perm_create_comment(self.record).test()
-            self.comment = self.comment_cls(
-                cons_role='comment',
-                cons_user_id=flask.g.identity.id,
-                cons_date=datetime.utcnow(),
-            )
-            form = self.form_cls(flask.request.form)
-
-        elif comment_id:
-            new_comment = False
-            self.comment = (self.comment_cls
-                                    .query.get_or_404(comment_id))
-            perm_edit_comment(self.comment).test()
-            self.record = self.record_for_comment(self.comment)
-            old_data = self.parse_commentform(self.comment)
-            if flask.request.method == 'POST':
-                form_data = flask.request.form
-            else:
-                form_data = MultiDict(flatten_dict(old_data))
-            form = self.form_cls(form_data)
-
-        else:
-            raise RuntimeError("Need at least one of "
-                               "record_id and comment_id")
 
         self.dataset_id = dataset_id
+        self.setup_record_and_form(record_id=record_id, comment_id=comment_id)
+
         self.setup_template_context()
         self.template_ctx['next_url'] = flask.request.args.get('next') or \
                                         self.get_next_url()
         self.template_ctx['blueprint'] = self.blueprint
         self.template_ctx['record_id'] = self.record.id
 
-        if flask.request.method == 'POST' and form.validate():
-            self.link_comment_to_record()
+        if flask.request.method == 'POST' and self.form.validate():
+            self.flatten_commentform(self.form.data, self.object)
 
-            self.flatten_commentform(form.data, self.comment)
-            models.db.session.add(self.comment)
+            models.db.session.add(self.object)
 
             app = flask.current_app._get_current_object()
-            if new_comment:
-                self.add_signal.send(app, ob=self.comment,
-                                          new_data=form.data)
+            if self.new_record:
+                self.add_signal.send(app, ob=self.object,
+                                          new_data=self.form.data)
             else:
-                self.edit_signal.send(app, ob=self.comment,
-                                      old_data=old_data, new_data=form.data)
+                self.edit_signal.send(app, ob=self.object,
+                                      old_data=self.original_data, new_data=self.form.data)
 
             models.db.session.commit()
 
-            self.dataset.update_extra_fields(form.data, self.comment)
-
+            self.dataset.update_extra_fields(self.form.data, self.object)
             return flask.render_template(self.template_saved,
                                          **self.template_ctx)
 
-        self.template_ctx['form'] = form
-        self.template_ctx['new_comment'] = new_comment
+        self.template_ctx['form'] = self.form
+        self.template_ctx['new_comment'] = self.new_record
         self.template_ctx['template_base'] = self.template_base
 
         addform_pressure = forms.PressureForm(prefix='addform_pressure.')
@@ -309,6 +285,40 @@ class CommentView(IndexMixin, flask.views.View):
                 'PRESSURES': dict(addform_pressure.pressure.choices),
                 'MEASURES': dict(addform_measure.measurecode.choices)})
         return flask.render_template(self.template, **self.template_ctx)
+
+
+class CommentViewMixin(object):
+
+    template_base = "common/comment.html"
+
+    def setup_record_and_form(self, record_id=None, comment_id=None):
+        if record_id:
+            self.new_record = True
+            self.record = self.record_cls.query.get_or_404(record_id)
+            perm_create_comment(self.record).test()
+            self.object = self.comment_cls(
+                cons_role='comment',
+                cons_user_id=flask.g.identity.id,
+                cons_date=datetime.utcnow(),
+            )
+            self.link_comment_to_record()
+            self.form = self.form_cls(flask.request.form)
+
+        elif comment_id:
+            self.new_record = False
+            self.object = self.comment_cls.query.get_or_404(comment_id)
+            perm_edit_comment(self.object).test()
+            self.record = self.record_for_comment(self.object)
+            self.original_data = self.parse_commentform(self.object)
+            if flask.request.method == 'POST':
+                form_data = flask.request.form
+            else:
+                form_data = MultiDict(flatten_dict(self.original_data))
+            self.form = self.form_cls(form_data)
+
+        else:
+            raise RuntimeError("Need at least one of "
+                               "record_id and comment_id")
 
 
 class CommentStateView(flask.views.View):
