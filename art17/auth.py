@@ -159,7 +159,7 @@ class LdapServer(object):
             ['memberOf', 'givenName', 'mail', 'company'],
         )
         if len(results) < 1:
-            raise RuntimeError("User %r not found", user_id)
+            raise RuntimeError("User %r not found" % user_id)
         dn, attrs = results[0]
         return {
             'name': get_value(attrs, 'givenName', ''),
