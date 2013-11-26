@@ -3,6 +3,7 @@ import flask
 import flask.views
 from art17 import models, dal
 from art17.habitat import HabitatCommentView
+from art17.species import SpeciesCommentView
 
 aggregation = flask.Blueprint('aggregation', __name__)
 
@@ -40,9 +41,9 @@ def record_edit_url(subject, region, dataset_id):
             cons_dataset_id=dataset_id,
             species=subject,
             region=region.code,
-        )
+        ).first()
         if species:
-            return flask.url_for('.species',
+            return flask.url_for('.species-edit',
                                  dataset_id=dataset_id,
                                  record_id=species.id,
             )
@@ -194,3 +195,24 @@ class HabitatRecordView(HabitatCommentView):
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>/',
                          view_func=HabitatRecordView.as_view('habitat'))
+
+
+class SpeciesRecordView(SpeciesCommentView):
+
+    template = 'aggregation/record-species.html'
+    template_base = 'aggregation/record.html'
+
+    def get_next_url(self):
+        return flask.url_for('.species', dataset_id=self.record.dataset.id,
+                             group_code=self.dataset_id)
+
+    def setup_template_context(self):
+        super(SpeciesRecordView, self).setup_template_context()
+        self.template_ctx.update(**{
+            'dataset_id': self.dataset_id,
+            'group_code': self.record.species.lu.group_code,
+        })
+
+
+aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>/',
+                         view_func=SpeciesRecordView.as_view('species-edit'))
