@@ -70,6 +70,22 @@ Configurație
     Activează o pagină de login unde se poate introduce orice `user_id`
     și set de roluri.
 
+``AUTH_REVERSE_PROXY = False``
+    Preia utilizatorul curent dintr-un header HTTP ``X-RP-AuthUser``.
+    Acesta trebuie controlat de un reverse proxy în fața aplicației.
+
+``LDAP_SERVER``
+    Adresa serverului LDAP sau ActiveDirectory. De exemplu
+    ``'ldap://192.168.2.3'``.
+
+``LDAP_LOGIN``
+    Date de autentificare pentru acces la LDAP. De exemplu
+    ``('IBB\Administrator', 'admin')``.
+
+``LDAP_BASE_DN``
+    Directorul de bază pentru căutări în LDAP. De exemplu
+    ``'OU=SharePoint,DC=ibb,DC=local'``.
+
 ``SQLALCHEMY_DATABASE_URI``
     Accesul la baza de date:
     ``'oracle://reportdata_owner:parola@localhost:1521/XE'``
