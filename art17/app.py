@@ -101,17 +101,6 @@ def create_manager(app):
     manager.add_command('cons', cons_manager)
     manager.add_command('runserver', Art17Server())
 
-    @manager.command
-    def waitress(app_name, listen='127.0.0.1', port='5000', url_prefix=''):
-        from waitress import serve
-        http_app = create_app_by_name(app_name)
-        serve(
-            http_app.wsgi_app,
-            host=listen,
-            port=int(port),
-            url_prefix=url_prefix,
-        )
-
     return manager
 
 

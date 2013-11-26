@@ -34,13 +34,13 @@ Rularea aplicației
 ------------------
 Serverul de aplicație se pornește cu comanda::
 
-    $ ./manage.py waitress consultation
+    $ waitress-serve --call art17.app:create_consultation_app
 
-Comanda primește următoarele argumente opționale:
+Comanda primește următoarele argumente opționale (ultimul argument
+trebuie să rămână numele aplicației):
 
-* ``-p 5000`` portul pe care să asculte serverul http
-* ``-l localhost`` adresele pe care să asculte serverul http
-* ``-u /url/prefix`` prefixul de url unde este servită aplicația
+* ``--port 5000`` portul pe care să asculte serverul http
+* ``--url-prefix=/some/value`` prefixul de url unde este servită aplicația
 
 
 Instalare offline
