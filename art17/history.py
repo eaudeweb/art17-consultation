@@ -105,12 +105,11 @@ def pretty_json_data(json_data):
 @admin_permission.require(403)
 def species_comments(subject_code, region_code):
     dataset = dal.SpeciesDataset()
-    species = dataset.get_subject(subject_code)
     items = dataset.get_history(subject_code, region_code)
     return flask.render_template('history/comments.html', **{
         'history_items': items,
         'subject_category': 'specii',
-        'subject_name': species.lu.display_name,
+        'subject_code': subject_code,
         'region_code': region_code,
     })
 
@@ -119,11 +118,10 @@ def species_comments(subject_code, region_code):
 @admin_permission.require(403)
 def habitat_comments(subject_code, region_code):
     dataset = dal.HabitatDataset()
-    habitat = dataset.get_subject(subject_code)
     items = dataset.get_history(subject_code, region_code)
     return flask.render_template('history/comments.html', **{
         'history_items': items,
         'subject_category': 'habitate',
-        'subject_name': habitat.lu.display_name,
+        'subject_code': subject_code,
         'region_code': region_code,
     })
