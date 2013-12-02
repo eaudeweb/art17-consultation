@@ -15,6 +15,8 @@ def create_app():
     from art17.auth import auth
     from art17 import models
 
+    os.environ['NLS_LANG'] = '.UTF8'  # encoding for cx_oracle
+
     app = flask.Flask(__name__, instance_relative_config=True)
     app.jinja_options = dict(
         app.jinja_options,
@@ -109,7 +111,6 @@ def create_manager(app):
 def main():
     import os
     import logging
-    os.environ['NLS_LANG'] = 'AMERICAN_AMERICA.UTF8'  # encoding for cx_oracle
     logging.basicConfig()
     logging.getLogger('werkzeug').setLevel(logging.INFO)
     app = create_app()
