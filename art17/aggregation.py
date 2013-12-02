@@ -1,4 +1,5 @@
 from datetime import datetime
+from blinker import Signal
 import flask
 import flask.views
 from werkzeug.datastructures import MultiDict
@@ -204,6 +205,8 @@ class HabitatRecordView(RecordViewMixin, HabitatCommentView):
 
     template = 'aggregation/record-habitat.html'
     template_base = 'aggregation/record.html'
+    add_signal = Signal()
+    edit_signal = Signal()
 
     def get_next_url(self):
         return flask.url_for('.habitat-index', dataset_id=self.dataset_id,
@@ -224,6 +227,8 @@ class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
 
     template = 'aggregation/record-species.html'
     template_base = 'aggregation/record.html'
+    add_signal = Signal()
+    edit_signal = Signal()
 
     def get_next_url(self):
         return flask.url_for('.species-index',
