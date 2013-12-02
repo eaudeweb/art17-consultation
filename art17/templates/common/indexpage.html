@@ -35,6 +35,10 @@
         ) %}
       <a class="btn btn-sm btn-danger" href="{{ history_url }}">istorie</a>
     {%- endif %}
+    {%- if perm_edit_final_for_this.can() %}
+      <a class="btn btn-sm btn-warning"
+         href="{{ finalize_url }}">editează versiunea finală</a>
+    {%- endif %}
   </p>
 
   {{ topic_html(

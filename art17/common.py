@@ -103,6 +103,10 @@ def perm_edit_record(record):
     return Permission(need.admin)
 
 
+def perm_edit_final(subject):
+    return Permission(need.admin)
+
+
 common = flask.Blueprint('common', __name__)
 
 
@@ -224,6 +228,10 @@ class IndexView(flask.views.View, IndexMixin):
                     topic['comments'].append(r)
 
         comment_next = self.get_comment_next_url(subject_code, region_code)
+        finalize_url = self.get_finalize_url(
+            topic['assessment']['id'],
+            next=comment_next,
+        )
 
         return flask.render_template('common/indexpage.html', **{
             'subject': subject,
@@ -236,6 +244,8 @@ class IndexView(flask.views.View, IndexMixin):
             'map_url': self.get_map_url(subject.code),
             'dashboard_url': self.get_dashboard_url(subject),
             'comment_history_view': self.comment_history_view,
+            'finalize_url': finalize_url,
+            'perm_edit_final_for_this': perm_edit_final(subject),
         })
 
 
@@ -359,6 +369,42 @@ class CommentDeleteView(flask.views.View):
         self.signal.send(app, ob=comment, old_data=old_data)
         models.db.session.commit()
         return flask.redirect(next_url)
+
+
+class FinalCommentMixin(object):
+
+    def setup_record_and_form(self, record_id=None, comment_id=None):
+        self.record = self.record_cls.query.get_or_404(record_id)
+        perm_edit_final(self.record.subject).test()
+
+        row_list = self.dataset.get_topic_records(
+            subject=self.record.subject,
+            region_code=self.record.region,
+        )
+        self.object = None
+        for row in row_list:
+            if row.cons_role == 'final':
+                self.object = row
+
+        if self.object is None:
+            self.new_record = True
+            self.object = self.comment_cls(
+                cons_role='final',
+                cons_user_id=flask.g.identity.id,
+                cons_date=datetime.utcnow(),
+            )
+            self.link_comment_to_record()
+            self.form = self.form_cls(flask.request.form)
+
+        else:
+            self.new_record = False
+            self.record = self.record_for_comment(self.object)
+            self.original_data = self.parse_commentform(self.object)
+            if flask.request.method == 'POST':
+                form_data = flask.request.form
+            else:
+                form_data = MultiDict(flatten_dict(self.original_data))
+            self.form = self.form_cls(form_data)
 
 
 cons_manager = Manager()

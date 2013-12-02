@@ -4,7 +4,8 @@ from blinker import Signal
 from art17 import models
 from art17 import dal
 from art17.common import (IndexView, CommentStateView,
-                          CommentDeleteView, RecordView, CommentViewMixin)
+                          CommentDeleteView, RecordView, CommentViewMixin,
+                          FinalCommentMixin)
 from art17 import forms
 from art17 import schemas
 
@@ -39,6 +40,9 @@ class HabitatIndexView(IndexView, HabitatMixin):
 
     def get_dashboard_url(self, subject):
         return flask.url_for('dashboard.habitats')
+
+    def get_finalize_url(self, record_id, next):
+        return flask.url_for('.finalize', record_id=record_id, next=next)
 
 
 habitat.add_url_rule('/habitate/', view_func=HabitatIndexView.as_view('index'))
@@ -124,3 +128,12 @@ class HabitatCommentDeleteView(CommentDeleteView):
 
 habitat.add_url_rule('/habitate/comentarii/<int:comment_id>/sterge',
             view_func=HabitatCommentDeleteView.as_view('comment_delete'))
+
+
+class HabitatFinalCommentView(FinalCommentMixin, HabitatCommentView):
+
+    signal = Signal()  # ignored
+
+
+habitat.add_url_rule('/habitate/detalii/<int:record_id>/final',
+                     view_func=HabitatFinalCommentView.as_view('finalize'))
