@@ -76,6 +76,7 @@ class SpeciesCommentView(RecordView, CommentViewMixin, SpeciesMixin):
     def link_comment_to_record(self):
         self.object.species_id = self.record.species_id
         self.object.region = self.record.region
+        self.object.cons_dataset_id = self.dataset.dataset_id
 
     def setup_template_context(self):
         self.template_ctx = {
