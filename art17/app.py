@@ -12,6 +12,7 @@ def none_as_blank(value):
 
 
 def create_app():
+    import os
     from art17.auth import auth
     from art17 import models
 
