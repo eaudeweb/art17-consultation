@@ -1,0 +1,30 @@
+{% from 'common/comment_bits.html' import error_cls, errors %}
+
+<div class="tab-pane comment" id="comment-sources">
+  <div class="panel panel-default">
+
+    {%- set sources = form.published %}
+    <div class="panel-body">
+
+      <div class="form-group {{- error_cls(sources) }}">
+
+
+        <div class="form-group">
+          <label for="published">
+            Surse publicate:
+          </label>
+
+          {{ errors(sources) }}
+
+          <div class="row">
+            <div class="col-sm-6 {{- error_cls(sources) }}">
+              {{ sources(class='form-control', rows=12) }}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

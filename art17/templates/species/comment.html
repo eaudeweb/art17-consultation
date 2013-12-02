@@ -65,6 +65,9 @@
           {%- endif %}>
         <a href="#comment-conclusion" data-toggle="tab">Concluzii</a>
       </li>
+      <li {% if form.published.errors %}class="text-error"{% endif %}>
+        <a href="#comment-sources" data-toggle="tab">Surse publicate</a>
+      </li>
     </ul>
 
     <div class="tab-content">
@@ -77,6 +80,7 @@
       {% include "common/comment/measures.html" with context %}
       {% include "species/comment/natura2000.html" with context %}
       {% include "species/comment/conclusion.html" with context %}
+      {% include "common/comment/sources.html" with context %}
     </div>
   </div>
 {% endblock form_content %}

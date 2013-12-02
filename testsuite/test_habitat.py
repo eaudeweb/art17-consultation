@@ -91,6 +91,7 @@ HABITAT_STRUCT_DATA = {
         'trend': '+',
     },
     'report_observation': 'nothing to add',
+    'published': 'someday',
 }
 
 
@@ -137,6 +138,8 @@ HABITAT_MODEL_DATA = {
     'conclusion_assessment_trend': '+',
 
     'cons_report_observation': 'nothing to add',
+
+    'published': 'someday',
 }
 
 

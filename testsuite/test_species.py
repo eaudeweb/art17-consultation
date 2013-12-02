@@ -131,6 +131,8 @@ SPECIES_STRUCT_DATA = {
     },
     'report_observation': 'nothing to add',
     'generalstatus': '1',
+
+    'published': 'someday',
 }
 
 
@@ -195,6 +197,8 @@ SPECIES_MODEL_DATA = {
 
     'cons_report_observation': 'nothing to add',
     'cons_generalstatus': '1',
+
+    'published': 'someday',
 }
 
 

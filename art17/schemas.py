@@ -276,6 +276,7 @@ def parse_species_commentform(row):
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
     rv['report_observation'] = row.cons_report_observation
     rv['generalstatus'] = row.cons_generalstatus
+    rv['published'] = row.published
 
     return rv
 
@@ -408,6 +409,7 @@ def parse_habitat_commentform(row):
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
     rv['report_observation'] = row.cons_report_observation
+    rv['published'] = row.published
 
     return rv
 
@@ -498,6 +500,7 @@ def flatten_species_commentform(struct, obj):
                     'conclusion_assessment')
     obj.cons_report_observation = struct['report_observation']
     obj.cons_generalstatus = struct['generalstatus']
+    obj.published = struct['published']
 
 
 def flatten_habitat_commentform(struct, obj):
@@ -536,3 +539,4 @@ def flatten_habitat_commentform(struct, obj):
     obj.natura2000_area_max = struct['natura2000']['area']['max']
     obj.natura2000_area_method = struct['natura2000']['method']
     obj.natura2000_area_trend = struct['natura2000']['trend']
+    obj.published = struct['published']
