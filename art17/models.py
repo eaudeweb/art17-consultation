@@ -268,6 +268,10 @@ class DataHabitattypeRegion(Base):
         return self.pressures.filter_by(type='t')
 
     @property
+    def subject(self):
+        return self.habitat
+
+    @property
     def subject_identifier(self):
         return self.habitat.identifier
 
@@ -443,6 +447,10 @@ class DataSpeciesRegion(Base):
 
     def get_threats(self):
         return self.pressures.filter_by(type='t')
+
+    @property
+    def subject(self):
+        return self.species
 
     @property
     def subject_identifier(self):
