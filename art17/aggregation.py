@@ -2,7 +2,7 @@ from datetime import datetime
 import flask
 import flask.views
 from werkzeug.datastructures import MultiDict
-from art17 import models, dal
+from art17 import models, dal, schemas
 from art17.common import flatten_dict, perm_edit_record
 from art17.habitat import HabitatCommentView
 from art17.species import SpeciesCommentView
@@ -26,7 +26,7 @@ def get_tabmenu_data(dataset_id):
         }
 
 
-def record_edit_url(subject, region, dataset_id):
+def record_index_url(subject, region, dataset_id):
     if isinstance(subject, models.DataHabitat):
         habitat = models.DataHabitattypeRegion.query.filter_by(
             cons_dataset_id=dataset_id,
@@ -34,7 +34,7 @@ def record_edit_url(subject, region, dataset_id):
             region=region.code,
         ).first()
         if habitat:
-            return flask.url_for('.habitat',
+            return flask.url_for('.habitat-index',
                                  dataset_id=dataset_id,
                                  record_id=habitat.id,
             )
@@ -45,17 +45,17 @@ def record_edit_url(subject, region, dataset_id):
             region=region.code,
         ).first()
         if species:
-            return flask.url_for('.species-edit',
+            return flask.url_for('.species-index',
                                  dataset_id=dataset_id,
                                  record_id=species.id,
             )
-    return '#TODO'
+    raise RuntimeError("Expecting a speciesregion or a habitattyperegion")
 
 
 @aggregation.app_context_processor
 def inject_funcs():
     return dict(home_url=flask.url_for('aggregation.home'),
-                record_edit_url=record_edit_url,
+                record_index_url=record_index_url,
     )
 
 
@@ -206,7 +206,8 @@ class HabitatRecordView(RecordViewMixin, HabitatCommentView):
     template_base = 'aggregation/record.html'
 
     def get_next_url(self):
-        return flask.url_for('.habitats', dataset_id=self.dataset_id)
+        return flask.url_for('.habitat-index', dataset_id=self.dataset_id,
+                             record_id=self.record.id)
 
     def setup_template_context(self):
         super(HabitatRecordView, self).setup_template_context()
@@ -216,7 +217,7 @@ class HabitatRecordView(RecordViewMixin, HabitatCommentView):
 
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>/',
-                         view_func=HabitatRecordView.as_view('habitat'))
+                         view_func=HabitatRecordView.as_view('habitat-edit'))
 
 
 class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
@@ -225,8 +226,9 @@ class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
     template_base = 'aggregation/record.html'
 
     def get_next_url(self):
-        return flask.url_for('.species', dataset_id=self.record.cons_dataset_id,
-                             group_code=self.record.species.lu.group_code)
+        return flask.url_for('.species-index',
+                             dataset_id=self.dataset_id,
+                             record_id=self.record.id)
 
     def setup_template_context(self):
         super(SpeciesRecordView, self).setup_template_context()
@@ -238,3 +240,61 @@ class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>/',
                          view_func=SpeciesRecordView.as_view('species-edit'))
+
+
+class HabitatIndexView(flask.views.View):
+
+    topic_template = 'habitat/topic.html'
+
+    def dispatch_request(self, dataset_id, record_id):
+        self.dataset_id = dataset_id
+        record = models.DataHabitattypeRegion.query.get_or_404(record_id)
+        region = dal.get_biogeo_region(record.region)
+        return flask.render_template('aggregation/index-habitat.html', **{
+            'dataset_id': self.dataset_id,
+            'assessment': schemas.parse_habitat(record),
+            'subject': record.habitat,
+            'region': region,
+            'topic_template': self.topic_template,
+            'type': 'habitat',
+        })
+
+
+aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>/'
+                         'index/',
+                         view_func=HabitatIndexView.as_view('habitat-index'))
+
+from .habitat import detail as detail_habitat
+
+aggregation.route('/habitate/detalii/<int:record_id>',
+                  endpoint='detail-habitat')(detail_habitat)
+
+
+class SpeciesIndexView(flask.views.View):
+
+    topic_template = 'species/topic.html'
+
+    def dispatch_request(self, dataset_id, record_id):
+        self.dataset_id = dataset_id
+        record = models.DataSpeciesRegion.query.get_or_404(record_id)
+        region = dal.get_biogeo_region(record.region)
+        return flask.render_template('aggregation/index-species.html', **{
+            'dataset_id': self.dataset_id,
+            'assessment': schemas.parse_species(record),
+            'subject': record.species,
+            'region': region,
+            'topic_template': self.topic_template,
+            'type': 'species',
+            'group_code': record.species.lu.group_code,
+        })
+
+
+aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>/'
+                         'index/',
+                         view_func=SpeciesIndexView.as_view('species-index'))
+
+
+from .species import detail as detail_species
+
+aggregation.route('/specii/detalii/<int:record_id>',
+                  endpoint='detail-species')(detail_species)

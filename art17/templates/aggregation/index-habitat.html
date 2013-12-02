@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% from 'common/topic.html' import topic_html_aggregation with context %}
+
+{% block title %}
+{{- super() }}
+{%- endblock title %}
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('set de date', url_for('.dataset', dataset_id=dataset_id)),
+          ('habitate', url_for('.habitats', dataset_id=dataset_id)),
+          (region.code + ' - privire de ansamblu', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
+{% block content %}
+  <p>{{ subject.lu.display_name }}</p>
+
+  <p>{{ region.name_ro }}</p>
+
+  {{ topic_html_aggregation(
+    assessment,
+    type,
+    topic_template,
+  ) }}
+
+
+  {% include 'common/recorddetail.html' %}
+{%- endblock content %}
+
+{% block script %}
+  {%- from 'bits.html' import script %}
+  {{- super() }}
+  {{ script('detail.js') }}
+{% endblock script %}

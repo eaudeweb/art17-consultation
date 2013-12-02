@@ -92,3 +92,37 @@
    {% endfor %}
   </table>
 {%- endmacro %}
+
+
+{% macro topic_html_aggregation(
+    assessment_row,
+    type,
+    topic_template) %}
+  {%- from topic_template import
+      assessment_header, comments_header, record
+      with context -%}
+
+  <table class="records table table-bordered">
+    {{ assessment_header() }}
+
+    <tr>
+      {#- detail #}
+      <td>
+        {%- set url = url_for('.detail-' + type,
+                              record_id=assessment_row.id) %}
+        <button class="records-detailbtn btn btn-xs btn-info"
+                data-url="{{ url }}">detalii</button>
+      </td>
+
+      {{ record(assessment_row) }}
+
+      <td colspan=4>  {#- conclusion (author, etc) #}
+        {%- set url = url_for('.' + type + '-edit',
+                              dataset_id=dataset_id,
+                              record_id=assessment_row.id) %}
+        <a class="btn btn-xs btn-default"
+           href="{{ url }}">edit</a>
+      </td>
+    </tr>
+  </table>
+{%- endmacro %}

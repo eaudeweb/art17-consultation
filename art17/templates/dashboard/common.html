@@ -44,6 +44,7 @@
   </table>
 {%- endmacro %}
 
+
 {%- macro table_aggregation(bioreg_list, subject_list, regions) %}
   <table class="table table-bordered">
     <thead>
@@ -65,9 +66,9 @@
         {% for bioreg in bioreg_list %}
           {%- set key = (subject.id, bioreg.code) %}
           {%- if key in regions %}
-            {%- set url = record_edit_url(subject, bioreg, dataset_id) %}
+            {%- set url = record_index_url(subject, bioreg, dataset_id) %}
             <td class="dashboard-commentcount">
-              <a href="{{ url }}" class="btn btn-xs">edit</a>
+              <a href="{{ url }}" class="btn btn-xs">detalii</a>
             </td>
           {%- else %}
             <td class="dashboard-missingrecord"></td>
