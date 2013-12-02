@@ -67,7 +67,7 @@
           {%- if key in regions %}
             {%- set url = record_edit_url(subject, bioreg, dataset_id) %}
             <td class="dashboard-commentcount">
-              <a href="{{ url }}">{{ regions[key] }}</a>
+              <a href="{{ url }}" class="btn btn-xs">edit</a>
             </td>
           {%- else %}
             <td class="dashboard-missingrecord"></td>
