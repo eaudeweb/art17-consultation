@@ -154,6 +154,10 @@ class DataHabitat(Base):
                       primaryjoin=(code == foreign(LuHabitattypeCodes.code)),
                       uselist=False, lazy='eager')
 
+    @property
+    def identifier(self):
+        return 'habitat:%s' % (self.lu.code,)
+
 
 class DataHabitatsCheckList(Base):
     __tablename__ = u'data_habitats_check_list'
@@ -264,8 +268,8 @@ class DataHabitattypeRegion(Base):
         return self.pressures.filter_by(type='t')
 
     @property
-    def identifier(self):
-        return 'habitat:%s' % (self.habitat.lu.code,)
+    def subject_identifier(self):
+        return self.habitat.identifier
 
 
 class DataSpecies(Base):
@@ -300,6 +304,10 @@ class DataSpecies(Base):
                                          lazy='joined',
                                          uselist=False,
                                          innerjoin=True))
+
+    @property
+    def identifier(self):
+        return 'species:%s:%s' % (self.lu.group_code, int(self.lu.code))
 
 
 class DataSpeciesCheckList(Base):
@@ -437,11 +445,8 @@ class DataSpeciesRegion(Base):
         return self.pressures.filter_by(type='t')
 
     @property
-    def identifier(self):
-        return 'species:%s:%s' % (
-            self.species.lu.group_code,
-            int(self.species.lu.code),
-        )
+    def subject_identifier(self):
+        return self.species.identifier
 
 
 class DataMeasures(Base):

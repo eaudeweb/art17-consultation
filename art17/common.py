@@ -61,7 +61,7 @@ def calculate_identifier_steps(identifier):
 
 
 def get_roles_for_record(role_base, comment):
-    full_name = '%s:%s' % (role_base, comment.identifier)
+    full_name = '%s:%s' % (role_base, comment.subject_identifier)
     steps = calculate_identifier_steps(full_name)
     return [need.role(s) for s in steps]
 

@@ -93,8 +93,8 @@ def get_parent_object(table, objectid):
 def get_notification_emails(obj):
     if isinstance(obj, models.CommentReply):
         parent = get_parent_object(obj.parent_table, obj.parent_id)
-        identifier = parent.identifier
+        identifier = parent.subject_identifier
     else:
-        identifier = obj.identifier
+        identifier = obj.subject_identifier
     # TODO: get emails from SharePoint, using identity
     return models.NotificationUser.query.all()
