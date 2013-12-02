@@ -112,6 +112,15 @@ SPECIES_STRUCT_DATA = {
         'other_relevant_information': '--',
         'transboundary_assessment': '---',
     },
+    'natura2000': {
+        'population': {
+            'min': 2,
+            'max': 6,
+            'unit': '',
+        },
+        'method': '',
+        'trend': '',
+    },
     'future_prospects': {
         'value': 'U2',
         'trend': '+',
@@ -170,6 +179,11 @@ SPECIES_MODEL_DATA = {
     'justification': '-',
     'other_relevant_information': '--',
     'transboundary_assessment': '---',
+    'natura2000_population_min': 2,
+    'natura2000_population_max': 6,
+    'natura2000_population_unit': '',
+    'natura2000_population_method': '',
+    'natura2000_population_trend': '',
     'conclusion_habitat': 'U1',
     'conclusion_habitat_trend': '-',
 
@@ -331,6 +345,7 @@ def test_save_all_form_fields(species_app):
 
     with species_app.app_context():
         form = forms.SpeciesComment(form_data)
+        form.validate()
         assert form.validate()
 
     comment = models.DataSpeciesRegion()

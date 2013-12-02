@@ -321,6 +321,24 @@ class Infocomp(Form):
     transboundary_assessment = TextField(validators=[Optional()])
 
 
+class Natura2000Species(Form):
+
+    population = FormField(PopulationValue)
+    method = SelectField(default='',
+                         choices=EMPTY_CHOICE + METHODS_USED_OPTIONS,
+                         validators=[Optional()],
+    )
+    trend = SelectField(
+        choices=EMPTY_CHOICE + TREND_OPTIONS,
+        default='',
+        validators=[Optional()]
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(Natura2000Species, self).__init__(*args, **kwargs)
+        self.population.unit.choices = EMPTY_CHOICE + LU_POP_NUMBER_OPTIONS
+
+
 class SpeciesComment(Form):
     range = FormField(Range)
     population = FormField(Population)
@@ -328,6 +346,7 @@ class SpeciesComment(Form):
     pressures = FormField(Pressures)
     threats = FormField(Threats)
     infocomp = FormField(Infocomp)
+    natura2000 = FormField(Natura2000Species)
     measures = FormField(Measures)
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)

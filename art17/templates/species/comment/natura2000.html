@@ -1,0 +1,64 @@
+{% from 'common/comment_bits.html' import error_cls, errors %}
+
+<div class="tab-pane comment" id="comment-natura2000">
+  <div class="panel panel-default">
+
+    <div class="panel-body">
+      <div class="form-group">
+        {%- set population = form.natura2000.population %}
+        <label for="population.unit">
+          Mărimea populației
+        </label>
+
+        {{ errors(population) }}
+
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(population.unit) }}">
+            {{ population.unit(class='form-control') }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(population.min) }}">
+            {{ population.min(class='form-control',
+                    placeholder="numǎr minim") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(population.max) }}">
+            {{ population.max(class='form-control',
+                    placeholder="numǎr maxim") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="natura2000.method">
+          Metoda utilizată
+        </label>
+
+        {{ errors(form.natura2000.method) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(form.natura2000.method) }}">
+            {{ form.natura2000.method(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set trend = form.natura2000.trend %}
+        <label for="natura2000.trend">
+          Tendință pe termen scurt
+        </label>
+
+        {{ errors(trend) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(trend) }}">
+            {{ trend(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

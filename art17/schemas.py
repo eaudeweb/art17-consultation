@@ -262,6 +262,16 @@ def parse_species_commentform(row):
         'transboundary_assessment': row.transboundary_assessment,
     }
 
+    rv['natura2000'] = {
+        'population': {
+            'min': row.natura2000_population_min,
+            'max': row.natura2000_population_max,
+            'unit': row.natura2000_population_unit,
+        },
+        'method': row.natura2000_population_method,
+        'trend': row.natura2000_population_trend,
+    }
+
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
     rv['report_observation'] = row.cons_report_observation
@@ -466,6 +476,11 @@ def flatten_species_commentform(struct, obj):
     obj.justification = struct['infocomp']['justification']
     obj.other_relevant_information = struct['infocomp']['other_relevant_information']
     obj.transboundary_assessment = struct['infocomp']['transboundary_assessment']
+    obj.natura2000_population_min = struct['natura2000']['population']['min']
+    obj.natura2000_population_max = struct['natura2000']['population']['max']
+    obj.natura2000_population_unit = struct['natura2000']['population']['unit']
+    obj.natura2000_population_method = struct['natura2000']['method']
+    obj.natura2000_population_trend = struct['natura2000']['trend']
     flatten_conclusion(struct['habitat']['conclusion'], obj,
                     'conclusion_habitat')
 
