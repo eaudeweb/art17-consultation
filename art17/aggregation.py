@@ -242,22 +242,34 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>/',
                          view_func=SpeciesRecordView.as_view('species-edit'))
 
 
-class HabitatIndexView(flask.views.View):
-
-    topic_template = 'habitat/topic.html'
+class IndexViewMixin(object):
 
     def dispatch_request(self, dataset_id, record_id):
         self.dataset_id = dataset_id
-        record = models.DataHabitattypeRegion.query.get_or_404(record_id)
-        region = dal.get_biogeo_region(record.region)
-        return flask.render_template('aggregation/index-habitat.html', **{
+        self.record = self.model_cls.query.get_or_404(record_id)
+        region = dal.get_biogeo_region(self.record.region)
+        context = self.get_template_context()
+        context.update(**{
             'dataset_id': self.dataset_id,
-            'assessment': schemas.parse_habitat(record),
-            'subject': record.habitat,
+            'assessment': self.parse_record(self.record),
             'region': region,
             'topic_template': self.topic_template,
-            'type': 'habitat',
         })
+        return flask.render_template(self.template_name, **context)
+
+
+class HabitatIndexView(IndexViewMixin, flask.views.View):
+
+    topic_template = 'habitat/topic.html'
+    template_name = 'aggregation/index-habitat.html'
+    model_cls = models.DataHabitattypeRegion
+    parse_record = staticmethod(schemas.parse_habitat)
+
+    def get_template_context(self):
+        return {
+            'subject': self.record.habitat,
+            'type': 'habitat',
+        }
 
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>/'
@@ -270,23 +282,19 @@ aggregation.route('/habitate/detalii/<int:record_id>',
                   endpoint='detail-habitat')(detail_habitat)
 
 
-class SpeciesIndexView(flask.views.View):
+class SpeciesIndexView(IndexViewMixin, flask.views.View):
 
     topic_template = 'species/topic.html'
+    template_name = 'aggregation/index-species.html'
+    model_cls = models.DataSpeciesRegion
+    parse_record = staticmethod(schemas.parse_species)
 
-    def dispatch_request(self, dataset_id, record_id):
-        self.dataset_id = dataset_id
-        record = models.DataSpeciesRegion.query.get_or_404(record_id)
-        region = dal.get_biogeo_region(record.region)
-        return flask.render_template('aggregation/index-species.html', **{
-            'dataset_id': self.dataset_id,
-            'assessment': schemas.parse_species(record),
-            'subject': record.species,
-            'region': region,
-            'topic_template': self.topic_template,
+    def get_template_context(self):
+        return {
+            'subject': self.record.species,
+            'group_code': self.record.species.lu.group_code,
             'type': 'species',
-            'group_code': record.species.lu.group_code,
-        })
+        }
 
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>/'
