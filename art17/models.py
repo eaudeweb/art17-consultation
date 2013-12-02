@@ -255,7 +255,7 @@ class DataHabitattypeRegion(Base):
                       innerjoin=True, uselist=False)
 
     dataset = relationship('Dataset',
-        backref=db.backref('species_objs', lazy='dynamic'))
+        backref=db.backref('habitat_objs', lazy='dynamic'))
 
     def get_pressures(self):
         return self.pressures.filter_by(type='p')
@@ -428,7 +428,7 @@ class DataSpeciesRegion(Base):
                       innerjoin=True, uselist=False)
 
     dataset = relationship('Dataset',
-        backref=db.backref('habitat_objs', lazy='dynamic'))
+        backref=db.backref('species_objs', lazy='dynamic'))
 
     def get_pressures(self):
         return self.pressures.filter_by(type='p')
