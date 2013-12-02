@@ -121,15 +121,15 @@ class BaseDataset(object):
 
         return overview
 
-    def get_topic_records(self, subject, region):
+    def get_topic_records(self, subject, region_code):
         records_query = (
             self.record_model.query
             .filter(self.record_model_subject_id == subject.id)
             .filter_by(cons_dataset_id=self.dataset_id)
             .order_by(self.record_model.cons_date)
         )
-        if region is not None:
-            records_query = records_query.filter_by(region=region.code)
+        if region_code is not None:
+            records_query = records_query.filter_by(region=region_code)
 
         return iter(records_query)
 

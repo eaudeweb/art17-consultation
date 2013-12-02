@@ -214,7 +214,7 @@ class IndexView(flask.views.View, IndexMixin):
 
         topic = {'comments': []}
 
-        for record in self.dataset.get_topic_records(subject, region):
+        for record in self.dataset.get_topic_records(subject, region.code):
             if record.cons_role == 'assessment':
                 topic['assessment'] = self.parse_record(record)
 
