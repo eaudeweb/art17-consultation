@@ -74,6 +74,14 @@ HABITAT_STRUCT_DATA = {
         'threats_method': '1',
     },
     'measures': {},
+    'natura2000': {
+        'area': {
+            'min': 0,
+            'max': 100,
+        },
+        'method': '',
+        'trend': '+',
+    },
     'future_prospects': {
         'value': 'U2',
         'trend': '+',
@@ -112,6 +120,10 @@ HABITAT_MODEL_DATA = {
     'complementary_favourable_area_method': 'foo method',
     'pressures_method': '1',
     'threats_method': '1',
+    'natura2000_area_min': 0,
+    'natura2000_area_max': 100,
+    'natura2000_area_method': '',
+    'natura2000_area_trend': '+',
     'conclusion_area': 'U2',
     'conclusion_area_trend': '+',
 

@@ -175,6 +175,13 @@ class PopulationValue(Form):
         validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
 
 
+class AreaValue(Form):
+    min = DecimalField(
+        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+    max = DecimalField(
+        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+
+
 class PopulationSize(Form):
     population = FormField(PopulationValue)
     population_alt = FormField(PopulationValue)
@@ -339,6 +346,20 @@ class Natura2000Species(Form):
         self.population.unit.choices = EMPTY_CHOICE + LU_POP_NUMBER_OPTIONS
 
 
+class Natura2000Habitat(Form):
+
+    area = FormField(AreaValue)
+    method = SelectField(default='',
+                         choices=EMPTY_CHOICE + METHODS_USED_OPTIONS,
+                         validators=[Optional()],
+    )
+    trend = SelectField(
+        choices=EMPTY_CHOICE + TREND_OPTIONS,
+        default='',
+        validators=[Optional()]
+    )
+
+
 class SpeciesComment(Form):
     range = FormField(Range)
     population = FormField(Population)
@@ -377,6 +398,7 @@ class HabitatComment(Form):
     coverage = FormField(Coverage)
     pressures = FormField(Pressures)
     threats = FormField(Threats)
+    natura2000 = FormField(Natura2000Habitat)
     measures = FormField(Measures)
     structure = FormField(Conclusion)
     future_prospects = FormField(Conclusion)

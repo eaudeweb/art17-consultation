@@ -42,6 +42,9 @@
     <li {% if form.measures.errors %}class="text-error"{% endif %}>
       <a href="#comment-measures" data-toggle="tab">Măsuri</a>
     </li>
+    <li {% if form.natura2000.errors %}class="text-error"{% endif %}>
+      <a href="#comment-natura2000" data-toggle="tab">Natura 2000</a>
+    </li>
     <li {% if form.structure.errors or
               form.future_prospects.errors or
               form.overall_assessment.errors -%}
@@ -57,6 +60,7 @@
     {% include "common/comment/pressures.html" with context %}
     {% include "common/comment/threats.html" with context %}
     {% include "common/comment/measures.html" with context %}
+    {% include "habitat/comment/natura2000.html" with context %}
     {% include "habitat/comment/conclusion.html" with context %}
   </div>
 {% endblock form_content %}

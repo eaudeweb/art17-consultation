@@ -1,0 +1,60 @@
+{% from 'common/comment_bits.html' import error_cls, errors %}
+
+<div class="tab-pane comment" id="comment-natura2000">
+  <div class="panel panel-default">
+
+    <div class="panel-body">
+      <div class="form-group">
+        {%- set area = form.natura2000.area %}
+        <label for="area.unit">
+          Suprafața (km<sup>2</sup>)
+        </label>
+
+        {{ errors(area) }}
+
+        <div class="row">
+          <div class="col-sm-3 {{- error_cls(area.min) }}">
+            {{ area.min(class='form-control',
+                    placeholder="valoare minimă") }}
+          </div>
+
+          <div class="col-sm-3 {{- error_cls(area.max) }}">
+            {{ area.max(class='form-control',
+                    placeholder="valoare maximă") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="natura2000.method">
+          Metoda utilizată
+        </label>
+
+        {{ errors(form.natura2000.method) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(form.natura2000.method) }}">
+            {{ form.natura2000.method(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set trend = form.natura2000.trend %}
+        <label for="natura2000.trend">
+          Tendință pe termen scurt
+        </label>
+
+        {{ errors(trend) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(trend) }}">
+            {{ trend(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

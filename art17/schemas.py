@@ -396,6 +396,14 @@ def parse_habitat_commentform(row):
                 for m in row.measures
             ]
     } if row.measures.count() else {}
+    rv['natura2000'] = {
+        'area': {
+            'min': row.natura2000_area_min,
+            'max': row.natura2000_area_max,
+        },
+        'method': row.natura2000_area_method,
+        'trend': row.natura2000_area_trend,
+    }
     rv['structure'] = parse_conclusion(row, 'conclusion_structure')
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
@@ -491,6 +499,7 @@ def flatten_species_commentform(struct, obj):
     obj.cons_report_observation = struct['report_observation']
     obj.cons_generalstatus = struct['generalstatus']
 
+
 def flatten_habitat_commentform(struct, obj):
     obj.range_surface_area = struct['range']['surface_area']
     obj.range_method = struct['range']['method']
@@ -523,3 +532,7 @@ def flatten_habitat_commentform(struct, obj):
     obj.cons_report_observation = struct['report_observation']
     obj.pressures_method = struct['pressures']['pressures_method']
     obj.threats_method = struct['threats']['threats_method']
+    obj.natura2000_area_min = struct['natura2000']['area']['min']
+    obj.natura2000_area_max = struct['natura2000']['area']['max']
+    obj.natura2000_area_method = struct['natura2000']['method']
+    obj.natura2000_area_trend = struct['natura2000']['trend']
