@@ -256,6 +256,12 @@ def parse_species_commentform(row):
             ]
     } if row.measures.count() else {}
 
+    rv['infocomp'] = {
+        'justification': row.justification,
+        'other_relevant_information': row.other_relevant_information,
+        'transboundary_assessment': row.transboundary_assessment,
+    }
+
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
     rv['report_observation'] = row.cons_report_observation
@@ -457,6 +463,9 @@ def flatten_species_commentform(struct, obj):
     obj.habitat_area_suitable = struct['habitat']['area_suitable']
     obj.pressures_method = struct['pressures']['pressures_method']
     obj.threats_method = struct['threats']['threats_method']
+    obj.justification = struct['infocomp']['justification']
+    obj.other_relevant_information = struct['infocomp']['other_relevant_information']
+    obj.transboundary_assessment = struct['infocomp']['transboundary_assessment']
     flatten_conclusion(struct['habitat']['conclusion'], obj,
                     'conclusion_habitat')
 

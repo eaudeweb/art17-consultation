@@ -312,6 +312,13 @@ class MeasuresForm(Form):
 
 class Measures(Form):
     measures = MultipleJSONField(default='')
+    
+    
+class Infocomp(Form):
+    
+    justification = TextField(validators=[Optional()])
+    other_relevant_information = TextField(validators=[Optional()])
+    transboundary_assessment = TextField(validators=[Optional()])
 
 
 class SpeciesComment(Form):
@@ -320,6 +327,7 @@ class SpeciesComment(Form):
     habitat = FormField(Habitat)
     pressures = FormField(Pressures)
     threats = FormField(Threats)
+    infocomp = FormField(Infocomp)
     measures = FormField(Measures)
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)

@@ -107,6 +107,11 @@ SPECIES_STRUCT_DATA = {
     },
     'measures': {
     },
+    'infocomp': {
+        'justification': '-',
+        'other_relevant_information': '--',
+        'transboundary_assessment': '---',
+    },
     'future_prospects': {
         'value': 'U2',
         'trend': '+',
@@ -162,6 +167,9 @@ SPECIES_MODEL_DATA = {
     'habitat_area_suitable': 1000,
     'pressures_method': '1',
     'threats_method': '1',
+    'justification': '-',
+    'other_relevant_information': '--',
+    'transboundary_assessment': '---',
     'conclusion_habitat': 'U1',
     'conclusion_habitat_trend': '-',
 

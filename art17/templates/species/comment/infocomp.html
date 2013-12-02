@@ -1,0 +1,52 @@
+{% from 'common/comment_bits.html' import error_cls, errors %}
+
+<div class="tab-pane comment" id="comment-infocomp">
+  <div class="panel panel-default">
+
+    <div class="panel-body">
+      <div class="form-group">
+        <label for="infocomp.justification">
+          Justificarea procentului de prag pentru tendințe
+        </label>
+
+        {{ errors(form.infocomp.justification) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(form.infocomp.justification) }}">
+            {{ form.infocomp.justification(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="infocomp.other_relevant_information">
+          Alte informații relevante
+        </label>
+
+        {{ errors(form.infocomp.other_relevant_information) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(form.infocomp.other_relevant_information) }}">
+            {{ form.infocomp.other_relevant_information(class='form-control') }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="infocomp.transboundary_assessment">
+          Justificarea procentului de prag pentru tendințe
+        </label>
+
+        {{ errors(form.infocomp.transboundary_assessment) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(form.infocomp.transboundary_assessment) }}">
+            {{ form.infocomp.transboundary_assessment(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
