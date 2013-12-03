@@ -421,18 +421,21 @@ class FinalCommentMixin(object):
         if self.object is None:
             self.new_record = True
             self.object = self.dataset.create_record(cons_role='final-draft')
+            data = self.parse_commentform(self.record)
+            self.flatten_commentform(data, self.object)
             self.dataset.link_to_record(self.object, self.record)
-            self.form = self.form_cls(flask.request.form)
 
         else:
             self.new_record = False
             self.record = self.record_for_comment(self.object)
-            self.original_data = self.parse_commentform(self.object)
-            if flask.request.method == 'POST':
-                form_data = flask.request.form
-            else:
-                form_data = MultiDict(flatten_dict(self.original_data))
-            self.form = self.form_cls(form_data)
+            data = self.parse_commentform(self.object)
+            self.original_data = data
+
+        if flask.request.method == 'POST':
+            form_data = flask.request.form
+        else:
+            form_data = MultiDict(flatten_dict(data))
+        self.form = self.form_cls(form_data)
 
 
 class CloseConsultationView(flask.views.View):
