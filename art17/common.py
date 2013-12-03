@@ -388,13 +388,13 @@ class FinalCommentMixin(object):
         )
         self.object = None
         for row in row_list:
-            if row.cons_role == 'final':
+            if row.cons_role == 'final-draft':
                 self.object = row
 
         if self.object is None:
             self.new_record = True
             self.object = self.comment_cls(
-                cons_role='final',
+                cons_role='final-draft',
                 cons_user_id=flask.g.identity.id,
                 cons_date=datetime.utcnow(),
             )
