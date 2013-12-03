@@ -70,7 +70,7 @@ def home():
     })
 
 
-@aggregation.route('/agregare', methods=['GET', 'POST'])
+@aggregation.route('/executa_agregare', methods=['GET', 'POST'])
 def aggregate():
     if flask.request.method == 'POST':
         q = "SELECT SYS_CONTEXT('USERENV', 'SESSION_USER') FROM DUAL"
