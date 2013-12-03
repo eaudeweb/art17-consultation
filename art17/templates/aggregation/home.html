@@ -32,7 +32,7 @@
   </thead>
 
   {%- for dataset in dataset_list %}
-    {%- set url = url_for('.dataset', dataset_id=dataset.id) %}
+    {%- set url = url_for('.dashboard', dataset_id=dataset.id) %}
     <tr>
       <td><a href="{{ url }}">{{ dataset.date }}</a></td>
       <td>{{ dataset.user_id }}</td>

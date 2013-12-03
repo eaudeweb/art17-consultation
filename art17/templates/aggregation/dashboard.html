@@ -8,13 +8,21 @@
   {%- from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
           ('acasǎ', home_url),
-          ('set de date', dataset_url),
-          ('dashboard', None),
+          ('set de date', None),
       ]) }}
 {% endblock breadcrumbs %}
 
 
 {% block content %}
+  <h2>Set de date, {{ dataset.user_id or "-" }}, {{ dataset.date }}</h2>
+
+  <p>{{ dataset.comment }}</p>
+
+  <p>
+    Înregistrări:
+    specii {{ species_count }},
+    habitate {{ habitat_count }}
+  </p>
   {%- from 'dashboard/common.html' import table_aggregation, tabmenu with context %}
   {{ tabmenu(current=current_tab) }}
 

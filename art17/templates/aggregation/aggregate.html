@@ -28,7 +28,7 @@
 
     <p>
       Setul de date:
-      {%- set url = url_for('.dataset', dataset_id=dataset.id) %}
+      {%- set url = url_for('.dashboard', dataset_id=dataset.id) %}
       <a href="{{ url }}">{{ dataset.date }}</a>
     </p>
 

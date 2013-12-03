@@ -9,7 +9,7 @@
   {%- from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
           ('acasǎ', home_url),
-          ('set de date', url_for('.dataset', dataset_id=dataset_id)),
+          ('set de date', url_for('.dashboard', dataset_id=dataset_id)),
           ('habitate', url_for('.habitats', dataset_id=dataset_id)),
           (region.code + ' - privire de ansamblu', None),
       ]) }}

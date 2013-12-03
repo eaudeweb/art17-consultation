@@ -86,16 +86,6 @@ def aggregate():
     })
 
 
-@aggregation.route('/dataset/<int:dataset_id>')
-def dataset(dataset_id):
-    dataset = models.Dataset.query.get_or_404(dataset_id)
-    return flask.render_template('aggregation/dataset.html', **{
-        'dataset': dataset,
-        'habitat_count': dataset.habitat_objs.count(),
-        'species_count': dataset.species_objs.count(),
-    })
-
-
 def execute_on_primary(query):
     app = flask.current_app
     aggregation_engine = models.db.get_engine(app, 'primary')
@@ -135,15 +125,19 @@ class DashboardView(flask.views.View):
     methods = ['GET']
 
     def get_context_data(self):
-        dataset = self.ds_model(self.dataset_id)
+        dal_object = self.ds_model(self.dataset_id)
+        dataset = models.Dataset.query.get_or_404(self.dataset_id)
         return {
             'current_tab': self.current_tab,
             'bioreg_list': dal.get_biogeo_region_list(),
             'tabmenu_data': list(get_tabmenu_data(self.dataset_id)),
-            'dataset_url': flask.url_for('.dataset', dataset_id=self.dataset_id),
+            'dataset_url': flask.url_for('.dashboard', dataset_id=self.dataset_id),
             'dataset_id': self.dataset_id,
             'object_list': self.get_object_list(),
-            'object_regions': dataset.get_subject_region_overview(),
+            'object_regions': dal_object.get_subject_region_overview(),
+            'dataset': dataset,
+            'habitat_count': dataset.habitat_objs.count(),
+            'species_count': dataset.species_objs.count(),
         }
 
     def dispatch_request(self, *args, **kwargs):
@@ -163,6 +157,11 @@ class HabitatsDashboard(DashboardView):
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/',
                          view_func=HabitatsDashboard.as_view('habitats'))
+
+
+@aggregation.route('/dataset/<int:dataset_id>/')
+def dashboard(dataset_id):
+    return flask.redirect(flask.url_for('.habitats', dataset_id=dataset_id))
 
 
 class SpeciesDashboard(DashboardView):
