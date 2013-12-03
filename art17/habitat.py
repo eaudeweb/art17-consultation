@@ -5,7 +5,7 @@ from art17 import models
 from art17 import dal
 from art17.common import (IndexView, CommentStateView,
                           CommentDeleteView, RecordView, CommentViewMixin,
-                          FinalCommentMixin)
+                          FinalCommentMixin, CloseConsultationView)
 from art17 import forms
 from art17 import schemas
 
@@ -43,6 +43,9 @@ class HabitatIndexView(IndexView, HabitatMixin):
 
     def get_final_comment_url(self, record_id, next):
         return flask.url_for('.final_comment', record_id=record_id, next=next)
+
+    def get_close_consultation_url(self, record_id, next):
+        return flask.url_for('.close', record_id=record_id, next=next)
 
 
 habitat.add_url_rule('/habitate/', view_func=HabitatIndexView.as_view('index'))
@@ -137,3 +140,11 @@ class HabitatFinalCommentView(FinalCommentMixin, HabitatCommentView):
 
 habitat.add_url_rule('/habitate/detalii/<int:record_id>/final',
                      view_func=HabitatFinalCommentView.as_view('final_comment'))
+
+
+class HabitatCloseConsultationView(CloseConsultationView):
+
+    dataset = dal.HabitatDataset()
+
+habitat.add_url_rule('/habitate/detalii/<int:record_id>/inchide',
+            view_func=HabitatCloseConsultationView.as_view('close'))

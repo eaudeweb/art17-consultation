@@ -232,6 +232,10 @@ class IndexView(flask.views.View, IndexMixin):
             topic['assessment']['id'],
             next=comment_next,
         )
+        close_consultation_url = self.get_close_consultation_url(
+            topic['assessment']['id'],
+            next=comment_next,
+        )
 
         return flask.render_template('common/indexpage.html', **{
             'subject': subject,
@@ -245,6 +249,7 @@ class IndexView(flask.views.View, IndexMixin):
             'dashboard_url': self.get_dashboard_url(subject),
             'comment_history_view': self.comment_history_view,
             'final_comment_url': final_comment_url,
+            'close_consultation_url': close_consultation_url,
             'perm_edit_final_for_this': perm_edit_final(subject),
         })
 
@@ -405,6 +410,16 @@ class FinalCommentMixin(object):
             else:
                 form_data = MultiDict(flatten_dict(self.original_data))
             self.form = self.form_cls(form_data)
+
+
+class CloseConsultationView(flask.views.View):
+
+    methods = ['POST']
+
+    def dispatch_request(self, record_id):
+        self.record = self.dataset.get_comment(record_id) or flask.abort(404)
+        perm_edit_final(self.record.subject).test()
+        return 'ok'
 
 
 cons_manager = Manager()
