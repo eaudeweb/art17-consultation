@@ -139,7 +139,7 @@ class SpeciesFinalCommentView(FinalCommentMixin, SpeciesCommentView):
     signal = Signal()  # ignored
 
 
-species.add_url_rule('/specii/detalii/<int:record_id>/final',
+species.add_url_rule('/specii/detalii/<int:record_id>/edit_final',
                      view_func=SpeciesFinalCommentView.as_view('final_comment'))
 
 

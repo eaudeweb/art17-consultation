@@ -138,7 +138,7 @@ class HabitatFinalCommentView(FinalCommentMixin, HabitatCommentView):
     signal = Signal()  # ignored
 
 
-habitat.add_url_rule('/habitate/detalii/<int:record_id>/final',
+habitat.add_url_rule('/habitate/detalii/<int:record_id>/edit_final',
                      view_func=HabitatFinalCommentView.as_view('final_comment'))
 
 
