@@ -1,0 +1,15 @@
+{% extends "common/comment-saved.html" %}
+
+{% block content %}
+<h1>
+  Înregistrarea
+  {{ subject.lu.display_name }}
+  ({{ record.region }})
+</h1>
+
+<p class="text-success">Înregistrarea a fost actualizată.</p>
+
+<p>
+  <a class="btn btn-primary" href="{{ next_url }}">Înapoi</a>
+</p>
+{% endblock content %}

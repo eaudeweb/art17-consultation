@@ -65,7 +65,6 @@ class HabitatCommentView(RecordView, CommentViewMixin, HabitatMixin):
     parse_commentform = staticmethod(schemas.parse_habitat_commentform)
     flatten_commentform = staticmethod(schemas.flatten_habitat_commentform)
     template = 'habitat/comment.html'
-    template_saved = 'habitat/comment-saved.html'
     add_signal = comment_added
     edit_signal = comment_edited
 

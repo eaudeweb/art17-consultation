@@ -2,7 +2,7 @@
 
 
 {% block title %}
-  {%- if habitat %}{{ habitat.name }} &mdash; {% endif %}
+  {{ subject.lu.display_name }} &mdash;
   {{- super() }}
 {%- endblock title %}
 

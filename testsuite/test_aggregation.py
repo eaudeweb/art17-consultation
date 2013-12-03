@@ -3,7 +3,7 @@ from test_habitat import _create_habitat_record
 from test_species import _create_species_record
 
 
-COMMENT_SAVED_TXT = "Comentariul a fost înregistrat"
+COMMENT_SAVED_TXT = "Înregistrarea a fost actualizată"
 
 
 def test_update_habitat_record(aggregation_app):

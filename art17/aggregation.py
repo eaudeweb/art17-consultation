@@ -182,6 +182,9 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/species/<group_code>',
 
 class RecordViewMixin(object):
 
+    template_base = 'aggregation/record.html'
+    template_saved = 'aggregation/record-saved.html'
+
     def setup_record_and_form(self, record_id=None, comment_id=None):
         if record_id:
             self.new_record = False
@@ -203,7 +206,6 @@ class RecordViewMixin(object):
 class HabitatRecordView(RecordViewMixin, HabitatCommentView):
 
     template = 'aggregation/record-habitat.html'
-    template_base = 'aggregation/record.html'
     add_signal = Signal()
     edit_signal = Signal()
 
@@ -225,7 +227,6 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>/',
 class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
 
     template = 'aggregation/record-species.html'
-    template_base = 'aggregation/record.html'
     add_signal = Signal()
     edit_signal = Signal()
 
