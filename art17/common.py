@@ -325,7 +325,7 @@ class CommentViewMixin(object):
 
         elif comment_id:
             self.new_record = False
-            self.object = self.comment_cls.query.get_or_404(comment_id)
+            self.object = self.dataset.get_comment(comment_id) or flask.abort(404)
             perm_edit_comment(self.object).test()
             self.record = self.record_for_comment(self.object)
             self.original_data = self.parse_commentform(self.object)
