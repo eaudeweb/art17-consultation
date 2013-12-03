@@ -11,7 +11,8 @@ def test_update_habitat_record(aggregation_app):
     _create_habitat_record(aggregation_app)
     client = aggregation_app.test_client()
     resp = client.post('/dataset/1/habitate/1/',
-                       data={'range.surface_area': '42'})
+                       data={'range.surface_area': '42'},
+                       follow_redirects=True)
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with aggregation_app.app_context():
@@ -25,7 +26,8 @@ def test_update_species_record(aggregation_app):
     _create_species_record(aggregation_app)
     client = aggregation_app.test_client()
     resp = client.post('/dataset/1/specii/1/',
-                       data={'range.surface_area': '42'})
+                       data={'range.surface_area': '42'},
+                       follow_redirects=True)
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with aggregation_app.app_context():

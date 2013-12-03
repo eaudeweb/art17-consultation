@@ -3,7 +3,9 @@ from blinker import Signal
 from art17 import models
 from art17 import dal
 from art17.common import (IndexView, CommentStateView,
-                          CommentDeleteView, RecordView, CommentViewMixin)
+                          CommentDeleteView, RecordView, CommentViewMixin,
+                          FinalCommentMixin, DeleteDraftView,
+                          CloseConsultationView, ReopenConsultationView)
 from art17 import forms
 from art17 import schemas
 
@@ -62,7 +64,6 @@ class SpeciesCommentView(RecordView, CommentViewMixin, SpeciesMixin):
 
     form_cls = forms.SpeciesComment
     record_cls = models.DataSpeciesRegion
-    comment_cls = models.DataSpeciesRegion
     parse_commentform = staticmethod(schemas.parse_species_commentform)
     flatten_commentform = staticmethod(schemas.flatten_species_commentform)
     template = 'species/comment.html'
@@ -70,12 +71,13 @@ class SpeciesCommentView(RecordView, CommentViewMixin, SpeciesMixin):
     edit_signal = comment_edited
 
     def get_next_url(self):
-        return flask.url_for('.index')
-
-    def link_comment_to_record(self):
-        self.object.species_id = self.record.species_id
-        self.object.region = self.record.region
-        self.object.cons_dataset_id = self.dataset.dataset_id
+        if flask.current_app.testing:
+            return flask.request.url
+        return flask.url_for(
+            '.index',
+            species=self.record.species.code,
+            region=self.record.region,
+        )
 
     def setup_template_context(self):
         self.template_ctx = {
@@ -125,3 +127,37 @@ class SpeciesCommentDeleteView(CommentDeleteView):
 
 species.add_url_rule('/specii/comentarii/<int:comment_id>/sterge',
             view_func=SpeciesCommentDeleteView.as_view('comment_delete'))
+
+
+class SpeciesFinalCommentView(FinalCommentMixin, SpeciesCommentView):
+
+    signal = Signal()  # ignored
+
+
+species.add_url_rule('/specii/detalii/<int:record_id>/edit_final',
+                     view_func=SpeciesFinalCommentView.as_view('final_comment'))
+
+
+class SpeciesDeleteDraftView(DeleteDraftView):
+
+    dataset = dal.SpeciesDataset()
+
+
+species.add_url_rule('/specii/detalii/<int:record_id>/delete_final',
+                     view_func=SpeciesDeleteDraftView.as_view('delete_draft'))
+
+
+class SpeciesCloseConsultationView(CloseConsultationView):
+
+    dataset = dal.SpeciesDataset()
+
+species.add_url_rule('/specii/detalii/<int:record_id>/inchide',
+            view_func=SpeciesCloseConsultationView.as_view('close'))
+
+
+class SpeciesReopenConsultationView(ReopenConsultationView):
+
+    dataset = dal.SpeciesDataset()
+
+species.add_url_rule('/specii/detalii/<int:final_record_id>/redeschide',
+            view_func=SpeciesReopenConsultationView.as_view('reopen'))

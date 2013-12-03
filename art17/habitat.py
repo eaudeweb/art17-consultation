@@ -4,7 +4,9 @@ from blinker import Signal
 from art17 import models
 from art17 import dal
 from art17.common import (IndexView, CommentStateView,
-                          CommentDeleteView, RecordView, CommentViewMixin)
+                          CommentDeleteView, RecordView, CommentViewMixin,
+                          FinalCommentMixin, DeleteDraftView,
+                          CloseConsultationView, ReopenConsultationView)
 from art17 import forms
 from art17 import schemas
 
@@ -61,7 +63,6 @@ class HabitatCommentView(RecordView, CommentViewMixin, HabitatMixin):
 
     form_cls = forms.HabitatComment
     record_cls = models.DataHabitattypeRegion
-    comment_cls = models.DataHabitattypeRegion
     parse_commentform = staticmethod(schemas.parse_habitat_commentform)
     flatten_commentform = staticmethod(schemas.flatten_habitat_commentform)
     template = 'habitat/comment.html'
@@ -69,12 +70,13 @@ class HabitatCommentView(RecordView, CommentViewMixin, HabitatMixin):
     edit_signal = comment_edited
 
     def get_next_url(self):
-        return flask.url_for('.index')
-
-    def link_comment_to_record(self):
-        self.object.habitat_id = self.record.habitat_id
-        self.object.region = self.record.region
-        self.object.cons_dataset_id = self.dataset.dataset_id
+        if flask.current_app.testing:
+            return flask.request.url
+        return flask.url_for(
+            '.index',
+            habitat=self.record.habitat.code,
+            region=self.record.region,
+        )
 
     def setup_template_context(self):
         self.template_ctx = {
@@ -124,3 +126,37 @@ class HabitatCommentDeleteView(CommentDeleteView):
 
 habitat.add_url_rule('/habitate/comentarii/<int:comment_id>/sterge',
             view_func=HabitatCommentDeleteView.as_view('comment_delete'))
+
+
+class HabitatFinalCommentView(FinalCommentMixin, HabitatCommentView):
+
+    signal = Signal()  # ignored
+
+
+habitat.add_url_rule('/habitate/detalii/<int:record_id>/edit_final',
+                     view_func=HabitatFinalCommentView.as_view('final_comment'))
+
+
+class HabitatDeleteDraftView(DeleteDraftView):
+
+    dataset = dal.HabitatDataset()
+
+
+habitat.add_url_rule('/habitate/detalii/<int:record_id>/delete_final',
+                     view_func=HabitatDeleteDraftView.as_view('delete_draft'))
+
+
+class HabitatCloseConsultationView(CloseConsultationView):
+
+    dataset = dal.HabitatDataset()
+
+habitat.add_url_rule('/habitate/detalii/<int:record_id>/inchide',
+            view_func=HabitatCloseConsultationView.as_view('close'))
+
+
+class HabitatReopenConsultationView(ReopenConsultationView):
+
+    dataset = dal.HabitatDataset()
+
+habitat.add_url_rule('/habitate/detalii/<int:final_record_id>/redeschide',
+            view_func=HabitatReopenConsultationView.as_view('reopen'))

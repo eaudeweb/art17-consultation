@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 from datetime import datetime
 from blinker import Signal
 import flask
@@ -208,6 +210,7 @@ class HabitatRecordView(RecordViewMixin, HabitatCommentView):
     template = 'aggregation/record-habitat.html'
     add_signal = Signal()
     edit_signal = Signal()
+    success_message = u"Înregistrarea a fost actualizată"
 
     def get_next_url(self):
         return flask.url_for('.habitat-index', dataset_id=self.dataset_id,
@@ -229,6 +232,7 @@ class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
     template = 'aggregation/record-species.html'
     add_signal = Signal()
     edit_signal = Signal()
+    success_message = u"Înregistrarea a fost actualizată"
 
     def get_next_url(self):
         return flask.url_for('.species-index',

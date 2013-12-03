@@ -164,6 +164,7 @@ def _create_habitat_record(habitat_app, comment=False):
             habitat=habitat,
             cons_role='assessment',
             region='ALP',
+            cons_dataset_id=1,
         )
         record.lu = models.LuBiogeoreg(objectid=1)
         models.db.session.add(record)
@@ -200,7 +201,8 @@ def test_save_comment_record(habitat_app):
                              'range.method': '1',
                              'coverage.surface_area': 123,
                              'coverage.date': '2001',
-                             'coverage.method': '1'})
+                             'coverage.method': '1'},
+                       follow_redirects=True)
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with habitat_app.app_context():
@@ -231,7 +233,8 @@ def test_edit_comment_submit(habitat_app):
                              'range.method': '1',
                              'coverage.surface_area': 123,
                              'coverage.date': '2001',
-                             'coverage.method': '1'})
+                             'coverage.method': '1'},
+                       follow_redirects=True)
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with habitat_app.app_context():
@@ -258,7 +261,8 @@ def test_extra_fields_save(habitat_app):
     client = habitat_app.test_client()
     resp = client.post('/habitate/detalii/1/comentarii',
                        data={'pressures.pressures': [pressure_data],
-                             'measures.measures': [measure_data]})
+                             'measures.measures': [measure_data]},
+                       follow_redirects=True)
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with habitat_app.app_context():
@@ -278,7 +282,8 @@ def test_typicalspecies_save(habitat_app):
     _create_habitat_record(habitat_app)
     client = habitat_app.test_client()
     resp = client.post('/habitate/detalii/1/comentarii',
-                       data={'typicalspecies.species': 'canis lupus\nianis'})
+                       data={'typicalspecies.species': 'canis lupus\nianis'},
+                       follow_redirects=True)
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with habitat_app.app_context():

@@ -253,7 +253,8 @@ def test_save_comment_record(species_app):
                              'habitat.method': '1',
                              'habitat.quality': '2',
                              'habitat.quality_explanation': 'foo explanation',
-                             'habitat.area_suitable': 1000})
+                             'habitat.area_suitable': 1000},
+                       follow_redirects=True)
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
@@ -289,7 +290,8 @@ def test_edit_comment_submit(species_app):
                              'habitat.method': '1',
                              'habitat.quality': '2',
                              'habitat.quality_explanation': 'foo explanation',
-                             'habitat.area_suitable': 1000})
+                             'habitat.area_suitable': 1000},
+                       follow_redirects=True)
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
@@ -316,7 +318,8 @@ def test_extra_fields_save(species_app):
     client = species_app.test_client()
     resp = client.post('/specii/detalii/1/comentarii',
                        data={'pressures.pressures': [pressure_data],
-                             'measures.measures': [measure_data]})
+                             'measures.measures': [measure_data]},
+                       follow_redirects=True)
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
@@ -411,6 +414,7 @@ def test_save_taxonomic_reserve_comment(species_app):
     resp = client.post(
         '/specii/detalii/1/comentarii',
         data={'generalstatus': 'SR TAX'},
+        follow_redirects=True,
     )
     assert resp.status_code == 200
     assert COMMENT_SAVED_TXT in resp.data

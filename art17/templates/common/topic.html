@@ -5,7 +5,8 @@
     assessment_row,
     comments,
     topic_template,
-    blueprint) %}
+    blueprint,
+    finalized) %}
   {%- from topic_template import
       assessment_header, comments_header, record
       with context -%}
@@ -25,6 +26,7 @@
       {{ record(assessment_row) }}
 
       <td colspan=4>  {#- conclusion (author, etc) #}
+      {%- if not finalized %}
         {%- if perm_create_comment(assessment_row['model']).can() %}
           {%- set url = url_for(blueprint + '.comment',
                                 record_id=assessment_row.id,
@@ -32,6 +34,7 @@
           <a class="records-commentbtn btn btn-xs btn-warning"
              href="{{ url }}">adaugǎ comentariu</a>
         {%- endif %}
+      {%- endif %}
       </td>
     </tr>
 
@@ -42,6 +45,7 @@
     <tr>
       {#- detail #}
       <td>
+      {%- if not finalized %}
         {%- if perm_update_comment_status(comment_row.model).can() %}
           {%- set url = url_for(blueprint + '.comment_status',
                                 comment_id=comment_row.id) %}
@@ -51,12 +55,14 @@
             <input type="hidden" name="status" value="{{ comment_row.status }}">
           </form>
         {%- endif %}
+      {%- endif %}
       </td>
 
       {{ record(comment_row) }}
 
       <td>{{ comment_row.cons_user_id }}</td>  {#- conclusion author, etc #}
       <td>
+      {%- if not finalized %}
         {%- if perm_edit_comment(comment_row.model).can() %}
           {%- set url = url_for(blueprint + '.comment_edit',
                                 comment_id=comment_row.id,
@@ -75,6 +81,7 @@
                     type="submit">șterge</button>
           </form>
         {%- endif %}
+      {%- endif %}
       </td>
       <td>{{ comment_row.comment_date|local_date }}</td>
       <td>

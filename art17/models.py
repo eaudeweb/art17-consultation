@@ -256,7 +256,7 @@ class DataHabitattypeRegion(Base):
 
     lu = relationship(LuBiogeoreg,
                       primaryjoin=(region == foreign(LuBiogeoreg.code)),
-                      innerjoin=True, uselist=False)
+                      innerjoin=True, uselist=False, passive_deletes=True)
 
     dataset = relationship('Dataset',
         backref=db.backref('habitat_objs', lazy='dynamic'))
@@ -437,7 +437,7 @@ class DataSpeciesRegion(Base):
 
     lu = relationship(LuBiogeoreg,
                       primaryjoin=(region == foreign(LuBiogeoreg.code)),
-                      innerjoin=True, uselist=False)
+                      innerjoin=True, uselist=False, passive_deletes=True)
 
     dataset = relationship('Dataset',
         backref=db.backref('species_objs', lazy='dynamic'))

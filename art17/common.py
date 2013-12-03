@@ -103,6 +103,10 @@ def perm_edit_record(record):
     return Permission(need.admin)
 
 
+def perm_edit_final(subject):
+    return Permission(need.admin)
+
+
 common = flask.Blueprint('common', __name__)
 
 
@@ -213,17 +217,53 @@ class IndexView(flask.views.View, IndexMixin):
         reply_counts = self.dataset.get_reply_counts()
 
         topic = {'comments': []}
+        final_record = None
+        final_draft_record = None
 
-        for record in self.dataset.get_topic_records(subject, region):
+        for record in self.dataset.get_topic_records(subject, region.code):
             if record.cons_role == 'assessment':
                 topic['assessment'] = self.parse_record(record)
 
-            else:
+            elif record.cons_role == 'comment':
                 if not record.cons_deleted:
                     r = self.parse_record(record, is_comment=True)
                     topic['comments'].append(r)
 
+            elif record.cons_role == 'final-draft':
+                final_draft_record = record
+
+            elif record.cons_role == 'final':
+                final_record = record
+
         comment_next = self.get_comment_next_url(subject_code, region_code)
+        final_comment_url = flask.url_for(
+            self.blueprint + '.final_comment',
+            record_id=topic['assessment']['id'],
+            next=comment_next,
+        )
+
+        close_consultation_url = flask.url_for(
+            self.blueprint + '.close',
+            record_id=topic['assessment']['id'],
+            next=comment_next,
+        )
+        if final_record is not None:
+            reopen_consultation_url = flask.url_for(
+                self.blueprint + '.reopen',
+                final_record_id=final_record.id,
+                next=comment_next,
+            )
+        else:
+            reopen_consultation_url = None
+
+        if final_draft_record is not None:
+            delete_draft_url = flask.url_for(
+                self.blueprint + '.delete_draft',
+                record_id=final_draft_record.id,
+                next=comment_next,
+            )
+        else:
+            delete_draft_url = None
 
         return flask.render_template('common/indexpage.html', **{
             'subject': subject,
@@ -236,12 +276,19 @@ class IndexView(flask.views.View, IndexMixin):
             'map_url': self.get_map_url(subject.code),
             'dashboard_url': self.get_dashboard_url(subject),
             'comment_history_view': self.comment_history_view,
+            'final_comment_url': final_comment_url,
+            'delete_draft_url': delete_draft_url,
+            'close_consultation_url': close_consultation_url,
+            'perm_edit_final_for_this': perm_edit_final(subject),
+            'reopen_consultation_url': reopen_consultation_url,
+            'finalized': final_record is not None,
         })
 
 
 class RecordView(IndexMixin, flask.views.View):
 
     methods = ['GET', 'POST']
+    success_message = u"Comentariul a fost înregistrat."
 
     def dispatch_request(self, record_id=None, comment_id=None,
                          dataset_id=None):
@@ -250,8 +297,7 @@ class RecordView(IndexMixin, flask.views.View):
         self.setup_record_and_form(record_id=record_id, comment_id=comment_id)
 
         self.setup_template_context()
-        self.template_ctx['next_url'] = flask.request.args.get('next') or \
-                                        self.get_next_url()
+        next_url = flask.request.args.get('next') or self.get_next_url()
         self.template_ctx['blueprint'] = self.blueprint
         self.template_ctx['record_id'] = self.record.id
         self.template_ctx['subject'] = self.record.subject
@@ -272,8 +318,8 @@ class RecordView(IndexMixin, flask.views.View):
             models.db.session.commit()
 
             self.dataset.update_extra_fields(self.form.data, self.object)
-            return flask.render_template(self.template_saved,
-                                         **self.template_ctx)
+            flask.flash(self.success_message, 'success')
+            return flask.redirect(next_url)
 
         self.template_ctx['form'] = self.form
         self.template_ctx['new_comment'] = self.new_record
@@ -300,17 +346,13 @@ class CommentViewMixin(object):
             self.new_record = True
             self.record = self.record_cls.query.get_or_404(record_id)
             perm_create_comment(self.record).test()
-            self.object = self.comment_cls(
-                cons_role='comment',
-                cons_user_id=flask.g.identity.id,
-                cons_date=datetime.utcnow(),
-            )
-            self.link_comment_to_record()
+            self.object = self.dataset.create_record(cons_role='comment')
+            self.dataset.link_to_record(self.object, self.record)
             self.form = self.form_cls(flask.request.form)
 
         elif comment_id:
             self.new_record = False
-            self.object = self.comment_cls.query.get_or_404(comment_id)
+            self.object = self.dataset.get_comment(comment_id) or flask.abort(404)
             perm_edit_comment(self.object).test()
             self.record = self.record_for_comment(self.object)
             self.original_data = self.parse_commentform(self.object)
@@ -358,6 +400,122 @@ class CommentDeleteView(flask.views.View):
         old_data['_status'] = comment.cons_status
         self.signal.send(app, ob=comment, old_data=old_data)
         models.db.session.commit()
+        return flask.redirect(next_url)
+
+
+class FinalCommentMixin(object):
+
+    success_message = u"Modificările au fost înregistrate."
+
+    def setup_record_and_form(self, record_id=None, comment_id=None):
+        self.record = self.record_cls.query.get_or_404(record_id)
+        perm_edit_final(self.record.subject).test()
+
+        row_list = self.dataset.get_topic_records(
+            subject=self.record.subject,
+            region_code=self.record.region,
+        )
+        self.object = None
+        for row in row_list:
+            if row.cons_role == 'final-draft':
+                self.object = row
+
+        if self.object is None:
+            self.new_record = True
+            self.object = self.dataset.create_record(cons_role='final-draft')
+            data = self.parse_commentform(self.record)
+            self.flatten_commentform(data, self.object)
+            self.dataset.link_to_record(self.object, self.record)
+
+        else:
+            self.new_record = False
+            self.record = self.record_for_comment(self.object)
+            data = self.parse_commentform(self.object)
+            self.original_data = data
+
+        if flask.request.method == 'POST':
+            form_data = flask.request.form
+        else:
+            form_data = MultiDict(flatten_dict(data))
+        self.form = self.form_cls(form_data)
+
+
+class CloseConsultationView(flask.views.View):
+
+    methods = ['POST']
+
+    def dispatch_request(self, record_id):
+        next_url = flask.request.args['next']
+        self.record = self.dataset.get_comment(record_id) or flask.abort(404)
+        perm_edit_final(self.record.subject).test()
+
+        row_list = self.dataset.get_topic_records(
+            subject=self.record.subject,
+            region_code=self.record.region,
+        )
+        self.assessment = None
+        self.draft = None
+        for row in row_list:
+            if row.cons_role == 'assessment':
+                self.assessment = row
+            elif row.cons_role == 'final-draft':
+                self.draft = row
+            elif row.cons_role == 'final':
+                raise RuntimeError("This consultation is already closed")
+
+        if self.draft is None:
+            self.draft = self.dataset.create_record(
+                cons_role='final-draft',
+                cons_status='not-modified',
+            )
+            models.db.session.add(self.draft)
+            self.dataset.link_to_record(self.draft, self.record)
+
+        self.draft.cons_role = 'final'
+        models.db.session.commit()
+
+        flask.flash(u"Consultarea a fost închisă", 'success')
+        return flask.redirect(next_url)
+
+
+class ReopenConsultationView(flask.views.View):
+
+    methods = ['POST']
+
+    def dispatch_request(self, final_record_id):
+        next_url = flask.request.args['next']
+        self.final = self.dataset.get_comment(final_record_id) or flask.abort(404)
+        perm_edit_final(self.final.subject).test()
+
+        assert self.final.cons_role == 'final'
+
+        if self.final.cons_status == 'not-modified':
+            models.db.session.delete(self.final)
+
+        else:
+            self.final.cons_role = 'final-draft'
+
+        models.db.session.commit()
+
+        flask.flash(u"Consultarea a fost redeschisă", 'success')
+        return flask.redirect(next_url)
+
+
+class DeleteDraftView(flask.views.View):
+
+    methods = ['POST']
+
+    def dispatch_request(self, record_id):
+        next_url = flask.request.args['next']
+        self.draft = self.dataset.get_comment(record_id) or flask.abort(404)
+        perm_edit_final(self.draft.subject).test()
+
+        assert self.draft.cons_role == 'final-draft'
+        models.db.session.delete(self.draft)
+
+        models.db.session.commit()
+
+        flask.flash(u"Modificările au fost șterse", 'success')
         return flask.redirect(next_url)
 
 

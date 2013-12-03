@@ -64,7 +64,8 @@ def test_comment_add(params, app):
     client = app.test_client()
 
     resp = client.post(params.comment_create_url,
-                       data=params.comment_data)
+                       data=params.comment_data,
+                       follow_redirects=True)
     assert resp.status_code == 200
 
     with app.app_context():
@@ -87,7 +88,8 @@ def test_comment_edit(params, app):
     params.setup(app, comment=True)
     client = app.test_client()
 
-    resp = client.post(params.comment_edit_url, data=params.comment_data)
+    resp = client.post(params.comment_edit_url, data=params.comment_data,
+                       follow_redirects=True)
     assert resp.status_code == 200
 
     with app.app_context():

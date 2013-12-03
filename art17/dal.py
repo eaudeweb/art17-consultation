@@ -1,4 +1,6 @@
+from datetime import datetime
 from sqlalchemy import func, cast, CHAR
+import flask
 from art17.models import (
     db,
     LuBiogeoreg,
@@ -121,15 +123,15 @@ class BaseDataset(object):
 
         return overview
 
-    def get_topic_records(self, subject, region):
+    def get_topic_records(self, subject, region_code):
         records_query = (
             self.record_model.query
             .filter(self.record_model_subject_id == subject.id)
             .filter_by(cons_dataset_id=self.dataset_id)
             .order_by(self.record_model.cons_date)
         )
-        if region is not None:
-            records_query = records_query.filter_by(region=region.code)
+        if region_code is not None:
+            records_query = records_query.filter_by(region=region_code)
 
         return iter(records_query)
 
@@ -207,6 +209,11 @@ class BaseDataset(object):
             db.session.add(measure_obj)
         db.session.commit()
 
+    def create_record(self, **kwargs):
+        kwargs.setdefault('cons_user_id', flask.g.identity.id)
+        kwargs.setdefault('cons_date', datetime.utcnow())
+        return self.record_model(**kwargs)
+
 
 class HabitatDataset(BaseDataset):
 
@@ -233,6 +240,11 @@ class HabitatDataset(BaseDataset):
             db.session.add(species_obj)
         db.session.commit()
 
+    def link_to_record(self, object, record):
+        object.habitat_id = record.habitat_id
+        object.region = record.region
+        object.cons_dataset_id = self.dataset_id
+
 
 class SpeciesDataset(BaseDataset):
 
@@ -245,3 +257,8 @@ class SpeciesDataset(BaseDataset):
     @property
     def record_model_subject_id(self):
         return DataSpeciesRegion.species_id
+
+    def link_to_record(self, object, record):
+        object.species_id = record.species_id
+        object.region = record.region
+        object.cons_dataset_id = self.dataset_id

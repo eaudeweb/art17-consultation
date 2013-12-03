@@ -43,7 +43,8 @@ def test_comment_add(params, app):
 
     with mail.record_messages() as outbox:
         resp = client.post(params.comment_create_url,
-                           data=params.comment_data)
+                           data=params.comment_data,
+                           follow_redirects=True)
         assert resp.status_code == 200
         assert len(outbox) == 1
         assert 'user@example.com' in outbox[0].recipients
@@ -55,7 +56,8 @@ def test_comment_edit(params, app):
     client = app.test_client()
 
     with mail.record_messages() as outbox:
-        resp = client.post(params.comment_edit_url, data=params.comment_data)
+        resp = client.post(params.comment_edit_url, data=params.comment_data,
+                           follow_redirects=True)
         assert resp.status_code == 200
         assert len(outbox) == 1
         assert 'user@example.com' in outbox[0].recipients
