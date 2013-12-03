@@ -320,7 +320,7 @@ class CommentViewMixin(object):
                 cons_user_id=flask.g.identity.id,
                 cons_date=datetime.utcnow(),
             )
-            self.link_comment_to_record()
+            self.dataset.link_to_record(self.object, self.record)
             self.form = self.form_cls(flask.request.form)
 
         elif comment_id:
@@ -398,7 +398,7 @@ class FinalCommentMixin(object):
                 cons_user_id=flask.g.identity.id,
                 cons_date=datetime.utcnow(),
             )
-            self.link_comment_to_record()
+            self.dataset.link_to_record(self.object, self.record)
             self.form = self.form_cls(flask.request.form)
 
         else:

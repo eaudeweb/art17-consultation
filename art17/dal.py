@@ -233,6 +233,11 @@ class HabitatDataset(BaseDataset):
             db.session.add(species_obj)
         db.session.commit()
 
+    def link_to_record(self, object, record):
+        object.habitat_id = record.habitat_id
+        object.region = record.region
+        object.cons_dataset_id = self.dataset_id
+
 
 class SpeciesDataset(BaseDataset):
 
@@ -245,3 +250,8 @@ class SpeciesDataset(BaseDataset):
     @property
     def record_model_subject_id(self):
         return DataSpeciesRegion.species_id
+
+    def link_to_record(self, object, record):
+        object.species_id = record.species_id
+        object.region = record.region
+        object.cons_dataset_id = self.dataset_id
