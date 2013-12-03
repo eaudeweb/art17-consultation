@@ -35,9 +35,10 @@
         ) %}
       <a class="btn btn-sm btn-danger" href="{{ history_url }}">istorie</a>
     {%- endif %}
-    {%- if perm_edit_final_for_this.can() %}
-      <form method="post" action="{{ close_consultation_url }}"
-            class="close-consultation">
+  </p>
+  {%- if not finalized %}
+    {%- if perm_edit_final_for_this.can() and not finalized %}
+      <form method="post" action="{{ close_consultation_url }}">
         <a class="btn btn-sm btn-warning"
            href="{{ final_comment_url }}">editează versiunea finală</a>
         <button type="submit" class="btn btn-sm btn-danger">
@@ -45,13 +46,16 @@
         </button>
       </form>
     {%- endif %}
-  </p>
+  {%- else %}
+    <p>Consultarea a fost finalizată.</p>
+  {%- endif %}
 
   {{ topic_html(
     topic.assessment,
     topic.comments,
     topic_template,
     blueprint,
+    finalized,
   ) }}
 
 

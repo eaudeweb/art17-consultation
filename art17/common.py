@@ -217,6 +217,7 @@ class IndexView(flask.views.View, IndexMixin):
         reply_counts = self.dataset.get_reply_counts()
 
         topic = {'comments': []}
+        finalized = False
 
         for record in self.dataset.get_topic_records(subject, region.code):
             if record.cons_role == 'assessment':
@@ -226,6 +227,9 @@ class IndexView(flask.views.View, IndexMixin):
                 if not record.cons_deleted:
                     r = self.parse_record(record, is_comment=True)
                     topic['comments'].append(r)
+
+            elif record.cons_role == 'final':
+                finalized = True
 
         comment_next = self.get_comment_next_url(subject_code, region_code)
         final_comment_url = self.get_final_comment_url(
@@ -251,6 +255,7 @@ class IndexView(flask.views.View, IndexMixin):
             'final_comment_url': final_comment_url,
             'close_consultation_url': close_consultation_url,
             'perm_edit_final_for_this': perm_edit_final(subject),
+            'finalized': finalized,
         })
 
 
