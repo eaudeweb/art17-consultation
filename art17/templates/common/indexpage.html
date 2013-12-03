@@ -37,7 +37,7 @@
     {%- endif %}
   </p>
   {%- if not finalized %}
-    {%- if perm_edit_final_for_this.can() and not finalized %}
+    {%- if perm_edit_final_for_this.can() %}
       <form method="post" action="{{ close_consultation_url }}">
         <a class="btn btn-sm btn-warning"
            href="{{ final_comment_url }}">editează versiunea finală</a>
@@ -48,6 +48,13 @@
     {%- endif %}
   {%- else %}
     <p>Consultarea a fost finalizată.</p>
+    {%- if perm_edit_final_for_this.can() %}
+      <form method="post" action="{{ reopen_consultation_url }}">
+        <button type="submit" class="btn btn-sm btn-danger">
+          redeschide consultarea
+        </button>
+      </form>
+    {%- endif %}
   {%- endif %}
 
   {{ topic_html(

@@ -217,7 +217,7 @@ class IndexView(flask.views.View, IndexMixin):
         reply_counts = self.dataset.get_reply_counts()
 
         topic = {'comments': []}
-        finalized = False
+        final_record = None
 
         for record in self.dataset.get_topic_records(subject, region.code):
             if record.cons_role == 'assessment':
@@ -229,7 +229,7 @@ class IndexView(flask.views.View, IndexMixin):
                     topic['comments'].append(r)
 
             elif record.cons_role == 'final':
-                finalized = True
+                final_record = record
 
         comment_next = self.get_comment_next_url(subject_code, region_code)
         final_comment_url = self.get_final_comment_url(
@@ -240,6 +240,13 @@ class IndexView(flask.views.View, IndexMixin):
             topic['assessment']['id'],
             next=comment_next,
         )
+        if final_record is not None:
+            reopen_consultation_url = self.get_reopen_consultation_url(
+                final_record.id,
+                comment_next,
+            )
+        else:
+            reopen_consultation_url = None
 
         return flask.render_template('common/indexpage.html', **{
             'subject': subject,
@@ -255,7 +262,8 @@ class IndexView(flask.views.View, IndexMixin):
             'final_comment_url': final_comment_url,
             'close_consultation_url': close_consultation_url,
             'perm_edit_final_for_this': perm_edit_final(subject),
-            'finalized': finalized,
+            'reopen_consultation_url': reopen_consultation_url,
+            'finalized': final_record is not None,
         })
 
 
@@ -444,6 +452,29 @@ class CloseConsultationView(flask.views.View):
         models.db.session.commit()
 
         flask.flash(u"Consultarea a fost închisă", 'success')
+        return flask.redirect(next_url)
+
+
+class ReopenConsultationView(flask.views.View):
+
+    methods = ['POST']
+
+    def dispatch_request(self, final_record_id):
+        next_url = flask.request.args['next']
+        self.final = self.dataset.get_comment(final_record_id) or flask.abort(404)
+        perm_edit_final(self.final.subject).test()
+
+        assert self.final.cons_role == 'final'
+
+        if self.final.cons_status == 'not-modified':
+            models.db.session.delete(self.final)
+
+        else:
+            self.final.cons_role = 'final-draft'
+
+        models.db.session.commit()
+
+        flask.flash(u"Consultarea a fost redeschisă", 'success')
         return flask.redirect(next_url)
 
 

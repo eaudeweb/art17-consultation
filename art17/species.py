@@ -4,7 +4,8 @@ from art17 import models
 from art17 import dal
 from art17.common import (IndexView, CommentStateView,
                           CommentDeleteView, RecordView, CommentViewMixin,
-                          FinalCommentMixin, CloseConsultationView)
+                          FinalCommentMixin,
+                          CloseConsultationView, ReopenConsultationView)
 from art17 import forms
 from art17 import schemas
 
@@ -48,6 +49,13 @@ class SpeciesIndexView(IndexView, SpeciesMixin):
 
     def get_close_consultation_url(self, record_id, next):
         return flask.url_for('.close', record_id=record_id, next=next)
+
+    def get_reopen_consultation_url(self, final_record_id, next):
+        return flask.url_for(
+            '.reopen',
+            final_record_id=final_record_id,
+            next=next,
+        )
 
 
 species.add_url_rule('/specii/', view_func=SpeciesIndexView.as_view('index'))
@@ -143,3 +151,11 @@ class SpeciesCloseConsultationView(CloseConsultationView):
 
 species.add_url_rule('/specii/detalii/<int:record_id>/inchide',
             view_func=SpeciesCloseConsultationView.as_view('close'))
+
+
+class SpeciesReopenConsultationView(ReopenConsultationView):
+
+    dataset = dal.SpeciesDataset()
+
+species.add_url_rule('/specii/detalii/<int:final_record_id>/redeschide',
+            view_func=SpeciesReopenConsultationView.as_view('reopen'))
