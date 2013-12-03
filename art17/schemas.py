@@ -405,6 +405,13 @@ def parse_habitat_commentform(row):
         'method': row.natura2000_area_method,
         'trend': row.natura2000_area_trend,
     }
+    rv['typicalspecies'] = {
+        'species': '\n'.join([dhs.speciesname for dhs in row.species]),
+        'method': row.typical_species_method,
+        'justification': row.justification,
+        'structure_and_functions_method': row.structure_and_functions_method,
+        'other_relevant_information': row.other_relevant_information,
+    }
     rv['structure'] = parse_conclusion(row, 'conclusion_structure')
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
@@ -540,3 +547,7 @@ def flatten_habitat_commentform(struct, obj):
     obj.natura2000_area_method = struct['natura2000']['method']
     obj.natura2000_area_trend = struct['natura2000']['trend']
     obj.published = struct['published']
+    obj.typical_species_method = struct['typicalspecies']['method']
+    obj.justification = struct['typicalspecies']['justification']
+    obj.structure_and_functions_method = struct['typicalspecies']['structure_and_functions_method']
+    obj.other_relevant_information = struct['typicalspecies']['other_relevant_information']

@@ -7,6 +7,7 @@ from wtforms import (Form as Form_base, FormField as FormField_base,
 from wtforms.validators import Required, Optional, NumberRange
 from wtforms.widgets import HTMLString, html_params
 from werkzeug.datastructures import MultiDict
+from wtforms.compat import text_type
 
 from art17 import models
 from art17.lookup import (
@@ -72,6 +73,19 @@ class MultipleJSONField(SelectMultipleField):
 
     def render_input(self, val):
         return self.widget.render_input(self, val)
+
+
+class SpeciesField(TextAreaField):
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            self.data = [l.strip() for l in valuelist[0].split('\n')]
+        else:
+            self.data = []
+
+    def _value(self):
+        data = '\n'.join(self.data) if self.data is not None else ''
+        return text_type(data)
 
 
 class MeasureField(BooleanField):
@@ -360,6 +374,18 @@ class Natura2000Habitat(Form):
     )
 
 
+class TypicalSpecies(Form):
+
+    species = SpeciesField(default='', validators=[Optional()])
+    method = TextField(validators=[Optional()])
+    justification = TextField(validators=[Optional()])
+    structure_and_functions_method = SelectField(default='',
+                         choices=EMPTY_CHOICE + METHODS_USED_OPTIONS,
+                         validators=[Optional()],
+    )
+    other_relevant_information = TextAreaField(validators=[Optional()])
+
+
 class SpeciesComment(Form):
     range = FormField(Range)
     population = FormField(Population)
@@ -399,6 +425,7 @@ class HabitatComment(Form):
     coverage = FormField(Coverage)
     pressures = FormField(Pressures)
     threats = FormField(Threats)
+    typicalspecies = FormField(TypicalSpecies)
     natura2000 = FormField(Natura2000Habitat)
     measures = FormField(Measures)
     structure = FormField(Conclusion)

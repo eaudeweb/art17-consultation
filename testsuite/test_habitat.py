@@ -92,6 +92,13 @@ HABITAT_STRUCT_DATA = {
     },
     'report_observation': 'nothing to add',
     'published': 'someday',
+    'typicalspecies': {
+        'species': '',
+        'method': 'free text',
+        'justification': 'free text 2',
+        'structure_and_functions_method': '3',
+        'other_relevant_information': 'free text 4',
+    },
 }
 
 
@@ -140,6 +147,10 @@ HABITAT_MODEL_DATA = {
     'cons_report_observation': 'nothing to add',
 
     'published': 'someday',
+    'typical_species_method': 'free text',
+    'justification': 'free text 2',
+    'other_relevant_information': 'free text 4',
+    'structure_and_functions_method': '3',
 }
 
 
@@ -259,6 +270,22 @@ def test_extra_fields_save(habitat_app):
         assert comment.pressures[0].ranking == 'M'
         assert comment.pressures[0].pollutions[0].pollution_qualifier == 'A'
         assert comment.measures[0].measurecode == '1'
+
+
+def test_typicalspecies_save(habitat_app):
+    from art17.models import DataHabitattypeRegion
+    habitat_app.config['TESTING_USER_ID'] = 'smith'
+    _create_habitat_record(habitat_app)
+    client = habitat_app.test_client()
+    resp = client.post('/habitate/detalii/1/comentarii',
+                       data={'typicalspecies.species': 'canis lupus\nianis'})
+    assert resp.status_code == 200
+    assert COMMENT_SAVED_TXT in resp.data
+    with habitat_app.app_context():
+        comment = DataHabitattypeRegion.query.get(2)
+        assert comment.cons_user_id == 'smith'
+        assert comment.species[0].speciesname == 'canis lupus'
+        assert comment.species[1].speciesname == 'ianis'
 
 
 def test_one_field_required(habitat_app):

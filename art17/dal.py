@@ -13,6 +13,7 @@ from art17.models import (
     DataPressuresThreatsPollution,
     DataMeasures,
     History,
+    DataHabitatSpecies,
 )
 
 
@@ -219,6 +220,18 @@ class HabitatDataset(BaseDataset):
     def record_model_subject_id(self):
         return DataHabitattypeRegion.habitat_id
 
+    @classmethod
+    def update_extra_fields(cls, struct, comment):
+        super(HabitatDataset, cls).update_extra_fields(struct, comment)
+        for species in comment.species:
+            db.session.delete(species)
+        for species in struct['typicalspecies']['species']:
+            if not species:
+                continue
+            species_obj = DataHabitatSpecies(habitat_id=comment.id,
+                                             speciesname=species)
+            db.session.add(species_obj)
+        db.session.commit()
 
 
 class SpeciesDataset(BaseDataset):

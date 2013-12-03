@@ -39,6 +39,9 @@
     <li {% if form.threats.errors %}class="text-error"{% endif %}>
       <a href="#comment-threats" data-toggle="tab">Amenințări</a>
     </li>
+    <li {% if form.typicalspecies.errors %}class="text-error"{% endif %}>
+      <a href="#comment-typicalspecies" data-toggle="tab">Specii tipice</a>
+    </li>
     <li {% if form.measures.errors %}class="text-error"{% endif %}>
       <a href="#comment-measures" data-toggle="tab">Măsuri</a>
     </li>
@@ -62,6 +65,7 @@
     {% include "habitat/comment/area.html" with context %}
     {% include "common/comment/pressures.html" with context %}
     {% include "common/comment/threats.html" with context %}
+    {% include "habitat/comment/typicalspecies.html" with context %}
     {% include "common/comment/measures.html" with context %}
     {% include "habitat/comment/natura2000.html" with context %}
     {% include "habitat/comment/conclusion.html" with context %}

@@ -1,0 +1,86 @@
+{% from 'common/comment_bits.html' import error_cls, errors %}
+
+<div class="tab-pane comment" id="comment-typicalspecies">
+  <div class="panel panel-default">
+
+    {%- set typicalspecies = form.typicalspecies %}
+    <div class="panel-body">
+
+      <div class="form-group {{- error_cls(typicalspecies.species) }}">
+
+        <label for="typicalspecies.species">
+          Specii tipice:
+        </label>
+
+        {{ errors(typicalspecies.species) }}
+
+        <div class="row">
+          <div
+              class="col-sm-6 {{- error_cls(typicalspecies.structure_and_functions_method) }}">
+            {{
+            typicalspecies.species(class='form-control', rows=5)
+            }}
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="typicalspecies.method">
+          Metoda utilizată
+        </label>
+
+        {{ errors(typicalspecies.method) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(typicalspecies.method) }}">
+            {{ typicalspecies.method(class='form-control') }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="typicalspecies.justification">
+          Justificarea modificărilor (%) induse de tendințe
+        </label>
+
+        {{ errors(typicalspecies.justification) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(typicalspecies.justification) }}">
+            {{ typicalspecies.justification(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="typicalspecies.structure_and_functions_method">
+          Structura şi funcțiile - metoda utilizată
+        </label>
+
+        {{ errors(typicalspecies.structure_and_functions_method) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(typicalspecies.structure_and_functions_method) }}">
+          {{ typicalspecies.structure_and_functions_method(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="typicalspecies.other_relevant_information">
+          Alte informații relevante
+        </label>
+
+        {{ errors(typicalspecies.other_relevant_information) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(typicalspecies.other_relevant_information) }}">
+          {{ typicalspecies.other_relevant_information(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
