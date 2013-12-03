@@ -254,6 +254,7 @@ class RecordView(IndexMixin, flask.views.View):
                                         self.get_next_url()
         self.template_ctx['blueprint'] = self.blueprint
         self.template_ctx['record_id'] = self.record.id
+        self.template_ctx['subject'] = self.record.subject
 
         if flask.request.method == 'POST' and self.form.validate():
             self.flatten_commentform(self.form.data, self.object)
