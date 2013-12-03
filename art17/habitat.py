@@ -42,19 +42,6 @@ class HabitatIndexView(IndexView, HabitatMixin):
     def get_dashboard_url(self, subject):
         return flask.url_for('dashboard.habitats')
 
-    def get_final_comment_url(self, record_id, next):
-        return flask.url_for('.final_comment', record_id=record_id, next=next)
-
-    def get_close_consultation_url(self, record_id, next):
-        return flask.url_for('.close', record_id=record_id, next=next)
-
-    def get_reopen_consultation_url(self, final_record_id, next):
-        return flask.url_for(
-            '.reopen',
-            final_record_id=final_record_id,
-            next=next,
-        )
-
 
 habitat.add_url_rule('/habitate/', view_func=HabitatIndexView.as_view('index'))
 

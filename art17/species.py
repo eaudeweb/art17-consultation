@@ -44,19 +44,6 @@ class SpeciesIndexView(IndexView, SpeciesMixin):
             group_code=subject.lu.group_code,
         )
 
-    def get_final_comment_url(self, record_id, next):
-        return flask.url_for('.final_comment', record_id=record_id, next=next)
-
-    def get_close_consultation_url(self, record_id, next):
-        return flask.url_for('.close', record_id=record_id, next=next)
-
-    def get_reopen_consultation_url(self, final_record_id, next):
-        return flask.url_for(
-            '.reopen',
-            final_record_id=final_record_id,
-            next=next,
-        )
-
 
 species.add_url_rule('/specii/', view_func=SpeciesIndexView.as_view('index'))
 

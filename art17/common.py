@@ -232,18 +232,22 @@ class IndexView(flask.views.View, IndexMixin):
                 final_record = record
 
         comment_next = self.get_comment_next_url(subject_code, region_code)
-        final_comment_url = self.get_final_comment_url(
-            topic['assessment']['id'],
+        final_comment_url = flask.url_for(
+            self.blueprint + '.final_comment',
+            record_id=topic['assessment']['id'],
             next=comment_next,
         )
-        close_consultation_url = self.get_close_consultation_url(
-            topic['assessment']['id'],
+
+        close_consultation_url = flask.url_for(
+            self.blueprint + '.close',
+            record_id=topic['assessment']['id'],
             next=comment_next,
         )
         if final_record is not None:
-            reopen_consultation_url = self.get_reopen_consultation_url(
-                final_record.id,
-                comment_next,
+            reopen_consultation_url = flask.url_for(
+                self.blueprint + '.reopen',
+                final_record_id=final_record.id,
+                next=comment_next,
             )
         else:
             reopen_consultation_url = None
