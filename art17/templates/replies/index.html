@@ -37,14 +37,14 @@
   {% else %}
     <div class="panel panel-default">
       <div class="panel-body">
-        Nu existǎ nici un comentariu.
+        Nu existǎ nici o replică.
       </div>
     </div>
   {% endfor %}
 
   {% if can_post_new_reply %}
   <div class="panel panel-default">
-    <div class="panel-heading">Adaugǎ comentariu</div>
+    <div class="panel-heading">Adaugǎ replică</div>
     <div class="panel-body">
       {% set url = url_for(
             '.new',
@@ -78,7 +78,7 @@
   "use strict";
 
   $('.reply-remove').submit(function(evt) {
-    if(! confirm("Ștergi comentariul?")) {
+    if(! confirm("Ștergi replica?")) {
       evt.preventDefault();
     }
   });
