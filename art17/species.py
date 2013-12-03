@@ -43,8 +43,8 @@ class SpeciesIndexView(IndexView, SpeciesMixin):
             group_code=subject.lu.group_code,
         )
 
-    def get_finalize_url(self, record_id, next):
-        return flask.url_for('.finalize', record_id=record_id, next=next)
+    def get_final_comment_url(self, record_id, next):
+        return flask.url_for('.final_comment', record_id=record_id, next=next)
 
 
 species.add_url_rule('/specii/', view_func=SpeciesIndexView.as_view('index'))
@@ -137,4 +137,4 @@ class SpeciesFinalCommentView(FinalCommentMixin, SpeciesCommentView):
 
 
 species.add_url_rule('/specii/detalii/<int:record_id>/final',
-                     view_func=SpeciesFinalCommentView.as_view('finalize'))
+                     view_func=SpeciesFinalCommentView.as_view('final_comment'))

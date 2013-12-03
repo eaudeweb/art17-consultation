@@ -41,8 +41,8 @@ class HabitatIndexView(IndexView, HabitatMixin):
     def get_dashboard_url(self, subject):
         return flask.url_for('dashboard.habitats')
 
-    def get_finalize_url(self, record_id, next):
-        return flask.url_for('.finalize', record_id=record_id, next=next)
+    def get_final_comment_url(self, record_id, next):
+        return flask.url_for('.final_comment', record_id=record_id, next=next)
 
 
 habitat.add_url_rule('/habitate/', view_func=HabitatIndexView.as_view('index'))
@@ -136,4 +136,4 @@ class HabitatFinalCommentView(FinalCommentMixin, HabitatCommentView):
 
 
 habitat.add_url_rule('/habitate/detalii/<int:record_id>/final',
-                     view_func=HabitatFinalCommentView.as_view('finalize'))
+                     view_func=HabitatFinalCommentView.as_view('final_comment'))

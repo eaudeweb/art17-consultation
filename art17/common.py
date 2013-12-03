@@ -228,7 +228,7 @@ class IndexView(flask.views.View, IndexMixin):
                     topic['comments'].append(r)
 
         comment_next = self.get_comment_next_url(subject_code, region_code)
-        finalize_url = self.get_finalize_url(
+        final_comment_url = self.get_final_comment_url(
             topic['assessment']['id'],
             next=comment_next,
         )
@@ -244,7 +244,7 @@ class IndexView(flask.views.View, IndexMixin):
             'map_url': self.get_map_url(subject.code),
             'dashboard_url': self.get_dashboard_url(subject),
             'comment_history_view': self.comment_history_view,
-            'finalize_url': finalize_url,
+            'final_comment_url': final_comment_url,
             'perm_edit_final_for_this': perm_edit_final(subject),
         })
 
