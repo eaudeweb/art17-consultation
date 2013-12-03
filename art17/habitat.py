@@ -5,7 +5,7 @@ from art17 import models
 from art17 import dal
 from art17.common import (IndexView, CommentStateView,
                           CommentDeleteView, RecordView, CommentViewMixin,
-                          FinalCommentMixin,
+                          FinalCommentMixin, DeleteDraftView,
                           CloseConsultationView, ReopenConsultationView)
 from art17 import forms
 from art17 import schemas
@@ -129,6 +129,15 @@ class HabitatFinalCommentView(FinalCommentMixin, HabitatCommentView):
 
 habitat.add_url_rule('/habitate/detalii/<int:record_id>/edit_final',
                      view_func=HabitatFinalCommentView.as_view('final_comment'))
+
+
+class HabitatDeleteDraftView(DeleteDraftView):
+
+    dataset = dal.HabitatDataset()
+
+
+habitat.add_url_rule('/habitate/detalii/<int:record_id>/delete_final',
+                     view_func=HabitatDeleteDraftView.as_view('delete_draft'))
 
 
 class HabitatCloseConsultationView(CloseConsultationView):

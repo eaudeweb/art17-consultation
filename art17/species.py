@@ -4,7 +4,7 @@ from art17 import models
 from art17 import dal
 from art17.common import (IndexView, CommentStateView,
                           CommentDeleteView, RecordView, CommentViewMixin,
-                          FinalCommentMixin,
+                          FinalCommentMixin, DeleteDraftView,
                           CloseConsultationView, ReopenConsultationView)
 from art17 import forms
 from art17 import schemas
@@ -130,6 +130,15 @@ class SpeciesFinalCommentView(FinalCommentMixin, SpeciesCommentView):
 
 species.add_url_rule('/specii/detalii/<int:record_id>/edit_final',
                      view_func=SpeciesFinalCommentView.as_view('final_comment'))
+
+
+class SpeciesDeleteDraftView(DeleteDraftView):
+
+    dataset = dal.SpeciesDataset()
+
+
+species.add_url_rule('/specii/detalii/<int:record_id>/delete_final',
+                     view_func=SpeciesDeleteDraftView.as_view('delete_draft'))
 
 
 class SpeciesCloseConsultationView(CloseConsultationView):
