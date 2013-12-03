@@ -69,7 +69,6 @@ class SpeciesCommentView(RecordView, CommentViewMixin, SpeciesMixin):
 
     form_cls = forms.SpeciesComment
     record_cls = models.DataSpeciesRegion
-    comment_cls = models.DataSpeciesRegion
     parse_commentform = staticmethod(schemas.parse_species_commentform)
     flatten_commentform = staticmethod(schemas.flatten_species_commentform)
     template = 'species/comment.html'

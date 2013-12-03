@@ -68,7 +68,6 @@ class HabitatCommentView(RecordView, CommentViewMixin, HabitatMixin):
 
     form_cls = forms.HabitatComment
     record_cls = models.DataHabitattypeRegion
-    comment_cls = models.DataHabitattypeRegion
     parse_commentform = staticmethod(schemas.parse_habitat_commentform)
     flatten_commentform = staticmethod(schemas.flatten_habitat_commentform)
     template = 'habitat/comment.html'

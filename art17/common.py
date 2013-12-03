@@ -315,11 +315,7 @@ class CommentViewMixin(object):
             self.new_record = True
             self.record = self.record_cls.query.get_or_404(record_id)
             perm_create_comment(self.record).test()
-            self.object = self.comment_cls(
-                cons_role='comment',
-                cons_user_id=flask.g.identity.id,
-                cons_date=datetime.utcnow(),
-            )
+            self.object = self.dataset.create_record(cons_role='comment')
             self.dataset.link_to_record(self.object, self.record)
             self.form = self.form_cls(flask.request.form)
 
@@ -393,11 +389,7 @@ class FinalCommentMixin(object):
 
         if self.object is None:
             self.new_record = True
-            self.object = self.comment_cls(
-                cons_role='final-draft',
-                cons_user_id=flask.g.identity.id,
-                cons_date=datetime.utcnow(),
-            )
+            self.object = self.dataset.create_record(cons_role='final-draft')
             self.dataset.link_to_record(self.object, self.record)
             self.form = self.form_cls(flask.request.form)
 

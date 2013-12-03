@@ -1,4 +1,6 @@
+from datetime import datetime
 from sqlalchemy import func, cast, CHAR
+import flask
 from art17.models import (
     db,
     LuBiogeoreg,
@@ -206,6 +208,11 @@ class BaseDataset(object):
             measure_obj = DataMeasures(**measure_data)
             db.session.add(measure_obj)
         db.session.commit()
+
+    def create_record(self, **kwargs):
+        kwargs.setdefault('cons_user_id', flask.g.identity.id)
+        kwargs.setdefault('cons_date', datetime.utcnow())
+        return self.record_model(**kwargs)
 
 
 class HabitatDataset(BaseDataset):
