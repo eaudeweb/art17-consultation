@@ -222,7 +222,7 @@ class IndexView(flask.views.View, IndexMixin):
             if record.cons_role == 'assessment':
                 topic['assessment'] = self.parse_record(record)
 
-            else:
+            elif record.cons_role == 'comment':
                 if not record.cons_deleted:
                     r = self.parse_record(record, is_comment=True)
                     topic['comments'].append(r)
