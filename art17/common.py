@@ -288,6 +288,7 @@ class IndexView(flask.views.View, IndexMixin):
 class RecordView(IndexMixin, flask.views.View):
 
     methods = ['GET', 'POST']
+    success_message = u"Comentariul a fost înregistrat."
 
     def dispatch_request(self, record_id=None, comment_id=None,
                          dataset_id=None):
@@ -296,8 +297,7 @@ class RecordView(IndexMixin, flask.views.View):
         self.setup_record_and_form(record_id=record_id, comment_id=comment_id)
 
         self.setup_template_context()
-        self.template_ctx['next_url'] = flask.request.args.get('next') or \
-                                        self.get_next_url()
+        next_url = flask.request.args.get('next') or self.get_next_url()
         self.template_ctx['blueprint'] = self.blueprint
         self.template_ctx['record_id'] = self.record.id
         self.template_ctx['subject'] = self.record.subject
@@ -318,8 +318,8 @@ class RecordView(IndexMixin, flask.views.View):
             models.db.session.commit()
 
             self.dataset.update_extra_fields(self.form.data, self.object)
-            return flask.render_template(self.template_saved,
-                                         **self.template_ctx)
+            flask.flash(self.success_message, 'success')
+            return flask.redirect(next_url)
 
         self.template_ctx['form'] = self.form
         self.template_ctx['new_comment'] = self.new_record
@@ -404,6 +404,8 @@ class CommentDeleteView(flask.views.View):
 
 
 class FinalCommentMixin(object):
+
+    success_message = u"Modificările au fost înregistrate."
 
     def setup_record_and_form(self, record_id=None, comment_id=None):
         self.record = self.record_cls.query.get_or_404(record_id)
