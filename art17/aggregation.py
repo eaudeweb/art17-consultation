@@ -257,6 +257,7 @@ class IndexViewMixin(object):
         context.update(**{
             'dataset_id': self.dataset_id,
             'assessment': self.parse_record(self.record),
+            'record': self.record,
             'region': region,
             'topic_template': self.topic_template,
         })
@@ -272,7 +273,6 @@ class HabitatIndexView(IndexViewMixin, flask.views.View):
 
     def get_template_context(self):
         return {
-            'subject': self.record.habitat,
             'type': 'habitat',
         }
 
@@ -296,7 +296,6 @@ class SpeciesIndexView(IndexViewMixin, flask.views.View):
 
     def get_template_context(self):
         return {
-            'subject': self.record.species,
             'group_code': self.record.species.lu.group_code,
             'type': 'species',
         }

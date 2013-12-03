@@ -1,9 +1,6 @@
 {% extends "layout.html" %}
 {% from 'common/topic.html' import topic_html_aggregation with context %}
 
-{% block title %}
-{{- super() }}
-{%- endblock title %}
 
 {% block breadcrumbs %}
   {%- from 'bits.html' import breadcrumbs %}
@@ -17,7 +14,7 @@
 
 
 {% block content %}
-  <p>{{ subject.lu.display_name }}</p>
+  <p>{{ record.subject.lu.display_name }}</p>
 
   <p>{{ region.name_ro }}</p>
 
