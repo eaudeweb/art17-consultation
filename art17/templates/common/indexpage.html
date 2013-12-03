@@ -42,14 +42,16 @@
          href="{{ final_comment_url }}">editează versiunea finală</a>
 
       {% if delete_draft_url %}
-        <form method="post" action="{{ delete_draft_url }}">
+        <form method="post" action="{{ delete_draft_url }}"
+              class="consultation-delete-draft">
           <button type="submit" class="btn btn-sm btn-danger">
             șterge modificările
           </button>
         </form>
       {% endif %}
 
-      <form method="post" action="{{ close_consultation_url }}">
+      <form method="post" action="{{ close_consultation_url }}"
+            class="consultation-close">
         <button type="submit" class="btn btn-sm btn-danger">
           încheie consultarea
           {% if delete_draft_url %}
@@ -63,7 +65,8 @@
   {%- else %}
     <p>Consultarea a fost finalizată.</p>
     {%- if perm_edit_final_for_this.can() %}
-      <form method="post" action="{{ reopen_consultation_url }}">
+      <form method="post" action="{{ reopen_consultation_url }}"
+            class="consultation-reopen">
         <button type="submit" class="btn btn-sm btn-danger">
           redeschide consultarea
         </button>
@@ -94,4 +97,34 @@
   {{ script('indexpage.js') }}
   {{ script('detail.js') }}
   {{ script('replies.js') }}
+
+  <script>
+  (function() {
+    "use strict";
+
+    function confirm_before_submit(selector, message) {
+      $(selector).submit(function(evt) {
+        if(! confirm(message)) {
+          evt.preventDefault();
+        }
+      });
+    }
+
+    confirm_before_submit(
+      '.consultation-delete-draft',
+      "Doriți revenirea la versiunea inițială?"
+    );
+    confirm_before_submit(
+      '.consultation-close',
+      "După ce închideți consultarea, experții nu vor "
+      + "mai putea adăuga comentarii."
+    );
+    confirm_before_submit(
+      '.consultation-reopen',
+      "Dacă redeschideți consultarea, experții vor "
+      + "putea adăuga noi comentarii."
+    );
+
+  })();
+  </script>
 {% endblock script %}
