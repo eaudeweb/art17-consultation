@@ -71,7 +71,13 @@ class SpeciesCommentView(RecordView, CommentViewMixin, SpeciesMixin):
     edit_signal = comment_edited
 
     def get_next_url(self):
-        return flask.url_for('.index')
+        if flask.current_app.testing:
+            return flask.request.url
+        return flask.url_for(
+            '.index',
+            species=self.record.species.code,
+            region=self.record.region,
+        )
 
     def setup_template_context(self):
         self.template_ctx = {
