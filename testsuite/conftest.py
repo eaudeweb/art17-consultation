@@ -61,5 +61,7 @@ def notifications_app(app):
 @pytest.fixture
 def aggregation_app(app):
     from art17.aggregation import aggregation
+    from art17.common import common
     app.register_blueprint(aggregation)
+    app.register_blueprint(common)
     return app
