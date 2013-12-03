@@ -409,9 +409,37 @@ class CloseConsultationView(flask.views.View):
     methods = ['POST']
 
     def dispatch_request(self, record_id):
+        next_url = flask.request.args['next']
         self.record = self.dataset.get_comment(record_id) or flask.abort(404)
         perm_edit_final(self.record.subject).test()
-        return 'ok'
+
+        row_list = self.dataset.get_topic_records(
+            subject=self.record.subject,
+            region_code=self.record.region,
+        )
+        self.assessment = None
+        self.draft = None
+        for row in row_list:
+            if row.cons_role == 'assessment':
+                self.assessment = row
+            elif row.cons_role == 'final-draft':
+                self.draft = row
+            elif row.cons_role == 'final':
+                raise RuntimeError("This consultation is already closed")
+
+        if self.draft is None:
+            self.draft = self.dataset.create_record(
+                cons_role='final-draft',
+                cons_status='not-modified',
+            )
+            models.db.session.add(self.draft)
+            self.dataset.link_to_record(self.draft, self.record)
+
+        self.draft.cons_role = 'final'
+        models.db.session.commit()
+
+        flask.flash(u"Consultarea a fost închisă", 'success')
+        return flask.redirect(next_url)
 
 
 cons_manager = Manager()
