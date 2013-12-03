@@ -360,3 +360,9 @@ class CommentDeleteView(flask.views.View):
 
 
 cons_manager = Manager()
+
+
+@common.route('/guide')
+def guide():
+    return flask.render_template('common/guide.html')
+

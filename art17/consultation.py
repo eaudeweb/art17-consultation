@@ -28,11 +28,6 @@ def ping():
     return "art17 consultation is up; %s; %d history items" % (now, count)
 
 
-@consultation.route('/guide')
-def guide():
-    return flask.render_template('consultation/guide.html')
-
-
 @consultation.app_url_defaults
 def bust_cache(endpoint, values):
     if endpoint == 'static':
