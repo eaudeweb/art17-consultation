@@ -4,6 +4,9 @@
     with context %}
 
 
+{% set record_columns = 17 %}
+
+
 {% macro assessment_header() %}
   <tr class="records-header">
     <th rowspan=2></th>
@@ -42,13 +45,6 @@
     <th title="Calitate">Cal.</th>
     {#- future prospects #}
     {#- overall assessment #}
-  </tr>
-{%- endmacro %}
-
-
-{% macro comments_header() %}
-  <tr class="records-header">
-    <th colspan=22>Comentarii</th>
   </tr>
 {%- endmacro %}
 
