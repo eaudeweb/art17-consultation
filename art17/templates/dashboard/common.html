@@ -24,7 +24,7 @@
       <tr>
         {%- set name = subject.lu.name_ro or subject.lu.speciesname %}
         <td title="{{ name }}">
-          {{ name|truncate(60) }}
+          {{ subject.code }} – {{ name|truncate(60) }}
         </td>
 
         {% for bioreg in bioreg_list %}

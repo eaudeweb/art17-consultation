@@ -39,6 +39,7 @@ def get_habitat_list():
     return (
         DataHabitat.query
         .join(DataHabitat.lu)
+        .order_by(DataHabitat.code)
         .all()
     )
 
@@ -48,6 +49,7 @@ def get_species_list(group_code):
         DataSpecies.query
         .join(DataSpecies.lu)
         .filter(LuHdSpecies.group_code == group_code)
+        .order_by(DataSpecies.code)
         .all()
     )
 
