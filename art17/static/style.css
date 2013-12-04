@@ -55,7 +55,8 @@ fieldset legend {
 }
 
 .records-commentstatus,
-.records-commentdelete {
+.records-commentdelete,
+.consultation-delete-draft {
     display: inline;
 }
 

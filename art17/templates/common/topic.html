@@ -2,8 +2,7 @@
 
 
 {% macro topic_html(
-    assessment_row,
-    comments,
+    topic,
     topic_template,
     blueprint,
     finalized) %}
@@ -11,8 +10,16 @@
       assessment_header, record, record_columns
       with context -%}
 
+  {% set assessment_row = topic['assessment'] %}
+
   <table class="records table table-bordered">
     {{ assessment_header() }}
+
+    <tr class="records-header">
+      <th colspan={{ record_columns + 5 }}>
+        Versiune pentru consultare
+      </th>
+    </tr>
 
     <tr>
       {#- detail #}
@@ -44,7 +51,7 @@
       </th>
     </tr>
 
-   {% for comment_row in comments %}
+   {% for comment_row in topic['comments'] %}
    {% if comment_row.region == assessment_row.region %}
     <tr>
       {#- detail #}
@@ -101,6 +108,56 @@
     </tr>
    {% endif %}
    {% endfor %}
+
+    <tr class="records-header">
+      <th colspan={{ record_columns + 5 }}>
+        Versiune rezultată în urma consultării
+      </th>
+    </tr>
+
+    <tr>
+      {%- set final_row = topic['final' if finalized else 'final-draft'] %}
+
+      <td>
+        {%- if final_row %}
+          {%- set url = url_for(blueprint + '.detail',
+                                record_id=final_row.id) %}
+          <button class="records-detailbtn btn btn-xs btn-info"
+                  data-url="{{ url }}">detalii</button>
+        {%- endif %}
+      </td>
+
+      {%- if final_row %}
+        {{ record(final_row) }}
+      {%- else %}
+        <td colspan={{ record_columns }}>
+          nu s-a adus nicio modificare versiunii spre consultare
+        </td>
+      {%- endif %}
+
+      <td></td>
+
+      <td>
+        {%- if not finalized %}
+          {%- if perm_edit_final_for_this.can() %}
+            <a class="btn btn-xs btn-default"
+               href="{{ final_comment_url }}">editează</a>
+
+            {% if delete_draft_url %}
+              <form method="post" action="{{ delete_draft_url }}"
+                    class="consultation-delete-draft">
+                <button type="submit" class="btn btn-xs btn-danger">
+                  șterge
+                </button>
+              </form>
+            {% endif %}
+          {%- endif %}
+        {%- endif %}
+      </td>
+
+      <td colspan=2></td>
+    </tr>
+
   </table>
 {%- endmacro %}
 
