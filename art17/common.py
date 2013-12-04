@@ -54,6 +54,14 @@ CONCLUSION_COLOR = {
     'XX': 'FFFFFF',
 }
 
+AGGREGATION_STATUS_OPTIONS = [
+    ('new', u"În lucru"),
+    ('finalized', u"Finalizat")
+]
+
+NEW_STATUS = 'new'
+FINALIZED_STATUS = 'finalized'
+
 
 def calculate_identifier_steps(identifier):
     bits = identifier.split(':')
@@ -100,6 +108,21 @@ def perm_delete_comment(comment):
 
 
 def perm_edit_record(record):
+    if record.cons_status == FINALIZED_STATUS:
+        return Denial(need.everybody)
+
+    return Permission(need.admin)
+
+
+def perm_finalize_record(record):
+    if record.cons_status == FINALIZED_STATUS:
+        return Denial(need.everybody)
+    return Permission(need.admin)
+
+
+def perm_definalize_record(record):
+    if record.cons_status != FINALIZED_STATUS:
+        return Denial(need.everybody)
     return Permission(need.admin)
 
 
@@ -137,7 +160,8 @@ def inject_constants():
         'METHODS_THREATS': lookup.METHODS_THREATS,
         'GENERALSTATUS_CHOICES': dict(models.db.session.query(
                                     models.LuPresence.code,
-                                    models.LuPresence.name).all())
+                                    models.LuPresence.name).all()),
+        'FINALIZED_STATUS': FINALIZED_STATUS,
     }
 
 

@@ -1,6 +1,5 @@
 {% extends "layout.html" %}
 
-
 {% block breadcrumbs %}
   {%- from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
@@ -9,3 +8,16 @@
           (region.code + ' - privire de ansamblu', None),
       ]) }}
 {% endblock breadcrumbs %}
+
+{% block footer %}
+    {% if record_obj.cons_status == FINALIZED_STATUS %}
+      {% set url = record_finalize_toggle_url(record_obj, False) %}
+      <a href="{{ url }}" class="btn btn-primary">Readu în lucru</a>
+    {% else %}
+      <a href="{{ record_edit_url(record_obj) }}" class="btn btn-default">Editează</a>
+
+      {% set url = record_finalize_toggle_url(record_obj, True) %}
+      <a href="{{ url }}" class="btn btn-primary">Finalizează</a>
+    {% endif %}
+    {{ super() }}
+{% endblock %}

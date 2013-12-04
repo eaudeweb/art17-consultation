@@ -6,7 +6,8 @@ import flask
 import flask.views
 from werkzeug.datastructures import MultiDict
 from art17 import models, dal, schemas
-from art17.common import flatten_dict, perm_edit_record
+from art17.common import flatten_dict, perm_edit_record, perm_finalize_record,\
+    FINALIZED_STATUS, perm_definalize_record, NEW_STATUS
 from art17.habitat import HabitatCommentView
 from art17.species import SpeciesCommentView
 
@@ -65,10 +66,47 @@ def record_dashboard_url(record):
     raise RuntimeError("Expecting a species or a habitat object")
 
 
+def record_edit_url(record):
+    if isinstance(record, models.DataHabitattypeRegion):
+        return flask.url_for('.habitat-edit', dataset_id=record.cons_dataset_id,
+                             record_id=record.id)
+    elif isinstance(record, models.DataSpeciesRegion):
+        return flask.url_for('.species-edit',
+                             dataset_id=record.cons_dataset_id,
+                             record_id=record.id)
+    raise RuntimeError("Expecting a species or a habitat object")
+
+
+def record_details_url(record):
+    if isinstance(record, models.DataHabitattypeRegion):
+        return flask.url_for('.habitat-details', dataset_id=record.cons_dataset_id,
+                             record_id=record.id)
+    elif isinstance(record, models.DataSpeciesRegion):
+        return flask.url_for('.species-details',
+                             dataset_id=record.cons_dataset_id,
+                             record_id=record.id)
+    raise RuntimeError("Expecting a species or a habitat object")
+
+
+def record_finalize_toggle_url(record, finalize):
+    action = 'finalize' if finalize else 'definalize'
+    if isinstance(record, models.DataHabitattypeRegion):
+        return flask.url_for('.habitat-' + action, dataset_id=record.cons_dataset_id,
+                             record_id=record.id)
+    elif isinstance(record, models.DataSpeciesRegion):
+        return flask.url_for('.species-' + action,
+                             dataset_id=record.cons_dataset_id,
+                             record_id=record.id)
+    raise RuntimeError("Expecting a species or a habitat object")
+
+
 @aggregation.app_context_processor
 def inject_funcs():
     return dict(home_url=flask.url_for('aggregation.home'),
                 record_index_url=record_index_url,
+                record_edit_url=record_edit_url,
+                record_details_url=record_details_url,
+                record_finalize_toggle_url=record_finalize_toggle_url,
                 record_dashboard_url=record_dashboard_url,
     )
 
@@ -375,3 +413,55 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>'
 aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>'
                          '/details',
                          view_func=HabitatDetails.as_view('habitat-details'))
+
+
+class RecordFinalToggle(flask.views.View):
+
+    def __init__(self, finalize=True, record_cls=None):
+        self.finalize = finalize
+        self.record_cls = record_cls
+
+    def dispatch_request(self, dataset_id, record_id):
+        self.record = self.record_cls.query.get(record_id)
+        if self.finalize:
+            perm_finalize_record(self.record).test()
+            self.record.cons_status = FINALIZED_STATUS
+        else:
+            perm_definalize_record(self.record).test()
+            self.record.cons_status = NEW_STATUS
+        models.db.session.add(self.record)
+        models.db.session.commit()
+        if self.finalize:
+            return flask.redirect(record_details_url(self.record))
+        else:
+            return flask.redirect(record_edit_url(self.record))
+
+
+
+aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>'
+                         '/finalize',
+                         view_func=RecordFinalToggle.as_view(
+                             'habitat-finalize',
+                             record_cls=models.DataHabitattypeRegion,
+                             finalize=True))
+
+aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>'
+                         '/definalize',
+                         view_func=RecordFinalToggle.as_view(
+                             'habitat-definalize',
+                             record_cls=models.DataHabitattypeRegion,
+                             finalize=False))
+
+aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>'
+                         '/finalize',
+                         view_func=RecordFinalToggle.as_view(
+                             'species-finalize',
+                             record_cls=models.DataSpeciesRegion,
+                             finalize=True))
+
+aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>'
+                         '/definalize',
+                         view_func=RecordFinalToggle.as_view(
+                             'species-definalize',
+                             record_cls=models.DataSpeciesRegion,
+                             finalize=False))
