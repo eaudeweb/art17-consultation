@@ -247,6 +247,8 @@ class RecordViewMixin(object):
             self.record = self.record_cls.query.get_or_404(record_id)
             perm_edit_record(self.record).test()
             self.object = self.record
+            if self.object.cons_role == 'assessment':
+                self.object.cons_role = 'final-draft'
             self.original_data = self.parse_commentform(self.object)
             if flask.request.method == 'POST':
                 form_data = flask.request.form
@@ -376,7 +378,7 @@ class RecordDetails(flask.views.View):
             'threats': self.record.get_threats().all(),
             'measures': self.record.measures.all(),
             'template_base': self.template_base,
-            'finalized': self.record.cons_status == FINALIZED_STATUS,
+            'finalized': self.record.cons_role == 'final',
         })
         return flask.render_template(self.template_name, **context)
 
@@ -420,10 +422,18 @@ class RecordFinalToggle(flask.views.View):
         self.record = self.record_cls.query.get(record_id)
         if self.finalize:
             perm_finalize_record(self.record).test()
-            self.record.cons_status = FINALIZED_STATUS
+            if self.record.cons_role == 'final-draft':
+                self.record.cons_status = FINALIZED_STATUS
+            elif self.record.cons_role == 'assessment':
+                self.record.cons_status = 'unmodified'
+            self.record.cons_role = 'final'
             flask.flash(u"Înregistrarea a fost finalizată.", 'success')
         else:
             perm_definalize_record(self.record).test()
+            if self.record.cons_status == 'unmodified':
+                self.record.cons_role = 'assessment'
+            else:
+                self.record.cons_role = 'final-draft'
             self.record.cons_status = NEW_STATUS
             flask.flash(u"Înregistrarea a fost readusă în lucru.", 'warning')
         models.db.session.add(self.record)

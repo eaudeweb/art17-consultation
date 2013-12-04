@@ -56,7 +56,8 @@ CONCLUSION_COLOR = {
 
 AGGREGATION_STATUS_OPTIONS = [
     ('new', u"În lucru"),
-    ('finalized', u"Finalizat")
+    ('finalized', u"Finalizat"),
+    ('unmodified', u"Nemodificat"),
 ]
 
 NEW_STATUS = 'new'
@@ -108,20 +109,20 @@ def perm_delete_comment(comment):
 
 
 def perm_edit_record(record):
-    if record.cons_status == FINALIZED_STATUS:
+    if record.cons_role == 'final':
         return Denial(need.everybody)
 
     return Permission(need.admin)
 
 
 def perm_finalize_record(record):
-    if record.cons_status == FINALIZED_STATUS:
+    if record.cons_role == 'final':
         return Denial(need.everybody)
     return Permission(need.admin)
 
 
 def perm_definalize_record(record):
-    if record.cons_status != FINALIZED_STATUS:
+    if record.cons_role != 'final':
         return Denial(need.everybody)
     return Permission(need.admin)
 
