@@ -84,18 +84,11 @@
   {{ script('indexpage.js') }}
   {{ script('detail.js') }}
   {{ script('replies.js') }}
+  {{ script('common.js') }}
 
   <script>
   (function() {
     "use strict";
-
-    function confirm_before_submit(selector, message) {
-      $(selector).submit(function(evt) {
-        if(! confirm(message)) {
-          evt.preventDefault();
-        }
-      });
-    }
 
     confirm_before_submit(
       '.consultation-delete-draft',

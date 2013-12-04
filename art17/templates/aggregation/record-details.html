@@ -12,12 +12,36 @@
 {% block footer %}
     {% if finalized %}
       {% set url = record_finalize_toggle_url(record_obj, False) %}
-      <a href="{{ url }}" class="btn btn-primary">Readu în lucru</a>
+      <a href="{{ url }}" class="btn btn-primary aggregation-definalize">Readu în lucru</a>
     {% else %}
       <a href="{{ record_edit_url(record_obj) }}" class="btn btn-default">Editează</a>
 
       {% set url = record_finalize_toggle_url(record_obj, True) %}
-      <a href="{{ url }}" class="btn btn-primary">Finalizează</a>
+      <a href="{{ url }}" class="btn btn-primary aggregation-finalize">Finalizează</a>
     {% endif %}
     {{ super() }}
 {% endblock %}
+
+{% block script %}
+  {{ super() }}
+  {{ script('common.js') }}
+
+  <script>
+  (function() {
+    "use strict";
+
+    confirm_before_click(
+      '.aggregation-finalize',
+      "După ce finalizați agregarea, experții nu vor "
+      + "mai putea modifica datele."
+    );
+
+    confirm_before_click(
+      '.aggregation-definalize',
+      "Dacă redeschideți agregarea, experții vor "
+      + "putea modifica datele."
+    );
+
+  })();
+  </script>
+{% endblock script %}
