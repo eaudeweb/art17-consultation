@@ -115,6 +115,7 @@ class BaseDataset(object):
             )
             .filter_by(cons_role='comment')
             .filter_by(cons_dataset_id=self.dataset_id)
+            .filter_by(cons_deleted=False)
             .group_by(
                 self.record_model_subject_id,
                 self.record_model.region,
