@@ -143,6 +143,17 @@ def aggregate():
     })
 
 
+@aggregation.route('/sterge/<int:dataset_id>', methods=['POST'])
+def delete_dataset(dataset_id):
+    dataset = models.Dataset.query.get(dataset_id)
+    dataset.species_objs.delete()
+    dataset.habitat_objs.delete()
+    models.db.session.delete(dataset)
+    models.db.session.commit()
+    flask.flash(u"Setul de date a fost șters.", 'success')
+    return flask.redirect(flask.url_for('.home'))
+
+
 def execute_on_primary(query):
     app = flask.current_app
     aggregation_engine = models.db.get_engine(app, 'primary')

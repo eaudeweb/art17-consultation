@@ -29,15 +29,36 @@
     <th>Dată</th>
     <th>Utilizator</th>
     <th></th>
+    <th></th>
   </thead>
 
   {%- for dataset in dataset_list %}
     {%- set url = url_for('.dashboard', dataset_id=dataset.id) %}
+    {%- set delete_url = url_for('.delete_dataset', dataset_id=dataset.id) %}
     <tr>
       <td><a href="{{ url }}">{{ dataset.date }}</a></td>
       <td>{{ dataset.user_id }}</td>
       <td>{{ dataset.comment or ""|truncate(100) }}</td>
+      <td>
+        <form method="post" action="{{ delete_url }}"
+              class="delete-dataset-form">
+          <button type="submit" class="btn btn-danger btn-xs">șterge</button>
+        </form>
+      </td>
     </tr>
   {%- endfor %}
 </table>
 {% endblock content %}
+
+
+{% block script %}
+{{ super() }}
+{%- from 'bits.html' import script %}
+{{ script('common.js') }}
+<script>
+  App.confirm_before_submit(
+    '.delete-dataset-form',
+    "Întreaga agregare va fi ștearsă!"
+  );
+</script>
+{% endblock script %}
