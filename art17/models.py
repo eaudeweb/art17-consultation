@@ -166,7 +166,7 @@ class DataHabitatsCheckList(Base):
     natura_2000_code = Column(String)
     hd_name = Column(String)
     valid_name = Column(String)
-    ms = Column(String)
+    member_state = Column('ms', String)
     bio_region = Column(String)
     presence = Column(String)
     ms_feedback_etcbd_comments = Column(Text)

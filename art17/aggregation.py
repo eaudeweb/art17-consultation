@@ -156,23 +156,45 @@ def create_aggregation(timestamp, user_id):
     )
     models.db.session.add(dataset)
 
-    habitat_row = models.DataHabitattypeRegion(
-        dataset=dataset,
-        habitat=models.DataHabitat.query.filter_by(code='8230').first(),
-        region='MBLS',
-        cons_role='assessment',
-        cons_date=timestamp,
-        cons_user_id=user_id,
+    habitat_query = (
+        models.DataHabitatsCheckList.query
+        .filter(models.DataHabitatsCheckList.presence != 'EX')
+        .filter(models.DataHabitatsCheckList.member_state == 'RO')
     )
 
-    species_row = models.DataSpeciesRegion(
-        dataset=dataset,
-        species=models.DataSpecies.query.filter_by(code='1353').first(),
-        region='MBLS',
-        cons_role='assessment',
-        cons_date=timestamp,
-        cons_user_id=user_id,
+    for row in habitat_query:
+        region_code = row.bio_region
+        habitat_code = row.natura_2000_code
+        habitat = models.DataHabitat.query.filter_by(code=habitat_code).first()
+        habitat_row = models.DataHabitattypeRegion(
+            dataset=dataset,
+            habitat=habitat,
+            region=region_code,
+            cons_role='assessment',
+            cons_date=timestamp,
+            cons_user_id=user_id,
+        )
+        models.db.session.add(habitat_row)
+
+    species_query = (
+        models.DataSpeciesCheckList.query
+        .filter(models.DataSpeciesCheckList.presence != 'EX')
+        .filter(models.DataSpeciesCheckList.member_state == 'RO')
     )
+
+    for row in species_query:
+        region_code = row.bio_region
+        species_code = row.natura_2000_code
+        species = models.DataSpecies.query.filter_by(code=species_code).first()
+        species_row = models.DataSpeciesRegion(
+            dataset=dataset,
+            species=species,
+            region=region_code,
+            cons_role='assessment',
+            cons_date=timestamp,
+            cons_user_id=user_id,
+        )
+        models.db.session.add(species_row)
 
     return dataset
 
