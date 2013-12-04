@@ -55,10 +55,21 @@ def record_index_url(subject, region, dataset_id):
     raise RuntimeError("Expecting a speciesregion or a habitattyperegion")
 
 
+def record_dashboard_url(record):
+    if isinstance(record, models.DataHabitattypeRegion):
+        return flask.url_for('.habitats', dataset_id=record.cons_dataset_id)
+    elif isinstance(record, models.DataSpeciesRegion):
+        return flask.url_for('.species',
+                             dataset_id=record.cons_dataset_id,
+                             group_code=record.subject.lu.group_code)
+    raise RuntimeError("Expecting a species or a habitat object")
+
+
 @aggregation.app_context_processor
 def inject_funcs():
     return dict(home_url=flask.url_for('aggregation.home'),
                 record_index_url=record_index_url,
+                record_dashboard_url=record_dashboard_url,
     )
 
 
@@ -314,3 +325,53 @@ from .species import detail as detail_species
 
 aggregation.route('/specii/detalii/<int:record_id>',
                   endpoint='detail-species')(detail_species)
+
+
+class RecordDetails(flask.views.View):
+
+    template_base = 'aggregation/record-details.html'
+
+    def dispatch_request(self, dataset_id, record_id):
+        self.record = self.record_cls.query.get(record_id)
+        context = self.get_context_data()
+        context.update({
+            'record': self.record_parser(self.record),
+            'record_obj': self.record,
+            'region': dal.get_biogeo_region(self.record.region),
+            'subject': self.record.subject,
+            'dataset_id': dataset_id,
+            'pressures': self.record.get_pressures().all(),
+            'threats': self.record.get_threats().all(),
+            'measures': self.record.measures.all(),
+            'template_base': self.template_base,
+        })
+        return flask.render_template(self.template_name, **context)
+
+
+class SpeciesDetails(RecordDetails):
+
+    record_cls = models.DataSpeciesRegion
+    template_name = 'species/detail.html'
+    record_parser = staticmethod(schemas.parse_species)
+
+    def get_context_data(self):
+        return {'group_code': self.record.species.lu.group_code}
+
+
+class HabitatDetails(RecordDetails):
+
+    record_cls = models.DataHabitattypeRegion
+    template_name = 'habitat/detail.html'
+    record_parser = staticmethod(schemas.parse_habitat)
+
+    def get_context_data(self):
+        return {'species': self.record.species.all()}
+
+
+aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>'
+                         '/details',
+                         view_func=SpeciesDetails.as_view('species-details'))
+
+aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>'
+                         '/details',
+                         view_func=HabitatDetails.as_view('habitat-details'))

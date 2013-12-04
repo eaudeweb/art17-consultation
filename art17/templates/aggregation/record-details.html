@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('set de date', record_dashboard_url(record_obj)),
+          (region.code + ' - privire de ansamblu', None),
+      ]) }}
+{% endblock breadcrumbs %}
