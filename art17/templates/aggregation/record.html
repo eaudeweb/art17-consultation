@@ -35,7 +35,12 @@
       <input type="hidden" name="next" value="{{ next_url }}">
     {%- endif %}
 
-    <button type="submit" class="btn btn-primary">Salveazǎ schimbǎrile</button>
+     <button type="submit" class="btn btn-primary">
+      Salveazǎ schimbǎrile
+    </button>
+    <button type="submit" name="submit" value="finalize" class="btn btn-danger">
+      Salveazǎ și finalizează
+    </button>
   </form>
 
   {% include 'common/recorddetail.html' %}

@@ -235,6 +235,12 @@ class RecordViewMixin(object):
 
     template_base = 'aggregation/record.html'
     template_saved = 'aggregation/record-saved.html'
+    success_message = u"Înregistrarea a fost actualizată"
+
+    def get_next_url(self):
+        if flask.request.form.get('submit', None) == 'finalize':
+            return record_finalize_toggle_url(self.record, True)
+        return record_edit_url(self.record)
 
     def setup_record_and_form(self, record_id=None, comment_id=None):
         if record_id:
@@ -259,11 +265,6 @@ class HabitatRecordView(RecordViewMixin, HabitatCommentView):
     template = 'aggregation/record-habitat.html'
     add_signal = Signal()
     edit_signal = Signal()
-    success_message = u"Înregistrarea a fost actualizată"
-
-    def get_next_url(self):
-        return flask.url_for('.habitat-index', dataset_id=self.dataset_id,
-                             record_id=self.record.id)
 
     def setup_template_context(self):
         super(HabitatRecordView, self).setup_template_context()
@@ -281,12 +282,6 @@ class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
     template = 'aggregation/record-species.html'
     add_signal = Signal()
     edit_signal = Signal()
-    success_message = u"Înregistrarea a fost actualizată"
-
-    def get_next_url(self):
-        return flask.url_for('.species-index',
-                             dataset_id=self.dataset_id,
-                             record_id=self.record.id)
 
     def setup_template_context(self):
         super(SpeciesRecordView, self).setup_template_context()
