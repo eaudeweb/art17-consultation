@@ -76,6 +76,7 @@ class LdapServer(object):
         for dn, attrs in results:
             if group_name in get_member_groups(attrs):
                 email = get_value(attrs, 'mail', None)
+                full_name = get_value(attrs, 'givenName', None)
                 if email:
-                    rv.append(email)
+                    rv.append({'email': email, 'full_name': full_name})
         return rv

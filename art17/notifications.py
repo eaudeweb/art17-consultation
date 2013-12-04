@@ -6,6 +6,8 @@ from art17 import species
 from art17 import replies
 from art17 import habitat
 from art17 import models
+from art17.common import calculate_identifier_steps
+from art17.ldap_access import open_ldap_server
 
 notifications = flask.Blueprint('notifications', __name__)
 mail = Mail()
@@ -56,7 +58,7 @@ def handle_signal(table, action, ob, **extra):
     for r in recipients:
         msg = Message(body=create_message(table, action, ob, r),
                 subject='Notificare',
-                recipients=[r.email]
+                recipients=[r['email']]
         )
         mail.send(msg)
 
@@ -96,5 +98,11 @@ def get_notification_emails(obj):
         identifier = parent.subject_identifier
     else:
         identifier = obj.subject_identifier
-    # TODO: get emails from SharePoint, using identity
-    return models.NotificationUser.query.all()
+    emails = []
+    steps = calculate_identifier_steps(identifier)
+    if flask.current_app.testing:
+        return [a.__dict__ for a in models.NotificationUser.query.all()]
+    with open_ldap_server() as ldap_server:
+        for group in steps:
+            emails.extend(ldap_server.get_emails_for_group(group))
+    return set(emails)
