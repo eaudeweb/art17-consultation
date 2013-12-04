@@ -49,9 +49,14 @@ fieldset legend {
     font-size: 11px;
 }
 
-.records-header th {
+.records-header th,
+.records-section-header th {
     background: #F6F8EE;
     text-align: center;
+}
+
+.records-section-header {
+    border-top: 2px solid #aaa;
 }
 
 .records-commentstatus,

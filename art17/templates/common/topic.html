@@ -15,7 +15,7 @@
   <table class="records table table-bordered">
     {{ assessment_header() }}
 
-    <tr class="records-header">
+    <tr class="records-section-header">
       <th colspan={{ record_columns + 5 }}>
         Versiune pentru consultare
       </th>
@@ -45,7 +45,7 @@
       </td>
     </tr>
 
-    <tr class="records-header">
+    <tr class="records-section-header">
       <th colspan={{ record_columns + 5 }}>
         Comentarii
       </th>
@@ -109,7 +109,7 @@
    {% endif %}
    {% endfor %}
 
-    <tr class="records-header">
+    <tr class="records-section-header">
       <th colspan={{ record_columns + 5 }}>
         Versiune rezultată în urma consultării
       </th>
