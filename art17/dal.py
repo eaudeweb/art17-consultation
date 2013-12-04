@@ -92,6 +92,20 @@ class BaseDataset(object):
         )
         return query.all()
 
+    def get_subject_region_overview_all(self):
+        overview = {}
+        regions_query = (
+            db.session
+            .query(
+                self.record_model_subject_id,
+                self.record_model.region,
+            )
+            .filter_by(cons_dataset_id=self.dataset_id)
+        )
+        for key in regions_query:
+            overview[key] = 0
+        return overview
+
     def get_subject_region_overview(self):
         overview = {}
         regions_query = (
