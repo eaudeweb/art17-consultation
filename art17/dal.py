@@ -20,7 +20,7 @@ from art17.models import (
 
 
 def get_biogeo_region_list():
-    return LuBiogeoreg.query.all()
+    return LuBiogeoreg.query.order_by(LuBiogeoreg.order).all()
 
 
 def get_biogeo_region(region_code):

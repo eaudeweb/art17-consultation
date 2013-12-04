@@ -51,25 +51,37 @@ def inject_funcs():
 @dashboard.route('/habitate')
 def habitats():
     habitat_dataset = dal.HabitatDataset()
+    habitat_regions = habitat_dataset.get_subject_region_overview()
+    relevant_regions = set(reg for n, reg in habitat_regions)
+    bioreg_list = [
+        r for r in dal.get_biogeo_region_list()
+        if r.code in relevant_regions
+    ]
 
     return flask.render_template('dashboard/habitat.html', **{
-        'bioreg_list': dal.get_biogeo_region_list(),
+        'bioreg_list': bioreg_list,
         'tabmenu_data': list(get_tabmenu_data()),
         'habitat_list': dal.get_habitat_list(),
-        'habitat_regions': habitat_dataset.get_subject_region_overview(),
+        'habitat_regions': habitat_regions,
     })
 
 
 @dashboard.route('/specii/<group_code>')
 def species(group_code):
     species_dataset = dal.SpeciesDataset()
+    species_regions = species_dataset.get_subject_region_overview()
+    relevant_regions = set(reg for n, reg in species_regions)
+    bioreg_list = [
+        r for r in dal.get_biogeo_region_list()
+        if r.code in relevant_regions
+    ]
 
     return flask.render_template('dashboard/species.html', **{
-        'bioreg_list': dal.get_biogeo_region_list(),
+        'bioreg_list': bioreg_list,
         'tabmenu_data': list(get_tabmenu_data()),
         'species_group': dal.get_species_group(group_code),
         'species_list': dal.get_species_list(group_code=group_code),
-        'species_regions': species_dataset.get_subject_region_overview(),
+        'species_regions': species_regions,
     })
 
 
