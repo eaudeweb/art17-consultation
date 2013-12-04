@@ -90,16 +90,16 @@
   (function() {
     "use strict";
 
-    confirm_before_submit(
+    App.confirm_before_submit(
       '.consultation-delete-draft',
       "Doriți revenirea la versiunea inițială?"
     );
-    confirm_before_submit(
+    App.confirm_before_submit(
       '.consultation-close',
       "După ce închideți consultarea, experții nu vor "
       + "mai putea adăuga comentarii."
     );
-    confirm_before_submit(
+    App.confirm_before_submit(
       '.consultation-reopen',
       "Dacă redeschideți consultarea, experții vor "
       + "putea adăuga noi comentarii."

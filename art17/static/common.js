@@ -1,15 +1,20 @@
-function confirm_before_submit(selector, message) {
+(function() {
+"use strict";
+
+App.confirm_before_submit = function(selector, message) {
   $(selector).submit(function(evt) {
     if(! confirm(message)) {
       evt.preventDefault();
     }
   });
-}
+};
 
-function confirm_before_click(selector, message) {
+App.confirm_before_click = function(selector, message) {
   $(selector).click(function(evt) {
     if(! confirm(message)) {
       evt.preventDefault();
     }
   });
-}
+};
+
+})();
