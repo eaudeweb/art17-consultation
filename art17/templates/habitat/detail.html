@@ -1,7 +1,11 @@
-{%- import 'common/td.html' as macros with context %}
+{% if template_base %}
+    {% extends template_base %}
+{% endif %}
 
+{% block content %}
+{%- import 'common/td.html' as macros with context %}
 <h1>
-  {{ habitat.lu.name_ro }}
+  {{ subject.lu.display_name }}
   ({{ record.region }})
 </h1>
 
@@ -40,3 +44,4 @@
   {% include "habitat/detail/sources.html" with context %}
 
 </div>
+{% endblock %}

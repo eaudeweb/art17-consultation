@@ -52,7 +52,7 @@ species.add_url_rule('/specii/', view_func=SpeciesIndexView.as_view('index'))
 def detail(record_id):
     record = models.DataSpeciesRegion.query.get_or_404(record_id)
     return flask.render_template('species/detail.html', **{
-        'species': record.species,
+        'subject': record.species,
         'record': schemas.parse_species(record),
         'pressures': record.get_pressures().all(),
         'threats': record.get_threats().all(),
