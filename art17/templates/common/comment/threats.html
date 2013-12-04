@@ -10,7 +10,8 @@
 
         {{ errors(threats.threats) }}
 
-        <table class="table table-bordered recorddetail-table table-vertical" id="threats_container">
+        <table class="table table-bordered recorddetail-table table-vertical"
+               id="threats_container">
           <tr>
             <th>Amenințare</th>
             <th>Clasificare</th>
@@ -24,12 +25,14 @@
             <td>
               {% if p.pollutions %}
               {% for pol in p.pollutions %}
-              {{ pol }}
+               {{ pol }}
               {% endfor %}
               {% endif %}
             </td>
             <td>
-              <button type="button" class="btn btn-danger btn-sm hidepressure">Șterge</button>
+              <button type="button" class="btn btn-danger btn-sm hidepressure">
+                Șterge
+              </button>
               {{ threats.threats.render_input(p) }}
             </td>
           </tr>
@@ -54,23 +57,22 @@
             </td>
           </tr>
         </table>
+      </div>
 
-        <div class="form-group">
-          <label for="threats.threats_method">
-            Metoda utilizată:
-          </label>
+      <div class="form-group">
+        <label for="threats.threats_method">
+          Metoda utilizată:
+        </label>
 
-          {{ errors(threats.threats_method) }}
+        {{ errors(threats.threats_method) }}
 
-          <div class="row">
-            <div class="col-sm-4 {{- error_cls(threats.threats_method) }}">
-              {{ threats.threats_method(class='form-control') }}
-            </div>
-
-            <div class="col-sm-2"></div>
+        <div class="row">
+          <div class="col-sm-4 {{- error_cls(threats.threats_method) }}">
+            {{ threats.threats_method(class='form-control') }}
           </div>
-        </div>
 
+          <div class="col-sm-2"></div>
+        </div>
       </div>
 
     </div>

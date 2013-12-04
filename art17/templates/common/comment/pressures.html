@@ -10,7 +10,8 @@
 
         {{ errors(pressures.pressures) }}
 
-        <table class="table table-bordered recorddetail-table table-vertical" id="pressures_container">
+        <table class="table table-bordered recorddetail-table table-vertical"
+               id="pressures_container">
           <tr>
             <th>Presiune</th>
             <th>Clasificare</th>
@@ -24,12 +25,14 @@
             <td>
               {% if p.pollutions %}
               {% for pol in p.pollutions %}
-              {{ pol }}
+                {{ pol }}
               {% endfor %}
               {% endif %}
             </td>
             <td>
-              <button type="button" class="btn btn-danger btn-sm hidepressure">Șterge</button>
+              <button type="button" class="btn btn-danger btn-sm hidepressure">
+                Șterge
+              </button>
               {{ pressures.pressures.render_input(p) }}
             </td>
           </tr>
@@ -54,23 +57,22 @@
             </td>
           </tr>
         </table>
+      </div>
 
-        <div class="form-group">
-          <label for="pressures.pressures_method">
-            Metoda utilizată:
-          </label>
+      <div class="form-group">
+        <label for="pressures.pressures_method">
+          Metoda utilizată:
+        </label>
 
-          {{ errors(pressures.pressures_method) }}
+        {{ errors(pressures.pressures_method) }}
 
-          <div class="row">
-            <div class="col-sm-4 {{- error_cls(pressures.pressures_method) }}">
-              {{ pressures.pressures_method(class='form-control') }}
-            </div>
-
-            <div class="col-sm-2"></div>
+        <div class="row">
+          <div class="col-sm-4 {{- error_cls(pressures.pressures_method) }}">
+            {{ pressures.pressures_method(class='form-control') }}
           </div>
-        </div>
 
+          <div class="col-sm-2"></div>
+        </div>
       </div>
 
     </div>
