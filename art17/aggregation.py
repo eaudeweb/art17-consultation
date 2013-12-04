@@ -249,14 +249,23 @@ class DashboardView(flask.views.View):
     def get_context_data(self):
         dal_object = self.ds_model(self.dataset_id)
         dataset = models.Dataset.query.get_or_404(self.dataset_id)
+        object_regions = dal_object.get_subject_region_overview_all()
+        #bioreg_list = dal.get_biogeo_region_list()
+
+        relevant_regions = set(reg for n, reg in object_regions)
+        bioreg_list = [
+            r for r in dal.get_biogeo_region_list()
+            if r.code in relevant_regions
+        ]
+
         return {
             'current_tab': self.current_tab,
-            'bioreg_list': dal.get_biogeo_region_list(),
+            'bioreg_list': bioreg_list,
             'tabmenu_data': list(get_tabmenu_data(self.dataset_id)),
             'dataset_url': flask.url_for('.dashboard', dataset_id=self.dataset_id),
             'dataset_id': self.dataset_id,
             'object_list': self.get_object_list(),
-            'object_regions': dal_object.get_subject_region_overview_all(),
+            'object_regions': object_regions,
             'dataset': dataset,
             'habitat_count': dataset.habitat_objs.count(),
             'species_count': dataset.species_objs.count(),
