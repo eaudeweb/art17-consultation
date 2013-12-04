@@ -46,6 +46,7 @@ def get_record(subject, region, dataset_id):
         ).first()
     if obj:
         obj.finalized = (obj.cons_role == 'final')
+        obj.new = (obj.cons_role == 'assessment')
         return obj
     raise RuntimeError("Expecting a speciesregion or a habitattyperegion")
 

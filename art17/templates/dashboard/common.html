@@ -79,7 +79,7 @@
             {%- set url = record_edit_url(record) %}
             <td class="dashboard-commentcount">
               <a href="{{ url }}" class="btn btn-xs">
-              {% if record.cons_role == 'assessment' %}
+              {% if record.new %}
                 agregat
               {% else %}
                 în lucru
