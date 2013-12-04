@@ -234,7 +234,6 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/species/<group_code>',
 class RecordViewMixin(object):
 
     template_base = 'aggregation/record.html'
-    template_saved = 'aggregation/record-saved.html'
     success_message = u"Înregistrarea a fost actualizată"
 
     def get_next_url(self):
@@ -422,9 +421,11 @@ class RecordFinalToggle(flask.views.View):
         if self.finalize:
             perm_finalize_record(self.record).test()
             self.record.cons_status = FINALIZED_STATUS
+            flask.flash(u"Înregistrarea a fost finalizată.", 'success')
         else:
             perm_definalize_record(self.record).test()
             self.record.cons_status = NEW_STATUS
+            flask.flash(u"Înregistrarea a fost readusă în lucru.", 'warning')
         models.db.session.add(self.record)
         models.db.session.commit()
         if self.finalize:

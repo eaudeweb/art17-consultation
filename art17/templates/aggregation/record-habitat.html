@@ -4,9 +4,8 @@
   {%- from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
           ('acasǎ', home_url),
-          ('set de date', url_for('.dashboard', dataset_id=dataset_id)),
-          ('habitate', url_for('.habitats', dataset_id=dataset_id)),
-          ('habitat', None)
+          ('set de date', record_dashboard_url(record_obj)),
+          (region.code + ' - editare', None),
       ]) }}
 {% endblock breadcrumbs %}
 

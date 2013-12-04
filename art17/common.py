@@ -363,7 +363,6 @@ class RecordView(IndexMixin, flask.views.View):
 class CommentViewMixin(object):
 
     template_base = 'common/comment.html'
-    template_saved = 'common/comment-saved.html'
 
     def setup_record_and_form(self, record_id=None, comment_id=None):
         if record_id:
