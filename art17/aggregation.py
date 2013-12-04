@@ -168,19 +168,25 @@ def create_aggregation(timestamp, user_id):
     )
     models.db.session.add(dataset)
 
-    habitat_query = (
+    habitat_id_map = dict(
+        models.db.session.query(
+            models.DataHabitat.code,
+            models.DataHabitat.id,
+        )
+    )
+
+    habitat_checklist_query = (
         models.DataHabitatsCheckList.query
         .filter(models.DataHabitatsCheckList.presence != 'EX')
         .filter(models.DataHabitatsCheckList.member_state == 'RO')
     )
 
-    for row in habitat_query:
+    for row in habitat_checklist_query:
         region_code = row.bio_region
-        habitat_code = row.natura_2000_code
-        habitat = models.DataHabitat.query.filter_by(code=habitat_code).first()
+        habitat_id = habitat_id_map.get(row.natura_2000_code)
         habitat_row = models.DataHabitattypeRegion(
             dataset=dataset,
-            habitat=habitat,
+            habitat_id=habitat_id,
             region=region_code,
             cons_role='assessment',
             cons_date=timestamp,
@@ -188,19 +194,25 @@ def create_aggregation(timestamp, user_id):
         )
         models.db.session.add(habitat_row)
 
-    species_query = (
+    species_id_map = dict(
+        models.db.session.query(
+            models.DataSpecies.code,
+            models.DataSpecies.id,
+        )
+    )
+
+    species_checklist_query = (
         models.DataSpeciesCheckList.query
         .filter(models.DataSpeciesCheckList.presence != 'EX')
         .filter(models.DataSpeciesCheckList.member_state == 'RO')
     )
 
-    for row in species_query:
+    for row in species_checklist_query:
         region_code = row.bio_region
-        species_code = row.natura_2000_code
-        species = models.DataSpecies.query.filter_by(code=species_code).first()
+        species_id = species_id_map.get(row.natura_2000_code)
         species_row = models.DataSpeciesRegion(
             dataset=dataset,
-            species=species,
+            species_id=species_id,
             region=region_code,
             cons_role='assessment',
             cons_date=timestamp,
