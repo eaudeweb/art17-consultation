@@ -16,7 +16,7 @@
 {% block content %}
   <h2>Agregare</h2>
 
-  {% if result is none %}
+  {% if report is none %}
 
     <form method="post">
       <button type="submit" class="btn btn-warning">Execută agregarea</button>
@@ -24,15 +24,15 @@
 
   {% else %}
 
-    <p>Rezultatul agregării:</p>
-
     <p>
       Setul de date:
       {%- set url = url_for('.dashboard', dataset_id=dataset.id) %}
       <a href="{{ url }}">{{ dataset.date }}</a>
     </p>
 
-    <pre>{{ result }}</pre>
+    <p>Raport:</p>
+
+    <pre>{{ report }}</pre>
 
   {% endif %}
 {% endblock content %}

@@ -1,6 +1,8 @@
 # encoding: utf-8
 
 from datetime import datetime
+from collections import defaultdict
+from StringIO import StringIO
 from blinker import Signal
 import flask
 import flask.views
@@ -129,17 +131,18 @@ def home():
 @aggregation.route('/executa_agregare', methods=['GET', 'POST'])
 def aggregate():
     if flask.request.method == 'POST':
-        q = "SELECT SYS_CONTEXT('USERENV', 'SESSION_USER') FROM DUAL"
-        result = execute_on_primary(q).scalar()
-        dataset = create_aggregation(datetime.utcnow(), flask.g.identity.id)
+        report, dataset = create_aggregation(
+            datetime.utcnow(),
+            flask.g.identity.id,
+        )
         models.db.session.commit()
 
     else:
-        result = None
+        report = None
         dataset = None
 
     return flask.render_template('aggregation/aggregate.html', **{
-        'result': result,
+        'report': report,
         'dataset': dataset,
     })
 
@@ -181,9 +184,11 @@ def create_aggregation(timestamp, user_id):
         .filter(models.DataHabitatsCheckList.member_state == 'RO')
     )
 
+    habitat_report = defaultdict(set)
     for row in habitat_checklist_query:
         region_code = row.bio_region
-        habitat_id = habitat_id_map.get(row.natura_2000_code)
+        habitat_code = row.natura_2000_code
+        habitat_id = habitat_id_map.get(habitat_code)
         habitat_row = models.DataHabitattypeRegion(
             dataset=dataset,
             habitat_id=habitat_id,
@@ -193,6 +198,7 @@ def create_aggregation(timestamp, user_id):
             cons_user_id=user_id,
         )
         models.db.session.add(habitat_row)
+        habitat_report[habitat_code].add(region_code)
 
     species_id_map = dict(
         models.db.session.query(
@@ -207,9 +213,11 @@ def create_aggregation(timestamp, user_id):
         .filter(models.DataSpeciesCheckList.member_state == 'RO')
     )
 
+    species_report = defaultdict(set)
     for row in species_checklist_query:
         region_code = row.bio_region
-        species_id = species_id_map.get(row.natura_2000_code)
+        species_code = row.natura_2000_code
+        species_id = species_id_map.get(species_code)
         species_row = models.DataSpeciesRegion(
             dataset=dataset,
             species_id=species_id,
@@ -219,8 +227,19 @@ def create_aggregation(timestamp, user_id):
             cons_user_id=user_id,
         )
         models.db.session.add(species_row)
+        species_report[species_code].add(region_code)
 
-    return dataset
+    report = StringIO()
+    print >>report, "Habitate:"
+    for habitat_code, regions in sorted(habitat_report.items()):
+        print >>report, "  %s: %s" % (habitat_code, ', '.join(sorted(regions)))
+
+    print >>report, "\n\n"
+    print >>report, "Specii:"
+    for species_code, regions in sorted(species_report.items()):
+        print >>report, "  %s: %s" % (species_code, ', '.join(sorted(regions)))
+
+    return report.getvalue(), dataset
 
 
 class DashboardView(flask.views.View):
