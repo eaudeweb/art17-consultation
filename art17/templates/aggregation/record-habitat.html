@@ -5,13 +5,13 @@
   {{ breadcrumbs([
           ('acasǎ', home_url),
           ('set de date', record_dashboard_url(record_obj)),
-          (region.code + ' - editare', None),
+          (record.region + ' - editare', None),
       ]) }}
 {% endblock breadcrumbs %}
 
 {% block headline %}
   {% if new_comment -%} Adaugă {%- else -%} Modifică {%- endif %}
   înregistrare pentru
- <em>{{ habitat.lu.code }} - {{ habitat.lu.name_ro }}</em> în
+  <em>{{ habitat.lu.code }} - {{ habitat.lu.name_ro }}</em> în
   <em>{{ record.model.lu.name_ro }}</em>
 {% endblock headline %}

@@ -322,6 +322,7 @@ class RecordView(IndexMixin, flask.views.View):
         next_url = flask.request.args.get('next') or self.get_next_url()
         self.template_ctx['blueprint'] = self.blueprint
         self.template_ctx['record_id'] = self.record.id
+        self.template_ctx['record_obj'] = self.record
         self.template_ctx['subject'] = self.record.subject
 
         if flask.request.method == 'POST' and self.form.validate():
