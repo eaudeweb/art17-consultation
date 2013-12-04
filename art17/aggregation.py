@@ -30,29 +30,34 @@ def get_tabmenu_data(dataset_id):
         }
 
 
-def record_index_url(subject, region, dataset_id):
+def get_record(subject, region, dataset_id):
+    obj = None
     if isinstance(subject, models.DataHabitat):
-        habitat = models.DataHabitattypeRegion.query.filter_by(
+        obj = models.DataHabitattypeRegion.query.filter_by(
             cons_dataset_id=dataset_id,
             habitat=subject,
             region=region.code,
         ).first()
-        if habitat:
-            return flask.url_for('.habitat-index',
-                                 dataset_id=dataset_id,
-                                 record_id=habitat.id,
-            )
     if isinstance(subject, models.DataSpecies):
-        species = models.DataSpeciesRegion.query.filter_by(
+        obj = models.DataSpeciesRegion.query.filter_by(
             cons_dataset_id=dataset_id,
             species=subject,
             region=region.code,
         ).first()
-        if species:
-            return flask.url_for('.species-index',
-                                 dataset_id=dataset_id,
-                                 record_id=species.id,
-            )
+    if obj:
+        obj.finalized = (obj.cons_role == 'final')
+        return obj
+    raise RuntimeError("Expecting a speciesregion or a habitattyperegion")
+
+
+def record_index_url(subject, region, dataset_id):
+    obj = get_record(subject, region, dataset_id)
+    if isinstance(obj, models.DataHabitattypeRegion):
+        return flask.url_for('.habitat-index', dataset_id=dataset_id,
+                             record_id=obj.id)
+    if isinstance(obj, models.DataSpeciesRegion):
+        return flask.url_for('.species-index', dataset_id=dataset_id,
+                             record_id=obj.id)
     raise RuntimeError("Expecting a speciesregion or a habitattyperegion")
 
 
@@ -103,6 +108,7 @@ def record_finalize_toggle_url(record, finalize):
 @aggregation.app_context_processor
 def inject_funcs():
     return dict(home_url=flask.url_for('aggregation.home'),
+                get_record=get_record,
                 record_index_url=record_index_url,
                 record_edit_url=record_edit_url,
                 record_details_url=record_details_url,
@@ -185,7 +191,7 @@ class DashboardView(flask.views.View):
             'dataset_url': flask.url_for('.dashboard', dataset_id=self.dataset_id),
             'dataset_id': self.dataset_id,
             'object_list': self.get_object_list(),
-            'object_regions': dal_object.get_subject_region_overview(),
+            'object_regions': dal_object.get_subject_region_overview_all(),
             'dataset': dataset,
             'habitat_count': dataset.habitat_objs.count(),
             'species_count': dataset.species_objs.count(),

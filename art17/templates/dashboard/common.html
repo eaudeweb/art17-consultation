@@ -66,10 +66,27 @@
         {% for bioreg in bioreg_list %}
           {%- set key = (subject.id, bioreg.code) %}
           {%- if key in regions %}
-            {%- set url = record_index_url(subject, bioreg, dataset_id) %}
-            <td class="dashboard-commentcount">
-              <a href="{{ url }}" class="btn btn-xs">detalii</a>
+            {%- set record = get_record(subject, bioreg, dataset_id) %}
+            {% if record.finalized %}
+            {%- set url = record_details_url(record) %}
+            <td class="dashboard-commentcount conclusion-{{ record.conclusion_assessment }}">
+              <a href="{{ url }}"
+                 title="{{ CONCLUSIONS[record.conclusion_assessment] }}">
+                {{ record.conclusion_assessment_trend or '...' }}
+              </a>
             </td>
+            {% else %}
+            {%- set url = record_edit_url(record) %}
+            <td class="dashboard-commentcount">
+              <a href="{{ url }}" class="btn btn-xs">
+              {% if record.cons_role == 'assessment' %}
+                agregat
+              {% else %}
+                în lucru
+              {% endif %}
+              </a>
+            </td>
+            {% endif %}
           {%- else %}
             <td class="dashboard-missingrecord"></td>
           {%- endif %}
