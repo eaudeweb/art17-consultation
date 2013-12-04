@@ -187,8 +187,8 @@ class BaseDataset(object):
         for threat in struct['threats']['threats']:
             threat_obj = DataPressuresThreats(**{
                 cls.rel_id: comment.id,
-                'pressure': pressure['pressure'],
-                'ranking': pressure['ranking'],
+                'pressure': threat['pressure'],
+                'ranking': threat['ranking'],
                 'type': 't',
             })
             db.session.add(threat_obj)
