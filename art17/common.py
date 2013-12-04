@@ -241,8 +241,6 @@ class IndexView(flask.views.View, IndexMixin):
         reply_counts = self.dataset.get_reply_counts()
 
         topic = {'comments': []}
-        final_record = None
-        final_draft_record = None
 
         for record in self.dataset.get_topic_records(subject, region.code):
             if record.cons_role == 'assessment':
@@ -254,10 +252,10 @@ class IndexView(flask.views.View, IndexMixin):
                     topic['comments'].append(r)
 
             elif record.cons_role == 'final-draft':
-                final_draft_record = record
+                topic['final-draft'] = self.parse_record(record)
 
             elif record.cons_role == 'final':
-                final_record = record
+                topic['final'] = self.parse_record(record)
 
         comment_next = self.get_comment_next_url(subject_code, region_code)
         final_comment_url = flask.url_for(
@@ -271,19 +269,19 @@ class IndexView(flask.views.View, IndexMixin):
             record_id=topic['assessment']['id'],
             next=comment_next,
         )
-        if final_record is not None:
+        if 'final' in topic:
             reopen_consultation_url = flask.url_for(
                 self.blueprint + '.reopen',
-                final_record_id=final_record.id,
+                final_record_id=topic['final']['id'],
                 next=comment_next,
             )
         else:
             reopen_consultation_url = None
 
-        if final_draft_record is not None:
+        if 'final-draft' in topic:
             delete_draft_url = flask.url_for(
                 self.blueprint + '.delete_draft',
-                record_id=final_draft_record.id,
+                record_id=topic['final-draft']['id'],
                 next=comment_next,
             )
         else:
@@ -305,7 +303,7 @@ class IndexView(flask.views.View, IndexMixin):
             'close_consultation_url': close_consultation_url,
             'perm_edit_final_for_this': perm_edit_final(subject),
             'reopen_consultation_url': reopen_consultation_url,
-            'finalized': final_record is not None,
+            'finalized': bool('final' in topic),
         })
 
 
