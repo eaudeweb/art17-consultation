@@ -149,6 +149,8 @@ habitat.add_url_rule('/habitate/detalii/<int:record_id>/delete_final',
 class HabitatCloseConsultationView(CloseConsultationView):
 
     dataset = dal.HabitatDataset()
+    parse_commentform = staticmethod(schemas.parse_habitat_commentform)
+    flatten_commentform = staticmethod(schemas.flatten_habitat_commentform)
 
 habitat.add_url_rule('/habitate/detalii/<int:record_id>/inchide',
             view_func=HabitatCloseConsultationView.as_view('close'))

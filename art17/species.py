@@ -150,6 +150,8 @@ species.add_url_rule('/specii/detalii/<int:record_id>/delete_final',
 class SpeciesCloseConsultationView(CloseConsultationView):
 
     dataset = dal.SpeciesDataset()
+    parse_commentform = staticmethod(schemas.parse_species_commentform)
+    flatten_commentform = staticmethod(schemas.flatten_species_commentform)
 
 species.add_url_rule('/specii/detalii/<int:record_id>/inchide',
             view_func=SpeciesCloseConsultationView.as_view('close'))

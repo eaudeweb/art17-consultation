@@ -489,8 +489,10 @@ class CloseConsultationView(flask.views.View):
                 cons_role='final-draft',
                 cons_status='not-modified',
             )
-            models.db.session.add(self.draft)
+            data = self.parse_commentform(self.record)
+            self.flatten_commentform(data, self.draft)
             self.dataset.link_to_record(self.draft, self.record)
+            models.db.session.add(self.draft)
 
         self.draft.cons_role = 'final'
         models.db.session.commit()
