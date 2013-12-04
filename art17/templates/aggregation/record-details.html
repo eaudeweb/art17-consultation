@@ -10,7 +10,7 @@
 {% endblock breadcrumbs %}
 
 {% block footer %}
-    {% if record_obj.cons_status == FINALIZED_STATUS %}
+    {% if finalized %}
       {% set url = record_finalize_toggle_url(record_obj, False) %}
       <a href="{{ url }}" class="btn btn-primary">Readu în lucru</a>
     {% else %}

@@ -377,6 +377,7 @@ class RecordDetails(flask.views.View):
             'threats': self.record.get_threats().all(),
             'measures': self.record.measures.all(),
             'template_base': self.template_base,
+            'finalized': self.record.cons_status == FINALIZED_STATUS,
         })
         return flask.render_template(self.template_name, **context)
 
