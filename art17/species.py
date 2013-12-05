@@ -32,9 +32,9 @@ class SpeciesMixin(object):
     dataset = cached_property(lambda self: get_dataset())
     comment_history_view = 'history.species_comments'
 
-    @property
+    @cached_property
     def map_url_template(self):
-        return flask.current_app.config['SPECIES_MAP_URL']
+        return config.get_config_value('SPECIES_MAP_URL')
 
 
 class SpeciesIndexView(IndexView, SpeciesMixin):
