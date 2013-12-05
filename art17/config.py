@@ -1,6 +1,7 @@
 # encoding: utf-8
 import flask
 from art17 import models
+from art17 import auth
 
 CONFIG_LABEL = {
     'SPECIES_MAP_URL': u"URL serviciu de hărți pentru specii",
@@ -13,6 +14,8 @@ config = flask.Blueprint('config', __name__)
 
 @config.route('/config', methods=['GET', 'POST'])
 def form():
+    auth.admin_permission.test()
+
     if flask.request.method == 'POST':
         for row in models.Config.query:
             row.value = flask.request.form[row.id]
