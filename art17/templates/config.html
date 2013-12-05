@@ -1,6 +1,18 @@
 {% extends "layout.html" %}
 
 
+{% block title %}Configurație &mdash; {{ super() }}{% endblock title %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('configurație', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
 {% block content %}
   <h1>Configurație</h1>
 

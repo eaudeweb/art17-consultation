@@ -17,6 +17,11 @@
         <a class="btn btn-danger"
            href="{{ url_for('auth.debug') }}">autentificare (debug)</a>
       {% endif %}
+
+      {% if admin_permission.can() %}
+        <a class="btn btn-default"
+           href="{{ url_for('config.form') }}">configurare</a>
+      {% endif %}
     </p>
   </div>
 </div>
