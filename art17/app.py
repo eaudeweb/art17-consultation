@@ -46,6 +46,7 @@ def create_consultation_app():
     from art17.history import history
     from art17.dashboard import dashboard
     from art17.notifications import notifications
+    from art17.config import config
 
     app = create_app()
     app.register_blueprint(consultation)
@@ -56,6 +57,7 @@ def create_consultation_app():
     app.register_blueprint(history)
     app.register_blueprint(dashboard, url_prefix='/dashboard')
     app.register_blueprint(notifications)
+    app.register_blueprint(config)
     admin.init_app(app)
 
     return app
