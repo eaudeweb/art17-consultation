@@ -50,7 +50,8 @@ def inject_funcs():
 
 @dashboard.route('/habitate')
 def habitats():
-    habitat_dataset = dal.HabitatDataset()
+    from art17.habitat import get_dataset
+    habitat_dataset = get_dataset()
     habitat_regions = habitat_dataset.get_subject_region_overview()
     relevant_regions = set(reg for n, reg in habitat_regions)
     bioreg_list = [
@@ -68,7 +69,8 @@ def habitats():
 
 @dashboard.route('/specii/<group_code>')
 def species(group_code):
-    species_dataset = dal.SpeciesDataset()
+    from art17.species import get_dataset
+    species_dataset = get_dataset()
     species_regions = species_dataset.get_subject_region_overview()
     relevant_regions = set(reg for n, reg in species_regions)
     bioreg_list = [
