@@ -50,6 +50,9 @@ def connect(signal, sender, **more_kwargs):
 
 
 def handle_signal(table, action, ob, **extra):
+    if flask.current_app.config.get('NOTIFICATIONS_DISABLED'):
+        return
+
     if not ob.id:
         models.db.session.flush()
         assert ob.id
