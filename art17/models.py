@@ -559,6 +559,15 @@ class DataHabitatSpecies(Base):
         backref=db.backref('species', lazy='dynamic'))
 
 
+class Attachment(Base):
+    __tablename__ = u'attachments'
+
+    id = Column('objectid', Integer, Sequence('attachments_seq'),
+                primary_key=True)
+    mime_type = Column(String)
+    data = Column(Binary)
+
+
 class CommentReply(Base):
     __tablename__ = u'comment_replies'
 
@@ -568,6 +577,9 @@ class CommentReply(Base):
     user_id = Column(String)
     date = Column(DateTime)
     text = Column(Text)
+    attachment_id = Column(ForeignKey(Attachment.id))
+
+    attachment = relationship(u'Attachment')
 
 
 class CommentReplyRead(Base):
