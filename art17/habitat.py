@@ -1,5 +1,6 @@
 import urllib
 import flask
+from werkzeug.utils import cached_property
 from blinker import Signal
 from art17 import models
 from art17 import dal
@@ -9,6 +10,7 @@ from art17.common import (IndexView, CommentStateView,
                           CloseConsultationView, ReopenConsultationView)
 from art17 import forms
 from art17 import schemas
+from art17 import config
 
 habitat = flask.Blueprint('habitat', __name__)
 
@@ -18,12 +20,17 @@ comment_status_changed = Signal()
 comment_deleted = Signal()
 
 
+def get_dataset():
+    dataset_id = config.get_config_value('CONSULTATION_DATASET', '1')
+    return dal.HabitatDataset(int(dataset_id))
+
+
 class HabitatMixin(object):
 
     subject_name = 'habitat'
     blueprint = 'habitat'
     parse_record = staticmethod(schemas.parse_habitat)
-    dataset = dal.HabitatDataset()
+    dataset = cached_property(lambda self: get_dataset())
     comment_history_view = 'history.habitat_comments'
 
     @property
@@ -109,7 +116,7 @@ habitat.add_url_rule('/habitate/comentarii/<int:comment_id>',
 
 class HabitatCommentStateView(CommentStateView):
 
-    dataset = dal.HabitatDataset()
+    dataset = cached_property(lambda self: get_dataset())
     signal = comment_status_changed
 
 
@@ -119,7 +126,7 @@ habitat.add_url_rule('/habitate/comentarii/<int:comment_id>/stare',
 
 class HabitatCommentDeleteView(CommentDeleteView):
 
-    dataset = dal.HabitatDataset()
+    dataset = cached_property(lambda self: get_dataset())
     parse_commentform = staticmethod(schemas.parse_habitat_commentform)
     signal = comment_deleted
 
@@ -139,7 +146,7 @@ habitat.add_url_rule('/habitate/detalii/<int:record_id>/edit_final',
 
 class HabitatDeleteDraftView(DeleteDraftView):
 
-    dataset = dal.HabitatDataset()
+    dataset = cached_property(lambda self: get_dataset())
 
 
 habitat.add_url_rule('/habitate/detalii/<int:record_id>/delete_final',
@@ -148,7 +155,7 @@ habitat.add_url_rule('/habitate/detalii/<int:record_id>/delete_final',
 
 class HabitatCloseConsultationView(CloseConsultationView):
 
-    dataset = dal.HabitatDataset()
+    dataset = cached_property(lambda self: get_dataset())
     parse_commentform = staticmethod(schemas.parse_habitat_commentform)
     flatten_commentform = staticmethod(schemas.flatten_habitat_commentform)
 
@@ -158,7 +165,7 @@ habitat.add_url_rule('/habitate/detalii/<int:record_id>/inchide',
 
 class HabitatReopenConsultationView(ReopenConsultationView):
 
-    dataset = dal.HabitatDataset()
+    dataset = cached_property(lambda self: get_dataset())
 
 habitat.add_url_rule('/habitate/detalii/<int:final_record_id>/redeschide',
             view_func=HabitatReopenConsultationView.as_view('reopen'))

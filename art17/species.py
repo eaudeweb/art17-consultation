@@ -1,4 +1,5 @@
 import flask
+from werkzeug.utils import cached_property
 from blinker import Signal
 from art17 import models
 from art17 import dal
@@ -8,6 +9,7 @@ from art17.common import (IndexView, CommentStateView,
                           CloseConsultationView, ReopenConsultationView)
 from art17 import forms
 from art17 import schemas
+from art17 import config
 
 species = flask.Blueprint('species', __name__)
 
@@ -17,12 +19,17 @@ comment_status_changed = Signal()
 comment_deleted = Signal()
 
 
+def get_dataset():
+    dataset_id = config.get_config_value('CONSULTATION_DATASET', '1')
+    return dal.SpeciesDataset(int(dataset_id))
+
+
 class SpeciesMixin(object):
 
     subject_name = 'species'
     blueprint = 'species'
     parse_record = staticmethod(schemas.parse_species)
-    dataset = dal.SpeciesDataset()
+    dataset = cached_property(lambda self: get_dataset())
     comment_history_view = 'history.species_comments'
 
     @property
@@ -110,7 +117,7 @@ species.add_url_rule('/specii/comentarii/<int:comment_id>',
 
 class SpeciesCommentStateView(CommentStateView):
 
-    dataset = dal.SpeciesDataset()
+    dataset = cached_property(lambda self: get_dataset())
     signal = comment_status_changed
 
 
@@ -120,7 +127,7 @@ species.add_url_rule('/specii/comentarii/<int:comment_id>/stare',
 
 class SpeciesCommentDeleteView(CommentDeleteView):
 
-    dataset = dal.SpeciesDataset()
+    dataset = cached_property(lambda self: get_dataset())
     parse_commentform = staticmethod(schemas.parse_species_commentform)
     signal = comment_deleted
 
@@ -140,7 +147,7 @@ species.add_url_rule('/specii/detalii/<int:record_id>/edit_final',
 
 class SpeciesDeleteDraftView(DeleteDraftView):
 
-    dataset = dal.SpeciesDataset()
+    dataset = cached_property(lambda self: get_dataset())
 
 
 species.add_url_rule('/specii/detalii/<int:record_id>/delete_final',
@@ -149,7 +156,7 @@ species.add_url_rule('/specii/detalii/<int:record_id>/delete_final',
 
 class SpeciesCloseConsultationView(CloseConsultationView):
 
-    dataset = dal.SpeciesDataset()
+    dataset = cached_property(lambda self: get_dataset())
     parse_commentform = staticmethod(schemas.parse_species_commentform)
     flatten_commentform = staticmethod(schemas.flatten_species_commentform)
 
@@ -159,7 +166,7 @@ species.add_url_rule('/specii/detalii/<int:record_id>/inchide',
 
 class SpeciesReopenConsultationView(ReopenConsultationView):
 
-    dataset = dal.SpeciesDataset()
+    dataset = cached_property(lambda self: get_dataset())
 
 species.add_url_rule('/specii/detalii/<int:final_record_id>/redeschide',
             view_func=SpeciesReopenConsultationView.as_view('reopen'))

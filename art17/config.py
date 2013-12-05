@@ -24,3 +24,11 @@ def form():
         'CONFIG_LABEL': CONFIG_LABEL,
         'config_rows': models.Config.query.all(),
     })
+
+
+def get_config_value(name, default=''):
+    row = models.Config.query.filter_by(id=name).first()
+    if row and row.value:
+        return row.value
+    else:
+        return default
