@@ -152,3 +152,12 @@ def index(parent_table, parent_id):
         'can_set_read_status': Permission(need.authenticated).can(),
         'can_delete_reply': Permission(need.admin).can()
     })
+
+
+@replies.route('/atasament/<int:attachment_id>')
+def attachment(attachment_id):
+    attachment_row = models.Attachment.query.get_or_404(attachment_id)
+    return flask.Response(
+        attachment_row.data,
+        mimetype=attachment_row.mime_type,
+    )
