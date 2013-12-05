@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+  <h1>Configurație</h1>
+
+  <form method="POST">
+    {%- for row in config_rows %}
+      <div class="form-group">
+        <label for="exampleInputEmail1">
+          {{- CONFIG_LABEL[row.id] -}}
+        </label>
+
+        <input class="form-control" id="exampleInputEmail1"
+               name="{{ row.id }}" value="{{ row.value }}">
+      </div>
+    {%- endfor %}
+
+    <button type="submit" class="btn btn-primary">Salvează</button>
+  </form>
+{% endblock content %}

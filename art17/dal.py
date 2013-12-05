@@ -64,7 +64,7 @@ def get_species_group(group_code):
 
 class BaseDataset(object):
 
-    def __init__(self, dataset_id=1):
+    def __init__(self, dataset_id):
         self.dataset_id = dataset_id
 
     def get_subject(self, subject_code):
