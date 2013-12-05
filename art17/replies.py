@@ -51,6 +51,13 @@ def new(parent_table, parent_id):
         parent_id=comment.id,
     )
 
+    attachment_file = flask.request.files.get('attachment')
+    if attachment_file is not None:
+        reply.attachment = models.Attachment(
+            mime_type=attachment_file.mimetype,
+            data=attachment_file.read(),
+        )
+
     models.db.session.add(reply)
     app = flask.current_app._get_current_object()
 

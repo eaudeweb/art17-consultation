@@ -51,11 +51,30 @@
             parent_id=parent_id,
             parent_table=parent_table,
         ) %}
+
       <form method="post" action="{{ url }}"
-            class="form" id="reply-form">
+            class="form-horizontal" id="reply-form"
+            enctype="multipart/form-data">
+
         <div class="form-group">
-          <textarea name="text" class="form-control" rows=4></textarea>
+          <div class="col-xs-2 control-label"></div>
+
+          <div class="col-xs-10">
+            <textarea name="text" class="form-control" rows=4></textarea>
+          </div>
         </div>
+
+        <div class="form-group">
+          <label class="col-xs-2 control-label"
+                 for="reply-attachment">Atașament</label>
+
+          <div class="col-xs-10">
+            <input type="file" name="attachment" id="reply-attachment">
+
+            {#<p class="help-block">Example block-level help text here.</p>#}
+          </div>
+        </div>
+
         <button type="submit" class="btn btn-primary">Salveazǎ</button>
       </form>
     </div>
