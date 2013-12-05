@@ -33,6 +33,18 @@
       <div class="panel-body" style="white-space: pre;">
         {{ msg.text|wordwrap }}
       </div>
+
+      {%- if msg.attachment_id %}
+        {%- set url = url_for(
+            '.attachment',
+            attachment_id=msg.attachment_id,
+          ) %}
+        <p>
+          <a href="{{ url }}" target="_blank">
+            descarcă atașamentul
+          </a>
+        </p>
+      {%- endif %}
     </div>
   {% else %}
     <div class="panel panel-default">
