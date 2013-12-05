@@ -609,6 +609,13 @@ class NotificationUser(Base):
     full_name = Column(String)
 
 
+class Config(Base):
+    __tablename__ = u'config'
+
+    id = Column('objectid', String, primary_key=True)
+    value = Column(Text)
+
+
 @db_manager.option('alembic_args', nargs=argparse.REMAINDER)
 def alembic(alembic_args):
     from alembic.config import CommandLine
