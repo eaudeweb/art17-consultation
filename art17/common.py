@@ -13,7 +13,6 @@ import flask.views
 from flask.ext.principal import Permission, Denial
 from flask.ext.script import Manager
 from werkzeug.datastructures import MultiDict
-from sqlalchemy import func
 from art17 import models
 from art17 import dal
 from art17.auth import need, admin_permission
@@ -69,14 +68,17 @@ def calculate_identifier_steps(identifier):
     return [':'.join(bits[:c+1]) for c in range(len(bits))]
 
 
-def get_roles_for_record(role_base, comment):
-    full_name = '%s:%s' % (role_base, comment.subject_identifier)
+def get_roles_for_subject(role_base, subject):
+    full_name = '%s:%s' % (role_base, subject.identifier)
     steps = calculate_identifier_steps(full_name)
     return [need.role(s) for s in steps]
 
 
 def perm_create_comment(record):
-    return Permission(need.admin, *get_roles_for_record('expert', record))
+    return Permission(
+        need.admin,
+        *get_roles_for_subject('expert', record.subject)
+    )
 
 
 def perm_edit_comment(comment):
@@ -91,7 +93,10 @@ def perm_edit_comment(comment):
 
 
 def perm_update_comment_status(comment):
-    return Permission(need.admin, *get_roles_for_record('reviewer', comment))
+    return Permission(
+        need.admin,
+        *get_roles_for_subject('reviewer', comment.subject)
+    )
 
 
 def perm_delete_comment(comment):
@@ -108,27 +113,12 @@ def perm_delete_comment(comment):
         return Permission(need.admin)
 
 
-def perm_edit_record(record):
-    if record.cons_role == 'final':
-        return Denial(need.everybody)
-
-    return Permission(need.admin)
-
-
-def perm_finalize_record(record):
-    if record.cons_role == 'final':
-        return Denial(need.everybody)
-    return Permission(need.admin)
-
-
-def perm_definalize_record(record):
-    if record.cons_role != 'final':
-        return Denial(need.everybody)
-    return Permission(need.admin)
-
-
 def perm_edit_final(subject):
-    return Permission(need.admin)
+    return Permission(need.admin, *get_roles_for_subject('reviewer', subject))
+
+
+def perm_close_consultation(subject):
+    return Permission(need.admin, *get_roles_for_subject('reviewer', subject))
 
 
 common = flask.Blueprint('common', __name__)
@@ -396,6 +386,7 @@ class CommentStateView(flask.views.View):
 
     def dispatch_request(self, comment_id):
         comment = self.dataset.get_comment(comment_id) or flask.abort(404)
+        perm_update_comment_status(comment).test()
         next_url = flask.request.form['next']
         new_status = flask.request.form['status']
         if new_status not in STATUS_VALUES:
@@ -470,7 +461,7 @@ class CloseConsultationView(flask.views.View):
     def dispatch_request(self, record_id):
         next_url = flask.request.args['next']
         self.record = self.dataset.get_comment(record_id) or flask.abort(404)
-        perm_edit_final(self.record.subject).test()
+        perm_close_consultation(self.record.subject).test()
 
         row_list = self.dataset.get_topic_records(
             subject=self.record.subject,
@@ -517,7 +508,7 @@ class ReopenConsultationView(flask.views.View):
     def dispatch_request(self, final_record_id):
         next_url = flask.request.args['next']
         self.final = self.dataset.get_comment(final_record_id) or flask.abort(404)
-        perm_edit_final(self.final.subject).test()
+        perm_close_consultation(self.final.subject).test()
 
         assert self.final.cons_role == 'final'
 
