@@ -104,7 +104,8 @@ def pretty_json_data(json_data):
 @history.route('/activitate/specii/<subject_code>/<region_code>')
 @admin_permission.require(403)
 def species_comments(subject_code, region_code):
-    dataset = dal.SpeciesDataset()
+    from art17.species import get_dataset
+    dataset = get_dataset()
     items = dataset.get_history(subject_code, region_code)
     return flask.render_template('history/comments.html', **{
         'history_items': items,
@@ -117,7 +118,8 @@ def species_comments(subject_code, region_code):
 @history.route('/activitate/habitate/<subject_code>/<region_code>')
 @admin_permission.require(403)
 def habitat_comments(subject_code, region_code):
-    dataset = dal.HabitatDataset()
+    from art17.habitat import get_dataset
+    dataset = get_dataset()
     items = dataset.get_history(subject_code, region_code)
     return flask.render_template('history/comments.html', **{
         'history_items': items,
