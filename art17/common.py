@@ -114,25 +114,6 @@ def perm_delete_comment(comment):
         return Permission(need.admin)
 
 
-def perm_edit_record(record):
-    if record.cons_role == 'final':
-        return Denial(need.everybody)
-
-    return Permission(need.admin)
-
-
-def perm_finalize_record(record):
-    if record.cons_role == 'final':
-        return Denial(need.everybody)
-    return Permission(need.admin)
-
-
-def perm_definalize_record(record):
-    if record.cons_role != 'final':
-        return Denial(need.everybody)
-    return Permission(need.admin)
-
-
 def perm_edit_final(subject):
     return Permission(need.admin, *get_roles_for_subject('reviewer', subject))
 
