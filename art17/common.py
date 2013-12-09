@@ -13,7 +13,6 @@ import flask.views
 from flask.ext.principal import Permission, Denial
 from flask.ext.script import Manager
 from werkzeug.datastructures import MultiDict
-from sqlalchemy import func
 from art17 import models
 from art17 import dal
 from art17.auth import need, admin_permission
