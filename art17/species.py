@@ -160,6 +160,7 @@ class SpeciesCloseConsultationView(CloseConsultationView):
     dataset = cached_property(lambda self: get_dataset())
     parse_commentform = staticmethod(schemas.parse_species_commentform)
     flatten_commentform = staticmethod(schemas.flatten_species_commentform)
+    form_cls = forms.SpeciesComment
 
 species.add_url_rule('/specii/detalii/<int:record_id>/inchide',
             view_func=SpeciesCloseConsultationView.as_view('close'))

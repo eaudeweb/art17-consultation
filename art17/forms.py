@@ -419,6 +419,13 @@ class SpeciesComment(Form):
 
         return True
 
+    def final_validate(self):
+        if not self.validate():
+            return False
+        # TODO: validare specie finală
+
+        return True
+
 
 class HabitatComment(Form):
     range = FormField(Range)
@@ -442,4 +449,14 @@ class HabitatComment(Form):
             fields[0].errors.append(u"Completați cel puțin o valoare.")
             return False
 
+        return True
+
+    def final_validate(self):
+        if not self.validate():
+            return False
+
+        if self.range.surface_area:
+            self.range.surface_area.errors.append(u"Trebuie specificată suprafața")
+            return False
+        # TODO: algoritm de validare habitat
         return True

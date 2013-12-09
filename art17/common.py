@@ -495,11 +495,18 @@ class CloseConsultationView(flask.views.View):
             self.flatten_commentform(data, self.draft)
             self.dataset.link_to_record(self.draft, self.record)
             models.db.session.add(self.draft)
+        else:
+            data = self.parse_commentform(self.draft)
 
         self.draft.cons_role = 'final'
-        models.db.session.commit()
-
-        flask.flash(u"Consultarea a fost închisă", 'success')
+        form = self.form_cls(MultiDict(flatten_dict(data)))
+        if not form.final_validate():
+            models.db.session.rollback()
+            flask.flash(u"Versiunea rezultată în urma consultării este "
+                        u"incompletă. Consultarea nu a fost închisă.", 'danger')
+        else:
+            models.db.session.commit()
+            flask.flash(u"Consultarea a fost închisă", 'success')
         return flask.redirect(next_url)
 
 
