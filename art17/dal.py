@@ -78,6 +78,7 @@ class BaseDataset(object):
         query = (
             History.query
             .filter_by(table=cast(self.history_table_name, CHAR(128)))
+            .filter_by(dataset_id=self.dataset_id)
             .join(
                 self.record_model,
                 History.object_id == cast(self.record_model.id, CHAR(32)),
