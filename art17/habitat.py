@@ -20,8 +20,9 @@ comment_status_changed = Signal()
 comment_deleted = Signal()
 
 
-def get_dataset():
-    dataset_id = config.get_config_value('CONSULTATION_DATASET', '1')
+def get_dataset(dataset_id=None):
+    dataset_id = dataset_id or config.get_config_value('CONSULTATION_DATASET',
+                                                       '1')
     return dal.HabitatDataset(int(dataset_id))
 
 

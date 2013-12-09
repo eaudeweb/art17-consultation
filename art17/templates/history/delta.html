@@ -8,7 +8,7 @@
   {%- from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
           ('acasǎ', home_url),
-          ('activitate', url_for('.index')),
+          ('activitate', url_for('.index', dataset_id=item.dataset_id)),
           ('detaliu', None),
       ]) }}
 {% endblock breadcrumbs %}

@@ -9,11 +9,12 @@
     <a class="showmap btn btn-sm btn-info"
        href="{{ map_url }}">vezi harta</a>
     {%- endif %}
-    {%- if perm_view_history.can() %}
+    {%- if record_obj and perm_view_history.can() %}
       {%- set history_url = url_for(
           comment_history_view,
           subject_code=subject.lu.code,
-          region_code=record.region.code,
+          region_code=record.region,
+          dataset_id=record_obj.cons_dataset_id,
         ) %}
       <a class="btn btn-sm btn-danger" href="{{ history_url }}">istorie</a>
     {%- endif %}

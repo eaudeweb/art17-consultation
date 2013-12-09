@@ -88,9 +88,11 @@ def inject_lookup_tables():
 
 
 @history_consultation.route('/activitate')
+@history_aggregation.route('/dataset/<int:dataset_id>/activitate')
 @admin_permission.require(403)
-def index():
-    dataset_id = config.get_config_value('CONSULTATION_DATASET', '1')
+def index(dataset_id=None):
+    dataset_id = dataset_id or config.get_config_value('CONSULTATION_DATASET',
+                                                       '1')
     history_items = models.History.query \
         .filter_by(dataset_id=dataset_id) \
         .order_by(models.History.date.desc()
@@ -101,6 +103,7 @@ def index():
 
 
 @history_consultation.route('/activitate/<item_id>')
+@history_aggregation.route('/activitate/<item_id>')
 @admin_permission.require(403)
 def delta(item_id):
     return flask.render_template('history/delta.html', **{
@@ -115,11 +118,12 @@ def pretty_json_data(json_data):
 
 
 @history_consultation.route('/activitate/specii/<subject_code>/<region_code>')
-@history_aggregation.route('/activitate/specii/<subject_code>/<region_code>')
+@history_aggregation.route('/dataset/<int:dataset_id>/activitate'
+                           '/specii/<subject_code>/<region_code>')
 @admin_permission.require(403)
-def species_comments(subject_code, region_code):
+def species_comments(subject_code, region_code, dataset_id=None):
     from art17.species import get_dataset
-    dataset = get_dataset()
+    dataset = get_dataset(dataset_id)
     items = dataset.get_history(subject_code, region_code)
     return flask.render_template('history/comments.html', **{
         'history_items': items,
@@ -130,11 +134,12 @@ def species_comments(subject_code, region_code):
 
 
 @history_consultation.route('/activitate/habitate/<subject_code>/<region_code>')
-@history_aggregation.route('/activitate/habitate/<subject_code>/<region_code>')
+@history_aggregation.route('/dataset/<int:dataset_id>/activitate'
+                           '/habitate/<subject_code>/<region_code>')
 @admin_permission.require(403)
-def habitat_comments(subject_code, region_code):
+def habitat_comments(subject_code, region_code, dataset_id=None):
     from art17.habitat import get_dataset
-    dataset = get_dataset()
+    dataset = get_dataset(dataset_id)
     items = dataset.get_history(subject_code, region_code)
     return flask.render_template('history/comments.html', **{
         'history_items': items,
