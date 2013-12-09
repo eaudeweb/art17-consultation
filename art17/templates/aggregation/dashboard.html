@@ -13,6 +13,36 @@
 {% endblock breadcrumbs %}
 
 
+{% macro cell(subject, bioreg) %}
+  {%- set key = (subject.id, bioreg.code) %}
+  {%- if key in object_regions %}
+    {%- set record = get_record(subject, bioreg, dataset_id) %}
+    {% if record.finalized %}
+    {%- set url = record_details_url(record) %}
+    <td class="dashboard-commentcount conclusion-{{ record.conclusion_assessment }}">
+      <a href="{{ url }}"
+         title="{{ CONCLUSIONS[record.conclusion_assessment] }}; {{ TREND_NAME[record.conclusion_assessment_trend] }}">
+        {{ record.conclusion_assessment_trend or '...' }}
+      </a>
+    </td>
+    {% else %}
+    {%- set url = record_edit_url(record) %}
+    <td class="dashboard-commentcount">
+      <a href="{{ url }}" class="btn btn-xs">
+      {% if record.new %}
+        agregat
+      {% else %}
+        în lucru
+      {% endif %}
+      </a>
+    </td>
+    {% endif %}
+  {%- else %}
+    <td class="dashboard-missingrecord"></td>
+  {%- endif %}
+{%- endmacro %}
+
+
 {% block content %}
   <h2>Set de date, {{ dataset.user_id or "-" }}, {{ dataset.date }}</h2>
 
@@ -23,12 +53,8 @@
     specii {{ species_count }},
     habitate {{ habitat_count }}
   </p>
-  {%- from 'dashboard/common.html' import table_aggregation, tabmenu with context %}
+  {%- from 'dashboard/common.html' import table, tabmenu with context %}
   {{ tabmenu(current=current_tab) }}
 
-  {{ table_aggregation(
-      bioreg_list,
-      object_list,
-      object_regions,
-  ) }}
+  {{ table(bioreg_list, object_list, cell) }}
 {% endblock content %}

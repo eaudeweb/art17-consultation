@@ -9,7 +9,7 @@
 {%- endmacro %}
 
 
-{%- macro table(bioreg_list, subject_list, regions) %}
+{%- macro table(bioreg_list, subject_list, cell) %}
   <table class="table table-bordered">
     <thead>
       <th></th>
@@ -28,68 +28,7 @@
         </td>
 
         {% for bioreg in bioreg_list %}
-          {%- set key = (subject.id, bioreg.code) %}
-          {%- if key in regions %}
-            {%- set url = consultation_url(subject, bioreg=bioreg.code) %}
-            <td class="dashboard-commentcount">
-              <a href="{{ url }}">{{ regions[key] }}</a>
-            </td>
-          {%- else %}
-            <td class="dashboard-missingrecord"></td>
-          {%- endif %}
-        {% endfor %}
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-{%- endmacro %}
-
-
-{%- macro table_aggregation(bioreg_list, subject_list, regions) %}
-  <table class="table table-bordered">
-    <thead>
-      <th></th>
-
-      {% for bioreg in bioreg_list %}
-        <th title="{{ bioreg.name_ro }}">{{ bioreg.code }}</th>
-      {% endfor %}
-    </thead>
-
-    <tbody>
-    {% for subject in subject_list %}
-      <tr>
-        {%- set name = subject.lu.name_ro or subject.lu.speciesname %}
-        <td title="{{ name }}">
-          {{ subject.code }} – {{ name|truncate(60) }}
-        </td>
-
-        {% for bioreg in bioreg_list %}
-          {%- set key = (subject.id, bioreg.code) %}
-          {%- if key in regions %}
-            {%- set record = get_record(subject, bioreg, dataset_id) %}
-            {% if record.finalized %}
-            {%- set url = record_details_url(record) %}
-            <td class="dashboard-commentcount conclusion-{{ record.conclusion_assessment }}">
-              <a href="{{ url }}"
-                 title="{{ CONCLUSIONS[record.conclusion_assessment] }}; {{ TREND_NAME[record.conclusion_assessment_trend] }}">
-                {{ record.conclusion_assessment_trend or '...' }}
-              </a>
-            </td>
-            {% else %}
-            {%- set url = record_edit_url(record) %}
-            <td class="dashboard-commentcount">
-              <a href="{{ url }}" class="btn btn-xs">
-              {% if record.new %}
-                agregat
-              {% else %}
-                în lucru
-              {% endif %}
-              </a>
-            </td>
-            {% endif %}
-          {%- else %}
-            <td class="dashboard-missingrecord"></td>
-          {%- endif %}
+          {{ cell(subject, bioreg) }}
         {% endfor %}
       </tr>
     {% endfor %}

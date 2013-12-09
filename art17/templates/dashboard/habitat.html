@@ -13,13 +13,22 @@
 {% endblock breadcrumbs %}
 
 
+{% macro cell(subject, bioreg) %}
+  {%- set key = (subject.id, bioreg.code) %}
+  {%- if key in habitat_regions %}
+    {%- set url = consultation_url(subject, bioreg=bioreg.code) %}
+    <td class="dashboard-commentcount">
+      <a href="{{ url }}">{{ habitat_regions[key] }}</a>
+    </td>
+  {%- else %}
+    <td class="dashboard-missingrecord"></td>
+  {%- endif %}
+{%- endmacro %}
+
+
 {% block content %}
   {%- from 'dashboard/common.html' import table, tabmenu with context %}
   {{ tabmenu(current='H') }}
 
-  {{ table(
-      bioreg_list,
-      habitat_list,
-      habitat_regions,
-  ) }}
+  {{ table(bioreg_list, habitat_list, cell) }}
 {% endblock content %}
