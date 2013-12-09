@@ -224,6 +224,7 @@ def _create_species_record(species_app, comment=False):
                 species_id=1,
                 cons_role='comment',
                 cons_user_id='smith',
+                cons_dataset_id=1,
                 region='ALP',
                 range_surface_area=1337,
             )
