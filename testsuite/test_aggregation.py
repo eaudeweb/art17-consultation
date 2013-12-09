@@ -65,6 +65,7 @@ def test_role_and_status_modified(aggregation_app):
 
 def test_role_and_status_unmodified(aggregation_app):
     from art17.models import DataSpeciesRegion
+    from art17.forms import SpeciesComment
     _create_species_record(aggregation_app)
     client = aggregation_app.test_client()
 
@@ -73,7 +74,10 @@ def test_role_and_status_unmodified(aggregation_app):
         assert species.cons_role == 'assessment'
         assert species.cons_status == 'new'
 
+    original_final = SpeciesComment.final_validate
+    SpeciesComment.final_validate = lambda self: True
     resp = client.get('/dataset/1/specii/1/finalize')
+    SpeciesComment.final_validate = original_final
     assert resp.status_code == 302
     with aggregation_app.app_context():
         comment = DataSpeciesRegion.query.get(1)
@@ -83,6 +87,7 @@ def test_role_and_status_unmodified(aggregation_app):
 
 def test_role_and_status_definalize_unmodified(aggregation_app):
     from art17.models import DataSpeciesRegion
+    from art17.forms import SpeciesComment
     _create_species_record(aggregation_app)
     client = aggregation_app.test_client()
 
@@ -91,7 +96,10 @@ def test_role_and_status_definalize_unmodified(aggregation_app):
         assert species.cons_role == 'assessment'
         assert species.cons_status == 'new'
 
+    original_final = SpeciesComment.final_validate
+    SpeciesComment.final_validate = lambda self: True
     resp = client.get('/dataset/1/specii/1/finalize')
+    SpeciesComment.final_validate = original_final
     assert resp.status_code == 302
 
     resp = client.get('/dataset/1/specii/1/definalize')
