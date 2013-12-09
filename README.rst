@@ -120,7 +120,7 @@ Actualizarea fișierelor `requirements`::
     $ pip-dump
 
 
-Import baza de data
+Import baza de date
 -------------------
 Pentru importul inițial instrucțiunile de import sunt aici::
 
@@ -129,3 +129,12 @@ Pentru importul inițial instrucțiunile de import sunt aici::
 După aceea trebuie rulate migrările::
 
     $ ./manage.py db upgrade
+
+
+Creare revizie
+--------------
+Pentru a crea un nou script de migrare:
+
+    $ ./manage.py db revision
+
+Apoi se editează din: `alembic/versions/revizie.py`
