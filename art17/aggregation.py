@@ -375,6 +375,7 @@ class RecordViewMixin(object):
 class HabitatRecordView(RecordViewMixin, HabitatCommentView):
 
     template = 'aggregation/record-habitat.html'
+    comment_history_view = 'history_aggregation.habitat_comments'
 
     def setup_template_context(self):
         super(HabitatRecordView, self).setup_template_context()
@@ -390,6 +391,7 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>/',
 class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
 
     template = 'aggregation/record-species.html'
+    comment_history_view = 'history_aggregation.species_comments'
 
     def setup_template_context(self):
         super(SpeciesRecordView, self).setup_template_context()
@@ -485,6 +487,7 @@ class RecordDetails(flask.views.View):
             'threats': self.record.get_threats().all(),
             'measures': self.record.measures.all(),
             'template_base': self.template_base,
+            'comment_history_view': self.comment_history_view,
             'finalized': self.record.cons_role == 'final',
         })
         return flask.render_template(self.template_name, **context)
@@ -495,6 +498,7 @@ class SpeciesDetails(RecordDetails):
     record_cls = models.DataSpeciesRegion
     template_name = 'species/detail.html'
     record_parser = staticmethod(schemas.parse_species)
+    comment_history_view = 'history_aggregation.species_comments'
 
     def get_context_data(self):
         return {'group_code': self.record.species.lu.group_code}
@@ -505,6 +509,7 @@ class HabitatDetails(RecordDetails):
     record_cls = models.DataHabitattypeRegion
     template_name = 'habitat/detail.html'
     record_parser = staticmethod(schemas.parse_habitat)
+    comment_history_view = 'history_aggregation.habitat_comments'
 
     def get_context_data(self):
         return {'species': self.record.species.all()}

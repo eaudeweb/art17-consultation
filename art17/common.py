@@ -338,6 +338,7 @@ class RecordView(IndexMixin, flask.views.View):
         self.template_ctx['form'] = self.form
         self.template_ctx['new_comment'] = self.new_record
         self.template_ctx['template_base'] = self.template_base
+        self.template_ctx['comment_history_view'] = self.comment_history_view
 
         addform_pressure = forms.PressureForm(prefix='addform_pressure.')
         addform_measure = forms.MeasuresForm(prefix='addform_measure.')
