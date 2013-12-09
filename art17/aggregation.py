@@ -7,7 +7,7 @@ from blinker import Signal
 import flask
 import flask.views
 from werkzeug.datastructures import MultiDict
-from art17 import models, dal, schemas
+from art17 import models, dal, schemas, forms
 from art17.common import flatten_dict, perm_edit_record, perm_finalize_record,\
     FINALIZED_STATUS, perm_definalize_record, NEW_STATUS
 from art17.habitat import HabitatCommentView
@@ -494,14 +494,19 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>'
 
 class RecordFinalToggle(flask.views.View):
 
-    def __init__(self, finalize=True, record_cls=None):
+    def __init__(self, finalize=True):
         self.finalize = finalize
-        self.record_cls = record_cls
 
     def dispatch_request(self, dataset_id, record_id):
         self.record = self.record_cls.query.get(record_id)
         if self.finalize:
             perm_finalize_record(self.record).test()
+            data = self.parse_commentform(self.record)
+            form = self.form_cls(MultiDict(flatten_dict(data)))
+            if not form.final_validate():
+                flask.flash(u"Înregistrarea NU a fost finalizată, deoarece este"
+                            u" incompletă.", 'danger')
+                return flask.redirect(record_edit_url(self.record))
             if self.record.cons_role == 'final-draft':
                 self.record.cons_status = FINALIZED_STATUS
             elif self.record.cons_role == 'assessment':
@@ -524,31 +529,40 @@ class RecordFinalToggle(flask.views.View):
             return flask.redirect(record_edit_url(self.record))
 
 
+class SpeciesFinalToggle(RecordFinalToggle):
+
+    record_cls = models.DataSpeciesRegion
+    form_cls = forms.SpeciesComment
+    parse_commentform = staticmethod(schemas.parse_species_commentform)
+
+
+class HabitatFinalToggle(RecordFinalToggle):
+
+    record_cls = models.DataHabitattypeRegion
+    form_cls = forms.HabitatComment
+    parse_commentform = staticmethod(schemas.parse_habitat_commentform)
+
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>'
                          '/finalize',
-                         view_func=RecordFinalToggle.as_view(
+                         view_func=HabitatFinalToggle.as_view(
                              'habitat-finalize',
-                             record_cls=models.DataHabitattypeRegion,
                              finalize=True))
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>'
                          '/definalize',
-                         view_func=RecordFinalToggle.as_view(
+                         view_func=HabitatFinalToggle.as_view(
                              'habitat-definalize',
-                             record_cls=models.DataHabitattypeRegion,
                              finalize=False))
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>'
                          '/finalize',
-                         view_func=RecordFinalToggle.as_view(
+                         view_func=SpeciesFinalToggle.as_view(
                              'species-finalize',
-                             record_cls=models.DataSpeciesRegion,
                              finalize=True))
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>'
                          '/definalize',
-                         view_func=RecordFinalToggle.as_view(
+                         view_func=SpeciesFinalToggle.as_view(
                              'species-definalize',
-                             record_cls=models.DataSpeciesRegion,
                              finalize=False))
