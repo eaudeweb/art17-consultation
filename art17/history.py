@@ -3,7 +3,6 @@
 from datetime import datetime
 import flask
 from art17 import models
-from art17 import dal
 from art17 import species
 from art17 import habitat
 from art17 import replies
@@ -11,6 +10,7 @@ from art17.common import json_encode_more
 from art17.auth import admin_permission
 
 history = flask.Blueprint('history', __name__)
+history_consultation = flask.Blueprint('history_consultation', __name__)
 
 
 TABLE_LABEL = {
@@ -78,7 +78,7 @@ def inject_lookup_tables():
     }
 
 
-@history.route('/activitate')
+@history_consultation.route('/activitate')
 @admin_permission.require(403)
 def index():
     history_items = models.History.query.order_by(models.History.date.desc())
@@ -87,7 +87,7 @@ def index():
     })
 
 
-@history.route('/activitate/<item_id>')
+@history_consultation.route('/activitate/<item_id>')
 @admin_permission.require(403)
 def delta(item_id):
     return flask.render_template('history/delta.html', **{
@@ -101,7 +101,7 @@ def pretty_json_data(json_data):
     return flask.json.dumps(data, indent=2, sort_keys=True)
 
 
-@history.route('/activitate/specii/<subject_code>/<region_code>')
+@history_consultation.route('/activitate/specii/<subject_code>/<region_code>')
 @admin_permission.require(403)
 def species_comments(subject_code, region_code):
     from art17.species import get_dataset
@@ -115,7 +115,7 @@ def species_comments(subject_code, region_code):
     })
 
 
-@history.route('/activitate/habitate/<subject_code>/<region_code>')
+@history_consultation.route('/activitate/habitate/<subject_code>/<region_code>')
 @admin_permission.require(403)
 def habitat_comments(subject_code, region_code):
     from art17.habitat import get_dataset

@@ -29,6 +29,7 @@ class species_params(object):
         from test_species import _create_species_record
         app.register_blueprint(species.species)
         app.register_blueprint(history.history)
+        app.register_blueprint(history.history_consultation)
         _create_species_record(app, comment)
         app.config['TESTING_USER_ID'] = cls.user_id
 
@@ -186,6 +187,7 @@ def test_reply_remove(app):
     from art17 import replies
     user_id = app.config['TESTING_USER_ID'] = 'somebody'
     app.register_blueprint(history.history)
+    app.register_blueprint(history.history_consultation)
     app.register_blueprint(replies.replies)
 
     with app.app_context():
