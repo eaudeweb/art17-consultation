@@ -10,12 +10,14 @@
 {% endblock breadcrumbs %}
 
 {% block footer %}
+    {% set history_url = record_history_url(record_obj) %}
     {% if finalized %}
       {% set url = record_finalize_toggle_url(record_obj, False) %}
       <a href="{{ url }}" class="btn btn-primary aggregation-definalize">Readu în lucru</a>
+      <a href="{{ history_url }}" class="btn btn-warning">Istorie</a>
     {% else %}
       <a href="{{ record_edit_url(record_obj) }}" class="btn btn-default">Editează</a>
-
+      <a href="{{ history_url }}" class="btn btn-warning">Istorie</a>
       {% set url = record_finalize_toggle_url(record_obj, True) %}
       <a href="{{ url }}" class="btn btn-primary aggregation-finalize">Finalizează</a>
     {% endif %}

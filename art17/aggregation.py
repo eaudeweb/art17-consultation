@@ -127,10 +127,27 @@ def record_details_url(record):
     raise RuntimeError("Expecting a species or a habitat object")
 
 
+def record_history_url(record):
+    if isinstance(record, models.DataHabitattypeRegion):
+        return flask.url_for('history_aggregation.habitat_comments',
+                             dataset_id=record.cons_dataset_id,
+                             subject_code=record.habitat.code,
+                             region_code=record.region,
+        )
+    elif isinstance(record, models.DataSpeciesRegion):
+        return flask.url_for('history_aggregation.habitat_comments',
+                             dataset_id=record.cons_dataset_id,
+                             subject_code=record.habitat.code,
+                             region_code=record.region,
+        )
+    raise RuntimeError("Expecting a species or a habitat object")
+
+
 def record_finalize_toggle_url(record, finalize):
     action = 'finalize' if finalize else 'definalize'
     if isinstance(record, models.DataHabitattypeRegion):
-        return flask.url_for('.habitat-' + action, dataset_id=record.cons_dataset_id,
+        return flask.url_for('.habitat-' + action,
+                             dataset_id=record.cons_dataset_id,
                              record_id=record.id)
     elif isinstance(record, models.DataSpeciesRegion):
         return flask.url_for('.species-' + action,
@@ -148,6 +165,7 @@ def inject_funcs():
                 record_details_url=record_details_url,
                 record_finalize_toggle_url=record_finalize_toggle_url,
                 record_dashboard_url=record_dashboard_url,
+                record_history_url=record_history_url,
     )
 
 

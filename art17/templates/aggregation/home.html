@@ -35,6 +35,7 @@
   {%- for dataset in dataset_list %}
     {%- set url = url_for('.dashboard', dataset_id=dataset.id) %}
     {%- set delete_url = url_for('.delete_dataset', dataset_id=dataset.id) %}
+    {%- set activity_url = url_for('history_aggregation.index', dataset_id=dataset.id) %}
     <tr>
       <td><a href="{{ url }}">{{ dataset.date }}</a></td>
       <td>{{ dataset.user_id }}</td>
@@ -43,6 +44,8 @@
         <form method="post" action="{{ delete_url }}"
               class="delete-dataset-form">
           <button type="submit" class="btn btn-danger btn-xs">șterge</button>
+          <a class="btn btn-warning btn-xs"
+             href="{{ activity_url }}">activitate</a>
         </form>
       </td>
     </tr>
