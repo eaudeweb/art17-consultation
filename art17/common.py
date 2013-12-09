@@ -134,7 +134,7 @@ def perm_definalize_record(record):
 
 
 def perm_edit_final(subject):
-    return Permission(need.admin)
+    return Permission(need.admin, *get_roles_for_subject('reviewer', subject))
 
 
 common = flask.Blueprint('common', __name__)
