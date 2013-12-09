@@ -503,7 +503,7 @@ class RecordFinalToggle(flask.views.View):
             perm_finalize_record(self.record).test()
             data = self.parse_commentform(self.record)
             form = self.form_cls(MultiDict(flatten_dict(data)))
-            if not flask.current_app.testing and not form.final_validate():
+            if not form.final_validate():
                 flask.flash(u"Înregistrarea NU a fost finalizată, deoarece este"
                             u" incompletă.", 'danger')
                 return flask.redirect(record_edit_url(self.record))
