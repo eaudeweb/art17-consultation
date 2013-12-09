@@ -137,6 +137,10 @@ def perm_edit_final(subject):
     return Permission(need.admin, *get_roles_for_subject('reviewer', subject))
 
 
+def perm_close_consultation(subject):
+    return Permission(need.admin, *get_roles_for_subject('reviewer', subject))
+
+
 common = flask.Blueprint('common', __name__)
 
 
@@ -477,7 +481,7 @@ class CloseConsultationView(flask.views.View):
     def dispatch_request(self, record_id):
         next_url = flask.request.args['next']
         self.record = self.dataset.get_comment(record_id) or flask.abort(404)
-        perm_edit_final(self.record.subject).test()
+        perm_close_consultation(self.record.subject).test()
 
         row_list = self.dataset.get_topic_records(
             subject=self.record.subject,
@@ -524,7 +528,7 @@ class ReopenConsultationView(flask.views.View):
     def dispatch_request(self, final_record_id):
         next_url = flask.request.args['next']
         self.final = self.dataset.get_comment(final_record_id) or flask.abort(404)
-        perm_edit_final(self.final.subject).test()
+        perm_close_consultation(self.final.subject).test()
 
         assert self.final.cons_role == 'final'
 
