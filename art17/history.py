@@ -2,7 +2,7 @@
 
 from datetime import datetime
 import flask
-from art17 import models
+from art17 import models, config
 from art17 import species
 from art17 import habitat
 from art17 import replies
@@ -71,7 +71,7 @@ def handle_signal(table, action, ob, old_data=None, new_data=None, **extra):
     models.db.session.add(item)
 
 
-@history.context_processor
+@history_consultation.context_processor
 def inject_lookup_tables():
     return {
         'TABLE_LABEL': TABLE_LABEL,
@@ -81,7 +81,11 @@ def inject_lookup_tables():
 @history_consultation.route('/activitate')
 @admin_permission.require(403)
 def index():
-    history_items = models.History.query.order_by(models.History.date.desc())
+    dataset_id = config.get_config_value('CONSULTATION_DATASET', '1')
+    history_items = models.History.query \
+        .filter_by(dataset_id=dataset_id) \
+        .order_by(models.History.date.desc()
+    )
     return flask.render_template('history/index.html', **{
         'history_items': iter(history_items),
     })

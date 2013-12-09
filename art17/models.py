@@ -601,6 +601,7 @@ class History(Base):
     user_id = Column(String)
     old_data = Column(Text)
     new_data = Column(Text)
+    dataset_id = Column(ForeignKey('datasets.objectid'))
 
 
 class Dataset(Base):
