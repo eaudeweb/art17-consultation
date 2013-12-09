@@ -1,6 +1,7 @@
 import flask
 from flask.ext.principal import (Principal, Permission, Identity,
                                  RoleNeed, UserNeed, PermissionDenied)
+from werkzeug.urls import url_encode
 from art17.ldap_access import open_ldap_server
 
 auth = flask.Blueprint('auth', __name__)
@@ -46,9 +47,10 @@ def register_principals(state):
 
 
 @auth.app_context_processor
-def inject_permissions():
+def inject_context():
     return {
         'admin_permission': admin_permission,
+        'get_profile_login_url': get_profile_login_url,
     }
 
 
@@ -126,3 +128,15 @@ def setup_auth_handlers(state):
 @auth.app_errorhandler(PermissionDenied)
 def handle_permission_denied(error):
     return flask.render_template('auth/denied.html')
+
+
+def get_profile_login_url():
+    default_url = flask.url_for('auth.debug', next=flask.request.url)
+    if flask.current_app.config.get('AUTH_DEBUG'):
+        return default_url
+
+    login_url = flask.current_app.config.get('AUTH_LOGIN_URL')
+    if login_url:
+        next_arg = flask.current_app.config.get('AUTH_LOGIN_NEXT_PARAM', 'next')
+        return login_url + u'?' + url_encode({next_arg: flask.request.url})
+    return default_url

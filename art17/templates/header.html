@@ -8,7 +8,7 @@
     <div class="col-md-10">
       <ul class="nav nav-pills pull-right">
         <li>
-          {%- set login_url = url_for('auth.debug', next=request.url) %}
+          {%- set login_url = get_profile_login_url() %}
           <a href="{{ login_url }}">utilizator: {{ g.identity.id or "vizitator" }}</a>
         </li>
       </ul>

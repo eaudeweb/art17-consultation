@@ -80,6 +80,15 @@ Configurație
     Preia utilizatorul curent dintr-un header HTTP ``X-RP-AuthUser``.
     Acesta trebuie controlat de un reverse proxy în fața aplicației.
 
+``AUTH_LOGIN_URL = ''``
+    Stabilește URL-ul la care se face autentificarea, atunci când AUTH_DEBUG
+    este False. După autentificare, se întoarce în aplicație, iar headerele
+    HTTP sunt setate.
+
+``AUTH_LOGIN_NEXT_PARAM = 'next'``
+    Stabilește parametrul GET pe care îl primește AUTH_LOGIN_URL pentru a ști
+    în ce pagină să se întoarcă (după autentificare).
+
 ``LDAP_SERVER``
     Adresa serverului LDAP sau ActiveDirectory. De exemplu
     ``'ldap://192.168.2.3'``.
