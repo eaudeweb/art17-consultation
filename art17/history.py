@@ -59,9 +59,16 @@ def handle_signal(table, action, ob, old_data=None, new_data=None, **extra):
     if not ob.id:
         models.db.session.flush()
         assert ob.id
+    if table == 'comment_replies':
+        record = replies.get_comment_from_reply(ob.parent_table,
+                                                ob.parent_id)
+        dataset_id = record.cons_dataset_id if record else None
+    else:
+        dataset_id = ob.cons_dataset_id
     item = models.History(table=table,
                           action=action,
                           object_id=ob.id,
+                          dataset_id=dataset_id,
                           date=datetime.utcnow(),
                           user_id=flask.g.identity.id)
     if old_data:

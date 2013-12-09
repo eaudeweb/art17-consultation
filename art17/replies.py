@@ -13,15 +13,16 @@ reply_added = Signal()
 reply_removed = Signal()
 
 
-def _get_comment_or_404(parent_table, parent_id):
+def get_comment_from_reply(parent_table, parent_id):
     if parent_table == 'habitat':
-        return models.DataHabitattypeRegion.query.get_or_404(parent_id)
-
+        return models.DataHabitattypeRegion.query.get(parent_id)
     elif parent_table == 'species':
-        return models.DataSpeciesRegion.query.get_or_404(parent_id)
+        return models.DataSpeciesRegion.query.get(parent_id)
+    return None
 
-    else:
-        flask.abort(404)
+
+def _get_comment_or_404(parent_table, parent_id):
+    return get_comment_from_reply(parent_table, parent_id) or flask.abort(404)
 
 
 def _dump_reply_data(reply):
