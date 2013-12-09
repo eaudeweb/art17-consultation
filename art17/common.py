@@ -396,6 +396,7 @@ class CommentStateView(flask.views.View):
 
     def dispatch_request(self, comment_id):
         comment = self.dataset.get_comment(comment_id) or flask.abort(404)
+        perm_update_comment_status(comment).test()
         next_url = flask.request.form['next']
         new_status = flask.request.form['status']
         if new_status not in STATUS_VALUES:
