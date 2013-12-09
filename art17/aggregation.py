@@ -9,7 +9,8 @@ import flask.views
 from flask.ext.principal import Permission, Denial
 from werkzeug.datastructures import MultiDict
 from art17 import models, dal, schemas
-from art17.common import flatten_dict, FINALIZED_STATUS, NEW_STATUS
+from art17.common import flatten_dict, FINALIZED_STATUS, NEW_STATUS, \
+                         get_roles_for_subject
 from art17.habitat import HabitatCommentView
 from art17.species import SpeciesCommentView
 from art17.auth import need
@@ -21,19 +22,30 @@ def perm_edit_record(record):
     if record.cons_role == 'final':
         return Denial(need.everybody)
 
-    return Permission(need.admin)
+    return Permission(
+        need.admin,
+        *get_roles_for_subject('reviewer', record.subject)
+    )
 
 
 def perm_finalize_record(record):
     if record.cons_role == 'final':
         return Denial(need.everybody)
-    return Permission(need.admin)
+
+    return Permission(
+        need.admin,
+        *get_roles_for_subject('reviewer', record.subject)
+    )
 
 
 def perm_definalize_record(record):
     if record.cons_role != 'final':
         return Denial(need.everybody)
-    return Permission(need.admin)
+
+    return Permission(
+        need.admin,
+        *get_roles_for_subject('reviewer', record.subject)
+    )
 
 
 def get_tabmenu_data(dataset_id):
