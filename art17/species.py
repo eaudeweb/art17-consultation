@@ -30,7 +30,7 @@ class SpeciesMixin(object):
     blueprint = 'species'
     parse_record = staticmethod(schemas.parse_species)
     dataset = cached_property(lambda self: get_dataset())
-    comment_history_view = 'history.species_comments'
+    comment_history_view = 'history_consultation.species_comments'
 
     @cached_property
     def map_url_template(self):

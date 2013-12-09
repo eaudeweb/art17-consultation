@@ -31,7 +31,7 @@ class HabitatMixin(object):
     blueprint = 'habitat'
     parse_record = staticmethod(schemas.parse_habitat)
     dataset = cached_property(lambda self: get_dataset())
-    comment_history_view = 'history.habitat_comments'
+    comment_history_view = 'history_consultation.habitat_comments'
 
     @cached_property
     def map_url_template(self):
