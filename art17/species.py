@@ -99,6 +99,7 @@ class SpeciesCommentView(RecordView, CommentViewMixin, SpeciesMixin):
     def record_for_comment(self, comment):
         records = (models.DataSpeciesRegion.query
                             .filter_by(cons_role='assessment')
+                            .filter_by(cons_dataset_id=comment.cons_dataset_id)
                             .filter_by(species_id=comment.species_id)
                             .filter_by(region=comment.region)
                             .all())

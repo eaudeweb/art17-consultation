@@ -98,6 +98,7 @@ class HabitatCommentView(RecordView, CommentViewMixin, HabitatMixin):
     def record_for_comment(self, comment):
         records = (models.DataHabitattypeRegion.query
                             .filter_by(cons_role='assessment')
+                            .filter_by(cons_dataset_id=comment.cons_dataset_id)
                             .filter_by(habitat_id=comment.habitat_id)
                             .filter_by(region=comment.region)
                             .all())
