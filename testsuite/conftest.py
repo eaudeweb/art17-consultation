@@ -62,6 +62,8 @@ def notifications_app(app):
 def aggregation_app(app):
     from art17.aggregation import aggregation
     from art17.common import common
+    from art17.history import history
     app.register_blueprint(aggregation)
     app.register_blueprint(common)
+    app.register_blueprint(history)
     return app

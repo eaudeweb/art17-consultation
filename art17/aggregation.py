@@ -3,7 +3,6 @@
 from datetime import datetime
 from collections import defaultdict
 from StringIO import StringIO
-from blinker import Signal
 import flask
 import flask.views
 from flask.ext.principal import Permission, Denial
@@ -376,8 +375,6 @@ class RecordViewMixin(object):
 class HabitatRecordView(RecordViewMixin, HabitatCommentView):
 
     template = 'aggregation/record-habitat.html'
-    add_signal = Signal()
-    edit_signal = Signal()
 
     def setup_template_context(self):
         super(HabitatRecordView, self).setup_template_context()
@@ -393,8 +390,6 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>/',
 class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
 
     template = 'aggregation/record-species.html'
-    add_signal = Signal()
-    edit_signal = Signal()
 
     def setup_template_context(self):
         super(SpeciesRecordView, self).setup_template_context()

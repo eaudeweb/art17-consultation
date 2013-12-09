@@ -135,3 +135,24 @@ def test_role_and_status_definalize_modified(aggregation_app):
         assert comment.cons_role == 'final-draft'
         assert comment.cons_status == 'new'
 
+
+def test_history_habitat_update(aggregation_app):
+    from art17.models import DataHabitattypeRegion, History
+    _create_habitat_record(aggregation_app)
+    client = aggregation_app.test_client()
+    resp = client.post('/dataset/1/habitate/1/',
+                       data={'range.surface_area': '42'},
+                       follow_redirects=True)
+    assert resp.status_code == 200
+    assert COMMENT_SAVED_TXT in resp.data
+    with aggregation_app.app_context():
+        comment = DataHabitattypeRegion.query.get(1)
+        assert comment.cons_role == 'final-draft'
+        assert comment.range_surface_area == 42
+
+        history = History.query.all()
+        assert history[0].table == 'data_habitattype_regions'
+        assert history[0].action == 'edit'
+        assert history[0].object_id == str(comment.id)
+        assert history[0].dataset_id == comment.cons_dataset_id
+

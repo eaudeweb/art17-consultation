@@ -67,11 +67,13 @@ def create_consultation_app():
 
 def create_aggregation_app():
     from art17.aggregation import aggregation
+    from art17.history import history
     from art17.common import common
 
     app = create_app()
     app.register_blueprint(aggregation)
     app.register_blueprint(common)
+    app.register_blueprint(history)
 
     return app
 
