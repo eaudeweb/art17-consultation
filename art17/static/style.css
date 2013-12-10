@@ -55,6 +55,15 @@ fieldset legend {
     text-align: center;
 }
 
+.section-separator th {
+    background: #FFF;
+    font-size: 14px;
+}
+
+.record-actions {
+    white-space: nowrap;
+}
+
 .records-section-header {
     border-top: 2px solid #aaa;
 }

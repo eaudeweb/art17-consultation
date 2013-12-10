@@ -15,7 +15,7 @@
   <table class="records table table-bordered">
     {{ assessment_header() }}
 
-    <tr class="records-section-header">
+    <tr class="records-section-header section-separator">
       <th colspan={{ record_columns + 5 }}>
         Versiune pentru consultare
       </th>
@@ -45,7 +45,7 @@
       </td>
     </tr>
 
-    <tr class="records-section-header">
+    <tr class="records-section-header section-separator">
       <th colspan={{ record_columns + 5 }}>
         Comentarii
       </th>
@@ -73,14 +73,15 @@
         {{ record(comment_row) }}
 
         <td>{{ comment_row.cons_user_id }}</td>  {#- conclusion author, etc #}
-        <td>
+        <td class="record-actions">
         {%- if not finalized %}
           {%- if perm_edit_comment(comment_row.model).can() %}
             {%- set url = url_for(blueprint + '.comment_edit',
                                   comment_id=comment_row.id,
                                   next=comment_next) %}
-            <a class="records-editcommentbtn btn btn-xs btn-default"
-               href="{{ url }}">editează</a>
+            <a class="records-editcommentbtn btn btn-xs btn-info"
+               href="{{ url }}"
+               title="editează">{{ fonticon('edit') }}</a>
           {%- endif %}
 
           {%- if perm_delete_comment(comment_row.model).can() %}
@@ -90,7 +91,8 @@
                   class="records-commentdelete">
               <input type="hidden" name="next" value="{{ comment_next }}">
               <button class="btn btn-xs btn-danger"
-                      type="submit">șterge</button>
+                      type="submit"
+                      title="șterge">{{ fonticon('trash') }}</button>
             </form>
           {%- endif %}
         {%- endif %}
@@ -119,7 +121,7 @@
 
    {% endfor %}
 
-    <tr class="records-section-header">
+    <tr class="records-section-header section-separator">
       <th colspan={{ record_columns + 5 }}>
         Versiune rezultată în urma consultării
       </th>
@@ -147,18 +149,19 @@
 
       <td></td>
 
-      <td>
+      <td class="record-actions">
         {%- if not finalized %}
           {%- if perm_edit_final_for_this.can() %}
-            <a class="btn btn-xs btn-default"
-               href="{{ final_comment_url }}">editează</a>
+            <a class="btn btn-xs btn-info"
+               href="{{ final_comment_url }}"
+               title="editează">{{ fonticon('edit') }}</a>
 
             {% if delete_draft_url %}
               <form method="post" action="{{ delete_draft_url }}"
                     class="consultation-delete-draft">
-                <button type="submit" class="btn btn-xs btn-danger">
-                  șterge
-                </button>
+                <button type="submit"
+                        class="btn btn-xs btn-danger"
+                        title="șterge">{{ fonticon('trash') }}</button>
               </form>
             {% endif %}
           {%- endif %}
