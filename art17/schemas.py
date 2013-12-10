@@ -95,6 +95,7 @@ def comment_info(row):
         'user_id': row.cons_user_id,
         'comment_date': row.cons_date,
         'status': row.cons_status,
+        'role': row.cons_role,
     }
 
 

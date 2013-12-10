@@ -54,18 +54,22 @@
    {% for comment_row in topic['comments'] %}
 
      {% if comment_row.region == assessment_row.region %}
-      <tr>
+      <tr {% if comment_row.role == 'comment-draft' %}class="draft"{% endif %}>
         {#- detail #}
         <td>
-        {%- if not finalized %}
-          {%- if perm_update_comment_status(comment_row.model).can() %}
-            {%- set url = url_for(blueprint + '.comment_status',
-                                  comment_id=comment_row.id) %}
-            <form method="post" action="{{ url }}"
-                  class="records-commentstatus">
-              <input type="hidden" name="next" value="{{ comment_next }}">
-              <input type="hidden" name="status" value="{{ comment_row.status }}">
-            </form>
+        {% if comment_row.role == 'comment-draft' %}
+          draft
+        {% else %}
+          {%- if not finalized %}
+            {%- if perm_update_comment_status(comment_row.model).can() %}
+              {%- set url = url_for(blueprint + '.comment_status',
+                                    comment_id=comment_row.id) %}
+              <form method="post" action="{{ url }}"
+                    class="records-commentstatus">
+                <input type="hidden" name="next" value="{{ comment_next }}">
+                <input type="hidden" name="status" value="{{ comment_row.status }}">
+              </form>
+            {%- endif %}
           {%- endif %}
         {%- endif %}
         </td>

@@ -172,3 +172,8 @@ fieldset legend {
     float: left;
     margin-right: 4px;
 }
+
+.draft {
+    background-color: #efefef;
+    font-style: italic;
+}
