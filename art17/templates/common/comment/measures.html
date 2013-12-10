@@ -14,29 +14,29 @@
          <tr>
           <th rowspan="2">Mǎsurǎ</th>
           <th colspan="5">Tip</th>
-          <th rowspan="2" title="Ranking" style="width: 20px;">Rank.</th>
+          <th rowspan="2" title="Importanțǎ">Importanțǎ</th>
           <th colspan="3">Locație</th>
-          <th colspan="6">Broad evaluation</th>
+          <th colspan="6">Evaluare</th>
           <th rowspan="2">Acțiuni</th>
         </tr>
 
         <tr class="sub-header">
-          <td title="Legal/Vertical">Lgl.</td>
-          <td title="Administrativǎ">Adm.</td>
-          <td title="Contractualǎ">Contr.</td>
-          <td title="Recurentǎ">Rec.</td>
-          <td title="One-off">Off.</td>
+          <td title="Legal">Leg.</td>
+          <td title="Administrativ">Adm.</td>
+          <td title="Contractual">Contr.</td>
+          <td title="Recurent">Rec.</td>
+          <td title="Unic (one-off)">Unic</td>
 
           <td title="În interiorul sitului">In.</td>
           <td title="În afara sitului">Out.</td>
           <td title="În interiorul și în afara sitului">Ambele</td>
 
-          <td title="Maintain">Maint.</td>
-          <td title="Enhance">Enh.</td>
-          <td title="Long term">L. term</td>
-          <td title="No effect">No eff.</td>
-          <td title="Unknown">Unk.</td>
-          <td title="Not evaluated">Not ev.</td>
+          <td title="Menținere">Men.</td>
+          <td title="Îmbunǎtǎțire">Imb.</td>
+          <td title="Termen lung">T. lung</td>
+          <td title="Fǎrǎ efect">F ef.</td>
+          <td title="Necunoscut">Nec.</td>
+          <td title="Neevaluat">Neval.</td>
         </tr>
 
         {% for m in measures.measures.data %}
@@ -58,7 +58,9 @@
           <td><input type="checkbox" value="1" disabled="disabled" {% if m.broad_evaluation_unknown %}checked{% endif %} /></td>
           <td><input type="checkbox" value="1" disabled="disabled" {% if m.broad_evaluation_notevaluat_18 %}checked{% endif %} /></td>
           <td>
-            <button type="button" class="btn btn-danger btn-sm hidepressure">Șterge</button>
+            <button type="button"
+                    class="btn btn-danger btn-sm hidepressure"
+                    title="Șterge măsurătoare">șterge</button>
             {{ measures.measures.render_input(m) }}
           </td>
         </tr>

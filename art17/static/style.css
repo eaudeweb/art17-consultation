@@ -189,3 +189,13 @@ fieldset legend {
     background-color: #efefef;
     font-style: italic;
 }
+
+#measures_container {
+    font-size: 12px;
+}
+
+#measures_container th,
+#measures_container .sub-header {
+    text-align: center;
+    white-space: nowrap;
+}

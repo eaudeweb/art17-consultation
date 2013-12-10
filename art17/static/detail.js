@@ -64,7 +64,7 @@ $('.add-pressuresbtn').click(function(evt) {
     $('<button>').attr({
         class: "btn btn-danger btn-sm hidepressure",
         type: "button"
-    }).html('Șterge').appendTo(actions);
+    }).html('șterge').appendTo(actions);
     actions.appendTo(html);
 
     $(html_container + ' tr:last').before(html);
@@ -123,7 +123,7 @@ $('.add-measurebtn').click(function(evt) {
     $('<button>').attr({
         class: "btn btn-danger btn-sm hidepressure",
         type: "button"
-    }).html('Șterge').appendTo(actions);
+    }).html('șterge').appendTo(actions);
 
     actions.appendTo(html);
     $('#measures_container tr:last').before(html);
