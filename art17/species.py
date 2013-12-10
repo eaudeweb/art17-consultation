@@ -16,6 +16,7 @@ species = flask.Blueprint('species', __name__)
 comment_added = Signal()
 comment_edited = Signal()
 comment_status_changed = Signal()
+comment_submitted = Signal()
 comment_deleted = Signal()
 
 
@@ -78,6 +79,7 @@ class SpeciesCommentView(RecordView, CommentViewMixin, SpeciesMixin):
     template = 'species/comment.html'
     add_signal = comment_added
     edit_signal = comment_edited
+    submit_signal = comment_submitted
 
     def get_next_url(self):
         if flask.current_app.testing:

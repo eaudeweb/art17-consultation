@@ -332,6 +332,7 @@ class RecordView(IndexMixin, flask.views.View):
                          dataset_id=None):
 
         self.dataset_id = dataset_id
+        self.submit_for_evaluation = None
         self.setup_record_and_form(record_id=record_id, comment_id=comment_id)
 
         self.setup_template_context()
@@ -361,6 +362,8 @@ class RecordView(IndexMixin, flask.views.View):
                 self.edit_signal.send(app, ob=self.object,
                                       old_data=self.original_data,
                                       new_data=self.form.data)
+            if self.submit_for_evaluation:
+                self.submit_signal.send(app, ob=self.object)
             models.db.session.commit()
 
             self.dataset.update_extra_fields(self.form.data, self.object)
@@ -416,6 +419,7 @@ class CommentViewMixin(object):
             and flask.request.form.get('submit') == 'evaluation':
             perm_submit_for_evaluation(self.object).test()
             self.object.cons_role = 'comment'
+            self.submit_for_evaluation = True
 
 
 

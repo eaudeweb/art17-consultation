@@ -26,6 +26,8 @@ def register_handlers(state):
             table='data_species_regions', action='status')
     connect(species.comment_deleted, app,
             table='data_species_regions', action='delete')
+    connect(species.comment_submitted, app,
+            table='data_species_regions', action='submit')
 
     connect(habitat.comment_added, app,
             table='data_habitattype_regions', action='add')
@@ -35,6 +37,8 @@ def register_handlers(state):
             table='data_habitattype_regions', action='status')
     connect(habitat.comment_deleted, app,
             table='data_habitattype_regions', action='delete')
+    connect(habitat.comment_submitted, app,
+            table='data_habitattype_regions', action='submit')
 
     connect(replies.reply_added, app,
             table='comment_replies', action='add')
@@ -74,16 +78,22 @@ def create_message(table, action, ob, user):
         tpl = 'notifications/habitat.html'
     elif table == 'comment_replies':
         tpl = 'notifications/comment.html'
-    return flask.render_template(tpl, **{'object': ob, 'user': user, 'action': action})
+    return flask.render_template(tpl, **{'object': ob,
+                                         'user': user,
+                                         'action': action})
 
 
 @notifications.app_template_global('resource_url')
 def resource_url(table, objectid, _external=False):
     obj = get_parent_object(table, objectid)
     if table == 'species':
-        return flask.url_for('species.index', _external=_external) + '?species=' + str(obj.species.code)
+        return flask.url_for('species.index',
+                             species=obj.species.code,
+                             _external=_external)
     if table == 'habitat':
-        return flask.url_for('habitat.index', _external=_external) + '?habitat=' + str(obj.habitat.code)
+        return flask.url_for('habitat.index',
+                             habitat=obj.habitat.code,
+                             _external=_external)
     return ''
 
 
