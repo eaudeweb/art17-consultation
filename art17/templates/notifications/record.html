@@ -3,7 +3,7 @@
 {% block content %}
 {{ user.full_name }},
 
-{%- set display_name = object.subject.lu.display_name %}
+{%- set display_name = '%s (%s)' % (object.subject.lu.display_name, object.region ) %}
 {% if action == 'add' %}
   Un nou comentariu a fost adăugat pentru {{ display_name }}.
 {% elif action == 'edit' %}
@@ -12,6 +12,8 @@
   Starea comentariului la {{ display_name }} a fost modificat.
 {% elif action == 'submit' %}
   Un comentariu la {{ display_name }} a fost trimis spre evaluare.
+{% elif action == 'closed' %}
+  Consultarea a fost închisă pentru {{ display_name }}.
 {% else %}
   S-au făcut modificări la {{ display_name }}.
 {% endif %}
