@@ -97,7 +97,11 @@
           {%- endif %}
         {%- endif %}
         </td>
-        <td>{{ comment_row.comment_date|local_date }}</td>
+        <td>
+          {{ comment_row.comment_date|local_date }}
+          <br/>
+          {{ comment_row.user_id }}
+        </td>
         <td>
           {%- set url = url_for(
                 'replies.index',
