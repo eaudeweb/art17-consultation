@@ -52,8 +52,8 @@ def inject_funcs():
 def habitats():
     from art17.habitat import get_dataset
     habitat_dataset = get_dataset()
-    habitat_regions = habitat_dataset.get_subject_region_overview()
-    relevant_regions = set(reg for n, reg in habitat_regions)
+    data_by_region = habitat_dataset.get_subject_region_overview()
+    relevant_regions = set(reg for n, reg in data_by_region)
     bioreg_list = [
         r for r in dal.get_biogeo_region_list()
         if r.code in relevant_regions
@@ -63,7 +63,7 @@ def habitats():
         'bioreg_list': bioreg_list,
         'tabmenu_data': list(get_tabmenu_data()),
         'habitat_list': dal.get_habitat_list(),
-        'habitat_regions': habitat_regions,
+        'data_by_region': data_by_region,
     })
 
 
@@ -71,8 +71,8 @@ def habitats():
 def species(group_code):
     from art17.species import get_dataset
     species_dataset = get_dataset()
-    species_regions = species_dataset.get_subject_region_overview()
-    relevant_regions = set(reg for n, reg in species_regions)
+    data_by_region = species_dataset.get_subject_region_overview()
+    relevant_regions = set(reg for n, reg in data_by_region)
     bioreg_list = [
         r for r in dal.get_biogeo_region_list()
         if r.code in relevant_regions
@@ -83,7 +83,7 @@ def species(group_code):
         'tabmenu_data': list(get_tabmenu_data()),
         'species_group': dal.get_species_group(group_code),
         'species_list': dal.get_species_list(group_code=group_code),
-        'species_regions': species_regions,
+        'data_by_region': data_by_region,
     })
 
 
