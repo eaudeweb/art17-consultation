@@ -110,6 +110,15 @@ def index(parent_table, parent_id):
         .all()
     )
     user_id = flask.g.identity.id
+    if user_id is not None:
+        fields = {
+            'user_id': user_id,
+            'table': parent_table,
+            'row_id': parent_id,
+        }
+        if models.CommentReplyRead.query.filter_by(**fields).count() < 1:
+            models.db.session.add(models.CommentReplyRead(**fields))
+            models.db.session.commit()
 
     return flask.render_template('replies/index.html', **{
         'parent_id': parent_id,
