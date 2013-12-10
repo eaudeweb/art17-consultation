@@ -1,7 +1,7 @@
 from datetime import datetime
 import pytest
 from flask import json
-from art17 import models, species, habitat, history
+from art17 import models, species, habitat, history, forms
 
 
 class species_params(object):
@@ -10,6 +10,7 @@ class species_params(object):
     comment_create_url = '/specii/detalii/1/comentarii'
     user_id = 'somebody'
     comment_cls = models.DataSpeciesRegion
+    form_cls = forms.SpeciesComment
     comment_id = 2
     comment_edit_url = '/specii/comentarii/2'
     comment_status_url = '/specii/comentarii/2/stare'
@@ -41,6 +42,7 @@ class habitat_params(object):
     comment_create_url = '/habitate/detalii/1/comentarii'
     user_id = 'somebody'
     comment_cls = models.DataHabitattypeRegion
+    form_cls = forms.HabitatComment
     comment_id = 2
     comment_edit_url = '/habitate/comentarii/2'
     comment_status_url = '/habitate/comentarii/2/stare'

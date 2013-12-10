@@ -1,3 +1,4 @@
+# coding=utf-8
 import pytest
 from art17 import models
 from art17 import species
@@ -126,10 +127,14 @@ def test_comment_final(params, app):
     client = app.test_client()
 
     with mail.record_messages() as outbox:
-        print params.comment_finalize_url
-        resp = client.post(params.comment_finalize_url, data={'next': '/'})
-        print resp.data
-        assert resp.status_code == 302
+        orig = params.form_cls.final_validate
+        params.form_cls.final_validate = lambda self: True
+        resp = client.post(params.comment_finalize_url,
+                           data={'next': params.comment_edit_url},
+                           follow_redirects=True,
+        )
+        params.form_cls.final_validate = orig
+        assert resp.status_code == 200
         assert len(outbox) == 1
         assert 'user@example.com' in outbox[0].recipients
-        assert 'final' in outbox[0].body
+        assert u'închisă' in outbox[0].body
