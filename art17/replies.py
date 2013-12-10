@@ -62,6 +62,13 @@ def new(parent_table, parent_id):
     models.db.session.add(reply)
     app = flask.current_app._get_current_object()
 
+    old_read_marks = (
+        models.CommentReplyRead.query
+        .filter_by(table=parent_table)
+        .filter_by(row_id=parent_id)
+    )
+    old_read_marks.delete()
+
     reply_added.send(
         app,
         ob=reply,
