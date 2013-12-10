@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% from 'common/topic.html' import topic_html with context %}
+{%- from 'bits.html' import fonticon %}
 
 
 {% block title %}
@@ -20,47 +21,56 @@
 
 
 {% block content %}
-  <p>{{ subject.lu.display_name }}</p>
+  <h1>
+    {{ subject.lu.display_name }}
+    ({{ region.name_ro }})
+  </h1>
 
-  <p>{{ region.name_ro }}</p>
-
-  <p>
-    <a class="showmap btn btn-sm btn-info" href="{{ map_url }}">vezi harta</a>
-    <a class="helpbox-button btn btn-sm btn-default" href="#">ajutor</a>
-    {%- if perm_view_history.can() %}
-      {%- set history_url = url_for(
-          comment_history_view,
-          subject_code=subject.lu.code,
-          region_code=region.code,
-        ) %}
-      <a class="btn btn-sm btn-danger" href="{{ history_url }}">istorie</a>
-    {%- endif %}
-  </p>
-  {%- if not finalized %}
-    {%- if perm_edit_final_for_this.can() %}
-      <form method="post" action="{{ close_consultation_url }}"
-            class="consultation-close">
-        <button type="submit" class="btn btn-sm btn-danger">
-          încheie consultarea
-          {% if delete_draft_url %}
-            (cu modificări)
-          {% else %}
-            (fără modificări)
-          {% endif %}
-        </button>
-      </form>
-    {%- endif %}
-  {%- else %}
-    <p>Consultarea a fost finalizată.</p>
-    {%- if perm_edit_final_for_this.can() %}
-      <form method="post" action="{{ reopen_consultation_url }}"
-            class="consultation-reopen">
-        <button type="submit" class="btn btn-sm btn-danger">
-          redeschide consultarea
-        </button>
-      </form>
-    {%- endif %}
+  {%- if finalized %}
+    <div class="alert alert-success">Consultarea a fost finalizată.</div>
   {%- endif %}
+
+  <div class="consultation-buttons">
+    <p>
+      <a class="showmap btn btn-sm btn-info" href="{{ map_url }}">vezi harta</a>
+
+    </p>
+    {%- if not finalized %}
+      {%- if perm_edit_final_for_this.can() %}
+        <form method="post" action="{{ close_consultation_url }}"
+              class="consultation-close">
+          <button type="submit" class="btn btn-sm btn-primary">
+            încheie consultarea
+            {% if delete_draft_url %}
+              (cu modificări)
+            {% else %}
+              (fără modificări)
+            {% endif %}
+          </button>
+        </form>
+      {%- endif %}
+    {%- else %}
+      {%- if perm_edit_final_for_this.can() %}
+        <form method="post" action="{{ reopen_consultation_url }}"
+              class="consultation-reopen">
+          <button type="submit" class="btn btn-sm btn-primary">
+            redeschide consultarea
+          </button>
+        </form>
+      {%- endif %}
+    {%- endif %}
+    <p>
+      {%- if perm_view_history.can() %}
+        {%- set history_url = url_for(
+            comment_history_view,
+            subject_code=subject.lu.code,
+            region_code=region.code,
+          ) %}
+        <a class="btn btn-sm btn-default" href="{{ history_url }}">istoric</a>
+      {%- endif %}
+      <a class="helpbox-button btn btn-sm btn-default" href="#">{{ fonticon('question') }}</a>
+    </p>
+  </div>
 
   {{ topic_html(
     topic,

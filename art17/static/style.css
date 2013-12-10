@@ -170,3 +170,14 @@ fieldset legend {
 .generalstatus {
     text-align: center;
 }
+
+.consultation-buttons {
+    overflow: hidden;
+}
+
+.consultation-buttons p,
+.consultation-buttons form
+ {
+    float: left;
+    margin-right: 4px;
+}
