@@ -315,6 +315,10 @@ class RecordView(IndexMixin, flask.views.View):
         self.template_ctx['record_id'] = self.record.id
         self.template_ctx['record_obj'] = self.record
         self.template_ctx['subject'] = self.record.subject
+        self.template_ctx['region'] = dal.get_biogeo_region(self.record.region)
+        self.template_ctx['dashboard_url'] = self.get_dashboard_url(
+            self.record.subject
+        )
 
         if flask.request.method == 'POST' and self.form.validate():
             self.flatten_commentform(self.form.data, self.object)

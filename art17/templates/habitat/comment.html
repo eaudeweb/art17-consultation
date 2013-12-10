@@ -9,13 +9,18 @@
 
 {% block breadcrumbs %}
   {%- from 'bits.html' import breadcrumbs %}
+  {%- set current_page_name = "%s %s (%s)"|format(
+        subject.lu.code,
+        subject.lu.display_name|truncate(80),
+        region.name_ro,
+      ) %}
   {{ breadcrumbs([
           ('acasǎ', home_url),
-          ('habitat', next_url),
-          ('comentariu', None),
+          ('consultare', dashboard_url),
+          (current_page_name, index_url),
+          ('modificare', None),
       ]) }}
 {% endblock breadcrumbs %}
-
 
 {% block headline %}
   {% if new_comment -%} Adaugă {%- else -%} Modifică {%- endif %}

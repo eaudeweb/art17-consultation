@@ -37,6 +37,14 @@ class SpeciesMixin(object):
     def map_url_template(self):
         return config.get_config_value('SPECIES_MAP_URL')
 
+    def get_dashboard_url(self, subject):
+        if flask.current_app.testing:
+            return flask.request.url
+        return flask.url_for(
+            'dashboard.species',
+            group_code=subject.lu.group_code,
+        )
+
 
 class SpeciesIndexView(IndexView, SpeciesMixin):
 
@@ -45,13 +53,6 @@ class SpeciesIndexView(IndexView, SpeciesMixin):
     def get_comment_next_url(self, subject_code, region_code):
         return flask.url_for('.index', species=subject_code,
                                        region=region_code)
-
-    def get_dashboard_url(self, subject):
-        return flask.url_for(
-            'dashboard.species',
-            group_code=subject.lu.group_code,
-        )
-
 
 species.add_url_rule('/specii/', view_func=SpeciesIndexView.as_view('index'))
 
@@ -95,6 +96,7 @@ class SpeciesCommentView(RecordView, CommentViewMixin, SpeciesMixin):
                 self.record.species.code,
                 region_code=self.record.region,
             ),
+            'index_url': self.get_next_url(),
         }
 
     def record_for_comment(self, comment):
