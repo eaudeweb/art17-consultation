@@ -6,9 +6,7 @@
   <h2>Replici</h2>
 
   {% for msg in replies %}
-    <div class="panel panel-default reply
-                {%- if msg.id in read_msgs %} reply-read{% endif %}"
-         data-id="{{ msg.id }}">
+    <div class="panel panel-default reply" data-id="{{ msg.id }}">
       <div class="panel-heading">
         {{ msg.user_id }} ({{ msg.date|local_date('long') }})
 
@@ -18,15 +16,6 @@
           <form class="reply-remove" method="post" action="{{ url }}">
             <button class="btn btn-xs btn-danger">șterge</button>
           </form>
-        {% endif %}
-
-        {% if can_set_read_status %}
-          <span class="readbox pull-right">
-            <button class="btn btn-xs btn-warning readbox-new">necitit</button>
-            <button class="btn btn-xs btn-default readbox-read">citit</button>
-            <button class="btn btn-xs btn-info readbox-mark">citit</button>
-            <button class="btn btn-xs btn-info readbox-unmark">necitit</button>
-          </span>
         {% endif %}
       </div>
 
@@ -101,7 +90,6 @@
 {%- from 'bits.html' import script %}
 {{- super() }}
 
-<script>window.App.set_read_status_url = "{{ url_for('.set_read_status') }}";</script>
 {{ script('replies.js') }}
 
 <script>

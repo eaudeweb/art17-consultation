@@ -586,8 +586,9 @@ class CommentReplyRead(Base):
     __tablename__ = u'comment_replies_read'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
-    reply_id = Column('reply_id', String, ForeignKey(CommentReply.id))
     user_id = Column(String)
+    table = Column(String)
+    row_id = Column(Integer)
 
 
 class History(Base):
