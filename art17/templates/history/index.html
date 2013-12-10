@@ -26,7 +26,6 @@
     <thead>
       <th>dată</th>
       <th>tabelă</th>
-      <th>obiect</th>
       <th>acțiune</th>
       <th>user_id</th>
     </thead>
@@ -40,7 +39,6 @@
         <td title="{{ item.table.strip() }}">
           {{ TABLE_LABEL.get(item.table.strip(), '?') }}
         </td>
-        <td>{{ item.object_id }}</td>
         <td>{{ item.action }}</td>
         <td>{{ item.user_id }}</td>
       </tr>
