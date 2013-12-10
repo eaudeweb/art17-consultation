@@ -17,6 +17,7 @@ comment_added = Signal()
 comment_edited = Signal()
 comment_status_changed = Signal()
 comment_submitted = Signal()
+comment_finalized = Signal()
 comment_deleted = Signal()
 
 
@@ -166,6 +167,7 @@ class SpeciesCloseConsultationView(CloseConsultationView):
     parse_commentform = staticmethod(schemas.parse_species_commentform)
     flatten_commentform = staticmethod(schemas.flatten_species_commentform)
     form_cls = forms.SpeciesComment
+    signal = comment_finalized
 
 species.add_url_rule('/specii/detalii/<int:record_id>/inchide',
             view_func=SpeciesCloseConsultationView.as_view('close'))

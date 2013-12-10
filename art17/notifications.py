@@ -28,6 +28,8 @@ def register_handlers(state):
             table='data_species_regions', action='delete')
     connect(species.comment_submitted, app,
             table='data_species_regions', action='submit')
+    connect(species.comment_finalized, app,
+            table='data_species_regions', action='closed')
 
     connect(habitat.comment_added, app,
             table='data_habitattype_regions', action='add')
@@ -39,6 +41,8 @@ def register_handlers(state):
             table='data_habitattype_regions', action='delete')
     connect(habitat.comment_submitted, app,
             table='data_habitattype_regions', action='submit')
+    connect(habitat.comment_finalized, app,
+            table='data_habitattype_regions', action='closed')
 
     connect(replies.reply_added, app,
             table='comment_replies', action='add')

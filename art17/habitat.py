@@ -18,6 +18,7 @@ comment_added = Signal()
 comment_edited = Signal()
 comment_status_changed = Signal()
 comment_submitted = Signal()
+comment_finalized = Signal()
 comment_deleted = Signal()
 
 
@@ -167,6 +168,7 @@ class HabitatCloseConsultationView(CloseConsultationView):
     parse_commentform = staticmethod(schemas.parse_habitat_commentform)
     flatten_commentform = staticmethod(schemas.flatten_habitat_commentform)
     form_cls = forms.HabitatComment
+    signal = comment_finalized
 
 habitat.add_url_rule('/habitate/detalii/<int:record_id>/inchide',
             view_func=HabitatCloseConsultationView.as_view('close'))

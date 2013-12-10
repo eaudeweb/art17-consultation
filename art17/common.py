@@ -540,6 +540,8 @@ class CloseConsultationView(flask.views.View):
                         u"incompletă. Consultarea nu a fost închisă.", 'danger')
         else:
             models.db.session.commit()
+            app = flask.current_app._get_current_object()
+            self.signal.send(app, ob=self.draft)
             # flask.flash(u"Consultarea a fost închisă", 'success')
         return flask.redirect(next_url)
 
