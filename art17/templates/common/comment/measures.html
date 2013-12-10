@@ -12,24 +12,24 @@
 
         <table class="table table-bordered recorddetail-table table-vertical" id="measures_container">
          <tr>
-          <th rowspan="2">Measure</th>
-          <th colspan="5">Type</th>
+          <th rowspan="2">Mǎsurǎ</th>
+          <th colspan="5">Tip</th>
           <th rowspan="2" title="Ranking" style="width: 20px;">Rank.</th>
-          <th colspan="3">Location</th>
+          <th colspan="3">Locație</th>
           <th colspan="6">Broad evaluation</th>
-          <th rowspan="2">Actions</th>
+          <th rowspan="2">Acțiuni</th>
         </tr>
 
         <tr class="sub-header">
           <td title="Legal/Vertical">Lgl.</td>
-          <td title="Administrative">Adm.</td>
-          <td title="Contractual">Contr.</td>
-          <td title="Recurrent">Rec.</td>
+          <td title="Administrativǎ">Adm.</td>
+          <td title="Contractualǎ">Contr.</td>
+          <td title="Recurentǎ">Rec.</td>
           <td title="One-off">Off.</td>
 
-          <td title="Inside">In.</td>
-          <td title="Outside">Out.</td>
-          <td title="Both inside-outside">Both.</td>
+          <td title="În interiorul sitului">In.</td>
+          <td title="În afara sitului">Out.</td>
+          <td title="În interiorul și în afara sitului">Ambele</td>
 
           <td title="Maintain">Maint.</td>
           <td title="Enhance">Enh.</td>
@@ -69,7 +69,8 @@
           <td>{{ field(class='form-control') }}</td>
           {% endfor %}
           <td>
-            <button class="btn btn-primary add-measurebtn">Adaugă măsurătoare</button>
+            <button class="btn btn-info add-measurebtn"
+                    title="Adaugă măsurătoare">adaugă</button>
           </td>
         </tr>
       </table>

@@ -172,3 +172,15 @@ fieldset legend {
     float: left;
     margin-right: 4px;
 }
+
+.consultation-status {
+    float: right;
+}
+
+#comment-measures .form-control {
+    width: auto;
+}
+
+#comment-measures select {
+    width: 50px !important;
+}

@@ -25,19 +25,16 @@
 
 
 {% block content %}
-  <h1>
+  <h3>
+    {{ subject.lu.code }} -
     {{ subject.lu.display_name }}
     ({{ region.name_ro }})
-  </h1>
-
-  {%- if finalized %}
-    <div class="alert alert-success">Consultarea a fost finalizată.</div>
-  {%- endif %}
+  </h3>
 
   <div class="consultation-buttons">
     <p>
-      <a class="showmap btn btn-sm btn-info" href="{{ map_url }}">vezi harta</a>
-
+      <a class="showmap btn btn-sm btn-info"
+         href="{{ map_url }}">vezi harta</a>
     </p>
     {%- if not finalized %}
       {%- if perm_edit_final_for_this.can() %}
@@ -74,6 +71,11 @@
       {%- endif %}
       <a class="helpbox-button btn btn-sm btn-default" href="#">{{ fonticon('question') }}</a>
     </p>
+    {%- if finalized %}
+      <span class="label label-danger consultation-status">
+        Consultarea a fost finalizată.
+      </span>
+    {%- endif %}
   </div>
 
   {{ topic_html(
