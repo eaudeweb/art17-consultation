@@ -100,3 +100,36 @@ def test_reply_add(app):
                            data={'text': "hello world"})
         assert resp.status_code == 302
         assert len(outbox) == 1
+
+
+@pytest.mark.parametrize(['params'], [[notif_species_params], [notif_habitat_params]])
+def test_comment_submit_for_evaluation(params, app):
+    params.setup(app, comment=True)
+    client = app.test_client()
+
+    with mail.record_messages() as outbox:
+        data = dict(params.comment_data)
+        data['submit'] = 'evaluation'
+        resp = client.post(params.comment_edit_url, data=data,
+                           follow_redirects=True)
+        assert resp.status_code == 200
+        assert len(outbox) == 2
+        assert 'user@example.com' in outbox[0].recipients
+        assert 'user@example.com' in outbox[1].recipients
+        assert 'evaluare' in outbox[1].body
+
+
+
+@pytest.mark.parametrize(['params'], [[notif_species_params], [notif_habitat_params]])
+def test_comment_final(params, app):
+    params.setup(app, comment=True)
+    client = app.test_client()
+
+    with mail.record_messages() as outbox:
+        print params.comment_finalize_url
+        resp = client.post(params.comment_finalize_url, data={'next': '/'})
+        print resp.data
+        assert resp.status_code == 302
+        assert len(outbox) == 1
+        assert 'user@example.com' in outbox[0].recipients
+        assert 'final' in outbox[0].body

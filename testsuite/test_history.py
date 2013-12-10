@@ -14,6 +14,7 @@ class species_params(object):
     comment_edit_url = '/specii/comentarii/2'
     comment_status_url = '/specii/comentarii/2/stare'
     comment_delete_url = '/specii/comentarii/2/sterge'
+    comment_finalize_url = '/specii/detalii/2/inchide'
     comment_data = {'range.surface_area': '50',
                     'range.method': '1',
                     'population.method': '1',
@@ -44,6 +45,7 @@ class habitat_params(object):
     comment_edit_url = '/habitate/comentarii/2'
     comment_status_url = '/habitate/comentarii/2/stare'
     comment_delete_url = '/habitate/comentarii/2/sterge'
+    comment_finalize_url = '/habitate/detalii/2/inchide'
     comment_data = {'range.surface_area': '50',
                     'range.method': '1',
                     'coverage.surface_area': 123,
