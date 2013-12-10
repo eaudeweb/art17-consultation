@@ -502,7 +502,7 @@ class CloseConsultationView(flask.views.View):
     methods = ['POST']
 
     def dispatch_request(self, record_id):
-        next_url = flask.request.args['next']
+        next_url = flask.request.values.get('next', '')
         self.record = self.dataset.get_comment(record_id) or flask.abort(404)
         perm_close_consultation(self.record.subject).test()
 
