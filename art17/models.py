@@ -587,7 +587,7 @@ class CommentReplyRead(Base):
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
     user_id = Column(String)
-    table = Column(String)
+    table = Column('TABLE', String)
     row_id = Column(Integer)
 
 
