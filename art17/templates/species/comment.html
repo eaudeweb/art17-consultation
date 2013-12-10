@@ -19,8 +19,8 @@
 
 {% block headline %}
   {% if new_comment -%} Adaugă {%- else -%} Modifică {%- endif %}
-  comentariu pentru
-  <em>{{ species.lu.speciesname }}</em> în
+  comentariu pentru specia
+  <em>{{ species.lu.speciesname }}</em> în regiunea
   <em>{{ record.model.lu.name_ro }}</em>
 {% endblock headline %}
 
@@ -33,7 +33,7 @@
   </div>
 
   <div class="comment-species-report">
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs detail-menu">
       <li class="active {% if form.range.errors %}text-error{% endif %}">
         <a href="#comment-range" data-toggle="tab">Areal</a>
       </li>
