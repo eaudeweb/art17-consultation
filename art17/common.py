@@ -102,6 +102,17 @@ def perm_update_comment_status(comment):
     )
 
 
+def perm_submit_for_evaluation(comment):
+    if comment.cons_role != 'comment-draft':
+        return Permission(need.impossible)
+
+    if comment.cons_user_id:
+        return Permission(need.admin, need.user_id(comment.cons_user_id))
+
+    else:
+        return Permission(need.admin)
+
+
 def perm_delete_comment(comment):
     if comment.cons_status not in EDITABLE_STATUS_LIST:
         return Permission(need.impossible)
@@ -328,6 +339,8 @@ class RecordView(IndexMixin, flask.views.View):
         self.template_ctx['blueprint'] = self.blueprint
         self.template_ctx['record_id'] = self.record.id
         self.template_ctx['record_obj'] = self.record
+        self.template_ctx['perm_submit_for_evaluation'] = \
+            perm_submit_for_evaluation(self.object)
         self.template_ctx['subject'] = self.record.subject
         self.template_ctx['region'] = dal.get_biogeo_region(self.record.region)
         self.template_ctx['dashboard_url'] = self.get_dashboard_url(
@@ -341,12 +354,13 @@ class RecordView(IndexMixin, flask.views.View):
 
             app = flask.current_app._get_current_object()
             if self.new_record:
-                self.add_signal.send(app, ob=self.object,
-                                          new_data=self.form.data)
+                self.add_signal.send(app,
+                                     ob=self.object,
+                                     new_data=self.form.data)
             else:
                 self.edit_signal.send(app, ob=self.object,
-                                      old_data=self.original_data, new_data=self.form.data)
-
+                                      old_data=self.original_data,
+                                      new_data=self.form.data)
             models.db.session.commit()
 
             self.dataset.update_extra_fields(self.form.data, self.object)
@@ -397,6 +411,12 @@ class CommentViewMixin(object):
         else:
             raise RuntimeError("Need at least one of "
                                "record_id and comment_id")
+
+        if flask.request.method == 'POST' \
+            and flask.request.form.get('submit') == 'evaluation':
+            perm_submit_for_evaluation(self.object).test()
+            self.object.cons_role = 'comment'
+
 
 
 class CommentStateView(flask.views.View):
