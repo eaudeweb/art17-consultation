@@ -1,0 +1,20 @@
+{% extends 'notifications/email.html' %}
+
+{% block content %}
+{{ user.full_name }},
+
+{%- set display_name = object.subject.lu.display_name %}
+{% if action == 'add' %}
+  Un nou comentariu a fost adăugat pentru {{ display_name }}.
+{% elif action == 'edit' %}
+  Comentariul la {{ display_name }} a fost modificat.
+{% elif action == 'status' %}
+  Starea comentariului la {{ display_name }} a fost modificat.
+{% elif action == 'submit' %}
+  Un comentariu la {{ display_name }} a fost trimis spre evaluare.
+{% else %}
+  S-au făcut modificări la {{ display_name }}.
+{% endif %}
+
+Pentru a-l vizualiza faceți click aici: {{ resource_url(subject_name, object.id, _external=True) }} .
+{% endblock %}

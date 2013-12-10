@@ -72,15 +72,20 @@ def handle_signal(table, action, ob, **extra):
 
 def create_message(table, action, ob, user):
     tpl = 'unknown.html'
+    subject_name = ''
     if table == 'data_species_regions':
-        tpl = 'notifications/species.html'
+        tpl = 'notifications/record.html'
+        subject_name = 'species'
     elif table == 'data_habitattype_regions':
-        tpl = 'notifications/habitat.html'
+        tpl = 'notifications/record.html'
+        subject_name = 'habitat'
     elif table == 'comment_replies':
         tpl = 'notifications/comment.html'
     return flask.render_template(tpl, **{'object': ob,
                                          'user': user,
-                                         'action': action})
+                                         'subject_name': subject_name,
+                                         'action': action,
+    })
 
 
 @notifications.app_template_global('resource_url')
