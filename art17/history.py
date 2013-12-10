@@ -8,6 +8,7 @@ from art17 import habitat
 from art17 import replies
 from art17.common import json_encode_more
 from art17.auth import admin_permission
+from art17.dal import get_biogeo_region
 
 history = flask.Blueprint('history', __name__)
 history_consultation = flask.Blueprint('history_consultation', __name__)
@@ -125,10 +126,17 @@ def species_comments(subject_code, region_code, dataset_id=None):
     from art17.species import get_dataset
     dataset = get_dataset(dataset_id)
     items = dataset.get_history(subject_code, region_code)
+    subject = dataset.get_subject(subject_code)
     return flask.render_template('history/comments.html', **{
         'history_items': items,
         'subject_category': 'specii',
         'subject_code': subject_code,
+        'subject': subject,
+        'region': get_biogeo_region(region_code),
+        'dashboard_url': flask.url_for('dashboard.species',
+                                       group_code=subject.lu.group_code),
+        'record_index_url': flask.url_for('species.index', region=region_code,
+                                           species=subject_code),
         'region_code': region_code,
     })
 
@@ -145,5 +153,10 @@ def habitat_comments(subject_code, region_code, dataset_id=None):
         'history_items': items,
         'subject_category': 'habitate',
         'subject_code': subject_code,
+        'subject': dataset.get_subject(subject_code),
+        'region': get_biogeo_region(region_code),
+        'dashboard_url': flask.url_for('dashboard.habitats'),
+        'record_index_url': flask.url_for('habitat.index', region=region_code,
+                                           habitat=subject_code),
         'region_code': region_code,
     })
