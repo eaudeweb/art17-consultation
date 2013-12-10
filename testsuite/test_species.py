@@ -260,7 +260,7 @@ def test_save_comment_record(species_app):
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
         comment = DataSpeciesRegion.query.get(2)
-        assert comment.cons_role == 'comment'
+        assert comment.cons_role == 'comment-draft'
         assert comment.cons_user_id == 'smith'
         assert comment.species.code == '1234'
         assert comment.region == 'ALP'
@@ -325,7 +325,7 @@ def test_extra_fields_save(species_app):
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
         comment = DataSpeciesRegion.query.get(2)
-        assert comment.cons_role == 'comment'
+        assert comment.cons_role == 'comment-draft'
         assert comment.cons_user_id == 'smith'
         assert len(list(comment.pressures)) == 1
         assert comment.pressures[0].pressure == '1'

@@ -22,7 +22,7 @@
     <dd>{{ item.date|local_date('long') }}</dd>
 
     <dt>tabelă</dt>
-    <dd>{{ item.table }}</dd>
+    <dd>{{ TABLE_LABEL.get(item.table.strip(), '?') }}</dd>
 
     <dt>obiect</dt>
     <dd>{{ item.object_id }}</dd>

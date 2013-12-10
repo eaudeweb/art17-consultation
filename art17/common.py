@@ -93,10 +93,24 @@ def perm_edit_comment(comment):
 
 
 def perm_update_comment_status(comment):
+    if comment.cons_role == 'comment-draft':
+        return Permission(need.impossible)
+
     return Permission(
         need.admin,
         *get_roles_for_subject('reviewer', comment.subject)
     )
+
+
+def perm_submit_for_evaluation(comment):
+    if comment.cons_role != 'comment-draft':
+        return Permission(need.impossible)
+
+    if comment.cons_user_id:
+        return Permission(need.admin, need.user_id(comment.cons_user_id))
+
+    else:
+        return Permission(need.admin)
 
 
 def perm_delete_comment(comment):
@@ -231,13 +245,23 @@ class IndexView(flask.views.View, IndexMixin):
 
         reply_counts = self.dataset.get_reply_counts()
 
+        user_id = flask.g.identity.id
+        if user_id is not None:
+            read_id_set = self.dataset.get_read_records(
+                user_id,
+                subject.id,
+                region_code,
+            )
+        else:
+            read_id_set = set()
+
         topic = {'comments': []}
 
         for record in self.dataset.get_topic_records(subject, region.code):
             if record.cons_role == 'assessment':
                 topic['assessment'] = self.parse_record(record)
 
-            elif record.cons_role == 'comment':
+            elif record.cons_role in ('comment', 'comment-draft'):
                 if not record.cons_deleted:
                     r = self.parse_record(record, is_comment=True)
                     topic['comments'].append(r)
@@ -295,6 +319,7 @@ class IndexView(flask.views.View, IndexMixin):
             'perm_edit_final_for_this': perm_edit_final(subject),
             'reopen_consultation_url': reopen_consultation_url,
             'finalized': bool('final' in topic),
+            'read_id_set': read_id_set,
         })
 
 
@@ -314,7 +339,13 @@ class RecordView(IndexMixin, flask.views.View):
         self.template_ctx['blueprint'] = self.blueprint
         self.template_ctx['record_id'] = self.record.id
         self.template_ctx['record_obj'] = self.record
+        self.template_ctx['perm_submit_for_evaluation'] = \
+            perm_submit_for_evaluation(self.object)
         self.template_ctx['subject'] = self.record.subject
+        self.template_ctx['region'] = dal.get_biogeo_region(self.record.region)
+        self.template_ctx['dashboard_url'] = self.get_dashboard_url(
+            self.record.subject
+        )
 
         if flask.request.method == 'POST' and self.form.validate():
             self.flatten_commentform(self.form.data, self.object)
@@ -323,12 +354,13 @@ class RecordView(IndexMixin, flask.views.View):
 
             app = flask.current_app._get_current_object()
             if self.new_record:
-                self.add_signal.send(app, ob=self.object,
-                                          new_data=self.form.data)
+                self.add_signal.send(app,
+                                     ob=self.object,
+                                     new_data=self.form.data)
             else:
                 self.edit_signal.send(app, ob=self.object,
-                                      old_data=self.original_data, new_data=self.form.data)
-
+                                      old_data=self.original_data,
+                                      new_data=self.form.data)
             models.db.session.commit()
 
             self.dataset.update_extra_fields(self.form.data, self.object)
@@ -360,7 +392,7 @@ class CommentViewMixin(object):
             self.new_record = True
             self.record = self.record_cls.query.get_or_404(record_id)
             perm_create_comment(self.record).test()
-            self.object = self.dataset.create_record(cons_role='comment')
+            self.object = self.dataset.create_record(cons_role='comment-draft')
             self.dataset.link_to_record(self.object, self.record)
             self.form = self.form_cls(flask.request.form)
 
@@ -379,6 +411,12 @@ class CommentViewMixin(object):
         else:
             raise RuntimeError("Need at least one of "
                                "record_id and comment_id")
+
+        if flask.request.method == 'POST' \
+            and flask.request.form.get('submit') == 'evaluation':
+            perm_submit_for_evaluation(self.object).test()
+            self.object.cons_role = 'comment'
+
 
 
 class CommentStateView(flask.views.View):

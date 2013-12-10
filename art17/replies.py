@@ -52,7 +52,7 @@ def new(parent_table, parent_id):
         parent_id=comment.id,
     )
 
-    attachment_file = flask.request.files['attachment']
+    attachment_file = flask.request.files.get('attachment')
     if attachment_file:
         reply.attachment = models.Attachment(
             mime_type=attachment_file.mimetype,
@@ -61,6 +61,13 @@ def new(parent_table, parent_id):
 
     models.db.session.add(reply)
     app = flask.current_app._get_current_object()
+
+    old_read_marks = (
+        models.CommentReplyRead.query
+        .filter_by(table=parent_table)
+        .filter_by(row_id=parent_id)
+    )
+    old_read_marks.delete()
 
     reply_added.send(
         app,
@@ -110,6 +117,15 @@ def index(parent_table, parent_id):
         .all()
     )
     user_id = flask.g.identity.id
+    if user_id is not None:
+        fields = {
+            'user_id': user_id,
+            'table': parent_table,
+            'row_id': parent_id,
+        }
+        if models.CommentReplyRead.query.filter_by(**fields).count() < 1:
+            models.db.session.add(models.CommentReplyRead(**fields))
+            models.db.session.commit()
 
     return flask.render_template('replies/index.html', **{
         'parent_id': parent_id,

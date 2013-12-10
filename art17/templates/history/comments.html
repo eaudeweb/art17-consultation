@@ -6,12 +6,16 @@
 
 {% block breadcrumbs %}
   {%- from 'bits.html' import breadcrumbs %}
+  {%- set current_page_name = "%s %s (%s)"|format(
+        subject.lu.code,
+        subject.lu.display_name|truncate(80),
+        region.name_ro,
+      ) %}
   {{ breadcrumbs([
           ('acasǎ', home_url),
-          ('activitate', None),
-          (subject_category, None),
-          (subject_code, None),
-          (region_code, None),
+          ('consultare', dashboard_url),
+          (current_page_name, record_index_url),
+          ('istoric', None),
       ]) }}
 {% endblock breadcrumbs %}
 
@@ -23,10 +27,15 @@
 
 
 {% block content %}
+  <h1>
+    {{ subject.lu.display_name }}
+    ({{ region.name_ro }})
+  <small> - Istoric</small>
+ </h1>
+
   <table class="table table-hover table-condensed">
     <thead>
       <th>dată</th>
-      <th>obiect</th>
       <th>acțiune</th>
       <th>user_id</th>
     </thead>
@@ -37,7 +46,6 @@
         {%- set date = item.date|local_date('long') %}
         {%- set url = url_for('.delta', item_id=item.id) %}
         <td><a href="{{ url }}">{{ date }}</a></td>
-        <td>{{ item.object_id }}</td>
         <td>{{ item.action }}</td>
         <td>{{ item.user_id }}</td>
       </tr>

@@ -11,6 +11,7 @@ from art17.models import (
     DataHabitattypeRegion,
     DataSpeciesRegion,
     CommentReply,
+    CommentReplyRead,
     DataPressuresThreats,
     DataPressuresThreatsPollution,
     DataMeasures,
@@ -128,7 +129,8 @@ class BaseDataset(object):
                 self.record_model.region,
                 func.count('*'),
             )
-            .filter_by(cons_role='comment')
+            .filter((self.record_model.cons_role == 'comment') |
+                    (self.record_model.cons_role == 'comment-draft'))
             .filter_by(cons_dataset_id=self.dataset_id)
             .filter_by(cons_deleted=False)
             .group_by(
@@ -231,6 +233,21 @@ class BaseDataset(object):
         kwargs.setdefault('cons_user_id', flask.g.identity.id)
         kwargs.setdefault('cons_date', datetime.utcnow())
         return self.record_model(**kwargs)
+
+    def get_read_records(self, user_id, subject_id, region_code):
+        read_query = (
+            db.session.query(CommentReplyRead.row_id)
+            .filter_by(table=self.reply_parent_table)
+            .filter_by(user_id=user_id)
+            .join(
+                self.record_model,
+                CommentReplyRead.row_id == self.record_model.id,
+            )
+            .filter(self.record_model_subject_id == subject_id)
+            .filter_by(region=region_code)
+            .filter_by(cons_dataset_id=self.dataset_id)
+        )
+        return set(row[0] for row in read_query)
 
 
 class HabitatDataset(BaseDataset):

@@ -2,7 +2,12 @@
 
 
 {% block content %}
-  <h4>{% block headline %}{% endblock %}</h4>
+  <h4>
+    {% block headline %}{% endblock %}
+    {% if perm_submit_for_evaluation.can() %}
+    <small>- draft</small>
+    {% endif %}
+  </h4>
 
   <div class="form-group">
     {%- if record_id %}
@@ -42,6 +47,13 @@
     {%- endif %}
 
     <button type="submit" class="btn btn-primary">Salveazǎ schimbǎrile</button>
+
+    {% if perm_submit_for_evaluation.can() %}
+    <button type="submit" name="submit" value="evaluation"
+            class="btn btn-danger consultation-submit-evaluation">
+      Salveazǎ și trimite spre evaluare
+    </button>
+    {% endif %}
   </form>
 
   {% include 'common/recorddetail.html' %}
@@ -51,4 +63,18 @@
   {%- from 'bits.html' import script %}
   {{- super() }}
   {{ script('detail.js') }}
+  {{ script('common.js') }}
+
+  <script>
+  (function() {
+    "use strict";
+
+    App.confirm_before_click(
+      '.consultation-submit-evaluation',
+      "Doriți trimiterea spre evaluare?"
+    );
+
+  })();
+  </script>
+
 {% endblock script %}

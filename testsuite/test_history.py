@@ -73,7 +73,7 @@ def test_comment_add(params, app):
         history = models.History.query.all()
         comment = (
             params.comment_cls.query
-            .filter_by(cons_role='comment')
+            .filter_by(cons_role='comment-draft')
             .first()
         )
         assert len(history) == 1

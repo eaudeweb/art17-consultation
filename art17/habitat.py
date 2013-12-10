@@ -38,6 +38,12 @@ class HabitatMixin(object):
     def map_url_template(self):
         return config.get_config_value('HABITAT_MAP_URL')
 
+    def get_dashboard_url(self, subject):
+        if flask.current_app.testing:
+            return flask.request.url
+
+        return flask.url_for('dashboard.habitats')
+
 
 class HabitatIndexView(IndexView, HabitatMixin):
 
@@ -46,9 +52,6 @@ class HabitatIndexView(IndexView, HabitatMixin):
     def get_comment_next_url(self, subject_code, region_code):
         return flask.url_for('.index', habitat=subject_code,
                                        region=region_code)
-
-    def get_dashboard_url(self, subject):
-        return flask.url_for('dashboard.habitats')
 
 
 habitat.add_url_rule('/habitate/', view_func=HabitatIndexView.as_view('index'))
@@ -94,6 +97,7 @@ class HabitatCommentView(RecordView, CommentViewMixin, HabitatMixin):
                 self.record.habitat.code,
                 region_code=self.record.region,
             ),
+            'index_url': self.get_next_url(),
         }
 
     def record_for_comment(self, comment):

@@ -184,3 +184,8 @@ fieldset legend {
 #comment-measures select {
     width: 50px !important;
 }
+
+.draft {
+    background-color: #efefef;
+    font-style: italic;
+}
