@@ -94,33 +94,6 @@ def remove():
     return flask.redirect(next_url)
 
 
-@replies.route('/replici/citit', methods=['POST'])
-@require(Permission(need.authenticated))
-def set_read_status():
-    reply_id = flask.request.form['reply_id']
-    read = (flask.request.form.get('read') == 'on')
-    reply = models.CommentReply.query.get_or_404(reply_id)
-
-    user_id = flask.g.identity.id
-    if user_id is None:
-        flask.abort(403)
-
-    existing = (models.CommentReplyRead
-                    .query.filter_by(reply_id=reply.id, user_id=user_id))
-
-    if read:
-        if not existing.count():
-            row = models.CommentReplyRead(reply_id=reply.id, user_id=user_id)
-            models.db.session.add(row)
-            models.db.session.commit()
-
-    else:
-        existing.delete()
-        models.db.session.commit()
-
-    return flask.jsonify(read=read)
-
-
 @replies.route(
     '/replici/habitate/<parent_id>',
     defaults={'parent_table': 'habitat'},
@@ -138,21 +111,11 @@ def index(parent_table, parent_id):
     )
     user_id = flask.g.identity.id
 
-    if user_id:
-        read_by_user = (models.CommentReplyRead
-                            .query.filter_by(user_id=user_id))
-        read_msgs = set(r.reply_id for r in read_by_user)
-
-    else:
-        read_msgs = []
-
     return flask.render_template('replies/index.html', **{
         'parent_id': parent_id,
         'parent_table': parent_table,
         'replies': replies,
-        'read_msgs': read_msgs,
         'can_post_new_reply': Permission(need.authenticated).can(),
-        'can_set_read_status': Permission(need.authenticated).can(),
         'can_delete_reply': Permission(need.admin).can()
     })
 

@@ -137,27 +137,8 @@ fieldset legend {
     white-space: normal;
 }
 
-.readbox-new    { width: 100px; }
-.readbox-read   { width: 100px; display: none; }
-.readbox-mark   { width: 100px; display: none; }
-.readbox-unmark { width: 100px; display: none; }
-
-.reply-read .readbox-new  { display: none; }
-.reply-read .readbox-read { display: inline-block; }
-
-.readbox:hover .readbox-new  { display: none; }
-.readbox:hover .readbox-mark { display: inline-block; }
-
-.reply-read .readbox:hover .readbox-read   { display: none; }
-.reply-read .readbox:hover .readbox-mark   { display: none; }
-.reply-read .readbox:hover .readbox-unmark { display: inline-block; }
-
 .reply .panel-body {
     font-weight: bold;
-}
-
-.reply.reply-read .panel-body {
-    font-weight: normal;
 }
 
 .reply-remove {
