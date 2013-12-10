@@ -84,6 +84,8 @@ def remove():
     next_url = flask.request.args['next']
     reply = models.CommentReply.query.get_or_404(reply_id)
     user_id = reply.user_id
+    if reply.attachment is not None:
+        models.db.session.delete(reply.attachment)
     models.db.session.delete(reply)
     app = flask.current_app._get_current_object()
     reply_removed.send(app, ob=reply, old_data=_dump_reply_data(reply))
