@@ -89,7 +89,7 @@ def inject_lookup_tables():
 
 @history_consultation.route('/activitate')
 @history_aggregation.route('/dataset/<int:dataset_id>/activitate')
-@admin_permission.require(403)
+@admin_permission.require()
 def index(dataset_id=None):
     dataset_id = dataset_id or config.get_config_value('CONSULTATION_DATASET',
                                                        '1')
@@ -104,7 +104,7 @@ def index(dataset_id=None):
 
 @history_consultation.route('/activitate/<item_id>')
 @history_aggregation.route('/activitate/<item_id>')
-@admin_permission.require(403)
+@admin_permission.require()
 def delta(item_id):
     return flask.render_template('history/delta.html', **{
         'item': models.History.query.get_or_404(item_id),
