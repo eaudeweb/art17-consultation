@@ -93,6 +93,9 @@ def perm_edit_comment(comment):
 
 
 def perm_update_comment_status(comment):
+    if comment.cons_role == 'comment-draft':
+        return Permission(need.impossible)
+
     return Permission(
         need.admin,
         *get_roles_for_subject('reviewer', comment.subject)
@@ -237,7 +240,7 @@ class IndexView(flask.views.View, IndexMixin):
             if record.cons_role == 'assessment':
                 topic['assessment'] = self.parse_record(record)
 
-            elif record.cons_role == 'comment':
+            elif record.cons_role in ('comment', 'comment-draft'):
                 if not record.cons_deleted:
                     r = self.parse_record(record, is_comment=True)
                     topic['comments'].append(r)
@@ -364,7 +367,7 @@ class CommentViewMixin(object):
             self.new_record = True
             self.record = self.record_cls.query.get_or_404(record_id)
             perm_create_comment(self.record).test()
-            self.object = self.dataset.create_record(cons_role='comment')
+            self.object = self.dataset.create_record(cons_role='comment-draft')
             self.dataset.link_to_record(self.object, self.record)
             self.form = self.form_cls(flask.request.form)
 
