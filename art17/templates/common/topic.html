@@ -105,7 +105,13 @@
                 parent_id=comment_row.id,
               ) %}
           {%- set count = reply_counts[comment_row.id|string] or 0 %}
-          <a class="records-repliesbtn btn btn-xs btn-default"
+          {%- set unread = (
+                g.identity.id and
+                count > 0 and
+                comment_row.id not in read_id_set
+              ) %}
+          {%- set color_cls = 'btn-warning' if unread else 'btn-default' %}
+          <a class="records-repliesbtn btn btn-xs btn-default {{ color_cls }}"
              href="{{ url }}">{{ fonticon('comment') }} {{ count }}</a>
         </td>
       </tr>

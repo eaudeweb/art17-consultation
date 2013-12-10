@@ -231,6 +231,16 @@ class IndexView(flask.views.View, IndexMixin):
 
         reply_counts = self.dataset.get_reply_counts()
 
+        user_id = flask.g.identity.id
+        if user_id is not None:
+            read_id_set = self.dataset.get_read_records(
+                user_id,
+                subject.id,
+                region_code,
+            )
+        else:
+            read_id_set = set()
+
         topic = {'comments': []}
 
         for record in self.dataset.get_topic_records(subject, region.code):
@@ -295,6 +305,7 @@ class IndexView(flask.views.View, IndexMixin):
             'perm_edit_final_for_this': perm_edit_final(subject),
             'reopen_consultation_url': reopen_consultation_url,
             'finalized': bool('final' in topic),
+            'read_id_set': read_id_set,
         })
 
 
