@@ -207,7 +207,7 @@ def test_save_comment_record(habitat_app):
     assert COMMENT_SAVED_TXT in resp.data
     with habitat_app.app_context():
         comment = DataHabitattypeRegion.query.get(2)
-        assert comment.cons_role == 'comment'
+        assert comment.cons_role == 'comment-draft'
         assert comment.cons_user_id == 'smith'
         assert comment.habitat.code == '1234'
         assert comment.region == 'ALP'
@@ -267,7 +267,7 @@ def test_extra_fields_save(habitat_app):
     assert COMMENT_SAVED_TXT in resp.data
     with habitat_app.app_context():
         comment = DataHabitattypeRegion.query.get(2)
-        assert comment.cons_role == 'comment'
+        assert comment.cons_role == 'comment-draft'
         assert comment.cons_user_id == 'smith'
         assert len(list(comment.pressures)) == 1
         assert comment.pressures[0].pressure == '1'
