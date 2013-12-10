@@ -156,6 +156,20 @@ def record_finalize_toggle_url(record, finalize):
     raise RuntimeError("Expecting a species or a habitat object")
 
 
+@aggregation.route('/_ping')
+def ping():
+    from art17 import models
+    from datetime import datetime
+    count = models.History.query.count()
+    now = datetime.utcnow().isoformat()
+    return "art17 aggregation is up; %s; %d history items" % (now, count)
+
+
+@aggregation.route('/_crashme')
+def crashme():
+    raise RuntimeError("Crashing, as requested.")
+
+
 @aggregation.app_context_processor
 def inject_funcs():
     return dict(home_url=flask.url_for('aggregation.home'),
