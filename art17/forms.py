@@ -284,7 +284,7 @@ class PressureForm(Form):
         self.pollutions.choices = [(p[0], '%s %s' % p) for p in
                                    models.db.session.query(
                                        models.LuPollution.code,
-                                       models.LuPollution.name)]
+                                       models.LuPollution.name_ro)]
 
 
 class Pressures(Form):

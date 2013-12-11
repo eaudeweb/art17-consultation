@@ -17,8 +17,6 @@ def upgrade():
         column('name_ro', sa.UnicodeText))
 
     for code, name_ro in DATA:
-        print code, name_ro
-    for code, name_ro in DATA:
         op.execute(
             lu_measures_codes.update()
                 .where(lu_measures_codes.c.code == op.inline_literal(code))

@@ -105,6 +105,7 @@ class LuPollution(Base):
     objectid = Column(Integer, Sequence('R685'), primary_key=True)
     code = Column(String)
     name = Column(String)
+    name_ro = Column(String)
 
 
 class LuMeasures(Base):
