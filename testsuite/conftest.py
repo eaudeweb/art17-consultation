@@ -1,4 +1,5 @@
 import sys
+import flask
 from path import path
 import pytest
 from mock import Mock
@@ -52,9 +53,15 @@ def habitat_app(app):
 @pytest.fixture
 def notifications_app(app):
     from art17.species import species
-    from art17.notifications import notifications
+    from art17.auth import auth, set_session_auth
     app.register_blueprint(species)
-    app.register_blueprint(notifications)
+    app.config['AUTH_DEBUG'] = True
+    app.register_blueprint(auth)
+
+    @app.route('/_fake_login/<name>')
+    def fake_login(name):
+        set_session_auth(name, ['admin'])
+        return flask.redirect('/_ping')
     return app
 
 

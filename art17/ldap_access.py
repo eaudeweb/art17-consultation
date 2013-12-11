@@ -70,7 +70,7 @@ class LdapServer(object):
             self.base_dn,
             ldap.SCOPE_SUBTREE,
             '(objectClass=user)',
-            ['memberOf', 'mail'],
+            ['memberOf', 'mail', 'givenName'],
         )
         rv = []
         for dn, attrs in results:

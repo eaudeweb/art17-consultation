@@ -582,6 +582,13 @@ class CommentReply(Base):
 
     attachment = relationship(u'Attachment')
 
+    @property
+    def thread_users(self):
+        return {r for r, in db.session.query(CommentReply.user_id)\
+            .filter_by(parent_table=self.parent_table)\
+            .filter_by(parent_id=self.parent_id)}
+
+
 
 class CommentReplyRead(Base):
     __tablename__ = u'comment_replies_read'
