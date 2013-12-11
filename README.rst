@@ -142,8 +142,13 @@ După aceea trebuie rulate migrările::
 
 Creare revizie
 --------------
-Pentru a crea un nou script de migrare:
+Pentru a crea un nou script de migrare::
 
     $ ./manage.py db revision
 
 Apoi se editează din: `alembic/versions/revizie.py`
+
+Pentru a aduce baza de date la zi: upgrade. Pentru a reveni la versiunea 
+dinaintea migrării::
+
+    $ ./manage.py db downgrade -1
