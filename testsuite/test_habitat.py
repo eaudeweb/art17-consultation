@@ -182,6 +182,7 @@ def _create_habitat_record(habitat_app, comment=False):
             models.db.session.add(comment)
 
         models.db.session.commit()
+        return comment or record
 
 
 def test_load_comments_view(habitat_app):
