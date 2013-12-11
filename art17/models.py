@@ -583,7 +583,7 @@ class CommentReply(Base):
 
     @property
     def thread_users(self):
-        return {r for r, in CommentReply.query(CommentReply.user_id)\
+        return {r for r, in db.session.query(CommentReply.user_id)\
             .filter_by(parent_table=self.parent_table)\
             .filter_by(parent_id=self.parent_id)}
 

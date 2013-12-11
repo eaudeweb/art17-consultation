@@ -20,12 +20,12 @@ def register_handlers(state):
 
     connect(species.comment_added, app,
             table='data_species_regions', action='add')
-    connect(species.comment_edited, app,
-            table='data_species_regions', action='edit')
+    #connect(species.comment_edited, app,
+    #        table='data_species_regions', action='edit')
     connect(species.comment_status_changed, app,
             table='data_species_regions', action='status')
-    connect(species.comment_deleted, app,
-            table='data_species_regions', action='delete')
+    #connect(species.comment_deleted, app,
+    #        table='data_species_regions', action='delete')
     connect(species.comment_submitted, app,
             table='data_species_regions', action='submit')
     connect(species.comment_finalized, app,
@@ -33,19 +33,19 @@ def register_handlers(state):
 
     connect(habitat.comment_added, app,
             table='data_habitattype_regions', action='add')
-    connect(habitat.comment_edited, app,
-            table='data_habitattype_regions', action='edit')
+    #connect(habitat.comment_edited, app,
+    #        table='data_habitattype_regions', action='edit')
     connect(habitat.comment_status_changed, app,
             table='data_habitattype_regions', action='status')
-    connect(habitat.comment_deleted, app,
-            table='data_habitattype_regions', action='delete')
+    #connect(habitat.comment_deleted, app,
+    #        table='data_habitattype_regions', action='delete')
     connect(habitat.comment_submitted, app,
             table='data_habitattype_regions', action='submit')
     connect(habitat.comment_finalized, app,
             table='data_habitattype_regions', action='closed')
 
     connect(replies.reply_added, app,
-            table='comment_replies', action='add')
+            table='comment_replies', action='reply-add')
     #connect(replies.reply_removed, app,
     #        table='comment_replies', action='remove')
 
@@ -65,7 +65,7 @@ def handle_signal(table, action, ob, **extra):
         models.db.session.flush()
         assert ob.id
 
-    recipients = get_notification_emails(ob)
+    recipients = get_notification_emails(ob, action)
     for r in recipients:
         msg = Message(body=create_message(table, action, ob, r),
                 subject='Notificare',
@@ -114,17 +114,39 @@ def get_parent_object(table, objectid):
     return None
 
 
-def get_notification_emails(obj):
+def get_notification_emails(obj, action):
     if isinstance(obj, models.CommentReply):
         parent = get_parent_object(obj.parent_table, obj.parent_id)
         identifier = parent.subject_identifier
     else:
         identifier = obj.subject_identifier
-    emails = []
-    steps = calculate_identifier_steps(identifier)
-    if flask.current_app.testing:
-        return [a.__dict__ for a in models.NotificationUser.query.all()]
+
+    users = []
+    exclude_users = []
+    if action in ('add', 'submit', 'close'):
+        exclude_users = [obj.cons_user_id]
+
+    elif action == 'status':
+        users = [obj.cons_user_id]
+
+    elif action == 'reply-add':
+        users = obj.thread_users
+        exclude_users = [obj.user_id]
+
     with open_ldap_server() as ldap_server:
-        for group in steps:
-            emails.extend(ldap_server.get_emails_for_group(group))
-    return set(emails)
+        if users:
+            emails = [ldap_server.get_user_info(user_id)
+                      for user_id in users]
+        else:
+            emails = []
+            steps = calculate_identifier_steps(identifier)
+            for group in steps:
+                emails.extend(ldap_server.get_emails_for_group(group))
+
+        if exclude_users:
+            exclude_emails = [ldap_server.get_user_info(user_id)['email']
+                              for user_id in exclude_users]
+            emails = [e for e in emails if e['email'] not in exclude_emails]
+
+    emails = {e['email']: e for e in emails}
+    return emails.values()
