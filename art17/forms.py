@@ -405,7 +405,7 @@ class SpeciesComment(Form):
         super(SpeciesComment, self).__init__(*args, **kwargs)
         self.generalstatus.choices = models.db.session.query(
             models.LuPresence.code,
-            models.LuPresence.name)
+            models.LuPresence.name_ro)
 
     def custom_validate(self):
         generalstatus_field = self.generalstatus

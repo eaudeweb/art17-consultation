@@ -165,7 +165,7 @@ def inject_constants():
         'METHODS_THREATS': lookup.METHODS_THREATS,
         'GENERALSTATUS_CHOICES': dict(models.db.session.query(
                                     models.LuPresence.code,
-                                    models.LuPresence.name).all()),
+                                    models.LuPresence.name_ro).all()),
         'FINALIZED_STATUS': FINALIZED_STATUS,
     }
 

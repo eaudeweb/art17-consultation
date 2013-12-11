@@ -124,6 +124,7 @@ class LuPresence(Base):
     objectid = Column(Integer, Sequence('R688'), primary_key=True)
     code = Column(String)
     name = Column(String)
+    name_ro = Column(String)
     order_ = Column(Integer)
     reporting = Column(String)
     habitat_reporting = Column(String)
