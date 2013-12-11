@@ -40,6 +40,10 @@ class HabitatMixin(object):
     def map_url_template(self):
         return config.get_config_value('HABITAT_MAP_URL')
 
+    @cached_property
+    def primary_data_url_template(self):
+        return config.get_config_value('HABITAT_PRIMARY_DATA_URL')
+
     def get_dashboard_url(self, subject):
         if flask.current_app.testing:
             return flask.request.url

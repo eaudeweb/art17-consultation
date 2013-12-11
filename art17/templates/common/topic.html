@@ -28,6 +28,11 @@
                               record_id=assessment_row.id) %}
         <button class="records-detailbtn btn btn-xs btn-info"
                 data-url="{{ url }}">detalii</button>
+        <br/>
+        {%- if primary_data_url %}
+        <a class="showmap btn btn-xs btn-info"
+                href="{{ primary_data_url }}">date primare</a>
+        {%- endif %}
       </td>
 
       {{ record(assessment_row) }}

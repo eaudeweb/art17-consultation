@@ -230,6 +230,12 @@ class IndexMixin(object):
             'regions': urllib.quote(flask.json.dumps(map_colors)),
         })
 
+    def get_primary_data_url(self, subject_code, region_code=None):
+        return self.primary_data_url_template.format(**{
+            self.subject_name: subject_code,
+            'region': region_code or '',
+        })
+
 
 class IndexView(flask.views.View, IndexMixin):
 
@@ -312,6 +318,7 @@ class IndexView(flask.views.View, IndexMixin):
             'reply_counts': reply_counts,
             'map_url': self.get_map_url(subject.code),
             'dashboard_url': self.get_dashboard_url(subject),
+            'primary_data_url': self.get_primary_data_url(subject.code),
             'comment_history_view': self.comment_history_view,
             'final_comment_url': final_comment_url,
             'delete_draft_url': delete_draft_url,

@@ -7,6 +7,8 @@ CONFIG_LABEL = {
     'SPECIES_MAP_URL': u"URL serviciu de hărți pentru specii",
     'HABITAT_MAP_URL': u"URL serviciu de hărți pentru habitate",
     'CONSULTATION_DATASET': u"Setul de date în consultare",
+    'SPECIES_PRIMARY_DATA_URL': u"URL serviciu de date primare pentru specii",
+    'HABITAT_PRIMARY_DATA_URL': u"URL serviciu de date primare pentru habitate",
 }
 
 config = flask.Blueprint('config', __name__)
