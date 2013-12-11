@@ -12,6 +12,9 @@ replies = flask.Blueprint('replies', __name__)
 reply_added = Signal()
 reply_removed = Signal()
 
+ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx', 'xls', 'xlsx', 'odt', 'ods', 'jpg',
+                      'jpeg', 'png', 'gif', 'txt'}
+
 
 def get_comment_from_reply(parent_table, parent_id):
     if parent_table == 'habitat':
@@ -30,6 +33,11 @@ def _dump_reply_data(reply):
     return {k: getattr(reply, k) for k in attributes}
 
 
+def _allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 @replies.route(
     '/replici/habitate/<parent_id>/nou',
     defaults={'parent_table': 'habitat'},
@@ -44,6 +52,12 @@ def _dump_reply_data(reply):
 def new(parent_table, parent_id):
     comment = _get_comment_or_404(parent_table, parent_id)
 
+    next_url = flask.url_for(
+        '.index',
+        parent_table=parent_table,
+        parent_id=parent_id,
+    )
+
     reply = models.CommentReply(
         text=flask.request.form['text'],
         user_id=flask.g.identity.id,
@@ -54,6 +68,9 @@ def new(parent_table, parent_id):
 
     attachment_file = flask.request.files.get('attachment')
     if attachment_file:
+        if not _allowed_file(attachment_file.filename):
+            flask.flash(u"Formatul de fișier nu este permis", 'danger')
+            return flask.redirect(next_url)
         reply.attachment = models.Attachment(
             mime_type=attachment_file.mimetype,
             data=attachment_file.read(),
@@ -76,12 +93,7 @@ def new(parent_table, parent_id):
     )
 
     models.db.session.commit()
-    url = flask.url_for(
-        '.index',
-        parent_table=parent_table,
-        parent_id=parent_id,
-    )
-    return flask.redirect(url)
+    return flask.redirect(next_url)
 
 
 @replies.route('/replici/sterge', methods=['POST'])
