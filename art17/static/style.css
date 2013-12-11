@@ -1,18 +1,92 @@
+/* GENERAL */
 body {
-    font-family: "Trebuchet MS", "Helvetica", "Arial", "sans-serif" !important;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
-#header #logo a {
-    background: url(logo.png) left top no-repeat;
-    display: block;
-    width: 188px;
-    height: 66px;
-    border: none;
+.container.full-width {
+    max-width: 100%;
 }
+
+
+/* HEADER */
+.suite-bar {
+    background: rgb(102, 204, 255);
+    height: 30px;
+}
+
+.suite-bar ul,
+.suite-bar li {
+    background: rgb(0, 153, 255);
+    height: 30px;
+}
+
+.suite-bar a:hover {
+    padding: 0px 15px;
+}
+
+.user-menu .nav>li>a {
+    color: #fff;
+    padding: 4px 15px;
+}
+
+.user-menu .nav>li>a:hover,
+.user-menu .nav>li>a:focus {
+    background: rgb(0, 153, 255);
+    padding: 4px 15px;
+    color: #000;
+    text-decoration: underline;
+}
+
+#header {
+    margin-bottom: 10px;
+}
+
+#portal-title a {
+    background: none;
+    font-weight: bold;
+    font-size: 20px;
+    color: #000;
+    height: auto;
+}
+
+.sponsors-and-title {
+    padding-top: 10px;
+}
+
+.sponsors-and-title img {
+    height: 80px;
+    padding-right: 30px;
+}
+
+#portal-title {
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+.portal-logo img {
+    height: 88px;
+    padding-top: 10px;
+}
+
+.global-menu {
+    background: rgb(102, 204, 51);
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+.global-menu label {
+    display: inline-block;
+    color: #fff;
+    font-weight: normal;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+/* footer */
 
 #footer {
-    margin-top: 60px;
-    border-top: 1px solid #badca0;
+    background: rgb(102, 204, 51);
+    height: 30px;
 }
 
 #footer .footer-logo {
@@ -23,8 +97,14 @@ body {
     border: none;
 }
 
+/* content */
+
 .breadcrumb {
     background: #e9f6fd;
+}
+
+.content {
+    margin-bottom: 40px;
 }
 
 fieldset legend {
