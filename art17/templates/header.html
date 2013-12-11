@@ -1,12 +1,8 @@
 <div id="header">
-  <div class="row">
-    <div class="col-md-2">
-      <h1 id="logo">
-        <a href="/" title="logo"></a>
-      </h1>
-    </div>
-    <div class="col-md-10">
-      <ul class="nav nav-pills pull-right">
+
+  <div class="row suite-bar ">
+    <div class="col-md-3 col-md-offset-9 user-menu">
+       <ul class="nav pull-right">
         <li>
           {%- set login_url = get_profile_login_url() %}
           <a href="{{ login_url }}">utilizator: {{ g.identity.id or "vizitator" }}</a>
@@ -14,4 +10,25 @@
       </ul>
     </div>
   </div>
+
+  <div class="row banner-up">
+    <div class="col-md-9 sponsors-and-title">
+      <img src="{{ url_for('static', filename='ue.png') }}" alt="logo UE">
+      <img src="{{ url_for('static', filename='gov.png') }}" alt="logo guvern">
+      <img src="{{ url_for('static', filename='is.png') }}" alt="logo IS">
+      <h1 id="portal-title">
+        <a href="." title="">SIMSHAB</a>
+      </h1>
+    </div>
+
+    <div class="col-md-3 portal-logo">
+      <img class="pull-right" src="{{ url_for('static', filename='posmediu.png') }}" alt="logo POSMEDIU">
+    </div>
+  </div>
+
+</div>
+
+
+<div class="global-menu">
+  <label>Global menu to be added</label>
 </div>
