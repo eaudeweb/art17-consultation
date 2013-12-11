@@ -12,4 +12,9 @@ $('.records').on('click', '.records-repliesbtn', function(evt) {
   popup.focus();
 });
 
+$('.close-popup').on('click', function (evt) {
+  evt.preventDefault();
+  window.close();
+});
+
 })();
