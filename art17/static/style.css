@@ -209,9 +209,9 @@ fieldset legend {
     width: 10px !important;
 }
 
-/*.recorddetail-table tr td {
+.recorddetail-table .sub-header td {
     white-space: nowrap;
-}*/
+}
 
 .recordvalue {
     font-size:12px;

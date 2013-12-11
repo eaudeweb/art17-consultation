@@ -325,7 +325,7 @@ class MeasuresForm(Form):
         super(MeasuresForm, self).__init__(*args, **kwargs)
         self.measurecode.choices = EMPTY_CHOICE + list(models.db.session.query(
             models.LuMeasures.code,
-            models.LuMeasures.name))
+            models.LuMeasures.name_ro))
         self.rankingcode.choices = EMPTY_CHOICE + list(models.db.session.query(
             models.LuRanking.code,
             models.LuRanking.name))
@@ -333,10 +333,10 @@ class MeasuresForm(Form):
 
 class Measures(Form):
     measures = MultipleJSONField(default='')
-    
-    
+
+
 class Infocomp(Form):
-    
+
     justification = TextField(validators=[Optional()])
     other_relevant_information = TextField(validators=[Optional()])
     transboundary_assessment = TextField(validators=[Optional()])

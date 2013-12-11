@@ -113,6 +113,7 @@ class LuMeasures(Base):
     objectid = Column(Integer, Sequence('R681'), primary_key=True)
     code = Column(String)
     name = Column(String)
+    name_ro = Column(String)
     valid_entry = Column(String)
 
 
