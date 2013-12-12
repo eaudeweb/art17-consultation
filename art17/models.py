@@ -95,6 +95,7 @@ class LuRanking(Base):
     objectid = Column(Integer, Sequence('R690'), primary_key=True)
     code = Column(String)
     name = Column(String)
+    name_ro = Column(String)
     note = Column(String)
     order_ = Column(Integer)
 

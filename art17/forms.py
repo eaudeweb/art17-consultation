@@ -297,7 +297,7 @@ class PressureForm(Form):
                                                     models.LuThreats.name)]
         self.ranking.choices = EMPTY_CHOICE + list(models.db.session.query(
             models.LuRanking.code,
-            models.LuRanking.name))
+            models.LuRanking.name_ro))
         self.pollutions.choices = [(p[0], '%s %s' % p) for p in
                                    models.db.session.query(
                                        models.LuPollution.code,
@@ -345,7 +345,7 @@ class MeasuresForm(Form):
             models.LuMeasures.name_ro))
         self.rankingcode.choices = EMPTY_CHOICE + list(models.db.session.query(
             models.LuRanking.code,
-            models.LuRanking.name))
+            models.LuRanking.name_ro))
 
 
 class Measures(Form):
