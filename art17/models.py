@@ -100,6 +100,26 @@ class LuRanking(Base):
     order_ = Column(Integer)
 
 
+class LuPopulation(Base):
+    __tablename__ = u'lu_population_number'
+
+    objectid = Column(Integer, Sequence('R686'), primary_key=True)
+    code = Column(String)
+    name = Column(String)
+    name_ro = Column(String)
+    order_ = Column(Integer)
+
+
+class LuPopulationRestricted(Base):
+    __tablename__ = u'lu_population_units_restricted'
+
+    objectid = Column(Integer, Sequence('R687'), primary_key=True)
+    code = Column(String)
+    name = Column(String)
+    name_ro = Column(String)
+    order_ = Column(Integer)
+
+
 class LuPollution(Base):
     __tablename__ = u'lu_pollution'
 

@@ -16,8 +16,6 @@ from art17.lookup import (
     METHODS_USED_OPTIONS,
     LU_FV_RANGE_OP_OPTIONS,
     LU_FV_RANGE_OP_FUNCT_OPTIONS,
-    LU_POP_NUMBER_OPTIONS,
-    LU_POP_NUMBER_RESTRICTED_OPTIONS,
     LU_REASONS_FOR_CHANGE,
     QUALITY_OPTIONS,
     METHODS_PRESSURES_OPTIONS,
@@ -228,8 +226,15 @@ class PopulationSize(Form):
 
     def __init__(self, *args, **kwargs):
         super(PopulationSize, self).__init__(*args, **kwargs)
-        self.population.unit.choices = EMPTY_CHOICE + LU_POP_NUMBER_RESTRICTED_OPTIONS
-        self.population_alt.unit.choices = EMPTY_CHOICE + LU_POP_NUMBER_OPTIONS
+        self.population.unit.choices = EMPTY_CHOICE + list(
+                        models.db.session.query(
+                            models.LuPopulationRestricted.code,
+                            models.LuPopulationRestricted.name_ro))
+
+        self.population_alt.unit.choices = EMPTY_CHOICE + list(
+                        models.db.session.query(
+                            models.LuPopulation.code,
+                            models.LuPopulation.name_ro))
 
 
 class Range(Form):
@@ -385,7 +390,10 @@ class Natura2000Species(Form):
 
     def __init__(self, *args, **kwargs):
         super(Natura2000Species, self).__init__(*args, **kwargs)
-        self.population.unit.choices = EMPTY_CHOICE + LU_POP_NUMBER_OPTIONS
+        self.population.unit.choices = EMPTY_CHOICE + list(
+                        models.db.session.query(
+                            models.LuPopulation.code,
+                            models.LuPopulation.name_ro))
 
 
 class Natura2000Habitat(Form):

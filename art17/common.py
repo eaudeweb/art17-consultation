@@ -63,6 +63,16 @@ NEW_STATUS = 'new'
 FINALIZED_STATUS = 'finalized'
 
 
+def get_population_units_ro(unit):
+    print unit
+    return (
+        models.db.session
+        .query(models.LuPopulation.name_ro)
+        .filter(models.LuPopulation.code==unit)
+        .scalar()
+    )
+
+
 def calculate_identifier_steps(identifier):
     bits = identifier.split(':')
     return [':'.join(bits[:c+1]) for c in range(len(bits))]
@@ -156,7 +166,6 @@ def inject_constants():
         'METHODS_USED': lookup.METHODS_USED,
         'LU_FV_RANGE_OP': lookup.LU_FV_RANGE_OP,
         'LU_FV_RANGE_OP_FUNCT': lookup.LU_FV_RANGE_OP_FUNCT,
-        'LU_POP_NUMBER': lookup.LU_POP_NUMBER,
         'CONCLUSIONS': lookup.CONCLUSIONS,
         'LU_REASONS_FOR_CHANGE': lookup.LU_REASONS_FOR_CHANGE,
         'QUALITY': lookup.QUALITY,
@@ -166,6 +175,7 @@ def inject_constants():
         'GENERALSTATUS_CHOICES': dict(models.db.session.query(
                                     models.LuPresence.code,
                                     models.LuPresence.name_ro).all()),
+        'get_population_units_ro':  get_population_units_ro,
         'FINALIZED_STATUS': FINALIZED_STATUS,
     }
 
