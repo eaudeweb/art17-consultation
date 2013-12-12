@@ -1,3 +1,6 @@
+{% from 'bits.html' import fonticon %}
+
+
 {%- macro tabmenu(current) %}
   <ul class="nav nav-tabs">
     {% for item in tabmenu_data %}
@@ -70,10 +73,16 @@
 
       <td class="dashboard-commentcount">
         <a href="{{ url }}">
-          {% if with_unread_reply > 0 %}[newreply]{% endif %}
-          {% if cell_data['unevaluated'] > 0 %}[evalme]{% endif %}
           {{ cell_data['count'] }} comentarii
         </a>
+
+        {%- if cell_data['unevaluated'] > 0 %}
+          {{ fonticon('asterisk') }}
+        {%- endif %}
+
+        {%- if with_unread_reply > 0 %}
+          {{ fonticon('comment') }}
+        {%- endif %}
       </td>
 
     {%- endif %}
