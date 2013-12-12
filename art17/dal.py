@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import func, cast, CHAR
+from sqlalchemy import func, cast, CHAR, and_
 import flask
 from art17.models import (
     db,
@@ -108,7 +108,7 @@ class BaseDataset(object):
             overview[key] = 0
         return overview
 
-    def get_subject_region_overview_consultation(self):
+    def get_subject_region_overview_consultation(self, user_id=None):
         overview = {}
         regions_query = (
             db.session
@@ -122,14 +122,16 @@ class BaseDataset(object):
         for key in regions_query:
             overview[key] = {
                 'count': 0,
+                'with_reply': 0,
+                'with_read_reply': 0,
             }
 
-        comment_count_query = (
+        count_comments = (
             db.session
             .query(
                 self.record_model_subject_id,
                 self.record_model.region,
-                func.count('*'),
+                func.count(func.distinct(self.record_model.id)),
             )
             .filter_by(cons_role='comment')
             .filter_by(cons_dataset_id=self.dataset_id)
@@ -139,8 +141,38 @@ class BaseDataset(object):
                 self.record_model.region,
             )
         )
-        for (subject_id, region_code, count) in comment_count_query:
+        for (subject_id, region_code, count) in count_comments:
             overview[subject_id, region_code]['count'] = count
+
+        if user_id is not None:
+            count_comments_with_reply = (
+                count_comments
+                .join(
+                    CommentReply,
+                    and_(
+                        CommentReply.parent_table == self.reply_parent_table,
+                        CommentReply.parent_id == self.record_model.id,
+                    ),
+                )
+            )
+            for (subject_id, region_code, count) in \
+                    count_comments_with_reply:
+                overview[subject_id, region_code]['with_reply'] = count
+
+            count_comments_with_read_reply = (
+                count_comments_with_reply
+                .join(
+                    CommentReplyRead,
+                    and_(
+                        CommentReplyRead.table == self.reply_parent_table,
+                        CommentReplyRead.row_id == self.record_model.id,
+                        CommentReplyRead.user_id == user_id,
+                    ),
+                )
+            )
+            for (subject_id, region_code, count) in \
+                    count_comments_with_read_reply:
+                overview[subject_id, region_code]['with_read_reply'] = count
 
         return overview
 

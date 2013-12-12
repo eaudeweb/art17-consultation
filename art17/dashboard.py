@@ -52,7 +52,11 @@ def inject_funcs():
 def habitats():
     from art17.habitat import get_dataset
     habitat_dataset = get_dataset()
-    data_by_region = habitat_dataset.get_subject_region_overview_consultation()
+    user_id = flask.g.identity.id
+    data_by_region = (
+        habitat_dataset
+        .get_subject_region_overview_consultation(user_id)
+    )
     relevant_regions = set(reg for n, reg in data_by_region)
     bioreg_list = [
         r for r in dal.get_biogeo_region_list()
@@ -71,7 +75,11 @@ def habitats():
 def species(group_code):
     from art17.species import get_dataset
     species_dataset = get_dataset()
-    data_by_region = species_dataset.get_subject_region_overview_consultation()
+    user_id = flask.g.identity.id
+    data_by_region = (
+        species_dataset
+        .get_subject_region_overview_consultation(user_id)
+    )
     relevant_regions = set(reg for n, reg in data_by_region)
     bioreg_list = [
         r for r in dal.get_biogeo_region_list()

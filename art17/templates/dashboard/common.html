@@ -42,7 +42,19 @@
   {%- if key in data_by_region %}
     {%- set url = consultation_url(subject, bioreg=bioreg.code) %}
     <td class="dashboard-commentcount">
-      <a href="{{ url }}">{{ data_by_region[key]['count'] }}</a>
+      <a href="{{ url }}">
+        {%- set cell_data = data_by_region[key] %}
+
+        {%- set with_unread_reply = (
+              cell_data['with_reply'] -
+              cell_data['with_read_reply']
+            ) %}
+        {%- if with_unread_reply > 0 %}
+          [newreply]
+        {%- endif %}
+
+        {{ cell_data['count'] }}
+      </a>
     </td>
   {%- else %}
     <td class="dashboard-missingrecord"></td>
