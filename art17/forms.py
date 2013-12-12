@@ -472,8 +472,16 @@ class HabitatComment(Form):
         if not self.validate():
             return False
 
-        if not self.range.surface_area.data:
-            self.range.surface_area.errors.append(u"Trebuie specificată suprafața")
+        mandatory_fields = (self.range.surface_area,
+            self.range.method,
+            self.range.trend_short.trend,
+            self.range.trend_short.period,
+        )
+
+        for f in mandatory_fields:
+            if not f.data:
+                f.errors.append(u"Trebuie completat câmpul")
             return False
+
         # TODO: algoritm de validare habitat
         return True
