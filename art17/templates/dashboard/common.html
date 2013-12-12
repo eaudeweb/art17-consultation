@@ -53,6 +53,10 @@
           [newreply]
         {%- endif %}
 
+        {%- if cell_data['unevaluated'] > 0 %}
+          [evalme]
+        {%- endif %}
+
         {{ cell_data['count'] }}
       </a>
     </td>

@@ -122,6 +122,7 @@ class BaseDataset(object):
         for key in regions_query:
             overview[key] = {
                 'count': 0,
+                'unevaluated': 0,
                 'with_reply': 0,
                 'with_read_reply': 0,
             }
@@ -143,6 +144,13 @@ class BaseDataset(object):
         )
         for (subject_id, region_code, count) in count_comments:
             overview[subject_id, region_code]['count'] = count
+
+        count_unevaluated_comments = (
+            count_comments
+            .filter_by(cons_status='new')
+        )
+        for (subject_id, region_code, count) in count_unevaluated_comments:
+            overview[subject_id, region_code]['unevaluated'] = count
 
         if user_id is not None:
             count_comments_with_reply = (
