@@ -553,8 +553,10 @@ class CloseConsultationView(flask.views.View):
         form = self.form_cls(MultiDict(flatten_dict(data)))
         if not form.final_validate():
             models.db.session.rollback()
+            fields = ', '.join(f for f in form.errors.keys())
             flask.flash(u"Versiunea rezultată în urma consultării este "
-                        u"incompletă. Consultarea nu a fost închisă.", 'danger')
+                        u"incompletă. Câmpuri cu probleme: %s. "
+                        u"Consultarea nu a fost închisă." % fields, 'danger')
         else:
             models.db.session.commit()
             app = flask.current_app._get_current_object()
