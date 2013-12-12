@@ -312,7 +312,7 @@ class DashboardView(flask.views.View):
     def get_context_data(self):
         dal_object = self.ds_model(self.dataset_id)
         dataset = models.Dataset.query.get_or_404(self.dataset_id)
-        object_regions = dal_object.get_subject_region_overview_all()
+        object_regions = dal_object.get_subject_region_overview_aggregation()
         #bioreg_list = dal.get_biogeo_region_list()
 
         relevant_regions = set(reg for n, reg in object_regions)
