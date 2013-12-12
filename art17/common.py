@@ -95,6 +95,11 @@ def perm_edit_comment(comment):
     if comment.cons_status not in EDITABLE_STATUS_LIST:
         return Permission(need.impossible)
 
+    if comment.cons_role != 'comment-draft':
+        return Permission(need.admin,
+                          *get_roles_for_subject('reviewer', comment.subject)
+        )
+
     if comment.cons_user_id:
         return Permission(need.admin, need.user_id(comment.cons_user_id))
 
@@ -121,6 +126,16 @@ def perm_submit_for_evaluation(comment):
 
     else:
         return Permission(need.admin)
+
+
+def perm_redraft_comment(comment):
+    if comment.cons_role == 'comment-draft':
+        return Permission(need.impossible)
+
+    if comment.cons_status in EDITABLE_STATUS_LIST:
+        return Permission(need.admin, need.user_id(comment.cons_user_id))
+
+    return Permission(need.admin)
 
 
 def perm_delete_comment(comment):
@@ -334,6 +349,7 @@ class IndexView(flask.views.View, IndexMixin):
             'delete_draft_url': delete_draft_url,
             'close_consultation_url': close_consultation_url,
             'perm_edit_final_for_this': perm_edit_final(subject),
+            'perm_redraft_comment': perm_redraft_comment,
             'reopen_consultation_url': reopen_consultation_url,
             'finalized': bool('final' in topic),
             'read_id_set': read_id_set,
@@ -603,6 +619,20 @@ class DeleteDraftView(flask.views.View):
         models.db.session.commit()
 
         flask.flash(u"Modificările au fost șterse", 'success')
+        return flask.redirect(next_url)
+
+
+class RedraftCommentView(flask.views.View):
+
+    def dispatch_request(self, comment_id):
+        next_url = flask.request.args['next']
+        comment = self.model_cls.query.get(comment_id)
+        perm_redraft_comment(comment).test()
+
+        comment.cons_role = 'comment-draft'
+        models.db.session.add(comment)
+        models.db.session.commit()
+
         return flask.redirect(next_url)
 
 

@@ -7,7 +7,7 @@ from art17 import dal
 from art17.common import (IndexView, CommentStateView,
                           CommentDeleteView, RecordView, CommentViewMixin,
                           FinalCommentMixin, DeleteDraftView,
-                          CloseConsultationView, ReopenConsultationView)
+                          CloseConsultationView, ReopenConsultationView, RedraftCommentView)
 from art17 import forms
 from art17 import schemas
 from art17 import config
@@ -164,6 +164,14 @@ class HabitatDeleteDraftView(DeleteDraftView):
 
 habitat.add_url_rule('/habitate/detalii/<int:record_id>/delete_final',
                      view_func=HabitatDeleteDraftView.as_view('delete_draft'))
+
+
+class HabitatRedraftCommentView(RedraftCommentView):
+
+    model_cls = models.DataHabitattypeRegion
+
+habitat.add_url_rule('/habitate/redraft/<int:comment_id>',
+                     view_func=HabitatRedraftCommentView.as_view('redraft'))
 
 
 class HabitatCloseConsultationView(CloseConsultationView):
