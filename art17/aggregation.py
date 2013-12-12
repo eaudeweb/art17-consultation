@@ -9,7 +9,7 @@ from flask.ext.principal import Permission, Denial
 from werkzeug.datastructures import MultiDict
 from art17 import models, dal, schemas, forms
 from art17.common import flatten_dict, FINALIZED_STATUS, NEW_STATUS, \
-                         get_roles_for_subject
+                         get_roles_for_subject, flatten_errors
 from art17.habitat import HabitatCommentView
 from art17.species import SpeciesCommentView
 from art17.auth import need
@@ -568,8 +568,9 @@ class RecordFinalToggle(flask.views.View):
             data = self.parse_commentform(self.record)
             form = self.form_cls(MultiDict(flatten_dict(data)))
             if not form.final_validate():
+                errors = flatten_errors(form.errors)
                 flask.flash(u"Înregistrarea NU a fost finalizată, deoarece este"
-                            u" incompletă.", 'danger')
+                            u" incompletă.Probleme: %s" % errors, 'danger')
                 return flask.redirect(record_edit_url(self.record))
             if self.record.cons_role == 'final-draft':
                 self.record.cons_status = FINALIZED_STATUS

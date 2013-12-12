@@ -245,7 +245,7 @@ class PopulationSize(Form):
 
 
 class Range(Form):
-    surface_area = DecimalField(
+    surface_area = DecimalField(label=u"Suprafață",
         validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
     method = SelectField(default='',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
@@ -510,7 +510,9 @@ class SpeciesComment(Form):
         finally:
             for f in mandatory_fields:
                 if not f.data:
-                    f.errors.append(u"Trebuie completat câmpul")
+                    f.errors.append(
+                        u"Trebuie completat câmpul %s" % (f.label.text or f)
+                    )
             if not (self.population.size.population.unit.data or
                         self.population.size.population_alt.unit.data):
                 self.population.size.population.unit.errors.append(
@@ -578,6 +580,8 @@ class HabitatComment(Form):
         finally:
             for f in mandatory_fields:
                 if not f.data:
-                    f.errors.append(u"Trebuie completat câmpul")
+                    f.errors.append(
+                        u"Trebuie completat câmpul %s" % (f.label.text or f)
+                    )
 
         return not self.errors

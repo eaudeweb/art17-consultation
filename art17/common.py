@@ -553,10 +553,10 @@ class CloseConsultationView(flask.views.View):
         form = self.form_cls(MultiDict(flatten_dict(data)))
         if not form.final_validate():
             models.db.session.rollback()
-            fields = ', '.join(f for f in form.errors.keys())
+            errors = flatten_errors(form.errors)
             flask.flash(u"Versiunea rezultată în urma consultării este "
-                        u"incompletă. Câmpuri cu probleme: %s. "
-                        u"Consultarea nu a fost închisă." % fields, 'danger')
+                        u"incompletă. Probleme: %s"
+                        u"Consultarea nu a fost închisă." % errors, 'danger')
         else:
             models.db.session.commit()
             app = flask.current_app._get_current_object()
@@ -613,3 +613,13 @@ cons_manager = Manager()
 def guide():
     return flask.render_template('common/guide.html')
 
+
+def flatten_errors(errors):
+    html = '\n'
+    for k, v in errors.iteritems():
+        if isinstance(v, dict):
+            html += flatten_errors(v)
+        else:
+            html += '\n'.join([' * ' + e for e in v])
+    html += '\n'
+    return html
