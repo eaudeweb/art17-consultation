@@ -84,6 +84,7 @@ class LuThreats(Base):
     objectid = Column(Integer, Sequence('R692'), primary_key=True)
     code = Column(String)
     name = Column(String)
+    name_ro = Column(Text)
     note = Column(String)
     eutroph = Column(String)
     valid_entry = Column(String)

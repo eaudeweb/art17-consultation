@@ -64,7 +64,6 @@ FINALIZED_STATUS = 'finalized'
 
 
 def get_population_units_ro(unit):
-    print unit
     return (
         models.db.session
         .query(models.LuPopulation.name_ro)
