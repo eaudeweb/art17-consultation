@@ -9,8 +9,8 @@ from wtforms.widgets import HTMLString, html_params
 from werkzeug.datastructures import MultiDict
 from werkzeug.local import LocalProxy
 from wtforms.compat import text_type
+import flask
 
-from art17 import models
 from art17.lookup import (
     TREND_OPTIONS,
     CONCLUSION_OPTIONS,
@@ -238,15 +238,15 @@ class PopulationSize(Form):
 
     def __init__(self, *args, **kwargs):
         super(PopulationSize, self).__init__(*args, **kwargs)
-        self.population.unit.choices = EMPTY_CHOICE + list(
-                        models.db.session.query(
-                            models.LuPopulationRestricted.code,
-                            models.LuPopulationRestricted.name_ro))
+        self.population.unit.choices = (
+            EMPTY_CHOICE +
+            form_choices_loader.get_lu_population_restricted()
+        )
 
-        self.population_alt.unit.choices = EMPTY_CHOICE + list(
-                        models.db.session.query(
-                            models.LuPopulation.code,
-                            models.LuPopulation.name_ro))
+        self.population_alt.unit.choices = (
+            EMPTY_CHOICE +
+            form_choices_loader.get_lu_population()
+        )
 
 
 class Range(Form):
@@ -325,17 +325,21 @@ class PressureForm(Form):
 
     def __init__(self, *args, **kwargs):
         super(PressureForm, self).__init__(*args, **kwargs)
-        self.pressure.choices = EMPTY_CHOICE + [(p[0], '%s. %s' % p) for p in
-                                                models.db.session.query(
-                                                    models.LuThreats.code,
-                                                    models.LuThreats.name_ro)]
-        self.ranking.choices = EMPTY_CHOICE + list(models.db.session.query(
-            models.LuRanking.code,
-            models.LuRanking.name_ro))
-        self.pollutions.choices = [(p[0], '%s %s' % p) for p in
-                                   models.db.session.query(
-                                       models.LuPollution.code,
-                                       models.LuPollution.name_ro)]
+        self.pressure.choices = (
+            EMPTY_CHOICE +
+            [
+                (p[0], '%s. %s' % p) for p in
+                form_choices_loader.get_lu_threats()
+            ]
+        )
+        self.ranking.choices = (
+            EMPTY_CHOICE +
+            form_choices_loader.get_lu_ranking()
+        )
+        self.pollutions.choices = [
+            (p[0], '%s %s' % p) for p in
+            form_choices_loader.get_lu_pollution()
+        ]
 
 
 class Pressures(Form):
@@ -374,12 +378,14 @@ class MeasuresForm(Form):
 
     def __init__(self, *args, **kwargs):
         super(MeasuresForm, self).__init__(*args, **kwargs)
-        self.measurecode.choices = EMPTY_CHOICE + list(models.db.session.query(
-            models.LuMeasures.code,
-            models.LuMeasures.name_ro))
-        self.rankingcode.choices = EMPTY_CHOICE + list(models.db.session.query(
-            models.LuRanking.code,
-            models.LuRanking.name_ro))
+        self.measurecode.choices = (
+            EMPTY_CHOICE +
+            form_choices_loader.get_lu_measures()
+        )
+        self.rankingcode.choices = (
+            EMPTY_CHOICE +
+            form_choices_loader.get_lu_ranking()
+        )
 
 
 class Measures(Form):
@@ -408,10 +414,10 @@ class Natura2000Species(Form):
 
     def __init__(self, *args, **kwargs):
         super(Natura2000Species, self).__init__(*args, **kwargs)
-        self.population.unit.choices = EMPTY_CHOICE + list(
-                        models.db.session.query(
-                            models.LuPopulation.code,
-                            models.LuPopulation.name_ro))
+        self.population.unit.choices = (
+            EMPTY_CHOICE +
+            form_choices_loader.get_lu_population()
+        )
 
 
 class Natura2000Habitat(Form):
@@ -457,9 +463,7 @@ class SpeciesComment(Form):
 
     def __init__(self, *args, **kwargs):
         super(SpeciesComment, self).__init__(*args, **kwargs)
-        self.generalstatus.choices = models.db.session.query(
-            models.LuPresence.code,
-            models.LuPresence.name_ro)
+        self.generalstatus.choices = form_choices_loader.get_lu_presence()
 
     def custom_validate(self):
         generalstatus_field = self.generalstatus

@@ -6,6 +6,13 @@ from art17.models import (
     LuBiogeoreg,
     LuGrupSpecie,
     LuHdSpecies,
+    LuPopulation,
+    LuThreats,
+    LuPollution,
+    LuRanking,
+    LuPopulationRestricted,
+    LuPresence,
+    LuMeasures,
     DataHabitat,
     DataSpecies,
     DataHabitattypeRegion,
@@ -353,3 +360,30 @@ class FormChoicesLoader(object):
 
     def initialize_app(self, app):
         app.extensions['form_choices_loader'] = self
+
+    def get_lu_population_restricted(self):
+        return (
+            db.session.query(
+                LuPopulationRestricted.code,
+                LuPopulationRestricted.name_ro,
+            )
+            .all()
+        )
+
+    def get_lu_population(self):
+        return db.session.query(LuPopulation.code, LuPopulation.name_ro).all()
+
+    def get_lu_threats(self):
+        return db.session.query(LuThreats.code, LuThreats.name_ro).all()
+
+    def get_lu_pollution(self):
+        return db.session.query(LuPollution.code, LuPollution.name_ro).all()
+
+    def get_lu_ranking(self):
+        return db.session.query(LuRanking.code, LuRanking.name_ro).all()
+
+    def get_lu_measures(self):
+        return db.session.query(LuMeasures.code, LuMeasures.name_ro).all()
+
+    def get_lu_presence(self):
+        return db.session.query(LuPresence.code, LuPresence.name_ro).all()
