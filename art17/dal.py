@@ -94,7 +94,7 @@ class BaseDataset(object):
         )
         return query.all()
 
-    def get_subject_region_overview_all(self):
+    def get_subject_region_overview_aggregation(self):
         overview = {}
         regions_query = (
             db.session
@@ -108,7 +108,7 @@ class BaseDataset(object):
             overview[key] = 0
         return overview
 
-    def get_subject_region_overview(self):
+    def get_subject_region_overview_consultation(self):
         overview = {}
         regions_query = (
             db.session
