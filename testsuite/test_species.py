@@ -34,8 +34,7 @@ SPECIES_STRUCT_DATA = {
         'reference_value': {
             'method': 'foo method',
             'number': 456,
-            'op': '>',
-            'x': None,
+            'op': '',
         },
         'reason': {},
         'conclusion': {
@@ -90,8 +89,7 @@ SPECIES_STRUCT_DATA = {
         'reference_value': {
             'method': 'foo pop method',
             'number': 234,
-            'op': '<',
-            'x': None,
+            'op': '',
         },
         'reason': {},
         'conclusion': {
@@ -170,7 +168,7 @@ SPECIES_MODEL_DATA = {
     'range_trend_period': '20002001',
     'range_trend_long': '-',
     'range_trend_long_period': '20022003',
-    'complementary_favourable_range_op': '>',
+    'complementary_favourable_range_op': '',
     'complementary_favourable_range': 456,
     'complementary_favourable_range_method': 'foo method',
     'conclusion_range': 'U1',
@@ -190,7 +188,7 @@ SPECIES_MODEL_DATA = {
     'population_trend_long': '+',
     'population_trend_long_period': '20102011',
     'population_trend_long_method': '1',
-    'complementary_favourable_population_op': '<',
+    'complementary_favourable_population_op': '',
     'complementary_favourable_population': 234,
     'complementary_favourable_population_method': 'foo pop method',
     'conclusion_population': 'U2',

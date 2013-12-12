@@ -34,8 +34,7 @@ HABITAT_STRUCT_DATA = {
         'reference_value': {
             'method': 'foo method',
             'number': 456,
-            'op': '>',
-            'x': None,
+            'op': '',
         },
         'reason': {},
         'conclusion': {
@@ -76,8 +75,7 @@ HABITAT_STRUCT_DATA = {
         'reference_value': {
             'method': 'foo method',
             'number': 123,
-            'op': '<',
-            'x': None,
+            'op': '',
         },
         'reason': {},
         'conclusion': {
@@ -131,7 +129,7 @@ HABITAT_MODEL_DATA = {
     'range_trend_period': '20002001',
     'range_trend_long': '-',
     'range_trend_long_period': '20022003',
-    'complementary_favourable_range_op': '>',
+    'complementary_favourable_range_op': '',
     'complementary_favourable_range': 456,
     'complementary_favourable_range_method': 'foo method',
     'conclusion_range': 'U1',
@@ -145,7 +143,7 @@ HABITAT_MODEL_DATA = {
     'coverage_trend_period': '20062007',
     'coverage_trend_long': '+',
     'coverage_trend_long_period': '20042005',
-    'complementary_favourable_area_op': '<',
+    'complementary_favourable_area_op': '',
     'complementary_favourable_area': 123,
     'complementary_favourable_area_method': 'foo method',
     'pressures_method': '1',

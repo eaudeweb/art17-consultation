@@ -41,13 +41,15 @@ def parse_conclusion(obj, prefix):
 
 
 def parse_reference_value(obj, prefix):
-    return {
+    data = {
         'number': getattr(obj, prefix),
         'op': getattr(obj, prefix + '_op'),
         'x': getattr(obj, prefix + '_x'),
         'method': getattr(obj, prefix + '_method'),
     }
-
+    if not data['x']:
+        del data['x']
+    return data
 
 def reasons_for_change(obj, prefix):
     data = {

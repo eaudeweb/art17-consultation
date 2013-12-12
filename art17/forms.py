@@ -159,6 +159,13 @@ def set_required_error_message(field):
     field.errors.append(message)
 
 
+def set_only_one_error_message(fields):
+    message = u"Doar unul dintre: %s poate fi completat" % \
+              (', '.join([f.label.text for f in fields])
+    )
+    fields[0].errors.append(message)
+
+
 class Trend(Form):
     trend = SelectField(choices=EMPTY_CHOICE + TREND_OPTIONS,
                         default='',
@@ -190,15 +197,15 @@ class TrendCI(Trend):
 class ReferenceValue(Form):
     op = SelectField(default='', label=u"operator", validators=[Optional()])
     number = DecimalField(label=u"suprafață", validators=[Optional()])
+    x = BooleanField(label=u"necunoscut", validators=[Optional()])
     method = TextAreaField()
 
     def custom_validate(self):
-        fields = [self.op, self.number]
-        empty = [f for f in fields if not f.data]
+        fields = [self.number, self.op, self.x]
+        filled = [f for f in fields if f.data]
 
-        if empty and len(empty) < len(fields):
-            for field in empty:
-                set_required_error_message(field)
+        if len(filled) > 1:
+            set_only_one_error_message(filled)
             return False
 
         return True
