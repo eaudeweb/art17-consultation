@@ -162,6 +162,12 @@ def perm_close_consultation(subject):
 common = flask.Blueprint('common', __name__)
 
 
+@common.record
+def setup_form_choices_loader(state):
+    app = state.app
+    dal.FormChoicesLoader().initialize_app(app)
+
+
 @common.app_context_processor
 def inject_permissions():
     return {

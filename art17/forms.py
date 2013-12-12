@@ -7,6 +7,7 @@ from wtforms import (Form as Form_base, FormField as FormField_base,
 from wtforms.validators import Required, Optional, NumberRange
 from wtforms.widgets import HTMLString, html_params
 from werkzeug.datastructures import MultiDict
+from werkzeug.local import LocalProxy
 from wtforms.compat import text_type
 
 from art17 import models
@@ -22,6 +23,10 @@ from art17.lookup import (
     METHODS_THREATS_OPTIONS
     )
 from art17 import schemas
+
+form_choices_loader = LocalProxy(
+    lambda: flask.current_app.extensions['form_choices_loader']
+)
 
 EMPTY_CHOICE = [('', "")]
 

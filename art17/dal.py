@@ -347,3 +347,9 @@ class SpeciesDataset(BaseDataset):
         object.species_id = record.species_id
         object.region = record.region
         object.cons_dataset_id = self.dataset_id
+
+
+class FormChoicesLoader(object):
+
+    def initialize_app(self, app):
+        app.extensions['form_choices_loader'] = self
