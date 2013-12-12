@@ -280,6 +280,7 @@ class Habitat(Form):
     trend_long = FormField(Trend)
     area_suitable = DecimalField(
         validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+    reason = FormField(ReasonValue)
     conclusion = FormField(Conclusion)
 
 

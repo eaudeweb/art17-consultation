@@ -148,6 +148,25 @@
       </div>
 
       <div class="form-group">
+        {%- set reason = form.habitat.reason %}
+        <label for="range.reason.a">Motivul modificării</label>
+
+        {{ errors(reason) }}
+
+        <div class="row">
+          <div class="col-sm-2">
+            {{ reason.a(class='form-control') }} {{ LU_REASONS_FOR_CHANGE['a'] }}
+          </div>
+          <div class="col-sm-2">
+            {{ reason.b(class='form-control') }} {{ LU_REASONS_FOR_CHANGE['b'] }}
+          </div>
+          <div class="col-sm-2">
+            {{ reason.c(class='form-control') }} {{ LU_REASONS_FOR_CHANGE['c'] }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
         {%- set conclusion = form.habitat.conclusion %}
         <label for="habitat.conclusion.value">
           Concluzie

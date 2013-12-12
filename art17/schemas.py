@@ -218,6 +218,7 @@ def parse_species_commentform(row):
             'trend_short': parse_trend(row, 'habitat_trend'),
             'trend_long': parse_trend(row, 'habitat_trend_long'),
             'area_suitable': row.habitat_area_suitable,
+            'reason': reasons_for_change(row, 'habitat'),
             'conclusion': parse_conclusion(row, 'conclusion_habitat'),
     }
 
@@ -493,10 +494,18 @@ def flatten_species_commentform(struct, obj):
     flatten_trend(struct['range']['trend_long'], obj, 'range_trend_long')
     flatten_refval(struct['range']['reference_value'], obj,
                    'complementary_favourable_range')
+    flatten_reason(struct['range']['reason'], obj,
+                   'range')
     flatten_conclusion(struct['range']['conclusion'], obj, 'conclusion_range')
 
     _set_population_size(struct['population']['size'], obj)
     obj.population_date = struct['population']['date']
+    obj.population_additional_locality = \
+        struct['population']['additional_locality']
+    obj.population_additional_method = \
+        struct['population']['additional_method']
+    obj.population_additional_problems = \
+        struct['population']['additional_problems']
     obj.population_method = struct['population']['method']
     flatten_trend(struct['population']['trend_short'], obj,
                     'population_trend', magnitude=True, ci=True)
@@ -504,6 +513,8 @@ def flatten_species_commentform(struct, obj):
                     'population_trend_long', magnitude=True, ci=True)
     flatten_refval(struct['population']['reference_value'], obj,
                     'complementary_favourable_population')
+    flatten_reason(struct['population']['reason'], obj,
+                   'population')
     flatten_conclusion(struct['population']['conclusion'], obj,
                     'conclusion_population')
 
@@ -517,6 +528,8 @@ def flatten_species_commentform(struct, obj):
     flatten_trend(struct['habitat']['trend_long'], obj,
                     'habitat_trend_long')
     obj.habitat_area_suitable = struct['habitat']['area_suitable']
+    flatten_reason(struct['habitat']['reason'], obj,
+                   'habitat')
     obj.pressures_method = struct['pressures']['pressures_method']
     obj.threats_method = struct['threats']['threats_method']
     obj.justification = struct['infocomp']['justification']

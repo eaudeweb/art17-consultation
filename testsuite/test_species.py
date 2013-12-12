@@ -120,6 +120,7 @@ SPECIES_STRUCT_DATA = {
             },
         },
         'area_suitable': 1000,
+        'reason': {},
         'conclusion': {
             'value': 'U1',
             'trend': '-',
