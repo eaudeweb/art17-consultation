@@ -18,7 +18,7 @@ from art17.lookup import (
     LU_FV_RANGE_OP_FUNCT_OPTIONS,
     LU_POP_NUMBER_OPTIONS,
     LU_POP_NUMBER_RESTRICTED_OPTIONS,
-    LU_REASONS_FOR_CHANGE_OPTIONS,
+    LU_REASONS_FOR_CHANGE,
     QUALITY_OPTIONS,
     METHODS_PRESSURES_OPTIONS,
     METHODS_THREATS_OPTIONS
@@ -204,6 +204,15 @@ class ReferenceValue(Form):
         return True
 
 
+class ReasonValue(Form):
+    a = MeasureField(default=False, label=LU_REASONS_FOR_CHANGE['a'],
+                     validators=[Optional()])
+    b = MeasureField(default=False, label=LU_REASONS_FOR_CHANGE['b'],
+                     validators=[Optional()])
+    c = MeasureField(default=False, label=LU_REASONS_FOR_CHANGE['c'],
+                     validators=[Optional()])
+
+
 class Conclusion(Form):
     value = SelectField(choices=EMPTY_CHOICE + CONCLUSION_OPTIONS,
                         default='',
@@ -231,6 +240,7 @@ class Range(Form):
     trend_short = FormField(Trend)
     trend_long = FormField(Trend)
     reference_value = FormField(ReferenceValue)
+    reason = FormField(ReasonValue)
     conclusion = FormField(Conclusion)
 
     def __init__(self, *args, **kwargs):
@@ -277,6 +287,7 @@ class Coverage(Form):
     trend_short = FormField(TrendCI)
     trend_long = FormField(TrendCI)
     reference_value = FormField(ReferenceValue)
+    reason = FormField(ReasonValue)
     conclusion = FormField(Conclusion)
 
     def __init__(self, *args, **kwargs):
