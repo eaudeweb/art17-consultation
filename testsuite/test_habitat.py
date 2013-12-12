@@ -15,12 +15,20 @@ HABITAT_STRUCT_DATA = {
                 'start': '2000',
                 'end': '2001',
             },
+            'magnitude': {
+                'min': None,
+                'max': None,
+            },
         },
         'trend_long': {
             'trend': '-',
             'period': {
                 'start': '2002',
                 'end': '2003',
+            },
+             'magnitude': {
+                'min': None,
+                'max': None,
             },
         },
         'reference_value': {
@@ -29,6 +37,7 @@ HABITAT_STRUCT_DATA = {
             'op': '>',
             'x': None,
         },
+        'reason': {},
         'conclusion': {
             'value': 'U1',
             'trend': '-',
@@ -44,6 +53,12 @@ HABITAT_STRUCT_DATA = {
                 'start': '2006',
                 'end': '2007',
             },
+            'magnitude': {
+                'min': None,
+                'max': None,
+                'ci': None,
+            },
+            'method': None,
         },
         'trend_long': {
             'trend': '+',
@@ -51,6 +66,12 @@ HABITAT_STRUCT_DATA = {
                 'start': '2004',
                 'end': '2005',
             },
+            'magnitude': {
+                'min': None,
+                'max': None,
+                'ci': None,
+            },
+            'method': None,
         },
         'reference_value': {
             'method': 'foo method',
@@ -58,6 +79,7 @@ HABITAT_STRUCT_DATA = {
             'op': '<',
             'x': None,
         },
+        'reason': {},
         'conclusion': {
             'value': 'U2',
             'trend': '+',

@@ -50,11 +50,12 @@ def parse_reference_value(obj, prefix):
 
 
 def reasons_for_change(obj, prefix):
-    return {
-        'a': getattr(obj, '%s_reasons_for_change_a' % prefix),
-        'b': getattr(obj, '%s_reasons_for_change_b' % prefix),
-        'c': getattr(obj, '%s_reasons_for_change_c' % prefix),
+    data = {
+        'a': getattr(obj, '%s_reasons_for_change_a' % prefix) or '',
+        'b': getattr(obj, '%s_reasons_for_change_b' % prefix) or '',
+        'c': getattr(obj, '%s_reasons_for_change_c' % prefix) or '',
     }
+    return {k:v for k,v in data.iteritems() if v}
 
 
 def additional_info(obj, prefix):
@@ -343,7 +344,8 @@ def parse_habitat_commentform(row):
             'trend_long': parse_trend(row, 'range_trend_long', magnitude=True),
             'conclusion': parse_conclusion(row, 'conclusion_range'),
             'reference_value': parse_reference_value(row,
-                                    'complementary_favourable_range')
+                                    'complementary_favourable_range'),
+            'reason': reasons_for_change(row, 'range'),
         }
 
     rv['coverage'] = {
@@ -354,6 +356,7 @@ def parse_habitat_commentform(row):
             'trend_long': parse_magnitude_ci_trend(row, 'coverage_trend_long'),
             'reference_value': parse_reference_value(row,
                                     'complementary_favourable_area'),
+            'reason': reasons_for_change(row, 'area'),
             'conclusion': parse_conclusion(row, 'conclusion_area')
         }
     rv['pressures'] = {
@@ -458,6 +461,15 @@ def flatten_refval(refval_struct, obj, prefix):
     setattr(obj, prefix + '_method', refval_struct['method'])
 
 
+def flatten_reason(reason_struct, obj, prefix):
+    setattr(obj, '%s_reasons_for_change_a' % prefix,
+            1 if reason_struct.get('a', '') else None)
+    setattr(obj, '%s_reasons_for_change_b' % prefix,
+            1 if reason_struct.get('b', '') else None)
+    setattr(obj, '%s_reasons_for_change_c' % prefix,
+            1 if reason_struct.get('c', '') else None)
+
+
 def _set_population_size(pop_size_struct, obj):
     for qualifier in ['population', 'population_alt']:
         setattr(obj, '%s_minimum_size' % qualifier,
@@ -530,6 +542,7 @@ def flatten_habitat_commentform(struct, obj):
                   magnitude=True)
     flatten_refval(struct['range']['reference_value'], obj,
                    'complementary_favourable_range')
+    flatten_reason(struct['range']['reason'], obj, 'range')
     flatten_conclusion(struct['range']['conclusion'], obj, 'conclusion_range')
 
 
@@ -542,6 +555,7 @@ def flatten_habitat_commentform(struct, obj):
                     'coverage_trend_long', magnitude=True, ci=True)
     flatten_refval(struct['coverage']['reference_value'], obj,
                     'complementary_favourable_area')
+    flatten_reason(struct['coverage']['reason'], obj, 'area')
     flatten_conclusion(struct['coverage']['conclusion'], obj,
                     'conclusion_area')
 

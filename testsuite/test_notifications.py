@@ -3,6 +3,7 @@ from contextlib import contextmanager
 import pytest
 from art17 import models
 from art17 import species
+from art17 import common
 from art17 import habitat
 from art17 import notifications
 from art17.notifications import mail
@@ -15,6 +16,7 @@ class notif_species_params(species_params):
         from test_species import _create_species_record
 
         app.register_blueprint(species.species)
+        app.register_blueprint(common.common)
         app.register_blueprint(notifications.notifications)
         cls.record = _create_species_record(app, comment)
         _create_user_record(app)
@@ -26,6 +28,7 @@ class notif_habitat_params(habitat_params):
         from test_habitat import _create_habitat_record
 
         app.register_blueprint(habitat.habitat)
+        app.register_blueprint(common.common)
         app.register_blueprint(notifications.notifications)
         cls.record = _create_habitat_record(app, comment)
         _create_user_record(app)
