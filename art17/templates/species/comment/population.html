@@ -52,6 +52,36 @@
       </div>
 
       <div class="form-group">
+        {%- set population = form.population %}
+        <label for="population.additional_locality">Informații adiționale</label>
+
+        {{ errors(population.additional_locality) }}
+        {{ errors(population.additional_method) }}
+        {{ errors(population.additional_problems) }}
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(population.additional_locality) }}">
+            {{ population.additional_locality(class='form-control') }}
+          </div>
+          <div class="col-sm-2 {{- error_cls(population.additional_method) }}">
+            {{ population.additional_method(class='form-control') }}
+          </div>
+          <div class="col-sm-2 {{- error_cls(population.additional_problems) }}">
+            {{ population.additional_problems(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="population.date">Anul / Perioada</label>
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(population.date) }}">
+            {{ population.date(class='form-control') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
         <label for="population.method">
           Metoda utilizată - mărimea populației
         </label>
@@ -87,6 +117,42 @@
             {{ trend_short.period.end(class='form-control',
                     placeholder="an de sfǎrșit") }}
           </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_short.method) }}">
+            {{ trend_short.method(class='form-control') }}
+          </div>
+        </div>
+        <br/>
+        {% set magnitude = trend_short.magnitude %}
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(magnitude) }}">
+            <label>Magnitudine:</label>
+          </div>
+          <div class="col-sm-2 {{- error_cls(magnitude.min) }}">
+            {{ magnitude.min(class='form-control',
+                    placeholder="valoare minimă") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(magnitude.max) }}">
+            {{ magnitude.max(class='form-control',
+                    placeholder="valoare maximă") }}
+          </div>
+          <div class="col-sm-2 {{- error_cls(magnitude.ci) }}">
+            {{ magnitude.ci(class='form-control',
+                    placeholder="interval de încredere") }}
+          </div>
+        </div>
+        
+        <label for="population.trend_short.method">
+          Metoda utilizată - tendința pe termen scurt
+        </label>
+
+        {{ errors(trend_short.method) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(trend_short.method) }}">
+            {{ trend_short.method(class='form-control') }}
+          </div>
         </div>
       </div>
 
@@ -112,6 +178,42 @@
             {{ trend_long.period.end(class='form-control',
                     placeholder="an de sfǎrșit") }}
           </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_long.method) }}">
+            {{ trend_long.method(class='form-control') }}
+          </div>
+        </div>
+        <br/>
+        {% set magnitude = trend_long.magnitude %}
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(magnitude) }}">
+            <label>Magnitudine:</label>
+          </div>
+          <div class="col-sm-2 {{- error_cls(magnitude.min) }}">
+            {{ magnitude.min(class='form-control',
+                    placeholder="valoare minimă") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(magnitude.max) }}">
+            {{ magnitude.max(class='form-control',
+                    placeholder="valoare maximă") }}
+          </div>
+          <div class="col-sm-2 {{- error_cls(magnitude.ci) }}">
+            {{ magnitude.ci(class='form-control',
+                    placeholder="interval de încredere") }}
+          </div>
+        </div>
+        
+        <label for="population.trend_long.method">
+          Metoda utilizată - tendința pe termen lung
+        </label>
+
+        {{ errors(trend_long.method) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(trend_long.method) }}">
+            {{ trend_long.method(class='form-control') }}
+          </div>
         </div>
       </div>
 
@@ -124,13 +226,17 @@
         {{ errors(reference_value) }}
 
         <div class="row">
+          <div class="col-sm-2 {{- error_cls(reference_value.number) }}">
+            {{ reference_value.number(class='form-control',
+                    placeholder="numărul de indivizi sau unitățile utilizate") }}
+          </div>
+
           <div class="col-sm-2 {{- error_cls(reference_value.op) }}">
             {{ reference_value.op(class='form-control') }}
           </div>
 
-          <div class="col-sm-4 {{- error_cls(reference_value.number) }}">
-            {{ reference_value.number(class='form-control',
-                    placeholder="numărul de indivizi sau unitățile utilizate") }}
+          <div class="col-sm-2 {{- error_cls(reference_value.x) }}">
+            {{ reference_value.x(class='form-control') }} necunoscut
           </div>
         </div>
       </div>
@@ -145,6 +251,25 @@
         <div class="row">
           <div class="col-sm-6 {{- error_cls(form.population.reference_value.method) }}">
             {{ form.population.reference_value.method(class='form-control', rows=2) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set reason = form.population.reason %}
+        <label for="range.reason.a">Motivul modificării</label>
+
+        {{ errors(reason) }}
+
+        <div class="row">
+          <div class="col-sm-2">
+            {{ reason.a(class='form-control') }} {{ LU_REASONS_FOR_CHANGE['a'] }}
+          </div>
+          <div class="col-sm-2">
+            {{ reason.b(class='form-control') }} {{ LU_REASONS_FOR_CHANGE['b'] }}
+          </div>
+          <div class="col-sm-2">
+            {{ reason.c(class='form-control') }} {{ LU_REASONS_FOR_CHANGE['c'] }}
           </div>
         </div>
       </div>

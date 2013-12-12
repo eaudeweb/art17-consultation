@@ -157,6 +157,13 @@ def set_required_error_message(field):
     field.errors.append(message)
 
 
+def set_only_one_error_message(fields):
+    message = u"Doar unul dintre: %s poate fi completat" % \
+              (', '.join([f.label.text for f in fields])
+    )
+    fields[0].errors.append(message)
+
+
 class Trend(Form):
     trend = SelectField(choices=EMPTY_CHOICE + TREND_OPTIONS,
                         default='',
@@ -188,15 +195,15 @@ class TrendCI(Trend):
 class ReferenceValue(Form):
     op = SelectField(default='', label=u"operator", validators=[Optional()])
     number = DecimalField(label=u"suprafață", validators=[Optional()])
+    x = BooleanField(label=u"necunoscut", validators=[Optional()])
     method = TextAreaField()
 
     def custom_validate(self):
-        fields = [self.op, self.number]
-        empty = [f for f in fields if not f.data]
+        fields = [self.number, self.op, self.x]
+        filled = [f for f in fields if f.data]
 
-        if empty and len(empty) < len(fields):
-            for field in empty:
-                set_required_error_message(field)
+        if len(filled) > 1:
+            set_only_one_error_message(filled)
             return False
 
         return True
@@ -255,11 +262,16 @@ class Range(Form):
 
 class Population(Form):
     size = FormField(PopulationSize)
+    additional_locality = TextAreaField(validators=[Optional()])
+    additional_method = TextAreaField(validators=[Optional()])
+    additional_problems = TextAreaField(validators=[Optional()])
+    date = TextField(validators=[Optional()])
     method = SelectField(default='',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
-    trend_short = FormField(Trend)
-    trend_long = FormField(Trend)
+    trend_short = FormField(TrendCI)
+    trend_long = FormField(TrendCI)
     reference_value = FormField(ReferenceValue)
+    reason = FormField(ReasonValue)
     conclusion = FormField(Conclusion)
 
     def __init__(self, *args, **kwargs):
@@ -280,6 +292,7 @@ class Habitat(Form):
     trend_long = FormField(Trend)
     area_suitable = DecimalField(
         validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+    reason = FormField(ReasonValue)
     conclusion = FormField(Conclusion)
 
 

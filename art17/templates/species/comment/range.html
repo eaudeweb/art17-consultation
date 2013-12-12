@@ -58,6 +58,22 @@
                     placeholder="an de sfârșit") }}
           </div>
         </div>
+        <br/>
+        {% set magnitude = trend_short.magnitude %}
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(magnitude) }}">
+            <label>Magnitudine:</label>
+          </div>
+          <div class="col-sm-2 {{- error_cls(magnitude.min) }}">
+            {{ magnitude.min(class='form-control',
+                    placeholder="valoare minimă") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(magnitude.max) }}">
+            {{ magnitude.max(class='form-control',
+                    placeholder="valoare maximă") }}
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
@@ -83,6 +99,22 @@
                     placeholder="an de sfârșit") }}
           </div>
         </div>
+        <br/>
+        {% set magnitude = trend_long.magnitude %}
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(magnitude) }}">
+            <label>Magnitudine:</label>
+          </div>
+          <div class="col-sm-2 {{- error_cls(magnitude.min) }}">
+            {{ magnitude.min(class='form-control',
+                    placeholder="valoare minimă") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(magnitude.max) }}">
+            {{ magnitude.max(class='form-control',
+                    placeholder="valoare maximă") }}
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
@@ -94,13 +126,17 @@
         {{ errors(reference_value) }}
 
         <div class="row">
+          <div class="col-sm-2 {{- error_cls(reference_value.number) }}">
+            {{ reference_value.number(class='form-control',
+                    placeholder="suprafața trebuie exprimatǎ in km²") }}
+          </div>
+
           <div class="col-sm-2 {{- error_cls(reference_value.op) }}">
             {{ reference_value.op(class='form-control') }}
           </div>
 
-          <div class="col-sm-4 {{- error_cls(reference_value.number) }}">
-            {{ reference_value.number(class='form-control',
-                    placeholder="suprafața trebuie exprimatǎ in km²") }}
+          <div class="col-sm-2 {{- error_cls(reference_value.x) }}">
+            {{ reference_value.x(class='form-control') }} necunoscut
           </div>
         </div>
       </div>
@@ -115,6 +151,25 @@
         <div class="row">
           <div class="col-sm-6 {{- error_cls(form.range.reference_value.method) }}">
             {{ form.range.reference_value.method(class='form-control', rows=2) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        {%- set reason = form.range.reason %}
+        <label for="range.reason.a">Motivul modificării</label>
+
+        {{ errors(reason) }}
+
+        <div class="row">
+          <div class="col-sm-2">
+            {{ reason.a(class='form-control') }} {{ LU_REASONS_FOR_CHANGE['a'] }}
+          </div>
+          <div class="col-sm-2">
+            {{ reason.b(class='form-control') }} {{ LU_REASONS_FOR_CHANGE['b'] }}
+          </div>
+          <div class="col-sm-2">
+            {{ reason.c(class='form-control') }} {{ LU_REASONS_FOR_CHANGE['c'] }}
           </div>
         </div>
       </div>

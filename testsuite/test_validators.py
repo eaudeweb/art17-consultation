@@ -54,19 +54,19 @@ def test_trend_validation(formdata, valid_data):
 
 @pytest.mark.parametrize(['formdata', 'valid_data'], [
     # all values are blank
-    [{'op': '', 'number': '', 'method': ''},
-     {'op': '', 'number': None, 'method': ''}],
+    [{'op': '', 'number': '', 'x': '1', 'method': ''},
+     {'op': '', 'number': None, 'x': True, 'method': ''}],
 
     # both values filled in
-    [{'op': 'foo', 'number': '1234', 'method': ''},
-     {'op': 'foo', 'number': 1234, 'method': ''}],
+    [{'op': '', 'number': '1234', 'method': ''},
+     {'op': '', 'number': 1234, 'x': False, 'method': ''}],
 
     # only op filled in
-    [{'op': 'foo', 'number': '', 'method': ''},
+    [{'op': 'foo', 'number': '', 'x': '1', 'method': ''},
      NOT_VALID],
 
     # only number filled in
-    [{'op': '', 'number': '1234', 'method': ''},
+    [{'op': 'foo', 'number': '1234', 'x': '', 'method': ''},
      NOT_VALID],
 ])
 def test_reference_value_validation(formdata, valid_data):
