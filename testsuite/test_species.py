@@ -461,6 +461,7 @@ def test_permissions(species_app):
     with species_app.app_context():
         row = models.DataSpeciesRegion.query.get(1)
         comment = models.DataSpeciesRegion.query.get(2)
+        comment.cons_role = 'comment-draft'
 
         assert common.perm_create_comment(row).needs == set([
             RoleNeed('admin'),
@@ -475,6 +476,7 @@ def test_permissions(species_app):
             UserNeed('smith'),
         ])
 
+        comment.cons_role = 'comment'
         assert common.perm_update_comment_status(comment).needs == set([
             RoleNeed('admin'),
             RoleNeed('reviewer'),
