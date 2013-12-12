@@ -186,21 +186,27 @@ def parse_species_commentform(row):
     rv['range'] = {
             'surface_area': row.range_surface_area,
             'method': row.range_method,
-            'trend_short': parse_trend(row, 'range_trend'),
-            'trend_long': parse_trend(row, 'range_trend_long'),
+            'trend_short': parse_trend(row, 'range_trend', magnitude=True),
+            'trend_long': parse_trend(row, 'range_trend_long', magnitude=True),
             'conclusion': parse_conclusion(row, 'conclusion_range'),
             'reference_value': parse_reference_value(row,
-                                    'complementary_favourable_range')
+                                    'complementary_favourable_range'),
+            'reason': reasons_for_change(row, 'range'),
         }
 
     rv['population'] = {
             'size': _get_population_size(row),
+            'additional_locality': row.population_additional_locality,
+            'additional_method': row.population_additional_method,
+            'additional_problems': row.population_additional_problems,
+            'date': row.population_date,
             'method': row.population_method,
-            'trend_short': parse_trend(row, 'population_trend'),
-            'trend_long': parse_trend(row, 'population_trend_long'),
+            'trend_short': parse_magnitude_ci_trend(row, 'population_trend'),
+            'trend_long': parse_magnitude_ci_trend(row, 'population_trend_long'),
             'conclusion': parse_conclusion(row, 'conclusion_population'),
             'reference_value': parse_reference_value(row,
-                                    'complementary_favourable_population')
+                                    'complementary_favourable_population'),
+            'reason': reasons_for_change(row, 'population'),
     }
 
     rv['habitat'] = {
@@ -490,11 +496,12 @@ def flatten_species_commentform(struct, obj):
     flatten_conclusion(struct['range']['conclusion'], obj, 'conclusion_range')
 
     _set_population_size(struct['population']['size'], obj)
+    obj.population_date = struct['population']['date']
     obj.population_method = struct['population']['method']
     flatten_trend(struct['population']['trend_short'], obj,
-                    'population_trend')
+                    'population_trend', magnitude=True, ci=True)
     flatten_trend(struct['population']['trend_long'], obj,
-                    'population_trend_long')
+                    'population_trend_long', magnitude=True, ci=True)
     flatten_refval(struct['population']['reference_value'], obj,
                     'complementary_favourable_population')
     flatten_conclusion(struct['population']['conclusion'], obj,

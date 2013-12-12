@@ -15,12 +15,20 @@ SPECIES_STRUCT_DATA = {
                 'start': '2000',
                 'end': '2001',
             },
+            'magnitude': {
+                'min': None,
+                'max': None,
+            },
         },
         'trend_long': {
             'trend': '-',
             'period': {
                 'start': '2002',
                 'end': '2003',
+            },
+            'magnitude': {
+                'min': None,
+                'max': None,
             },
         },
         'reference_value': {
@@ -29,6 +37,7 @@ SPECIES_STRUCT_DATA = {
             'op': '>',
             'x': None,
         },
+        'reason': {},
         'conclusion': {
             'value': 'U1',
             'trend': '-',
@@ -47,12 +56,22 @@ SPECIES_STRUCT_DATA = {
                 'max': 120,
             },
         },
+        'additional_locality': None,
+        'additional_method': None,
+        'additional_problems': None,
+        'date': '2010',
         'method': '1',
         'trend_short': {
             'trend': '-',
             'period': {
                 'start': '2008',
                 'end': '2009',
+            },
+            'method': '1',
+            'magnitude': {
+                'min': None,
+                'max': None,
+                'ci': None,
             },
         },
         'trend_long': {
@@ -61,6 +80,12 @@ SPECIES_STRUCT_DATA = {
                 'start': '2010',
                 'end': '2011',
             },
+            'method': '1',
+            'magnitude': {
+                'min': None,
+                'max': None,
+                'ci': None,
+            },
         },
         'reference_value': {
             'method': 'foo pop method',
@@ -68,6 +93,7 @@ SPECIES_STRUCT_DATA = {
             'op': '<',
             'x': None,
         },
+        'reason': {},
         'conclusion': {
             'value': 'U2',
             'trend': '-',
@@ -155,11 +181,14 @@ SPECIES_MODEL_DATA = {
     'population_alt_minimum_size': 10,
     'population_alt_maximum_size': 120,
     'population_alt_size_unit': 'grids10x10',
+    'population_date': '2010',
     'population_method': '1',
     'population_trend': '-',
     'population_trend_period': '20082009',
+    'population_trend_method': '1',
     'population_trend_long': '+',
     'population_trend_long_period': '20102011',
+    'population_trend_long_method': '1',
     'complementary_favourable_population_op': '<',
     'complementary_favourable_population': 234,
     'complementary_favourable_population_method': 'foo pop method',

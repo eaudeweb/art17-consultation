@@ -250,11 +250,16 @@ class Range(Form):
 
 class Population(Form):
     size = FormField(PopulationSize)
+    additional_locality = TextAreaField(validators=[Optional()])
+    additional_method = TextAreaField(validators=[Optional()])
+    additional_problems = TextAreaField(validators=[Optional()])
+    date = TextField(validators=[Optional()])
     method = SelectField(default='',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
-    trend_short = FormField(Trend)
-    trend_long = FormField(Trend)
+    trend_short = FormField(TrendCI)
+    trend_long = FormField(TrendCI)
     reference_value = FormField(ReferenceValue)
+    reason = FormField(ReasonValue)
     conclusion = FormField(Conclusion)
 
     def __init__(self, *args, **kwargs):
