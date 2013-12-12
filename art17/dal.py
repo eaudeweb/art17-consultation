@@ -131,8 +131,7 @@ class BaseDataset(object):
                 self.record_model.region,
                 func.count('*'),
             )
-            .filter((self.record_model.cons_role == 'comment') |
-                    (self.record_model.cons_role == 'comment-draft'))
+            .filter_by(cons_role='comment')
             .filter_by(cons_dataset_id=self.dataset_id)
             .filter_by(cons_deleted=False)
             .group_by(
