@@ -226,13 +226,13 @@
         {{ errors(reference_value) }}
 
         <div class="row">
-          <div class="col-sm-2 {{- error_cls(reference_value.op) }}">
-            {{ reference_value.op(class='form-control') }}
-          </div>
-
           <div class="col-sm-2 {{- error_cls(reference_value.number) }}">
             {{ reference_value.number(class='form-control',
                     placeholder="numărul de indivizi sau unitățile utilizate") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(reference_value.op) }}">
+            {{ reference_value.op(class='form-control') }}
           </div>
 
           <div class="col-sm-2 {{- error_cls(reference_value.x) }}">
