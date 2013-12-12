@@ -444,6 +444,7 @@ def flatten_trend(trend_struct, obj, prefix, magnitude=False, ci=False):
     if ci:
         setattr(obj, prefix + '_magnitude_ci',
                 trend_struct['magnitude']['ci'])
+        setattr(obj, prefix + '_method', trend_struct['method'])
 
 
 def flatten_conclusion(conclusion_struct, obj, prefix):

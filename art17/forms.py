@@ -181,6 +181,10 @@ class Trend(Form):
 
 class TrendCI(Trend):
     magnitude = FormField(MagnitudeCIValue)
+    method = SelectField(default='',
+                         choices=EMPTY_CHOICE + METHODS_USED_OPTIONS,
+                         validators=[Optional()],
+    )
 
 
 class ReferenceValue(Form):

@@ -69,6 +69,10 @@
             {{ trend_short.period.end(class='form-control',
                     placeholder="an de sfǎrșit") }}
           </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_short.method) }}">
+            {{ trend_short.method(class='form-control') }}
+          </div>
         </div>
         <br/>
         {% set magnitude = trend_short.magnitude %}
@@ -113,6 +117,10 @@
           <div class="col-sm-2 {{- error_cls(trend_long.period.end) }}">
             {{ trend_long.period.end(class='form-control',
                     placeholder="an de sfǎrșit") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_long.method) }}">
+            {{ trend_long.method(class='form-control') }}
           </div>
         </div>
         <br/>
