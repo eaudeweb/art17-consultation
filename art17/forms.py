@@ -143,6 +143,10 @@ class MagnitudeValue(AreaValue):
     pass
 
 
+class MagnitudeCIValue(MagnitudeValue):
+    ci = DecimalField(label=u"interval de încredere", validators=[Optional()])
+
+
 class Period(Form):
     start = IntegerField(label=u"an de început",
                          validators=[Optional(), NumberRange(1900, 2100)])
@@ -173,6 +177,10 @@ class Trend(Form):
             return False
 
         return True
+
+
+class TrendCI(Trend):
+    magnitude = FormField(MagnitudeCIValue)
 
 
 class ReferenceValue(Form):
@@ -262,8 +270,8 @@ class Coverage(Form):
     date = TextField(validators=[Optional()])
     method = SelectField(default='',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
-    trend_short = FormField(Trend)
-    trend_long = FormField(Trend)
+    trend_short = FormField(TrendCI)
+    trend_long = FormField(TrendCI)
     reference_value = FormField(ReferenceValue)
     conclusion = FormField(Conclusion)
 

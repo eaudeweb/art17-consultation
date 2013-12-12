@@ -350,8 +350,8 @@ def parse_habitat_commentform(row):
             'surface_area': row.coverage_surface_area,
             'date':row.coverage_date,
             'method': row.coverage_method,
-            'trend_short': parse_trend(row, 'coverage_trend'),
-            'trend_long': parse_trend(row, 'coverage_trend_long'),
+            'trend_short': parse_magnitude_ci_trend(row, 'coverage_trend'),
+            'trend_long': parse_magnitude_ci_trend(row, 'coverage_trend_long'),
             'reference_value': parse_reference_value(row,
                                     'complementary_favourable_area'),
             'conclusion': parse_conclusion(row, 'conclusion_area')
@@ -433,7 +433,7 @@ def flatten_period(period_struct, obj, prefix):
     setattr(obj, prefix, value)
 
 
-def flatten_trend(trend_struct, obj, prefix, magnitude=False):
+def flatten_trend(trend_struct, obj, prefix, magnitude=False, ci=False):
     setattr(obj, prefix, trend_struct['trend'])
     flatten_period(trend_struct['period'], obj, prefix + '_period')
     if magnitude:
@@ -441,6 +441,9 @@ def flatten_trend(trend_struct, obj, prefix, magnitude=False):
                 trend_struct['magnitude']['min'])
         setattr(obj, prefix + '_magnitude_max',
                 trend_struct['magnitude']['max'])
+    if ci:
+        setattr(obj, prefix + '_magnitude_ci',
+                trend_struct['magnitude']['ci'])
 
 
 def flatten_conclusion(conclusion_struct, obj, prefix):
@@ -533,9 +536,9 @@ def flatten_habitat_commentform(struct, obj):
     obj.coverage_date = struct['coverage']['date']
     obj.coverage_method = struct['coverage']['method']
     flatten_trend(struct['coverage']['trend_short'], obj,
-                    'coverage_trend')
+                    'coverage_trend', magnitude=True, ci=True)
     flatten_trend(struct['coverage']['trend_long'], obj,
-                    'coverage_trend_long')
+                    'coverage_trend_long', magnitude=True, ci=True)
     flatten_refval(struct['coverage']['reference_value'], obj,
                     'complementary_favourable_area')
     flatten_conclusion(struct['coverage']['conclusion'], obj,
