@@ -415,6 +415,12 @@ class HabitatRecordView(RecordViewMixin, HabitatCommentView):
             'dataset_id': self.dataset_id
         })
 
+    def get_dashboard_url(self, subject):
+        if flask.current_app.testing:
+            return flask.request.url
+
+        return flask.url_for('.habitats', dataset_id=self.dataset_id)
+
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>/',
                          view_func=HabitatRecordView.as_view('habitat-edit'))
@@ -431,6 +437,14 @@ class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
             'dataset_id': self.dataset_id,
             'group_code': self.record.species.lu.group_code,
         })
+
+    def get_dashboard_url(self, subject):
+        if flask.current_app.testing:
+            return flask.request.url
+
+        return flask.url_for('.species',
+                             dataset_id=self.dataset_id,
+                             group_code=self.record.species.lu.group_code)
 
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>/',
@@ -570,7 +584,7 @@ class RecordFinalToggle(flask.views.View):
             if not form.final_validate():
                 errors = flatten_errors(form.errors)
                 flask.flash(u"Înregistrarea NU a fost finalizată, deoarece este"
-                            u" incompletă.Probleme: %s" % errors, 'danger')
+                            u" incompletă. Probleme:\n%s" % errors, 'danger')
                 return flask.redirect(record_edit_url(self.record))
             if self.record.cons_role == 'final-draft':
                 self.record.cons_status = FINALIZED_STATUS
