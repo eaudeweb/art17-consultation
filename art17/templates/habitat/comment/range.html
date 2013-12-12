@@ -57,8 +57,67 @@
                     placeholder="an de sfǎrșit") }}
           </div>
         </div>
+        <br/>
+        
+        {% set magnitude = trend_short.magnitude %}
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(magnitude) }}">
+            <label>Magnitudine:</label>
+          </div>
+          <div class="col-sm-2 {{- error_cls(magnitude.min) }}">
+            {{ magnitude.min(class='form-control',
+                    placeholder="valoare minimă") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(magnitude.max) }}">
+            {{ magnitude.max(class='form-control',
+                    placeholder="valoare maximă") }}
+          </div>
+        </div>
       </div>
 
+      <div class="form-group">
+        {%- set trend_long = form.range.trend_long %}
+        <label for="range.trend_long.trend">
+          Tendință pe termen lung
+        </label>
+
+        {{ errors(trend_long) }}
+
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(trend_long.trend) }}">
+            {{ trend_long.trend(class='form-control') }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_long.period.start) }}">
+            {{ trend_long.period.start(class='form-control',
+                    placeholder="an de inceput") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(trend_long.period.end) }}">
+            {{ trend_long.period.end(class='form-control',
+                    placeholder="an de sfǎrșit") }}
+          </div>
+        </div>
+        <br/>
+        
+        {% set magnitude = trend_long.magnitude %}
+        <div class="row">
+          <div class="col-sm-2 {{- error_cls(magnitude) }}">
+            <label>Magnitudine:</label>
+          </div>
+          <div class="col-sm-2 {{- error_cls(magnitude.min) }}">
+            {{ magnitude.min(class='form-control',
+                    placeholder="valoare minimă") }}
+          </div>
+
+          <div class="col-sm-2 {{- error_cls(magnitude.max) }}">
+            {{ magnitude.max(class='form-control',
+                    placeholder="valoare maximă") }}
+          </div>
+        </div>
+      </div>
+      
       <div class="form-group">
         {%- set reference_value = form.range.reference_value %}
         <label for="range.reference_value.op">

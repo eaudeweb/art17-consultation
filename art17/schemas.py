@@ -339,8 +339,8 @@ def parse_habitat_commentform(row):
     rv['range'] = {
             'surface_area': row.range_surface_area,
             'method': row.range_method,
-            'trend_short': parse_trend(row, 'range_trend'),
-            'trend_long': parse_trend(row, 'range_trend_long'),
+            'trend_short': parse_trend(row, 'range_trend', magnitude=True),
+            'trend_long': parse_trend(row, 'range_trend_long', magnitude=True),
             'conclusion': parse_conclusion(row, 'conclusion_range'),
             'reference_value': parse_reference_value(row,
                                     'complementary_favourable_range')
@@ -433,9 +433,14 @@ def flatten_period(period_struct, obj, prefix):
     setattr(obj, prefix, value)
 
 
-def flatten_trend(trend_struct, obj, prefix):
+def flatten_trend(trend_struct, obj, prefix, magnitude=False):
     setattr(obj, prefix, trend_struct['trend'])
     flatten_period(trend_struct['period'], obj, prefix + '_period')
+    if magnitude:
+        setattr(obj, prefix + '_magnitude_min',
+                trend_struct['magnitude']['min'])
+        setattr(obj, prefix + '_magnitude_max',
+                trend_struct['magnitude']['max'])
 
 
 def flatten_conclusion(conclusion_struct, obj, prefix):
@@ -515,8 +520,10 @@ def flatten_habitat_commentform(struct, obj):
     obj.range_surface_area = struct['range']['surface_area']
     obj.range_method = struct['range']['method']
 
-    flatten_trend(struct['range']['trend_short'], obj, 'range_trend')
-    flatten_trend(struct['range']['trend_long'], obj, 'range_trend_long')
+    flatten_trend(struct['range']['trend_short'], obj, 'range_trend',
+                  magnitude=True)
+    flatten_trend(struct['range']['trend_long'], obj, 'range_trend_long',
+                  magnitude=True)
     flatten_refval(struct['range']['reference_value'], obj,
                    'complementary_favourable_range')
     flatten_conclusion(struct['range']['conclusion'], obj, 'conclusion_range')

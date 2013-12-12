@@ -124,6 +124,25 @@ class Form(Form_base):
         return True
 
 
+class PopulationValue(Form):
+    unit = SelectField(default='', validators=[Optional()])
+    min = DecimalField(
+        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+    max = DecimalField(
+        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+
+
+class AreaValue(Form):
+    min = DecimalField(
+        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+    max = DecimalField(
+        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+
+
+class MagnitudeValue(AreaValue):
+    pass
+
+
 class Period(Form):
     start = IntegerField(label=u"an de început",
                          validators=[Optional(), NumberRange(1900, 2100)])
@@ -142,6 +161,7 @@ class Trend(Form):
                         label=u"tendință",
                         validators=[Optional()])
     period = FormField(Period)
+    magnitude = FormField(MagnitudeValue)
 
     def custom_validate(self):
         fields = [self.period.start, self.period.end, self.trend]
@@ -179,21 +199,6 @@ class Conclusion(Form):
     trend = SelectField(choices=EMPTY_CHOICE + TREND_OPTIONS,
                         default='',
                         validators=[Optional()])
-
-
-class PopulationValue(Form):
-    unit = SelectField(default='', validators=[Optional()])
-    min = DecimalField(
-        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
-    max = DecimalField(
-        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
-
-
-class AreaValue(Form):
-    min = DecimalField(
-        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
-    max = DecimalField(
-        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
 
 
 class PopulationSize(Form):
