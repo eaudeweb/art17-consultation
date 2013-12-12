@@ -578,7 +578,6 @@ class HabitatComment(Form):
         finally:
             for f in mandatory_fields:
                 if not f.data:
-                    print "aici", f, f.data
                     f.errors.append(u"Trebuie completat câmpul")
 
         return not self.errors
