@@ -6,7 +6,7 @@ from art17 import dal
 from art17.common import (IndexView, CommentStateView,
                           CommentDeleteView, RecordView, CommentViewMixin,
                           FinalCommentMixin, DeleteDraftView,
-                          CloseConsultationView, ReopenConsultationView)
+                          CloseConsultationView, ReopenConsultationView, RedraftCommentView)
 from art17 import forms
 from art17 import schemas
 from art17 import config
@@ -163,6 +163,14 @@ class SpeciesDeleteDraftView(DeleteDraftView):
 
 species.add_url_rule('/specii/detalii/<int:record_id>/delete_final',
                      view_func=SpeciesDeleteDraftView.as_view('delete_draft'))
+
+
+class SpeciesRedraftCommentView(RedraftCommentView):
+
+    model_cls = models.DataSpeciesRegion
+
+species.add_url_rule('/species/redraft/<int:comment_id>',
+                     view_func=SpeciesRedraftCommentView.as_view('redraft'))
 
 
 class SpeciesCloseConsultationView(CloseConsultationView):

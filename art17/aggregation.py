@@ -9,7 +9,7 @@ from flask.ext.principal import Permission, Denial
 from werkzeug.datastructures import MultiDict
 from art17 import models, dal, schemas, forms
 from art17.common import flatten_dict, FINALIZED_STATUS, NEW_STATUS, \
-                         get_roles_for_subject
+                         get_roles_for_subject, flatten_errors
 from art17.habitat import HabitatCommentView
 from art17.species import SpeciesCommentView
 from art17.auth import need
@@ -312,7 +312,7 @@ class DashboardView(flask.views.View):
     def get_context_data(self):
         dal_object = self.ds_model(self.dataset_id)
         dataset = models.Dataset.query.get_or_404(self.dataset_id)
-        object_regions = dal_object.get_subject_region_overview_all()
+        object_regions = dal_object.get_subject_region_overview_aggregation()
         #bioreg_list = dal.get_biogeo_region_list()
 
         relevant_regions = set(reg for n, reg in object_regions)
@@ -415,6 +415,12 @@ class HabitatRecordView(RecordViewMixin, HabitatCommentView):
             'dataset_id': self.dataset_id
         })
 
+    def get_dashboard_url(self, subject):
+        if flask.current_app.testing:
+            return flask.request.url
+
+        return flask.url_for('.habitats', dataset_id=self.dataset_id)
+
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>/',
                          view_func=HabitatRecordView.as_view('habitat-edit'))
@@ -431,6 +437,14 @@ class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
             'dataset_id': self.dataset_id,
             'group_code': self.record.species.lu.group_code,
         })
+
+    def get_dashboard_url(self, subject):
+        if flask.current_app.testing:
+            return flask.request.url
+
+        return flask.url_for('.species',
+                             dataset_id=self.dataset_id,
+                             group_code=self.record.species.lu.group_code)
 
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>/',
@@ -568,8 +582,9 @@ class RecordFinalToggle(flask.views.View):
             data = self.parse_commentform(self.record)
             form = self.form_cls(MultiDict(flatten_dict(data)))
             if not form.final_validate():
+                errors = flatten_errors(form.errors)
                 flask.flash(u"Înregistrarea NU a fost finalizată, deoarece este"
-                            u" incompletă.", 'danger')
+                            u" incompletă. Probleme:\n%s" % errors, 'danger')
                 return flask.redirect(record_edit_url(self.record))
             if self.record.cons_role == 'final-draft':
                 self.record.cons_status = FINALIZED_STATUS

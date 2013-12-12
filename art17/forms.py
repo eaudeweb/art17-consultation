@@ -196,7 +196,7 @@ class ReferenceValue(Form):
     op = SelectField(default='', label=u"operator", validators=[Optional()])
     number = DecimalField(label=u"suprafață", validators=[Optional()])
     x = BooleanField(label=u"necunoscut", validators=[Optional()])
-    method = TextAreaField()
+    method = TextAreaField(validators=[Optional()])
 
     def custom_validate(self):
         fields = [self.number, self.op, self.x]
@@ -245,7 +245,7 @@ class PopulationSize(Form):
 
 
 class Range(Form):
-    surface_area = DecimalField(
+    surface_area = DecimalField(label=u"Suprafață",
         validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
     method = SelectField(default='',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
@@ -469,11 +469,58 @@ class SpeciesComment(Form):
         return True
 
     def final_validate(self):
-        if not self.validate():
-            return False
-        # TODO: validare specie finală
+        mandatory_fields = (
+            self.range.surface_area,
+            self.range.method,
+            self.range.trend_short.trend,
+            self.range.trend_short.period,
+            self.range.reference_value.method,
+            self.population.date,
+            self.population.method,
+            self.population.trend_short.trend,
+            self.population.trend_short.period,
+            self.population.trend_short.method,
+            self.population.reference_value.method,
+            self.habitat.surface_area,
+            self.habitat.date,
+            self.habitat.method,
+            self.habitat.quality,
+            self.habitat.quality_explanation,
+            self.habitat.trend_short.trend,
+            self.habitat.trend_short.period,
+            self.habitat.area_suitable,
+            self.pressures.pressures,
+            self.pressures.pressures_method,
+            self.threats.threats,
+            self.threats.threats_method,
+            self.range.conclusion.value,
+            self.population.conclusion.value,
+            self.habitat.conclusion.value,
+            self.future_prospects.value,
+            self.overall_assessment.value,
+            self.overall_assessment.trend,
+            self.natura2000.population.unit,
+            self.natura2000.population.min,
+            self.natura2000.population.max,
+            self.natura2000.method,
+        )
 
-        return True
+        try:
+            self.validate()
+        finally:
+            for f in mandatory_fields:
+                if not f.data:
+                    f.errors.append(
+                        u"Trebuie completat câmpul %s" % (f.label.text or f)
+                    )
+            if not (self.population.size.population.unit.data or
+                        self.population.size.population_alt.unit.data):
+                self.population.size.population.unit.errors.append(
+                    u"Trebuie completată una dintre cele două dimensiuni"
+                    u" ale populației"
+                )
+
+        return not self.errors
 
 
 class HabitatComment(Form):
@@ -501,19 +548,40 @@ class HabitatComment(Form):
         return True
 
     def final_validate(self):
-        if not self.validate():
-            return False
-
-        mandatory_fields = (self.range.surface_area,
+        mandatory_fields = (
+            self.range.surface_area,
             self.range.method,
             self.range.trend_short.trend,
             self.range.trend_short.period,
+            self.range.reference_value.method,
+            self.coverage.surface_area,
+            self.coverage.date,
+            self.coverage.method,
+            self.coverage.trend_short.trend,
+            self.coverage.trend_short.period,
+            self.coverage.trend_short.method,
+            self.pressures.pressures,
+            self.pressures.pressures_method,
+            self.threats.threats,
+            self.threats.threats_method,
+            self.typicalspecies.species,
+            self.typicalspecies.method,
+            self.typicalspecies.structure_and_functions_method,
+            self.range.conclusion.value,
+            self.coverage.conclusion.value,
+            self.structure.value,
+            self.future_prospects.value,
+            self.overall_assessment.value,
+            self.overall_assessment.trend,
         )
 
-        for f in mandatory_fields:
-            if not f.data:
-                f.errors.append(u"Trebuie completat câmpul")
-            return False
+        try:
+            self.validate()
+        finally:
+            for f in mandatory_fields:
+                if not f.data:
+                    f.errors.append(
+                        u"Trebuie completat câmpul %s" % (f.label.text or f)
+                    )
 
-        # TODO: algoritm de validare habitat
-        return True
+        return not self.errors

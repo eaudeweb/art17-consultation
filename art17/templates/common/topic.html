@@ -91,6 +91,14 @@
             <a class="records-editcommentbtn btn btn-xs btn-info"
                href="{{ url }}"
                title="editează">{{ fonticon('edit') }}</a>
+          {%- else %}
+            {%- if perm_redraft_comment(comment_row.model).can() %}
+              {%- set url = url_for(blueprint + '.redraft',
+                                    comment_id=comment_row.id,
+                                    next=comment_next) %}
+              <a href="{{ url }}" class="btn btn-xs btn-danger records-redraft"
+                 title="Readu la draft">{{ fonticon('edit') }}</a>
+            {%- endif %}
           {%- endif %}
 
           {%- if perm_delete_comment(comment_row.model).can() %}

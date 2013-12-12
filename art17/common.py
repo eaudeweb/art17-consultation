@@ -94,6 +94,11 @@ def perm_edit_comment(comment):
     if comment.cons_status not in EDITABLE_STATUS_LIST:
         return Permission(need.impossible)
 
+    if comment.cons_role != 'comment-draft':
+        return Permission(need.admin,
+                          *get_roles_for_subject('reviewer', comment.subject)
+        )
+
     if comment.cons_user_id:
         return Permission(need.admin, need.user_id(comment.cons_user_id))
 
@@ -120,6 +125,16 @@ def perm_submit_for_evaluation(comment):
 
     else:
         return Permission(need.admin)
+
+
+def perm_redraft_comment(comment):
+    if comment.cons_role == 'comment-draft':
+        return Permission(need.impossible)
+
+    if comment.cons_status in EDITABLE_STATUS_LIST:
+        return Permission(need.admin, need.user_id(comment.cons_user_id))
+
+    return Permission(need.admin)
 
 
 def perm_delete_comment(comment):
@@ -333,6 +348,7 @@ class IndexView(flask.views.View, IndexMixin):
             'delete_draft_url': delete_draft_url,
             'close_consultation_url': close_consultation_url,
             'perm_edit_final_for_this': perm_edit_final(subject),
+            'perm_redraft_comment': perm_redraft_comment,
             'reopen_consultation_url': reopen_consultation_url,
             'finalized': bool('final' in topic),
             'read_id_set': read_id_set,
@@ -552,8 +568,10 @@ class CloseConsultationView(flask.views.View):
         form = self.form_cls(MultiDict(flatten_dict(data)))
         if not form.final_validate():
             models.db.session.rollback()
+            errors = flatten_errors(form.errors)
             flask.flash(u"Versiunea rezultată în urma consultării este "
-                        u"incompletă. Consultarea nu a fost închisă.", 'danger')
+                        u"incompletă. Probleme: %s"
+                        u"Consultarea nu a fost închisă." % errors, 'danger')
         else:
             models.db.session.commit()
             app = flask.current_app._get_current_object()
@@ -603,6 +621,20 @@ class DeleteDraftView(flask.views.View):
         return flask.redirect(next_url)
 
 
+class RedraftCommentView(flask.views.View):
+
+    def dispatch_request(self, comment_id):
+        next_url = flask.request.args['next']
+        comment = self.model_cls.query.get(comment_id)
+        perm_redraft_comment(comment).test()
+
+        comment.cons_role = 'comment-draft'
+        models.db.session.add(comment)
+        models.db.session.commit()
+
+        return flask.redirect(next_url)
+
+
 cons_manager = Manager()
 
 
@@ -610,3 +642,19 @@ cons_manager = Manager()
 def guide():
     return flask.render_template('common/guide.html')
 
+
+def _flatten_errors(errors):
+    real_errors = []
+    for k, v in errors.iteritems():
+        if isinstance(v, dict):
+            real_errors.extend(_flatten_errors(v))
+        else:
+            real_errors.extend(v)
+    return real_errors
+
+
+def flatten_errors(errors):
+    real_errors = _flatten_errors(errors)
+
+    return '<ul>' + '\n'.join(['<li>%s</li>' % e for e in real_errors]) + \
+           '</ul>'

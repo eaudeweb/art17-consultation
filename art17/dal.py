@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import func, cast, CHAR
+from sqlalchemy import func, cast, CHAR, and_
 import flask
 from art17.models import (
     db,
@@ -94,7 +94,7 @@ class BaseDataset(object):
         )
         return query.all()
 
-    def get_subject_region_overview_all(self):
+    def get_subject_region_overview_aggregation(self):
         overview = {}
         regions_query = (
             db.session
@@ -108,7 +108,7 @@ class BaseDataset(object):
             overview[key] = 0
         return overview
 
-    def get_subject_region_overview(self):
+    def get_subject_region_overview_consultation(self, user_id=None):
         overview = {}
         regions_query = (
             db.session
@@ -120,17 +120,21 @@ class BaseDataset(object):
             .filter_by(cons_dataset_id=self.dataset_id)
         )
         for key in regions_query:
-            overview[key] = 0
+            overview[key] = {
+                'count': 0,
+                'unevaluated': 0,
+                'with_reply': 0,
+                'with_read_reply': 0,
+            }
 
-        comment_count_query = (
+        count_comments = (
             db.session
             .query(
                 self.record_model_subject_id,
                 self.record_model.region,
-                func.count('*'),
+                func.count(func.distinct(self.record_model.id)),
             )
-            .filter((self.record_model.cons_role == 'comment') |
-                    (self.record_model.cons_role == 'comment-draft'))
+            .filter_by(cons_role='comment')
             .filter_by(cons_dataset_id=self.dataset_id)
             .filter_by(cons_deleted=False)
             .group_by(
@@ -138,8 +142,54 @@ class BaseDataset(object):
                 self.record_model.region,
             )
         )
-        for (subject_id, region_code, count) in comment_count_query:
-            overview[subject_id, region_code] = count
+        for (subject_id, region_code, count) in count_comments:
+            overview[subject_id, region_code]['count'] = count
+
+        count_unevaluated_comments = (
+            count_comments
+            .filter_by(cons_status='new')
+        )
+        for (subject_id, region_code, count) in count_unevaluated_comments:
+            overview[subject_id, region_code]['unevaluated'] = count
+
+        if user_id is not None:
+            count_comments_with_reply = (
+                count_comments
+                .join(
+                    CommentReply,
+                    and_(
+                        CommentReply.parent_table == self.reply_parent_table,
+                        CommentReply.parent_id == self.record_model.id,
+                    ),
+                )
+            )
+            for (subject_id, region_code, count) in \
+                    count_comments_with_reply:
+                overview[subject_id, region_code]['with_reply'] = count
+
+            count_comments_with_read_reply = (
+                count_comments_with_reply
+                .join(
+                    CommentReplyRead,
+                    and_(
+                        CommentReplyRead.table == self.reply_parent_table,
+                        CommentReplyRead.row_id == self.record_model.id,
+                        CommentReplyRead.user_id == user_id,
+                    ),
+                )
+            )
+            for (subject_id, region_code, count) in \
+                    count_comments_with_read_reply:
+                overview[subject_id, region_code]['with_read_reply'] = count
+
+        final_records_query = (
+            self.record_model.query
+            .filter_by(cons_role='final')
+            .filter_by(cons_dataset_id=self.dataset_id)
+        )
+        for final_record in final_records_query:
+            key = (final_record.subject_id, final_record.region)
+            overview[key]['final_record'] = final_record
 
         return overview
 
