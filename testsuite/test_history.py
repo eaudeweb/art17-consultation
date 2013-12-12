@@ -1,7 +1,7 @@
 from datetime import datetime
 import pytest
 from flask import json
-from art17 import models, species, habitat, history, forms
+from art17 import models, species, habitat, history, forms, common
 
 
 class species_params(object):
@@ -29,6 +29,7 @@ class species_params(object):
     @classmethod
     def setup(cls, app, comment=False):
         from test_species import _create_species_record
+        app.register_blueprint(common.common)
         app.register_blueprint(species.species)
         app.register_blueprint(history.history)
         app.register_blueprint(history.history_consultation)
@@ -57,6 +58,7 @@ class habitat_params(object):
     @classmethod
     def setup(cls, app, comment=False):
         from test_habitat import _create_habitat_record
+        app.register_blueprint(common.common)
         app.register_blueprint(habitat.habitat)
         app.register_blueprint(history.history)
         _create_habitat_record(app, comment)

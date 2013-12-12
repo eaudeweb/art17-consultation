@@ -37,6 +37,7 @@ HABITAT_STRUCT_DATA = {
             'op': '>',
             'x': None,
         },
+        'reason': {},
         'conclusion': {
             'value': 'U1',
             'trend': '-',
@@ -78,6 +79,7 @@ HABITAT_STRUCT_DATA = {
             'op': '<',
             'x': None,
         },
+        'reason': {},
         'conclusion': {
             'value': 'U2',
             'trend': '+',

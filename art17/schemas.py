@@ -463,11 +463,11 @@ def flatten_refval(refval_struct, obj, prefix):
 
 def flatten_reason(reason_struct, obj, prefix):
     setattr(obj, '%s_reasons_for_change_a' % prefix,
-            1 if reason_struct['a'] else None)
+            1 if reason_struct.get('a', '') else None)
     setattr(obj, '%s_reasons_for_change_b' % prefix,
-            1 if reason_struct['b'] else None)
+            1 if reason_struct.get('b', '') else None)
     setattr(obj, '%s_reasons_for_change_c' % prefix,
-            1 if reason_struct['c'] else None)
+            1 if reason_struct.get('c', '') else None)
 
 
 def _set_population_size(pop_size_struct, obj):

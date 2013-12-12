@@ -39,14 +39,18 @@ def app():
 @pytest.fixture
 def species_app(app):
     from art17.species import species
+    from art17.common import common
     app.register_blueprint(species)
+    app.register_blueprint(common)
     return app
 
 
 @pytest.fixture
 def habitat_app(app):
     from art17.habitat import habitat
+    from art17.common import common
     app.register_blueprint(habitat)
+    app.register_blueprint(common)
     return app
 
 
@@ -54,6 +58,8 @@ def habitat_app(app):
 def notifications_app(app):
     from art17.species import species
     from art17.auth import auth, set_session_auth
+    from art17.common import common
+    app.register_blueprint(common)
     app.register_blueprint(species)
     app.config['AUTH_DEBUG'] = True
     app.register_blueprint(auth)
