@@ -196,7 +196,7 @@ class ReferenceValue(Form):
     op = SelectField(default='', label=u"operator", validators=[Optional()])
     number = DecimalField(label=u"suprafață", validators=[Optional()])
     x = BooleanField(label=u"necunoscut", validators=[Optional()])
-    method = TextAreaField()
+    method = TextAreaField(validators=[Optional()])
 
     def custom_validate(self):
         fields = [self.number, self.op, self.x]
@@ -578,6 +578,7 @@ class HabitatComment(Form):
         finally:
             for f in mandatory_fields:
                 if not f.data:
+                    print "aici", f, f.data
                     f.errors.append(u"Trebuie completat câmpul")
 
         return not self.errors

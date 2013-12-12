@@ -140,7 +140,20 @@
             {{ reference_value.x(class='form-control') }} necunoscut
           </div>
         </div>
+
+        <label for="population.reference_value.method">
+          Arealul favorabil de referință - metoda
+        </label>
+
+        {{ errors(reference_value.method) }}
+
+        <div class="row">
+          <div class="col-sm-6 {{- error_cls(reference_value.method) }}">
+            {{ reference_value.method(class='form-control', rows=2) }}
+          </div>
+        </div>
       </div>
+
 
       <div class="form-group">
         {%- set reason = form.range.reason %}
