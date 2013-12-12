@@ -614,12 +614,18 @@ def guide():
     return flask.render_template('common/guide.html')
 
 
-def flatten_errors(errors):
-    html = '\n'
+def _flatten_errors(errors):
+    real_errors = []
     for k, v in errors.iteritems():
         if isinstance(v, dict):
-            html += flatten_errors(v)
+            real_errors.extend(_flatten_errors(v))
         else:
-            html += '\n'.join([' * ' + e for e in v])
-    html += '\n'
-    return html
+            real_errors.extend(v)
+    return real_errors
+
+
+def flatten_errors(errors):
+    real_errors = _flatten_errors(errors)
+
+    return '<ul>' + '\n'.join(['<li>%s</li>' % e for e in real_errors]) + \
+           '</ul>'
