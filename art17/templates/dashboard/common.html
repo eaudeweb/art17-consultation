@@ -41,25 +41,42 @@
   {%- set key = (subject.id, bioreg.code) %}
   {%- if key in data_by_region %}
     {%- set url = consultation_url(subject, bioreg=bioreg.code) %}
-    <td class="dashboard-commentcount">
-      <a href="{{ url }}">
-        {%- set cell_data = data_by_region[key] %}
+    {%- set cell_data = data_by_region[key] %}
+    {%- if 'final_record' in cell_data %}
 
-        {%- set with_unread_reply = (
-              cell_data['with_reply'] -
-              cell_data['with_read_reply']
-            ) %}
-        {%- if with_unread_reply > 0 %}
-          [newreply]
-        {%- endif %}
+      {%- set final_record = cell_data['final_record'] %}
+      {%- set conclusion_cls = (
+            'conclusion-' +
+            (final_record.conclusion_assessment or '')
+          ) %}
+      {%- set conclusion_title = (
+            CONCLUSIONS.get(final_record.conclusion_assessment, '') +
+            '; ' +
+            TREND_NAME.get(final_record.conclusion_assessment_trend, '')
+          ) %}
 
-        {%- if cell_data['unevaluated'] > 0 %}
-          [evalme]
-        {%- endif %}
+      <td class="dashboard-commentcount {{ conclusion_cls }}">
+        <a href="{{ url }}" title="{{ conclusion_title }}">
+          {{ final_record.conclusion_assessment_trend or '...' }}
+        </a>
+      </td>
 
-        {{ cell_data['count'] }}
-      </a>
-    </td>
+    {%- else %}
+
+      {%- set with_unread_reply = (
+            cell_data['with_reply'] -
+            cell_data['with_read_reply']
+          ) %}
+
+      <td class="dashboard-commentcount">
+        <a href="{{ url }}">
+          {% if with_unread_reply > 0 %}[newreply]{% endif %}
+          {% if cell_data['unevaluated'] > 0 %}[evalme]{% endif %}
+          {{ cell_data['count'] }} comentarii
+        </a>
+      </td>
+
+    {%- endif %}
   {%- else %}
     <td class="dashboard-missingrecord"></td>
   {%- endif %}

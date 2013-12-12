@@ -182,6 +182,15 @@ class BaseDataset(object):
                     count_comments_with_read_reply:
                 overview[subject_id, region_code]['with_read_reply'] = count
 
+        final_records_query = (
+            self.record_model.query
+            .filter_by(cons_role='final')
+            .filter_by(cons_dataset_id=self.dataset_id)
+        )
+        for final_record in final_records_query:
+            key = (final_record.subject_id, final_record.region)
+            overview[key]['final_record'] = final_record
+
         return overview
 
     def get_topic_records(self, subject, region_code):
