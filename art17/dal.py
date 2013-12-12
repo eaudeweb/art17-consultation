@@ -120,7 +120,9 @@ class BaseDataset(object):
             .filter_by(cons_dataset_id=self.dataset_id)
         )
         for key in regions_query:
-            overview[key] = 0
+            overview[key] = {
+                'count': 0,
+            }
 
         comment_count_query = (
             db.session
@@ -139,7 +141,7 @@ class BaseDataset(object):
             )
         )
         for (subject_id, region_code, count) in comment_count_query:
-            overview[subject_id, region_code] = count
+            overview[subject_id, region_code]['count'] = count
 
         return overview
 
