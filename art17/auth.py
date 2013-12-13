@@ -106,8 +106,19 @@ def load_reverse_proxy_auth():
 
         identity.provides.add(need.user_id(identity.id))
         identity.provides.add(need.authenticated)
+
+        mapped_roles = []
         for group_name in user_info['groups']:
-            identity.provides.add(RoleNeed(group_name))
+            role_name = map_ldap_role(group_name)
+            if role_name:
+                mapped_roles.append(role_name)
+
+        log.debug("Role mapping: %r -> %r", user_info['groups'], mapped_roles)
+
+        for role_name in mapped_roles:
+            identity.provides.add(RoleNeed(role_name))
+
+        log.debug("Authenticated as %r", identity)
 
 
 @auth.record
@@ -140,3 +151,45 @@ def get_profile_login_url():
         next_arg = flask.current_app.config.get('AUTH_LOGIN_NEXT_PARAM', 'next')
         return login_url + u'?' + url_encode({next_arg: flask.request.url})
     return default_url
+
+
+def map_ldap_role(group_name):
+    if group_name == 'AdministratorSimshab':
+        return 'admin'
+
+    if group_name.startswith('G_EXP_'):
+        prefix = 'expert'
+        target = group_name.split('_', 2)[2]
+
+    elif group_name.startswith('G_RES_'):
+        prefix = 'reviewer'
+        target = group_name.split('_', 2)[2]
+
+    else:
+        return None
+
+    if target in ['apadulce', 'dune', 'hcostiere', 'hmarine', 'hpesteri',
+                  'mturb', 'paduri', 'pesteri', 'saraturi', 'stancarii',
+                  'tufarisuri']:
+        return prefix + ':habitat'
+
+    elif target == 'amfibieni':
+        return prefix + ':species:A'
+
+    elif target in ['lilieci', 'mamifere', 'smamifere']:
+        return prefix + ':species:M'
+
+    elif target == 'nevertebrate':
+        return prefix + ':species:I'
+
+    elif target in ['pesti', 'spesti']:
+        return prefix + ':species:F'
+
+    elif target == 'plante':
+        return prefix + ':species:P'
+
+    elif target == 'reptile':
+        return prefix + ':species:R'
+
+    else:
+        return None
