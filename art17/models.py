@@ -21,6 +21,10 @@ def create_uuid():
     return str(uuid.uuid4()).replace('-', '')
 
 
+def create_esri_guid():
+    return ('{%s}' % uuid.uuid4()).upper()
+
+
 class LuHabitattypeCodes(Base):
     __tablename__ = u'lu_habitattype_codes'
 
@@ -35,6 +39,7 @@ class LuHabitattypeCodes(Base):
     valide_name = Column(String)
     priority = Column(Numeric)
     priority_comment = Column(String)
+    globalid = Column(String, default=create_esri_guid)
 
     @property
     def display_name(self):
@@ -47,6 +52,7 @@ class LuGrupSpecie(Base):
     oid = Column(Integer, primary_key=True)
     code = Column(String)
     description = Column(String)
+    globalid = Column(String, default=create_esri_guid)
 
 
 class LuHdSpecies(Base):
@@ -71,6 +77,7 @@ class LuHdSpecies(Base):
     annexiv_commet = Column(Text)
     annexv_comment = Column(Text)
     etc_comments = Column(String)
+    globalid = Column(String, default=create_esri_guid)
 
     @property
     def display_name(self):
@@ -89,6 +96,7 @@ class LuBiogeoreg(Base):
     name = Column(String)
     name_ro = Column('nume', String)
     order = Column('order_', Numeric)
+    globalid = Column(String, default=create_esri_guid)
 
 
 class LuThreats(Base):
@@ -105,6 +113,7 @@ class LuThreats(Base):
     note = Column(String)
     eutroph = Column(String)
     valid_entry = Column(String)
+    globalid = Column(String, default=create_esri_guid)
 
 
 class LuRanking(Base):
@@ -120,6 +129,7 @@ class LuRanking(Base):
     name_ro = Column(String)
     note = Column(String)
     order_ = Column(Integer)
+    globalid = Column(String, default=create_esri_guid)
 
 
 class LuPopulation(Base):
@@ -134,6 +144,7 @@ class LuPopulation(Base):
     name = Column(String)
     name_ro = Column(String)
     order_ = Column(Integer)
+    globalid = Column(String, default=create_esri_guid)
 
 
 class LuPopulationRestricted(Base):
@@ -148,6 +159,7 @@ class LuPopulationRestricted(Base):
     name = Column(String)
     name_ro = Column(String)
     order_ = Column(Integer)
+    globalid = Column(String, default=create_esri_guid)
 
 
 class LuPollution(Base):
@@ -161,6 +173,7 @@ class LuPollution(Base):
     code = Column(String)
     name = Column(String)
     name_ro = Column(String)
+    globalid = Column(String, default=create_esri_guid)
 
 
 class LuMeasures(Base):
@@ -175,6 +188,7 @@ class LuMeasures(Base):
     name = Column(String)
     name_ro = Column(String)
     valid_entry = Column(String)
+    globalid = Column(String, default=create_esri_guid)
 
 
 class LuPresence(Base):
@@ -193,6 +207,7 @@ class LuPresence(Base):
     habitat_reporting = Column(String)
     species_reporting = Column(String)
     bird_reporting = Column(String)
+    globalid = Column(String, default=create_esri_guid)
 
 
 class DataHabitat(Base):
@@ -220,6 +235,7 @@ class DataHabitat(Base):
     validation_date = Column(DateTime)
     export = Column(Integer)
     import_id = Column(Integer)
+    globalid = Column(String, default=create_esri_guid)
 
     lu = relationship(u'LuHabitattypeCodes',
                       primaryjoin=(code == foreign(LuHabitattypeCodes.code)),
@@ -247,6 +263,7 @@ class DataHabitatsCheckList(Base):
     ms_feedback_etcbd_comments = Column(Text)
     ms_added = Column(Integer)
     predefined = Column(Integer)
+    globalid = Column(String, default=create_esri_guid)
 
 
 class DataHabitattypeRegion(Base):
@@ -330,6 +347,7 @@ class DataHabitattypeRegion(Base):
     cons_deleted = Column(Boolean, default=False)
     cons_report_observation = Column(Text)
     cons_dataset_id = Column(ForeignKey('datasets.objectid'))
+    globalid = Column(String, default=create_esri_guid)
 
     habitat = relationship(u'DataHabitat',
         backref=db.backref('regions', lazy='dynamic'))
@@ -388,6 +406,7 @@ class DataSpecies(Base):
     sys_modifier_id = Column(String)
     export = Column(Integer)
     import_id = Column(Integer)
+    globalid = Column(String, default=create_esri_guid)
 
     lu = relationship(LuHdSpecies,
                       primaryjoin=(code == cast(foreign(LuHdSpecies.code),
@@ -424,6 +443,7 @@ class DataSpeciesCheckList(Base):
     comment = Column('comment_', Text)
     ms_added = Column(Integer)
     predefined = Column(Integer)
+    globalid = Column(String, default=create_esri_guid)
 
 
 class DataSpeciesRegion(Base):
@@ -520,6 +540,7 @@ class DataSpeciesRegion(Base):
     natura2000_population_trend = Column(String)
     validated = Column(Integer)
     validation_date = Column(DateTime)
+    globalid = Column(String, default=create_esri_guid)
 
     cons_role = Column(String)
     cons_date = Column(DateTime)
@@ -588,6 +609,7 @@ class DataMeasures(Base):
     broad_evaluation_notevaluat_18 = Column(Numeric)
     validated = Column(Integer)
     validation_date = Column(DateTime)
+    globalid = Column(String, default=create_esri_guid)
 
     species = relationship(u'DataSpeciesRegion',
         backref=db.backref('measures', lazy='dynamic'))
@@ -622,6 +644,7 @@ class DataPressuresThreats(Base):
     type = Column(String)
     validated = Column(Integer)
     validation_date = Column(DateTime)
+    globalid = Column(String, default=create_esri_guid)
 
     species = relationship(u'DataSpeciesRegion',
         backref=db.backref('pressures', lazy='dynamic'))
@@ -651,6 +674,7 @@ class DataPressuresThreatsPollution(Base):
     pollution_qualifier = Column(String)
     validated = Column(Integer)
     validation_date = Column(DateTime)
+    globalid = Column(String, default=create_esri_guid)
 
     lu = relationship(LuPollution,
             primaryjoin=(pollution_qualifier == foreign(LuPollution.code)),
@@ -676,6 +700,7 @@ class DataHabitatSpecies(Base):
     speciesname = Column(String)
     validated = Column(Integer)
     validation_date = Column(DateTime)
+    globalid = Column(String, default=create_esri_guid)
 
     habitats = relationship(u'DataHabitattypeRegion',
         backref=db.backref('species', lazy='dynamic'))
