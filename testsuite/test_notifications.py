@@ -14,10 +14,12 @@ class notif_species_params(species_params):
     @classmethod
     def setup(cls, app, comment=False):
         from test_species import _create_species_record
+        from conftest import create_mock_form_choices
 
         app.register_blueprint(species.species)
         app.register_blueprint(common.common)
         app.register_blueprint(notifications.notifications)
+        app.extensions['form_choices_loader'] = create_mock_form_choices()
         cls.record = _create_species_record(app, comment)
         _create_user_record(app)
 
@@ -26,10 +28,12 @@ class notif_habitat_params(habitat_params):
     @classmethod
     def setup(cls, app, comment=False):
         from test_habitat import _create_habitat_record
+        from conftest import create_mock_form_choices
 
         app.register_blueprint(habitat.habitat)
         app.register_blueprint(common.common)
         app.register_blueprint(notifications.notifications)
+        app.extensions['form_choices_loader'] = create_mock_form_choices()
         cls.record = _create_habitat_record(app, comment)
         _create_user_record(app)
 

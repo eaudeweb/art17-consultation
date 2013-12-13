@@ -21,19 +21,26 @@ def app():
     def set_identity():
         user_id = flask.current_app.config['TESTING_USER_ID']
         flask.g.identity = Mock(id=user_id)
-    from art17.models import db, LuPresence
+    from art17.models import db
     db.init_app(app)
     with app.app_context():
         db.create_all()
-        rec1 = LuPresence(objectid=1, code='1', name='Present')
-        db.session.add(rec1)
-
-        rec2 = LuPresence(objectid=2,
-                                    code='SR TAX',
-                                    name='Taxonomical reserve')
-        db.session.add(rec2)
-        db.session.commit()
     return app
+
+
+def create_mock_form_choices():
+    rv = Mock()
+    rv.get_lu_population_restricted.return_value = [('i', '')]
+    rv.get_lu_presence.return_value = [
+        ('1', 'Present'),
+        ('SR TAX', 'Taxonomical reserve'),
+    ]
+    rv.get_lu_population.return_value = [('A', ''), ('grids10x10', '')]
+    rv.get_lu_threats.return_value = [('1', '')]
+    rv.get_lu_pollution.return_value = [('M', ''), ('A', '')]
+    rv.get_lu_ranking.return_value = [('A', ''), ('M', '')]
+    rv.get_lu_measures.return_value = []
+    return rv
 
 
 @pytest.fixture
@@ -42,6 +49,7 @@ def species_app(app):
     from art17.common import common
     app.register_blueprint(species)
     app.register_blueprint(common)
+    app.extensions['form_choices_loader'] = create_mock_form_choices()
     return app
 
 
@@ -51,6 +59,7 @@ def habitat_app(app):
     from art17.common import common
     app.register_blueprint(habitat)
     app.register_blueprint(common)
+    app.extensions['form_choices_loader'] = create_mock_form_choices()
     return app
 
 
@@ -80,4 +89,5 @@ def aggregation_app(app):
     app.register_blueprint(common)
     app.register_blueprint(history)
     app.register_blueprint(history_aggregation)
+    app.extensions['form_choices_loader'] = create_mock_form_choices()
     return app

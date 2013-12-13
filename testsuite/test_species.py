@@ -331,18 +331,10 @@ def test_edit_comment_submit(species_app):
 
 def test_extra_fields_save(species_app):
     import json
-    from art17.models import DataSpeciesRegion, LuThreats, LuRanking, LuPollution
+    from art17.models import DataSpeciesRegion
     from art17 import models
     species_app.config['TESTING_USER_ID'] = 'smith'
     _create_species_record(species_app)
-    with species_app.app_context():
-        pressure = LuThreats(code='1')
-        ranking = LuRanking(code='M')
-        pollution = LuPollution(code='A')
-        models.db.session.add(pressure)
-        models.db.session.add(ranking)
-        models.db.session.add(pollution)
-        models.db.session.commit()
     pressure_data = json.dumps({'pressure': '1', 'ranking': 'M', 'pollutions': ['A']})
     measure_data = json.dumps({'measurecode': '1', 'rankingcode': 'M'})
     client = species_app.test_client()

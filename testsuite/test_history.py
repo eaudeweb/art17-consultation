@@ -29,10 +29,12 @@ class species_params(object):
     @classmethod
     def setup(cls, app, comment=False):
         from test_species import _create_species_record
+        from conftest import create_mock_form_choices
         app.register_blueprint(common.common)
         app.register_blueprint(species.species)
         app.register_blueprint(history.history)
         app.register_blueprint(history.history_consultation)
+        app.extensions['form_choices_loader'] = create_mock_form_choices()
         _create_species_record(app, comment)
         app.config['TESTING_USER_ID'] = cls.user_id
 
@@ -58,9 +60,11 @@ class habitat_params(object):
     @classmethod
     def setup(cls, app, comment=False):
         from test_habitat import _create_habitat_record
+        from conftest import create_mock_form_choices
         app.register_blueprint(common.common)
         app.register_blueprint(habitat.habitat)
         app.register_blueprint(history.history)
+        app.extensions['form_choices_loader'] = create_mock_form_choices()
         _create_habitat_record(app, comment)
         app.config['TESTING_USER_ID'] = cls.user_id
 
