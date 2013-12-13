@@ -52,7 +52,6 @@ class LuGrupSpecie(Base):
     oid = Column(Integer, primary_key=True)
     code = Column(String)
     description = Column(String)
-    globalid = Column(String, default=create_esri_guid)
 
 
 class LuHdSpecies(Base):
