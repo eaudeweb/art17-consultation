@@ -67,9 +67,9 @@ def debug():
         return flask.redirect(flask.url_for('.debug'))
 
     user_info = {}
-    if not auth_debug_allowed:
+    if not auth_debug_allowed and flask.g.identity.id:
         with open_ldap_server() as ldap_server:
-            user_info = ldap_server.get_user_info(flask.g.identity.id or '')
+            user_info = ldap_server.get_user_info(flask.g.identity.id)
 
     roles = flask.session.get('auth', {}).get('roles', [])
     return flask.render_template('auth/debug.html', **{
