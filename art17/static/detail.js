@@ -92,8 +92,13 @@ $('.add-measurebtn').click(function(evt) {
         name = name.substr(name.indexOf('.') + 1);
 
         if (valid && !$(this).val()) {
-            alert('Please select '+ name +' value');
-            valid = false;
+          if (name == 'measurecode') {
+            alert('Vǎ rugǎm selectați o valoare pentru mǎsurǎ');
+          }
+          else if (name == 'rankingcode') {
+            alert('Vǎ rugǎm selectați o valoare pentru importanțǎ');
+          }
+          valid = false;
         }
     });
     if (!valid)
