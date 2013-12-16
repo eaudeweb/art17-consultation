@@ -279,3 +279,9 @@ fieldset legend {
     text-align: center;
     white-space: nowrap;
 }
+
+.field-inline input {
+    margin: 3px;
+    display: inline;
+    width: auto;
+}

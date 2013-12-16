@@ -154,14 +154,15 @@
         {{ errors(reason) }}
 
         <div class="row">
-          <div class="col-sm-2">
-            {{ reason.a(class='form-control') }} {{ LU_REASONS_FOR_CHANGE['a'] }}
-          </div>
-          <div class="col-sm-2">
-            {{ reason.b(class='form-control') }} {{ LU_REASONS_FOR_CHANGE['b'] }}
-          </div>
-          <div class="col-sm-2">
-            {{ reason.c(class='form-control') }} {{ LU_REASONS_FOR_CHANGE['c'] }}
+          <div class="col-sm-6 field-inline">
+            {{ reason.a(class='form-control') }}
+            {{ LU_REASONS_FOR_CHANGE['a'] }} <br>
+
+            {{ reason.b(class='form-control') }}
+            {{ LU_REASONS_FOR_CHANGE['b'] }} <br>
+
+            {{ reason.c(class='form-control') }}
+            {{ LU_REASONS_FOR_CHANGE['c'] }} <br>
           </div>
         </div>
       </div>

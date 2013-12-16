@@ -58,7 +58,7 @@
           </div>
         </div>
         <br/>
-        
+
         {% set magnitude = trend_short.magnitude %}
         <div class="row">
           <div class="col-sm-2 {{- error_cls(magnitude) }}">
@@ -100,7 +100,7 @@
           </div>
         </div>
         <br/>
-        
+
         {% set magnitude = trend_long.magnitude %}
         <div class="row">
           <div class="col-sm-2 {{- error_cls(magnitude) }}">
@@ -117,7 +117,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="form-group">
         {%- set reference_value = form.range.reference_value %}
         <label for="range.reference_value.op">
@@ -136,7 +136,8 @@
             {{ reference_value.op(class='form-control') }}
           </div>
 
-          <div class="col-sm-2 {{- error_cls(reference_value.x) }}">
+          <div class="col-sm-2
+                     {{- error_cls(reference_value.x) }} field-inline">
             {{ reference_value.x(class='form-control') }} necunoscut
           </div>
         </div>
@@ -162,14 +163,15 @@
         {{ errors(reason) }}
 
         <div class="row">
-          <div class="col-sm-2">
-            {{ reason.a(class='form-control') }} {{ LU_REASONS_FOR_CHANGE['a'] }}
-          </div>
-          <div class="col-sm-2">
-            {{ reason.b(class='form-control') }} {{ LU_REASONS_FOR_CHANGE['b'] }}
-          </div>
-          <div class="col-sm-2">
-            {{ reason.c(class='form-control') }} {{ LU_REASONS_FOR_CHANGE['c'] }}
+          <div class="col-sm-6 field-inline">
+            {{ reason.a(class='form-control') }}
+            {{ LU_REASONS_FOR_CHANGE['a'] }} <br>
+
+            {{ reason.b(class='form-control') }}
+            {{ LU_REASONS_FOR_CHANGE['b'] }} <br>
+
+            {{ reason.c(class='form-control') }}
+            {{ LU_REASONS_FOR_CHANGE['c'] }} <br>
           </div>
         </div>
       </div>
