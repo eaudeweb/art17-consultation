@@ -20,8 +20,8 @@ from art17.lookup import (
     LU_REASONS_FOR_CHANGE,
     QUALITY_OPTIONS,
     METHODS_PRESSURES_OPTIONS,
-    METHODS_THREATS_OPTIONS
-    )
+    METHODS_THREATS_OPTIONS,
+)
 from art17 import schemas
 
 form_choices_loader = LocalProxy(
@@ -353,7 +353,7 @@ class Pressures(Form):
 class Threats(Form):
     threats_method = SelectField(default='',
                                  choices=EMPTY_CHOICE +
-                                         METHODS_PRESSURES_OPTIONS)
+                                         METHODS_THREATS_OPTIONS)
     threats = MultipleJSONField(default='',
                                 validators=[FormValidator(PressureForm)])
 
