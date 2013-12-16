@@ -68,18 +68,47 @@ body {
     padding-top: 10px;
 }
 
+
+/* GLOBAL MENU */
+@media screen and (max-width: 1024px) {
+  .global-menu .nav>li>a {
+  padding: 10px 8px;
+  }
+}
+
 .global-menu {
     background: rgb(102, 204, 51);
     height: 40px;
     margin-bottom: 10px;
 }
 
-.global-menu label {
-    display: inline-block;
-    color: #fff;
-    font-weight: normal;
-    padding-top: 10px;
-    padding-left: 10px;
+.global-menu .nav-tabs {
+    border-bottom: 0px;
+}
+
+.global-menu .nav-tabs>li>a {
+    border: 0px;
+    color: rgb(255, 255, 255);
+    font-size: 13px
+}
+
+.global-menu .nav-tabs>li.active>a,
+.global-menu .nav-tabs>li.active>a:hover,
+.global-menu .nav-tabs>li.active>a:focus,
+.global-menu .nav>li>a:hover,
+.global-menu .nav>li>a:focus {
+    background: none;
+    border: 0px;
+}
+
+.global-menu .nav-tabs>li.active>a,
+.global-menu .nav-tabs>li.active>a:hover,
+.global-menu .nav-tabs>li.active>a:focus {
+    color: #000;
+}
+
+.global-menu .nav-tabs>li>a:hover {
+    text-decoration: underline;
 }
 
 /* footer */
