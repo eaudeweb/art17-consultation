@@ -238,7 +238,7 @@ class BaseDataset(object):
             .group_by(CommentReply.parent_id)
         )
         return dict(reply_query)
-    
+
     @classmethod
     def update_extra_fields(cls, struct, comment):
         for pressure in comment.get_pressures():
@@ -374,7 +374,14 @@ class FormChoicesLoader(object):
         return db.session.query(LuPopulation.code, LuPopulation.name_ro).all()
 
     def get_lu_threats(self):
-        return db.session.query(LuThreats.code, LuThreats.name_ro).all()
+        return (
+            db.session.query(
+                LuThreats.code,
+                LuThreats.name_ro
+            )
+            .order_by('code')
+            .all()
+        )
 
     def get_lu_pollution(self):
         return db.session.query(LuPollution.code, LuPollution.name_ro).all()
