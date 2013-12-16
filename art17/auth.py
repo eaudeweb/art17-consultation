@@ -162,7 +162,7 @@ def get_profile_login_url():
 
 
 def map_ldap_role(group_name):
-    if group_name == 'AdministratorSimshab':
+    if group_name == 'AdministratoriSIMSHAB':
         return 'admin'
 
     if group_name.startswith('G_EXP_'):
