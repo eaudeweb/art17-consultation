@@ -1,3 +1,4 @@
+import logging
 import flask
 from flask.ext.principal import (Principal, Permission, Identity,
                                  RoleNeed, UserNeed, PermissionDenied)
@@ -97,6 +98,7 @@ def load_debug_auth():
 
 def load_reverse_proxy_auth():
     user_id = flask.request.headers.get('X-RP-AuthUser')
+    log = logging.getLogger(__name__)
     if user_id and user_id != '(null)':
         with open_ldap_server() as ldap_server:
             user_info = ldap_server.get_user_info(user_id)
