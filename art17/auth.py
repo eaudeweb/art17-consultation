@@ -66,6 +66,11 @@ def debug():
         set_session_auth(user_id, roles)
         return flask.redirect(flask.url_for('.debug'))
 
+    user_info = {}
+    if not auth_debug_allowed:
+        with open_ldap_server() as ldap_server:
+            user_info = ldap_server.get_user_info(flask.g.identity.id)
+
     roles = flask.session.get('auth', {}).get('roles', [])
     return flask.render_template('auth/debug.html', **{
         'user_id': flask.g.identity.id,
@@ -77,6 +82,7 @@ def debug():
             'reviewer:habitat:8230\n'
         ),
         'auth_debug_allowed': auth_debug_allowed,
+        'user_info': user_info,
     })
 
 
