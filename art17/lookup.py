@@ -2,28 +2,28 @@
 
 
 LU_REASONS_FOR_CHANGE_OPTIONS = [
-    ('a', u"genuine change"),
-    ('b', u"improved knowledge/more accurate data"),
-    ('c', u"use of different method (e.g. `Range tool`)"),
+    ('a', u"Schimbare reală"),
+    ('b', u"Cunoștințe îmbunătățite / date mai precise"),
+    ('c', u"Utilizarea unor metode diferite (ex. `Range tool`)"),
 ]
 
 LU_REASONS_FOR_CHANGE = dict(LU_REASONS_FOR_CHANGE_OPTIONS)
 
 
 LU_FV_RANGE_OP_FUNCT_OPTIONS =[
-    (u'≈', u"aproximativ egal cu"),
-    (u'>', u"mai mare decǎt"),
-    (u'≫', u"mult mai mare decǎt"),
-    (u'<', u"mai micǎ decǎt"),
+    (u'≈', u"Aproximativ egal cu"),
+    (u'>', u"Mai mare decǎt"),
+    (u'≫', u"Mult mai mare decǎt"),
+    (u'<', u"Mai micǎ decǎt"),
 ]
 
 LU_FV_RANGE_OP_FUNCT = dict(LU_FV_RANGE_OP_FUNCT_OPTIONS)
 
 
 LU_FV_RANGE_OP_OPTIONS =[
-    (u'≈', u"aproximativ egal cu"),
-    (u'>', u"mai mare decǎt"),
-    (u'≫', u"mult mai mare decǎt"),
+    (u'≈', u"Aproximativ egal cu"),
+    (u'>', u"Mai mare decǎt"),
+    (u'≫', u"Mult mai mare decǎt"),
 ]
 
 LU_FV_RANGE_OP = dict(LU_FV_RANGE_OP_OPTIONS)
