@@ -2,8 +2,11 @@ from alembic import context
 from art17.models import db
 
 
-context.configure(connection=db.session.connection(),
-                  target_metadata=db.metadata)
+context.configure(
+    connection=db.session.connection(),
+    target_metadata=db.metadata,
+    transactional_ddl=False,
+)
 
 context.run_migrations()
 
