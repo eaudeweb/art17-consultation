@@ -140,8 +140,9 @@ def get_notification_emails(obj, action):
         else:
             emails = []
             steps = calculate_identifier_steps(identifier)
-            for group in steps:
-                emails.extend(ldap_server.get_emails_for_group(group))
+            for role in steps:
+                for ldap_group in ldap_groups_for_role(role):
+                    emails.extend(ldap_server.get_emails_for_group(ldap_group))
 
         if exclude_users:
             exclude_emails = [ldap_server.get_user_info(user_id)['email']
