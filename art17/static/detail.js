@@ -41,6 +41,7 @@ $('.add-pressuresbtn').click(function(evt) {
     var pressure_text = container.find('select[name="addform_pressure.pressure"] option:selected').text();
     var ranking = container.find('select[name="addform_pressure.ranking"]').val();
     var pollutions = container.find('select[name="addform_pressure.pollutions"]').val();
+    var data;
 
     if (!pressure) {
         return alert('Nu ați selectat presiunea');
@@ -48,7 +49,11 @@ $('.add-pressuresbtn').click(function(evt) {
     if (!ranking) {
         return alert('Nu ați selectat clasificarea');
     }
-    var data = {pressure: pressure, ranking: ranking, pollutions: pollutions};
+    if (!pollutions) {
+        data = {pressure: pressure, ranking: ranking, pollutions: ''};
+    } else {
+        data = {pressure: pressure, ranking: ranking, pollutions: pollutions};
+    }
 
     $('<input>').attr({
         type: "hidden",
