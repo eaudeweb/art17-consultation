@@ -3,9 +3,20 @@
   <div class="row suite-bar ">
     <div class="col-md-3 col-md-offset-9 user-menu">
        <ul class="nav pull-right">
-        <li>
+        <li class="user">
           {%- set login_url = get_profile_login_url() %}
-          <a href="{{ login_url }}">utilizator: {{ g.identity.id or "vizitator" }}</a>
+          {%- set logout_url = get_profile_logout_url() %}
+          {%- if not g.identity.id %}
+          <a href="{{ login_url }}">Conectare</a>
+          {%- else %}
+           <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            {{ g.identity.id }} <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="/_layouts/15/userdisp.aspx?Force=True&Source={{ request.url }}">Setările mele</a></li>
+            <li><a href="{{ logout_url }}">Deconectare</a> </li>
+          </ul>
+          {%- endif %}
         </li>
       </ul>
     </div>

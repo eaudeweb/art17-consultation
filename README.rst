@@ -89,6 +89,10 @@ Configurație
     Stabilește parametrul GET pe care îl primește AUTH_LOGIN_URL pentru a ști
     în ce pagină să se întoarcă (după autentificare).
 
+``AUTH_LOGOUT_URL = ''``
+    URL-ul la care se face deautentificarea, atunci când AUTH_DEBUG
+    este False.
+
 ``LDAP_SERVER``
     Adresa serverului LDAP sau ActiveDirectory. De exemplu
     ``'ldap://192.168.2.3'``.

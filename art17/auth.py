@@ -52,6 +52,7 @@ def inject_context():
     return {
         'admin_permission': admin_permission,
         'get_profile_login_url': get_profile_login_url,
+        'get_profile_logout_url': get_profile_logout_url,
     }
 
 
@@ -171,6 +172,15 @@ def get_profile_login_url():
         next_arg = flask.current_app.config.get('AUTH_LOGIN_NEXT_PARAM', 'next')
         return login_url + u'?' + url_encode({next_arg: flask.request.url})
     return default_url
+
+
+def get_profile_logout_url():
+    default_url = flask.url_for('auth.debug', next=flask.request.url)
+    if flask.current_app.config.get('AUTH_DEBUG'):
+        return default_url
+
+    logout_url = flask.current_app.config.get('AUTH_LOGOUT_URL')
+    return logout_url or default_url
 
 
 def map_ldap_role(group_name):
