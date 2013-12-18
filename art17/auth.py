@@ -209,8 +209,27 @@ LDAP_ROLE_MAP = [
 LDAP_ADMIN_ROLE = 'AdministratoriSIMSHAB'
 
 
-def ldap_groups_for_role():
-    pass
+def ldap_groups_for_role(role):
+    if role == 'admin':
+        return [LDAP_ADMIN_ROLE]
+
+    elif role.startswith('expert:'):
+        prefix = 'expert'
+        ldap_prefix = 'G_EXP_'
+
+    elif role.startswith('reviewer:'):
+        prefix = 'reviewer'
+        ldap_prefix = 'G_RES_'
+
+    else:
+        raise RuntimeError("Can't parse role %r" % role)
+
+    role_suffix = role[len(prefix):]
+    rv = []
+    for suffix, ldap_name in LDAP_ROLE_MAP:
+        if role_suffix == suffix:
+            rv.append(ldap_prefix + ldap_name)
+    return rv
 
 
 def role_for_ldap_group(group_name):
