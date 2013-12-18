@@ -6,10 +6,8 @@ import sqlalchemy as sa
 
 
 def upgrade():
-    op.drop_table('data_habitattype_comments')
-    op.drop_table('data_species_comments')
-    op.drop_table('consultation_topic')
+    pass
 
 
 def downgrade():
-    raise NotImplementedError
+    pass

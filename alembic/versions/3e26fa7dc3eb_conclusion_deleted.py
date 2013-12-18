@@ -6,12 +6,8 @@ import sqlalchemy as sa
 
 
 def upgrade():
-    op.add_column('data_species_conclusions',
-        sa.Column('deleted', sa.Boolean, nullable=False, server_default='0'))
-    op.add_column('data_habitattype_conclusions',
-        sa.Column('deleted', sa.Boolean, nullable=False, server_default='0'))
+    pass
 
 
 def downgrade():
-    op.drop_column('data_habitattype_conclusions', 'deleted')
-    op.drop_column('data_species_conclusions', 'deleted')
+    pass
