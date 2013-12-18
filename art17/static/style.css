@@ -33,6 +33,17 @@ body {
     text-decoration: underline;
 }
 
+.user-menu .nav>li.fixed>a,
+.user-menu .nav>li.fixed>a:hover {
+    color: #777;
+    text-decoration: none;
+    font-size: 1.4em;
+    padding: 0 15px;
+}
+
+.user-menu {
+    padding-right: 0;
+}
 #header {
     margin-bottom: 10px;
 }

@@ -1,7 +1,18 @@
+{%- from 'bits.html' import fonticon %}
+
 <div id="header">
 
   <div class="row suite-bar ">
     <div class="col-md-3 col-md-offset-9 user-menu">
+      {%- if g.identity.id %}
+      <ul class="nav pull-right">
+        <li class="fixed">
+          <a href="{{ url_for('common.guide') }}" title="Ghidul de raportare">
+            {{ fonticon('question') }}
+          </a>
+        </li>
+      </ul>
+      {% endif %}
        <ul class="nav pull-right">
         <li class="user">
           {%- set login_url = get_profile_login_url() %}
