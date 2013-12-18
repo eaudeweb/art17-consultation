@@ -69,10 +69,6 @@
             {{ trend_short.period.end(class='form-control',
                     placeholder="an de sfǎrșit") }}
           </div>
-
-          <div class="col-sm-2 {{- error_cls(trend_short.method) }}">
-            {{ trend_short.method(class='form-control') }}
-          </div>
         </div>
         <br/>
         {% set magnitude = trend_short.magnitude %}
@@ -95,7 +91,7 @@
           </div>
         </div>
 
-        <label for="population.trend_short.method">
+        <label for="coverage.trend_short.method">
           Metoda utilizată - tendința pe termen scurt
         </label>
 
@@ -130,10 +126,6 @@
             {{ trend_long.period.end(class='form-control',
                     placeholder="an de sfǎrșit") }}
           </div>
-
-          <div class="col-sm-2 {{- error_cls(trend_long.method) }}">
-            {{ trend_long.method(class='form-control') }}
-          </div>
         </div>
         <br/>
         {% set magnitude = trend_long.magnitude %}
@@ -156,7 +148,7 @@
           </div>
         </div>
 
-        <label for="population.trend_long.method">
+        <label for="coverage.trend_long.method">
           Metoda utilizată - tendința pe termen lung
         </label>
 

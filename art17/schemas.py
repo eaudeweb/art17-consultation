@@ -465,6 +465,7 @@ def flatten_conclusion(conclusion_struct, obj, prefix):
 
 
 def flatten_refval(refval_struct, obj, prefix):
+    setattr(obj, prefix + '_x', refval_struct['x'])
     setattr(obj, prefix + '_op', refval_struct['op'])
     setattr(obj, prefix, refval_struct['number'])
     setattr(obj, prefix + '_method', refval_struct['method'])
