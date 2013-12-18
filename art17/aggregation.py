@@ -185,6 +185,7 @@ def inject_funcs():
 
 
 @aggregation.route('/')
+@admin_permission.require()
 def home():
     dataset_list = models.Dataset.query.order_by(models.Dataset.date).all()
     return flask.render_template('aggregation/home.html', **{
