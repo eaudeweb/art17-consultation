@@ -69,7 +69,7 @@
           ) %}
         <a class="btn btn-sm btn-default" href="{{ history_url }}">istoric</a>
       {%- endif %}
-      <a class="helpbox-button btn btn-sm btn-default" href="#">{{ fonticon('question') }}</a>
+      <!-- <a class="helpbox-button btn btn-sm btn-default" href="#">{{ fonticon('question') }}</a> -->
     </p>
     {%- if finalized %}
       <span class="label label-danger consultation-status">
@@ -79,7 +79,7 @@
   </div>
 
   {{ topic_html(
-    topic
+    topic,
     topic_template,
     blueprint,
     finalized,
