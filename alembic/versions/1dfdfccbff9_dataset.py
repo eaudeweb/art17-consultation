@@ -30,7 +30,7 @@ def upgrade():
         u"VALUES ("
             u"DATASETS_SEQ.nextval, "
             u"TO_DATE('2013-10-01 13:30:00', 'YYYY-MM-DD HH24:MI:SS'), "
-            u"'Consultare publică'"
+            u"'Consultare publica'"
         u") "
     )
     op.execute(

@@ -28,7 +28,7 @@ def downgrade():
 
 
 DATA = [
-    ('H', u"importanțǎ mare"),
-    ('M', u"importanțǎ medie"),
-    ('L', u"importanțǎ micǎ"),
+    ('H', u"importanta mare"),
+    ('M', u"importanta medie"),
+    ('L', u"importanta mica"),
 ]

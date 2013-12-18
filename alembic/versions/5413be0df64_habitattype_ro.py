@@ -28,129 +28,129 @@ def downgrade():
 
 
 DATA = [
-    ('1110', u"Bancuri de nisip submerse de mică adâncime"),
-    ('1130', u"Estuare și guri de vărsare ale marilor râuri și fluvii"),
-    ('1140', u"Suprafețe de nisip și mâl descoperite la maree joasă"),
+    ('1110', u"Bancuri de nisip submerse de mica adancime"),
+    ('1130', u"Estuare si guri de varsare ale marilor rauri si fluvii"),
+    ('1140', u"Suprafete de nisip si mal descoperite la maree joasa"),
     ('1150', u"Lagune costiere"),
-    ('1160', u"Brațe de mare și golfuri mai puțin adânci"),
+    ('1160', u"Brate de mare si golfuri mai putin adanci"),
     ('1170', u"Recifi"),
     ('1180', u"Structuri submarine create de emisiile de gaze"),
-    ('1210', u"Vegetație anuală de-a lungul liniei țărmului"),
-    ('1310', u"Comunități cu Salicornia și alte specii anuale care "
-             u"colonizează terenurile umede și nisipoase"),
-    ('1410', u"Pajiști halofile de tip mediteranean (Juncetalia maritimi)"),
-    ('1530', u"Pajiști și mlaștini halofile panonice și ponto-sarmatice"),
-    ('2110', u"Dune mobile embrionare (în formare)"),
-    ('2130', u"Dune fixate cu vegetație herbacee perenă (dune gri)"),
+    ('1210', u"Vegetatie anuala de-a lungul liniei tarmului"),
+    ('1310', u"Comunitati cu Salicornia si alte specii anuale care "
+             u"colonizeaza terenurile umede si nisipoase"),
+    ('1410', u"Pajisti halofile de tip mediteranean (Juncetalia maritimi)"),
+    ('1530', u"Pajisti si mlastini halofile panonice si ponto-sarmatice"),
+    ('2110', u"Dune mobile embrionare (in formare)"),
+    ('2130', u"Dune fixate cu vegetatie herbacee perena (dune gri)"),
     ('2160', u"Dune cu Hippophaë rhamnoides"),
     ('2190', u"Depresiuni umede interdunale"),
-    ('2330', u"Dune cu Corynephorus și Agrostis"),
+    ('2330', u"Dune cu Corynephorus si Agrostis"),
     ('2340', u"Dune panonice"),
-    ('3130', u"Ape stătătoare oligotrofice până la mezotrofice cu vegetație "
-             u"din Littorelletea uniflorae și/sau Isoëto-Nanojuncetea"),
-    ('3140', u"Ape puternic oligo-mezotrofice cu vegetație bentonică de "
+    ('3130', u"Ape statatoare oligotrofice pana la mezotrofice cu vegetatie "
+             u"din Littorelletea uniflorae si/sau Isoëto-Nanojuncetea"),
+    ('3140', u"Ape puternic oligo-mezotrofice cu vegetatie bentonica de "
              u"specii de Chara"),
-    ('3150', u"Lacuri naturale eutrofice cu vegetație tip Magnopotamion "
+    ('3150', u"Lacuri naturale eutrofice cu vegetatie tip Magnopotamion "
              u"sau Hydrocharition"),
-    ('3160', u"Lacuri distrofice și iazuri"),
-    ('31A0', u"Ape termale din Transilvania acoperite cu lotus (drețe)"),
-    ('3220', u"Vegetație herbacee de pe malurile râurilor montane"),
-    ('3230', u"Vegetație lemnoasă cu Myricaria germanica de-a lungul "
-             u"râurilor montane"),
-    ('3240', u"Vegetație lemnoasă cu Salix elaeagnos de-a lungul râurilor "
+    ('3160', u"Lacuri distrofice si iazuri"),
+    ('31A0', u"Ape termale din Transilvania acoperite cu lotus (drete)"),
+    ('3220', u"Vegetatie herbacee de pe malurile raurilor montane"),
+    ('3230', u"Vegetatie lemnoasa cu Myricaria germanica de-a lungul "
+             u"raurilor montane"),
+    ('3240', u"Vegetatie lemnoasa cu Salix elaeagnos de-a lungul raurilor "
              u"montane"),
-    ('3260', u"Cursuri de apă din zona de câmpie până în etajul montan, cu "
-             u"vegetație din Ranunculion fluitantis și "
+    ('3260', u"Cursuri de apa din zona de campie pana in etajul montan, cu "
+             u"vegetatie din Ranunculion fluitantis si "
              u"Callitricho-Batrachion"),
-    ('3270', u"Râuri cu maluri nămoloase cu vegetație din Chenopodion "
-             u"rubri și Bidention"),
-    ('4030', u"Tufărișuri uscate europene"),
-    ('4060', u"Tufărișuri alpine și boreale"),
-    ('4070', u"Tufărișuri cu Pinus mugo și Rhododendron myrtifolium"),
-    ('4080', u"Tufărișuri cu specii sub-arctice de Salix"),
-    ('40A0', u"Tufărișuri subcontinentale peri-panonice"),
-    ('40C0', u"Tufărișuri de foioase ponto-sarmatice"),
-    ('6110', u"Comunități rupicole calcifile sau pajiști bazifile din "
+    ('3270', u"Rauri cu maluri namoloase cu vegetatie din Chenopodion "
+             u"rubri si Bidention"),
+    ('4030', u"Tufarisuri uscate europene"),
+    ('4060', u"Tufarisuri alpine si boreale"),
+    ('4070', u"Tufarisuri cu Pinus mugo si Rhododendron myrtifolium"),
+    ('4080', u"Tufarisuri cu specii sub-arctice de Salix"),
+    ('40A0', u"Tufarisuri subcontinentale peri-panonice"),
+    ('40C0', u"Tufarisuri de foioase ponto-sarmatice"),
+    ('6110', u"Comunitati rupicole calcifile sau pajisti bazifile din "
              u"Alysso-Sedion albi"),
-    ('6120', u"Pajiști xerice pe substrate calcaroase"),
-    ('6150', u"Pajiști boreale și alpine pe substrate silicioase"),
-    ('6170', u"Pajiști calcifile alpine și subalpine"),
-    ('6190', u"Pajiști panonice de stâncării (Stipo-Festucetalia "
+    ('6120', u"Pajisti xerice pe substrate calcaroase"),
+    ('6150', u"Pajisti boreale si alpine pe substrate silicioase"),
+    ('6170', u"Pajisti calcifile alpine si subalpine"),
+    ('6190', u"Pajisti panonice de stancarii (Stipo-Festucetalia "
              u"pallentis)"),
-    ('6210', u"Pajiști uscate seminaturale și faciesuri cu tufărișuri pe "
+    ('6210', u"Pajisti uscate seminaturale si faciesuri cu tufarisuri pe "
              u"substrate calcaroase (Festuco Brometalia)"),
-    ('6230', u"Pajiști montane de Nardus bogate în specii, pe substrate "
+    ('6230', u"Pajisti montane de Nardus bogate in specii, pe substrate "
              u"silicioase"),
-    ('6240', u"Pajiști stepice subpanonice"),
-    ('6250', u"Pajiști panonice pe loess"),
-    ('6260', u"Pajiști panonice și vest-pontice pe nisipuri"),
+    ('6240', u"Pajisti stepice subpanonice"),
+    ('6250', u"Pajisti panonice pe loess"),
+    ('6260', u"Pajisti panonice si vest-pontice pe nisipuri"),
     ('62C0', u"Stepe ponto-sarmatice"),
-    ('6410', u"Pajiști cu Molinia pe soluri calcaroase, turboase sau "
+    ('6410', u"Pajisti cu Molinia pe soluri calcaroase, turboase sau "
              u"argiloase (Molinion caeruleae)"),
-    ('6420', u"Pajiști mediteraneene umede cu ierburi înalte din "
+    ('6420', u"Pajisti mediteraneene umede cu ierburi inalte din "
              u"Molinio-Holoschoenion"),
-    ('6430', u"Comunități de lizieră cu ierburi înalte higrofile de la "
-             u"câmpie până în etajele montan și alpin"),
-    ('6440', u"Pajiști aluviale din Cnidion dubii"),
-    ('6510', u"Pajiști de altitudine joasă (Alopecurus pratensis, "
+    ('6430', u"Comunitati de liziera cu ierburi inalte higrofile de la "
+             u"campie pana in etajele montan si alpin"),
+    ('6440', u"Pajisti aluviale din Cnidion dubii"),
+    ('6510', u"Pajisti de altitudine joasa (Alopecurus pratensis, "
              u"Sanguisorba officinalis)"),
-    ('6520', u"Fânețe montane"),
-    ('7110', u"Turbării active"),
-    ('7120', u"Turbării degradate capabile de regenerare naturală"),
-    ('7140', u"Mlaștini turboase de tranziție și turbării oscilante "
+    ('6520', u"Fanete montane"),
+    ('7110', u"Turbarii active"),
+    ('7120', u"Turbarii degradate capabile de regenerare naturala"),
+    ('7140', u"Mlastini turboase de tranzitie si turbarii oscilante "
              u"(nefixate de substrat)"),
-    ('7150', u"Comunități depresionare din Rhynchosporion pe substrate "
+    ('7150', u"Comunitati depresionare din Rhynchosporion pe substrate "
              u"turboase"),
-    ('7210', u"Mlaștini calcaroase cu Cladium mariscus"),
+    ('7210', u"Mlastini calcaroase cu Cladium mariscus"),
     ('7220', u"Izvoare petrifiante cu formare de travertin "
              u"(Cratoneurion)"),
-    ('7230', u"Mlaștini alcaline"),
-    ('7240', u"Formațiuni pioniere alpine din Caricion "
+    ('7230', u"Mlastini alcaline"),
+    ('7240', u"Formatiuni pioniere alpine din Caricion "
              u"bicoloris-atrofuscae"),
-    ('8110', u"Grohotișuri silicioase din etajele montan și alpin "
-             u"(Androsacetalia alpinae și Galeopsietalia ladani)"),
-    ('8120', u"Grohotișuri calcaroase și de șisturi calcaroase din etajele "
-             u"montan și alpin (Thlaspietea rotundifolii)"),
-    ('8160', u"Grohotișuri medio-europene calcaroase din etajele colinar "
-             u"și montan"),
-    ('8210', u"Versanți stâncoși cu vegetație chasmofitică pe roci "
+    ('8110', u"Grohotisuri silicioase din etajele montan si alpin "
+             u"(Androsacetalia alpinae si Galeopsietalia ladani)"),
+    ('8120', u"Grohotisuri calcaroase si de sisturi calcaroase din etajele "
+             u"montan si alpin (Thlaspietea rotundifolii)"),
+    ('8160', u"Grohotisuri medio-europene calcaroase din etajele colinar "
+             u"si montan"),
+    ('8210', u"Versanti stancosi cu vegetatie chasmofitica pe roci "
              u"calcaroase"),
-    ('8220', u"Versanți stâncoși cu vegetație chasmofitică pe roci "
+    ('8220', u"Versanti stancosi cu vegetatie chasmofitica pe roci "
              u"silicioase"),
-    ('8230', u"Comunități pioniere din Sedo-Scleranthion sau din Sedo "
-             u"albi-Veronicion dilleni pe stâncării silicioase"),
-    ('8310', u"Peșteri în care accesul publicului este interzis"),
+    ('8230', u"Comunitati pioniere din Sedo-Scleranthion sau din Sedo "
+             u"albi-Veronicion dilleni pe stancarii silicioase"),
+    ('8310', u"Pesteri in care accesul publicului este interzis"),
     ('8330', u"Pesteri marine total sau partial submerse"),
-    ('9110', u"Păduri de fag de tip Luzulo-Fagetum"),
-    ('9130', u"Păduri de fag de tip Asperulo-Fagetum"),
-    ('9150', u"Păduri medio-europene de fag din Cephalanthero-Fagion"),
+    ('9110', u"Paduri de fag de tip Luzulo-Fagetum"),
+    ('9130', u"Paduri de fag de tip Asperulo-Fagetum"),
+    ('9150', u"Paduri medio-europene de fag din Cephalanthero-Fagion"),
     ('9170', u"Pãduri de stejar cu carpen de tip Galio-Carpinetum"),
-    ('9180', u"Păduri din Tilio-Acerion pe versanți abrupți, grohotișuri "
-             u"și ravene"),
-    ('91AA', u"Vegetație forestieră ponto-sarmatică cu stejar pufos"),
-    ('91D0', u"Turbării cu vegetație forestieră"),
-    ('91E0', u"Păduri aluviale cu Alnus glutinosa și Fraxinus excelsior "
+    ('9180', u"Paduri din Tilio-Acerion pe versanti abrupti, grohotisuri "
+             u"si ravene"),
+    ('91AA', u"Vegetatie forestiera ponto-sarmatica cu stejar pufos"),
+    ('91D0', u"Turbarii cu vegetatie forestiera"),
+    ('91E0', u"Paduri aluviale cu Alnus glutinosa si Fraxinus excelsior "
              u"(Alno-Padion, Alnion incanae, Salicion albae)"),
-    ('91F0', u"Păduri ripariene mixte cu Quercus robur, Ulmus laevis, "
+    ('91F0', u"Paduri ripariene mixte cu Quercus robur, Ulmus laevis, "
              u"Fraxinus excelsior sau Fraxinus angustifolia, din "
-             u"lungul marilor râuri (Ulmenion minoris)"),
-    ('91H0', u"Vegetație forestieră panonică cu Quercus pubescens"),
-    ('91I0', u"Vegetație de silvostepă eurosiberiană cu Quercus spp."),
-    ('91K0', u"Păduri ilirice de Fagus sylvatica (Aremonio-Fagion)"),
-    ('91L0', u"Păduri ilirice de stejar cu carpen (Erythronio-Carpinion)"),
-    ('91M0', u"Păduri balcano-panonice de cer și gorun"),
-    ('91Q0', u"Păduri relictare cu Pinus sylvestris pe substrate calcaroase"),
-    ('91V0', u"Păduri dacice de fag (Symphyto-Fagion)"),
-    ('91X0', u"Păduri dobrogene de fag"),
-    ('91Y0', u"Păduri dacice de stejar și carpen"),
-    ('9260', u"Vegetație forestieră cu Castanea sativa"),
-    ('92A0', u"Zăvoaie cu Salix alba și Populus alba"),
-    ('92D0', u"Galerii ripariene și tufărișuri (Nerio-Tamaricetea și "
+             u"lungul marilor rauri (Ulmenion minoris)"),
+    ('91H0', u"Vegetatie forestiera panonica cu Quercus pubescens"),
+    ('91I0', u"Vegetatie de silvostepa eurosiberiana cu Quercus spp."),
+    ('91K0', u"Paduri ilirice de Fagus sylvatica (Aremonio-Fagion)"),
+    ('91L0', u"Paduri ilirice de stejar cu carpen (Erythronio-Carpinion)"),
+    ('91M0', u"Paduri balcano-panonice de cer si gorun"),
+    ('91Q0', u"Paduri relictare cu Pinus sylvestris pe substrate calcaroase"),
+    ('91V0', u"Paduri dacice de fag (Symphyto-Fagion)"),
+    ('91X0', u"Paduri dobrogene de fag"),
+    ('91Y0', u"Paduri dacice de stejar si carpen"),
+    ('9260', u"Vegetatie forestiera cu Castanea sativa"),
+    ('92A0', u"Zavoaie cu Salix alba si Populus alba"),
+    ('92D0', u"Galerii ripariene si tufarisuri (Nerio-Tamaricetea si "
              u"Securinegion tinctoriae)"),
-    ('9410', u"Păduri acidofile de Picea abies din regiunea montana "
+    ('9410', u"Paduri acidofile de Picea abies din regiunea montana "
              u"(Vaccinio-Piceetea)"),
-    ('9420', u"Păduri de Larix decidua și/sau Pinus cembra din "
-             u"regiunea montană"),
-    ('9530', u"Vegetație forestieră sub-mediteraneeană cu endemitul "
+    ('9420', u"Paduri de Larix decidua si/sau Pinus cembra din "
+             u"regiunea montana"),
+    ('9530', u"Vegetatie forestiera sub-mediteraneeana cu endemitul "
              u"Pinus nigra ssp. banatica"),
 ]

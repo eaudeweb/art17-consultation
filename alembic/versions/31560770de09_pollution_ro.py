@@ -31,7 +31,7 @@ DATA = [
     ('N', u"Azot"),
     ('P', u"Fosfor/Fosfat"),
     ('O', u"Chimicale organice toxice"),
-    ('X', u"Mix de poluanți"),
+    ('X', u"Mix de poluanti"),
     ('A', u"Acid"),
     ('T', u"Chimicale anorganice toxice"),
 ]
