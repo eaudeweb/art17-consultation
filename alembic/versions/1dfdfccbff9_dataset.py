@@ -33,17 +33,13 @@ def upgrade():
             u"'Consultare publica'"
         u") "
     )
-    op.execute(
-        "UPDATE data_habitattype_reg "
-            "SET cons_dataset_id = (SELECT objectid FROM datasets)"
-    )
-    op.execute(
-        "UPDATE data_species_regions "
-            "SET cons_dataset_id = (SELECT objectid FROM datasets)"
-    )
+    op.execute("UPDATE data_habitattype_reg SET cons_dataset_id = 1")
+    op.execute("UPDATE data_species_regions SET cons_dataset_id = 1")
 
 
 def downgrade():
+    op.execute("DELETE FROM data_species_regions WHERE cons_dataset_id > 1")
+    op.execute("DELETE FROM data_habitattype_reg WHERE cons_dataset_id > 1")
     op.drop_column('data_species_regions', 'cons_dataset_id')
     op.drop_column('data_habitattype_reg', 'cons_dataset_id')
     op.drop_table('datasets')
