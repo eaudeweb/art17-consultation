@@ -5,7 +5,7 @@ from collections import defaultdict
 from StringIO import StringIO
 import flask
 import flask.views
-from flask.ext.principal import Permission, Denial
+from flask.ext.principal import Permission, Denial, PermissionDenied
 from werkzeug.datastructures import MultiDict
 from art17 import models, dal, schemas, forms
 from art17.common import flatten_dict, FINALIZED_STATUS, NEW_STATUS, \
@@ -47,12 +47,14 @@ def perm_definalize_record(record):
     )
 
 
-def perm_view_aggregation():
+def check_aggregation_perm():
+    if need.admin in flask.g.identity.provides:
+        return True
     for ne in flask.g.identity.provides:
         if ne.value.startswith('reviewer'):
-            return Permission(need.everybody)
+            return True
 
-    return Permission(need.admin)
+    raise PermissionDenied()
 
 
 def get_tabmenu_data(dataset_id):
@@ -194,7 +196,7 @@ def inject_funcs():
 
 @aggregation.route('/')
 def home():
-    perm_view_aggregation().test()
+    check_aggregation_perm()
     dataset_list = models.Dataset.query.order_by(models.Dataset.date).all()
     return flask.render_template('aggregation/home.html', **{
         'dataset_list': dataset_list,
