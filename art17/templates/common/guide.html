@@ -19,8 +19,16 @@
 {% block content %}
   <h1>Ghid de raportare</h1>
 
-  <p>
-    ... stuff ...
-    {# link la pdf-uri, 'formatul de raportare' și 'ghidul de raportare' #}
-  </p>
+  <ul>
+    <li>
+      <a href="{{ url_for('static', filename='guide/guidelines.pdf') }}">
+        Ghidul de raportare <small>PDF</small></a>
+      <p>Note explanatorii și linii de ghidare pentru perioada 2007 - 2012.</p>
+    </li>
+    <li>
+      <a href="{{ url_for('static', filename='guide/formats.pdf') }}">
+        Formatul de raportare <small>PDF</small></a>
+      <p>Formatele de raportare pentru perioada 2007 - 2012.</p>
+    </li>
+  </ul>
 {% endblock content %}
