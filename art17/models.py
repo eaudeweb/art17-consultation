@@ -806,3 +806,16 @@ def upgrade(revision='head'):
 @db_manager.command
 def downgrade(revision):
     return alembic(['downgrade', revision])
+
+
+@db_manager.command
+def sequences():
+    pairs = list(db.session.execute(
+        "select 'R'||registration_id sequence_name, table_name "
+        "from sde.table_registry where owner = 'REPORTDATA_OWNER'"
+    ))
+
+    print "["
+    for a, b in pairs:
+        print "    %r," % ((str(a), str(b.lower())),)
+    print "]"
