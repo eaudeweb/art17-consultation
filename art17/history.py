@@ -133,10 +133,13 @@ def species_comments(subject_code, region_code, dataset_id=None):
         'subject_code': subject_code,
         'subject': subject,
         'region': get_biogeo_region(region_code),
-        'dashboard_url': flask.url_for('dashboard.species',
-                                       group_code=subject.lu.group_code),
-        'record_index_url': flask.url_for('species.index', region=region_code,
-                                           species=subject_code),
+        'dashboard_url':
+            flask.url_for('dashboard.species', group_code=subject.lu.group_code)
+            if dataset_id is None else '',
+        'record_index_url':
+            flask.url_for('species.index', region=region_code,
+                          species=subject_code)
+            if dataset_id is None else '',
         'region_code': region_code,
     })
 
@@ -155,8 +158,11 @@ def habitat_comments(subject_code, region_code, dataset_id=None):
         'subject_code': subject_code,
         'subject': dataset.get_subject(subject_code),
         'region': get_biogeo_region(region_code),
-        'dashboard_url': flask.url_for('dashboard.habitats'),
-        'record_index_url': flask.url_for('habitat.index', region=region_code,
-                                           habitat=subject_code),
+        'dashboard_url':
+            flask.url_for('dashboard.habitats') if dataset_id is None else '',
+        'record_index_url':
+            flask.url_for('habitat.index', region=region_code,
+                          habitat=subject_code) if dataset_id is None else ''
+        ,
         'region_code': region_code,
     })
