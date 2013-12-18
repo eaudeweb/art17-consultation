@@ -115,7 +115,8 @@ class HabitatCommentView(RecordView, CommentViewMixin, HabitatMixin):
                             .filter_by(region=comment.region)
                             .all())
         assert len(records) == 1, ("Expected exactly one record "
-                                   "for the conclusion")
+                                   "for the conclusion, "
+                                   "%d found" % len(records))
         return records[0]
 
 
