@@ -105,6 +105,10 @@ def load_debug_auth():
 def load_reverse_proxy_auth():
     user_id = flask.request.headers.get('X-RP-AuthUser')
     log = logging.getLogger(__name__)
+    cookie = flask.current_app.config.get('AUTH_COOKIE_NAME',
+                                               'WSS_KeepSessionAuthenticated')
+    realm = flask.current_app.config.get('AUTH_HTTP_REALM',
+                                         'sharepointdmz.ibb.local')
     if user_id and user_id != '(null)':
         with open_ldap_server() as ldap_server:
             user_info = ldap_server.get_user_info(user_id)
@@ -128,11 +132,11 @@ def load_reverse_proxy_auth():
 
         log.debug("Authenticated as %r", identity)
 
-    elif 'WSS_KeepSessionAuthenticated' in flask.request.cookies:
+    elif cookie in flask.request.cookies:
         return flask.Response(
             status=401,
             headers={
-                'WWW-Authenticate': 'Basic realm="sharepointdmz.ibb.local"',
+                'WWW-Authenticate': 'Basic realm="%s"' % realm,
             }
         )
 
