@@ -4,7 +4,6 @@
 
   <div class="row suite-bar ">
     <div class="col-md-3 col-md-offset-9 user-menu">
-      {%- if g.identity.id %}
       <ul class="nav pull-right">
         <li class="fixed">
           <a href="{{ url_for('common.guide') }}" title="Ghidul de raportare">
@@ -12,8 +11,8 @@
           </a>
         </li>
       </ul>
-      {% endif %}
-       <ul class="nav pull-right">
+
+      <ul class="nav pull-right">
         <li class="user">
           {%- set login_url = get_profile_login_url() %}
           {%- set logout_url = get_profile_logout_url() %}
@@ -59,6 +58,7 @@
       <a href="{{ homepage }}/">SIMSHAB</a>
     </li>
 
+    {%- if g.identity.id %}
     <li class="">
       <a href="{{ homepage }}/SitePages/Colectare Date.aspx">Colectare Date</a>
     </li>
@@ -68,16 +68,13 @@
     </li>
 
     <li class="">
-      <a href="{{ homepage }}/SitePages/Vizualizare.aspx">Vizualizare</a>
-    </li>
-
-    <li class="">
       <a href="{{ homepage }}/SitePages/Responsabil.aspx">Responsabil</a>
     </li>
 
     <li {% if app_name == 'aggregation' %}class="active"{% endif %}>
       <a href="{{ homepage }}/SitePages/Agregare.aspx">Agregare</a>
     </li>
+    {%- endif %}
 
     <li {% if app_name == 'consultation' %}class="active"{% endif %}>
       <a href="{{ homepage }}/SitePages/ConsultarePublica.aspx">Consultare Publică</a>
@@ -87,9 +84,10 @@
       <a href="{{ homepage }}/SitePages/Raportare.aspx">Raportare</a>
     </li>
 
+    {%- if g.identity.id %}
     <li class="">
       <a href="{{ homepage }}/SitePages/Management Utilizatori.aspx">Management Utilizatori</a>
     </li>
-
+    {%- endif %}
   </ul>
 </div>
