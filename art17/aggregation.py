@@ -47,6 +47,14 @@ def perm_definalize_record(record):
     )
 
 
+def perm_view_aggregation():
+    for ne in flask.g.identity.provides:
+        if ne.value.startswith('reviewer'):
+            return Permission(need.everybody)
+
+    return Permission(need.admin)
+
+
 def get_tabmenu_data(dataset_id):
     yield {
         'url': flask.url_for('.habitats', dataset_id=dataset_id),
@@ -185,8 +193,8 @@ def inject_funcs():
 
 
 @aggregation.route('/')
-@admin_permission.require()
 def home():
+    perm_view_aggregation().test()
     dataset_list = models.Dataset.query.order_by(models.Dataset.date).all()
     return flask.render_template('aggregation/home.html', **{
         'dataset_list': dataset_list,
