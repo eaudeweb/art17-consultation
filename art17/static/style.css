@@ -14,14 +14,10 @@ body {
     height: 30px;
 }
 
-.suite-bar ul,
-.suite-bar li {
+.suite-bar ul.nav,
+.suite-bar li.user {
     background: rgb(0, 153, 255);
     height: 30px;
-}
-
-.suite-bar a:hover {
-    padding: 0px 15px;
 }
 
 .user-menu .nav>li>a {
