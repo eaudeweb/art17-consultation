@@ -129,7 +129,12 @@ def load_reverse_proxy_auth():
         log.debug("Authenticated as %r", identity)
 
     elif 'WSS_KeepSessionAuthenticated' in flask.request.cookies:
-        return flask.Response(status=401)
+        return flask.Response(
+            status=401,
+            headers={
+                'WWW-Authenticate': 'Basic realm="sharepointdmz.ibb.local"',
+            }
+        )
 
 
 @auth.record
