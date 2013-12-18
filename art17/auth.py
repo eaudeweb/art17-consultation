@@ -128,6 +128,9 @@ def load_reverse_proxy_auth():
 
         log.debug("Authenticated as %r", identity)
 
+    elif 'WSS_KeepSessionAuthenticated' in flask.request.cookies:
+        return flask.Response(status=403)
+
 
 @auth.record
 def setup_auth_handlers(state):
