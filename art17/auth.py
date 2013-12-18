@@ -122,7 +122,7 @@ def load_reverse_proxy_auth():
 
         mapped_roles = []
         for group_name in user_info['groups']:
-            role_name = map_ldap_role(group_name)
+            role_name = role_for_ldap_group(group_name)
             if role_name:
                 mapped_roles.append(role_name)
 
@@ -183,8 +183,38 @@ def get_profile_logout_url():
     return logout_url or default_url
 
 
-def map_ldap_role(group_name):
-    if group_name == 'AdministratoriSIMSHAB':
+LDAP_ROLE_MAP = [
+    (':habitat', 'apadulce'),
+    (':habitat', 'dune'),
+    (':habitat', 'hcostiere'),
+    (':habitat', 'hmarine'),
+    (':habitat', 'hpesteri'),
+    (':habitat', 'mturb'),
+    (':habitat', 'paduri'),
+    (':habitat', 'pesteri'),
+    (':habitat', 'saraturi'),
+    (':habitat', 'stancarii'),
+    (':habitat', 'tufarisuri'),
+    (':species:A', 'amfibieni'),
+    (':species:M', 'lilieci'),
+    (':species:M', 'mamifere'),
+    (':species:M', 'smamifere'),
+    (':species:I', 'nevertebrate'),
+    (':species:F', 'pesti'),
+    (':species:F', 'spesti'),
+    (':species:P', 'plante'),
+    (':species:R', 'reptile'),
+]
+
+LDAP_ADMIN_ROLE = 'AdministratoriSIMSHAB'
+
+
+def ldap_groups_for_role():
+    pass
+
+
+def role_for_ldap_group(group_name):
+    if group_name == LDAP_ADMIN_ROLE:
         return 'admin'
 
     if group_name.startswith('G_EXP_'):
@@ -198,28 +228,9 @@ def map_ldap_role(group_name):
     else:
         return None
 
-    if target in ['apadulce', 'dune', 'hcostiere', 'hmarine', 'hpesteri',
-                  'mturb', 'paduri', 'pesteri', 'saraturi', 'stancarii',
-                  'tufarisuri']:
-        return prefix + ':habitat'
-
-    elif target == 'amfibieni':
-        return prefix + ':species:A'
-
-    elif target in ['lilieci', 'mamifere', 'smamifere']:
-        return prefix + ':species:M'
-
-    elif target == 'nevertebrate':
-        return prefix + ':species:I'
-
-    elif target in ['pesti', 'spesti']:
-        return prefix + ':species:F'
-
-    elif target == 'plante':
-        return prefix + ':species:P'
-
-    elif target == 'reptile':
-        return prefix + ':species:R'
+    for suffix, ldap_name in LDAP_ROLE_MAP:
+        if target == ldap_name:
+            return prefix + suffix
 
     else:
         return None
