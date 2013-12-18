@@ -11,9 +11,7 @@ MANUAL_SCRIPTS = (path(__file__).abspath().parent.parent /
 
 
 def upgrade():
-    for script_name in ['1_lu_grup_specie.sql',
-                        '2_data_species_comments.sql',
-                        '3_data_habitattype_comments.sql']:
+    for script_name in ['1_lu_grup_specie.sql']:
         script_path = MANUAL_SCRIPTS / script_name
         for statement in script_path.text(encoding='utf-8').split(';\n'):
             if statement.strip():
@@ -21,6 +19,4 @@ def upgrade():
 
 
 def downgrade():
-    op.drop_table('data_habitattype_comments')
-    op.drop_table('data_species_comments')
     op.drop_table('lu_grup_specie')
