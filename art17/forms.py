@@ -337,7 +337,8 @@ class PressureForm(Form):
             form_choices_loader.get_lu_ranking()
         )
         self.pollutions.choices = [
-            (p[0], '%s %s' % p) for p in
+            EMPTY_CHOICE +
+            [p[0], '%s %s' % p] for p in
             form_choices_loader.get_lu_pollution()
         ]
 
