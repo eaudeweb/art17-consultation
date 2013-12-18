@@ -321,7 +321,7 @@ class Coverage(Form):
 class PressureForm(Form):
     pressure = SelectField(default='')
     ranking = SelectField(default='')
-    pollutions = SelectMultipleField(default='')
+    pollutions = SelectMultipleField(default='', validators=[Optional()])
 
     def __init__(self, *args, **kwargs):
         super(PressureForm, self).__init__(*args, **kwargs)
