@@ -173,6 +173,7 @@ def crashme():
 @aggregation.app_context_processor
 def inject_funcs():
     return dict(home_url=flask.url_for('aggregation.home'),
+                app_name='aggregation',
                 get_record=get_record,
                 record_index_url=record_index_url,
                 record_edit_url=record_edit_url,

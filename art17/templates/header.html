@@ -53,11 +53,11 @@
       <a href="{{ homepage }}/SitePages/Responsabil.aspx">Responsabil</a>
     </li>
 
-    <li class="">
+    <li {% if app_name == 'aggregation' %}class="active"{% endif %}>
       <a href="{{ homepage }}/SitePages/Agregare.aspx">Agregare</a>
     </li>
 
-    <li class="active ">
+    <li {% if app_name == 'consultation' %}class="active"{% endif %}>
       <a href="{{ homepage }}/SitePages/ConsultarePublica.aspx">Consultare Publică</a>
     </li>
 

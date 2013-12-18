@@ -6,7 +6,9 @@ consultation = flask.Blueprint('consultation', __name__)
 
 @consultation.app_context_processor
 def inject_home_url():
-    return dict(home_url=flask.url_for('consultation.home'))
+    return dict(home_url=flask.url_for('consultation.home'),
+                app_name='consultation',
+    )
 
 
 @consultation.route('/')
