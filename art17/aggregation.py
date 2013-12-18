@@ -12,7 +12,7 @@ from art17.common import flatten_dict, FINALIZED_STATUS, NEW_STATUS, \
                          get_roles_for_subject, flatten_errors
 from art17.habitat import HabitatCommentView
 from art17.species import SpeciesCommentView
-from art17.auth import need
+from art17.auth import need, admin_permission
 
 aggregation = flask.Blueprint('aggregation', __name__)
 
@@ -193,6 +193,7 @@ def home():
 
 
 @aggregation.route('/executa_agregare', methods=['GET', 'POST'])
+@admin_permission.require()
 def aggregate():
     if flask.request.method == 'POST':
         report, dataset = create_aggregation(
@@ -212,6 +213,7 @@ def aggregate():
 
 
 @aggregation.route('/sterge/<int:dataset_id>', methods=['POST'])
+@admin_permission.require()
 def delete_dataset(dataset_id):
     dataset = models.Dataset.query.get(dataset_id)
     dataset.species_objs.delete()
