@@ -27,7 +27,7 @@ def form():
 
     return flask.render_template('config.html', **{
         'CONFIG_LABEL': CONFIG_LABEL,
-        'config_rows': models.Config.query.all(),
+        'config_rows': models.Config.query.order_by(models.Config.id).all(),
     })
 
 
