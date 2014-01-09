@@ -150,14 +150,18 @@ class BaseDataset(object):
             )
         )
         for (subject_id, region_code, count) in count_comments:
-            overview[subject_id, region_code]['count'] = count
+            key = subject_id, region_code
+            if key in overview:
+                overview[key]['count'] = count
 
         count_unevaluated_comments = (
             count_comments
             .filter_by(cons_status='new')
         )
         for (subject_id, region_code, count) in count_unevaluated_comments:
-            overview[subject_id, region_code]['unevaluated'] = count
+            key = subject_id, region_code
+            if key in overview:
+                overview[key]['unevaluated'] = count
 
         if user_id is not None:
             count_comments_with_reply = (
@@ -172,7 +176,9 @@ class BaseDataset(object):
             )
             for (subject_id, region_code, count) in \
                     count_comments_with_reply:
-                overview[subject_id, region_code]['with_reply'] = count
+                key = subject_id, region_code
+                if key in overview:
+                    overview[key]['with_reply'] = count
 
             count_comments_with_read_reply = (
                 count_comments_with_reply
@@ -187,7 +193,9 @@ class BaseDataset(object):
             )
             for (subject_id, region_code, count) in \
                     count_comments_with_read_reply:
-                overview[subject_id, region_code]['with_read_reply'] = count
+                key = (subject_id, region_code)
+                if key in overview:
+                    overview[key]['with_read_reply'] = count
 
         final_records_query = (
             self.record_model.query
@@ -196,7 +204,8 @@ class BaseDataset(object):
         )
         for final_record in final_records_query:
             key = (final_record.subject_id, final_record.region)
-            overview[key]['final_record'] = final_record
+            if key in overview:
+                overview[key]['final_record'] = final_record
 
         return overview
 
