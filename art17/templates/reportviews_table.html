@@ -8,7 +8,7 @@
 
   {% for name, parsed_row in species_list %}
     <tr>
-      <td>{{ name }}</td>
+      <td>{{ name }} ({{ parsed_row.region }})</td>
 
       {{ record(parsed_row) }}
     </tr>
