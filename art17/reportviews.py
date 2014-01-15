@@ -40,6 +40,10 @@ def table(species_list):
         .filter(models.DataSpeciesRegion.cons_dataset_id == dataset_id)
         .filter(models.DataSpeciesRegion.cons_role == 'assessment')
         .filter(models.DataSpecies.id.in_(species_id_list))
+        .order_by(
+            models.LuHdSpecies.speciesname,
+            models.DataSpeciesRegion.region,
+        )
     )
 
     return flask.render_template('reportviews_table.html', **{
