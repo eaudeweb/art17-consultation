@@ -5,12 +5,17 @@ from art17 import config
 
 reportviews = flask.Blueprint('reportviews', __name__)
 
-with reportviews.open_resource('reportviews_species.json') as f:
-    cites_species_names = set(flask.json.load(f)['species'])
+with reportviews.open_resource('reportviews_species.json') as _f:
+    _data = flask.json.load(_f)
+    species_names = {
+        'cbd': set(_data['cbd']),
+        'cites': set(_data['cites']),
+    }
 
 
-@reportviews.route('/raport_specii/cites')
-def table():
+@reportviews.route('/raport_specii/cbd', defaults={'species_list': 'cbd'})
+@reportviews.route('/raport_specii/cites', defaults={'species_list': 'cites'})
+def table(species_list):
     dataset_id = int(config.get_config_value('CONSULTATION_DATASET', '1'))
 
     prefilter_query = (
@@ -22,7 +27,7 @@ def table():
     )
     species_id_list = []
     for species_id, name in prefilter_query:
-        if name in cites_species_names:
+        if name in species_names[species_list]:
             species_id_list.append(species_id)
 
     species_query = (
