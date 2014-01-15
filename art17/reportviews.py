@@ -45,6 +45,6 @@ def table(species_list):
     return flask.render_template('reportviews_table.html', **{
         'species_list': [
             (name, schemas.parse_species(record))
-            for name, record in species_query.limit(5)  # TODO remove limit
+            for name, record in species_query
         ],
     })
