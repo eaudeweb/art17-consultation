@@ -1,0 +1,16 @@
+{%- from 'species/topic.html' import
+    assessment_header, record, record_columns
+    with context -%}
+
+
+<table class="records table table-bordered">
+  {{ assessment_header() }}
+
+  {% for name, parsed_row in species_list %}
+    <tr>
+      <td>{{ name }}</td>
+
+      {{ record(parsed_row) }}
+    </tr>
+  {% endfor %}
+</table>
