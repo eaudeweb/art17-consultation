@@ -1,7 +1,13 @@
+{% extends "layout.html" %}
+
 {%- from 'species/topic.html' import
     assessment_header, record, record_columns
     with context -%}
 
+
+{% block content %}
+
+<h1>Specii {{ title }}</h1>
 
 <table class="records table table-bordered">
   {{ assessment_header() }}
@@ -14,3 +20,4 @@
     </tr>
   {% endfor %}
 </table>
+{%- endblock %}

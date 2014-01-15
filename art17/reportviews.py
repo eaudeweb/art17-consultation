@@ -8,8 +8,14 @@ reportviews = flask.Blueprint('reportviews', __name__)
 with reportviews.open_resource('reportviews_species.json') as _f:
     _data = flask.json.load(_f)
     species_names = {
-        'cbd': set(_data['cbd']),
-        'cites': set(_data['cites']),
+        'cbd': {
+            'title': "CBD",
+            'data': set(_data['cbd']),
+        },
+        'cites': {
+            'title': "CITES",
+            'data': set(_data['cites']),
+        },
     }
 
 
@@ -27,7 +33,7 @@ def table(species_list):
     )
     species_id_list = []
     for species_id, name in prefilter_query:
-        if name in species_names[species_list]:
+        if name in species_names[species_list]['data']:
             species_id_list.append(species_id)
 
     species_query = (
@@ -47,6 +53,7 @@ def table(species_list):
     )
 
     return flask.render_template('reportviews_table.html', **{
+        'title': species_names[species_list]['title'],
         'species_list': [
             (name, schemas.parse_species(record))
             for name, record in species_query
