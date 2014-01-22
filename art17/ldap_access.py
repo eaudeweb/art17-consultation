@@ -46,7 +46,7 @@ class LdapServer(object):
 
     def get_user_info(self, user_id):
         filters = ldap.filter.filter_format(
-            '(&(objectClass=user)(cn=%s))',
+            '(&(objectClass=user)(sAMAccountName=%s))',
             [user_id],
         )
         results = self.conn.search_s(
