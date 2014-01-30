@@ -32,20 +32,21 @@
     </div>
   </div>
 
-  <div class="row banner-up">
-    <div class="col-md-9 sponsors-and-title">
-      <img class="imag-left" src="{{ url_for('static', filename='ue.png') }}" alt="logo UE">
-      <img class="imag-left" src="{{ url_for('static', filename='gov.png') }}" alt="logo guvern">
-      <img class="imag-left" src="{{ url_for('static', filename='posmediu.png') }}" alt="logo POSMEDIU">
-      <img src="{{ url_for('static', filename='ibb.bmp') }}" alt="logo IS">
-      <h1 id="portal-title">SIMSHAB</h1>
-    </div>
+  <div class="row">
+    <div class="sponsors-and-title" style="padding-left: 20px">
+      <table width="100%">
+        <tr>
+        <td width="20%"><img src="{{ url_for('static', filename='ue.png') }}" alt="logo UE"></td></td>
+        <td width="20%"><img src="{{ url_for('static', filename='gov.png') }}" alt="logo guvern"></td>
+        <td width="20%"><img src="{{ url_for('static', filename='posmediu.png') }}" alt="logo POSMEDIU"></td>
+        <td width="20%"><img style="float:right" src="{{ url_for('static', filename='ibb.bmp') }}" alt="logo IS"></td>
+        <td width="20%" align="right"><img src="{{ url_for('static', filename='is.png') }}" alt="logo IS"></td>
+        </tr>
+      </table>
 
-    <div class="col-md-3 portal-logo">
-      <img class="pull-right" src="{{ url_for('static', filename='is.png') }}" alt="logo IS">
+     <h1 id="portal-title">SIMSHAB</h1>
     </div>
   </div>
-
 </div>
 
 <div class="global-menu">
