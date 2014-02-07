@@ -68,9 +68,12 @@ def handle_signal(table, action, ob, **extra):
 
     recipients = get_notification_emails(ob, action)
     for r in recipients:
+        address = r['email']
+        if not address:
+            continue
         msg = Message(body=create_message(table, action, ob, r),
                 subject='Notificare',
-                recipients=[r['email']]
+                recipients=[address]
         )
         mail.send(msg)
 
