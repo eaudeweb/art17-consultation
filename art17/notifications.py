@@ -8,6 +8,7 @@ from art17 import habitat
 from art17 import models
 from art17.common import calculate_identifier_steps
 from art17.ldap_access import open_ldap_server
+from art17.auth import ldap_groups_for_role
 
 notifications = flask.Blueprint('notifications', __name__)
 mail = Mail()

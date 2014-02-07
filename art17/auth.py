@@ -222,7 +222,7 @@ def ldap_groups_for_role(role):
         ldap_prefix = 'G_RES_'
 
     else:
-        raise RuntimeError("Can't parse role %r" % role)
+        return []
 
     role_suffix = role[len(prefix):]
     rv = []
