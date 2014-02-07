@@ -147,7 +147,7 @@ def record_history_url(record):
     elif isinstance(record, models.DataSpeciesRegion):
         return flask.url_for('history_aggregation.habitat_comments',
                              dataset_id=record.cons_dataset_id,
-                             subject_code=record.habitat.code,
+                             subject_code=record.species.code,
                              region_code=record.region,
         )
     raise RuntimeError("Expecting a species or a habitat object")
