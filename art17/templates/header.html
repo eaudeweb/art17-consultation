@@ -84,7 +84,7 @@
       <a href="{{ homepage }}/SitePages/Raportare.aspx">Raportare</a>
     </li>
 
-    {%- if g.identity.id %}
+    {%- if admin_permission.can() %}
     <li class="">
       <a href="{{ homepage }}/SitePages/Management Utilizatori.aspx">Management Utilizatori</a>
     </li>
