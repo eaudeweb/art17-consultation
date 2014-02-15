@@ -2,7 +2,7 @@ Art17 – aplicație de consultare
 ===============================
 
 
-Insalare
+Instalare
 --------
 Trebuie să fie deja instalate următoarele:
 
