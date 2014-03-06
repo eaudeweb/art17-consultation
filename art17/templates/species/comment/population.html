@@ -7,7 +7,7 @@
       <div class="form-group">
         {%- set population = form.population.size.population %}
         <label for="population.size.population.unit">
-          Estimarea mărimii populației
+          Estimarea mărimii populației (număr de indivizi sau valori agreate)
         </label>
 
         {{ errors(population) }}
@@ -29,9 +29,12 @@
         </div>
       </div>
 
+
       <div class="form-group">
         {%- set population_alt = form.population.size.population_alt %}
-
+        <label for="population.size.population.unit">
+          Estimarea mărimii populației (altfel decât număr de indivizi)
+        </label>
         {{ errors(population_alt) }}
 
         <div class="row">
