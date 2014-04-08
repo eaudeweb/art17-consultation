@@ -98,6 +98,36 @@ def execute_on_primary(query):
     return models.db.session.execute(query, bind=aggregation_engine)
 
 
+def aggregate_object(obj, dataset):
+    """
+    Aggregate a habitat or a species.
+    Returns a new row to be inserted into database.
+    """
+    if isinstance(obj, models.DataHabitatsCheckList):
+        region_code = obj.bio_region
+        habitat_row = models.DataHabitattypeRegion(
+            dataset=dataset,
+            region=region_code,
+        )
+        return habitat_row
+    elif isinstance(obj, models.DataSpeciesCheckList):
+        region_code = obj.bio_region
+        species_row = models.DataSpeciesRegion(
+            dataset=dataset,
+            region=region_code,
+        )
+        return species_row
+    else:
+        raise NotImplementedError('Unknown check list obj')
+
+
+def prepare_object(obj, timestamp, user_id):
+    obj.cons_date = timestamp
+    obj.cons_user_id = user_id
+    obj.cons_role = 'assessment'
+    return obj
+
+
 def create_aggregation(timestamp, user_id):
     dataset = models.Dataset(
         date=timestamp,
@@ -120,19 +150,15 @@ def create_aggregation(timestamp, user_id):
 
     habitat_report = defaultdict(set)
     for row in habitat_checklist_query:
-        region_code = row.bio_region
+        habitat_row = aggregate_object(row, dataset)
         habitat_code = row.natura_2000_code
         habitat_id = habitat_id_map.get(habitat_code)
-        habitat_row = models.DataHabitattypeRegion(
-            dataset=dataset,
-            habitat_id=habitat_id,
-            region=region_code,
-            cons_role='assessment',
-            cons_date=timestamp,
-            cons_user_id=user_id,
-        )
+
+        habitat_row = prepare_object(habitat_row, timestamp, user_id)
+        habitat_row.subject_id = habitat_id
         models.db.session.add(habitat_row)
-        habitat_report[habitat_code].add(region_code)
+
+        habitat_report[habitat_code].add(habitat_row.region)
 
     species_id_map = dict(
         models.db.session.query(
@@ -149,19 +175,14 @@ def create_aggregation(timestamp, user_id):
 
     species_report = defaultdict(set)
     for row in species_checklist_query:
-        region_code = row.bio_region
+        species_row = aggregate_object(row, dataset)
         species_code = row.natura_2000_code
         species_id = species_id_map.get(species_code)
-        species_row = models.DataSpeciesRegion(
-            dataset=dataset,
-            species_id=species_id,
-            region=region_code,
-            cons_role='assessment',
-            cons_date=timestamp,
-            cons_user_id=user_id,
-        )
+        species_row = prepare_object(species_row, timestamp, user_id)
+        species_row.subject_id = species_id
         models.db.session.add(species_row)
-        species_report[species_code].add(region_code)
+
+        species_report[species_code].add(species_row.region)
 
     report = StringIO()
     print >>report, "Habitate:"

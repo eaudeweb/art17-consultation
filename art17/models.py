@@ -6,6 +6,7 @@ from sqlalchemy import (Column, DateTime, ForeignKey, Index, func,
                         Boolean, Integer, Sequence)
 from sqlalchemy.orm import relationship, foreign
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.hybrid import hybrid_property
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.script import Manager
 from art17.table_sequences import get_sequence_id
@@ -364,9 +365,13 @@ class DataHabitattypeRegion(Base):
     def get_threats(self):
         return self.pressures.filter_by(type='t')
 
-    @property
+    @hybrid_property
     def subject_id(self):
         return self.habitat_id
+
+    @subject_id.setter
+    def subject_id(self, value):
+        self.habitat_id = value
 
     @property
     def subject(self):
@@ -566,9 +571,13 @@ class DataSpeciesRegion(Base):
     def get_threats(self):
         return self.pressures.filter_by(type='t')
 
-    @property
+    @hybrid_property
     def subject_id(self):
         return self.species_id
+
+    @subject_id.setter
+    def subject_id(self, value):
+        self.species_id = value
 
     @property
     def subject(self):
