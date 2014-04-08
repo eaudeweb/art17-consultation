@@ -499,7 +499,7 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>/'
                          'index/',
                          view_func=HabitatIndexView.as_view('habitat-index'))
 
-from .habitat import detail as detail_habitat
+from art17.habitat import detail as detail_habitat
 
 aggregation.route('/habitate/detalii/<int:record_id>',
                   endpoint='detail-habitat')(detail_habitat)
@@ -524,7 +524,7 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>/'
                          view_func=SpeciesIndexView.as_view('species-index'))
 
 
-from .species import detail as detail_species
+from art17.species import detail as detail_species
 
 aggregation.route('/specii/detalii/<int:record_id>',
                   endpoint='detail-species')(detail_species)
