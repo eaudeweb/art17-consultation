@@ -767,6 +767,24 @@ class Dataset(Base):
     date = Column('DATE', DateTime)
     comment = Column('COMMENT', Text)
 
+    @property
+    def details(self):
+        new = (
+            self.habitat_objs.filter_by(cons_role='assessment').count() +
+            self.species_objs.filter_by(cons_role='assessment').count()
+        )
+        draft = (
+            self.habitat_objs.filter_by(cons_role='final-draft').count() +
+            self.species_objs.filter_by(cons_role='final-draft').count()
+        )
+        final = (
+            self.habitat_objs.filter_by(cons_role='final').count() +
+            self.species_objs.filter_by(cons_role='final').count()
+        )
+        return {
+            'new': new, 'draft': draft, 'final': final,
+        }
+
 
 class NotificationUser(Base):
     __tablename__ = u'notification_user'

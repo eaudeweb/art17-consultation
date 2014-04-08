@@ -28,7 +28,8 @@
   <thead>
     <th>Dată</th>
     <th>Utilizator</th>
-    <th></th>
+    <th>Titlu</th>
+    <th>Detalii</th>
     <th></th>
   </thead>
 
@@ -40,6 +41,11 @@
       <td><a href="{{ url }}">{{ dataset.date }}</a></td>
       <td>{{ dataset.user_id }}</td>
       <td>{{ dataset.comment or ""|truncate(100) }}</td>
+      <td class="text-right">
+        {{ dataset.details.new }} agregate,
+        {{ dataset.details.draft }} în lucru,
+        {{ dataset.details.final }} finalizate
+      </td>
       <td>
         <form method="post" action="{{ delete_url }}"
               class="delete-dataset-form">
