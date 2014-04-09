@@ -128,6 +128,52 @@ def prepare_object(obj, timestamp, user_id):
     return obj
 
 
+def get_habitat_checklist(distinct=False):
+    queryset = (
+        models.DataHabitatsCheckList.query
+        .filter(models.DataHabitatsCheckList.presence != 'EX')
+        .filter(models.DataHabitatsCheckList.member_state == 'RO')
+    )
+    if distinct:
+        queryset = (
+            queryset
+            .with_entities(
+                models.DataHabitatsCheckList.code,
+                models.DataHabitatsCheckList.code.concat(
+                    ' ' +
+                    models.DataHabitatsCheckList.name
+                ),
+            )
+            .group_by(models.DataHabitatsCheckList.name,
+                      models.DataHabitatsCheckList.code)
+            .order_by(models.DataHabitatsCheckList.name)
+        )
+    return queryset
+
+
+def get_species_checklist(distinct=False):
+    queryset = (
+        models.DataSpeciesCheckList.query
+        .filter(models.DataSpeciesCheckList.presence != 'EX')
+        .filter(models.DataSpeciesCheckList.member_state == 'RO')
+    )
+    if distinct:
+        queryset = (
+            queryset
+            .with_entities(
+                models.DataSpeciesCheckList.code,
+                models.DataSpeciesCheckList.code.concat(
+                    ' ' +
+                    models.DataSpeciesCheckList.name
+                ),
+            )
+            .group_by(models.DataSpeciesCheckList.name,
+                      models.DataSpeciesCheckList.code)
+            .order_by(models.DataSpeciesCheckList.name)
+        )
+    return queryset
+
+
 def create_aggregation(timestamp, user_id):
     dataset = models.Dataset(
         date=timestamp,
@@ -142,11 +188,7 @@ def create_aggregation(timestamp, user_id):
         )
     )
 
-    habitat_checklist_query = (
-        models.DataHabitatsCheckList.query
-        .filter(models.DataHabitatsCheckList.presence != 'EX')
-        .filter(models.DataHabitatsCheckList.member_state == 'RO')
-    )
+    habitat_checklist_query = get_habitat_checklist()
 
     habitat_report = defaultdict(set)
     for row in habitat_checklist_query:
@@ -167,11 +209,7 @@ def create_aggregation(timestamp, user_id):
         )
     )
 
-    species_checklist_query = (
-        models.DataSpeciesCheckList.query
-        .filter(models.DataSpeciesCheckList.presence != 'EX')
-        .filter(models.DataSpeciesCheckList.member_state == 'RO')
-    )
+    species_checklist_query = get_species_checklist()
 
     species_report = defaultdict(set)
     for row in species_checklist_query:

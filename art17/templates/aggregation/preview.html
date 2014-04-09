@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+
+{% block title %}Agregare &mdash; {{ super() }}{% endblock title %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('agregare specie/habitat', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
+{% block content %}
+  <h2>Agregare specie/habitat</h2>
+
+    <p>Făcând click pe butonul agregare, se va încerca agregarea speciei sau
+      habitatului selectat.
+    </p>
+
+    <form method="post">
+      {{ form.subject() }}
+      <button type="submit" class="btn btn-warning">Execută agregarea</button>
+    </form>
+{% endblock content %}

@@ -4,6 +4,7 @@ from datetime import datetime
 import flask
 from flask.views import View
 from werkzeug.datastructures import MultiDict
+from wtforms import Form, SelectField
 
 from art17 import models, forms, schemas, dal
 from art17.aggregation import (
@@ -14,9 +15,14 @@ from art17.aggregation import (
     perm_edit_record,
     perm_finalize_record,
     perm_definalize_record,
+    get_habitat_checklist,
+    get_species_checklist,
 )
-from art17.aggregation.utils import record_edit_url, record_details_url, \
-    record_finalize_toggle_url
+from art17.aggregation.utils import (
+    record_edit_url,
+    record_details_url,
+    record_finalize_toggle_url,
+)
 from art17.auth import admin_permission
 from art17.common import (
     flatten_dict,
@@ -67,6 +73,28 @@ def aggregate():
 
     return flask.render_template('aggregation/aggregate.html', **{
         'report': report,
+        'dataset': dataset,
+    })
+
+
+class PreviewForm(Form):
+    subject = SelectField(default='')
+
+
+@aggregation.route('/previzualizare/<page>/', methods=['GET', 'POST'])
+@admin_permission.require()
+def preview(page):
+    if page == 'habitat':
+        qs = get_habitat_checklist(distinct=True)
+    elif page == 'species':
+        qs = get_species_checklist(distinct=True)
+    else:
+        raise NotImplementedError()
+    dataset = None
+    form = PreviewForm()
+    form.subject.choices = list(qs)
+    return flask.render_template('aggregation/preview.html', **{
+        'form': form,
         'dataset': dataset,
     })
 

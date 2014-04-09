@@ -265,6 +265,14 @@ class DataHabitatsCheckList(Base):
     predefined = Column(Integer)
     globalid = Column(String, default=create_esri_guid)
 
+    @hybrid_property
+    def code(self):
+        return self.natura_2000_code
+
+    @hybrid_property
+    def name(self):
+        return self.valid_name
+
 
 class DataHabitattypeRegion(Base):
     __tablename__ = u'data_habitattype_reg'
@@ -448,6 +456,14 @@ class DataSpeciesCheckList(Base):
     ms_added = Column(Integer)
     predefined = Column(Integer)
     globalid = Column(String, default=create_esri_guid)
+
+    @hybrid_property
+    def code(self):
+        return self.natura_2000_code
+
+    @hybrid_property
+    def name(self):
+        return self.species_name
 
 
 class DataSpeciesRegion(Base):

@@ -11,7 +11,13 @@
 
     <p>
       <a class="btn btn-primary"
-         href="{{ url_for('.aggregate') }}">Agregare</a>
+         href="{{ url_for('.aggregate') }}">Agregare set de date</a>
+
+      <a class="btn btn-warning"
+         href="{{ url_for('.preview', page='habitat') }}">Agregare habitat</a>
+
+      <a class="btn btn-warning"
+         href="{{ url_for('.preview', page='species') }}">Agregare species</a>
 
       {% if config['AUTH_DEBUG'] %}
         <a class="btn btn-danger"
