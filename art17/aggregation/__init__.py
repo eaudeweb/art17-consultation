@@ -61,9 +61,29 @@ def check_aggregation_perm():
     raise PermissionDenied()
 
 
-def get_tabmenu_data(dataset_id):
+def get_tabmenu_preview(dataset):
+    if dataset.habitat_objs.count():
+        yield {
+            'url': flask.url_for('.habitats', dataset_id=dataset.id),
+            'label': "Habitate",
+            'code': 'H',
+        }
+    species = list(dataset.species_objs)
+    for group in dal.get_species_groups():
+        qs = [s for s in species if s.species.lu.group_code == group.code]
+        if qs:
+            yield {
+                'url': flask.url_for('.species',
+                                     group_code=group.code,
+                                     dataset_id=dataset.id),
+                'label': group.description,
+                'code': 'S' + group.code,
+            }
+
+
+def get_tabmenu_data(dataset):
     yield {
-        'url': flask.url_for('.habitats', dataset_id=dataset_id),
+        'url': flask.url_for('.habitats', dataset_id=dataset.id),
         'label': "Habitate",
         'code': 'H',
     }
@@ -71,7 +91,7 @@ def get_tabmenu_data(dataset_id):
         yield {
             'url': flask.url_for('.species',
                                  group_code=group.code,
-                                 dataset_id=dataset_id),
+                                 dataset_id=dataset.id),
             'label': group.description,
             'code': 'S' + group.code,
         }

@@ -12,13 +12,15 @@ from art17.aggregation import (
     aggregation,
     check_aggregation_perm,
     create_aggregation,
+    create_preview_aggregation,
     get_tabmenu_data,
+    get_tabmenu_preview,
     perm_edit_record,
     perm_finalize_record,
     perm_definalize_record,
     get_habitat_checklist,
     get_species_checklist,
-    create_preview_aggregation)
+)
 from art17.aggregation.utils import (
     record_edit_url,
     record_details_url,
@@ -143,7 +145,7 @@ class DashboardView(View):
 
     def get_context_data(self):
         dal_object = self.ds_model(self.dataset_id)
-        dataset = models.Dataset.query.get_or_404(self.dataset_id)
+        self.dataset = models.Dataset.query.get_or_404(self.dataset_id)
         object_regions = dal_object.get_subject_region_overview_aggregation()
         #bioreg_list = dal.get_biogeo_region_list()
 
@@ -153,18 +155,22 @@ class DashboardView(View):
             if r.code in relevant_regions
         ]
 
+        if self.dataset.preview:
+            tabmenu = get_tabmenu_preview(self.dataset)
+        else:
+            tabmenu = list(get_tabmenu_data(self.dataset_id))
         return {
             'current_tab': self.current_tab,
             'bioreg_list': bioreg_list,
-            'tabmenu_data': list(get_tabmenu_data(self.dataset_id)),
+            'tabmenu_data': tabmenu,
             'dataset_url': flask.url_for('.dashboard',
                                          dataset_id=self.dataset_id),
             'dataset_id': self.dataset_id,
             'object_list': self.get_object_list(),
             'object_regions': object_regions,
-            'dataset': dataset,
-            'habitat_count': dataset.habitat_objs.count(),
-            'species_count': dataset.species_objs.count(),
+            'dataset': self.dataset,
+            'habitat_count': self.dataset.habitat_objs.count(),
+            'species_count': self.dataset.species_objs.count(),
         }
 
     def dispatch_request(self, *args, **kwargs):
@@ -181,15 +187,12 @@ class HabitatsDashboard(DashboardView):
     ds_model = dal.HabitatDataset
 
     def get_object_list(self):
+        if self.dataset.preview:
+            return set([h.habitat for h in self.dataset.habitat_objs])
         return dal.get_habitat_list()
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/',
                          view_func=HabitatsDashboard.as_view('habitats'))
-
-
-@aggregation.route('/dataset/<int:dataset_id>/')
-def dashboard(dataset_id):
-    return flask.redirect(flask.url_for('.habitats', dataset_id=dataset_id))
 
 
 class SpeciesDashboard(DashboardView):
@@ -197,6 +200,8 @@ class SpeciesDashboard(DashboardView):
     ds_model = dal.SpeciesDataset
 
     def get_object_list(self):
+        if self.dataset.preview:
+            return set([s.species for s in self.dataset.species_objs])
         return dal.get_species_list(self.group_code)
 
     def dispatch_request(self, *args, **kwargs):
@@ -206,6 +211,23 @@ class SpeciesDashboard(DashboardView):
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/species/<group_code>',
                          view_func=SpeciesDashboard.as_view('species'))
+
+
+@aggregation.route('/dataset/<int:dataset_id>/')
+def dashboard(dataset_id):
+    dataset = models.Dataset.query.get(dataset_id)
+    if dataset.habitat_objs.count():
+        return flask.redirect(flask.url_for('.habitats',
+                                            dataset_id=dataset_id))
+    species = dataset.species_objs.first()
+    if species:
+        return flask.redirect(flask.url_for(
+            '.species',
+            dataset_id=dataset_id,
+            group_code=species.species.lu.group_code,
+        ))
+    return flask.redirect(flask.url_for('.habitats',
+                                        dataset_id=dataset_id))
 
 
 class RecordViewMixin(object):
