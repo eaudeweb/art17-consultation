@@ -1,3 +1,4 @@
 *.pyc
 /instance
 /settings.py
+/fabenv.ini
