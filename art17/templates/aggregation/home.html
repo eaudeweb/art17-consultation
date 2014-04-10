@@ -1,35 +1,6 @@
 {% extends "layout.html" %}
 
-
-{% block content %}
-<div class="jumbotron">
-  <div class="container">
-    <h2>
-      Agregarea datelor primare
-      pentru Articolul 17 din Directiva Habitate
-    </h2>
-
-    <p>
-      <a class="btn btn-primary"
-         href="{{ url_for('.aggregate') }}">Agregare set de date</a>
-
-      <a class="btn btn-warning"
-         href="{{ url_for('.preview', page='habitat') }}">Agregare habitat</a>
-
-      <a class="btn btn-warning"
-         href="{{ url_for('.preview', page='species') }}">Agregare species</a>
-
-      {% if config['AUTH_DEBUG'] %}
-        <a class="btn btn-danger"
-           href="{{ url_for('auth.debug') }}">autentificare (debug)</a>
-      {% endif %}
-    </p>
-  </div>
-</div>
-
-
-<h2>Seturi de date</h2>
-
+{% macro dataset_table(dataset_list) %}
 <table class="table table-bordered">
   <thead>
     <th>Dată</th>
@@ -63,6 +34,46 @@
     </tr>
   {%- endfor %}
 </table>
+{% endmacro %}
+
+
+{% block content %}
+<div class="jumbotron">
+  <div class="container">
+    <h2>
+      Agregarea datelor primare
+      pentru Articolul 17 din Directiva Habitate
+    </h2>
+
+    <p>
+      <a class="btn btn-primary"
+         href="{{ url_for('.aggregate') }}">Agregare set de date</a>
+
+      <a class="btn btn-warning"
+         href="{{ url_for('.preview', page='habitat') }}">Agregare habitat</a>
+
+      <a class="btn btn-warning"
+         href="{{ url_for('.preview', page='species') }}">Agregare species</a>
+
+      {% if config['AUTH_DEBUG'] %}
+        <a class="btn btn-danger"
+           href="{{ url_for('auth.debug') }}">autentificare (debug)</a>
+      {% endif %}
+    </p>
+  </div>
+</div>
+
+{% if preview_datasets %}
+<h2>Previzualizări agregare</h2>
+
+
+{{ dataset_table(preview_datasets) }}
+{% endif %}
+
+<h2>Seturi de date</h2>
+
+{{ dataset_table(dataset_list) }}
+
 {% endblock content %}
 
 

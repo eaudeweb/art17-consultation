@@ -58,8 +58,15 @@ def home():
         .order_by(models.Dataset.date)
         .all()
     )
+    preview_list = (
+        models.Dataset.query
+        .filter_by(preview=True, user_id=flask.g.identity.id)
+        .order_by(models.Dataset.date)
+        .all()
+    )
     return flask.render_template('aggregation/home.html', **{
         'dataset_list': dataset_list,
+        'preview_datasets': preview_list,
     })
 
 
