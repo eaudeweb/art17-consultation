@@ -20,7 +20,7 @@ def app():
     @app.before_request
     def set_identity():
         user_id = flask.current_app.config['TESTING_USER_ID']
-        flask.g.identity = Mock(id=user_id)
+        flask.g.identity = Mock(id=user_id, provides=[])
     from art17.models import db
     db.init_app(app)
     with app.app_context():

@@ -1,4 +1,8 @@
 # coding=utf-8
+import flask
+from flask.ext.principal import PermissionDenied
+from mock import Mock
+from art17.auth import need
 from test_habitat import _create_habitat_record
 from test_species import _create_species_record
 
@@ -161,3 +165,17 @@ def test_history_habitat_update(aggregation_app):
         assert history[0].object_id == str(comment.id)
         assert history[0].dataset_id == comment.cons_dataset_id
 
+
+def test_aggregation_roles(aggregation_app):
+    client = aggregation_app.test_client()
+    try:
+        client.get('/executa_agregare')
+    except PermissionDenied:
+        pass
+
+    @aggregation_app.before_request
+    def set_identity():
+        flask.g.identity = Mock(id='bar', provides=[need.admin])
+
+    resp = client.get('/executa_agregare')
+    assert resp.status_code == 200
