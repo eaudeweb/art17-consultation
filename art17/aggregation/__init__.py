@@ -234,5 +234,42 @@ def create_aggregation(timestamp, user_id):
 
     return report.getvalue(), dataset
 
+
+def create_preview_aggregation(page, subject, timestamp, user_id):
+    if page == 'habitat':
+        id_map = dict(
+            models.db.session.query(
+                models.DataHabitat.code,
+                models.DataHabitat.id,
+            )
+        )
+        rows = get_habitat_checklist().filter_by(code=subject)
+    elif page == 'species':
+        id_map = dict(
+            models.db.session.query(
+                models.DataSpecies.code,
+                models.DataSpecies.id,
+            )
+        )
+        rows = get_species_checklist().filter_by(code=subject)
+    else:
+        raise NotImplementedError()
+
+    dataset = models.Dataset(
+        date=timestamp,
+        user_id=user_id,
+    )
+    models.db.session.add(dataset)
+    bioregions = []
+    for row in rows:
+        record = aggregate_object(row, dataset)
+        record = prepare_object(record, timestamp, user_id)
+        record.subject_id = id_map.get(row.code)
+        models.db.session.add(record)
+        bioregions.append(row.bio_region)
+    report = ', '.join(bioregions)
+    return report, dataset
+
+
 # Import this after everything else
 import art17.aggregation.views

@@ -2,6 +2,7 @@
 
 from datetime import datetime
 import flask
+from flask import request
 from flask.views import View
 from werkzeug.datastructures import MultiDict
 from wtforms import Form, SelectField
@@ -17,7 +18,7 @@ from art17.aggregation import (
     perm_definalize_record,
     get_habitat_checklist,
     get_species_checklist,
-)
+    create_preview_aggregation)
 from art17.aggregation.utils import (
     record_edit_url,
     record_details_url,
@@ -60,7 +61,7 @@ def home():
 @aggregation.route('/executa_agregare', methods=['GET', 'POST'])
 @admin_permission.require()
 def aggregate():
-    if flask.request.method == 'POST':
+    if request.method == 'POST':
         report, dataset = create_aggregation(
             datetime.utcnow(),
             flask.g.identity.id,
@@ -90,12 +91,25 @@ def preview(page):
         qs = get_species_checklist(distinct=True)
     else:
         raise NotImplementedError()
+    report = None
     dataset = None
-    form = PreviewForm()
+    form = PreviewForm(request.form)
     form.subject.choices = list(qs)
+    if request.method == "POST":
+        if form.validate():
+            report, dataset = create_preview_aggregation(
+                page,
+                form.subject.data,
+                datetime.utcnow(),
+                flask.g.identity.id,
+            )
+            models.db.session.commit()
+        else:
+            flask.flash('Invalid form', 'error')
     return flask.render_template('aggregation/preview.html', **{
         'form': form,
         'dataset': dataset,
+        'report': report,
     })
 
 
@@ -188,7 +202,7 @@ class RecordViewMixin(object):
     success_message = u"Înregistrarea a fost actualizată"
 
     def get_next_url(self):
-        if flask.request.form.get('submit', None) == 'finalize':
+        if request.form.get('submit', None) == 'finalize':
             return record_finalize_toggle_url(self.record, True)
         return record_edit_url(self.record)
 
@@ -201,8 +215,8 @@ class RecordViewMixin(object):
             if self.object.cons_role == 'assessment':
                 self.object.cons_role = 'final-draft'
             self.original_data = self.parse_commentform(self.object)
-            if flask.request.method == 'POST':
-                form_data = flask.request.form
+            if request.method == 'POST':
+                form_data = request.form
             else:
                 form_data = MultiDict(flatten_dict(self.original_data))
             self.form = self.form_cls(form_data)
@@ -225,7 +239,7 @@ class HabitatRecordView(RecordViewMixin, HabitatCommentView):
 
     def get_dashboard_url(self, subject):
         if flask.current_app.testing:
-            return flask.request.url
+            return request.url
 
         return flask.url_for('.habitats', dataset_id=self.dataset_id)
 
@@ -248,7 +262,7 @@ class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
 
     def get_dashboard_url(self, subject):
         if flask.current_app.testing:
-            return flask.request.url
+            return request.url
 
         return flask.url_for('.species',
                              dataset_id=self.dataset_id,

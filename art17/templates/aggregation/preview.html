@@ -16,6 +16,7 @@
 {% block content %}
   <h2>Agregare specie/habitat</h2>
 
+    {% if report is none %}
     <p>Făcând click pe butonul agregare, se va încerca agregarea speciei sau
       habitatului selectat.
     </p>
@@ -24,4 +25,17 @@
       {{ form.subject() }}
       <button type="submit" class="btn btn-warning">Execută agregarea</button>
     </form>
+
+    {% else %}
+    <p>
+      Date agregate:
+      {%- set url = url_for('.dashboard', dataset_id=dataset.id) %}
+      <a href="{{ url }}">{{ dataset.date }}</a>
+    </p>
+
+    <p>Raport:</p>
+
+    <pre>{{ report }}</pre>
+
+    {% endif %}
 {% endblock content %}
