@@ -122,11 +122,14 @@
         <label for="range.reference_value.op">
           Arealul favorabil de referință
         </label>
+        <p for="range.reference_value.op">
+          <em>* Doar una din următoarele trei elemente trebuie completate:</em>
+        </p>
 
         {{ errors(reference_value) }}
 
         <div class="row">
-          <div class="col-sm-2 {{- error_cls(reference_value.number) }}">
+          <div class="col-sm-3 {{- error_cls(reference_value.number) }}">
             {{ reference_value.number(class='form-control',
                     placeholder="suprafața trebuie exprimatǎ in km²") }}
           </div>
@@ -158,7 +161,14 @@
 
       <div class="form-group">
         {%- set reason = form.range.reason %}
-        <label for="range.reason.a">Motivul modificării</label>
+        <label for="range.reason.a">
+            Motivul modificării
+        </label>
+        <p for="range.reference_value.op">
+            <em>* Dacă există, justificați diferența între valoarea Suprafeței din
+                raportarea precedentă și valoarea curentă
+            </em>
+        </p>
 
         {{ errors(reason) }}
 
