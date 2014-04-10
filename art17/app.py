@@ -71,12 +71,15 @@ def create_aggregation_app():
     from art17.aggregation import aggregation
     from art17.history import history, history_aggregation
     from art17.common import common
+    from art17.config import config
 
     app = create_app()
+    app.config.setdefault('CONFIG_SET', 'AGGREGATION')
     app.register_blueprint(aggregation)
     app.register_blueprint(common)
     app.register_blueprint(history)
     app.register_blueprint(history_aggregation)
+    app.register_blueprint(config)
 
     return app
 
