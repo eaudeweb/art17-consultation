@@ -791,6 +791,9 @@ class Dataset(Base):
     user_id = Column(String)
     date = Column('DATE', DateTime)
     comment = Column('COMMENT', Text)
+    preview = Column(Boolean, default=False)
+    year_start = Column(Integer, nullable=True)
+    year_end = Column(Integer, nullable=True)
 
     @property
     def details(self):

@@ -258,6 +258,7 @@ def create_preview_aggregation(page, subject, timestamp, user_id):
     dataset = models.Dataset(
         date=timestamp,
         user_id=user_id,
+        preview=True,
     )
     models.db.session.add(dataset)
     bioregions = []

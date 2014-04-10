@@ -52,7 +52,12 @@ def crashme():
 @aggregation.route('/')
 def home():
     check_aggregation_perm()
-    dataset_list = models.Dataset.query.order_by(models.Dataset.date).all()
+    dataset_list = (
+        models.Dataset.query
+        .filter_by(preview=None)
+        .order_by(models.Dataset.date)
+        .all()
+    )
     return flask.render_template('aggregation/home.html', **{
         'dataset_list': dataset_list,
     })
