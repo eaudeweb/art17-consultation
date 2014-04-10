@@ -20,7 +20,7 @@ from art17.aggregation import (
     perm_definalize_record,
     get_habitat_checklist,
     get_species_checklist,
-)
+    check_aggregation_preview_perm)
 from art17.aggregation.utils import (
     record_edit_url,
     record_details_url,
@@ -35,6 +35,10 @@ from art17.common import (
 )
 from art17.habitat import detail as detail_habitat, HabitatCommentView
 from art17.species import detail as detail_species, SpeciesCommentView
+
+
+class PreviewForm(Form):
+    subject = SelectField(default='')
 
 
 @aggregation.route('/_ping')
@@ -73,8 +77,8 @@ def home():
 
 
 @aggregation.route('/executa_agregare', methods=['GET', 'POST'])
-@admin_permission.require()
 def aggregate():
+    check_aggregation_perm()
     if request.method == 'POST':
         report, dataset = create_aggregation(
             datetime.utcnow(),
@@ -92,13 +96,9 @@ def aggregate():
     })
 
 
-class PreviewForm(Form):
-    subject = SelectField(default='')
-
-
 @aggregation.route('/previzualizare/<page>/', methods=['GET', 'POST'])
-@admin_permission.require()
 def preview(page):
+    check_aggregation_preview_perm()
     if page == 'habitat':
         qs = get_habitat_checklist(distinct=True)
     elif page == 'species':

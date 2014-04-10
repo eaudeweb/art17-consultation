@@ -61,6 +61,19 @@ def check_aggregation_perm():
     raise PermissionDenied()
 
 
+def check_aggregation_preview_perm():
+    if need.admin in flask.g.identity.provides:
+        return True
+    for ne in flask.g.identity.provides:
+        if ne.value.startswith('reviewer'):
+            return True
+    for ne in flask.g.identity.provides:
+        if ne.value.startswith('expert'):
+            return True
+
+    raise PermissionDenied()
+
+
 def get_tabmenu_preview(dataset):
     if dataset.habitat_objs.count():
         yield {
