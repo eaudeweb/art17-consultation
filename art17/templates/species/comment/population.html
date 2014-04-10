@@ -63,13 +63,16 @@
         {{ errors(population.additional_problems) }}
         <div class="row">
           <div class="col-sm-2 {{- error_cls(population.additional_locality) }}">
-            {{ population.additional_locality(class='form-control') }}
+            {{ population.additional_locality(class='form-control',
+                    placeholder="Definiția localității") }}
           </div>
           <div class="col-sm-2 {{- error_cls(population.additional_method) }}">
-            {{ population.additional_method(class='form-control') }}
+            {{ population.additional_method(class='form-control',
+                    placeholder="Metoda de conversie") }}
           </div>
           <div class="col-sm-2 {{- error_cls(population.additional_problems) }}">
-            {{ population.additional_problems(class='form-control') }}
+            {{ population.additional_problems(class='form-control',
+                    placeholder="Probleme") }}
           </div>
         </div>
       </div>
@@ -225,6 +228,9 @@
         <label for="population.reference_value.op">
           Populația favorabilă de referință
         </label>
+        <p for="range.reference_value.op">
+          <em>* Doar una din următoarele trei elemente trebuie completate:</em>
+        </p>
 
         {{ errors(reference_value) }}
 
@@ -261,7 +267,14 @@
 
       <div class="form-group">
         {%- set reason = form.population.reason %}
-        <label for="range.reason.a">Motivul modificării</label>
+        <label for="range.reason.a">
+            Motivul modificării
+        </label>
+        <p for="range.reason.a">
+            <em>* Dacă există, justificați diferența între valoarea Populației din
+                raportarea precedentă și valoarea curentă
+            </em>
+        </p>
 
         {{ errors(reason) }}
 
