@@ -105,15 +105,18 @@ def preview(page):
         qs = get_species_checklist(distinct=True)
     else:
         raise NotImplementedError()
+    qs = list(qs)
     report = None
     dataset = None
     form = PreviewForm(request.form)
-    form.subject.choices = list(qs)
+    form.subject.choices = qs
+    qs_dict = dict(qs)
     if request.method == "POST":
         if form.validate():
             report, dataset = create_preview_aggregation(
                 page,
                 form.subject.data,
+                qs_dict.get(form.subject.data),
                 datetime.utcnow(),
                 flask.g.identity.id,
             )

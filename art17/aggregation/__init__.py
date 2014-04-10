@@ -268,7 +268,7 @@ def create_aggregation(timestamp, user_id):
     return report.getvalue(), dataset
 
 
-def create_preview_aggregation(page, subject, timestamp, user_id):
+def create_preview_aggregation(page, subject, comment, timestamp, user_id):
     if page == 'habitat':
         id_map = dict(
             models.db.session.query(
@@ -292,6 +292,7 @@ def create_preview_aggregation(page, subject, timestamp, user_id):
         date=timestamp,
         user_id=user_id,
         preview=True,
+        comment=comment,
     )
     models.db.session.add(dataset)
     bioregions = []
