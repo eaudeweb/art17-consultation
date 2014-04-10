@@ -1,12 +1,14 @@
 {% extends "layout.html" %}
 
-{% macro dataset_table(dataset_list) %}
+{% macro dataset_table(dataset_list, show_user=True) %}
 <table class="table table-bordered">
   <thead>
     <th>Dată</th>
+    {% if show_user %}
     <th>Utilizator</th>
+    {% endif %}
     <th>Titlu</th>
-    <th>Detalii</th>
+    <th>Detalii rapoarte</th>
     <th></th>
   </thead>
 
@@ -15,15 +17,17 @@
     {%- set delete_url = url_for('.delete_dataset', dataset_id=dataset.id) %}
     {%- set activity_url = url_for('history_aggregation.index', dataset_id=dataset.id) %}
     <tr>
-      <td><a href="{{ url }}">{{ dataset.date }}</a></td>
+      <td nowrap><a href="{{ url }}">{{ dataset.date }}</a></td>
+      {% if show_user %}
       <td>{{ dataset.user_id }}</td>
-      <td>{{ dataset.comment or ""|truncate(100) }}</td>
-      <td class="text-right">
+      {% endif %}
+      <td width="100%">{{ dataset.comment or ""|truncate(100) }}</td>
+      <td class="text-right" nowrap>
         {{ dataset.details.new }} agregate,
         {{ dataset.details.draft }} în lucru,
         {{ dataset.details.final }} finalizate
       </td>
-      <td>
+      <td nowrap>
         <form method="post" action="{{ delete_url }}"
               class="delete-dataset-form">
           <button type="submit" class="btn btn-danger btn-xs">șterge</button>
@@ -70,7 +74,7 @@
 <h2>Previzualizări agregare</h2>
 
 
-{{ dataset_table(preview_datasets) }}
+{{ dataset_table(preview_datasets, show_user=False) }}
 {% endif %}
 
 <h2>Seturi de date</h2>
