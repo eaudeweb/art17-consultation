@@ -150,6 +150,11 @@
       <div class="form-group">
         {%- set reason = form.habitat.reason %}
         <label for="range.reason.a">Motivul modificării</label>
+        <p for="range.reason.a">
+            <em>* Dacă există, justificați diferența între valoarea Suprafaței din
+                raportarea precedentă și valoarea curentă
+            </em>
+        </p>
 
         {{ errors(reason) }}
 
