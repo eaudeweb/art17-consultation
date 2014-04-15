@@ -161,7 +161,7 @@ class DashboardView(View):
         if self.dataset.preview:
             tabmenu = get_tabmenu_preview(self.dataset)
         else:
-            tabmenu = list(get_tabmenu_data(self.dataset_id))
+            tabmenu = list(get_tabmenu_data(self.dataset))
         return {
             'current_tab': self.current_tab,
             'bioreg_list': bioreg_list,
