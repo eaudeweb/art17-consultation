@@ -166,6 +166,7 @@ def get_habitat_checklist(distinct=False):
         models.DataHabitatsCheckList.query
         .filter(models.DataHabitatsCheckList.presence != 'EX')
         .filter(models.DataHabitatsCheckList.member_state == 'RO')
+        .order_by(models.DataHabitatsCheckList.name)
     )
     if distinct:
         queryset = (
@@ -189,6 +190,7 @@ def get_species_checklist(distinct=False):
         models.DataSpeciesCheckList.query
         .filter(models.DataSpeciesCheckList.presence != 'EX')
         .filter(models.DataSpeciesCheckList.member_state == 'RO')
+        .order_by(models.DataSpeciesCheckList.name)
     )
     if distinct:
         queryset = (

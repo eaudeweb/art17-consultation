@@ -1,0 +1,43 @@
+{% extends 'aggregation/admin.html' %}
+
+{% macro render_list(list) %}
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Cod</th>
+      <th>Nume</th>
+      <th>Regiuni</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for key,regions in list.iteritems() %}
+    {% set code, name = key %}
+    <tr>
+      <td>{{ code }}</td>
+      <td>{{ name }}</td>
+      <td nowrap>{{ ', '.join(regions) }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endmacro %}
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('admin', url_for('.admin')),
+          ('liste de verificare', url_for('.checklists')),
+          ('listă', none),
+      ]) }}
+{% endblock breadcrumbs %}
+
+{% block content %}
+  <h1>Listă de verificare</h1>
+
+  <h2>Specii</h2>
+  {{ render_list(species_dict) }}
+
+  <h2>Habitate</h2>
+  {{ render_list(habitats_dict) }}
+{% endblock %}
