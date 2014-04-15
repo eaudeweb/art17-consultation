@@ -39,9 +39,16 @@ def form():
         flask.flash(u"Configurația a fost salvată.", 'success')
         return flask.redirect(flask.url_for('.form'))
 
+    if config_key == 'AGGREGATION':
+        base_template = 'aggregation/admin.html'
+    else:
+        base_template = ''
+
     return flask.render_template('config.html', **{
         'CONFIG_LABEL': config_set,
         'config_rows': config_rows,
+        'base_template': base_template,
+        'page': 'config',
     })
 
 

@@ -308,3 +308,4 @@ def create_preview_aggregation(page, subject, comment, timestamp, user_id):
 
 # Import this after everything else
 import art17.aggregation.views
+import art17.aggregation.admin

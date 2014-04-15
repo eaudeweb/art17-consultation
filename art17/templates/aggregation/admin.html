@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}Dashboard &mdash; {{ super() }}{% endblock title %}
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('admin', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
+{% block before_content %}
+  <ul class="nav nav-tabs">
+    <li {% if page == 'config' %}class="active"{% endif %}>
+      <a href="{{ url_for('config.form') }}">Configurare</a>
+    </li>
+    <li {% if page == 'checklist' %}class="active"{% endif %}>
+      <a href="{{ url_for('aggregation.checklists') }}">Liste de verificare</a>
+    </li>
+  </ul>
+{% endblock %}

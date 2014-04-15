@@ -1,0 +1,14 @@
+{% extends 'aggregation/admin.html' %}
+
+
+{% block content %}
+  <h1>Liste de verificare</h1>
+
+  <ul>
+  {% for list in checklists %}
+    <li>
+      <a href="{{ url_for('.checklist', id=list.id) }}">{{ list.date }}</a>
+    </li>
+  {% endfor %}
+  </ul>
+{% endblock %}
