@@ -66,7 +66,7 @@ def home():
     )
     preview_list = (
         models.Dataset.query
-        .filter_by(preview=True, user_id=flask.g.identity.id)
+        .filter_by(preview=True, checklist=None, user_id=flask.g.identity.id)
         .order_by(models.Dataset.date)
         .all()
     )

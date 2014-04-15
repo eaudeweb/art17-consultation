@@ -264,6 +264,7 @@ class DataHabitatsCheckList(Base):
     ms_added = Column(Integer)
     predefined = Column(Integer)
     globalid = Column(String, default=create_esri_guid)
+    dataset_id = Column(ForeignKey('datasets.objectid'), nullable=True)
 
     @hybrid_property
     def code(self):
@@ -456,6 +457,7 @@ class DataSpeciesCheckList(Base):
     ms_added = Column(Integer)
     predefined = Column(Integer)
     globalid = Column(String, default=create_esri_guid)
+    dataset_id = Column(ForeignKey('datasets.objectid'), nullable=True)
 
     @hybrid_property
     def code(self):
@@ -791,7 +793,8 @@ class Dataset(Base):
     user_id = Column(String)
     date = Column('DATE', DateTime)
     comment = Column('COMMENT', Text)
-    preview = Column(Boolean, default=False)
+    preview = Column(Boolean, default=False, nullable=True)
+    checklist = Column(Boolean, default=False, nullable=True)
     year_start = Column(Integer, nullable=True)
     year_end = Column(Integer, nullable=True)
 
