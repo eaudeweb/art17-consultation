@@ -1,21 +1,35 @@
 {% extends 'aggregation/admin.html' %}
 
-{% macro render_list(list) %}
+{% macro render_list(list, sections=True) %}
   <table class="table">
     <thead>
     <tr>
-      <th>Cod</th>
-      <th>Nume</th>
-      <th>Regiuni</th>
+      <th rowspan="2">Cod</th>
+      <th rowspan="2">Nume</th>
+      <th rowspan="2">Regiuni</th>
+      <th rowspan="2">Prezența</th>
+      {% if sections %}
+      <th colspan="3">Secțiuni</th>
+    </tr>
+    <tr>
+      <th>II</th>
+      <th>IV</th>
+      <th>V</th>
+      {% endif %}
     </tr>
     </thead>
     <tbody>
-    {% for key,regions in list.iteritems() %}
+    {% for key,data in list.iteritems() %}
     {% set code, name = key %}
+    {% set info, regions = data['info'],data['regions'] %}
     <tr>
       <td>{{ code }}</td>
       <td>{{ name }}</td>
       <td nowrap>{{ ', '.join(regions) }}</td>
+      <td>{{ info.presence }}</td>
+      <td>{{ info.annex_ii }}</td>
+      <td>{{ info.annex_iv }}</td>
+      <td>{{ info.annex_v }}</td>
     </tr>
     {% endfor %}
     </tbody>

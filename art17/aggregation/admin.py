@@ -13,9 +13,9 @@ def parse_checklist(list):
     for item in list:
         key = (item.code, item.name)
         if key not in result:
-            result[key] = [item.bio_region]
+            result[key] = {'info': item, 'regions': [item.bio_region]}
         else:
-            result[key].append(item.bio_region)
+            result[key]['regions'].append(item.bio_region)
     return result
 
 

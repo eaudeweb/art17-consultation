@@ -164,7 +164,7 @@ def prepare_object(obj, timestamp, user_id):
 def get_habitat_checklist(distinct=False):
     queryset = (
         models.DataHabitatsCheckList.query
-        .filter(models.DataHabitatsCheckList.presence != 'EX')
+        #.filter(models.DataHabitatsCheckList.presence != 'EX')
         .filter(models.DataHabitatsCheckList.member_state == 'RO')
         .order_by(models.DataHabitatsCheckList.name)
     )
@@ -188,7 +188,7 @@ def get_habitat_checklist(distinct=False):
 def get_species_checklist(distinct=False):
     queryset = (
         models.DataSpeciesCheckList.query
-        .filter(models.DataSpeciesCheckList.presence != 'EX')
+        #.filter(models.DataSpeciesCheckList.presence != 'EX')
         .filter(models.DataSpeciesCheckList.member_state == 'RO')
         .order_by(models.DataSpeciesCheckList.name)
     )
