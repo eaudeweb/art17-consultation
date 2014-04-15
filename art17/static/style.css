@@ -318,3 +318,23 @@ fieldset legend {
     display: inline;
     width: auto;
 }
+
+select[data-color="FV"] {
+    background-color: #21B24A;
+}
+
+select[data-color="U1"] {
+    background-color: #FFC308;
+}
+
+select[data-color="U2"] {
+    background-color: #EF1C21;
+}
+
+select[data-color="XX"] {
+    background-color: #FFFFFF;
+}
+
+select.form-control option {
+    background-color: #fff;
+}
