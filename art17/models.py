@@ -266,13 +266,23 @@ class DataHabitatsCheckList(Base):
     globalid = Column(String, default=create_esri_guid)
     dataset_id = Column(ForeignKey('datasets.objectid'), nullable=True)
 
+    dataset = relationship('Dataset', backref='habitat_checklist')
+
     @hybrid_property
     def code(self):
         return self.natura_2000_code
 
+    @code.setter
+    def code(self, value):
+        self.natura_2000_code = value
+
     @hybrid_property
     def name(self):
         return self.valid_name
+
+    @name.setter
+    def name(self, value):
+        self.valid_name = value
 
 
 class DataHabitattypeRegion(Base):
@@ -463,13 +473,23 @@ class DataSpeciesCheckList(Base):
     globalid = Column(String, default=create_esri_guid)
     dataset_id = Column(ForeignKey('datasets.objectid'), nullable=True)
 
+    dataset = relationship('Dataset', backref='species_checklist')
+
     @hybrid_property
     def code(self):
         return self.natura_2000_code
 
+    @code.setter
+    def code(self, value):
+        self.natura_2000_code = value
+
     @hybrid_property
     def name(self):
         return self.species_name
+
+    @name.setter
+    def name(self, value):
+        self.species_name = value
 
 
 class DataSpeciesRegion(Base):
