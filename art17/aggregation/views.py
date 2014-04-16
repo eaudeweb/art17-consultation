@@ -139,7 +139,8 @@ def delete_dataset(dataset_id):
     models.db.session.delete(dataset)
     models.db.session.commit()
     flask.flash(u"Setul de date a fost șters.", 'success')
-    return flask.redirect(flask.url_for('.home'))
+    next_url = request.values.get('next', flask.url_for('.home'))
+    return flask.redirect(next_url)
 
 
 class DashboardView(View):
