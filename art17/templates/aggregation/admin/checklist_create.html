@@ -1,0 +1,22 @@
+{% extends 'aggregation/admin.html' %}
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('admin', url_for('.admin')),
+          ('liste de verificare', url_for('.checklists')),
+          ('creare listă', none),
+      ]) }}
+{% endblock breadcrumbs %}
+
+{% block content %}
+  <h1>Creare listă de verificare</h1>
+
+  <p>Făcând click pe creează, listele de verificare vor fi preluate de
+  la ANPM.</p>
+
+  <form method="post" action="">
+    <button type="submit" class="btn btn-default">Creează</button>
+  </form>
+{% endblock %}

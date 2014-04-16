@@ -4,12 +4,57 @@
 {% block content %}
   <h1>Liste de verificare</h1>
 
-  <ul>
-    <li><a href="{{ url_for('.checklist') }}">Lista inițială</a></li>
-  {% for list in checklists %}
-    <li>
-      <a href="{{ url_for('.checklist', id=list.id) }}">{{ list.date }}</a>
-    </li>
-  {% endfor %}
-  </ul>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Listă</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><a href="{{ url_for('.checklist') }}">Lista inițială</a></td>
+      <td class="text-right">
+        {{ default_list.species_checklist|count }} specii,
+        {{ default_list.habitat_checklist|count }} habitate
+      </td>
+      <td></td>
+    </tr>
+    {% for list in checklists %}
+    {%- set delete_url = url_for('.delete_dataset', dataset_id=list.id) %}
+    <tr>
+      <td><a href="{{ url_for('.checklist', dataset_id=list.id) }}">{{ list.date }}</a></td>
+      <td class="text-right">
+        {{ list.species_checklist|count }} specii,
+        {{ list.habitat_checklist|count }} habitate
+      </td>
+      <td>
+        <form method="post" action="{{ delete_url }}"
+              class="delete-dataset-form">
+        <button type="submit" class="btn btn-danger btn-xs">șterge</button>
+        <input type="hidden" name="next" value="{{ url_for('.checklists') }}" />
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <p>
+    <a class="btn btn-default" href="{{ url_for('.create') }}">
+      Creează listă de verificare</a>
+  </p>
 {% endblock %}
+
+{% block script %}
+{{ super() }}
+{%- from 'bits.html' import script %}
+{{ script('common.js') }}
+<script>
+  App.confirm_before_submit(
+    '.delete-dataset-form',
+    "Checklist-ul va fi șters!"
+  );
+</script>
+{% endblock script %}

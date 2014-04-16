@@ -1,0 +1,3527 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<feed xml:base="http://natura.anpm.ro/API/CNSERVICE.svc/" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://www.w3.org/2005/Atom">
+  <title type="text">ListaVerificareHabitate</title>
+  <id>http://natura.anpm.ro/api/CNSERVICE.svc/ListaVerificareHabitate</id>
+  <updated>2014-04-15T14:20:57Z</updated>
+  <link rel="self" title="ListaVerificareHabitate" href="ListaVerificareHabitate" />
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'4c120413-84e5-447d-baac-98a0c2e98964')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'4c120413-84e5-447d-baac-98a0c2e98964')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">4c120413-84e5-447d-baac-98a0c2e98964</d:Id>
+        <d:CodHabitat>1110</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Bancuri de nisip submerse de mică adâncime</d:NumeHabitat>
+        <d:Bioregiune>Marea Neagra</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'1785d1d9-9397-405f-b153-6d67044b6d1b')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'1785d1d9-9397-405f-b153-6d67044b6d1b')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">1785d1d9-9397-405f-b153-6d67044b6d1b</d:Id>
+        <d:CodHabitat>1130</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Estuare şi guri de vărsare ale marilor râuri şi fluvii</d:NumeHabitat>
+        <d:Bioregiune>Marea Neagra</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'63028ddf-8cc8-47cb-a9ba-75c4355fbc9b')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'63028ddf-8cc8-47cb-a9ba-75c4355fbc9b')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">63028ddf-8cc8-47cb-a9ba-75c4355fbc9b</d:Id>
+        <d:CodHabitat>1140</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Suprafeţe de nisip şi mâl descoperite la maree joasă</d:NumeHabitat>
+        <d:Bioregiune>Marea Neagra</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'd3c81670-a9df-4d86-9260-ae161386c4dd')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'd3c81670-a9df-4d86-9260-ae161386c4dd')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">d3c81670-a9df-4d86-9260-ae161386c4dd</d:Id>
+        <d:CodHabitat>1150</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Lagune costiere</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'3b1c2ccb-f6ac-4238-b4cc-2caa27980ea3')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'3b1c2ccb-f6ac-4238-b4cc-2caa27980ea3')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">3b1c2ccb-f6ac-4238-b4cc-2caa27980ea3</d:Id>
+        <d:CodHabitat>1160</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Braţe de mare şi golfuri mai puţin adânci</d:NumeHabitat>
+        <d:Bioregiune>Marea Neagra</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'6727dfac-2343-4157-a92a-0123bbb6001c')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'6727dfac-2343-4157-a92a-0123bbb6001c')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">6727dfac-2343-4157-a92a-0123bbb6001c</d:Id>
+        <d:CodHabitat>1170</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Recifi</d:NumeHabitat>
+        <d:Bioregiune>Marea Neagra</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'd70969c9-6f23-4b6e-94c7-316e43ed2f33')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'd70969c9-6f23-4b6e-94c7-316e43ed2f33')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">d70969c9-6f23-4b6e-94c7-316e43ed2f33</d:Id>
+        <d:CodHabitat>1180</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Structuri submarine create de emisiile de gaze</d:NumeHabitat>
+        <d:Bioregiune>Marea Neagra</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'9a574f74-ef5a-4fd9-b1b4-09b031c1eec8')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'9a574f74-ef5a-4fd9-b1b4-09b031c1eec8')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">9a574f74-ef5a-4fd9-b1b4-09b031c1eec8</d:Id>
+        <d:CodHabitat>1210</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Vegetaţie anuală de-a lungul liniei ţărmului</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'e7de4a5f-b3c0-4c74-adbb-847564047fe9')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'e7de4a5f-b3c0-4c74-adbb-847564047fe9')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">e7de4a5f-b3c0-4c74-adbb-847564047fe9</d:Id>
+        <d:CodHabitat>1310</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Comunităţi cu Salicornia şi alte specii anuale care colonizează terenurile umede şi nisipoase</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'5f0a7731-92ff-418d-8e28-8b2d2726b895')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'5f0a7731-92ff-418d-8e28-8b2d2726b895')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">5f0a7731-92ff-418d-8e28-8b2d2726b895</d:Id>
+        <d:CodHabitat>1310</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Comunităţi cu Salicornia şi alte specii anuale care colonizează terenurile umede şi nisipoase</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'6ebde9f9-b41b-4275-b950-d95b8f284f53')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'6ebde9f9-b41b-4275-b950-d95b8f284f53')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">6ebde9f9-b41b-4275-b950-d95b8f284f53</d:Id>
+        <d:CodHabitat>1310</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Comunităţi cu Salicornia şi alte specii anuale care colonizează terenurile umede şi nisipoase</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'8b34ce2c-e58d-4cac-bb88-ef3824c3aec7')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'8b34ce2c-e58d-4cac-bb88-ef3824c3aec7')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">8b34ce2c-e58d-4cac-bb88-ef3824c3aec7</d:Id>
+        <d:CodHabitat>1410</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti halofile de tip mediteranean (Juncetalia maritimi)</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'a792ece1-eb40-4953-a79d-0d64c04b3b12')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'a792ece1-eb40-4953-a79d-0d64c04b3b12')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">a792ece1-eb40-4953-a79d-0d64c04b3b12</d:Id>
+        <d:CodHabitat>1530</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti şi mlaştini halofile panonice şi ponto-sarmatice</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'd3c55cba-6141-4ba8-8481-111d98973b5a')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'd3c55cba-6141-4ba8-8481-111d98973b5a')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">d3c55cba-6141-4ba8-8481-111d98973b5a</d:Id>
+        <d:CodHabitat>1530</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti şi mlaştini halofile panonice şi ponto-sarmatice</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'a55784fd-50a3-419f-9f27-76f9461e82cc')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'a55784fd-50a3-419f-9f27-76f9461e82cc')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">a55784fd-50a3-419f-9f27-76f9461e82cc</d:Id>
+        <d:CodHabitat>1530</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti şi mlaştini halofile panonice şi ponto-sarmatice</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'adb94f4e-f2ca-49c3-a057-eaaa2b4085c2')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'adb94f4e-f2ca-49c3-a057-eaaa2b4085c2')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">adb94f4e-f2ca-49c3-a057-eaaa2b4085c2</d:Id>
+        <d:CodHabitat>1530</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti şi mlaştini halofile panonice şi ponto-sarmatice</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'8eeb3da6-42b0-4218-843f-5a02c9ecbea0')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'8eeb3da6-42b0-4218-843f-5a02c9ecbea0')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">8eeb3da6-42b0-4218-843f-5a02c9ecbea0</d:Id>
+        <d:CodHabitat>2110</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Dune mobile embrionare (în formare)</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'0dcfb6e9-8b81-4613-a53c-2b5f6d8e3066')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'0dcfb6e9-8b81-4613-a53c-2b5f6d8e3066')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">0dcfb6e9-8b81-4613-a53c-2b5f6d8e3066</d:Id>
+        <d:CodHabitat>2130</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Dune fixate cu vegetaţie herbacee perenă (dune gri)</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'ac5d5bf5-67c5-4bda-884d-697c20588e57')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'ac5d5bf5-67c5-4bda-884d-697c20588e57')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">ac5d5bf5-67c5-4bda-884d-697c20588e57</d:Id>
+        <d:CodHabitat>2160</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Dune cu Hippophaë rhamnoides</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'5257f1a3-71c3-4434-a975-b6b452de12f6')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'5257f1a3-71c3-4434-a975-b6b452de12f6')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">5257f1a3-71c3-4434-a975-b6b452de12f6</d:Id>
+        <d:CodHabitat>2190</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Depresiuni umede interdunale</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'49f94a01-334b-4f16-ae6d-35b1a19531c1')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'49f94a01-334b-4f16-ae6d-35b1a19531c1')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">49f94a01-334b-4f16-ae6d-35b1a19531c1</d:Id>
+        <d:CodHabitat>2340</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Dune panonice</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'7b438ba8-8a4c-469d-9f8c-6242c0d3574e')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'7b438ba8-8a4c-469d-9f8c-6242c0d3574e')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">7b438ba8-8a4c-469d-9f8c-6242c0d3574e</d:Id>
+        <d:CodHabitat>3130</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Ape stătătoare oligotrofice până la mezotrofice cu vegetaţie din Littorelletea uniflorae şi/sau Isoëto-Nanojuncetea</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'4df35949-dd30-474f-911c-7a41397236b7')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'4df35949-dd30-474f-911c-7a41397236b7')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">4df35949-dd30-474f-911c-7a41397236b7</d:Id>
+        <d:CodHabitat>3130</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Ape stătătoare oligotrofice până la mezotrofice cu vegetaţie din Littorelletea uniflorae şi/sau Isoëto-Nanojuncetea</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'58216d52-b352-4958-bbbd-b684ba38884c')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'58216d52-b352-4958-bbbd-b684ba38884c')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">58216d52-b352-4958-bbbd-b684ba38884c</d:Id>
+        <d:CodHabitat>3130</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Ape stătătoare oligotrofice până la mezotrofice cu vegetaţie din Littorelletea uniflorae şi/sau Isoëto-Nanojuncetea</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'fbc90d07-0e4a-48d3-a050-fb3e8c4554a5')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'fbc90d07-0e4a-48d3-a050-fb3e8c4554a5')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">fbc90d07-0e4a-48d3-a050-fb3e8c4554a5</d:Id>
+        <d:CodHabitat>3130</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Ape stătătoare oligotrofice până la mezotrofice cu vegetaţie din Littorelletea uniflorae şi/sau Isoëto-Nanojuncetea</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'd51f61a7-2f5b-4cb1-a81b-2777ac179415')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'd51f61a7-2f5b-4cb1-a81b-2777ac179415')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">d51f61a7-2f5b-4cb1-a81b-2777ac179415</d:Id>
+        <d:CodHabitat>3140</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Ape puternic oligo-mezotrofice cu vegetaţie bentonică de specii de Chara</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'4555ebb8-c58c-48df-b01d-34e74609fa72')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'4555ebb8-c58c-48df-b01d-34e74609fa72')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">4555ebb8-c58c-48df-b01d-34e74609fa72</d:Id>
+        <d:CodHabitat>3140</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Ape puternic oligo-mezotrofice cu vegetaţie bentonică de specii de Chara</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'40ba1511-5426-4159-be09-687cf7f449ab')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'40ba1511-5426-4159-be09-687cf7f449ab')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">40ba1511-5426-4159-be09-687cf7f449ab</d:Id>
+        <d:CodHabitat>3140</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Ape puternic oligo-mezotrofice cu vegetaţie bentonică de specii de Chara</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'4705b93a-27a6-46d4-ac61-52996309db12')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'4705b93a-27a6-46d4-ac61-52996309db12')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">4705b93a-27a6-46d4-ac61-52996309db12</d:Id>
+        <d:CodHabitat>3150</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Lacuri naturale eutrofice cu vegetaţie tip Magnopotamion sau Hydrocharition</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'918740d9-9212-40fa-8b32-9ad89d0011e4')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'918740d9-9212-40fa-8b32-9ad89d0011e4')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">918740d9-9212-40fa-8b32-9ad89d0011e4</d:Id>
+        <d:CodHabitat>3150</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Lacuri naturale eutrofice cu vegetaţie tip Magnopotamion sau Hydrocharition</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'b6f38fe7-9841-4032-8fcb-e51998b7637c')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'b6f38fe7-9841-4032-8fcb-e51998b7637c')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">b6f38fe7-9841-4032-8fcb-e51998b7637c</d:Id>
+        <d:CodHabitat>3150</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Lacuri naturale eutrofice cu vegetaţie tip Magnopotamion sau Hydrocharition</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'38eeb848-48ee-4349-b7b5-e59c48bf7810')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'38eeb848-48ee-4349-b7b5-e59c48bf7810')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">38eeb848-48ee-4349-b7b5-e59c48bf7810</d:Id>
+        <d:CodHabitat>3150</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Lacuri naturale eutrofice cu vegetaţie tip Magnopotamion sau Hydrocharition</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'0814e70f-a29d-4e92-9616-e7f487233976')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'0814e70f-a29d-4e92-9616-e7f487233976')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">0814e70f-a29d-4e92-9616-e7f487233976</d:Id>
+        <d:CodHabitat>3150</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Lacuri naturale eutrofice cu vegetaţie tip Magnopotamion sau Hydrocharition</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'f34c101d-4022-4b89-b86f-4fa64449306f')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'f34c101d-4022-4b89-b86f-4fa64449306f')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">f34c101d-4022-4b89-b86f-4fa64449306f</d:Id>
+        <d:CodHabitat>3160</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Lacuri distrofice şi iazuri</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'236db4a3-1f64-4a15-bd31-5c0b1898310c')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'236db4a3-1f64-4a15-bd31-5c0b1898310c')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">236db4a3-1f64-4a15-bd31-5c0b1898310c</d:Id>
+        <d:CodHabitat>3160</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Lacuri distrofice şi iazuri</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'56917487-f0ea-4235-a1f5-61c98e6625b0')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'56917487-f0ea-4235-a1f5-61c98e6625b0')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">56917487-f0ea-4235-a1f5-61c98e6625b0</d:Id>
+        <d:CodHabitat>3160</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Lacuri distrofice şi iazuri</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'0133776e-f96d-467a-bc8f-9ca980cbc3c7')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'0133776e-f96d-467a-bc8f-9ca980cbc3c7')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">0133776e-f96d-467a-bc8f-9ca980cbc3c7</d:Id>
+        <d:CodHabitat>31A0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Ape termale din Transilvania acoperite cu lotus (dreţe)</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'9095cb0a-165b-4449-8a3f-299c3d058c9d')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'9095cb0a-165b-4449-8a3f-299c3d058c9d')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">9095cb0a-165b-4449-8a3f-299c3d058c9d</d:Id>
+        <d:CodHabitat>3220</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Vegetaţie herbacee de pe malurile râurilor montane</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'c66f45ff-a27e-4d5b-862e-adbbfa7f0635')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'c66f45ff-a27e-4d5b-862e-adbbfa7f0635')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">c66f45ff-a27e-4d5b-862e-adbbfa7f0635</d:Id>
+        <d:CodHabitat>3220</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Vegetaţie herbacee de pe malurile râurilor montane</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'973e132c-8e5c-47cc-91da-f5d00d8b131c')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'973e132c-8e5c-47cc-91da-f5d00d8b131c')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">973e132c-8e5c-47cc-91da-f5d00d8b131c</d:Id>
+        <d:CodHabitat>3230</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Vegetaţie lemnoasă cu Myricaria germanica de-a lungul râurilor montane</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'40d88184-f1ec-49a6-b65c-01c0fa74f663')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'40d88184-f1ec-49a6-b65c-01c0fa74f663')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">40d88184-f1ec-49a6-b65c-01c0fa74f663</d:Id>
+        <d:CodHabitat>3240</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Vegetaţie lemnoasă cu Salix elaeagnos de-a lungul râurilor montane</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'e49cac34-a6e4-41c3-84fb-03ef00251129')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'e49cac34-a6e4-41c3-84fb-03ef00251129')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">e49cac34-a6e4-41c3-84fb-03ef00251129</d:Id>
+        <d:CodHabitat>3260</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Cursuri de apă din zona de câmpie până în etajul montan, cu vegetaţie din Ranunculion fluitantis şi Callitricho-Batrachion</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'27121bdd-491c-4be6-bdf8-30cf3d8afd69')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'27121bdd-491c-4be6-bdf8-30cf3d8afd69')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">27121bdd-491c-4be6-bdf8-30cf3d8afd69</d:Id>
+        <d:CodHabitat>3260</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Cursuri de apă din zona de câmpie până în etajul montan, cu vegetaţie din Ranunculion fluitantis şi Callitricho-Batrachion</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'4abb0219-8850-4d92-b9ab-51a0de5f5f19')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'4abb0219-8850-4d92-b9ab-51a0de5f5f19')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">4abb0219-8850-4d92-b9ab-51a0de5f5f19</d:Id>
+        <d:CodHabitat>3260</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Cursuri de apă din zona de câmpie până în etajul montan, cu vegetaţie din Ranunculion fluitantis şi Callitricho-Batrachion</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'f94c4db3-3c98-4dfc-b3e4-be28d9212cab')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'f94c4db3-3c98-4dfc-b3e4-be28d9212cab')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">f94c4db3-3c98-4dfc-b3e4-be28d9212cab</d:Id>
+        <d:CodHabitat>3260</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Cursuri de apă din zona de câmpie până în etajul montan, cu vegetaţie din Ranunculion fluitantis şi Callitricho-Batrachion</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'077d5bc1-a071-4400-a615-f0dbb948413f')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'077d5bc1-a071-4400-a615-f0dbb948413f')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">077d5bc1-a071-4400-a615-f0dbb948413f</d:Id>
+        <d:CodHabitat>3260</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Cursuri de apă din zona de câmpie până în etajul montan, cu vegetaţie din Ranunculion fluitantis şi Callitricho-Batrachion</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'f86e3b4c-2230-49ff-96ef-65d20d0ac5bd')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'f86e3b4c-2230-49ff-96ef-65d20d0ac5bd')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">f86e3b4c-2230-49ff-96ef-65d20d0ac5bd</d:Id>
+        <d:CodHabitat>3270</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Râuri cu maluri nămoloase cu vegetaţie din Chenopodion rubri şi Bidention</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'd64e5b25-0aeb-4092-9566-676772d21c99')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'd64e5b25-0aeb-4092-9566-676772d21c99')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">d64e5b25-0aeb-4092-9566-676772d21c99</d:Id>
+        <d:CodHabitat>3270</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Râuri cu maluri nămoloase cu vegetaţie din Chenopodion rubri şi Bidention</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'df610928-e195-40d6-857e-dd3d2b8f02b1')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'df610928-e195-40d6-857e-dd3d2b8f02b1')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">df610928-e195-40d6-857e-dd3d2b8f02b1</d:Id>
+        <d:CodHabitat>3270</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Râuri cu maluri nămoloase cu vegetaţie din Chenopodion rubri şi Bidention</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'df7d7cb8-74eb-43f8-a3b9-f7a9e79f0f6e')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'df7d7cb8-74eb-43f8-a3b9-f7a9e79f0f6e')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">df7d7cb8-74eb-43f8-a3b9-f7a9e79f0f6e</d:Id>
+        <d:CodHabitat>3270</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Râuri cu maluri nămoloase cu vegetaţie din Chenopodion rubri şi Bidention</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'78e330d9-cb19-4c63-9fa6-81395b5394e0')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'78e330d9-cb19-4c63-9fa6-81395b5394e0')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">78e330d9-cb19-4c63-9fa6-81395b5394e0</d:Id>
+        <d:CodHabitat>4030</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Tufărişuri uscate europene</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'd3d951cf-32f3-4f24-852d-fd6ac4111b35')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'd3d951cf-32f3-4f24-852d-fd6ac4111b35')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">d3d951cf-32f3-4f24-852d-fd6ac4111b35</d:Id>
+        <d:CodHabitat>4030</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Tufărişuri uscate europene</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Marginal</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'eb960d0d-0c55-41cc-8011-1d0fcb2589a8')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'eb960d0d-0c55-41cc-8011-1d0fcb2589a8')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">eb960d0d-0c55-41cc-8011-1d0fcb2589a8</d:Id>
+        <d:CodHabitat>4060</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Tufărişuri alpine şi boreale</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'489fd8b9-9f1b-4639-a0ee-b279d1f3763b')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'489fd8b9-9f1b-4639-a0ee-b279d1f3763b')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">489fd8b9-9f1b-4639-a0ee-b279d1f3763b</d:Id>
+        <d:CodHabitat>4070</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Tufărişuri cu Pinus mugo şi Rhododendron myrtifolium</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'2ec24e06-fe81-49ae-a793-546dc6ef9272')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'2ec24e06-fe81-49ae-a793-546dc6ef9272')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">2ec24e06-fe81-49ae-a793-546dc6ef9272</d:Id>
+        <d:CodHabitat>4080</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Tufărişuri cu specii sub-arctice de Salix</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'c93dc308-051a-4eee-a00d-731cedd4ca34')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'c93dc308-051a-4eee-a00d-731cedd4ca34')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">c93dc308-051a-4eee-a00d-731cedd4ca34</d:Id>
+        <d:CodHabitat>40A0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Tufărişuri subcontinentale peri-panonice</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'd6c613f0-9dfb-40f7-af1b-9dbf8fb0108f')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'd6c613f0-9dfb-40f7-af1b-9dbf8fb0108f')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">d6c613f0-9dfb-40f7-af1b-9dbf8fb0108f</d:Id>
+        <d:CodHabitat>40A0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Tufărişuri subcontinentale peri-panonice</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'07ed6118-c58c-41d5-9142-cf26d3e7c946')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'07ed6118-c58c-41d5-9142-cf26d3e7c946')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">07ed6118-c58c-41d5-9142-cf26d3e7c946</d:Id>
+        <d:CodHabitat>40A0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Tufărişuri subcontinentale peri-panonice</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'a18cc934-46df-4d7e-a0a7-47bc3ae3fbea')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'a18cc934-46df-4d7e-a0a7-47bc3ae3fbea')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">a18cc934-46df-4d7e-a0a7-47bc3ae3fbea</d:Id>
+        <d:CodHabitat>40C0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Tufărişuri de foioase ponto-sarmatice</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'0b4718f2-11da-43ee-bb24-f6ced2790f9c')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'0b4718f2-11da-43ee-bb24-f6ced2790f9c')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">0b4718f2-11da-43ee-bb24-f6ced2790f9c</d:Id>
+        <d:CodHabitat>40C0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Tufărişuri de foioase ponto-sarmatice</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'559eb1c2-3689-4fd3-8f3c-824092a4157d')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'559eb1c2-3689-4fd3-8f3c-824092a4157d')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">559eb1c2-3689-4fd3-8f3c-824092a4157d</d:Id>
+        <d:CodHabitat>6110</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Comunităţi rupicole calcifile sau pajişti bazifile din Alysso-Sedion albi</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'20f21c75-6420-4566-8640-94f215282511')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'20f21c75-6420-4566-8640-94f215282511')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">20f21c75-6420-4566-8640-94f215282511</d:Id>
+        <d:CodHabitat>6110</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Comunităţi rupicole calcifile sau pajişti bazifile din Alysso-Sedion albi</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'1fd9d43a-1c9a-4a20-bb52-1d7d5d54056f')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'1fd9d43a-1c9a-4a20-bb52-1d7d5d54056f')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">1fd9d43a-1c9a-4a20-bb52-1d7d5d54056f</d:Id>
+        <d:CodHabitat>6120</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti xerice pe substrate calcaroase</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'a88221d9-54de-4fa2-9245-c09b56705ec4')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'a88221d9-54de-4fa2-9245-c09b56705ec4')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">a88221d9-54de-4fa2-9245-c09b56705ec4</d:Id>
+        <d:CodHabitat>6120</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti xerice pe substrate calcaroase</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'c2906443-151b-479d-be2d-b2fab0f9d52c')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'c2906443-151b-479d-be2d-b2fab0f9d52c')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">c2906443-151b-479d-be2d-b2fab0f9d52c</d:Id>
+        <d:CodHabitat>6150</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti boreale şi alpine pe substrate silicioase</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'552cd497-410d-4133-9b65-347e320fcd2b')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'552cd497-410d-4133-9b65-347e320fcd2b')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">552cd497-410d-4133-9b65-347e320fcd2b</d:Id>
+        <d:CodHabitat>6170</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti calcifile alpine şi subalpine</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'7b780dfa-db04-4d67-923a-1a71fc50647a')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'7b780dfa-db04-4d67-923a-1a71fc50647a')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">7b780dfa-db04-4d67-923a-1a71fc50647a</d:Id>
+        <d:CodHabitat>6190</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti panonice de stâncării (Stipo-Festucetalia pallentis)</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'28d87703-c177-4523-82f7-e1be857d1ab4')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'28d87703-c177-4523-82f7-e1be857d1ab4')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">28d87703-c177-4523-82f7-e1be857d1ab4</d:Id>
+        <d:CodHabitat>6190</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti panonice de stâncării (Stipo-Festucetalia pallentis)</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'2fe63bf6-2f06-45b2-9251-46ab42569a34')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'2fe63bf6-2f06-45b2-9251-46ab42569a34')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">2fe63bf6-2f06-45b2-9251-46ab42569a34</d:Id>
+        <d:CodHabitat>6210</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti uscate seminaturale şi faciesuri cu tufărişuri pe substrate calcaroase (Festuco Brometalia)</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'cf6affc0-42f9-4f94-9a21-8f841927fd36')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'cf6affc0-42f9-4f94-9a21-8f841927fd36')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">cf6affc0-42f9-4f94-9a21-8f841927fd36</d:Id>
+        <d:CodHabitat>6210</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti uscate seminaturale şi faciesuri cu tufărişuri pe substrate calcaroase (Festuco Brometalia)</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'aba81d7d-999e-4c67-9391-cb6f70addcb1')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'aba81d7d-999e-4c67-9391-cb6f70addcb1')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">aba81d7d-999e-4c67-9391-cb6f70addcb1</d:Id>
+        <d:CodHabitat>6230</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti montane de Nardus bogate în specii, pe substrate silicioase</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'1f4605c9-1b3c-4ff5-b266-6af8c1d8ecf0')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'1f4605c9-1b3c-4ff5-b266-6af8c1d8ecf0')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">1f4605c9-1b3c-4ff5-b266-6af8c1d8ecf0</d:Id>
+        <d:CodHabitat>6240</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti stepice subpanonice</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'86a39abe-8aab-4108-b0a9-09ba1a42736f')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'86a39abe-8aab-4108-b0a9-09ba1a42736f')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">86a39abe-8aab-4108-b0a9-09ba1a42736f</d:Id>
+        <d:CodHabitat>6250</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti panonice pe loess</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Rezerva stiintifica</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'f7407f15-9d07-4acc-a5d9-c68a4ca46ac8')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'f7407f15-9d07-4acc-a5d9-c68a4ca46ac8')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">f7407f15-9d07-4acc-a5d9-c68a4ca46ac8</d:Id>
+        <d:CodHabitat>62C0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Stepe ponto-sarmatice</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'6b88c853-0d71-43e3-9d6c-e98cde0ae888')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'6b88c853-0d71-43e3-9d6c-e98cde0ae888')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">6b88c853-0d71-43e3-9d6c-e98cde0ae888</d:Id>
+        <d:CodHabitat>62C0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Stepe ponto-sarmatice</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'4f791fcf-a614-44f3-a5c3-0820ee50b8b3')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'4f791fcf-a614-44f3-a5c3-0820ee50b8b3')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">4f791fcf-a614-44f3-a5c3-0820ee50b8b3</d:Id>
+        <d:CodHabitat>6410</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti cu Molinia pe soluri calcaroase, turboase sau argiloase (Molinion caeruleae)</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'7b654b6a-a16a-4d3e-9354-13d6a51444d6')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'7b654b6a-a16a-4d3e-9354-13d6a51444d6')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">7b654b6a-a16a-4d3e-9354-13d6a51444d6</d:Id>
+        <d:CodHabitat>6410</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti cu Molinia pe soluri calcaroase, turboase sau argiloase (Molinion caeruleae)</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'713fd6de-5e77-465b-94ea-38795ca0d291')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'713fd6de-5e77-465b-94ea-38795ca0d291')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">713fd6de-5e77-465b-94ea-38795ca0d291</d:Id>
+        <d:CodHabitat>6410</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti cu Molinia pe soluri calcaroase, turboase sau argiloase (Molinion caeruleae)</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'5a28ba5c-0a39-4994-9807-854c8a22aa5c')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'5a28ba5c-0a39-4994-9807-854c8a22aa5c')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">5a28ba5c-0a39-4994-9807-854c8a22aa5c</d:Id>
+        <d:CodHabitat>6410</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti cu Molinia pe soluri calcaroase, turboase sau argiloase (Molinion caeruleae)</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'a8192fbe-f1aa-4f00-9664-b63ecd1fe14a')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'a8192fbe-f1aa-4f00-9664-b63ecd1fe14a')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">a8192fbe-f1aa-4f00-9664-b63ecd1fe14a</d:Id>
+        <d:CodHabitat>6410</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti cu Molinia pe soluri calcaroase, turboase sau argiloase (Molinion caeruleae)</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'68d35731-6e9a-4417-b75b-b557e7a64954')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'68d35731-6e9a-4417-b75b-b557e7a64954')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">68d35731-6e9a-4417-b75b-b557e7a64954</d:Id>
+        <d:CodHabitat>6420</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti mediteraneene umede cu ierburi înalte din Molinio-Holoschoenion</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'7be39811-a601-4002-9348-0765947d6211')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'7be39811-a601-4002-9348-0765947d6211')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">7be39811-a601-4002-9348-0765947d6211</d:Id>
+        <d:CodHabitat>6430</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Comunităţi de lizieră cu ierburi înalte higrofile de la câmpie până în etajele montan şi alpin</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'1b0c4feb-23d5-4648-9d05-893f2d00a621')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'1b0c4feb-23d5-4648-9d05-893f2d00a621')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">1b0c4feb-23d5-4648-9d05-893f2d00a621</d:Id>
+        <d:CodHabitat>6430</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Comunităţi de lizieră cu ierburi înalte higrofile de la câmpie până în etajele montan şi alpin</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'd20b2096-41b0-4d7f-83a4-902d4c4195a1')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'd20b2096-41b0-4d7f-83a4-902d4c4195a1')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">d20b2096-41b0-4d7f-83a4-902d4c4195a1</d:Id>
+        <d:CodHabitat>6430</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Comunităţi de lizieră cu ierburi înalte higrofile de la câmpie până în etajele montan şi alpin</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'610d0b99-8c0e-4e28-882f-aed7ccbc7ba8')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'610d0b99-8c0e-4e28-882f-aed7ccbc7ba8')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">610d0b99-8c0e-4e28-882f-aed7ccbc7ba8</d:Id>
+        <d:CodHabitat>6430</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Comunităţi de lizieră cu ierburi înalte higrofile de la câmpie până în etajele montan şi alpin</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'b55797e0-d34e-4e57-b836-d21390d1154c')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'b55797e0-d34e-4e57-b836-d21390d1154c')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">b55797e0-d34e-4e57-b836-d21390d1154c</d:Id>
+        <d:CodHabitat>6430</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Comunităţi de lizieră cu ierburi înalte higrofile de la câmpie până în etajele montan şi alpin</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'36ddeba0-22e5-4515-b020-0d75375e9253')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'36ddeba0-22e5-4515-b020-0d75375e9253')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">36ddeba0-22e5-4515-b020-0d75375e9253</d:Id>
+        <d:CodHabitat>6440</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti aluviale din Cnidion dubii</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'c951fe11-a987-4be5-92f4-1bfdbf17386e')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'c951fe11-a987-4be5-92f4-1bfdbf17386e')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">c951fe11-a987-4be5-92f4-1bfdbf17386e</d:Id>
+        <d:CodHabitat>6440</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti aluviale din Cnidion dubii</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'269991b7-734b-4de7-9ce7-af791405ecb3')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'269991b7-734b-4de7-9ce7-af791405ecb3')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">269991b7-734b-4de7-9ce7-af791405ecb3</d:Id>
+        <d:CodHabitat>6440</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti aluviale din Cnidion dubii</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'f2d19c44-a621-43f2-8c27-cfa537ff2e47')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'f2d19c44-a621-43f2-8c27-cfa537ff2e47')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">f2d19c44-a621-43f2-8c27-cfa537ff2e47</d:Id>
+        <d:CodHabitat>6440</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti aluviale din Cnidion dubii</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'0896d4da-45fc-47c4-a965-f0389c7b9e11')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'0896d4da-45fc-47c4-a965-f0389c7b9e11')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">0896d4da-45fc-47c4-a965-f0389c7b9e11</d:Id>
+        <d:CodHabitat>6440</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti aluviale din Cnidion dubii</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'cac1e7c4-095c-473d-ac77-3b4fedf68204')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'cac1e7c4-095c-473d-ac77-3b4fedf68204')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">cac1e7c4-095c-473d-ac77-3b4fedf68204</d:Id>
+        <d:CodHabitat>6510</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti de altitudine joasă (Alopecurus pratensis, Sanguisorba officinalis)</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'9ce8f252-adab-443c-b354-48910b3db72c')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'9ce8f252-adab-443c-b354-48910b3db72c')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">9ce8f252-adab-443c-b354-48910b3db72c</d:Id>
+        <d:CodHabitat>6510</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti de altitudine joasă (Alopecurus pratensis, Sanguisorba officinalis)</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'05742217-a849-445b-9555-663dbeb95a66')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'05742217-a849-445b-9555-663dbeb95a66')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">05742217-a849-445b-9555-663dbeb95a66</d:Id>
+        <d:CodHabitat>6510</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti de altitudine joasă (Alopecurus pratensis, Sanguisorba officinalis)</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'e21d53ae-a55e-4873-a307-867627140e8e')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'e21d53ae-a55e-4873-a307-867627140e8e')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">e21d53ae-a55e-4873-a307-867627140e8e</d:Id>
+        <d:CodHabitat>6510</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti de altitudine joasă (Alopecurus pratensis, Sanguisorba officinalis)</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'68a7490e-ffa9-4104-ab35-eb8bad3e5f3c')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'68a7490e-ffa9-4104-ab35-eb8bad3e5f3c')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">68a7490e-ffa9-4104-ab35-eb8bad3e5f3c</d:Id>
+        <d:CodHabitat>6510</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pajişti de altitudine joasă (Alopecurus pratensis, Sanguisorba officinalis)</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'f6c9a9cd-115d-4059-b7eb-ebcc23d4522a')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'f6c9a9cd-115d-4059-b7eb-ebcc23d4522a')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">f6c9a9cd-115d-4059-b7eb-ebcc23d4522a</d:Id>
+        <d:CodHabitat>6520</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Fâneţe montane</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'2c4c8fcb-a392-4683-85ba-dfd0307a09e7')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'2c4c8fcb-a392-4683-85ba-dfd0307a09e7')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">2c4c8fcb-a392-4683-85ba-dfd0307a09e7</d:Id>
+        <d:CodHabitat>7110</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Turbării active</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'6449c4a1-acb8-42fb-8e4e-b4bc128cd6bb')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'6449c4a1-acb8-42fb-8e4e-b4bc128cd6bb')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">6449c4a1-acb8-42fb-8e4e-b4bc128cd6bb</d:Id>
+        <d:CodHabitat>7120</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Turbării degradate capabile de regenerare naturală</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'e91f9893-2b8f-4a0e-9581-19894ec876e5')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'e91f9893-2b8f-4a0e-9581-19894ec876e5')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">e91f9893-2b8f-4a0e-9581-19894ec876e5</d:Id>
+        <d:CodHabitat>7140</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Mlaştini turboase de tranziţie şi turbării oscilante (nefixate de substrat)</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'10ff4b7e-ba50-4d02-9f5a-b2685e000e0a')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'10ff4b7e-ba50-4d02-9f5a-b2685e000e0a')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">10ff4b7e-ba50-4d02-9f5a-b2685e000e0a</d:Id>
+        <d:CodHabitat>7140</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Mlaştini turboase de tranziţie şi turbării oscilante (nefixate de substrat)</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'199f8567-2aee-4219-bf32-61a548bec6c5')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'199f8567-2aee-4219-bf32-61a548bec6c5')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">199f8567-2aee-4219-bf32-61a548bec6c5</d:Id>
+        <d:CodHabitat>7150</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Comunităţi depresionare din Rhynchosporion pe substrate turboase</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'428e2ed6-1207-46d5-ba1b-88975038ad4d')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'428e2ed6-1207-46d5-ba1b-88975038ad4d')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">428e2ed6-1207-46d5-ba1b-88975038ad4d</d:Id>
+        <d:CodHabitat>7150</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Comunităţi depresionare din Rhynchosporion pe substrate turboase</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'8386d51f-34f9-4bf6-8cd8-3c78e34469eb')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'8386d51f-34f9-4bf6-8cd8-3c78e34469eb')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">8386d51f-34f9-4bf6-8cd8-3c78e34469eb</d:Id>
+        <d:CodHabitat>7210</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Mlaştini calcaroase cu Cladium mariscus</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'f12018b7-4423-4cbd-9487-071b1323f3b0')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'f12018b7-4423-4cbd-9487-071b1323f3b0')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">f12018b7-4423-4cbd-9487-071b1323f3b0</d:Id>
+        <d:CodHabitat>7220</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Izvoare petrifiante cu formare de travertin (Cratoneurion)</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'34b56433-4fa2-4457-ba48-d2e1571e3c23')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'34b56433-4fa2-4457-ba48-d2e1571e3c23')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">34b56433-4fa2-4457-ba48-d2e1571e3c23</d:Id>
+        <d:CodHabitat>7220</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Izvoare petrifiante cu formare de travertin (Cratoneurion)</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'd963666e-e7b0-4c45-9ce7-2e2827025964')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'd963666e-e7b0-4c45-9ce7-2e2827025964')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">d963666e-e7b0-4c45-9ce7-2e2827025964</d:Id>
+        <d:CodHabitat>7230</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Mlaştini alcaline</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'05c99797-3450-49b3-9639-76f6f8735787')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'05c99797-3450-49b3-9639-76f6f8735787')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">05c99797-3450-49b3-9639-76f6f8735787</d:Id>
+        <d:CodHabitat>7230</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Mlaştini alcaline</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'ee26d8cf-4add-4c0f-b1e9-5a06a8e97bd3')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'ee26d8cf-4add-4c0f-b1e9-5a06a8e97bd3')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">ee26d8cf-4add-4c0f-b1e9-5a06a8e97bd3</d:Id>
+        <d:CodHabitat>7240</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Formaţiuni pioniere alpine din Caricion bicoloris-atrofuscae</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Rezerva stiintifica</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'de6155fd-f7d4-481c-b9f4-88c57c802cdc')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'de6155fd-f7d4-481c-b9f4-88c57c802cdc')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">de6155fd-f7d4-481c-b9f4-88c57c802cdc</d:Id>
+        <d:CodHabitat>8110</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Grohotişuri silicioase din etajele montan şi alpin (Androsacetalia alpinae şi Galeopsietalia ladani)</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'7e22f1a3-55b5-44b3-b212-5577a6d89605')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'7e22f1a3-55b5-44b3-b212-5577a6d89605')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">7e22f1a3-55b5-44b3-b212-5577a6d89605</d:Id>
+        <d:CodHabitat>8120</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Grohotişuri calcaroase şi de şisturi calcaroase din etajele montan şi alpin (Thlaspietea rotundifolii)</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'319d333d-7438-4b00-9c5b-b505cedea7e7')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'319d333d-7438-4b00-9c5b-b505cedea7e7')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">319d333d-7438-4b00-9c5b-b505cedea7e7</d:Id>
+        <d:CodHabitat>8120</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Grohotişuri calcaroase şi de şisturi calcaroase din etajele montan şi alpin (Thlaspietea rotundifolii)</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'95da01c6-3abc-41b6-8665-3d468bfd9efd')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'95da01c6-3abc-41b6-8665-3d468bfd9efd')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">95da01c6-3abc-41b6-8665-3d468bfd9efd</d:Id>
+        <d:CodHabitat>8160</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Grohotişuri medio-europene calcaroase din etajele colinar şi montan</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'638cf63c-3096-4ac6-93d4-82eab2320c29')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'638cf63c-3096-4ac6-93d4-82eab2320c29')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">638cf63c-3096-4ac6-93d4-82eab2320c29</d:Id>
+        <d:CodHabitat>8160</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Grohotişuri medio-europene calcaroase din etajele colinar şi montan</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'c1ba4d42-e45e-46bd-9345-3b07cfa4cd71')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'c1ba4d42-e45e-46bd-9345-3b07cfa4cd71')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">c1ba4d42-e45e-46bd-9345-3b07cfa4cd71</d:Id>
+        <d:CodHabitat>8210</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Versanţi stâncoşi cu vegetaţie chasmofitică pe roci calcaroase</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'be41dda1-3c47-42d1-a0a8-65cd1c490e7e')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'be41dda1-3c47-42d1-a0a8-65cd1c490e7e')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">be41dda1-3c47-42d1-a0a8-65cd1c490e7e</d:Id>
+        <d:CodHabitat>8210</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Versanţi stâncoşi cu vegetaţie chasmofitică pe roci calcaroase</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'08202ac2-f7d9-4944-a45a-67796017b8f0')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'08202ac2-f7d9-4944-a45a-67796017b8f0')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">08202ac2-f7d9-4944-a45a-67796017b8f0</d:Id>
+        <d:CodHabitat>8220</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Versanţi stâncoşi cu vegetaţie chasmofitică pe roci silicioase</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'ab8d5af7-378e-4c91-a4ba-d67e6d3b2811')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'ab8d5af7-378e-4c91-a4ba-d67e6d3b2811')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">ab8d5af7-378e-4c91-a4ba-d67e6d3b2811</d:Id>
+        <d:CodHabitat>8220</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Versanţi stâncoşi cu vegetaţie chasmofitică pe roci silicioase</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'e1f5041d-a074-48fc-940f-2c573ac3aa94')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'e1f5041d-a074-48fc-940f-2c573ac3aa94')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">e1f5041d-a074-48fc-940f-2c573ac3aa94</d:Id>
+        <d:CodHabitat>8230</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Comunităţi pioniere din Sedo-Scleranthion sau din Sedo albi-Veronicion dilleni pe stâncării silicioase</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'0aac7865-7816-40db-8374-c4742b925962')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'0aac7865-7816-40db-8374-c4742b925962')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">0aac7865-7816-40db-8374-c4742b925962</d:Id>
+        <d:CodHabitat>8230</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Comunităţi pioniere din Sedo-Scleranthion sau din Sedo albi-Veronicion dilleni pe stâncării silicioase</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'47e7eab9-8029-4fc6-8ad7-e0b3d2cb2d10')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'47e7eab9-8029-4fc6-8ad7-e0b3d2cb2d10')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">47e7eab9-8029-4fc6-8ad7-e0b3d2cb2d10</d:Id>
+        <d:CodHabitat>8230</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Comunităţi pioniere din Sedo-Scleranthion sau din Sedo albi-Veronicion dilleni pe stâncării silicioase</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'f244debe-d05f-49eb-ac36-359c3342b3ab')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'f244debe-d05f-49eb-ac36-359c3342b3ab')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">f244debe-d05f-49eb-ac36-359c3342b3ab</d:Id>
+        <d:CodHabitat>8310</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Peşteri în care accesul publicului este interzis</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'a87680dd-6ca2-4324-8bbe-c35ffa751fd5')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'a87680dd-6ca2-4324-8bbe-c35ffa751fd5')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">a87680dd-6ca2-4324-8bbe-c35ffa751fd5</d:Id>
+        <d:CodHabitat>8310</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Peşteri în care accesul publicului este interzis</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'd79ff16c-0237-4182-a8c4-c36ea0b1728c')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'd79ff16c-0237-4182-a8c4-c36ea0b1728c')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">d79ff16c-0237-4182-a8c4-c36ea0b1728c</d:Id>
+        <d:CodHabitat>8310</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Peşteri în care accesul publicului este interzis</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'dcccf80e-70dd-46cb-9a95-0edd85b6808a')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'dcccf80e-70dd-46cb-9a95-0edd85b6808a')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">dcccf80e-70dd-46cb-9a95-0edd85b6808a</d:Id>
+        <d:CodHabitat>9110</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri de fag de tip Luzulo-Fagetum</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'ddc8d07d-b51e-48e1-9170-e765940f498c')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'ddc8d07d-b51e-48e1-9170-e765940f498c')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">ddc8d07d-b51e-48e1-9170-e765940f498c</d:Id>
+        <d:CodHabitat>9110</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri de fag de tip Luzulo-Fagetum</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'124b7284-1592-46ae-8cec-b7e27e6809bf')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'124b7284-1592-46ae-8cec-b7e27e6809bf')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">124b7284-1592-46ae-8cec-b7e27e6809bf</d:Id>
+        <d:CodHabitat>9130</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri de fag de tip Asperulo-Fagetum</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'26987d37-cb60-47e1-b32f-c495da5b19cd')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'26987d37-cb60-47e1-b32f-c495da5b19cd')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">26987d37-cb60-47e1-b32f-c495da5b19cd</d:Id>
+        <d:CodHabitat>9130</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri de fag de tip Asperulo-Fagetum</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'772928c2-a910-4f26-a3d6-4366f0f3494a')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'772928c2-a910-4f26-a3d6-4366f0f3494a')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">772928c2-a910-4f26-a3d6-4366f0f3494a</d:Id>
+        <d:CodHabitat>9150</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri medio-europene de fag din Cephalanthero-Fagion</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'27777ddb-da74-4c22-9515-a67ba024e032')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'27777ddb-da74-4c22-9515-a67ba024e032')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">27777ddb-da74-4c22-9515-a67ba024e032</d:Id>
+        <d:CodHabitat>9150</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri medio-europene de fag din Cephalanthero-Fagion</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'3b80c3c3-c7e5-447c-a279-b91ddaeee3fb')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'3b80c3c3-c7e5-447c-a279-b91ddaeee3fb')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">3b80c3c3-c7e5-447c-a279-b91ddaeee3fb</d:Id>
+        <d:CodHabitat>9170</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pãduri de stejar cu carpen de tip Galio-Carpinetum</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'434b128b-c097-4069-9706-f4bc4aa59527')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'434b128b-c097-4069-9706-f4bc4aa59527')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">434b128b-c097-4069-9706-f4bc4aa59527</d:Id>
+        <d:CodHabitat>9170</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pãduri de stejar cu carpen de tip Galio-Carpinetum</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'bcedccdd-9d2f-420c-8a6e-433f4473cad6')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'bcedccdd-9d2f-420c-8a6e-433f4473cad6')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">bcedccdd-9d2f-420c-8a6e-433f4473cad6</d:Id>
+        <d:CodHabitat>9180</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri din Tilio-Acerion pe versanţi abrupţi, grohotişuri şi ravene</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'e6b3fbff-3a1b-4c8b-a07f-7811ff6974ba')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'e6b3fbff-3a1b-4c8b-a07f-7811ff6974ba')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">e6b3fbff-3a1b-4c8b-a07f-7811ff6974ba</d:Id>
+        <d:CodHabitat>9180</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri din Tilio-Acerion pe versanţi abrupţi, grohotişuri şi ravene</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'3f359d29-0355-4fc1-8519-d9adf5ae0caa')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'3f359d29-0355-4fc1-8519-d9adf5ae0caa')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">3f359d29-0355-4fc1-8519-d9adf5ae0caa</d:Id>
+        <d:CodHabitat>91AA</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Vegetaţie forestieră ponto-sarmatică cu stejar pufos</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'61526c70-11d9-4129-aef9-e3fd75f32385')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'61526c70-11d9-4129-aef9-e3fd75f32385')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">61526c70-11d9-4129-aef9-e3fd75f32385</d:Id>
+        <d:CodHabitat>91AA</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Vegetaţie forestieră ponto-sarmatică cu stejar pufos</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'53052669-cf0c-406d-aa39-84922cd3bdef')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'53052669-cf0c-406d-aa39-84922cd3bdef')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">53052669-cf0c-406d-aa39-84922cd3bdef</d:Id>
+        <d:CodHabitat>91D0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Turbării cu vegetaţie forestieră</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'3f4bb920-95ca-4451-bf56-cb594e30b397')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'3f4bb920-95ca-4451-bf56-cb594e30b397')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">3f4bb920-95ca-4451-bf56-cb594e30b397</d:Id>
+        <d:CodHabitat>91D0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Turbării cu vegetaţie forestieră</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'057d7784-5506-42be-9161-b7e50a3165dd')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'057d7784-5506-42be-9161-b7e50a3165dd')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">057d7784-5506-42be-9161-b7e50a3165dd</d:Id>
+        <d:CodHabitat>91E0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri aluviale cu Alnus glutinosa şi Fraxinus excelsior (Alno-Padion, Alnion incanae, Salicion albae)</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'a0a2689b-8914-4ede-8fc1-fe515f9e89dd')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'a0a2689b-8914-4ede-8fc1-fe515f9e89dd')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">a0a2689b-8914-4ede-8fc1-fe515f9e89dd</d:Id>
+        <d:CodHabitat>91E0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri aluviale cu Alnus glutinosa şi Fraxinus excelsior (Alno-Padion, Alnion incanae, Salicion albae)</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'4b6ae083-cdf2-426d-acbe-19e6cc291ab9')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'4b6ae083-cdf2-426d-acbe-19e6cc291ab9')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">4b6ae083-cdf2-426d-acbe-19e6cc291ab9</d:Id>
+        <d:CodHabitat>91F0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri ripariene mixte cu Quercus robur, Ulmus laevis, Fraxinus excelsior sau Fraxinus angustifolia, din lungul marilor râuri (Ulmenion minoris)</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'c102ea86-c1ea-4b54-a53a-7b140ff3dbe6')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'c102ea86-c1ea-4b54-a53a-7b140ff3dbe6')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">c102ea86-c1ea-4b54-a53a-7b140ff3dbe6</d:Id>
+        <d:CodHabitat>91F0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri ripariene mixte cu Quercus robur, Ulmus laevis, Fraxinus excelsior sau Fraxinus angustifolia, din lungul marilor râuri (Ulmenion minoris)</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'32cd26f3-2168-404d-882f-7d7735dcab3a')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'32cd26f3-2168-404d-882f-7d7735dcab3a')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">32cd26f3-2168-404d-882f-7d7735dcab3a</d:Id>
+        <d:CodHabitat>91F0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri ripariene mixte cu Quercus robur, Ulmus laevis, Fraxinus excelsior sau Fraxinus angustifolia, din lungul marilor râuri (Ulmenion minoris)</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Marginal</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'88481600-c590-499a-826a-af06a11cb0b7')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'88481600-c590-499a-826a-af06a11cb0b7')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">88481600-c590-499a-826a-af06a11cb0b7</d:Id>
+        <d:CodHabitat>91F0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri ripariene mixte cu Quercus robur, Ulmus laevis, Fraxinus excelsior sau Fraxinus angustifolia, din lungul marilor râuri (Ulmenion minoris)</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'115eea9c-eec8-4b62-ba72-9b7d8eb1aa7f')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'115eea9c-eec8-4b62-ba72-9b7d8eb1aa7f')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">115eea9c-eec8-4b62-ba72-9b7d8eb1aa7f</d:Id>
+        <d:CodHabitat>91H0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Vegetaţie forestieră panonică cu Quercus pubescens</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'4ac3d4de-f3d6-4406-b250-06841a1b99ea')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'4ac3d4de-f3d6-4406-b250-06841a1b99ea')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">4ac3d4de-f3d6-4406-b250-06841a1b99ea</d:Id>
+        <d:CodHabitat>91I0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Vegetaţie de silvostepă eurosiberiană cu Quercus spp.</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'6cf046f3-f932-4130-b39c-6b24d014649d')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'6cf046f3-f932-4130-b39c-6b24d014649d')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">6cf046f3-f932-4130-b39c-6b24d014649d</d:Id>
+        <d:CodHabitat>91I0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Vegetaţie de silvostepă eurosiberiană cu Quercus spp.</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'b40fecee-5097-4437-8e56-ad046064ce5f')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'b40fecee-5097-4437-8e56-ad046064ce5f')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">b40fecee-5097-4437-8e56-ad046064ce5f</d:Id>
+        <d:CodHabitat>91I0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Vegetaţie de silvostepă eurosiberiană cu Quercus spp.</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'fb0a4a6a-0eee-452e-b804-56142e89bace')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'fb0a4a6a-0eee-452e-b804-56142e89bace')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">fb0a4a6a-0eee-452e-b804-56142e89bace</d:Id>
+        <d:CodHabitat>91K0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri ilirice de Fagus sylvatica (Aremonio-Fagion)</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'c0c92429-36e2-4cbf-a96e-991856c21262')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'c0c92429-36e2-4cbf-a96e-991856c21262')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">c0c92429-36e2-4cbf-a96e-991856c21262</d:Id>
+        <d:CodHabitat>91K0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri ilirice de Fagus sylvatica (Aremonio-Fagion)</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'2deb23ff-f2d4-4154-a9a0-385864253e91')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'2deb23ff-f2d4-4154-a9a0-385864253e91')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">2deb23ff-f2d4-4154-a9a0-385864253e91</d:Id>
+        <d:CodHabitat>91L0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri ilirice de stejar cu carpen (Erythronio-Carpinion)</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'c6bbd460-68b8-4b5a-aff3-035c3b87a977')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'c6bbd460-68b8-4b5a-aff3-035c3b87a977')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">c6bbd460-68b8-4b5a-aff3-035c3b87a977</d:Id>
+        <d:CodHabitat>91M0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri balcano-panonice de cer şi gorun</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Marginal</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'273a5df2-bd16-42af-ac87-45b3b751eeee')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'273a5df2-bd16-42af-ac87-45b3b751eeee')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">273a5df2-bd16-42af-ac87-45b3b751eeee</d:Id>
+        <d:CodHabitat>91M0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri balcano-panonice de cer şi gorun</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'99106930-31ae-4b06-983b-5fa8c725484f')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'99106930-31ae-4b06-983b-5fa8c725484f')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">99106930-31ae-4b06-983b-5fa8c725484f</d:Id>
+        <d:CodHabitat>91M0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri balcano-panonice de cer şi gorun</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Marginal</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'cb95ee0e-0b62-430d-8371-7473a7b3394b')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'cb95ee0e-0b62-430d-8371-7473a7b3394b')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">cb95ee0e-0b62-430d-8371-7473a7b3394b</d:Id>
+        <d:CodHabitat>91M0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri balcano-panonice de cer şi gorun</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'0aa56a33-d04d-4742-9a93-ffecdf5fe334')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'0aa56a33-d04d-4742-9a93-ffecdf5fe334')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">0aa56a33-d04d-4742-9a93-ffecdf5fe334</d:Id>
+        <d:CodHabitat>91Q0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri relictare cu Pinus sylvestris pe substrate calcaroase</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'cf3cbeec-af0f-45e2-b117-403d887d12b7')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'cf3cbeec-af0f-45e2-b117-403d887d12b7')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">cf3cbeec-af0f-45e2-b117-403d887d12b7</d:Id>
+        <d:CodHabitat>91V0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri dacice de fag (Symphyto-Fagion)</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'a6f26f1a-fa01-4560-b968-47d04bef52af')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'a6f26f1a-fa01-4560-b968-47d04bef52af')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">a6f26f1a-fa01-4560-b968-47d04bef52af</d:Id>
+        <d:CodHabitat>91V0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri dacice de fag (Symphyto-Fagion)</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'a83bdb2f-fe63-4f37-b6c9-c8ba8181d303')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'a83bdb2f-fe63-4f37-b6c9-c8ba8181d303')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">a83bdb2f-fe63-4f37-b6c9-c8ba8181d303</d:Id>
+        <d:CodHabitat>91X0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri dobrogene de fag</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'f8dbdf24-3979-4e2e-99f3-3912272044db')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'f8dbdf24-3979-4e2e-99f3-3912272044db')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">f8dbdf24-3979-4e2e-99f3-3912272044db</d:Id>
+        <d:CodHabitat>91Y0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri dacice de stejar şi carpen</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Marginal</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'2118f179-3f51-42c7-be5a-5b6fd9196824')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'2118f179-3f51-42c7-be5a-5b6fd9196824')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">2118f179-3f51-42c7-be5a-5b6fd9196824</d:Id>
+        <d:CodHabitat>91Y0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri dacice de stejar şi carpen</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'87a7eb97-45b8-4c75-9ace-a29a00af69f3')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'87a7eb97-45b8-4c75-9ace-a29a00af69f3')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">87a7eb97-45b8-4c75-9ace-a29a00af69f3</d:Id>
+        <d:CodHabitat>91Y0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri dacice de stejar şi carpen</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Marginal</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'86dce1f8-35cf-4bf5-b8ec-bb69d36b17e9')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'86dce1f8-35cf-4bf5-b8ec-bb69d36b17e9')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">86dce1f8-35cf-4bf5-b8ec-bb69d36b17e9</d:Id>
+        <d:CodHabitat>91Y0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri dacice de stejar şi carpen</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'ab785693-8900-4aec-ac29-45742a532a0e')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'ab785693-8900-4aec-ac29-45742a532a0e')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">ab785693-8900-4aec-ac29-45742a532a0e</d:Id>
+        <d:CodHabitat>9260</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Vegetaţie forestieră cu Castanea sativa</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'77711e4d-14a2-4f79-80d7-9320a00965dd')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'77711e4d-14a2-4f79-80d7-9320a00965dd')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">77711e4d-14a2-4f79-80d7-9320a00965dd</d:Id>
+        <d:CodHabitat>9260</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Vegetaţie forestieră cu Castanea sativa</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'd2d3b6c8-cfb4-4aab-a5e3-0a7c93dd14fe')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'd2d3b6c8-cfb4-4aab-a5e3-0a7c93dd14fe')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">d2d3b6c8-cfb4-4aab-a5e3-0a7c93dd14fe</d:Id>
+        <d:CodHabitat>92A0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Zăvoaie cu Salix alba şi Populus alba</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'58ada022-6dc8-4f87-a80e-18493d31a33a')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'58ada022-6dc8-4f87-a80e-18493d31a33a')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">58ada022-6dc8-4f87-a80e-18493d31a33a</d:Id>
+        <d:CodHabitat>92A0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Zăvoaie cu Salix alba şi Populus alba</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'b8342e6e-e449-4c12-b565-3c29f8ff244a')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'b8342e6e-e449-4c12-b565-3c29f8ff244a')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">b8342e6e-e449-4c12-b565-3c29f8ff244a</d:Id>
+        <d:CodHabitat>92A0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Zăvoaie cu Salix alba şi Populus alba</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'34e33ff7-e0be-49ff-a065-abb36ccba52c')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'34e33ff7-e0be-49ff-a065-abb36ccba52c')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">34e33ff7-e0be-49ff-a065-abb36ccba52c</d:Id>
+        <d:CodHabitat>92A0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Zăvoaie cu Salix alba şi Populus alba</d:NumeHabitat>
+        <d:Bioregiune>Panonica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'ccfdd09b-6732-4d61-bbee-57a3a0438aa6')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'ccfdd09b-6732-4d61-bbee-57a3a0438aa6')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">ccfdd09b-6732-4d61-bbee-57a3a0438aa6</d:Id>
+        <d:CodHabitat>92D0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Galerii ripariene şi tufărişuri (Nerio-Tamaricetea şi Securinegion tinctoriae)</d:NumeHabitat>
+        <d:Bioregiune>Pontic</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'dcf3142e-f4da-4cf8-85f0-af10ead81a90')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'dcf3142e-f4da-4cf8-85f0-af10ead81a90')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">dcf3142e-f4da-4cf8-85f0-af10ead81a90</d:Id>
+        <d:CodHabitat>92D0</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Galerii ripariene şi tufărişuri (Nerio-Tamaricetea şi Securinegion tinctoriae)</d:NumeHabitat>
+        <d:Bioregiune>Stepica</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'8ba95ba3-06df-4f66-a9a9-96c61f9acda3')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'8ba95ba3-06df-4f66-a9a9-96c61f9acda3')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">8ba95ba3-06df-4f66-a9a9-96c61f9acda3</d:Id>
+        <d:CodHabitat>9410</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri acidofile de Picea abies din regiunea montana (Vaccinio-Piceetea)</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'f09aac10-a231-484e-9afe-5d863e342604')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'f09aac10-a231-484e-9afe-5d863e342604')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">f09aac10-a231-484e-9afe-5d863e342604</d:Id>
+        <d:CodHabitat>9420</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Păduri de Larix decidua şi/sau Pinus cembra din regiunea montană</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'df1e9c00-43ab-400b-bc95-bb24554b89cd')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'df1e9c00-43ab-400b-bc95-bb24554b89cd')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">df1e9c00-43ab-400b-bc95-bb24554b89cd</d:Id>
+        <d:CodHabitat>9530</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Vegetaţie forestieră sub-mediteraneeană cu endemitul Pinus nigra ssp. banatica</d:NumeHabitat>
+        <d:Bioregiune>Alpina</d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'2e899517-24f4-4d67-9742-f6841b2b5818')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'2e899517-24f4-4d67-9742-f6841b2b5818')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">2e899517-24f4-4d67-9742-f6841b2b5818</d:Id>
+        <d:CodHabitat>9530</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">true</d:PrioritateHabitat>
+        <d:NumeHabitat>Vegetaţie forestieră sub-mediteraneeană cu endemitul Pinus nigra ssp. banatica</d:NumeHabitat>
+        <d:Bioregiune xml:space="preserve">Continentala </d:Bioregiune>
+        <d:StatusVerificare>Prezent</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+  <entry>
+    <id>http://natura.anpm.ro/API/CNSERVICE.svc/ListaVerificareHabitate(guid'707127e9-89c7-4a4a-a6b8-dbf4a5e185dc')</id>
+    <title type="text"></title>
+    <updated>2014-04-15T14:20:57Z</updated>
+    <author>
+      <name />
+    </author>
+    <link rel="edit" title="ListaVerificareHabitate" href="ListaVerificareHabitate(guid'707127e9-89c7-4a4a-a6b8-dbf4a5e185dc')" />
+    <category term="IbisDefaultModel.ListaVerificareHabitate" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <content type="application/xml">
+      <m:properties>
+        <d:Id m:type="Edm.Guid">707127e9-89c7-4a4a-a6b8-dbf4a5e185dc</d:Id>
+        <d:CodHabitat>8330</d:CodHabitat>
+        <d:PrioritateHabitat m:type="Edm.Boolean">false</d:PrioritateHabitat>
+        <d:NumeHabitat>Pesteri marine total sau partial submerse</d:NumeHabitat>
+        <d:Bioregiune>Marea Neagra</d:Bioregiune>
+        <d:StatusVerificare>Rezerva stiintifica</d:StatusVerificare>
+      </m:properties>
+    </content>
+  </entry>
+</feed>

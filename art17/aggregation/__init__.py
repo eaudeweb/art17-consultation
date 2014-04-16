@@ -4,6 +4,7 @@ from StringIO import StringIO
 
 import flask
 from flask.ext.principal import Permission, Denial, PermissionDenied
+from flask.ext.script import Manager
 
 from art17 import models, dal
 from art17.aggregation.utils import (
@@ -19,6 +20,7 @@ from art17.auth import need
 
 
 aggregation = flask.Blueprint('aggregation', __name__)
+aggregation_manager = Manager()
 
 
 def perm_edit_record(record):
@@ -161,10 +163,11 @@ def prepare_object(obj, timestamp, user_id):
     return obj
 
 
-def get_habitat_checklist(distinct=False):
+def get_habitat_checklist(distinct=False, dataset_id=None):
     queryset = (
         models.DataHabitatsCheckList.query
         #.filter(models.DataHabitatsCheckList.presence != 'EX')
+        .filter_by(dataset_id=dataset_id)
         .filter(models.DataHabitatsCheckList.member_state == 'RO')
         .order_by(models.DataHabitatsCheckList.name)
     )
@@ -185,10 +188,11 @@ def get_habitat_checklist(distinct=False):
     return queryset
 
 
-def get_species_checklist(distinct=False):
+def get_species_checklist(distinct=False, dataset_id=None):
     queryset = (
         models.DataSpeciesCheckList.query
         #.filter(models.DataSpeciesCheckList.presence != 'EX')
+        .filter_by(dataset_id=dataset_id)
         .filter(models.DataSpeciesCheckList.member_state == 'RO')
         .order_by(models.DataSpeciesCheckList.name)
     )
