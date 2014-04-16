@@ -112,11 +112,13 @@ class Art17Server(Server):
 def create_manager(app):
     from art17.models import db_manager
     from art17.common import cons_manager
+    from art17.scripts import exporter
 
     manager = Manager(app)
     manager.add_command('db', db_manager)
     manager.add_command('cons', cons_manager)
     manager.add_command('runserver', Art17Server())
+    manager.add_command('export', exporter)
 
     return manager
 

@@ -434,6 +434,10 @@ class DataSpecies(Base):
     def identifier(self):
         return 'species:%s:%s' % (self.lu.group_code, int(self.lu.code))
 
+    @hybrid_property
+    def name(self):
+        return self.common_speciesname
+
 
 class DataSpeciesCheckList(Base):
     __tablename__ = u'data_species_check_list'
