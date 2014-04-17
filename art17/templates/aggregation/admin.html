@@ -13,11 +13,11 @@
 
 {% block before_content %}
   <ul class="nav nav-tabs">
-    <li {% if page == 'config' %}class="active"{% endif %}>
-      <a href="{{ url_for('config.form') }}">Configurare</a>
-    </li>
     <li {% if page == 'checklist' %}class="active"{% endif %}>
       <a href="{{ url_for('aggregation.checklists') }}">Liste de verificare</a>
+    </li>
+    <li {% if page == 'config' %}class="active"{% endif %}>
+      <a href="{{ url_for('config.form') }}">Configurare</a>
     </li>
   </ul>
 {% endblock %}

@@ -15,6 +15,7 @@ CONFIGURATION = {
     'AGGREGATION': {
         'REPORTING_BEGIN': u"An de început pentru perioada de raportare",
         'REPORTING_END': u"An de final pentru perioada de raportare",
+        'REPORTING_ID': u"Raportare curentă",
     },
 }
 
@@ -49,6 +50,7 @@ def form():
         'config_rows': config_rows,
         'base_template': base_template,
         'page': 'config',
+        'config_key': config_key,
     })
 
 

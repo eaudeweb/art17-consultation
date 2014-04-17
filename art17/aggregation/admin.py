@@ -39,6 +39,10 @@ PRESENCE_MAP = {
 }
 
 
+def get_checklists():
+    return Dataset.query.filter_by(checklist=True).all()
+
+
 def parse_checklist(list):
     result = OrderedDict()
     for item in list:
@@ -139,12 +143,12 @@ def create_checklist():
 
 @aggregation.route('/admin/')
 def admin():
-    return redirect(url_for('config.form'))
+    return redirect(url_for('.checklists'))
 
 
 @aggregation.route('/admin/checklists/')
 def checklists():
-    checklists = Dataset.query.filter_by(checklist=True).all()
+    checklists = get_checklists()
 
     default_checklist = {
         'species_checklist': get_species_checklist().all(),
@@ -192,3 +196,8 @@ def checklist():
     with open('misc/ListaVerificareSpecii.xml') as fin:
         species = species_from_oid(fin, None)
         print "Specie:", species[0] if species else '-'
+
+
+@aggregation.app_context_processor
+def inject_globals():
+    return {'checklists': get_checklists()}
