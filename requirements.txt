@@ -23,6 +23,7 @@ python-dateutil==2.1
 python-ldap==2.3.13
 pytz==2013d
 raven==2.0.12.2
+requests==2.2.1
 six==1.4.1
 sqlacodegen==1.1.1
 SQLAlchemy==0.8.2
