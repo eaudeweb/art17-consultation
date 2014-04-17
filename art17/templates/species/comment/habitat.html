@@ -130,44 +130,43 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="habitat.area_suitable">
-          Suprafața de habitat adecvată pentru specie (km²)
-        </label>
+      <div class="clearfix">
+        <div class="well col-sm-6">
+          <div class="form-group">
+            <label for="habitat.area_suitable">
+              Suprafața de habitat adecvată pentru specie (km²)
+            </label>
 
-        {{ errors(form.habitat.area_suitable) }}
+            {{ errors(form.habitat.area_suitable) }}
 
-        <div class="row">
-          <div class="col-sm-4 {{- error_cls(form.habitat.area_suitable) }}">
-            {{ form.habitat.area_suitable(class='form-control',
+            <div class="{{- error_cls(form.habitat.area_suitable) }}">
+              {{ form.habitat.area_suitable(class='form-control',
                     placeholder="suprafața trebuie exprimatǎ in km²") }}
+            </div>
+
           </div>
 
-          <div class="col-sm-2"></div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        {%- set reason = form.habitat.reason %}
-        <label for="range.reason.a">Motivul modificării</label>
-        <p for="range.reason.a">
-            <em>* Dacă există, justificați diferența între valoarea Suprafaței din
+          <div class="form-group">
+            {%- set reason = form.habitat.reason %}
+            <label for="range.reason.a">Motivul modificării</label>
+            <p for="range.reason.a">
+              <em>* Dacă există, justificați diferența între valoarea Suprafaței din
                 raportarea precedentă și valoarea curentă
-            </em>
-        </p>
+              </em>
+            </p>
 
-        {{ errors(reason) }}
+            {{ errors(reason) }}
 
-        <div class="row">
-          <div class="col-sm-6 field-inline">
-            {{ reason.a(class='form-control') }}
-            {{ LU_REASONS_FOR_CHANGE['a'] }} <br>
+            <div class="field-inline">
+              {{ reason.a(class='form-control') }}
+              {{ LU_REASONS_FOR_CHANGE['a'] }} <br>
 
-            {{ reason.b(class='form-control') }}
-            {{ LU_REASONS_FOR_CHANGE['b'] }} <br>
+              {{ reason.b(class='form-control') }}
+              {{ LU_REASONS_FOR_CHANGE['b'] }} <br>
 
-            {{ reason.c(class='form-control') }}
-            {{ LU_REASONS_FOR_CHANGE['c'] }} <br>
+              {{ reason.c(class='form-control') }}
+              {{ LU_REASONS_FOR_CHANGE['c'] }} <br>
+            </div>
           </div>
         </div>
       </div>

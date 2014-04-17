@@ -117,71 +117,71 @@
         </div>
       </div>
 
-      <div class="form-group">
-        {%- set reference_value = form.range.reference_value %}
-        <label for="range.reference_value.op">
-          Arealul favorabil de referință
-        </label>
-        <p for="range.reference_value.op">
-          <em>* Doar una din următoarele trei elemente trebuie completate:</em>
-        </p>
+      <div class="clearfix">
+        <div class="well col-sm-6">
+          <div class="form-group">
+            {%- set reference_value = form.range.reference_value %}
+            <label for="range.reference_value.op">
+              Arealul favorabil de referință
+            </label>
+            <p for="range.reference_value.op">
+              <em>* Doar una din următoarele trei elemente trebuie completate:</em>
+            </p>
 
-        {{ errors(reference_value) }}
+            {{ errors(reference_value) }}
 
-        <div class="row">
-          <div class="col-sm-3 {{- error_cls(reference_value.number) }}">
-            {{ reference_value.number(class='form-control',
+            <div class="row">
+              <div class="col-sm-4 {{- error_cls(reference_value.number) }}">
+                {{ reference_value.number(class='form-control',
                     placeholder="suprafața trebuie exprimatǎ in km²") }}
-          </div>
+              </div>
 
-          <div class="col-sm-2 {{- error_cls(reference_value.op) }}">
-            {{ reference_value.op(class='form-control') }}
-          </div>
+              <div class="col-sm-4 {{- error_cls(reference_value.op) }}">
+                {{ reference_value.op(class='form-control') }}
+              </div>
 
-          <div class="col-sm-2
+              <div class="col-sm-4
                       {{- error_cls(reference_value.x) }} field-inline">
-            {{ reference_value.x(class='form-control') }} necunoscut
+                {{ reference_value.x(class='form-control') }} necunoscut
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div class="form-group">
-        <label for="range.reference_value.method">
-          Arealul favorabil de referință - metoda
-        </label>
+          <div class="form-group">
+            <label for="range.reference_value.method">
+              Arealul favorabil de referință - metoda
+            </label>
 
-        {{ errors(form.range.reference_value.method) }}
+            {{ errors(form.range.reference_value.method) }}
 
-        <div class="row">
-          <div class="col-sm-6 {{- error_cls(form.range.reference_value.method) }}">
-            {{ form.range.reference_value.method(class='form-control', rows=2) }}
+            <div class="{{- error_cls(form.range.reference_value.method) }}">
+              {{ form.range.reference_value.method(class='form-control', rows=2) }}
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div class="form-group">
-        {%- set reason = form.range.reason %}
-        <label for="range.reason.a">
-            Motivul modificării
-        </label>
-        <p for="range.reason.a">
-            <em>* Dacă există, justificați diferența între valoarea Suprafeței din
+          <div class="form-group">
+            {%- set reason = form.range.reason %}
+            <label for="range.reason.a">
+              Motivul modificării
+            </label>
+            <p for="range.reason.a">
+              <em>* Dacă există, justificați diferența între valoarea Suprafeței din
                 raportarea precedentă și valoarea curentă
-            </em>
-        </p>
+              </em>
+            </p>
 
-        {{ errors(reason) }}
+            {{ errors(reason) }}
 
-        <div class="row">
-          <div class="col-sm-6 field-inline">
-            {{ reason.a(class='form-control') }}
-            {{ LU_REASONS_FOR_CHANGE['a'] }} <br>
+            <div class="field-inline">
+              {{ reason.a(class='form-control') }}
+              {{ LU_REASONS_FOR_CHANGE['a'] }} <br>
 
-            {{ reason.b(class='form-control') }}
-            {{ LU_REASONS_FOR_CHANGE['b'] }} <br>
+              {{ reason.b(class='form-control') }}
+              {{ LU_REASONS_FOR_CHANGE['b'] }} <br>
 
-            {{ reason.c(class='form-control') }}
-            {{ LU_REASONS_FOR_CHANGE['c'] }} <br>
+              {{ reason.c(class='form-control') }}
+              {{ LU_REASONS_FOR_CHANGE['c'] }} <br>
+            </div>
           </div>
         </div>
       </div>

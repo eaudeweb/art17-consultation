@@ -118,60 +118,60 @@
         </div>
       </div>
 
-      <div class="form-group">
-        {%- set reference_value = form.range.reference_value %}
-        <label for="range.reference_value.op">
-          Arealul favorabil de referință
-        </label>
+      <div class="clearfix">
+        <div class="well col-sm-6">
+          <div class="form-group">
+            {%- set reference_value = form.range.reference_value %}
+            <label for="range.reference_value.op">
+              Arealul favorabil de referință
+            </label>
 
-        {{ errors(reference_value) }}
+            {{ errors(reference_value) }}
 
-        <div class="row">
-          <div class="col-sm-2 {{- error_cls(reference_value.number) }}">
-            {{ reference_value.number(class='form-control',
+            <div class="row">
+              <div class="col-sm-4 {{- error_cls(reference_value.number) }}">
+                {{ reference_value.number(class='form-control',
                     placeholder="suprafața trebuie exprimatǎ in km²") }}
-          </div>
+              </div>
 
-          <div class="col-sm-2 {{- error_cls(reference_value.op) }}">
-            {{ reference_value.op(class='form-control') }}
-          </div>
+              <div class="col-sm-4 {{- error_cls(reference_value.op) }}">
+                {{ reference_value.op(class='form-control') }}
+              </div>
 
-          <div class="col-sm-2
+              <div class="col-sm-4
                      {{- error_cls(reference_value.x) }} field-inline">
-            {{ reference_value.x(class='form-control') }} necunoscut
+                {{ reference_value.x(class='form-control') }} necunoscut
+              </div>
+            </div>
+
+            <label for="population.reference_value.method">
+              Arealul favorabil de referință - metoda
+            </label>
+
+            {{ errors(reference_value.method) }}
+
+            <div class="{{- error_cls(reference_value.method) }}">
+              {{ reference_value.method(class='form-control', rows=2) }}
+            </div>
           </div>
-        </div>
-
-        <label for="population.reference_value.method">
-          Arealul favorabil de referință - metoda
-        </label>
-
-        {{ errors(reference_value.method) }}
-
-        <div class="row">
-          <div class="col-sm-6 {{- error_cls(reference_value.method) }}">
-            {{ reference_value.method(class='form-control', rows=2) }}
-          </div>
-        </div>
-      </div>
 
 
-      <div class="form-group">
-        {%- set reason = form.range.reason %}
-        <label for="range.reason.a">Motivul modificării</label>
+          <div class="form-group">
+            {%- set reason = form.range.reason %}
+            <label for="range.reason.a">Motivul modificării</label>
 
-        {{ errors(reason) }}
+            {{ errors(reason) }}
 
-        <div class="row">
-          <div class="col-sm-6 field-inline">
-            {{ reason.a(class='form-control') }}
-            {{ LU_REASONS_FOR_CHANGE['a'] }} <br>
+            <div class="field-inline">
+              {{ reason.a(class='form-control') }}
+              {{ LU_REASONS_FOR_CHANGE['a'] }} <br>
 
-            {{ reason.b(class='form-control') }}
-            {{ LU_REASONS_FOR_CHANGE['b'] }} <br>
+              {{ reason.b(class='form-control') }}
+              {{ LU_REASONS_FOR_CHANGE['b'] }} <br>
 
-            {{ reason.c(class='form-control') }}
-            {{ LU_REASONS_FOR_CHANGE['c'] }} <br>
+              {{ reason.c(class='form-control') }}
+              {{ LU_REASONS_FOR_CHANGE['c'] }} <br>
+            </div>
           </div>
         </div>
       </div>
