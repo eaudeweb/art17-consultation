@@ -197,6 +197,7 @@ def inject_constants():
                                     models.LuPresence.name_ro).all()),
         'get_population_units_ro':  get_population_units_ro,
         'FINALIZED_STATUS': FINALIZED_STATUS,
+        'GA_CODE': flask.current_app.config.get('GA_CODE'),
     }
 
 
