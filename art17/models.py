@@ -245,6 +245,14 @@ class DataHabitat(Base):
     def identifier(self):
         return 'habitat:%s' % (self.lu.code,)
 
+    @property
+    def checklist(self):
+        return (
+            DataHabitatsCheckList.query
+            .filter_by(dataset_id=None, code=self.code, member_state='RO')
+            .first()
+        )
+
 
 class DataHabitatsCheckList(Base):
     __tablename__ = u'data_habitats_check_list'
@@ -447,6 +455,14 @@ class DataSpecies(Base):
     @hybrid_property
     def name(self):
         return self.common_speciesname
+
+    @property
+    def checklist(self):
+        return (
+            DataSpeciesCheckList.query
+            .filter_by(dataset_id=None, code=self.code, member_state='RO')
+            .first()
+        )
 
 
 class DataSpeciesCheckList(Base):
