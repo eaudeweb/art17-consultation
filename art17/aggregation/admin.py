@@ -3,6 +3,8 @@ from datetime import datetime
 from BeautifulSoup import BeautifulSoup
 import requests
 from flask import redirect, url_for, render_template, request, current_app
+from wtforms import Form, IntegerField, TextField
+from wtforms.validators import Optional
 
 from art17.aggregation import (
     aggregation,
@@ -40,7 +42,7 @@ PRESENCE_MAP = {
 
 
 def get_checklists():
-    return Dataset.query.filter_by(checklist=True).all()
+    return Dataset.query.filter_by(checklist=True)
 
 
 def parse_checklist(list):
@@ -185,7 +187,35 @@ def create():
         create_checklist()
         return redirect(url_for('.checklists'))
     return render_template(
-        'aggregation/admin/checklist_create.html'
+        'aggregation/admin/checklist_create.html',
+        page='checklist',
+    )
+
+
+class ChecklistForm(Form):
+    comment = TextField()
+    year_start = IntegerField(validators=[Optional()])
+    year_end = IntegerField(validators=[Optional()])
+
+
+@aggregation.route('/admin/checklist/<dataset_id>/edit/',
+                   methods=('GET', 'POST'))
+def edit_checklist(dataset_id):
+    dataset = get_checklists().filter_by(id=dataset_id).first()
+
+    if request.method == 'POST':
+        form = ChecklistForm(request.form, obj=dataset)
+        if form.validate():
+            form.populate_obj(dataset)
+            db.session.commit()
+    else:
+        form = ChecklistForm(obj=dataset)
+
+    return render_template(
+      'aggregation/admin/edit_checklist.html',
+      page='checklist',
+      dataset=dataset,
+      form=form,
     )
 
 

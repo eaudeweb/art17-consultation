@@ -1,0 +1,43 @@
+{% extends 'aggregation/admin.html' %}
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('admin', url_for('.admin')),
+          ('liste de verificare', url_for('.checklists')),
+          ('creare listă', none),
+      ]) }}
+{% endblock breadcrumbs %}
+
+{% block content %}
+  <h1>Modifică raportare</h1>
+
+  <form method="post" action="">
+
+    <div class="form-group">
+      {% if form.comment.errors %}
+      <p class="text-danger">{{ form.comment.errors }}</p>
+      {% endif %}
+      <label for="comment">Titlu</label>
+      {{ form.comment(class='form-control') }}
+
+      {% if form.year_start.errors %}
+      <p class="text-danger">{{ form.comment.errors }}</p>
+      {% endif %}
+      <label for="year_start">An de început</label>
+      {{ form.year_start(class='form-control') }}
+
+      {% if form.year_end.errors %}
+      <p class="text-danger">{{ form.comment.errors }}</p>
+      {% endif %}
+      <label for="year_end">An de final</label>
+      {{ form.year_start(class='form-control') }}
+    </div>
+
+    <button type="submit" class="btn btn-default">Modifică</button>
+    <a class="btn btn-default" href="{{ url_for('.checklists') }}">
+      Renunță
+    </a>
+  </form>
+{% endblock %}

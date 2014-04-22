@@ -14,7 +14,7 @@
 {% block before_content %}
   <ul class="nav nav-tabs">
     <li {% if page == 'checklist' %}class="active"{% endif %}>
-      <a href="{{ url_for('aggregation.checklists') }}">Liste de verificare</a>
+      <a href="{{ url_for('aggregation.checklists') }}">Raportări</a>
     </li>
     <li {% if page == 'config' %}class="active"{% endif %}>
       <a href="{{ url_for('config.form') }}">Configurare</a>
