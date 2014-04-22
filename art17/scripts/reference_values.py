@@ -21,9 +21,13 @@ def species_magnitude():
             .order_by(models.DataSpeciesRegion.region)
         )
         for sr in data_species_regions:
+            name = None
+            if sp.lu:
+                name = sp.lu.display_name
+            name = name or ''
             row = [
                 sp.code,
-                sp.checklist.name or '++++++++++'
+                name,
                 sr.region,
                 unicode(sr.range_trend_magnitude_min or ''),
                 unicode(sr.range_trend_magnitude_max or ''),
@@ -56,9 +60,13 @@ def species_range_reference():
             .order_by(models.DataSpeciesRegion.region)
         )
         for sr in data_species_regions:
+            name = None
+            if sp.lu:
+                name = sp.lu.display_name
+            name = name or ''
             row = [
                 sp.code,
-                sp.checklist.name or '++++++++++'
+                name,
                 sr.region,
             ]
             row.extend([''] * 4)
