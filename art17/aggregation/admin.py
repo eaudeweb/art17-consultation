@@ -74,6 +74,7 @@ def species_from_oid(data, dataset):
         data = {
             'code': cod_specie, 'name': name, 'bio_region': region,
             'presence': presence, 'globalid': guid,
+            'hd_name': name,
             'member_state': 'RO',
         }
         if dataset:
