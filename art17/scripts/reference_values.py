@@ -23,7 +23,7 @@ def species_magnitude():
         for sr in data_species_regions:
             row = [
                 sp.code,
-                sp.name or sp.alternative_speciesname or '',
+                sp.checklist.name or '++++++++++'
                 sr.region,
                 unicode(sr.range_trend_magnitude_min or ''),
                 unicode(sr.range_trend_magnitude_max or ''),
@@ -58,7 +58,7 @@ def species_range_reference():
         for sr in data_species_regions:
             row = [
                 sp.code,
-                sp.name or sp.alternative_speciesname or '',
+                sp.checklist.name or '++++++++++'
                 sr.region,
             ]
             row.extend([''] * 4)
