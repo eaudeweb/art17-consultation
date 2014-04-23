@@ -51,10 +51,9 @@ def species_magnitude():
 @exporter.command
 def species_range_reference():
     header = ('Cod specie', 'Nume', 'Bioregiune',
-              'Val. min areal favorabil referinta',
-              'Val de la care arealul devine nefavorabil - inadecvat',
-              'Valoare de la care arealul devine nefavorabil - rau',
-              'Valoare de la care arealul devine necunoscut')
+              'Areal favorabil referinta',
+              'Operator - areal',
+              'Necunoscut')
 
     groups = models.LuGrupSpecie.query.all()
     columns = []
@@ -84,8 +83,10 @@ def species_range_reference():
                     sp.code,
                     name,
                     sr.region,
+                    unicode(sr.complementary_favourable_range) or '',
+                    unicode(sr.complementary_favourable_range_op) or '',
+                    unicode(sr.complementary_favourable_range_x) or '',
                 ]
-                row.extend([''] * 4)
                 columns.append(row)
 
     ret = generate_csv(header, columns)
