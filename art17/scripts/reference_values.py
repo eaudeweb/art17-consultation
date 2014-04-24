@@ -4,6 +4,7 @@ from utils import do_csv_export
 
 DATASET = 1
 
+
 @exporter.command
 def species_magnitude(filename=None):
     header = ('Cod specie', 'Nume', 'Bioregiune', 'Magn. min scurt',
@@ -82,9 +83,11 @@ def species_range_reference(filename=None):
                     sp.code,
                     name,
                     sr.region,
-                    unicode(sr.complementary_favourable_range) or '',
-                    unicode(sr.complementary_favourable_range_op) or '',
-                    unicode(sr.complementary_favourable_range_x) or '',
+                    unicode(sr.complementary_favourable_range)
+                    if sr.complementary_favourable_range else '',
+                    unicode(sr.complementary_favourable_range_op)
+                    if sr.complementary_favourable_range_x else '',
+                    'x' if sr.complementary_favourable_range_x else '',
                 ]
                 columns.append(row)
 
