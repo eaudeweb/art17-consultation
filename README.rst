@@ -156,3 +156,13 @@ Pentru a aduce baza de date la zi: upgrade. Pentru a reveni la versiunea
 dinaintea migrării::
 
     $ ./manage.py db downgrade -1
+
+Export date
+-----------
+
+Pentru exportul de date, folosim comanda export::
+    
+    $ ./manage.py export -h
+
+Vor fi afișate tipurile de export disponibile.
+

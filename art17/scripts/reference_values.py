@@ -1,11 +1,11 @@
 from art17 import models
 from art17.scripts import exporter
-from utils import generate_csv
+from utils import do_csv_export
 
 DATASET = 1
 
 @exporter.command
-def species_magnitude():
+def species_magnitude(filename=None):
     header = ('Cod specie', 'Nume', 'Bioregiune', 'Magn. min scurt',
               'Magn. max scurt', 'Magn. min lung', 'Magn. max lung')
 
@@ -44,12 +44,11 @@ def species_magnitude():
                 ]
                 columns.append(row)
 
-    ret = generate_csv(header, columns)
-    print ret
+    do_csv_export(header, columns, filename)
 
 
 @exporter.command
-def species_range_reference():
+def species_range_reference(filename=None):
     header = ('Cod specie', 'Nume', 'Bioregiune',
               'Areal favorabil referinta',
               'Operator - areal',
@@ -89,5 +88,17 @@ def species_range_reference():
                 ]
                 columns.append(row)
 
-    ret = generate_csv(header, columns)
-    print ret
+    do_csv_export(header, columns, filename)
+
+
+@exporter.command
+def all():
+    available = {
+        'species_magnitude': species_magnitude,
+        'species_range_reference': species_range_reference,
+    }
+    for k, v in available.iteritems():
+        filename = '%s.csv' % k
+        print "Exporting %s..." % k
+        v(filename)
+    print "Done."
