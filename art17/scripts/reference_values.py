@@ -132,9 +132,9 @@ def species_population_magnitude(filename=None):
             unicode(sr.population_trend_magnitude_min or ''),
             unicode(sr.population_trend_magnitude_max or ''),
             unicode(sr.population_trend_magnitude_ci or ''),
-            unicode(sr.range_trend_long_magnitude_min or ''),
-            unicode(sr.range_trend_long_magnitude_max or ''),
-            unicode(sr.range_trend_long_magnitude_max_ci or ''),
+            unicode(sr.population_trend_long_magnitude_min or ''),
+            unicode(sr.population_trend_long_magnitude_max or ''),
+            unicode(sr.population_trend_long_magnitude_ci or ''),
         ]
         return row
 
