@@ -34,6 +34,7 @@ from art17.common import (
     NEW_STATUS,
 )
 from art17.habitat import detail as detail_habitat, HabitatCommentView
+from art17.lookup import CONCLUSIONS
 from art17.species import detail as detail_species, SpeciesCommentView
 
 
@@ -141,6 +142,34 @@ def delete_dataset(dataset_id):
     flask.flash(u"Setul de date a fost șters.", 'success')
     next_url = request.values.get('next', flask.url_for('.home'))
     return flask.redirect(next_url)
+
+
+@aggregation.route('/raport/<int:dataset_id>')
+def report(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+
+    def reports(ds):
+        ROLE = 'assessment'
+        data = {'species': {}, 'habitat': {}}
+        for k, v in CONCLUSIONS.iteritems():
+            data['species'][k] = (
+                ds.species_objs
+                .filter_by(cons_role=ROLE, conclusion_assessment=k).count()
+            )
+            data['habitat'][k] = (
+                ds.habitat_objs
+                .filter_by(cons_role=ROLE, conclusion_assessment=k).count()
+            )
+        data['species']['total'] = (
+            ds.species_objs.filter_by(cons_role=ROLE).count()
+        )
+        data['habitat']['total'] = (
+            ds.habitat_objs.filter_by(cons_role=ROLE).count()
+        )
+        return data
+
+    dataset.reports = reports(dataset)
+    return flask.render_template('aggregation/report.html', dataset=dataset)
 
 
 class DashboardView(View):
