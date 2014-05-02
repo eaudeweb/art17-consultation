@@ -38,38 +38,60 @@
       <div class="form-group">
         {%- set trend_short = form.range.trend_short %}
         <label for="range.trend_short.trend">
-          Tendință pe termen scurt
+          Tendință pe termen scurt (12 ani)
         </label>
 
         {{ errors(trend_short) }}
 
         <div class="row">
           <div class="col-sm-2 {{- error_cls(trend_short.trend) }}">
+            <label for="range.trend_short.trend">
+                Direcția tendinței:
+            </label>
             {{ trend_short.trend(class='form-control') }}
           </div>
 
           <div class="col-sm-2 {{- error_cls(trend_short.period.start) }}">
+            <label for="range.trend_short.period.start">
+                An de început:
+            </label>
             {{ trend_short.period.start(class='form-control',
                     placeholder="an de început") }}
           </div>
 
           <div class="col-sm-2 {{- error_cls(trend_short.period.end) }}">
+            <label for="range.trend_short.period.end">
+                An de sfârșit:
+            </label>
             {{ trend_short.period.end(class='form-control',
                     placeholder="an de sfârșit") }}
           </div>
         </div>
         <br/>
         {% set magnitude = trend_short.magnitude %}
+        <label>
+          Magnitudine (% - schimbarea pe aceasta perioadă):
+        </label>
+
+        {{ errors(magnitude) }}
+
         <div class="row">
           <div class="col-sm-2 {{- error_cls(magnitude) }}">
-            <label>Magnitudine:</label>
+            <p><small><em>* Dacă este o cifra exactă, se completează aceeași valoare în
+            ambele capete de interval.</em></small></p>
           </div>
           <div class="col-sm-2 {{- error_cls(magnitude.min) }}">
+            <label for="range.trend_short.magnitude.min">
+                Min:
+            </label>
             {{ magnitude.min(class='form-control',
                     placeholder="valoare minimă") }}
           </div>
 
           <div class="col-sm-2 {{- error_cls(magnitude.max) }}">
+            <label for="range.trend_short.magnitude.max">
+                Max:
+            </label>
             {{ magnitude.max(class='form-control',
                     placeholder="valoare maximă") }}
           </div>
@@ -79,31 +101,47 @@
       <div class="form-group">
         {%- set trend_long = form.range.trend_long %}
         <label for="range.trend_long.trend">
-          Tendință pe termen lung
+          Tendință pe termen lung (24 de ani)
         </label>
 
         {{ errors(trend_long) }}
 
         <div class="row">
           <div class="col-sm-2 {{- error_cls(trend_long.trend) }}">
+            <label for="range.trend_long.trend">
+                Direcția tendinței:
+            </label>
             {{ trend_long.trend(class='form-control') }}
           </div>
 
           <div class="col-sm-2 {{- error_cls(trend_long.period.start) }}">
+            <label for="range.trend_long.period.start">
+                An de început:
+            </label>
             {{ trend_long.period.start(class='form-control',
                     placeholder="an de început") }}
           </div>
 
           <div class="col-sm-2 {{- error_cls(trend_long.period.end) }}">
+            <label for="range.trend_long.period.end">
+                An de sfârșit:
+            </label>
             {{ trend_long.period.end(class='form-control',
                     placeholder="an de sfârșit") }}
           </div>
         </div>
         <br/>
         {% set magnitude = trend_long.magnitude %}
+        <label>
+          Magnitudine (% - schimbarea pe aceasta perioadă):
+        </label>
+
+        {{ errors(magnitude) }}
+
         <div class="row">
           <div class="col-sm-2 {{- error_cls(magnitude) }}">
-            <label>Magnitudine:</label>
+            <p><small><em>* Dacă este o cifra exactă, se completează aceeași valoare în
+            ambele capete de interval.</em></small></p>
           </div>
           <div class="col-sm-2 {{- error_cls(magnitude.min) }}">
             {{ magnitude.min(class='form-control',
@@ -122,7 +160,8 @@
           <div class="form-group">
             {%- set reference_value = form.range.reference_value %}
             <label for="range.reference_value.op">
-              Arealul favorabil de referință
+              Arealul favorabil de referință (km²)
+
             </label>
             <p for="range.reference_value.op">
               <em>* Doar una din următoarele trei elemente trebuie completate:</em>
@@ -131,25 +170,36 @@
             {{ errors(reference_value) }}
 
             <div class="row">
-              <div class="col-sm-4 {{- error_cls(reference_value.number) }}">
+              <div class="col-sm-5 {{- error_cls(reference_value.number) }}">
+                <label for="range.reference_value.number">
+                    Suprafață:
+                </label>
                 {{ reference_value.number(class='form-control',
                     placeholder="suprafața trebuie exprimatǎ in km²") }}
               </div>
 
               <div class="col-sm-4 {{- error_cls(reference_value.op) }}">
+                <label for="range.reference_value.op">
+                    Operator:
+                </label>
                 {{ reference_value.op(class='form-control') }}
               </div>
 
-              <div class="col-sm-4
-                      {{- error_cls(reference_value.x) }} field-inline">
-                {{ reference_value.x(class='form-control') }} necunoscut
+              <div class="col-sm-3 {{- error_cls(reference_value.x) }}">
+                <label for="range.reference_value.x">
+                    Necunoscut:
+                </label>
+                <div class="field-inline">
+                    {{ reference_value.x(class='form-control') }}
+                </div>
               </div>
             </div>
           </div>
 
           <div class="form-group">
             <label for="range.reference_value.method">
-              Arealul favorabil de referință - metoda
+              Arealul favorabil de referință - metoda folosită pentru stabilirea
+              acestei valori
             </label>
 
             {{ errors(form.range.reference_value.method) }}
@@ -159,49 +209,65 @@
             </div>
           </div>
 
-          <div class="form-group">
-            {%- set reason = form.range.reason %}
-            <label for="range.reason.a">
-              Motivul modificării
-            </label>
-            <p for="range.reason.a">
-              <em>* Dacă există, justificați diferența între valoarea Suprafeței din
-                raportarea precedentă și valoarea curentă
-              </em>
-            </p>
-
-            {{ errors(reason) }}
-
-            <div class="field-inline">
-              {{ reason.a(class='form-control') }}
-              {{ LU_REASONS_FOR_CHANGE['a'] }} <br>
-
-              {{ reason.b(class='form-control') }}
-              {{ LU_REASONS_FOR_CHANGE['b'] }} <br>
-
-              {{ reason.c(class='form-control') }}
-              {{ LU_REASONS_FOR_CHANGE['c'] }} <br>
-            </div>
-          </div>
         </div>
       </div>
 
       <div class="form-group">
-        {%- set conclusion = form.range.conclusion %}
-        <label for="range.conclusion.value">
-          Concluzie
+        {%- set reason = form.range.reason %}
+        <label for="range.reason.a">
+          Motivul modificării
         </label>
+        <p for="range.reason.a">
+          <em>* Dacă există, justificați diferența între valoarea Suprafeței din
+            raportarea precedentă și valoarea curentă
+          </em>
+        </p>
 
-        {{ errors(conclusion) }}
+        {{ errors(reason) }}
 
-        <div class="row">
-          <div class="col-sm-3 {{- error_cls(conclusion.value) }}">
-            {{ conclusion.value(class='form-control semaphore') }}
+        <div class="field-inline">
+          {{ reason.a(class='form-control') }}
+          {{ LU_REASONS_FOR_CHANGE['a'] }} <br>
+
+          {{ reason.b(class='form-control') }}
+          {{ LU_REASONS_FOR_CHANGE['b'] }} <br>
+
+          {{ reason.c(class='form-control') }}
+          {{ LU_REASONS_FOR_CHANGE['c'] }} <br>
+        </div>
+      </div>
+
+      <div class="clearfix">
+        <div class="well">
+          <div class="form-group">
+            {%- set conclusion = form.range.conclusion %}
+            <label for="range.conclusion.value">
+              Evaluarea
+            </label>
+
+            {{ errors(conclusion) }}
+
+            <div class="row">
+              <div class="col-md-12">
+                  <p><small><em>* Daca concluzia este nevaforabilă se recomandă
+                  folosirea unui calificator.</em></small></p>
+              </div>
+              <div class="col-sm-3 {{- error_cls(conclusion.value) }}">
+                <label for="range.conclusion.value">
+                    Concluzie:
+                </label>
+                {{ conclusion.value(class='form-control semaphore') }}
+              </div>
+
+              <div class="col-sm-3 {{- error_cls(conclusion.trend) }}">
+                <label for="range.conclusion.trend">
+                    Calificator:
+                </label>
+                {{ conclusion.trend(class='form-control') }}
+              </div>
+            </div>
           </div>
 
-          <div class="col-sm-3 {{- error_cls(conclusion.trend) }}">
-            {{ conclusion.trend(class='form-control') }}
-          </div>
         </div>
       </div>
 
