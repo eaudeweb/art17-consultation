@@ -12,12 +12,11 @@
         {{ errors(form.range.surface_area) }}
 
         <div class="row">
-          <div class="col-sm-4 {{- error_cls(form.range.surface_area) }}">
+          <div class="col-sm-6 {{- error_cls(form.range.surface_area) }}">
             {{ form.range.surface_area(class='form-control',
                     placeholder="suprafața trebuie exprimatǎ in km²") }}
           </div>
 
-          <div class="col-sm-2"></div>
         </div>
       </div>
 
@@ -69,9 +68,7 @@
         </div>
         <br/>
         {% set magnitude = trend_short.magnitude %}
-        <label>
-          Magnitudine (% - schimbarea pe aceasta perioadă):
-        </label>
+        <label>Magnitudine (% - schimbarea pe aceasta perioadă):</label>
 
         {{ errors(magnitude) }}
 
@@ -144,11 +141,17 @@
             ambele capete de interval.</em></small></p>
           </div>
           <div class="col-sm-2 {{- error_cls(magnitude.min) }}">
+            <label for="range.trend_long.magnitude.min">
+                Min:
+            </label>
             {{ magnitude.min(class='form-control',
                     placeholder="valoare minimă") }}
           </div>
 
           <div class="col-sm-2 {{- error_cls(magnitude.max) }}">
+            <label for="range.trend_long.magnitude.max">
+                Max:
+            </label>
             {{ magnitude.max(class='form-control',
                     placeholder="valoare maximă") }}
           </div>
