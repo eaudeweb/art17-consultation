@@ -89,7 +89,9 @@ $('.add-pressuresbtn').click(function(evt) {
 
 $('body').on('click', '.hidepressure', function(evt) {
   evt.preventDefault();
-  $(this).parent().parent().remove();
+  if (confirm('Sunteți sigur că vreți să ștergeți această înregistrare?')) {
+      $(this).parent().parent().remove();
+  }
 });
 
 $('.add-measurebtn').click(function(evt) {
