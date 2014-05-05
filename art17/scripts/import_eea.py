@@ -83,23 +83,37 @@ def diff(input_db, dataset_id=1):
     input_conn = create_engine(input_db + '?charset=utf8').connect()
 
     # species
-    current_species = [
-        r[0] for r in DataSpecies.query.with_entities(DataSpecies.code).all()
-    ]
-    species_rows = _get_table_data(input_conn, 'etc_data_species_regions', dataset_id)
+    current_species = {
+        r.code: r for r in DataSpecies.query.all()
+    }
+    species_rows = _get_table_data(input_conn, 'etc_data_species_regions',
+                                   dataset_id)
     for row in species_rows:
         code = row['code']
         if code not in current_species:
-            print "Missing: ", code, row['speciesname']
+            print "Missing species: ", code, row['speciesname']
         else:
-            print code, row['speciesname']
+            print code, row['speciesname'], row['region']
+            species = DataSpeciesRegion.query.filter_by(
+                species=current_species[code],
+                region=row['region']).first()
+            if not species:
+                print "* no current species found:", code, row['region']
+                continue
+            for k, v in DSR_MAP.iteritems():
+                current = getattr(species, k)
+                eea = row.get(v, '')
+                if current != eea:
+                    print "  - different: ", k,  "c:", current, "e:", eea
+                else:
+                    print "  - ok: ", k
 
     # habitat
     current_habitats = [
         r[0] for r in DataHabitat.query.with_entities(DataHabitat.code).all()
     ]
     habitat_rows = _get_table_data(input_conn, 'etc_data_habitattype_regions',
-                           dataset_id)
+                                   dataset_id)
     for row in habitat_rows:
         code = row['code']
         if code not in current_habitats:
@@ -108,3 +122,23 @@ def diff(input_db, dataset_id=1):
             print code
 
     print len(species_rows), 'species', len(habitat_rows), 'habitats'
+
+DSR_MAP = {
+    'region': 'region',
+    'range_surface_area': 'range_surface_area',
+    'range_trend': 'range_trend',
+    'complementary_favourable_range': 'complementary_favourable_range',
+    'population_size_unit': 'population_size_unit',
+    'population_minimum_size': 'population_minimum_size',
+    'population_maximum_size': 'population_maximum_size',
+    'complementary_favourable_population':
+    'complementary_favourable_population',
+    'habitat_surface_area': 'habitat_surface_area',
+    'habitat_area_suitable': 'complementary_suitable_habitat',
+    'conclusion_range': 'conclusion_range',
+    'conclusion_population': 'conclusion_population',
+    'conclusion_habitat': 'conclusion_habitat',
+    'conclusion_future': 'conclusion_future',
+    'conclusion_assessment': 'conclusion_assessment',
+    'conclusion_assessment_trend': 'conclusion_assessment_trend',
+}
