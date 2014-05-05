@@ -195,9 +195,8 @@ def inject_constants():
         'GENERALSTATUS_CHOICES': dict(models.db.session.query(
                                     models.LuPresence.code,
                                     models.LuPresence.name_ro).all()),
-        'RANKING_STATUS': dict(models.db.session.query(
-                                models.LuRanking.code,
-                                models.LuRanking.name_ro).all()),
+        'RANKING_STATUS': dict(dal.FormChoicesLoader().get_lu_ranking()),
+        'POLLUTION_STATUS': dict(dal.FormChoicesLoader().get_lu_pollution()),
         'get_population_units_ro':  get_population_units_ro,
         'FINALIZED_STATUS': FINALIZED_STATUS,
         'GA_CODE': flask.current_app.config.get('GA_CODE'),
