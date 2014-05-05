@@ -20,11 +20,11 @@
           {% for p in pressures.pressures.data %}
           <tr data-id="{{ p.id }}">
             <td>{{ PRESSURES[p.pressure] }}</td>
-            <td> {{ p.ranking }}-{{RANKING_STATUS[p.ranking] }}</td>
+            <td> {{ p.ranking }}-{{RANKING_STATUS.get(p.ranking) }}</td>
             <td>
               {% if p.pollutions %}
               {% for pol in p.pollutions %}
-                {{ POLLUTION_STATUS[pol] }}
+                {{ POLLUTION_STATUS.get(pol) }},
               {% endfor %}
               {% endif %}
             </td>
