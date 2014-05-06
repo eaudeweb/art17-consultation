@@ -62,6 +62,22 @@
         </div>
       </div>
 
+      {% if app_name and app_name == 'consultation' %}
+        <div class="form-group">
+          {%- set report_observation = form.report_observation %}
+          <label for="report_observation">
+            Observații asupra raportului
+          </label>
+
+           {{ errors(report_observation) }}
+
+          <div class="row">
+            <div class="col-sm-8 {{- error_cls(report_observation) }}">
+              {{ report_observation(class='form-control', rows=8) }}
+            </div>
+          </div>
+        </div>
+      {% endif %}
     </div>
 
   </div>

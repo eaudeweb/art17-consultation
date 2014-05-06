@@ -104,6 +104,7 @@ class SpeciesCommentView(RecordView, CommentViewMixin, SpeciesMixin):
                 region_code=self.record.region,
             ),
             'index_url': self.get_next_url(),
+            'app_name': 'consultation',
         }
 
     def record_for_comment(self, comment):

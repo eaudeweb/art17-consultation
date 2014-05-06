@@ -325,6 +325,7 @@ class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
         self.template_ctx.update(**{
             'dataset_id': self.dataset_id,
             'group_code': self.record.species.lu.group_code,
+            'app_name': 'aggregation',
         })
 
     def get_dashboard_url(self, subject):
