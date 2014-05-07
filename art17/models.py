@@ -256,6 +256,10 @@ class DataHabitat(Base):
                       primaryjoin=(code == foreign(LuHabitattypeCodes.code)),
                       uselist=False, lazy='eager')
 
+    lu_method = relationship(LuMethods,
+                primaryjoin=(distribution_method == foreign(LuMethods.code)),
+                innerjoin=True, uselist=False, passive_deletes=True)
+
     @property
     def identifier(self):
         return 'habitat:%s' % (self.lu.code,)

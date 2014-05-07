@@ -1,0 +1,143 @@
+{% macro to_bool(val) %}
+    {%- if val -%}
+        true
+    {%- else -%}
+        false
+    {%- endif -%}
+{% endmacro -%}
+
+<?xml version="1.0" encoding="UTF-8"?>
+<habitat_reports xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xml:lang="en" xsi:noNamespaceSchemaLocation="http://bd.eionet.europa.eu/schemas/Art12Art17_reporting_2013/art17_habitats.xsd">
+{%- for habitat in habitats %}
+    <habitat_report>
+        <country isocode="RO" desc="Romania">RO</country>
+        <habitatcode desc="{{ habitat.checklist.eunis_code }}">{{ habitat.code }}</habitatcode>
+        <distribution_map>{{ to_bool(habitat.distribution_map) }}</distribution_map>
+        <distribution_method desc="{{ habitat.lu_method.name }}">{{ habitat.distribution_method }}</distribution_method>
+        <distribution_date>{{ habitat.distribution_date }}</distribution_date>
+        <additional_distribution_map>{{ to_bool(habitat.additional_distribution_map) }}</additional_distribution_map>
+        <range_map>{{ to_bool(habitat.range_map) }}</range_map>
+        <regional>
+            {%- for region in habitat.regions.filter_by(cons_dataset_id=1) %}
+            <region>
+                <code desc="{{ region.lu.name }}">{{ region.region }}</code>
+                <published>{{ region.published }}</published>
+                <range_surface_area>{{ region.range_surface_area }}</range_surface_area>
+                <range_method>{{ region.range_method }}</range_method>
+                <range_trend_period>{{ region.range_trend_period }}</range_trend_period>
+                <range_trend>{{ region.range_trend }}</range_trend>
+                <range_trend_magnitude_min>{{ region.range_trend_magnitude_min }}</range_trend_magnitude_min>
+                <range_trend_magnitude_max>{{ region.range_trend_magnitude_max }}</range_trend_magnitude_max>
+                <range_trend_long_period>{{ region.range_trend_long_period }}</range_trend_long_period>
+                <range_trend_long>{{ region.range_trend_long }}</range_trend_long>
+                <range_trend_long_magnitude_min>{{ region.range_trend_long_magnitude_min }}</range_trend_long_magnitude_min>
+                <range_trend_long_magnitude_max>{{ region.range_trend_long_magnitude_max }}</range_trend_long_magnitude_max>
+                <complementary_favourable_range>{{ region.complementary_favourable_range }}</complementary_favourable_range>
+                <complementary_favourable_range_op>{{ region.complementary_favourable_range_op|e }}</complementary_favourable_range_op>
+                <complementary_favourable_range_unknown>{{ to_bool(region.complementary_favourable_range_x) }}</complementary_favourable_range_unknown>
+                <complementary_favourable_range_method>{{ region.complementary_favourable_range_method }}</complementary_favourable_range_method>
+                <range_reasons_for_change_a>{{ region.range_reasons_for_change_a }}</range_reasons_for_change_a>
+                <range_reasons_for_change_b>{{ region.region.range_reasons_for_change_b }}</range_reasons_for_change_b>
+                <range_reasons_for_change_c>{{ region.range_reasons_for_change_c }}</range_reasons_for_change_c>
+                <coverage_surface_area>{{ region.coverage_surface_area }}</coverage_surface_area>
+                <coverage_date>{{ region.coverage_date }}</coverage_date>
+                <coverage_method>{{ region.coverage_method }}</coverage_method>
+                <coverage_trend_period>{{ region.coverage_trend_period }}</coverage_trend_period>
+                <coverage_trend>{{ region.coverage_trend }}</coverage_trend>
+                <coverage_trend_magnitude_min>{{ region.coverage_trend_magnitude_min }}</coverage_trend_magnitude_min>
+                <coverage_trend_magnitude_max>{{ region.coverage_trend_magnitude_max }}</coverage_trend_magnitude_max>
+                <coverage_trend_magnitude_ci>{{ region.coverage_trend_magnitude_ci }}</coverage_trend_magnitude_ci>
+                <coverage_trend_method>{{ region.coverage_trend_method }}</coverage_trend_method>
+                <coverage_trend_long_period>{{ region.coverage_trend_long_period }}</coverage_trend_long_period>
+                <coverage_trend_long>{{ region.coverage_trend_long }}</coverage_trend_long>
+                <coverage_trend_long_magnitude_min>{{ region.coverage_trend_long_magnitude_min }}</coverage_trend_long_magnitude_min>
+                <coverage_trend_long_magnitude_max>{{ region.coverage_trend_long_magnitude_max }}</coverage_trend_long_magnitude_max>
+                <coverage_trend_long_magnitude_ci>{{ region.coverage_trend_long_magnitude_ci }}</coverage_trend_long_magnitude_ci>
+                <coverage_trend_long_method>{{ region.coverage_trend_long_method }}</coverage_trend_long_method>
+                <complementary_favourable_area>{{ region.complementary_favourable_area }}</complementary_favourable_area>
+                <complementary_favourable_area_op>{{ region.complementary_favourable_area_op|e }}</complementary_favourable_area_op>
+                <complementary_favourable_area_unknown>{{ to_bool(region.complementary_favourable_area_x) }}</complementary_favourable_area_unknown>
+                <complementary_favourable_area_method>{{ region.complementary_favourable_area_method }}</complementary_favourable_area_method>
+                <area_reasons_for_change_a>{{ to_bool(region.area_reasons_for_change_a) }}</area_reasons_for_change_a>
+                <area_reasons_for_change_b>{{ to_bool(region.area_reasons_for_change_b) }}</area_reasons_for_change_b>
+                <area_reasons_for_change_c>{{ to_bool(region.area_reasons_for_change_c) }}</area_reasons_for_change_c>
+                <pressures>
+                {%- for pressure in region.get_pressures() %}
+                    <pressure>
+                        <code>{{ pressure.lu.code }}</code>
+                        <ranking>{{ pressure.ranking }}</ranking>
+                        <pollution_qualifiers>
+                            {%- for pollution in pressure.pollutions %}
+                            <pollution_qualifier>{{ pollution.pollution_qualifier }}</pollution_qualifier>
+                            {%- endfor %}
+                        </pollution_qualifiers>
+                    <pressure>
+                {%- endfor %}
+                </pressures>
+                <pressures_method>{{ region.pressures_method }}</pressures_method>
+                <threats>
+                {%- for threat in region.get_threats() %}
+                    <threat>
+                        <code>{{ threat.lu.code }}</code>
+                        <ranking>{{ threat.ranking }}</ranking>
+                        <pollution_qualifiers>
+                            {%- for pollution in threat.pollutions %}
+                            <pollution_qualifier>{{ pollution.pollution_qualifier }}</pollution_qualifier>
+                            {%- endfor %}
+                        </pollution_qualifiers>
+                    </threat>
+                {%- endfor %}
+                </threats>
+                <typical_species>
+                    {%- for species in region.species %}
+                    <species>
+                        <speciesname>{{ species.speciesname }}</speciesname>
+                    </species>
+                    {%- endfor %}
+                </typical_species>
+                <typical_species_method>{{ region.typical_species_method }}</typical_species_method>
+                <justification>{{ region.justification }}</justification>
+                <structure_and_functions_method>{{ region.structure_and_functions_method }}</structure_and_functions_method>
+                <other_relevant_information>{{ region.other_relevant_information }}</other_relevant_information>
+                <conclusion_range>{{ region.conclusion_range }}</conclusion_range>
+                <conclusion_range_trend>{{ region.conclusion_range_trend }}</conclusion_range_trend>
+                <conclusion_area>{{ region.conclusion_area }}</conclusion_area>
+                <conclusion_area_trend>{{ region.conclusion_area_trend }}</conclusion_area_trend>
+                <conclusion_structure>{{ region.conclusion_structure }}</conclusion_structure>
+                <conclusion_structure_trend>{{ region.conclusion_structure_trend }}</conclusion_structure_trend>
+                <conclusion_future>{{ region.conclusion_future }}</conclusion_future>
+                <conclusion_future_trend>{{ region.conclusion_future_trend }}</conclusion_future_trend>
+                <conclusion_assessment>{{ region.conclusion_assessment }}</conclusion_assessment>
+                <conclusion_assessment_trend>{{ region.conclusion_assessment_trend }}</conclusion_assessment_trend>
+                <natura2000_area_min>{{ region.natura2000_area_min }}</natura2000_area_min>
+                <natura2000_area_max>{{ region.natura2000_area_max }}</natura2000_area_max>
+                <natura2000_area_method>{{ region.natura2000_area_method }}</natura2000_area_method>
+                <natura2000_area_trend>{{ region.natura2000_area_trend }}</natura2000_area_trend>
+                <measures>
+                {%- for measure in region.measures %}
+                    <measure>
+                        <code>{{ measure.lu.code }}</code>
+                        <type_legal>{{ to_bool(measure.type_legal) }}</type_legal>
+                        <type_administrative>{{ to_bool(measure.type_administrative) }}</type_administrative>
+                        <type_contractual>{{ to_bool(measure.type_contractual) }}</type_contractual>
+                        <type_recurrent>{{ to_bool(measure.type_recurrent) }}</type_recurrent>
+                        <type_oneoff>{{ to_bool(measure.type_oneoff) }}</type_oneoff>
+                        <ranking>{{ measure.rankingcode }}</ranking>
+                        <location_inside>{{ to_bool(measure.location_inside) }}</location_inside>
+                        <location_outside>{{ to_bool(measure.location_outside) }}</location_outside>
+                        <location_both>{{ to_bool(measure.location_both) }}</location_both>
+                        <broad_evaluation_maintain>{{ to_bool(measure.broad_evaluation_maintain) }}</broad_evaluation_maintain>
+                        <broad_evaluation_enhance>{{ to_bool(measure.broad_evaluation_enhance) }}</broad_evaluation_enhance>
+                        <broad_evaluation_longterm>{{ to_bool(measure.broad_evaluation_longterm) }}</broad_evaluation_longterm>
+                        <broad_evaluation_noeffect>{{ to_bool(measure.broad_evaluation_noeffect) }}</broad_evaluation_noeffect>
+                        <broad_evaluation_unknown>{{ to_bool(measure.broad_evaluation_unknown) }}</broad_evaluation_unknown>
+                        <broad_evaluation_notevaluated>{{ to_bool(measure.broad_evaluation_notevaluat_18) }}</broad_evaluation_notevaluated>
+                    </measure>
+                {%- endfor %}
+                </measures>
+            </region>
+            {%- endfor %}
+        </regional>
+    </habitat_report>
+{%- endfor %}
+</habitat_reports>
