@@ -210,6 +210,21 @@ class LuPresence(Base):
     globalid = Column(String, default=create_esri_guid)
 
 
+class LuMethods(Base):
+    __tablename__ = u'lu_methods_used'
+
+    objectid = Column(
+        Integer,
+        Sequence(get_sequence_id('lu_methods_used')),
+        primary_key=True,
+    )
+    code = Column(String)
+    name = Column(String)
+    order = Column('order_', Numeric)
+    str_funct = Column(String)
+    globalid = Column(String, default=create_esri_guid)
+
+
 class DataHabitat(Base):
     __tablename__ = u'data_habitats'
 
@@ -447,6 +462,10 @@ class DataSpecies(Base):
                                          lazy='joined',
                                          uselist=False,
                                          innerjoin=True))
+
+    lu_method = relationship(LuMethods,
+                    primaryjoin=(distribution_method == foreign(LuMethods.code)),
+                    innerjoin=True, uselist=False, passive_deletes=True)
 
     @property
     def identifier(self):
