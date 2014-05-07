@@ -13,7 +13,7 @@
         <country isocode="RO" desc="Romania">RO</country>
         <habitatcode desc="{{ habitat.checklist.eunis_code }}">{{ habitat.code }}</habitatcode>
         <distribution_map>{{ to_bool(habitat.distribution_map) }}</distribution_map>
-        <distribution_method desc="{{ habitat.lu_method.name }}">{{ habitat.distribution_method }}</distribution_method>
+        <distribution_method>{{ habitat.distribution_method }}</distribution_method>
         <distribution_date>{{ habitat.distribution_date }}</distribution_date>
         <additional_distribution_map>{{ to_bool(habitat.additional_distribution_map) }}</additional_distribution_map>
         <range_map>{{ to_bool(habitat.range_map) }}</range_map>
@@ -71,7 +71,7 @@
                             <pollution_qualifier>{{ pollution.pollution_qualifier }}</pollution_qualifier>
                             {%- endfor %}
                         </pollution_qualifiers>
-                    <pressure>
+                    </pressure>
                 {%- endfor %}
                 </pressures>
                 <pressures_method>{{ region.pressures_method }}</pressures_method>

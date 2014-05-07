@@ -4,20 +4,24 @@ from art17.scripts import exporter
 
 
 @exporter.command
-def xml_species():
+def xml_species(filename=None):
     species = models.db.session.query(models.DataSpecies)
-    template = flask.render_template(
+    data = flask.render_template(
                 'xml_export/species.html',
                 **{'species_list': species}
             )
-    return template
+    if filename:
+        with open(filename, 'w') as file_out:
+            file_out.write(data.encode('utf-8'))
 
 
 @exporter.command
-def xml_habitats():
-    habitats = models.db.session.query(models.DataHabitat).filter_by(code=2160)
-    template = flask.render_template(
+def xml_habitats(filename=None):
+    habitats = models.db.session.query(models.DataHabitat)
+    data = flask.render_template(
                 'xml_export/habitats.html',
                 **{'habitats': habitats}
             )
-    return template
+    if filename:
+        with open(filename, 'w') as file_out:
+            file_out.write(data.encode('utf-8'))

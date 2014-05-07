@@ -17,7 +17,7 @@
         <common_speciesname>{{ species.common_speciesname }}</common_speciesname>
         <distribution_map>{{ to_bool(species.distribution_map) }}</distribution_map>
         <sensitive_species>{{ to_bool(species.sensitive_species) }}</sensitive_species>
-        <distribution_method desc="{{ species.lu_method.name }}">{{ species.distribution_method }}</distribution_method>
+        <distribution_method>{{ species.distribution_method }}</distribution_method>
         <distribution_date>{{ species.distribution_date }}</distribution_date>
         <additional_distribution_map>{{ to_bool(species.additional_distribution_map) }}</additional_distribution_map>
         <range_map>{{ to_bool(species.range_map) }}</range_map>
@@ -25,7 +25,7 @@
         {%- for region in species.regions.filter_by(cons_dataset_id=1) %}
             <region>
                 <code desc="{{ region.lu.name }}">{{ region.region }}</code>
-                <published>{{ region.published }}</published>
+                <published>{{ region.published|e }}</published>
                 <range_surface_area>{{ region.range_surface_area }}</range_surface_area>
                 <range_method>{{ region.range_method }}</range_method>
                 <range_trend_period>{{ region.range_trend_period }}</range_trend_period>
@@ -37,7 +37,7 @@
                 <range_trend_long_magnitude_min>{{ region.range_trend_long_magnitude_min }}</range_trend_long_magnitude_min>
                 <range_trend_long_magnitude_max>{{ region.range_trend_long_magnitude_max }}</range_trend_long_magnitude_max>
                 <complementary_favourable_range>{{ region.complementary_favourable_range }}</complementary_favourable_range>
-                <complementary_favourable_range_op>{{ region.complementary_favourable_range_op }}</complementary_favourable_range_op>
+                <complementary_favourable_range_op>{{ region.complementary_favourable_range_op|e }}</complementary_favourable_range_op>
                 <complementary_favourable_range_unknown>{{ to_bool(region.complementary_favourable_range_x) }}</complementary_favourable_range_unknown>
                 <complementary_favourable_range_method>{{ region.complementary_favourable_range_method }}</complementary_favourable_range_method>
                 <range_reasons_for_change_a>{{ region.range_reasons_for_change_a }}</range_reasons_for_change_a>
@@ -67,7 +67,7 @@
                 <population_trend_long_magnitude_ci>{{ region.population_trend_long_magnitude_ci }}</population_trend_long_magnitude_ci>
                 <population_trend_long_method>{{ region.population_trend_long_method }}</population_trend_long_method>
                 <complementary_favourable_population>{{ region.complementary_favourable_population }}</complementary_favourable_population>
-                <complementary_favourable_population_op>{{ region.complementary_favourable_population_op }}</complementary_favourable_population_op>
+                <complementary_favourable_population_op>{{ region.complementary_favourable_population_op|e }}</complementary_favourable_population_op>
                 <complementary_favourable_population_unknown>{{ to_bool(region.complementary_favourable_population_x) }}</complementary_favourable_population_unknown>
                 <complementary_favourable_population_method>{{ region.complementary_favourable_population_method }}</complementary_favourable_population_method>
                 <population_reasons_for_change_a>{{ to_bool(region.population_reasons_for_change_a) }}</population_reasons_for_change_a>
@@ -96,7 +96,7 @@
                             <pollution_qualifier>{{ pollution.pollution_qualifier }}</pollution_qualifier>
                             {%- endfor %}
                         </pollution_qualifiers>
-                    <pressure>
+                    </pressure>
                 {%- endfor %}
                 </pressures>
                 <pressures_method>{{ region.pressures_method }}</pressures_method>
