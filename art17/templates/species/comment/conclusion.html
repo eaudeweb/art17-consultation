@@ -7,17 +7,27 @@
       <div class="form-group">
         {%- set future_prospects = form.future_prospects %}
         <label for="future_prospects.value">
-          Perspective viitoare
+          Perspective viitoare - Evaluarea
         </label>
 
         {{ errors(future_prospects) }}
 
         <div class="row">
+          <div class="col-md-12">
+              <p><small><em>* Daca concluzia este nevaforabilă se recomandă
+              folosirea unui calificator.</em></small></p>
+          </div>
           <div class="col-sm-3 {{- error_cls(future_prospects.value) }}">
+            <label for="future_prospects.value">
+                Concluzie:
+            </label>
             {{ future_prospects.value(class='form-control semaphore') }}
           </div>
 
           <div class="col-sm-3 {{- error_cls(future_prospects.trend) }}">
+            <label for="future_prospects.trend">
+                Calificator:
+            </label>
             {{ future_prospects.trend(class='form-control') }}
           </div>
         </div>
@@ -32,17 +42,28 @@
         {{ errors(overall_assessment) }}
 
         <div class="row">
+          <div class="col-md-12">
+              <p><small><em>* Daca concluzia este nevaforabilă se recomandă
+              folosirea unui calificator.</em></small></p>
+          </div>
           <div class="col-sm-3 {{- error_cls(overall_assessment.value) }}">
-            {{ overall_assessment.value(class='form-control') }}
+            <label for="overall_assessment.value">
+                Concluzie:
+            </label>
+            {{ overall_assessment.value(class='form-control semaphore') }}
           </div>
 
           <div class="col-sm-3 {{- error_cls(overall_assessment.trend) }}">
+            <label for="overall_assessment.trend">
+                Calificator:
+            </label>
             {{ overall_assessment.trend(class='form-control') }}
           </div>
         </div>
       </div>
 
-      <div class="form-group">
+      {% if app_name and app_name == 'consultation' %}
+        <div class="form-group">
           {%- set report_observation = form.report_observation %}
           <label for="report_observation">
             Observații asupra raportului
@@ -55,7 +76,8 @@
               {{ report_observation(class='form-control', rows=8) }}
             </div>
           </div>
-      </div>
+        </div>
+      {% endif %}
     </div>
 
   </div>

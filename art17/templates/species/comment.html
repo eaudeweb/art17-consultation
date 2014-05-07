@@ -58,11 +58,11 @@
       <li {% if form.infocomp.errors %}class="text-error"{% endif %}>
         <a href="#comment-infocomp" data-toggle="tab">Informații complementare</a>
       </li>
-      <li {% if form.measures.errors %}class="text-error"{% endif %}>
-        <a href="#comment-measures" data-toggle="tab">Măsuri de conservare</a>
-      </li>
       <li {% if form.natura2000.errors %}class="text-error"{% endif %}>
         <a href="#comment-natura2000" data-toggle="tab">Natura 2000</a>
+      </li>
+      <li {% if form.measures.errors %}class="text-error"{% endif %}>
+        <a href="#comment-measures" data-toggle="tab">Măsuri de conservare</a>
       </li>
       <li {% if form.future_prospects.errors or
                 form.overall_assessment.errors or
@@ -83,8 +83,8 @@
       {% include "common/comment/pressures.html" with context %}
       {% include "common/comment/threats.html" with context %}
       {% include "species/comment/infocomp.html" with context %}
-      {% include "common/comment/measures.html" with context %}
       {% include "species/comment/natura2000.html" with context %}
+      {% include "common/comment/measures.html" with context %}
       {% include "species/comment/conclusion.html" with context %}
       {% include "common/comment/sources.html" with context %}
     </div>

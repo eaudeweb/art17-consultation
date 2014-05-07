@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% macro dataset_table(dataset_list, show_user=True) %}
+{% macro dataset_table(dataset_list, show_user=True, show_reports=True) %}
 <table class="table table-bordered">
   <thead>
     <th>Dată</th>
@@ -16,6 +16,7 @@
     {%- set url = url_for('.dashboard', dataset_id=dataset.id) %}
     {%- set delete_url = url_for('.delete_dataset', dataset_id=dataset.id) %}
     {%- set activity_url = url_for('history_aggregation.index', dataset_id=dataset.id) %}
+    {%- set report_url = url_for('.report', dataset_id=dataset.id) %}
     <tr>
       <td nowrap><a href="{{ url }}">{{ dataset.date }}</a></td>
       {% if show_user %}
@@ -33,6 +34,10 @@
           <button type="submit" class="btn btn-danger btn-xs">șterge</button>
           <a class="btn btn-warning btn-xs"
              href="{{ activity_url }}">activitate</a>
+          {% if show_reports %}
+          <a class="btn btn-default btn-xs"
+             href="{{ report_url }}">rapoarte</a>
+          {% endif %}
         </form>
       </td>
     </tr>
@@ -74,7 +79,7 @@
 <h2>Previzualizări agregare</h2>
 
 
-{{ dataset_table(preview_datasets, show_user=False) }}
+{{ dataset_table(preview_datasets, show_user=False, show_reports=False) }}
 {% endif %}
 
 <h2>Seturi de date</h2>

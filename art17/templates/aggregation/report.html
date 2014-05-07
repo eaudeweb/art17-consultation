@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}Raport set de date &mdash; {{ super() }}{% endblock title %}
+
+{% macro report_table(data) %}
+<table class="table">
+  <tr>
+    <th>Favorabilă</th>
+    <th>Nefavorabilă-Inadecvat</th>
+    <th>Nefavorabilă-Rău</th>
+    <th>Necunoscută</th>
+    <th>Total</th>
+  </tr>
+  <tr>
+    <td>{{ data.FV }}</td>
+    <td>{{ data.U1 }}</td>
+    <td>{{ data.U2 }}</td>
+    <td>{{ data.XX }}</td>
+    <td>{{ data.total }}</td>
+  </tr>
+  </table>
+{% endmacro %}
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('set de date', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+{% block content %}
+  <h2>Rapoarte set #{{ dataset.id }}</h2>
+  <p class="lead">{{ dataset.user_id }} {{ dataset.date }}, {{ dataset.comment }}</p>
+
+  <h3>Evaluarea stării de conservare</h3>
+
+  <h4>Specii</h4>
+  {{ report_table(dataset.reports.species) }}
+
+  <h4>Habitate</h4>
+  {{ report_table(dataset.reports.habitat) }}
+{% endblock content %}

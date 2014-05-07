@@ -9,7 +9,6 @@
       <div class="form-group {{- error_cls(pressures.pressures) }}">
 
         {{ errors(pressures.pressures) }}
-
         <table class="table table-bordered recorddetail-table table-vertical"
                id="pressures_container">
           <tr>
@@ -21,11 +20,11 @@
           {% for p in pressures.pressures.data %}
           <tr data-id="{{ p.id }}">
             <td>{{ PRESSURES[p.pressure] }}</td>
-            <td>{{ p.ranking }}</td>
+            <td> {{ RANKING_STATUS.get(p.ranking) }}</td>
             <td>
               {% if p.pollutions %}
               {% for pol in p.pollutions %}
-                {{ pol }}
+                {{ pol }} {{ POLLUTION_STATUS.get(pol) }},
               {% endfor %}
               {% endif %}
             </td>

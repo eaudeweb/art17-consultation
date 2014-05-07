@@ -1,4 +1,5 @@
 -r requirements.txt
+MySQL-python==1.2.5
 pip-tools==0.3.4
 py==1.4.15
 pytest==2.3.5

@@ -40,7 +40,14 @@ $('.add-pressuresbtn').click(function(evt) {
     var pressure = container.find('select[name="addform_pressure.pressure"]').val();
     var pressure_text = container.find('select[name="addform_pressure.pressure"] option:selected').text();
     var ranking = container.find('select[name="addform_pressure.ranking"]').val();
+    var ranking_text = container.find('select[name="addform_pressure.ranking"] option:selected').text();
     var pollutions = container.find('select[name="addform_pressure.pollutions"]').val();
+    var pressure_pollutions = []
+    container.find('select[name="addform_pressure.pollutions"] option:selected').each(function(i, selected){
+      pressure_pollutions[i] = $(selected).text();
+    });
+
+    var pollutions_text = pressure_pollutions.join();
     var data;
 
     if (!pressure) {
@@ -62,8 +69,8 @@ $('.add-pressuresbtn').click(function(evt) {
     }).appendTo('form');
 
     $('<td>').html(pressure_text).appendTo(html);
-    $('<td>').html(ranking).appendTo(html);
-    $('<td>').html(pollutions).appendTo(html);
+    $('<td>').html(ranking_text).appendTo(html);
+    $('<td>').html(pollutions_text).appendTo(html);
 
     var actions = $('<td>');
     $('<button>').attr({
@@ -82,7 +89,9 @@ $('.add-pressuresbtn').click(function(evt) {
 
 $('body').on('click', '.hidepressure', function(evt) {
   evt.preventDefault();
-  $(this).parent().parent().remove();
+  if (confirm('Sunteți sigur că vreți să ștergeți această înregistrare?')) {
+      $(this).parent().parent().remove();
+  }
 });
 
 $('.add-measurebtn').click(function(evt) {

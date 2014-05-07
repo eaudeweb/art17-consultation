@@ -157,12 +157,18 @@ dinaintea migrării::
 
     $ ./manage.py db downgrade -1
 
-Export date
------------
-
+Scripturi operații cu date
+--------------------------
+Export
+~~~~~~
 Pentru exportul de date, folosim comanda export::
     
     $ ./manage.py export -h
 
 Vor fi afișate tipurile de export disponibile.
 
+Import
+~~~~~~
+Pentru import din baza de date mysql european, folosim::
+
+    $ ./manage.py import diff 'mysql://user:pass@host/db' -d <dataset_id>
