@@ -142,3 +142,46 @@ DSR_MAP = {
     'conclusion_assessment': 'conclusion_assessment',
     'conclusion_assessment_trend': 'conclusion_assessment_trend',
 }
+
+# {
+#     'published': '',
+#     'range_method': '',
+#     'range_trend_period': '',
+#     'range_trend_magnitude_min': '', # range_yearly_magnitude
+#     'range_trend_magnitude_max': '', # range_yearly_magnitude
+#     'range_trend_long*': '',
+#     'complementary_favourable_range_op': '', # complementary_favourable_range_q
+#     'complementary_favourable_range_x': '', # complementary_favourable_range_q
+#     'complementary_favourable_range_method': '', # complementary_favourable_range_q
+#     'range_reasons_for_change_a': 'range_change_reason',
+#     'range_reasons_for_change_b': '', #'range_change_reason',
+#     'range_reasons_for_change_c': '', #'range_change_reason',
+#     'population_alt_size_unit': '', #'population_units_other', 'population_units_agreed'
+#     'population_additional_locality': '',
+#     'population_additional_method': '',
+#     'population_additional_problems': '',
+#     'population_date': '',
+#     'population_method': '',
+#     'population_trend_method': '',
+#     'population_trend': '',
+#     # popultion_trend *,
+#     'complementary_favourable_population_*': '', #'complementary_favourable_population',
+#     'habitat_date': '',
+#     'habitat_method': '',
+#     'habitat_quality': '',
+#     'habitat_quality_explanation': '',
+#     # habitat _trend *
+#     'habitat_reasons_for_change_a': 'habitat_change_reason',
+#     'habitat_reasons_for_change_b': '',  # 'habitat_change_reason',
+#     'habitat_reasons_for_change_c': '',  # 'habitat_change_reason',
+#     'pressures_method': '',
+#     'threats_method': '',
+#     'justification': '',
+#     'other_relevant_information': '',
+#     'transboundary_assessment': '',
+#     'conclusion_range_trend': '',
+#     'conclusion_population_trend': '',
+#     'conclusion_habitat_trend': '',
+#     'conclusion_future_trend': '',
+#     'natura2000*': '',
+# }
