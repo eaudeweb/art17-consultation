@@ -153,9 +153,9 @@ fieldset legend {
     text-align: center;
 }
 
-.conclusion-FV { background: #71A057; }
-.conclusion-U1 { background: #E7E737; }
-.conclusion-U2 { background: #F76C27; }
+.conclusion-FV { background: #21B24A; }
+.conclusion-U1 { background: #FFC308; }
+.conclusion-U2 { background: #EF1C21; }
 .conclusion-XX { background: #FFFFFF; }
 
 .records {
@@ -265,6 +265,7 @@ fieldset legend {
 
 .dashboard-commentcount {
     text-align: center;
+    font-size: small;
 }
 
 .comment-info {
