@@ -76,8 +76,8 @@ def species_range(filename=None):
             unicode(sr.complementary_favourable_range)
             if sr.complementary_favourable_range else '',
             unicode(sr.complementary_favourable_range_op)
-            if sr.complementary_favourable_range_x else '',
-            'x' if sr.complementary_favourable_range_x else '',
+            if sr.complementary_favourable_range_unknown else '',
+            'x' if sr.complementary_favourable_range_unknown else '',
         ]
         return row
 
@@ -104,8 +104,8 @@ def species_population_range(filename=None):
             unicode(sr.complementary_favourable_population)
             if sr.complementary_favourable_population else '',
             unicode(sr.complementary_favourable_population_op)
-            if sr.complementary_favourable_population_x else '',
-            'x' if sr.complementary_favourable_population_x else '',
+            if sr.complementary_favourable_population_unknown else '',
+            'x' if sr.complementary_favourable_population_unknown else '',
         ]
         return row
 

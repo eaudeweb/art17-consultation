@@ -44,7 +44,7 @@ def parse_reference_value(obj, prefix):
     data = {
         'number': getattr(obj, prefix),
         'op': getattr(obj, prefix + '_op'),
-        'x': getattr(obj, prefix + '_x'),
+        'x': getattr(obj, prefix + '_unknown'),
         'method': getattr(obj, prefix + '_method'),
     }
     if not data['x']:
@@ -465,7 +465,7 @@ def flatten_conclusion(conclusion_struct, obj, prefix):
 
 
 def flatten_refval(refval_struct, obj, prefix):
-    setattr(obj, prefix + '_x', refval_struct.get('x', None))
+    setattr(obj, prefix + '_unknown', refval_struct.get('x', None))
     setattr(obj, prefix + '_op', refval_struct['op'])
     setattr(obj, prefix, refval_struct['number'])
     setattr(obj, prefix + '_method', refval_struct['method'])
