@@ -203,10 +203,11 @@
 
 {% macro conclusions_html(conclusion) %}
 {%- if conclusion.value %}
-  {{ conclusion.value }} ({{ CONCLUSIONS[conclusion.value] }})
+    <strong>Concluzie:</strong><span class="conclusion {{ conclusion.value }}">{{ conclusion.value }}</span>{{ CONCLUSIONS[conclusion.value] }}
 {%- endif %}
-{%- if conclusion.trend %};
-  Trend: {{ TREND_NAME[conclusion.trend] }}
+{%- if conclusion.trend %}
+    &ensp;
+    <strong>Tendință:</strong><span class="conclusion">{{ conclusion.trend }}</span>{{ TREND_NAME[conclusion.trend] }}
 {% endif %}
 
 {%- endmacro %}
