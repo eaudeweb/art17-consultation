@@ -765,6 +765,14 @@ class DataPressuresThreats(Base):
                       primaryjoin=(ranking == foreign(LuRanking.code)),
                       innerjoin=True, uselist=False, passive_deletes=True)
 
+    @hybrid_property
+    def code(self):
+        return self.pressure
+
+    @code.setter
+    def code(self, value):
+        self.pressure = value
+
 
 class DataPressuresThreatsPollution(Base):
     __tablename__ = u'data_pressures_threats_pol'
@@ -787,6 +795,14 @@ class DataPressuresThreatsPollution(Base):
 
     pressure = relationship(u'DataPressuresThreats',
         backref=db.backref('pollutions', lazy='dynamic', cascade='all'))
+
+    @hybrid_property
+    def code(self):
+        return self.pollution_qualifier
+
+    @code.setter
+    def code(self, value):
+        self.pollution_qualifier = value
 
 
 class DataHabitatSpecies(Base):
