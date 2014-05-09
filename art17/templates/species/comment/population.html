@@ -93,36 +93,36 @@
             <label for="population.additional_locality">
               Definiția localității:
             </label>
+            {{ population.additional_locality(class='form-control',
+                    placeholder="Definiția localității") }}
             <p>
               <em>* Dacă localitatea este folosită ca mărime a populației - definiți termenul
               </em>
             </p>
-            {{ population.additional_locality(class='form-control',
-                    placeholder="Definiția localității") }}
           </div>
           <div class="col-sm-2 {{- error_cls(population.additional_method) }}">
             <label for="population.additional_method">
               Metoda de conversie:
             </label>
+            {{ population.additional_method(class='form-control',
+                    placeholder="Metoda de conversie") }}
             <p>
               <em>* Descrieți modul în care datele au fost convertite la numărul
               de indivizi
               </em>
             </p>
-            {{ population.additional_method(class='form-control',
-                    placeholder="Metoda de conversie") }}
           </div>
           <div class="col-sm-2 {{- error_cls(population.additional_problems) }}">
             <label for="population.additional_problems">
               Probleme:
             </label>
+            {{ population.additional_problems(class='form-control',
+                    placeholder="Probleme") }}
             <p>
               <em>* Descrieți problemele întâmpinate pentru a furniza mărimea
               populației
               </em>
             </p>
-            {{ population.additional_problems(class='form-control',
-                    placeholder="Probleme") }}
           </div>
         </div>
       </div>
