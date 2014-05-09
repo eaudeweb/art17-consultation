@@ -262,7 +262,7 @@ def parse_species_commentform(row):
                     'broad_evaluation_longterm': int(m.broad_evaluation_longterm),
                     'broad_evaluation_noeffect': int(m.broad_evaluation_noeffect),
                     'broad_evaluation_unknown': int(m.broad_evaluation_unknown),
-                    'broad_evaluation_notevaluat_18': int(m.broad_evaluation_notevaluat_18)})
+                    'broad_evaluation_notevaluated': int(m.broad_evaluation_notevaluated)})
                 for m in row.measures
             ]
     } if row.measures.count() else {}
@@ -406,7 +406,7 @@ def parse_habitat_commentform(row):
                     'broad_evaluation_longterm': int(m.broad_evaluation_longterm),
                     'broad_evaluation_noeffect': int(m.broad_evaluation_noeffect),
                     'broad_evaluation_unknown': int(m.broad_evaluation_unknown),
-                    'broad_evaluation_notevaluat_18': int(m.broad_evaluation_notevaluat_18)})
+                    'broad_evaluation_notevaluated': int(m.broad_evaluation_notevaluated)})
                 for m in row.measures
             ]
     } if row.measures.count() else {}

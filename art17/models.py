@@ -695,7 +695,7 @@ class DataMeasures(Base):
     broad_evaluation_longterm = Column(Numeric)
     broad_evaluation_noeffect = Column(Numeric)
     broad_evaluation_unknown = Column(Numeric)
-    broad_evaluation_notevaluat_18 = Column(Numeric)
+    broad_evaluation_notevaluated = Column('broad_evaluation_notevaluat_18', Numeric)
     validated = Column(Integer)
     validation_date = Column(DateTime)
     globalid = Column(String, default=create_esri_guid)
@@ -713,6 +713,22 @@ class DataMeasures(Base):
     lu_ranking = relationship(LuRanking,
                       primaryjoin=(rankingcode == foreign(LuRanking.code)),
                       innerjoin=True, uselist=False, passive_deletes=True)
+
+    @hybrid_property
+    def ranking(self):
+        return self.rankingcode
+
+    @ranking.setter
+    def ranking(self, value):
+        self.rankingcode = value
+
+    @hybrid_property
+    def code(self):
+        return self.measurecode
+
+    @code.setter
+    def code(self, value):
+        self.measurecode = value
 
 
 class DataPressuresThreats(Base):
