@@ -660,6 +660,14 @@ class DataSpeciesRegion(Base):
     def subject_identifier(self):
         return self.species.identifier
 
+    @hybrid_property
+    def conclusion_future_trends(self):
+        return self.conclusion_future_trend
+
+    @conclusion_future_trends.setter
+    def conclusion_future_trends(self, value):
+        self.conclusion_future_trend = value
+
 
 class DataMeasures(Base):
     __tablename__ = u'data_measures'
