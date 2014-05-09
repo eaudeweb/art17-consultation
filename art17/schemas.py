@@ -6,7 +6,7 @@ def parse_period(obj, prefix):
     if year_string:
         return {
             'start': year_string[:4],
-            'end': year_string[4:],
+            'end': year_string[-4:],
         }
 
     else:
