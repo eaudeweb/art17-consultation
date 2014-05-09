@@ -40,7 +40,7 @@ $('.add-pressuresbtn').click(function(evt) {
     var pressure = container.find('select[name="addform_pressure.pressure"]').val();
     var pressure_text = container.find('select[name="addform_pressure.pressure"] option:selected').text();
     var ranking = container.find('select[name="addform_pressure.ranking"]').val();
-    var ranking_text = container.find('select[name="addform_pressure.ranking"] option:selected').text();
+    var ranking_text = '(' + ranking + ') ' + container.find('select[name="addform_pressure.ranking"] option:selected').text();
     var pollutions = container.find('select[name="addform_pressure.pollutions"]').val();
     var pressure_pollutions = []
     container.find('select[name="addform_pressure.pollutions"] option:selected').each(function(i, selected){

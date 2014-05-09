@@ -21,7 +21,7 @@
           {% for p in threats.threats.data %}
           <tr data-id="{{ p.id }}">
             <td>{{ PRESSURES[p.pressure] }}</td>
-            <td> {{ RANKING_STATUS.get(p.ranking) }}</td>
+            <td>({{ p.ranking }}) {{ RANKING_STATUS.get(p.ranking) }}</td>
             <td>
               {% if p.pollutions %}
               {% for pol in p.pollutions %}
