@@ -297,7 +297,8 @@ def xml_species(xml_path, dataset_id=1):
             species_obj = DataSpecies.query.filter_by(code=speciescode).first()
             if not species_obj:
                 print "Missing species: ", speciescode
-                species_lu_obj = LuHdSpecies.query.filter_by(code=speciescode).first()
+                speciescode_numeric = int(speciescode)
+                species_lu_obj = LuHdSpecies.query.filter_by(code=speciescode_numeric).first()
                 if not species_lu_obj:
                     lu_data = extract_record('lu_hd_species', species)
                     lu_data['group_code'] = 'X'  # unknown
