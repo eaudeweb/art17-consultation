@@ -22,7 +22,7 @@
     <td class="dashboard-commentcount conclusion-{{ record.conclusion_assessment }}">
       <a href="{{ url }}"
          title="{{ CONCLUSIONS[record.conclusion_assessment] }}; {{ TREND_NAME[record.conclusion_assessment_trend] }}">
-        finalizat
+        finalizat, {{ record.conclusion_assessment }} {{record.conclusion_assessment_trend }}
       </a>
     </td>
     {% else %}
