@@ -83,6 +83,14 @@ class LuHdSpecies(Base):
     def display_name(self):
         return self.speciesname
 
+    @hybrid_property
+    def speciescode(self):
+        return self.code
+
+    @speciescode.setter
+    def speciescode(self, value):
+        self.code = value
+
 
 class LuBiogeoreg(Base):
     __tablename__ = u'lu_biogeoreg'

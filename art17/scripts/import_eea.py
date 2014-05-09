@@ -2,7 +2,8 @@ from sqlalchemy import create_engine
 from bs4 import BeautifulSoup
 from art17.scripts import importer
 from art17.models import DataSpeciesRegion, DataSpecies, DataHabitat, db, \
-    DataMeasures, DataPressuresThreats, DataPressuresThreatsPollution
+    DataMeasures, DataPressuresThreats, DataPressuresThreatsPollution, \
+    LuHdSpecies
 
 
 SCHEMA = dict([
@@ -88,6 +89,20 @@ DSR_MAP = {
 }
 
 SCHEMA_XML = {
+    'etc_data_species': [
+        'alternative_speciesname',
+        'common_speciesname',
+        'distribution_map',
+        'sensitive_species',
+        'distribution_method',
+        'distribution_date',
+        'additional_distribution_map',
+        'range_map',
+    ],
+    'lu_hd_species': [
+        'speciescode',
+        'speciesname',
+    ],
     'etc_data_species_regions': [
         'range_surface_area',
         'published',
@@ -278,10 +293,21 @@ def xml_species(xml_path, dataset_id=1):
 
         for species in parser.find_all('species_report'):
             speciescode = species.speciescode.text
+            data = extract_record('etc_data_species', species)
             species_obj = DataSpecies.query.filter_by(code=speciescode).first()
             if not species_obj:
-                print "Missing species: ", speciescode
-                continue
+                print "Missing species: ", speciescode, type(speciescode), len(speciescode)
+                species_lu_obj = LuHdSpecies.query.filter_by(code=speciescode).first()
+                if not species_lu_obj:
+                    data = extract_record('lu_hd_species', species)
+                    data['group_code'] = 'X'  # unknown
+                    species_lu_obj = LuHdSpecies(**data)
+                    db.session.add(species_lu_obj)
+                    print "Added species hd."
+                species_obj = DataSpecies(country='RO', code=speciescode,
+                                          **data)
+                db.session.add(species_obj)
+                print "Added new species."
             print "Species: ", species_obj.id, species_obj.code, species_obj.alternative_speciesname
             ok_regions = []
             for region in species.regional.find_all('region'):
