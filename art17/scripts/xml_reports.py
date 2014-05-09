@@ -51,3 +51,31 @@ def xml_habitats(filename=None):
     if filename:
         with open(filename, 'w') as file_out:
             file_out.write(data.encode('utf-8'))
+
+
+@exporter.command
+def xml_habitats_checklist(filename=None):
+    habitats = models.db.session.query(
+                    models.DataHabitatsCheckList).filter_by(
+                            member_state='RO')
+
+    habitats_as_dict = {}
+    for hb in habitats:
+        try:
+            habitats_as_dict[hb.code]['regions'].append(hb)
+        except KeyError:
+            habitats_as_dict[hb.code] = {
+                        'info': hb,
+                        'regions': [hb],
+                    }
+
+    data = flask.render_template(
+                'xml_export/habitats_checklist.html',
+                **{'habitats_dict': habitats_as_dict}
+            )
+
+    if filename:
+        with open(filename, 'w') as file_out:
+            file_out.write(data.encode('utf-8'))
+    else:
+        return data

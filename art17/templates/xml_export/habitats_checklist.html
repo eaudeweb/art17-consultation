@@ -1,0 +1,32 @@
+{% macro to_bool(val) %}
+    {%- if val -%}
+        true
+    {%- else -%}
+        false
+    {%- endif -%}
+{% endmacro -%}
+
+<?xml version="1.0" encoding="UTF-8"?>
+<member_state_checklist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://bd.eionet.europa.eu/schemas/Art12Art17_reporting_2013/art17_habitats_checklist.xsd" xml:lang="en">
+<country isocode="RO" desc="Romania">RO</country>
+<habitats>
+    {%- for code, habitat in habitats_dict.items() %}
+    <habitat>
+        <code>{{ code }}</code>
+        <name>{{ habitat['info'].hd_name }}</name>
+        <legal_name>{{ habitat['info'].name }}</legal_name>
+        <regional>
+            {%- for region in habitat.regions %}
+            <region>
+                <code>{{ region.bio_region }}</code>
+                <presence>{{ region.presence }}</presence>
+                <comments>{{ region.ms_feedback_etcbd_comments }}</comments>
+                <ms_added>{{ to_bool(region.ms_added) }}</ms_added>
+                <predefined>{{ to_bool(region.predefined) }}</predefined>
+            </region>
+            {%- endfor %}
+        </regional>
+    </habitat>
+    {%- endfor %}
+</habitats>
+</member_state_checklist>
