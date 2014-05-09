@@ -377,7 +377,7 @@ class MeasuresForm(Form):
     broad_evaluation_longterm = MeasureField(default=False)
     broad_evaluation_noeffect = MeasureField(default=False)
     broad_evaluation_unknown = MeasureField(default=False)
-    broad_evaluation_notevaluat_18 = MeasureField(default=False)
+    broad_evaluation_notevaluated = MeasureField(default=False)
 
     def __init__(self, *args, **kwargs):
         super(MeasuresForm, self).__init__(*args, **kwargs)

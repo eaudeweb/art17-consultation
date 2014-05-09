@@ -6,7 +6,7 @@ def parse_period(obj, prefix):
     if year_string:
         return {
             'start': year_string[:4],
-            'end': year_string[4:],
+            'end': year_string[-4:],
         }
 
     else:
@@ -44,7 +44,7 @@ def parse_reference_value(obj, prefix):
     data = {
         'number': getattr(obj, prefix),
         'op': getattr(obj, prefix + '_op'),
-        'x': getattr(obj, prefix + '_x'),
+        'x': getattr(obj, prefix + '_unknown'),
         'method': getattr(obj, prefix + '_method'),
     }
     if not data['x']:
@@ -262,7 +262,7 @@ def parse_species_commentform(row):
                     'broad_evaluation_longterm': int(m.broad_evaluation_longterm),
                     'broad_evaluation_noeffect': int(m.broad_evaluation_noeffect),
                     'broad_evaluation_unknown': int(m.broad_evaluation_unknown),
-                    'broad_evaluation_notevaluat_18': int(m.broad_evaluation_notevaluat_18)})
+                    'broad_evaluation_notevaluated': int(m.broad_evaluation_notevaluated)})
                 for m in row.measures
             ]
     } if row.measures.count() else {}
@@ -406,7 +406,7 @@ def parse_habitat_commentform(row):
                     'broad_evaluation_longterm': int(m.broad_evaluation_longterm),
                     'broad_evaluation_noeffect': int(m.broad_evaluation_noeffect),
                     'broad_evaluation_unknown': int(m.broad_evaluation_unknown),
-                    'broad_evaluation_notevaluat_18': int(m.broad_evaluation_notevaluat_18)})
+                    'broad_evaluation_notevaluated': int(m.broad_evaluation_notevaluated)})
                 for m in row.measures
             ]
     } if row.measures.count() else {}
@@ -465,7 +465,7 @@ def flatten_conclusion(conclusion_struct, obj, prefix):
 
 
 def flatten_refval(refval_struct, obj, prefix):
-    setattr(obj, prefix + '_x', refval_struct.get('x', None))
+    setattr(obj, prefix + '_unknown', refval_struct.get('x', None))
     setattr(obj, prefix + '_op', refval_struct['op'])
     setattr(obj, prefix, refval_struct['number'])
     setattr(obj, prefix + '_method', refval_struct['method'])

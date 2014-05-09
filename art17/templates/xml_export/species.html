@@ -38,10 +38,10 @@
                 <range_trend_long_magnitude_max>{{ region.range_trend_long_magnitude_max }}</range_trend_long_magnitude_max>
                 <complementary_favourable_range>{{ region.complementary_favourable_range }}</complementary_favourable_range>
                 <complementary_favourable_range_op>{{ region.complementary_favourable_range_op|e }}</complementary_favourable_range_op>
-                <complementary_favourable_range_unknown>{{ to_bool(region.complementary_favourable_range_x) }}</complementary_favourable_range_unknown>
+                <complementary_favourable_range_unknown>{{ to_bool(region.complementary_favourable_range_unknown) }}</complementary_favourable_range_unknown>
                 <complementary_favourable_range_method>{{ region.complementary_favourable_range_method }}</complementary_favourable_range_method>
                 <range_reasons_for_change_a>{{ region.range_reasons_for_change_a }}</range_reasons_for_change_a>
-                <range_reasons_for_change_b>{{ region.region.range_reasons_for_change_b }}</range_reasons_for_change_b>
+                <range_reasons_for_change_b>{{ region.range_reasons_for_change_b }}</range_reasons_for_change_b>
                 <range_reasons_for_change_c>{{ region.range_reasons_for_change_c }}</range_reasons_for_change_c>
                 <population_size_unit>{{ region.population_size_unit }}</population_size_unit>
                 <population_minimum_size>{{ region.population_minimum_size }}</population_minimum_size>
@@ -68,7 +68,7 @@
                 <population_trend_long_method>{{ region.population_trend_long_method }}</population_trend_long_method>
                 <complementary_favourable_population>{{ region.complementary_favourable_population }}</complementary_favourable_population>
                 <complementary_favourable_population_op>{{ region.complementary_favourable_population_op|e }}</complementary_favourable_population_op>
-                <complementary_favourable_population_unknown>{{ to_bool(region.complementary_favourable_population_x) }}</complementary_favourable_population_unknown>
+                <complementary_favourable_population_unknown>{{ to_bool(region.complementary_favourable_population_unknown) }}</complementary_favourable_population_unknown>
                 <complementary_favourable_population_method>{{ region.complementary_favourable_population_method }}</complementary_favourable_population_method>
                 <population_reasons_for_change_a>{{ to_bool(region.population_reasons_for_change_a) }}</population_reasons_for_change_a>
                 <population_reasons_for_change_b>{{ to_bool(region.population_reasons_for_change_b) }}</population_reasons_for_change_b>
@@ -150,7 +150,7 @@
                         <broad_evaluation_longterm>{{ to_bool(measure.broad_evaluation_longterm) }}</broad_evaluation_longterm>
                         <broad_evaluation_noeffect>{{ to_bool(measure.broad_evaluation_noeffect) }}</broad_evaluation_noeffect>
                         <broad_evaluation_unknown>{{ to_bool(measure.broad_evaluation_unknown) }}</broad_evaluation_unknown>
-                        <broad_evaluation_notevaluated>{{ to_bool(measure.broad_evaluation_notevaluat_18) }}</broad_evaluation_notevaluated>
+                        <broad_evaluation_notevaluated>{{ to_bool(measure.broad_evaluation_notevaluated) }}</broad_evaluation_notevaluated>
                     </measure>
                 {%- endfor %}
                 </measures>

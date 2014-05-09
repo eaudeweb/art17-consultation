@@ -332,7 +332,7 @@ class DataHabitattypeRegion(Base):
     range_trend_long_magnitude_max = Column('range_trend_long_mag_max', Numeric)
     complementary_favourable_range = Column('compl_favourable_range', Numeric)
     complementary_favourable_range_op = Column('comp_favourable_range_op', String)
-    complementary_favourable_range_x = Column('comp_favourable_range_x', Numeric)
+    complementary_favourable_range_unknown = Column('comp_favourable_range_x', Numeric)
     complementary_favourable_range_method = Column('comp_favourable_range_met', Text)
     range_reasons_for_change_a = Column('r_reasons_for_change_a', Numeric)
     range_reasons_for_change_b = Column('r_reasons_for_change_b', Numeric)
@@ -354,7 +354,7 @@ class DataHabitattypeRegion(Base):
     coverage_trend_long_method = Column(String)
     complementary_favourable_area = Column('comp_favourable_area', Numeric)
     complementary_favourable_area_op = Column('comp_favourable_area_op', String)
-    complementary_favourable_area_x = Column('comp_favourable_area_x', Numeric)
+    complementary_favourable_area_unknown = Column('comp_favourable_area_x', Numeric)
     complementary_favourable_area_method = Column('comp_favourable_area_method', Text)
     area_reasons_for_change_a = Column(Numeric)
     area_reasons_for_change_b = Column(Numeric)
@@ -547,7 +547,7 @@ class DataSpeciesRegion(Base):
     range_trend_long_magnitude_max = Column('range_trend_long_mag_max', Numeric)
     complementary_favourable_range = Column('comp_favourable_range', Numeric)
     complementary_favourable_range_op = Column('comp_favourable_range_op', String)
-    complementary_favourable_range_x = Column('comp_favourable_range_x', Numeric)
+    complementary_favourable_range_unknown = Column('comp_favourable_range_x', Numeric)
     complementary_favourable_range_method = Column('comp_favourable_range_met', Text)
     range_reasons_for_change_a = Column('r_reasons_for_change_a', Numeric)
     range_reasons_for_change_b = Column('r_reasons_for_change_b', Numeric)
@@ -577,7 +577,7 @@ class DataSpeciesRegion(Base):
     population_trend_long_method = Column('pop_trend_long_method', String)
     complementary_favourable_population = Column('comp_favourable_pop', Numeric)
     complementary_favourable_population_op = Column('comp_favourable_pop_op', String)
-    complementary_favourable_population_x = Column('comp_favourable_pop_x', Numeric)
+    complementary_favourable_population_unknown = Column('comp_favourable_pop_x', Numeric)
     complementary_favourable_population_method = Column('comp_favourable_pop_met', Text)
     population_reasons_for_change_a = Column('pop_reasons_for_change_a', Numeric)
     population_reasons_for_change_b = Column('pop_reasons_for_change_b', Numeric)
@@ -660,6 +660,14 @@ class DataSpeciesRegion(Base):
     def subject_identifier(self):
         return self.species.identifier
 
+    @hybrid_property
+    def conclusion_future_trends(self):
+        return self.conclusion_future_trend
+
+    @conclusion_future_trends.setter
+    def conclusion_future_trends(self, value):
+        self.conclusion_future_trend = value
+
 
 class DataMeasures(Base):
     __tablename__ = u'data_measures'
@@ -687,7 +695,7 @@ class DataMeasures(Base):
     broad_evaluation_longterm = Column(Numeric)
     broad_evaluation_noeffect = Column(Numeric)
     broad_evaluation_unknown = Column(Numeric)
-    broad_evaluation_notevaluat_18 = Column(Numeric)
+    broad_evaluation_notevaluated = Column('broad_evaluation_notevaluat_18', Numeric)
     validated = Column(Integer)
     validation_date = Column(DateTime)
     globalid = Column(String, default=create_esri_guid)
@@ -705,6 +713,22 @@ class DataMeasures(Base):
     lu_ranking = relationship(LuRanking,
                       primaryjoin=(rankingcode == foreign(LuRanking.code)),
                       innerjoin=True, uselist=False, passive_deletes=True)
+
+    @hybrid_property
+    def ranking(self):
+        return self.rankingcode
+
+    @ranking.setter
+    def ranking(self, value):
+        self.rankingcode = value
+
+    @hybrid_property
+    def code(self):
+        return self.measurecode
+
+    @code.setter
+    def code(self, value):
+        self.measurecode = value
 
 
 class DataPressuresThreats(Base):
@@ -741,6 +765,14 @@ class DataPressuresThreats(Base):
                       primaryjoin=(ranking == foreign(LuRanking.code)),
                       innerjoin=True, uselist=False, passive_deletes=True)
 
+    @hybrid_property
+    def code(self):
+        return self.pressure
+
+    @code.setter
+    def code(self, value):
+        self.pressure = value
+
 
 class DataPressuresThreatsPollution(Base):
     __tablename__ = u'data_pressures_threats_pol'
@@ -763,6 +795,14 @@ class DataPressuresThreatsPollution(Base):
 
     pressure = relationship(u'DataPressuresThreats',
         backref=db.backref('pollutions', lazy='dynamic', cascade='all'))
+
+    @hybrid_property
+    def code(self):
+        return self.pollution_qualifier
+
+    @code.setter
+    def code(self, value):
+        self.pollution_qualifier = value
 
 
 class DataHabitatSpecies(Base):
