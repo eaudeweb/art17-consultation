@@ -299,9 +299,9 @@ def xml_species(xml_path, dataset_id=1):
                 print "Missing species: ", speciescode, type(speciescode), len(speciescode)
                 species_lu_obj = LuHdSpecies.query.filter_by(code=speciescode).first()
                 if not species_lu_obj:
-                    data = extract_record('lu_hd_species', species)
-                    data['group_code'] = 'X'  # unknown
-                    species_lu_obj = LuHdSpecies(**data)
+                    lu_data = extract_record('lu_hd_species', species)
+                    lu_data['group_code'] = 'X'  # unknown
+                    species_lu_obj = LuHdSpecies(**lu_data)
                     db.session.add(species_lu_obj)
                     print "Added species hd."
                 species_obj = DataSpecies(country='RO', code=speciescode,
