@@ -17,7 +17,7 @@
   {%- set key = (subject.id, bioreg.code) %}
   {%- if key in object_regions %}
     {%- set record = get_record(subject, bioreg, dataset_id) %}
-    {% if record.finalized %}
+    {% if record.is_final() %}
     {%- set url = record_details_url(record) %}
     <td class="dashboard-commentcount conclusion-{{ record.conclusion_assessment }}">
       <a href="{{ url }}"
@@ -29,7 +29,7 @@
     {%- set url = record_edit_url(record) %}
     <td class="dashboard-commentcount">
       <a href="{{ url }}" class="btn btn-xs">
-      {% if record.new %}
+      {% if record.is_new() %}
         agregat
       {% else %}
         în lucru

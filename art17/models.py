@@ -26,6 +26,15 @@ def create_esri_guid():
     return ('{%s}' % uuid.uuid4()).upper()
 
 
+class RoleMixin(object):
+
+    def is_final(self):
+        return self.cons_role == 'final'
+
+    def is_new(self):
+        return self.cons_role == 'assessment'
+
+
 class LuHabitattypeCodes(Base):
     __tablename__ = u'lu_habitattype_codes'
 
@@ -316,7 +325,7 @@ class DataHabitatsCheckList(Base):
         self.valid_name = value
 
 
-class DataHabitattypeRegion(Base):
+class DataHabitattypeRegion(Base, RoleMixin):
     __tablename__ = u'data_habitattype_reg'
 
     id = Column(
@@ -531,7 +540,7 @@ class DataSpeciesCheckList(Base):
         self.species_name = value
 
 
-class DataSpeciesRegion(Base):
+class DataSpeciesRegion(Base, RoleMixin):
     __tablename__ = u'data_species_regions'
 
     id = Column(

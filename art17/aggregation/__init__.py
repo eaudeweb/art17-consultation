@@ -23,8 +23,15 @@ aggregation = flask.Blueprint('aggregation', __name__)
 aggregation_manager = Manager()
 
 
+RECORD_ROLES = {
+    'assessment': 'Initial role',
+    'final-draft': 'Assessment being edited',
+    'final': 'Final record, ready for consultation',
+}
+
+
 def perm_edit_record(record):
-    if record.cons_role == 'final':
+    if record.is_final():
         return Denial(need.everybody)
 
     return Permission(
@@ -34,7 +41,7 @@ def perm_edit_record(record):
 
 
 def perm_finalize_record(record):
-    if record.cons_role == 'final':
+    if record.is_final():
         return Denial(need.everybody)
 
     return Permission(
@@ -44,7 +51,7 @@ def perm_finalize_record(record):
 
 
 def perm_definalize_record(record):
-    if record.cons_role != 'final':
+    if not record.is_final():
         return Denial(need.everybody)
 
     return Permission(

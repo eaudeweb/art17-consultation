@@ -421,7 +421,7 @@ class RecordDetails(View):
             'measures': self.record.measures.all(),
             'template_base': self.template_base,
             'comment_history_view': self.comment_history_view,
-            'finalized': self.record.cons_role == 'final',
+            'finalized': self.record.is_final(),
         })
         return flask.render_template(self.template_name, **context)
 
