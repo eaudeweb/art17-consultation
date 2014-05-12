@@ -34,6 +34,9 @@ class RoleMixin(object):
     def is_new(self):
         return self.cons_role == 'assessment'
 
+    def is_missing(self):
+        return self.cons_role == 'missing'
+
 
 class LuHabitattypeCodes(Base):
     __tablename__ = u'lu_habitattype_codes'

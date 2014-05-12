@@ -172,6 +172,21 @@ def report(dataset_id):
     return flask.render_template('aggregation/report.html', dataset=dataset)
 
 
+@aggregation.route('/raport/<int:dataset_id>/agregare')
+def report_aggregation(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+
+    ROLE = 'missing'
+    species = dataset.species_objs.filter_by(cons_role=ROLE)
+    habitats = dataset.habitat_objs.filter_by(cons_role=ROLE)
+
+    return flask.render_template('aggregation/report_aggregation.html',
+                                 missing_species=species,
+                                 missing_habitats=habitats,
+                                 dataset=dataset,
+    )
+
+
 class DashboardView(View):
 
     methods = ['GET']

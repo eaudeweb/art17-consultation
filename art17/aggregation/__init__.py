@@ -24,6 +24,7 @@ aggregation_manager = Manager()
 
 
 RECORD_ROLES = {
+    'missing': 'The data was missing',
     'assessment': 'Initial role',
     'final-draft': 'Assessment being edited',
     'final': 'Final record, ready for consultation',
