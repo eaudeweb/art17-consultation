@@ -14,7 +14,7 @@
           <div class="form-group">
             {%- set population = form.population.size.population %}
             <label for="population.size.population.unit">
-              1. Estimarea mărimii populației (număr de indivizi sau valori agreate)
+              1. {{ population.label }}:
             </label>
 
             {{ errors(population) }}
@@ -22,14 +22,14 @@
             <div class="row">
               <div class="col-sm-6 {{- error_cls(population.unit) }}">
                 <label for="population.size.population.unit">
-                    Unități:
+                    {{ population.unit.label }}:
                 </label>
                 {{ population.unit(class='form-control') }}
               </div>
 
               <div class="col-sm-3 {{- error_cls(population.min) }}">
                 <label for="population.size.population.min">
-                    Min:
+                    {{ population.min.label }}:
                 </label>
                 {{ population.min(class='form-control',
                         placeholder="numǎr minim") }}
@@ -37,7 +37,7 @@
 
               <div class="col-sm-3 {{- error_cls(population.max) }}">
                 <label for="population.size.population.max">
-                    Max:
+                    {{ population.max.label }}:
                 </label>
                 {{ population.max(class='form-control',
                         placeholder="numǎr maxim") }}
@@ -47,22 +47,22 @@
 
           <div class="form-group">
             {%- set population_alt = form.population.size.population_alt %}
-            <label for="population.size.population.unit">
-              2. Estimarea mărimii populației (altfel decât număr de indivizi)
+            <label for="population.size.population_alt.unit">
+              2. {{ population_alt.label }}:
             </label>
             {{ errors(population_alt) }}
 
             <div class="row">
               <div class="col-sm-6 {{- error_cls(population_alt.unit) }}">
-                <label for="population.size.population.unit">
-                  Unități:
+                <label for="population.size.population_alt.unit">
+                  {{ population_alt.unit.label }}:
                 </label>
                 {{ population_alt.unit(class='form-control') }}
               </div>
 
               <div class="col-sm-3 {{- error_cls(population_alt.min) }}">
                 <label for="population.size.population.min">
-                  Min:
+                  {{ population_alt.min.label }}:
                 </label>
                 {{ population_alt.min(class='form-control',
                         placeholder="numǎr minim") }}
@@ -70,7 +70,7 @@
 
               <div class="col-sm-3 {{- error_cls(population_alt.max) }}">
                 <label for="population.size.population.max">
-                  Max:
+                  {{ population_alt.max.label }}:
                 </label>
                   {{ population_alt.max(class='form-control',
                         placeholder="numǎr maxim") }}
@@ -83,7 +83,9 @@
 
       <div class="form-group">
         {%- set population = form.population %}
-        <label for="population.additional_locality">Informații adiționale</label>
+        <label>
+            Informații adiționale
+        </label>
 
         {{ errors(population.additional_locality) }}
         {{ errors(population.additional_method) }}
@@ -91,7 +93,7 @@
         <div class="row">
           <div class="col-sm-2 {{- error_cls(population.additional_locality) }}">
             <label for="population.additional_locality">
-              Definiția localității:
+              {{ population.additional_locality.label }}:
             </label>
             {{ population.additional_locality(class='form-control',
                     placeholder="Definiția localității") }}
@@ -102,7 +104,7 @@
           </div>
           <div class="col-sm-2 {{- error_cls(population.additional_method) }}">
             <label for="population.additional_method">
-              Metoda de conversie:
+              {{ population.additional_method.label }}:
             </label>
             {{ population.additional_method(class='form-control',
                     placeholder="Metoda de conversie") }}
@@ -114,7 +116,7 @@
           </div>
           <div class="col-sm-2 {{- error_cls(population.additional_problems) }}">
             <label for="population.additional_problems">
-              Probleme:
+              {{ population.additional_problems.label }}:
             </label>
             {{ population.additional_problems(class='form-control',
                     placeholder="Probleme") }}
@@ -128,7 +130,9 @@
       </div>
 
       <div class="form-group">
-        <label for="population.date">Anul / Perioada</label>
+        <label for="population.date">
+            {{ population.date.label }}:
+        </label>
         <p>
           <em>
           * Anul (sau perioada) în care au fost colectate datele
@@ -144,7 +148,7 @@
 
       <div class="form-group">
         <label for="population.method">
-          Metoda utilizată - mărimea populației
+          {{ population.method.label}}:
         </label>
 
         {{ errors(form.population.method) }}
@@ -159,45 +163,47 @@
       <div class="form-group">
         {%- set trend_short = form.population.trend_short %}
         <label for="population.trend_short.trend">
-          Tendință pe termen scurt (12 ani)
+          {{ trend_short.label }}
         </label>
 
         {{ errors(trend_short) }}
 
         <div class="row">
           <div class="col-sm-2 {{- error_cls(trend_short.trend) }}">
-            <label for="population.trend_short.trend">
-                Direcția tendinței:
+            <label for="trend_short.trend">
+                {{ trend_short.trend.label }}:
             </label>
             {{ trend_short.trend(class='form-control') }}
           </div>
 
           <div class="col-sm-2 {{- error_cls(trend_short.period.start) }}">
-            <label for="population.trend_short.period.start">
-                An de început:
+            <label for="trend_short.period.start">
+                {{ trend_short.period.start.label }}:
             </label>
             {{ trend_short.period.start(class='form-control',
                     placeholder="an de început") }}
           </div>
 
           <div class="col-sm-2 {{- error_cls(trend_short.period.end) }}">
-            <label for="population.trend_short.period.end">
-                An de sfârșit:
+            <label for="trend_short.period.end">
+                {{ trend_short.period.end.label }}:
             </label>
             {{ trend_short.period.end(class='form-control',
                     placeholder="an de sfârșit") }}
           </div>
 
           <div class="col-sm-2 {{- error_cls(trend_short.method) }}">
-            <label for="population.trend_short.period.method">
-                Metoda:
+            <label for="trend_short.period.method">
+                {{ trend_short.method.label }}:
             </label>
             {{ trend_short.method(class='form-control') }}
           </div>
         </div>
         <br/>
         {% set magnitude = trend_short.magnitude %}
-        <label>Magnitudine (% - schimbarea pe aceasta perioadă):</label>
+        <label>
+            {{ magnitude.label }}:
+        </label>
 
         {{ errors(magnitude) }}
 
@@ -207,30 +213,30 @@
             ambele capete de interval.</em></small></p>
           </div>
           <div class="col-sm-2 {{- error_cls(magnitude.min) }}">
-            <label for="population.trend_short.magnitude.min">
-                Min:
+            <label for="magnitude.min">
+                {{ magnitude.min.label }}:
             </label>
             {{ magnitude.min(class='form-control',
                     placeholder="valoare minimă") }}
           </div>
 
           <div class="col-sm-2 {{- error_cls(magnitude.max) }}">
-            <label for="population.trend_short.magnitude.min">
-                Max:
+            <label for="magnitude.min">
+                {{ magnitude.max.label }}:
             </label>
             {{ magnitude.max(class='form-control',
                     placeholder="valoare maximă") }}
           </div>
           <div class="col-sm-2 {{- error_cls(magnitude.ci) }}">
-            <label for="population.trend_short.magnitude.min">
-                Interval de încredere:
+            <label for="magnitude.min">
+                {{ magnitude.ci.label }}:
             </label>
             {{ magnitude.ci(class='form-control',
                     placeholder="interval de încredere") }}
           </div>
         </div>
 
-        <label for="population.trend_short.method">
+        <label for="trend_short.method">
           Metoda utilizată - tendința pe termen scurt
         </label>
 
@@ -246,7 +252,7 @@
       <div class="form-group">
         {%- set trend_long = form.population.trend_long %}
         <label for="population.trend_long.trend">
-          Tendință pe termen lung (24 de ani)
+          {{ trend_long.label }}
         </label>
 
         {{ errors(trend_long) }}

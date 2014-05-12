@@ -128,10 +128,13 @@ class Form(Form_base):
 
 
 class PopulationValue(Form):
-    unit = SelectField(default='', validators=[Optional()])
+    unit = SelectField(label=u"Unități",
+                       default='', validators=[Optional()])
     min = DecimalField(
+        label=u"Min",
         validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
     max = DecimalField(
+        label=u"Max",
         validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
 
 
@@ -147,7 +150,7 @@ class MagnitudeValue(AreaValue):
 
 
 class MagnitudeCIValue(MagnitudeValue):
-    ci = DecimalField(label=u"interval de încredere", validators=[Optional()])
+    ci = DecimalField(label=u"Interval de încredere", validators=[Optional()])
 
 
 class Period(Form):
@@ -191,8 +194,10 @@ class Trend(Form):
 
 
 class TrendCI(Trend):
-    magnitude = FormField(MagnitudeCIValue)
+    magnitude = FormField(MagnitudeCIValue, label=u"Magnitudine (% - \
+                                        schimbarea pe aceasta perioadă)")
     method = SelectField(default='',
+                         label=u"Metoda",
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS,
                          validators=[Optional()],
     )
@@ -238,8 +243,12 @@ class Conclusion(Form):
 
 
 class PopulationSize(Form):
-    population = FormField(PopulationValue)
-    population_alt = FormField(PopulationValue)
+    population = FormField(PopulationValue,
+                           label=u"Estimarea mărimii populației (număr de \
+                           indivizi sau valori agreate)")
+    population_alt = FormField(PopulationValue,
+                           label=u"Estimarea mărimii populației (altfel decât \
+                           număr de indivizi)")
 
     def __init__(self, *args, **kwargs):
         super(PopulationSize, self).__init__(*args, **kwargs)
@@ -261,7 +270,7 @@ class Range(Form):
                          default='',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
     trend_short = FormField(Trend, label=u"Tendință pe termen scurt (12 ani)")
-    trend_long = FormField(Trend, label=u"Tendință pe termen lung (12 ani)")
+    trend_long = FormField(Trend, label=u"Tendință pe termen lung (24 ani)")
     reference_value = FormField(ReferenceValue, label=u"Arealul favorabil de \
                                                         referință (km²)")
     reason = FormField(ReasonValue, label=u"Motivul modificării")
@@ -274,14 +283,18 @@ class Range(Form):
 
 class Population(Form):
     size = FormField(PopulationSize)
-    additional_locality = TextAreaField(validators=[Optional()])
-    additional_method = TextAreaField(validators=[Optional()])
-    additional_problems = TextAreaField(validators=[Optional()])
-    date = TextField(validators=[Optional()])
+    additional_locality = TextAreaField(label=u"Definiția localității",
+                                        validators=[Optional()])
+    additional_method = TextAreaField(label=u"Metoda de conversie",
+                                      validators=[Optional()])
+    additional_problems = TextAreaField(label=u"Probleme",
+                                        validators=[Optional()])
+    date = TextField(label=u"Anul / Perioada", validators=[Optional()])
     method = SelectField(default='',
+                         label=u"Metoda utilizată - mărimea populației",
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
-    trend_short = FormField(TrendCI)
-    trend_long = FormField(TrendCI)
+    trend_short = FormField(TrendCI, label=u"Tendință pe termen scurt (12 ani)")
+    trend_long = FormField(TrendCI, label=u"Tendință pe termen lung (24 ani)")
     reference_value = FormField(ReferenceValue)
     reason = FormField(ReasonValue)
     conclusion = FormField(Conclusion)
