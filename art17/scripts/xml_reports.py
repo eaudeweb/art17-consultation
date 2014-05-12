@@ -13,6 +13,7 @@ def xml_species(filename=None):
     if filename:
         with open(filename, 'w') as file_out:
             file_out.write(data.encode('utf-8'))
+    return data
 
 
 @exporter.command
@@ -39,6 +40,7 @@ def xml_species_checklist(filename=None):
     if filename:
         with open(filename, 'w') as file_out:
             file_out.write(data.encode('utf-8'))
+    return data
 
 
 @exporter.command
@@ -51,6 +53,7 @@ def xml_habitats(filename=None):
     if filename:
         with open(filename, 'w') as file_out:
             file_out.write(data.encode('utf-8'))
+    return data
 
 
 @exporter.command
@@ -77,5 +80,4 @@ def xml_habitats_checklist(filename=None):
     if filename:
         with open(filename, 'w') as file_out:
             file_out.write(data.encode('utf-8'))
-    else:
-        return data
+    return data

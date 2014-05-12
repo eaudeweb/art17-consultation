@@ -39,3 +39,25 @@ def bust_cache(endpoint, values):
             mtime = file_path.stat().st_mtime
             key = ('%x' % mtime)[-6:]
             values['t'] = key
+
+
+@consultation.route('/export/<export_name>')
+@consultation.route('/export/')
+def export(export_name=None):
+    from art17.scripts.xml_reports import (
+        xml_habitats, xml_habitats_checklist, xml_species,
+        xml_species_checklist,
+    )
+    KNOWN_EXPORTS = {
+        'xml_habitats': xml_habitats,
+        'xml_habitats_checklist': xml_habitats_checklist,
+        'xml_species': xml_species,
+        'xml_species_checklist': xml_species_checklist,
+    }
+    if export_name is None:
+        return flask.Response("Known exports: %s" % KNOWN_EXPORTS.keys())
+    if export_name not in KNOWN_EXPORTS:
+        flask.abort(404)
+
+    data = KNOWN_EXPORTS[export_name]()
+    return flask.Response(data, mimetype='text/xml')
