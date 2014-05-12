@@ -1,4 +1,5 @@
 # coding=utf-8
+import os.path
 from art17 import models
 from art17.scripts import exporter
 from utils import do_csv_export
@@ -148,7 +149,10 @@ def species_population_units(filename=None):
 
 
 @exporter.command
-def all():
+def all(dest_dir=None):
+    """ Export all reference values
+    """
+    dest_dir = dest_dir or '.'
     available = {
         'species_magnitude': species_magnitude,
         'species_range': species_range,
@@ -159,5 +163,6 @@ def all():
     for k, v in available.iteritems():
         filename = '%s.csv' % k
         print "Exporting %s..." % k
-        v(filename)
+        filepath = os.path.join(dest_dir, filename)
+        v(filepath)
     print "Done."
