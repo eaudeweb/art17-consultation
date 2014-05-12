@@ -136,9 +136,9 @@ class PopulationValue(Form):
 
 
 class AreaValue(Form):
-    min = DecimalField(
+    min = DecimalField(label=u"Min",
         validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
-    max = DecimalField(
+    max = DecimalField(label=u"Max",
         validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
 
 
@@ -151,9 +151,9 @@ class MagnitudeCIValue(MagnitudeValue):
 
 
 class Period(Form):
-    start = IntegerField(label=u"an de început",
+    start = IntegerField(label=u"An de început",
                          validators=[Optional(), NumberRange(1900, 2100)])
-    end = IntegerField(label=u"an de sfârșit",
+    end = IntegerField(label=u"An de sfârșit",
                        validators=[Optional(), NumberRange(1900, 2100)])
 
 
@@ -172,10 +172,11 @@ def set_only_one_error_message(fields):
 class Trend(Form):
     trend = SelectField(choices=EMPTY_CHOICE + TREND_OPTIONS,
                         default='',
-                        label=u"tendință",
+                        label=u"Direcția tendinței",
                         validators=[Optional()])
     period = FormField(Period)
-    magnitude = FormField(MagnitudeValue)
+    magnitude = FormField(MagnitudeValue, label=u"Magnitudine (% - \
+                                    schimbarea pe aceasta perioadă)")
 
     def custom_validate(self):
         fields = [self.period.start, self.period.end, self.trend]
@@ -198,10 +199,12 @@ class TrendCI(Trend):
 
 
 class ReferenceValue(Form):
-    op = SelectField(default='', label=u"operator", validators=[Optional()])
-    number = DecimalField(label=u"suprafață", validators=[Optional()])
-    x = BooleanField(label=u"necunoscut", validators=[Optional()])
-    method = TextAreaField(validators=[Optional()])
+    op = SelectField(default='', label=u"Operator", validators=[Optional()])
+    number = DecimalField(label=u"Suprafață", validators=[Optional()])
+    x = BooleanField(label=u"Necunoscut", validators=[Optional()])
+    method = TextAreaField(label=u"Arealul favorabil de referință - metoda \
+                           folosită pentru stabilirea acestei valori",
+                           validators=[Optional()])
 
     def custom_validate(self):
         fields = [self.number, self.op, self.x]
@@ -225,9 +228,11 @@ class ReasonValue(Form):
 
 class Conclusion(Form):
     value = SelectField(choices=EMPTY_CHOICE + CONCLUSION_OPTIONS,
+                        label=u"Concluzie",
                         default='',
                         validators=[Optional()])
     trend = SelectField(choices=EMPTY_CHOICE + TREND_OPTIONS,
+                        label=u"Tendință",
                         default='',
                         validators=[Optional()])
 
@@ -250,15 +255,17 @@ class PopulationSize(Form):
 
 
 class Range(Form):
-    surface_area = DecimalField(label=u"Suprafață",
+    surface_area = DecimalField(label=u"Suprafață (km²)",
         validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
-    method = SelectField(default='',
+    method = SelectField(label=u"Metoda utilizată - suprafața arealului",
+                         default='',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
-    trend_short = FormField(Trend)
-    trend_long = FormField(Trend)
-    reference_value = FormField(ReferenceValue)
-    reason = FormField(ReasonValue)
-    conclusion = FormField(Conclusion)
+    trend_short = FormField(Trend, label=u"Tendință pe termen scurt (12 ani)")
+    trend_long = FormField(Trend, label=u"Tendință pe termen lung (12 ani)")
+    reference_value = FormField(ReferenceValue, label=u"Arealul favorabil de \
+                                                        referință (km²)")
+    reason = FormField(ReasonValue, label=u"Motivul modificării")
+    conclusion = FormField(Conclusion, label=u"Evaluarea")
 
     def __init__(self, *args, **kwargs):
         super(Range, self).__init__(*args, **kwargs)
