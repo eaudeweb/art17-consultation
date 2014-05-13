@@ -92,14 +92,14 @@
           </div>
           <div class="col-sm-3 {{- error_cls(future_prospects.value) }}">
             <label for="future_prospects.value">
-                Concluzie:
+                {{ future_prospects.value.label}}:
             </label>
             {{ future_prospects.value(class='form-control semaphore') }}
           </div>
 
           <div class="col-sm-3 {{- error_cls(future_prospects.trend) }}">
             <label for="future_prospects.trend">
-                Tendință:
+                {{ future_prospects.trend.label}}:
             </label>
             {{ future_prospects.trend(class='form-control') }}
           </div>
@@ -121,14 +121,14 @@
           </div>
           <div class="col-sm-3 {{- error_cls(overall_assessment.value) }}">
             <label for="overall_assessment.value">
-                Concluzie:
+                {{ overall_assessment.value.label }}:
             </label>
             {{ overall_assessment.value(class='form-control semaphore') }}
           </div>
 
           <div class="col-sm-3 {{- error_cls(overall_assessment.trend) }}">
             <label for="overall_assessment.trend">
-                Tendință:
+                {{ overall_assessment.trend.label }}:
             </label>
             {{ overall_assessment.trend(class='form-control') }}
           </div>
@@ -139,7 +139,7 @@
         <div class="form-group">
           {%- set report_observation = form.report_observation %}
           <label for="report_observation">
-            Observații asupra raportului
+            {{ report_observation.label }}:
           </label>
 
            {{ errors(report_observation) }}

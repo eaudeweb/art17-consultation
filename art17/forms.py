@@ -502,9 +502,13 @@ class SpeciesComment(Form):
     measures = FormField(Measures)
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)
-    report_observation = TextAreaField(validators=[Optional()])
+    report_observation = TextAreaField(
+                            label=u"Observații asupra raportului",
+                            validators=[Optional()])
     generalstatus = SelectField(default='1')
-    published = TextAreaField(validators=[Optional()])
+    published = TextAreaField(
+                        label=u"Surse publicate",
+                        validators=[Optional()])
 
     def __init__(self, *args, **kwargs):
         super(SpeciesComment, self).__init__(*args, **kwargs)
