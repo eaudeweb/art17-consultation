@@ -1,0 +1,16 @@
+{% extends "habitat/comment.html" %}
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('set de date', record_dashboard_url(record_obj)),
+          (record.region + ' - editare', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+{% block content %}
+<h4>Date lipsă pentru <em>{{ habitat.lu.code }} - {{ habitat.lu.name_ro }}</em></h4>
+
+<p>Nu există date agregate pentru acest habitat.</p>
+{% endblock content %}

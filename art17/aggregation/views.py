@@ -4,6 +4,7 @@ from datetime import datetime
 import flask
 from flask import request
 from flask.views import View
+from sqlalchemy import or_
 from werkzeug.datastructures import MultiDict
 from wtforms import Form, SelectField
 
@@ -61,7 +62,8 @@ def home():
     check_aggregation_perm()
     dataset_list = (
         models.Dataset.query
-        .filter_by(preview=None)
+        .filter(or_(models.Dataset.preview == False,
+                    models.Dataset.preview == None))
         .order_by(models.Dataset.date)
         .all()
     )
@@ -137,6 +139,9 @@ def delete_dataset(dataset_id):
     dataset = models.Dataset.query.get(dataset_id)
     dataset.species_objs.delete()
     dataset.habitat_objs.delete()
+    if dataset.checklist:
+        dataset.habitat_checklist.delete()
+        dataset.species_checklist.delete()
     models.db.session.delete(dataset)
     models.db.session.commit()
     flask.flash(u"Setul de date a fost șters.", 'success')
@@ -311,6 +316,7 @@ class RecordViewMixin(object):
 class HabitatRecordView(RecordViewMixin, HabitatCommentView):
 
     template = 'aggregation/record-habitat.html'
+    missing_template = 'aggregation/record-habitat-missing.html'
     comment_history_view = 'history_aggregation.habitat_comments'
 
     def setup_template_context(self):
@@ -333,6 +339,7 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>/',
 class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
 
     template = 'aggregation/record-species.html'
+    missing_template = 'aggregation/record-species-missing.html'
     comment_history_view = 'history_aggregation.species_comments'
 
     def setup_template_context(self):

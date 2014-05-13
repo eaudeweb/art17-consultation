@@ -388,6 +388,13 @@ class RecordView(IndexMixin, flask.views.View):
         self.template_ctx['dashboard_url'] = self.get_dashboard_url(
             self.record.subject
         )
+        self.template_ctx['template_base'] = self.template_base
+
+        if self.record.is_missing():
+            return flask.render_template(
+                self.missing_template,
+                **self.template_ctx
+            )
 
         if flask.request.method == 'POST' and self.form.validate():
             self.flatten_commentform(self.form.data, self.object)
@@ -413,7 +420,6 @@ class RecordView(IndexMixin, flask.views.View):
 
         self.template_ctx['form'] = self.form
         self.template_ctx['new_comment'] = self.new_record
-        self.template_ctx['template_base'] = self.template_base
         self.template_ctx['comment_history_view'] = self.comment_history_view
 
         addform_pressure = forms.PressureForm(prefix='addform_pressure.')

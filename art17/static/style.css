@@ -260,6 +260,7 @@ fieldset legend {
 }
 
 .dashboard-missingrecord {
+    text-align: center;
     background: #ddd;
 }
 

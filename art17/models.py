@@ -309,7 +309,8 @@ class DataHabitatsCheckList(Base):
     globalid = Column(String, default=create_esri_guid)
     dataset_id = Column(ForeignKey('datasets.objectid'), nullable=True)
 
-    dataset = relationship('Dataset', backref='habitat_checklist')
+    dataset = relationship('Dataset', backref=db.backref('habitat_checklist',
+                                                         lazy='dynamic'))
 
     @hybrid_property
     def code(self):
@@ -524,7 +525,8 @@ class DataSpeciesCheckList(Base):
     globalid = Column(String, default=create_esri_guid)
     dataset_id = Column(ForeignKey('datasets.objectid'), nullable=True)
 
-    dataset = relationship('Dataset', backref='species_checklist')
+    dataset = relationship('Dataset', backref=db.backref('species_checklist',
+                                                         lazy='dynamic'))
 
     @hybrid_property
     def code(self):

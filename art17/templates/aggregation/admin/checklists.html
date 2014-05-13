@@ -27,8 +27,8 @@
     <tr>
       <td><a href="{{ url_for('.checklist', dataset_id=list.id) }}">{{ list.comment or list.date }}</a></td>
       <td class="text-right">
-        {{ list.species_checklist|count }} specii,
-        {{ list.habitat_checklist|count }} habitate
+        {{ list.species_checklist.count() }} specii,
+        {{ list.habitat_checklist.count() }} habitate
       </td>
       <td>
         <form method="post" action="{{ delete_url }}"

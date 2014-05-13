@@ -25,7 +25,7 @@
         finalizat, {{ record.conclusion_assessment }} {{record.conclusion_assessment_trend }}
       </a>
     </td>
-    {% else %}
+    {% elif not record.is_missing() %}
     {%- set url = record_edit_url(record) %}
     <td class="dashboard-commentcount">
       <a href="{{ url }}" class="btn btn-xs">
@@ -36,6 +36,13 @@
       {% endif %}
       </a>
     </td>
+    {% else %}
+      {%- set url = record_edit_url(record) %}
+      <td class="dashboard-missingrecord">
+        <a href="{{ url }}" class="btn btn-xs">
+          date lipsă
+        </a>
+      </td>
     {% endif %}
   {%- else %}
     <td class="dashboard-missingrecord"></td>
