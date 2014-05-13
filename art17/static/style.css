@@ -154,8 +154,18 @@ fieldset legend {
 }
 
 .conclusion-FV { background: #21B24A; }
+.conclusion-FV a,
+.conclusion-FV a:hover,
+.conclusion-FV a:visited {
+    color: white;
+}
 .conclusion-U1 { background: #FFC308; }
 .conclusion-U2 { background: #EF1C21; }
+.conclusion-U2 a,
+.conclusion-U2 a:hover,
+.conclusion-U2 a:visited {
+    color: white;
+}
 .conclusion-XX { background: #FFFFFF; }
 
 .records {
