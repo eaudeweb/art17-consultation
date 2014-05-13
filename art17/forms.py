@@ -377,10 +377,12 @@ class PressureForm(Form):
 
 
 class Pressures(Form):
-    pressures_method = SelectField(default='',
+    pressures_method = SelectField(label=u"Presiuni - Metoda utilizată",
+                                   default='',
                                    choices=EMPTY_CHOICE +
                                            METHODS_PRESSURES_OPTIONS)
-    pressures = MultipleJSONField(default='',
+    pressures = MultipleJSONField(label=u"Presiuni",
+                                  default='',
                                   validators=[FormValidator(PressureForm)])
 
 
