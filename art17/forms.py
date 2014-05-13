@@ -387,10 +387,12 @@ class Pressures(Form):
 
 
 class Threats(Form):
-    threats_method = SelectField(default='',
+    threats_method = SelectField(label=u"Amenințări - Metoda utilizată",
+                                 default='',
                                  choices=EMPTY_CHOICE +
                                          METHODS_THREATS_OPTIONS)
-    threats = MultipleJSONField(default='',
+    threats = MultipleJSONField(label=u"Amenințări",
+                                default='',
                                 validators=[FormValidator(PressureForm)])
 
 
