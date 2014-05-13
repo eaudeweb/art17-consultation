@@ -6,7 +6,7 @@
     {%- set url = record_details_url(record) %}
     <td class="dashboard-commentcount conclusion-{{ record.conclusion_assessment }}">
       <a href="{{ url }}"
-         title="{{ CONCLUSIONS[record.conclusion_assessment] }}; {{ TREND_NAME[record.conclusion_assessment_trend] }}">
+         title="Concluzie: {{ CONCLUSIONS[record.conclusion_assessment] }}{% if record.conclusion_assessment_trend %}; Tendință: {{ TREND_NAME[record.conclusion_assessment_trend] }} {% endif %}">
         finalizat, {{ record.conclusion_assessment }} {{record.conclusion_assessment_trend }}
       </a>
     </td>
