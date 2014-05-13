@@ -185,10 +185,23 @@ def report_aggregation(dataset_id):
     species = dataset.species_objs.filter_by(cons_role=ROLE)
     habitats = dataset.habitat_objs.filter_by(cons_role=ROLE)
 
-    return flask.render_template('aggregation/report_aggregation.html',
-                                 missing_species=species,
-                                 missing_habitats=habitats,
-                                 dataset=dataset,
+    species_list = set([s.species for s in species])
+    habitat_list = set([h.habitat for h in habitats])
+    species_regions = {(s.subject_id, s.region): 0 for s in species}
+    habitat_regions = {(h.subject_id, h.region): 0 for h in habitats}
+    bioreg_list = [
+        r for r in dal.get_biogeo_region_list()
+        if r.code in [a[1] for a in species_regions.keys() + habitat_regions.keys()]
+    ]
+
+    return flask.render_template(
+        'aggregation/report_aggregation.html',
+        missing_species=species, species_regions=species_regions,
+        species_list=species_list, habitat_list=habitat_list,
+        missing_habitats=habitats, habitat_regions=habitat_regions,
+        dataset=dataset,
+        dataset_id=dataset.id,
+        bioreg_list=bioreg_list,
     )
 
 

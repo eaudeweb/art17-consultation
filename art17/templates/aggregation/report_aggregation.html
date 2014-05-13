@@ -1,5 +1,8 @@
 {% extends "layout.html" %}
 
+{% from 'dashboard/common.html' import table with context %}
+{% from 'aggregation/common.html' import cell with context %}
+
 {% block title %}Raport set de date &mdash; {{ super() }}{% endblock title %}
 
 {% block breadcrumbs %}
@@ -15,6 +18,14 @@
   <h2>Raport agregare set #{{ dataset.id }}</h2>
   <p class="lead">{{ dataset.user_id }} {{ dataset.date }}, {{ dataset.comment }}</p>
 
+  <h3>Specii</h3>
   <p>{{ missing_species.count() }} specii lipsă</p>
+
+  {{ table(bioreg_list, species_list, cell, species_regions) }}
+
+  <h3>Habitate</h3>
   <p>{{ missing_habitats.count() }} habitate lipsă</p>
+
+  {{ table(bioreg_list, habitat_list, cell, habitat_regions) }}
+
 {% endblock content %}

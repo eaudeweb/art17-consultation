@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 
+{% from 'aggregation/common.html' import cell with context %}
 
 {% block title %}Dashboard &mdash; {{ super() }}{% endblock title %}
 
@@ -11,44 +12,6 @@
           ('set de date', None),
       ]) }}
 {% endblock breadcrumbs %}
-
-
-{% macro cell(subject, bioreg) %}
-  {%- set key = (subject.id, bioreg.code) %}
-  {%- if key in object_regions %}
-    {%- set record = get_record(subject, bioreg, dataset_id) %}
-    {% if record.is_final() %}
-    {%- set url = record_details_url(record) %}
-    <td class="dashboard-commentcount conclusion-{{ record.conclusion_assessment }}">
-      <a href="{{ url }}"
-         title="{{ CONCLUSIONS[record.conclusion_assessment] }}; {{ TREND_NAME[record.conclusion_assessment_trend] }}">
-        finalizat, {{ record.conclusion_assessment }} {{record.conclusion_assessment_trend }}
-      </a>
-    </td>
-    {% elif not record.is_missing() %}
-    {%- set url = record_edit_url(record) %}
-    <td class="dashboard-commentcount">
-      <a href="{{ url }}" class="btn btn-xs">
-      {% if record.is_new() %}
-        agregat
-      {% else %}
-        în lucru
-      {% endif %}
-      </a>
-    </td>
-    {% else %}
-      {%- set url = record_edit_url(record) %}
-      <td class="dashboard-missingrecord">
-        <a href="{{ url }}" class="btn btn-xs">
-          date lipsă
-        </a>
-      </td>
-    {% endif %}
-  {%- else %}
-    <td class="dashboard-missingrecord"></td>
-  {%- endif %}
-{%- endmacro %}
-
 
 {% block content %}
   <h2>Set de date, {{ dataset.user_id or "-" }}, {{ dataset.date }}</h2>
@@ -63,5 +26,5 @@
   {%- from 'dashboard/common.html' import table, tabmenu with context %}
   {{ tabmenu(current=current_tab) }}
 
-  {{ table(bioreg_list, object_list, cell) }}
+  {{ table(bioreg_list, object_list, cell, object_regions) }}
 {% endblock content %}

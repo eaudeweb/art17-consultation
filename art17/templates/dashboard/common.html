@@ -12,7 +12,7 @@
 {%- endmacro %}
 
 
-{%- macro table(bioreg_list, subject_list, cell) %}
+{%- macro table(bioreg_list, subject_list, cell, object_regions) %}
   <table class="table table-bordered">
     <thead>
       <th></th>
@@ -31,7 +31,7 @@
         </td>
 
         {% for bioreg in bioreg_list %}
-          {{ cell(subject, bioreg) }}
+          {{ cell(subject, bioreg, object_regions) }}
         {% endfor %}
       </tr>
     {% endfor %}
@@ -40,7 +40,7 @@
 {%- endmacro %}
 
 
-{%- macro consultation_cell(subject, bioreg) %}
+{%- macro consultation_cell(subject, bioreg, object_regions) %}
   {%- set key = (subject.id, bioreg.code) %}
   {%- if key in data_by_region %}
     {%- set url = consultation_url(subject, bioreg=bioreg.code) %}

@@ -1,0 +1,35 @@
+{% macro cell(subject, bioreg, object_regions) %}
+  {%- set key = (subject.id, bioreg.code) %}
+  {%- if key in object_regions %}
+    {%- set record = get_record(subject, bioreg, dataset_id) %}
+    {% if record.is_final() %}
+    {%- set url = record_details_url(record) %}
+    <td class="dashboard-commentcount conclusion-{{ record.conclusion_assessment }}">
+      <a href="{{ url }}"
+         title="{{ CONCLUSIONS[record.conclusion_assessment] }}; {{ TREND_NAME[record.conclusion_assessment_trend] }}">
+        finalizat, {{ record.conclusion_assessment }} {{record.conclusion_assessment_trend }}
+      </a>
+    </td>
+    {% elif not record.is_missing() %}
+    {%- set url = record_edit_url(record) %}
+    <td class="dashboard-commentcount">
+      <a href="{{ url }}" class="btn btn-xs">
+      {% if record.is_new() %}
+        agregat
+      {% else %}
+        în lucru
+      {% endif %}
+      </a>
+    </td>
+    {% else %}
+      {%- set url = record_edit_url(record) %}
+      <td class="dashboard-missingrecord">
+        <a href="{{ url }}" class="btn btn-xs">
+          date lipsă
+        </a>
+      </td>
+    {% endif %}
+  {%- else %}
+    <td class="dashboard-missingrecord"></td>
+  {%- endif %}
+{%- endmacro %}
