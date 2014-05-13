@@ -74,22 +74,31 @@
       <div class="form-group">
         {%- set population = form.natura2000.population %}
         <label for="population.unit">
-          Mărimea populației
+          {{ population.label }}
         </label>
 
         {{ errors(population) }}
 
         <div class="row">
           <div class="col-sm-2 {{- error_cls(population.unit) }}">
+            <label>
+                {{ population.unit.label }}:
+            </label>
             {{ population.unit(class='form-control') }}
           </div>
 
           <div class="col-sm-2 {{- error_cls(population.min) }}">
+            <label>
+                {{ population.min.label }}:
+            </label>
             {{ population.min(class='form-control',
                     placeholder="numǎr minim") }}
           </div>
 
           <div class="col-sm-2 {{- error_cls(population.max) }}">
+            <label>
+                {{ population.max.label }}:
+            </label>
             {{ population.max(class='form-control',
                     placeholder="numǎr maxim") }}
           </div>
@@ -98,7 +107,7 @@
 
       <div class="form-group">
         <label for="natura2000.method">
-          Metoda utilizată
+          {{ form.natura2000.method.label }}:
         </label>
 
         {{ errors(form.natura2000.method) }}
@@ -113,7 +122,7 @@
       <div class="form-group">
         {%- set trend = form.natura2000.trend %}
         <label for="natura2000.trend">
-          Tendință pe termen scurt
+          {{ form.natura2000.trend.label }}:
         </label>
 
         {{ errors(trend) }}

@@ -445,8 +445,9 @@ class Infocomp(Form):
 
 class Natura2000Species(Form):
 
-    population = FormField(PopulationValue)
-    method = SelectField(default='',
+    population = FormField(PopulationValue, label=u"Mărimea populației")
+    method = SelectField(label=u"Metoda utilizată",
+                         default='Metoda utilizată',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS,
                          validators=[Optional()],
     )
