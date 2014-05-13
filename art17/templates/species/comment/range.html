@@ -6,7 +6,7 @@
     <div class="panel-body">
       <div class="form-group">
         <label for="range.surface_area">
-          {{ form.range.surface_area.label }}
+          {{ form.range.surface_area.label }}:
         </label>
 
         {{ errors(form.range.surface_area) }}
@@ -22,7 +22,7 @@
 
       <div class="form-group">
         <label for="range.method">
-          {{ form.range.method.label }}
+          {{ form.range.method.label }}:
         </label>
 
         {{ errors(form.range.method) }}
@@ -45,7 +45,7 @@
         <div class="row">
           <div class="col-sm-2 {{- error_cls(trend_short.trend) }}">
             <label for="range.trend_short.trend">
-                {{ trend_short.trend.label }}
+                {{ trend_short.trend.label }}:
             </label>
             {{ trend_short.trend(class='form-control') }}
           </div>
@@ -67,7 +67,7 @@
           </div>
         </div>
         <br/>
-        {% set magnitude = trend_short.magnitude %}
+        {% set magnitude = form.range.trend_short.magnitude %}
         <label> {{ magnitude.label }}</label>
 
         {{ errors(magnitude) }}
@@ -106,7 +106,7 @@
         <div class="row">
           <div class="col-sm-2 {{- error_cls(trend_long.trend) }}">
             <label for="range.trend_long.trend">
-                {{ trend_long.trend.label }}
+                {{ trend_long.trend.label }}:
             </label>
             {{ trend_long.trend(class='form-control') }}
           </div>
@@ -128,7 +128,7 @@
           </div>
         </div>
         <br/>
-        {% set magnitude = trend_long.magnitude %}
+        {% set magnitude = form.range.trend_long.magnitude %}
         <label> {{ magnitude.label }}</label>
 
         {{ errors(magnitude) }}
@@ -161,7 +161,7 @@
           <div class="form-group">
             {%- set reference_value = form.range.reference_value %}
             <label for="range.reference_value.op">
-                {{ form.range.reference_value.label }}
+                {{ reference_value.label }}
             </label>
             <p for="range.reference_value.op">
               <em>* Doar una din următoarele trei elemente trebuie completate:</em>
@@ -172,7 +172,7 @@
             <div class="row">
               <div class="col-sm-5 {{- error_cls(reference_value.number) }}">
                 <label for="range.reference_value.number">
-                    {{ form.range.reference_value.number.label }}:
+                    {{ reference_value.number.label }}:
                 </label>
                 {{ reference_value.number(class='form-control',
                     placeholder="suprafața exprimatǎ in km²") }}
@@ -180,14 +180,14 @@
 
               <div class="col-sm-4 {{- error_cls(reference_value.op) }}">
                 <label for="range.reference_value.op">
-                    {{ form.range.reference_value.op.label }}:
+                    {{ reference_value.op.label }}:
                 </label>
                 {{ reference_value.op(class='form-control') }}
               </div>
 
               <div class="col-sm-3 {{- error_cls(reference_value.x) }}">
                 <label for="range.reference_value.x">
-                    {{ form.range.reference_value.x.label }}:
+                    {{ reference_value.x.label }}:
                 </label>
                 <div class="field-inline">
                     {{ reference_value.x(class='form-control') }}
@@ -198,13 +198,13 @@
 
           <div class="form-group">
             <label for="range.reference_value.method">
-                {{ form.range.reference_value.method.label }}:
+                {{ reference_value.method.label }}:
             </label>
 
-            {{ errors(form.range.reference_value.method) }}
+            {{ errors(reference_value.method) }}
 
-            <div class="{{- error_cls(form.range.reference_value.method) }}">
-              {{ form.range.reference_value.method(class='form-control', rows=2) }}
+            <div class="{{- error_cls(reference_value.method) }}">
+              {{ reference_value.method(class='form-control', rows=2) }}
             </div>
           </div>
 
@@ -240,8 +240,8 @@
         <div class="well">
           <div class="form-group">
             {%- set conclusion = form.range.conclusion %}
-            <label for="range.conclusion.value">
-              {{ form.range.conclusion.label }}:
+            <label for="conclusion.value">
+              {{ conclusion.label }}
             </label>
 
             {{ errors(conclusion) }}
@@ -253,14 +253,14 @@
               </div>
               <div class="col-sm-3 {{- error_cls(conclusion.value) }}">
                 <label for="range.conclusion.value">
-                    {{ form.range.conclusion.value.label }}:
+                    {{ conclusion.value.label }}:
                 </label>
                 {{ conclusion.value(class='form-control semaphore') }}
               </div>
 
               <div class="col-sm-3 {{- error_cls(conclusion.trend) }}">
                 <label for="range.conclusion.trend">
-                    {{ form.range.conclusion.trend.label }}:
+                    {{ conclusion.trend.label }}:
                 </label>
                 {{ conclusion.trend(class='form-control') }}
               </div>

@@ -205,9 +205,9 @@ class TrendCI(Trend):
 
 class ReferenceValue(Form):
     op = SelectField(default='', label=u"Operator", validators=[Optional()])
-    number = DecimalField(label=u"Suprafață", validators=[Optional()])
+    number = DecimalField(label=u"Număr", validators=[Optional()])
     x = BooleanField(label=u"Necunoscut", validators=[Optional()])
-    method = TextAreaField(label=u"Arealul favorabil de referință - metoda \
+    method = TextAreaField(label=u"Numărul favorabil de referință - metoda \
                            folosită pentru stabilirea acestei valori",
                            validators=[Optional()])
 
@@ -265,7 +265,8 @@ class PopulationSize(Form):
 
 class Range(Form):
     surface_area = DecimalField(label=u"Suprafață (km²)",
-        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+                                validators=[Optional
+                                (u"Mǎrimea trebuie sǎ fie de tip numeric")])
     method = SelectField(label=u"Metoda utilizată - suprafața arealului",
                          default='',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
@@ -279,6 +280,9 @@ class Range(Form):
     def __init__(self, *args, **kwargs):
         super(Range, self).__init__(*args, **kwargs)
         self.reference_value.op.choices = EMPTY_CHOICE + LU_FV_RANGE_OP_OPTIONS
+        self.reference_value.number.label.text = u"Suprafață"
+        self.reference_value.method.label.text = u"Arealul favorabil de \
+            referință - metoda folosită pentru stabilirea acestei valori"
 
 
 class Population(Form):
@@ -295,13 +299,17 @@ class Population(Form):
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
     trend_short = FormField(TrendCI, label=u"Tendință pe termen scurt (12 ani)")
     trend_long = FormField(TrendCI, label=u"Tendință pe termen lung (24 ani)")
-    reference_value = FormField(ReferenceValue)
-    reason = FormField(ReasonValue)
-    conclusion = FormField(Conclusion)
+    reference_value = FormField(ReferenceValue, label=u"Populația favorabilă de \
+                                                        referință")
+    reason = FormField(ReasonValue, label=u"Motivul modificării")
+    conclusion = FormField(Conclusion, label=u"Evaluarea")
 
     def __init__(self, *args, **kwargs):
         super(Population, self).__init__(*args, **kwargs)
         self.reference_value.op.choices = EMPTY_CHOICE + LU_FV_RANGE_OP_FUNCT_OPTIONS
+        self.reference_value.number.label.text = u"Populație"
+        self.reference_value.method.label.text = u"Populația favorabil de \
+            referință - metoda folosită pentru stabilirea acestei valori"
 
 
 class Habitat(Form):
