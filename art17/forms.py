@@ -432,9 +432,15 @@ class Measures(Form):
 
 class Infocomp(Form):
 
-    justification = TextField(validators=[Optional()])
-    other_relevant_information = TextField(validators=[Optional()])
-    transboundary_assessment = TextField(validators=[Optional()])
+    justification = TextField(
+                        label=u"Justificarea procentului de prag pentru tendințe",
+                        validators=[Optional()])
+    other_relevant_information = TextField(
+                        label=u"Alte informații relevante",
+                        validators=[Optional()])
+    transboundary_assessment = TextField(
+                        label=u"Evaluare transfrontalieră",
+                        validators=[Optional()])
 
 
 class Natura2000Species(Form):

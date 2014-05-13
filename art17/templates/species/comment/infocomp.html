@@ -6,7 +6,7 @@
     <div class="panel-body">
       <div class="form-group">
         <label for="infocomp.justification">
-          Justificarea procentului de prag pentru tendințe
+          {{ form.infocomp.justification.label }}:
         </label>
         <p><small><em>* Se completează atunci când o țară nu folosește procentul
         de prag recomandat de <code>1</code>% la evaluarea trendului</em></small></p>
@@ -22,7 +22,7 @@
 
       <div class="form-group">
         <label for="infocomp.other_relevant_information">
-          Alte informații relevante
+          {{ form.infocomp.other_relevant_information.label }}:
         </label>
 
         {{ errors(form.infocomp.other_relevant_information) }}
@@ -36,7 +36,7 @@
 
       <div class="form-group">
         <label for="infocomp.transboundary_assessment">
-          Evaluare transfrontalieră
+          {{ form.infocomp.transboundary_assessment.label }}:
         </label>
 
         {{ errors(form.infocomp.transboundary_assessment) }}
