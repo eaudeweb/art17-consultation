@@ -291,8 +291,10 @@ def xml_species(xml_path, dataset_id=1):
     with open(xml_path, 'r') as fin:
         parser = BeautifulSoup(fin)
 
+        ok_species = []
         for species in parser.find_all('species_report'):
             speciescode = species.speciescode.text
+            ok_species.append(speciescode)
             data = extract_record('etc_data_species', species)
             species_obj = DataSpecies.query.filter_by(code=speciescode).first()
             if not species_obj:
@@ -378,8 +380,14 @@ def xml_species(xml_path, dataset_id=1):
                         pol_obj = DataPressuresThreatsPollution(pressure=threat_obj, **data)
                         db.session.add(pol_obj)
                         print "   added pollution: ", pol_obj.code
-            for existing_region in species_obj.regions:
+            for existing_region in species_obj.regions.filter_by(cons_dataset_id=dataset_id):
                 if existing_region.region not in ok_regions:
                     print " Deleting existing region: ", existing_region.region
+                    db.session.delete(existing_region)
+        for existing_species in DataSpecies.query.all():
+            if existing_species.code not in ok_species:
+                print "Deleting regions for non existent species: ", existing_species.code
+                for existing_region in existing_species.regions.filter_by(cons_dataset_id=dataset_id):
+                    print " - ", existing_region.region
                     db.session.delete(existing_region)
     db.session.commit()
