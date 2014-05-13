@@ -313,20 +313,23 @@ class Population(Form):
 
 
 class Habitat(Form):
-    surface_area = DecimalField(
+    surface_area = DecimalField(label=u"Suprafață (km²)",
         validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
-    date = TextField(validators=[Optional()])
-    method = SelectField(default='',
+    date = TextField(label=u"Anul / Perioada", validators=[Optional()])
+    method = SelectField(label=u"Metoda utilizată - habitatul speciei",
+                         default='',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
-    quality = SelectField(default='',
+    quality = SelectField(label=u"Calitatea habitatului",
+                          default='',
                           choices=EMPTY_CHOICE + QUALITY_OPTIONS)
-    quality_explanation = TextAreaField()
-    trend_short = FormField(Trend)
-    trend_long = FormField(Trend)
-    area_suitable = DecimalField(
-        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
-    reason = FormField(ReasonValue)
-    conclusion = FormField(Conclusion)
+    quality_explanation = TextAreaField(label=u"Calitatea habitatului - metoda \
+                            (descrieți modul în care aceasta a fost evaluată)")
+    trend_short = FormField(Trend, label=u"Tendință pe termen scurt (12 ani)")
+    trend_long = FormField(Trend, label=u"Tendință pe termen lung (24 ani)")
+    area_suitable = DecimalField(label=u"Suprafața habitatului adecvată pentru specie (km²) ",
+                                 validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+    reason = FormField(ReasonValue, label=u"Motivul modificării")
+    conclusion = FormField(Conclusion, label=u"Evaluarea")
 
 
 class Coverage(Form):

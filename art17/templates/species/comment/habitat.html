@@ -6,7 +6,7 @@
     <div class="panel-body">
       <div class="form-group">
         <label for="habitat.surface_area">
-          Suprafață (km²)
+          {{ form.habitat.surface_area.label }}:
         </label>
 
         {{ errors(form.habitat.surface_area) }}
@@ -23,7 +23,7 @@
 
       <div class="form-group">
         <label for="habitat.date">
-          Anul/perioada
+          {{ form.habitat.date.label }}:
         </label>
         <p>
           <em>
@@ -46,7 +46,7 @@
 
       <div class="form-group">
         <label for="habitat.method">
-          Metoda utilizată - habitatul speciei
+          {{ form.habitat.method.label }}:
         </label>
 
         {{ errors(form.habitat.method) }}
@@ -60,7 +60,7 @@
 
       <div class="form-group">
         <label for="habitat.quality">
-          Calitatea habitatului
+          {{ form.habitat.quality.label }}:
         </label>
 
         {{ errors(form.habitat.quality) }}
@@ -74,8 +74,7 @@
 
       <div class="form-group">
         <label for="habitat.quality_explanation">
-          Calitatea habitatului - metoda (descrieți modul în care aceasta a fost
-          evaluată)
+            {{ form.habitat.quality_explanation.label }}:
         </label>
 
         {{ errors(form.habitat.quality_explanation) }}
@@ -90,7 +89,7 @@
       <div class="form-group">
         {%- set trend_short = form.habitat.trend_short %}
         <label for="habitat.trend_short.trend">
-          Tendință pe termen scurt (12 ani)
+          {{ trend_short.label }}
         </label>
 
         {{ errors(trend_short) }}
@@ -98,14 +97,14 @@
         <div class="row">
           <div class="col-sm-2 {{- error_cls(trend_short.trend) }}">
             <label for="habitat.trend_short.trend">
-                Direcția tendinței:
+                {{ trend_short.trend.label }}:
             </label>
             {{ trend_short.trend(class='form-control') }}
           </div>
 
           <div class="col-sm-2 {{- error_cls(trend_short.period.start) }}">
             <label for="habitat.trend_short.period.start">
-                An de început:
+                {{ trend_short.period.start.label }}:
             </label>
             {{ trend_short.period.start(class='form-control',
                     placeholder="an de inceput") }}
@@ -113,7 +112,7 @@
 
           <div class="col-sm-2 {{- error_cls(trend_short.period.end) }}">
             <label for="habitat.trend_short.period.end">
-                An de sfârșit:
+                {{ trend_short.period.end.label }}:
             </label>
             {{ trend_short.period.end(class='form-control',
                     placeholder="an de sfârșit") }}
@@ -124,7 +123,7 @@
       <div class="form-group">
         {%- set trend_long = form.habitat.trend_long %}
         <label for="habitat.trend_long.trend">
-          Tendință pe termen lung (24 de ani)
+          {{ trend_long.label }}
         </label>
 
         {{ errors(trend_long) }}
@@ -132,14 +131,14 @@
         <div class="row">
           <div class="col-sm-2 {{- error_cls(trend_long.trend) }}">
             <label for="habitat.trend_long.trend">
-                Direcția tendinței:
+                {{ trend_long.trend.label }}:
             </label>
             {{ trend_long.trend(class='form-control') }}
           </div>
 
           <div class="col-sm-2 {{- error_cls(trend_long.period.start) }}">
             <label for="habitat.trend_long.period.start">
-                An de început:
+                {{ trend_long.period.start.label }}:
             </label>
             {{ trend_long.period.start(class='form-control',
                     placeholder="an de inceput") }}
@@ -147,7 +146,7 @@
 
           <div class="col-sm-2 {{- error_cls(trend_long.period.end) }}">
             <label for="habitat.trend_long.period.end">
-                An de sfârșit:
+                {{ trend_long.period.end.label }}:
             </label>
             {{ trend_long.period.end(class='form-control',
                     placeholder="an de sfârșit") }}
@@ -157,7 +156,7 @@
 
       <div class="form-group">
         <label for="habitat.area_suitable">
-          Suprafața habitatului adecvată pentru specie (km²)
+            {{ form.habitat.area_suitable.label }}:
         </label>
         <p><small><em>* În absența datelor, completați cu valoarea <code>0</code>.</em></small></p>
 
@@ -172,8 +171,10 @@
 
       <div class="form-group">
         {%- set reason = form.habitat.reason %}
-        <label for="range.reason.a">Motivul modificării</label>
-        <p for="range.reason.a">
+        <label for="habitat.reason.a">
+            {{ reason.label }}:
+        </label>
+        <p for="habitat.reason.a">
           <em>* Dacă există, justificați diferența între valoarea suprafaței din
             raportarea precedentă și valoarea curentă
           </em>
@@ -198,7 +199,7 @@
           <div class="form-group">
             {%- set conclusion = form.habitat.conclusion %}
             <label for="habitat.conclusion.value">
-              Evaluarea
+              {{ conclusion.label }}
             </label>
 
             {{ errors(conclusion) }}
@@ -210,14 +211,14 @@
               </div>
               <div class="col-sm-3 {{- error_cls(conclusion.value) }}">
                 <label for="habitat.conclusion.value">
-                    Concluzie:
+                    {{ conclusion.value.label }}:
                 </label>
                 {{ conclusion.value(class='form-control semaphore') }}
               </div>
 
               <div class="col-sm-3 {{- error_cls(conclusion.trend) }}">
                 <label for="habitat.conclusion.trend">
-                    Tendință:
+                    {{ conclusion.trend.label }}:
                 </label>
                 {{ conclusion.trend(class='form-control') }}
               </div>
