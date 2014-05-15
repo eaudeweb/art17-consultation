@@ -14,7 +14,8 @@ from art17.aggregation.utils import (
     record_details_url,
     record_history_url,
     record_finalize_toggle_url,
-    get_record)
+    get_record,
+)
 from art17.common import get_roles_for_subject
 from art17.auth import need
 

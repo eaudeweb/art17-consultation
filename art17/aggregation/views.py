@@ -21,7 +21,8 @@ from art17.aggregation import (
     perm_definalize_record,
     get_habitat_checklist,
     get_species_checklist,
-    check_aggregation_preview_perm)
+    check_aggregation_preview_perm,
+)
 from art17.aggregation.utils import (
     record_edit_url,
     record_details_url,
