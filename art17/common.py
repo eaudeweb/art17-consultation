@@ -311,6 +311,9 @@ class IndexView(flask.views.View, IndexMixin):
             elif record.cons_role == 'final':
                 topic['final'] = self.parse_record(record)
 
+        if 'assessment' not in topic:
+            flask.abort(404)
+
         comment_next = self.get_comment_next_url(subject_code, region_code)
         final_comment_url = flask.url_for(
             self.blueprint + '.final_comment',
