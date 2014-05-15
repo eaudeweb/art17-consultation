@@ -43,7 +43,7 @@ def species_magnitude(filename=None):
         if sp.lu:
             name = sp.lu.display_name
         name = name or ''
-        row = [
+        return [
             sp.code,
             name,
             sr.region,
@@ -52,7 +52,6 @@ def species_magnitude(filename=None):
             unicode(sr.range_trend_long_magnitude_min or ''),
             unicode(sr.range_trend_long_magnitude_max or ''),
         ]
-        return row
 
     columns = generic_species_exporter(format_row)
     do_csv_export(header, columns, filename)
@@ -70,7 +69,7 @@ def species_range(filename=None):
         if sp.lu:
             name = sp.lu.display_name
         name = name or ''
-        row = [
+        return [
             sp.code,
             name,
             sr.region,
@@ -80,7 +79,6 @@ def species_range(filename=None):
             if sr.complementary_favourable_range_unknown else '',
             'x' if sr.complementary_favourable_range_unknown else '',
         ]
-        return row
 
     columns = generic_species_exporter(format_row)
     do_csv_export(header, columns, filename)
@@ -98,7 +96,7 @@ def species_population_range(filename=None):
         if sp.lu:
             name = sp.lu.display_name
         name = name or ''
-        row = [
+        return [
             sp.code,
             name,
             sr.region,
@@ -108,7 +106,6 @@ def species_population_range(filename=None):
             if sr.complementary_favourable_population_unknown else '',
             'x' if sr.complementary_favourable_population_unknown else '',
         ]
-        return row
 
     columns = generic_species_exporter(format_row)
     do_csv_export(header, columns, filename)
@@ -126,7 +123,7 @@ def species_population_magnitude(filename=None):
         if sp.lu:
             name = sp.lu.display_name
         name = name or ''
-        row = [
+        return [
             sp.code,
             name,
             sr.region,
@@ -137,7 +134,6 @@ def species_population_magnitude(filename=None):
             unicode(sr.population_trend_long_magnitude_max or ''),
             unicode(sr.population_trend_long_magnitude_ci or ''),
         ]
-        return row
 
     columns = generic_species_exporter(format_row)
     do_csv_export(header, columns, filename)
@@ -145,7 +141,26 @@ def species_population_magnitude(filename=None):
 
 @exporter.command
 def species_population_units(filename=None):
-    pass
+    header = (u'Unit. de măsură', u'Metoda conversie', u'Definiția localității',
+              u'Dificultăți întâmpinate')
+
+    def format_row(sp, sr):
+        name = sp.lu.display_name if sp.lu else None
+        name = name or ''
+        units = [sr.population_size_unit, sr.population_alt_size_unit]
+        units = [str(unit) for unit in units if unit]
+        return [
+            sp.code,
+            name,
+            sr.region,
+            ';'.join(units),
+            sr.population_additional_method or '',
+            sr.population_additional_locality or '',
+            sr.population_additional_problems or '',
+        ]
+
+    columns = generic_species_exporter(format_row)
+    do_csv_export(header, columns, filename)
 
 
 @exporter.command
