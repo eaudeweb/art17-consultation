@@ -20,8 +20,8 @@
 
   <p>
     Înregistrări:
-    specii {{ species_count }},
-    habitate {{ habitat_count }}
+    specii {{ dataset.details.species }},
+    habitate {{ dataset.details.habitat }}
   </p>
   {%- from 'dashboard/common.html' import table, tabmenu with context %}
   {{ tabmenu(current=current_tab) }}

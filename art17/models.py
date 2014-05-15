@@ -917,20 +917,33 @@ class Dataset(Base):
 
     @property
     def details(self):
-        new = (
-            self.habitat_objs.filter_by(cons_role='assessment').count() +
+        species_new = (
             self.species_objs.filter_by(cons_role='assessment').count()
         )
-        draft = (
-            self.habitat_objs.filter_by(cons_role='final-draft').count() +
+        species_draft = (
             self.species_objs.filter_by(cons_role='final-draft').count()
         )
-        final = (
-            self.habitat_objs.filter_by(cons_role='final').count() +
+        species_final = (
             self.species_objs.filter_by(cons_role='final').count()
         )
+        species = species_new + species_draft + species_final
+        habitat_new = (
+            self.habitat_objs.filter_by(cons_role='assessment').count()
+        )
+        habitat_draft = (
+            self.habitat_objs.filter_by(cons_role='final-draft').count()
+        )
+        habitat_final = (
+            self.habitat_objs.filter_by(cons_role='final').count()
+        )
+        habitat = habitat_new + habitat_draft + habitat_final
+        new = species_new + habitat_new
+        draft = species_draft + habitat_draft
+        final = species_final + habitat_final
+
         return {
             'new': new, 'draft': draft, 'final': final,
+            'species': species, 'habitat': habitat,
         }
 
 
