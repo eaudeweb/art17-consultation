@@ -1,5 +1,6 @@
 import json
 
+
 def parse_period(obj, prefix):
     year_string = getattr(obj, prefix)
 
@@ -441,7 +442,7 @@ def flatten_period(period_struct, obj, prefix):
         value = None
     else:
         assert period_struct['start'] and period_struct['end']
-        value = '%s%s' % (period_struct['start'], period_struct['end'])
+        value = '%s-%s' % (period_struct['start'], period_struct['end'])
     setattr(obj, prefix, value)
 
 
