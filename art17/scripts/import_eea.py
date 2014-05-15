@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from art17.scripts import importer
 from art17.models import DataSpeciesRegion, DataSpecies, DataHabitat, db, \
     DataMeasures, DataPressuresThreats, DataPressuresThreatsPollution, \
-    LuHdSpecies, DataSpeciesCheckList
+    LuHdSpecies, DataSpeciesCheckList, DataHabitatsCheckList
 
 
 SCHEMA = dict([
@@ -213,6 +213,9 @@ SCHEMA_XML = {
     ],
     'data_species_check_list': [
         'code', 'hd_name', 'name',
+    ],
+    'data_habitats_check_list': [
+        'code', 'legal_name', 'name',
     ]
 }
 
@@ -429,5 +432,40 @@ def xml_species_checklist(xml_path, dataset_id=None):
                     print "Updating", speciescode, regioncode
 
                 data = extract_record('data_species_check_list', species)
+                update_object(region_obj, data)
+    db.session.commit()
+
+
+@importer.command
+def xml_habitat_checklist(xml_path, dataset_id=None):
+
+    checklist_qs = DataHabitatsCheckList.query.filter_by(dataset_id=dataset_id)
+    with open(xml_path, 'r') as fin:
+        parser = BeautifulSoup(fin)
+
+        for habitat in parser.find_all('habitat'):
+            habcode = habitat.code.text
+
+            for region in habitat.regional.find_all('region'):
+                regioncode = region.code.text
+                region_qs = (
+                    checklist_qs
+                    .filter_by(code=habcode, bio_region=regioncode)
+                )
+                region_obj = region_qs.first()
+                if region_qs.count() > 1:
+                    print "Multiple objects for the same key", region_obj.objectid
+                    for r in region_qs:
+                        if r.objectid != region_obj.objectid:
+                            print " Deleting", r.objectid
+                            db.session.delete(r)
+                if not region_obj:
+                    print "Missing ", habcode, regioncode
+                    region_obj = DataHabitatsCheckList(code=habcode,
+                                                       bio_region=regioncode)
+                else:
+                    print "Updating", habcode, regioncode
+
+                data = extract_record('data_habitats_check_list', habitat)
                 update_object(region_obj, data)
     db.session.commit()

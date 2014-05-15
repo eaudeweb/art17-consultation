@@ -328,6 +328,8 @@ class DataHabitatsCheckList(Base):
     def name(self, value):
         self.valid_name = value
 
+    legal_name = name  # used in importer
+
 
 class DataHabitattypeRegion(Base, RoleMixin):
     __tablename__ = u'data_habitattype_reg'
