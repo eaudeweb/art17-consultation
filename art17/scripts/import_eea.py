@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from art17.scripts import importer
 from art17.models import DataSpeciesRegion, DataSpecies, DataHabitat, db, \
     DataMeasures, DataPressuresThreats, DataPressuresThreatsPollution, \
-    LuHdSpecies
+    LuHdSpecies, DataSpeciesCheckList
 
 
 SCHEMA = dict([
@@ -211,6 +211,9 @@ SCHEMA_XML = {
     'data_pressures_threats_pol': [
         'code',
     ],
+    'data_species_check_list': [
+        'code', 'hd_name', 'name',
+    ]
 }
 
 
@@ -272,21 +275,23 @@ def diff(input_db, dataset_id=1):
     print len(species_rows), 'species', len(habitat_rows), 'habitats'
 
 
+def extract_record(table_name, element):
+    data = {}
+    for field in SCHEMA_XML[table_name]:
+        value = element.find(field)
+        value = value.text or None
+        if value in ('true', 'false'):
+            value = True if value == 'true' else False
+        data[field] = value
+    return data
+
+
+def update_object(obj, data):
+    for k, v in data.iteritems():
+        setattr(obj, k, v)
+
 @importer.command
 def xml_species(xml_path, dataset_id=1):
-
-    def extract_record(table_name, element):
-        data = {}
-        for field in SCHEMA_XML[table_name]:
-            value = getattr(element, field).text or None
-            if value in ('true', 'false'):
-                value = True if value == 'true' else False
-            data[field] = value
-        return data
-
-    def update_object(obj, data):
-        for k, v in data.iteritems():
-            setattr(obj, k, v)
 
     with open(xml_path, 'r') as fin:
         parser = BeautifulSoup(fin)
@@ -390,4 +395,39 @@ def xml_species(xml_path, dataset_id=1):
                 for existing_region in existing_species.regions.filter_by(cons_dataset_id=dataset_id):
                     print " - ", existing_region.region
                     db.session.delete(existing_region)
+    db.session.commit()
+
+
+@importer.command
+def xml_species_checklist(xml_path, dataset_id=None):
+
+    checklist_qs = DataSpeciesCheckList.query.filter_by(dataset_id=dataset_id)
+    with open(xml_path, 'r') as fin:
+        parser = BeautifulSoup(fin)
+
+        for species in parser.find_all('species'):
+            speciescode = int(species.code.text)
+
+            for region in species.regional.find_all('region'):
+                regioncode = region.code.text
+                region_qs = (
+                    checklist_qs
+                    .filter_by(code=speciescode, bio_region=regioncode)
+                )
+                region_obj = region_qs.first()
+                if region_qs.count() > 1:
+                    print "Multiple objects for the same key", region_obj.objectid
+                    for r in region_qs:
+                        if r.objectid != region_obj.objectid:
+                            print " Deleting", r.objectid
+                            db.session.delete(r)
+                if not region_obj:
+                    print "Missing ", speciescode, regioncode
+                    region_obj = DataSpeciesCheckList(code=speciescode,
+                                                      bio_region=regioncode)
+                else:
+                    print "Updating", speciescode, regioncode
+
+                data = extract_record('data_species_check_list', species)
+                update_object(region_obj, data)
     db.session.commit()
