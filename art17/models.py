@@ -916,6 +916,7 @@ class Dataset(Base):
     checklist = Column(Boolean, default=False, nullable=True)
     year_start = Column(Integer, nullable=True)
     year_end = Column(Integer, nullable=True)
+    checklist_id = Column(Integer, nullable=True)
 
     @property
     def details(self):

@@ -222,10 +222,17 @@ def get_species_checklist(distinct=False, dataset_id=None):
     return queryset
 
 
+def get_reporting_id():
+    current_report = models.Config.query.filter_by(id='REPORTING_ID').first()
+    return current_report.value if current_report else None
+
+
 def create_aggregation(timestamp, user_id):
+    curr_report_id = get_reporting_id()
     dataset = models.Dataset(
         date=timestamp,
         user_id=user_id,
+        checklist_id=curr_report_id,
     )
     models.db.session.add(dataset)
 
@@ -236,7 +243,7 @@ def create_aggregation(timestamp, user_id):
         )
     )
 
-    habitat_checklist_query = get_habitat_checklist()
+    habitat_checklist_query = get_habitat_checklist(dataset_id=curr_report_id)
 
     habitat_report = defaultdict(set)
     for row in habitat_checklist_query:
@@ -257,7 +264,7 @@ def create_aggregation(timestamp, user_id):
         )
     )
 
-    species_checklist_query = get_species_checklist()
+    species_checklist_query = get_species_checklist(dataset_id=curr_report_id)
 
     species_report = defaultdict(set)
     for row in species_checklist_query:
