@@ -3,7 +3,8 @@ from bs4 import BeautifulSoup
 from art17.scripts import importer
 from art17.models import DataSpeciesRegion, DataSpecies, DataHabitat, db, \
     DataMeasures, DataPressuresThreats, DataPressuresThreatsPollution, \
-    LuHdSpecies, DataSpeciesCheckList, DataHabitatsCheckList
+    LuHdSpecies, DataSpeciesCheckList, DataHabitatsCheckList, \
+    DataHabitattypeRegion
 
 
 SCHEMA = dict([
@@ -214,9 +215,78 @@ SCHEMA_XML = {
     'data_species_check_list': [
         'code', 'hd_name', 'name',
     ],
+    'data_habitats': [
+        'distribution_map',
+        'distribution_method',
+        'distribution_date',
+        'additional_distribution_map',
+        'range_map',
+    ],
+    'data_habitattype_reg': [
+        'published',
+        'range_surface_area',
+        'range_method',
+        'range_trend_period',
+        'range_trend',
+        'range_trend_magnitude_min',
+        'range_trend_magnitude_max',
+        'range_trend_long_period',
+        'range_trend_long',
+        'range_trend_long_magnitude_min',
+        'range_trend_long_magnitude_max',
+        'complementary_favourable_range',
+        'complementary_favourable_range_op',
+        'complementary_favourable_range_unknown',
+        'complementary_favourable_range_method',
+        'range_reasons_for_change_a',
+        'range_reasons_for_change_b',
+        'range_reasons_for_change_c',
+        'coverage_surface_area',
+        'coverage_date',
+        'coverage_method',
+        'coverage_trend_period',
+        'coverage_trend',
+        'coverage_trend_magnitude_min',
+        'coverage_trend_magnitude_max',
+        'coverage_trend_magnitude_ci',
+        'coverage_trend_method',
+        'coverage_trend_long_period',
+        'coverage_trend_long',
+        'coverage_trend_long_magnitude_min',
+        'coverage_trend_long_magnitude_max',
+        'coverage_trend_long_magnitude_ci',
+        'coverage_trend_long_method',
+        'complementary_favourable_area',
+        'complementary_favourable_area_op',
+        'complementary_favourable_area_unknown',
+        'complementary_favourable_area_method',
+        'area_reasons_for_change_a',
+        'area_reasons_for_change_b',
+        'area_reasons_for_change_c',
+        'pressures_method',
+        'threats_method',
+        'typical_species_method',
+        'justification',
+        'structure_and_functions_method',
+        'other_relevant_information',
+        'conclusion_range',
+        'conclusion_range_trend',
+        'conclusion_area',
+        'conclusion_area_trend',
+        'conclusion_structure',
+        'conclusion_structure_trend',
+        'conclusion_future',
+        'conclusion_future_trend',
+        'conclusion_assessment',
+        'conclusion_assessment_trend',
+        'natura2000_area_min',
+        'natura2000_area_max',
+        'natura2000_area_method',
+        'natura2000_area_trend',
+    ],
     'data_habitats_check_list': [
         'code', 'legal_name', 'name',
-    ]
+    ],
 }
 
 
@@ -282,6 +352,8 @@ def extract_record(table_name, element):
     data = {}
     for field in SCHEMA_XML[table_name]:
         value = element.find(field)
+        if value is None:
+            print "Aici", table_name, field
         value = value.text or None
         if value in ('true', 'false'):
             value = True if value == 'true' else False
@@ -433,6 +505,107 @@ def xml_species_checklist(xml_path, dataset_id=None):
 
                 data = extract_record('data_species_check_list', species)
                 update_object(region_obj, data)
+    db.session.commit()
+
+
+@importer.command
+def xml_habitat(xml_path, dataset_id=1):
+
+    with open(xml_path, 'r') as fin:
+        parser = BeautifulSoup(fin)
+
+        ok_habitats = []
+        for habitat in parser.find_all('habitat_report'):
+            habcode = habitat.habitatcode.text
+            ok_habitats.append(habcode)
+            data = extract_record('data_habitats', habitat)
+            habitat_obj = DataHabitat.query.filter_by(code=habcode).first()
+
+            if not habitat_obj:
+                print "Missing habitat: ", habcode
+                habitat_obj = DataHabitat(country='RO', code=habcode,
+                                          **data)
+                db.session.add(habitat_obj)
+                print "Added new habitat."
+            print "Habitat: ", habitat_obj.id, habitat_obj.code
+            ok_regions = []
+            for region in habitat.regional.find_all('region'):
+                regioncode = region.code.text
+                ok_regions.append(regioncode)
+                data = extract_record('data_habitattype_reg', region)
+
+                # Get existing region and update
+                habitat_region = (
+                    habitat_obj.regions.filter_by(region=regioncode,
+                                                  cons_role='assessment',
+                                                  cons_dataset_id=dataset_id)
+                ).first()
+                if not habitat_region:
+                    print " Missing habitat region: ", regioncode
+                    habitat_region = (
+                        DataHabitattypeRegion(habitat=habitat_obj,
+                                              region=regioncode,
+                                              cons_dataset_id=dataset_id,
+                                              cons_role='assessment',
+                                              cons_status=None,
+                        )
+                    )
+                    db.session.add(habitat_region)
+                print " Region:", regioncode, habitat_region.id
+                update_object(habitat_region, data)
+                # Get all measures
+                for existing_measure in habitat_region.measures:
+                    db.session.delete(existing_measure)
+                for measure in region.measures.find_all('measure'):
+                    data = extract_record('data_measures', measure)
+                    measure_obj = DataMeasures(habitat=habitat_region, **data)
+                    db.session.add(measure_obj)
+                    print "  added measure: ", measure_obj.code
+                # Get all pressures
+                for existing_pressure in habitat_region.get_pressures():
+                    print "  deleting", existing_pressure.id
+                    db.session.delete(existing_pressure)
+                for pressure in region.pressures.find_all('pressure'):
+                    data = extract_record('data_pressures_threats', pressure)
+                    data['type'] = 'p'
+                    pressure_obj = (
+                        DataPressuresThreats(habitat=habitat_region, **data)
+                    )
+                    db.session.add(pressure_obj)
+                    print "  added pressure: ", pressure_obj.code
+                    for p in pressure.pollution_qualifiers.find_all('pollution_qualifier'):
+                        data = extract_record('data_pressures_threats_pol', p)
+                        pol_obj = DataPressuresThreatsPollution(pressure=pressure_obj, **data)
+                        db.session.add(pol_obj)
+                        print "   added pollution: ", pol_obj.code
+                # Get all threats
+                for existing_threat in habitat_region.get_threats():
+                    print "  deleting", existing_threat.id
+                    db.session.delete(existing_threat)
+                for threat in region.threats.find_all('threat'):
+                    data = extract_record('data_pressures_threats', threat)
+                    data['type'] = 't'
+                    threat_obj = (
+                        DataPressuresThreats(habitat=habitat_region, **data)
+                    )
+                    db.session.add(pressure_obj)
+                    print "  added threat: ", threat_obj.code
+                    for p in threat.pollution_qualifiers.find_all('pollution_qualifier'):
+                        data = extract_record('data_pressures_threats_pol', p)
+                        pol_obj = DataPressuresThreatsPollution(pressure=threat_obj, **data)
+                        db.session.add(pol_obj)
+                        print "   added pollution: ", pol_obj.code
+            for existing_region in habitat_obj.regions.filter_by(cons_dataset_id=dataset_id):
+                if existing_region.region not in ok_regions:
+                    print " Deleting existing region: ", existing_region.region
+                    db.session.delete(existing_region)
+        for existing_habitat in DataHabitat.query.all():
+            if existing_habitat.code not in ok_habitats:
+                print "Deleting regions for non existent habitat: ", existing_habitat.code
+                for existing_region in existing_habitat.regions.filter_by(cons_dataset_id=dataset_id):
+                    print " - ", existing_region.region
+                    db.session.delete(existing_region)
+
     db.session.commit()
 
 
