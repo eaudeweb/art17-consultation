@@ -425,8 +425,16 @@ class RecordView(IndexMixin, flask.views.View):
         if flask.request.method == 'POST':
             if self.process_form():
                 flask.flash(self.success_message, 'success')
-                return flask.redirect(next_url)
-                
+                if flask.request.form.get('submit', '') == 'finalize':
+                    if not self.form.final_validate():
+                        errors = flatten_errors(self.form.errors)
+                        flask.flash(u"Înregistrarea NU a fost finalizată, deoarece este"
+                                    u" incompletă. Probleme:\n%s" % errors, 'danger')
+                    else:
+                        return flask.redirect(next_url)
+                else:
+                    return flask.redirect(next_url)
+
         self.template_ctx['form'] = self.form
         self.template_ctx['new_comment'] = self.new_record
         self.template_ctx['comment_history_view'] = self.comment_history_view

@@ -505,9 +505,7 @@ class RecordFinalToggle(View):
             data = self.parse_commentform(self.record)
             form = self.form_cls(MultiDict(flatten_dict(data)))
             if not form.final_validate():
-                errors = flatten_errors(form.errors)
-                flask.flash(u"Înregistrarea NU a fost finalizată, deoarece este"
-                            u" incompletă. Probleme:\n%s" % errors, 'danger')
+                flask.flash(u"Înregistrarea NU e completă", 'danger')
                 return flask.redirect(record_edit_url(self.record))
             if self.record.cons_role == 'final-draft':
                 self.record.cons_status = FINALIZED_STATUS
