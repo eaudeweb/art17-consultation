@@ -372,6 +372,29 @@ class RecordView(IndexMixin, flask.views.View):
     methods = ['GET', 'POST']
     success_message = u"Comentariul a fost înregistrat."
 
+    def process_form(self):
+        if self.form.validate():
+            self.flatten_commentform(self.form.data, self.object)
+
+            models.db.session.add(self.object)
+
+            app = flask.current_app._get_current_object()
+            if self.new_record:
+                self.add_signal.send(app,
+                                     ob=self.object,
+                                     new_data=self.form.data)
+            else:
+                self.edit_signal.send(app, ob=self.object,
+                                      old_data=self.original_data,
+                                      new_data=self.form.data)
+            if self.submit_for_evaluation:
+                self.submit_signal.send(app, ob=self.object)
+            models.db.session.commit()
+
+            self.dataset.update_extra_fields(self.form.data, self.object)
+            return True
+        return False
+
     def dispatch_request(self, record_id=None, comment_id=None,
                          dataset_id=None):
 
@@ -399,28 +422,11 @@ class RecordView(IndexMixin, flask.views.View):
                 **self.template_ctx
             )
 
-        if flask.request.method == 'POST' and self.form.validate():
-            self.flatten_commentform(self.form.data, self.object)
-
-            models.db.session.add(self.object)
-
-            app = flask.current_app._get_current_object()
-            if self.new_record:
-                self.add_signal.send(app,
-                                     ob=self.object,
-                                     new_data=self.form.data)
-            else:
-                self.edit_signal.send(app, ob=self.object,
-                                      old_data=self.original_data,
-                                      new_data=self.form.data)
-            if self.submit_for_evaluation:
-                self.submit_signal.send(app, ob=self.object)
-            models.db.session.commit()
-
-            self.dataset.update_extra_fields(self.form.data, self.object)
-            flask.flash(self.success_message, 'success')
-            return flask.redirect(next_url)
-
+        if flask.request.method == 'POST':
+            if self.process_form():
+                flask.flash(self.success_message, 'success')
+                return flask.redirect(next_url)
+                
         self.template_ctx['form'] = self.form
         self.template_ctx['new_comment'] = self.new_record
         self.template_ctx['comment_history_view'] = self.comment_history_view
