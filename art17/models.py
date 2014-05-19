@@ -947,6 +947,9 @@ class Dataset(Base):
         return {
             'new': new, 'draft': draft, 'final': final,
             'species': species, 'habitat': habitat,
+            'species_new': species_new, 'species_draft': species_draft,
+            'species_final': species_final, 'habitat_new': habitat_new,
+            'habitat_draft': habitat_draft, 'habitat_final': habitat_final,
         }
 
     def __unicode__(self):

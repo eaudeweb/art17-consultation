@@ -4,6 +4,7 @@ from datetime import datetime
 import flask
 from flask import request, render_template
 from flask.views import View
+from sqlalchemy import or_, func
 from werkzeug.datastructures import MultiDict
 from wtforms import Form, SelectField
 
@@ -183,6 +184,29 @@ def report(dataset_id):
         data['habitat']['total'] = (
             ds.habitat_objs.filter_by(cons_role=ROLE).count()
         )
+
+        data['species']['total_species'] = (
+            models.DataSpeciesCheckList.query
+            .with_entities(func.count(models.DataSpeciesCheckList.species_name))
+            .filter_by(dataset_id=ds.checklist_id)
+            .group_by(models.DataSpeciesCheckList.species_name).count())
+
+        queryset = data['species']['total_reports'] = (
+           models.DataSpeciesCheckList.query
+                .filter_by(dataset_id=ds.checklist_id).count()
+        )
+
+        data['habitat']['total_habitats'] = (
+            models.DataHabitatsCheckList.query
+            .with_entities(func.count(models.DataHabitatsCheckList.valid_name))
+            .filter_by(dataset_id=ds.checklist_id)
+            .group_by(models.DataHabitatsCheckList.valid_name).count())
+
+        queryset = data['habitat']['total_reports'] = (
+           models.DataHabitatsCheckList.query
+                .filter_by(dataset_id=ds.checklist_id).count()
+        )
+
         return data
 
     dataset.reports = reports(dataset)
@@ -629,7 +653,7 @@ def compare_datasets(dataset1, dataset2):
             if not ass2 or ass2.conclusion_assessment != ass.conclusion_assessment:
                 s_stat['diff'] += 1
             s_stat['objs'] += 1
-            
+
     conclusions_h_d1 = d1.habitat_objs.filter_by(cons_role=ROLE)
     conclusions_h_d2 = d2.habitat_objs.filter_by(cons_role=ROLE)
 
@@ -652,7 +676,7 @@ def compare_datasets(dataset1, dataset2):
             if not ass2 or ass2.conclusion_assessment != ass.conclusion_assessment:
                 h_stat['diff'] += 1
             h_stat['objs'] += 1
-    
+
     bioreg_list = dal.get_biogeo_region_list(relevant_regions)
     return render_template(
         'aggregation/compare_datasets.html',

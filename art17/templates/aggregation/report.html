@@ -38,7 +38,20 @@
 
   <h4>Specii</h4>
   {{ report_table(dataset.reports.species) }}
+  =======
+  <p>Numărul de specii în checklist: {{ dataset.reports.species.get('total_species')}} </p>
+  <p>Numărul total de rapoarte în checklist: {{ dataset.reports.species.get('total_reports')}}</p>
+  <p>Numărul de rapoarte agregate: {{ dataset.details.species_new }}</p>
+  <p>Numărul de rapoarte în lucru: {{ dataset.details.species_draft }}</p>
+  <p>Numărul de rapoarte finalizate: {{ dataset.details.species_final }}</p>
 
   <h4>Habitate</h4>
   {{ report_table(dataset.reports.habitat) }}
+  =======
+  <p>Numărul de habitate în checklist: {{ dataset.reports.habitat.get('total_habitats')}} </p>
+  <p>Numărul total de rapoarte în checklist: {{ dataset.reports.habitat.get('total_reports')}}</p>
+  <p>Numărul de rapoarte agregate: {{ dataset.details.habitat_new }}</p>
+  <p>Numărul de rapoarte în lucru: {{ dataset.details.habitat_draft }}</p>
+  <p>Numărul de rapoarte finalizate: {{ dataset.details.habitat_final }}</p>
+
 {% endblock content %}
