@@ -28,6 +28,7 @@ from art17.aggregation.utils import (
     record_details_url,
     record_finalize_toggle_url,
     get_datasets,
+    aggregation_missing_data_report
 )
 from art17.auth import admin_permission
 from art17.common import (
@@ -207,38 +208,11 @@ def report(dataset_id):
                 .filter_by(dataset_id=ds.checklist_id).count()
         )
 
+        data['missing'] = aggregation_missing_data_report(dataset_id)
         return data
 
     dataset.reports = reports(dataset)
     return flask.render_template('aggregation/report.html', dataset=dataset)
-
-
-@aggregation.route('/raport/<int:dataset_id>/agregare')
-def report_aggregation(dataset_id):
-    dataset = models.Dataset.query.get_or_404(dataset_id)
-
-    ROLE = 'missing'
-    species = dataset.species_objs.filter_by(cons_role=ROLE)
-    habitats = dataset.habitat_objs.filter_by(cons_role=ROLE)
-
-    species_list = set([s.species for s in species])
-    habitat_list = set([h.habitat for h in habitats])
-    species_regions = {(s.subject_id, s.region): 0 for s in species}
-    habitat_regions = {(h.subject_id, h.region): 0 for h in habitats}
-    relevant_regions = [
-        a[1] for a in species_regions.keys() + habitat_regions.keys()
-    ]
-    bioreg_list = dal.get_biogeo_region_list(relevant_regions)
-
-    return flask.render_template(
-        'aggregation/report_aggregation.html',
-        missing_species=species, species_regions=species_regions,
-        species_list=species_list, habitat_list=habitat_list,
-        missing_habitats=habitats, habitat_regions=habitat_regions,
-        dataset=dataset,
-        dataset_id=dataset.id,
-        bioreg_list=bioreg_list,
-    )
 
 
 class DashboardView(View):
