@@ -69,11 +69,15 @@
   <p>#1 {{ dataset1 }} vs. #2 {{ dataset2 }}</p>
 
   <h3>Specii</h3>
+  {% if s_stat.objs %}
   <p>Diferențe: {{ 100 * s_stat.diff / s_stat.objs }}%</p>
   {{ table(species_data) }}
+  {% endif %}
 
   <h3>Habitate</h3>
+  {% if h_stat.objs %}
   <p>Diferențe: {{ 100 * h_stat.diff / h_stat.objs }}%</p>
   {{ table(habitat_data) }}
+  {% endif %}
 
 {% endblock content %}
