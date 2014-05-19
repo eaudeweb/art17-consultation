@@ -598,7 +598,7 @@ def compare_datasets(dataset1, dataset2):
     d1 = models.Dataset.query.get_or_404(dataset1)
     d2 = models.Dataset.query.get_or_404(dataset2)
 
-    ROLE = 'assessment'
+    ROLE = 'final'
 
     conclusions_s_d1 = d1.species_objs.filter_by(cons_role=ROLE)
     conclusions_s_d2 = d2.species_objs.filter_by(cons_role=ROLE)
