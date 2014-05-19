@@ -1,0 +1,30 @@
+{% extends "aggregation/admin.html" %}
+
+{% block title %}Compară seturi de date{% endblock title %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('compare', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+{% block content %}
+  <h2>Comparație seturi de date</h2>
+
+  {% if form.errors %}
+  <p class="error">
+    {% for k,v in form.errors.iteritems() %}
+    {{ v|join(',') }}
+    {% endfor %}
+  </p>
+  {% endif %}
+
+  <form method="post">
+    {{ form.dataset1() }}
+    {{ form.dataset2() }}
+    <button type="submit">Compară</button>
+  </form>
+{% endblock content %}

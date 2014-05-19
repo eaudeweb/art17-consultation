@@ -1,0 +1,79 @@
+{% extends "aggregation/admin.html" %}
+
+{% macro cell(info, bioreg) %}
+  {% set region = info.get(bioreg.code, none) %}
+  {% if region %}
+    {%- set conclusion_cls = (
+            'conclusion-' +
+            (region.conclusion_assessment or '')
+          ) %}
+    <td class="dashboard-commentcount {{ conclusion_cls }}">
+      {{ region.conclusion_assessment }}
+    </td>
+  {% else %}
+    <td class="dashboard-missingrecord"></td>
+  {% endif %}
+{% endmacro %}
+
+{% macro table(data) %}
+  <table class="table table-bordered">
+    <thead>
+      <th></th>
+      <th>Set</th>
+
+      {% for bioreg in bioreg_list %}
+        <th title="{{ bioreg.name_ro }}">{{ bioreg.code }}</th>
+      {% endfor %}
+    </thead>
+
+    <tbody>
+    {% for subject,data_obj in data.iteritems() %}
+      {% set info = data_obj['d1'] %}
+      <tr>
+        {%- set name = subject.lu.name_ro or subject.lu.speciesname %}
+        <td title="{{ name }}" rowspan="2">
+          {{ subject.code }} – {{ name|truncate(60) }}
+        </td>
+        <td>#1</td>
+
+        {% for bioreg in bioreg_list %}
+          {{ cell(info, bioreg) }}
+        {% endfor %}
+      </tr>
+      {% set info = data_obj['d2'] %}
+      <tr>
+        <td>#2</td>
+
+        {% for bioreg in bioreg_list %}
+          {{ cell(info, bioreg) }}
+        {% endfor %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endmacro %}
+
+{% block title %}Compară seturi de date{% endblock title %}
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('compare', url_for('.compare')),
+      ]) }}
+{% endblock breadcrumbs %}
+
+{% block content %}
+  <h2>Comparație seturi de date</h2>
+
+  <p>#1 {{ dataset1 }} vs. #2 {{ dataset2 }}</p>
+
+  <h3>Specii</h3>
+  <p>Diferențe: {{ 100 * s_stat.diff / s_stat.objs }}%</p>
+  {{ table(species_data) }}
+
+  <h3>Habitate</h3>
+  <p>Diferențe: {{ 100 * h_stat.diff / h_stat.objs }}%</p>
+  {{ table(habitat_data) }}
+
+{% endblock content %}

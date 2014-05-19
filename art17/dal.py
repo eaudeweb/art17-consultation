@@ -27,8 +27,13 @@ from art17.models import (
 )
 
 
-def get_biogeo_region_list():
-    return LuBiogeoreg.query.order_by(LuBiogeoreg.order).all()
+def get_biogeo_region_list(relevant_regions=None):
+    biogeo_region_qs = LuBiogeoreg.query.order_by(LuBiogeoreg.order).all()
+    if relevant_regions is None:
+        return biogeo_region_qs
+    else:
+        return [r for r in biogeo_region_qs
+                if (r in relevant_regions) or (r.code in relevant_regions)]
 
 
 def get_biogeo_region(region_code):

@@ -1,4 +1,5 @@
 import flask
+from sqlalchemy import or_
 from art17 import models
 
 
@@ -91,3 +92,13 @@ def get_record(subject, region, dataset_id):
     if obj:
         return obj
     raise RuntimeError("Expecting a speciesregion or a habitattyperegion")
+
+
+def get_datasets():
+    return (
+        models.Dataset.query
+        .filter(or_(models.Dataset.preview == False,
+                    models.Dataset.preview == None))
+        .order_by(models.Dataset.date)
+        .all()
+    )

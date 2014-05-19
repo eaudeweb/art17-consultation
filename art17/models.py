@@ -949,6 +949,9 @@ class Dataset(Base):
             'species': species, 'habitat': habitat,
         }
 
+    def __unicode__(self):
+        return '%s (%s)' % (self.date, self.comment)
+
 
 class NotificationUser(Base):
     __tablename__ = u'notification_user'

@@ -19,5 +19,8 @@
     <li {% if page == 'config' %}class="active"{% endif %}>
       <a href="{{ url_for('config.form') }}">Configurare</a>
     </li>
+    <li {% if page == 'compare' %}class="active"{% endif %}>
+      <a href="{{ url_for('aggregation.compare') }}">Comparație</a>
+    </li>
   </ul>
 {% endblock %}
