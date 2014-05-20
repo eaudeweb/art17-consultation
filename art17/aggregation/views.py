@@ -1,12 +1,12 @@
 # encoding: utf-8
 
 from datetime import datetime
+
 import flask
 from flask import request, render_template
 from flask.views import View
-from sqlalchemy import or_, func
+from sqlalchemy import func
 from werkzeug.datastructures import MultiDict
-from wtforms import Form, SelectField
 
 from art17 import models, forms, schemas, dal
 from art17.aggregation import (
@@ -23,6 +23,7 @@ from art17.aggregation import (
     get_species_checklist,
     check_aggregation_preview_perm,
 )
+from art17.aggregation.forms import PreviewForm, CompareForm
 from art17.aggregation.utils import (
     record_edit_url,
     record_details_url,
@@ -39,28 +40,6 @@ from art17.common import (
 from art17.habitat import detail as detail_habitat, HabitatCommentView
 from art17.lookup import CONCLUSIONS
 from art17.species import detail as detail_species, SpeciesCommentView
-
-
-class PreviewForm(Form):
-    subject = SelectField(default='')
-
-
-class CompareForm(Form):
-    dataset1 = SelectField()
-    dataset2 = SelectField()
-
-    def __init__(self, *args, **kwargs):
-        super(CompareForm, self).__init__(*args, **kwargs)
-        datasets = [(str(d.id), d) for d in get_datasets()]
-        self.dataset1.choices = datasets
-        self.dataset2.choices = datasets
-
-    def validate(self):
-        res = super(CompareForm, self).validate()
-        if self.dataset1.data == self.dataset2.data:
-            self.dataset1.errors.append('Cannot compare to self')
-            return False
-        return res
 
 
 @aggregation.route('/_ping')
@@ -117,17 +96,32 @@ def aggregate():
 def preview(page):
     check_aggregation_preview_perm()
     if page == 'habitat':
-        qs = get_habitat_checklist(distinct=True)
+        qs = list(get_habitat_checklist(distinct=True))
+        qs_dict = dict(qs)
     elif page == 'species':
-        qs = get_species_checklist(distinct=True)
+        orig_qs = list(get_species_checklist(distinct=True))
+        qs_dict = dict(orig_qs)
+
+        orig_qs = {a[0]: a for a in orig_qs}
+        qs = []
+        for group in models.LuGrupSpecie.query.all():
+            species = (
+                models.LuHdSpecies.query
+                .filter_by(group_code=group.code)
+                .order_by(models.LuHdSpecies.speciesname)
+            )
+            species = [
+                orig_qs[str(s.code)]
+                for s in species if str(s.code) in orig_qs
+            ]
+            qs.append((group.description, species))
     else:
         raise NotImplementedError()
-    qs = list(qs)
+
     report = None
     dataset = None
     form = PreviewForm(request.form)
     form.subject.choices = qs
-    qs_dict = dict(qs)
     if request.method == "POST":
         if form.validate():
             report, dataset = create_preview_aggregation(
