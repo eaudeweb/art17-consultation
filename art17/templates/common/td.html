@@ -36,6 +36,15 @@
 {%- endmacro %}
 
 
+{% macro unit_value_field(value, unit) %}
+  {%- if value and unit -%}
+    {{ value }} {{ unit }}
+  {%- else -%}
+    N/A
+  {%- endif -%}
+{%- endmacro %}
+
+
 {% macro population_reference_value_html(refval, ideal) %}
   {%- set measure_unit = ideal['population'].unit or ideal['population_alt'].unit %}
 
