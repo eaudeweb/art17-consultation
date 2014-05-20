@@ -36,11 +36,26 @@
 {%- endmacro %}
 
 
+{% macro population_reference_value_html(refval, ideal) %}
+  {%- set measure_unit = ideal['population'].unit or ideal['population_alt'].unit %}
+
+  {%- if refval.number -%}
+    {{ refval.number }} {{ measure_unit }}
+  {%- elif refval.op -%}
+    ({{ refval.op }}) {{ LU_FV_RANGE_OP_FUNCT[refval.op] }} {{ population_size_html(ideal) }}
+  {%- elif refval.x -%}
+    Necunoscut.
+  {%- else -%}
+    N/A
+  {%- endif -%}
+{%- endmacro %}
+
+
 {% macro reference_value_html(refval, unit='', ideal='') %}
   {%- if refval.number -%}
     {{ refval.number }} {{ unit }}
   {%- elif refval.op -%}
-    {{ refval.op }}{{ ideal }} {{ unit }}
+    ({{ refval.op }}) {{ LU_FV_RANGE_OP_FUNCT[refval.op] }}{{ ideal }} {{ unit }}
   {%- elif refval.x -%}
     Necunoscut.
   {%- else -%}

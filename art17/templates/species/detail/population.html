@@ -80,7 +80,8 @@
 
       <tr>
         <th>Populația favorabilă de referință</th>
-        <td>{{ macros.reference_value_html(record.population.reference_value) }}</td>
+        <td>{{ macros.population_reference_value_html(record.population.reference_value,
+                                                      record.population.size) }}</td>
       </tr>
 
       <tr>
