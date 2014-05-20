@@ -333,20 +333,26 @@ class Habitat(Form):
 
 
 class Coverage(Form):
-    surface_area = DecimalField(
-        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
-    date = TextField(validators=[Optional()])
-    method = SelectField(default='',
+    surface_area = DecimalField(label=u"Suprafață (km²)",
+                                validators=[Optional
+                                (u"Mǎrimea trebuie sǎ fie de tip numeric")])
+    date = TextField(label=u"Anul / Perioada", validators=[Optional()])
+    method = SelectField(label=u"Metoda utilizată - suprafața arealului",
+                         default='',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
-    trend_short = FormField(TrendCI)
-    trend_long = FormField(TrendCI)
-    reference_value = FormField(ReferenceValue)
-    reason = FormField(ReasonValue)
-    conclusion = FormField(Conclusion)
+    trend_short = FormField(TrendCI, label=u"Tendință pe termen scurt (12 ani)")
+    trend_long = FormField(TrendCI, label=u"Tendință pe termen lung (24 ani)")
+    reference_value = FormField(ReferenceValue, label=u"Arealul favorabil de \
+                                                        referință (km²)")
+    reason = FormField(ReasonValue, label=u"Motivul modificării")
+    conclusion = FormField(Conclusion, label=u"Evaluarea")
 
     def __init__(self, *args, **kwargs):
         super(Coverage, self).__init__(*args, **kwargs)
         self.reference_value.op.choices = EMPTY_CHOICE + LU_FV_RANGE_OP_FUNCT_OPTIONS
+        self.reference_value.number.label.text = u"Suprafață"
+        self.reference_value.method.label.text = u"Arealul favorabil de \
+            referință - metoda folosită pentru stabilirea acestei valori"
 
 
 class PressureForm(Form):

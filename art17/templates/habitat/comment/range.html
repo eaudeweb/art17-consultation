@@ -209,32 +209,32 @@
               {{ reference_value.method(class='form-control', rows=2) }}
             </div>
           </div>
+        </div>
+      </div>
 
 
-          <div class="form-group">
-            {%- set reason = form.range.reason %}
-            <label for="range.reason.a">
-                {{ reason.label }}:
-            </label>
-            <p for="range.reason.a">
-              <em>* Dacă există, justificați diferența între valoarea Suprafeței din
-                raportarea precedentă și valoarea curentă
-              </em>
-            </p>
+      <div class="form-group">
+        {%- set reason = form.range.reason %}
+        <label for="range.reason.a">
+            {{ reason.label }}:
+        </label>
+        <p for="range.reason.a">
+          <em>* Dacă există, justificați diferența între valoarea Suprafeței din
+            raportarea precedentă și valoarea curentă
+          </em>
+        </p>
 
-            {{ errors(reason) }}
+        {{ errors(reason) }}
 
-            <div class="field-inline">
-              {{ reason.a(class='form-control') }}
-              {{ LU_REASONS_FOR_CHANGE['a'] }} <br>
+        <div class="field-inline">
+          {{ reason.a(class='form-control') }}
+          {{ LU_REASONS_FOR_CHANGE['a'] }} <br>
 
-              {{ reason.b(class='form-control') }}
-              {{ LU_REASONS_FOR_CHANGE['b'] }} <br>
+          {{ reason.b(class='form-control') }}
+          {{ LU_REASONS_FOR_CHANGE['b'] }} <br>
 
-              {{ reason.c(class='form-control') }}
-              {{ LU_REASONS_FOR_CHANGE['c'] }} <br>
-            </div>
-          </div>
+          {{ reason.c(class='form-control') }}
+          {{ LU_REASONS_FOR_CHANGE['c'] }} <br>
         </div>
       </div>
 
