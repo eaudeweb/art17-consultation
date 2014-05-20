@@ -15,6 +15,8 @@ def record_index_url(subject, region, dataset_id):
 
 
 def record_dashboard_url(record):
+    if record.dataset.preview:
+        return flask.url_for('.post_preview', dataset_id=record.dataset.id)
     if isinstance(record, models.DataHabitattypeRegion):
         return flask.url_for('.habitats', dataset_id=record.cons_dataset_id)
     elif isinstance(record, models.DataSpeciesRegion):

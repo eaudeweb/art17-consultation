@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% from 'common/td.html' import conclusions_html %}
+
+{% block title %}Agregare &mdash; {{ super() }}{% endblock title %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('agregare temporară', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
+{% block content %}
+  <h2>Agregare temporară pentru {{ dataset.comment }}</h2>
+  <p class="lead">Data: {{ dataset.date }}, Utilizator: {{ dataset.user_id }}</p>
+
+  <h4>Regiuni</h4>
+  <table class="table">
+    <tbody>
+    {% for record in dataset.species_objs %}
+    {%- set url = record_edit_url(record) %}
+    <tr>
+      <td><a href="{{ url }}">{{ record.lu.name_ro }}</a></td>
+
+      <td>{{ conclusions_html(record.conclusion_assessment) }}</td>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock content %}

@@ -3,9 +3,9 @@
 from datetime import datetime
 
 import flask
-from flask import request, render_template
+from flask import request, render_template, redirect, url_for
 from flask.views import View
-from sqlalchemy import func
+from sqlalchemy import func, or_
 from werkzeug.datastructures import MultiDict
 
 from art17 import models, forms, schemas, dal
@@ -62,7 +62,9 @@ def home():
     dataset_list = get_datasets()
     preview_list = (
         models.Dataset.query
-        .filter_by(preview=True, checklist=None, user_id=flask.g.identity.id)
+        .filter_by(preview=True, user_id=flask.g.identity.id)
+        .filter(or_(models.Dataset.checklist==None,
+                    models.Dataset.checklist==False))
         .order_by(models.Dataset.date)
         .all()
     )
@@ -132,9 +134,10 @@ def preview(page):
                 flask.g.identity.id,
             )
             models.db.session.commit()
+            return redirect(url_for('.post_preview', dataset_id=dataset.id))
         else:
             flask.flash('Invalid form', 'error')
-    return flask.render_template('aggregation/preview.html', **{
+    return flask.render_template('aggregation/preview/preview.html', **{
         'form': form,
         'dataset': dataset,
         'report': report,
@@ -207,6 +210,16 @@ def report(dataset_id):
 
     dataset.reports = reports(dataset)
     return flask.render_template('aggregation/report.html', dataset=dataset)
+
+
+@aggregation.route('/preview/<int:dataset_id>/')
+def post_preview(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+
+    return flask.render_template(
+        'aggregation/preview/post.html',
+        dataset=dataset,
+    )
 
 
 class DashboardView(View):

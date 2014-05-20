@@ -4,6 +4,7 @@
 {% block content %}
   <h4>{% block headline %}{% endblock %}</h4>
 
+  {% if not record_obj.dataset.preview %}
   <div class="form-group">
     {%- if map_url %}
     <a class="showmap btn btn-sm btn-info"
@@ -19,6 +20,7 @@
       <a class="btn btn-sm btn-danger" href="{{ history_url }}">istorie</a>
     {%- endif %}
   </div>
+  {% endif %}
 
   <form method="post">
     {%- if not config.TESTING %}
@@ -43,6 +45,7 @@
       <input type="hidden" name="next" value="{{ next_url }}">
     {%- endif %}
 
+    {%- if not record_obj.dataset.preview -%}
      <button type="submit" class="btn btn-primary">
       Salveazǎ schimbǎrile
     </button>
@@ -50,6 +53,7 @@
             class="btn btn-danger aggregation-finalize">
       Salveazǎ și finalizează
     </button>
+    {%- endif -%}
   </form>
 
   {% include 'common/recorddetail.html' %}

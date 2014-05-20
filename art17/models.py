@@ -943,6 +943,7 @@ class Dataset(Base):
         new = species_new + habitat_new
         draft = species_draft + habitat_draft
         final = species_final + habitat_final
+        all_count = habitat + species
 
         return {
             'new': new, 'draft': draft, 'final': final,
@@ -950,6 +951,7 @@ class Dataset(Base):
             'species_new': species_new, 'species_draft': species_draft,
             'species_final': species_final, 'habitat_new': habitat_new,
             'habitat_draft': habitat_draft, 'habitat_final': habitat_final,
+            'all': all_count,
         }
 
     def __unicode__(self):

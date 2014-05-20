@@ -32,11 +32,20 @@
 
 
 {% block form_content %}
+  {% if not record_obj.dataset.preview %}
   <div class="row">
     <p class="col-sm-4">
       {{ form.generalstatus(class='form-control') }}
     </p>
   </div>
+  {% else %}
+    <div class="alert alert-danger">
+      <p>Această înregistrare face parte dintr-o agregare temporară care
+      urmează să fie ștearsă. Această înregistrarea nu participă la agregarea
+      finală  care se va face în bloc.</p>
+      <p>Nu puteți salva datele.</p>
+    </div>
+  {% endif %}
 
   <div class="comment-species-report">
     <ul class="nav nav-tabs detail-menu">

@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
-{% macro dataset_table(dataset_list, show_user=True, show_reports=True) %}
+{% macro dataset_table(dataset_list, show_user=True, show_reports=True,
+  view='.dashboard') %}
 <table class="table table-bordered">
   <thead>
     <th>Dată</th>
@@ -13,7 +14,7 @@
   </thead>
 
   {%- for dataset in dataset_list %}
-    {%- set url = url_for('.dashboard', dataset_id=dataset.id) %}
+    {%- set url = url_for(view, dataset_id=dataset.id) %}
     {%- set delete_url = url_for('.delete_dataset', dataset_id=dataset.id) %}
     {%- set activity_url = url_for('history_aggregation.index', dataset_id=dataset.id) %}
     {%- set report_url = url_for('.report', dataset_id=dataset.id) %}
@@ -24,9 +25,13 @@
       {% endif %}
       <td width="100%">{{ dataset.comment or ""|truncate(100) }}</td>
       <td class="text-right" nowrap>
-        {{ dataset.details.new }} agregate,
-        {{ dataset.details.draft }} în lucru,
-        {{ dataset.details.final }} finalizate
+        {% if dataset.preview %}
+          {{ dataset.details.all }} regiuni
+        {% else %}
+          {{ dataset.details.new }} agregate,
+          {{ dataset.details.draft }} în lucru,
+          {{ dataset.details.final }} finalizate
+        {% endif %}
       </td>
       <td nowrap>
         <form method="post" action="{{ delete_url }}"
@@ -79,7 +84,7 @@
 <h2>Previzualizări agregare</h2>
 
 
-{{ dataset_table(preview_datasets, show_user=False, show_reports=False) }}
+{{ dataset_table(preview_datasets, show_user=False, show_reports=False, view='.post_preview') }}
 {% endif %}
 
 <h2>Seturi de date</h2>

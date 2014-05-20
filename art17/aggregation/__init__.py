@@ -291,6 +291,7 @@ def create_aggregation(timestamp, user_id):
 
 
 def create_preview_aggregation(page, subject, comment, timestamp, user_id):
+    curr_report_id = get_reporting_id()
     if page == 'habitat':
         id_map = dict(
             models.db.session.query(
@@ -298,7 +299,10 @@ def create_preview_aggregation(page, subject, comment, timestamp, user_id):
                 models.DataHabitat.id,
             )
         )
-        rows = get_habitat_checklist().filter_by(code=subject)
+        rows = (
+            get_habitat_checklist(dataset_id=curr_report_id)
+            .filter_by(code=subject)
+        )
     elif page == 'species':
         id_map = dict(
             models.db.session.query(
@@ -306,7 +310,10 @@ def create_preview_aggregation(page, subject, comment, timestamp, user_id):
                 models.DataSpecies.id,
             )
         )
-        rows = get_species_checklist().filter_by(code=subject)
+        rows = (
+            get_species_checklist(dataset_id=curr_report_id)
+            .filter_by(code=subject)
+        )
     else:
         raise NotImplementedError()
 
