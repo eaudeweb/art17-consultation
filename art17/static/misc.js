@@ -60,4 +60,23 @@ $(function() {
         $('input[name="populationlink.size.population_alt.max"]').val(value);
     }).change();
 
+    // habitats
+
+    $('select[name="coverage.conclusion.value"]').on('change', function() {
+        var text = $(this).find('option:selected').text();
+        $('input[name="coveragelink.conclusion.value"]').val(text);
+    }).change();
+    $('select[name="coverage.conclusion.trend"]').on('change', function() {
+        var text = $(this).find('option:selected').text();
+        $('input[name="coveragelink.conclusion.trend"]').val(text);
+    }).change();
+
+    $('select[data-speciallink="habitatrange.conclusion.value"]').on('change', function() {
+        var text = $(this).find('option:selected').text();
+        $('input[name="habitatrangelink.conclusion.value"]').val(text);
+    }).change();
+    $('select[data-speciallink="habitatrange.conclusion.trend"]').on('change', function() {
+        var text = $(this).find('option:selected').text();
+        $('input[name="habitatrangelink.conclusion.trend"]').val(text);
+    }).change();
 });

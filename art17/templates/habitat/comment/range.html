@@ -257,14 +257,14 @@
                 <label for="range.conclusion.value">
                     {{ conclusion.value.label }}:
                 </label>
-                {{ conclusion.value(class='form-control semaphore') }}
+                {{ conclusion.value(class='form-control semaphore', **{'data-speciallink':'habitatrange.conclusion.value'}) }}
               </div>
 
               <div class="col-sm-3 {{- error_cls(conclusion.trend) }}">
                 <label for="range.conclusion.trend">
                     {{ conclusion.trend.label }}:
                 </label>
-                {{ conclusion.trend(class='form-control') }}
+                {{ conclusion.trend(class='form-control', **{'data-speciallink':'habitatrange.conclusion.trend'}) }}
               </div>
             </div>
           </div>

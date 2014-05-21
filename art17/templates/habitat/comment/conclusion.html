@@ -3,6 +3,55 @@
 <div class="tab-pane comment" id="comment-conclusion">
   <div class="panel panel-default">
     <div class="panel-body">
+
+      <div class="form-group">
+        <label><em>
+          Proporția - Evaluare
+        </em></label>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <label><em>
+                Concluzie:
+            </em></label>
+            <input id="habitatrangelink.conclusion.value" class="form-control" type="text" value=""
+                   name="habitatrangelink.conclusion.value" disabled></input>
+          </div>
+
+          <div class="col-sm-3">
+            <label><em>
+                Tendință:
+            </em></label>
+            <input id="habitatrangelink.conclusion.trend" class="form-control" type="text" value=""
+                   name="habitatrangelink.conclusion.trend" disabled></input>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label><em>
+          Suprafața - Evaluare
+        </em></label>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <label><em>
+                Concluzie:
+            </em></label>
+            <input id="coveragelink.conclusion.value" class="form-control" type="text" value=""
+                   name="coveragelink.conclusion.value" disabled></input>
+          </div>
+
+          <div class="col-sm-3">
+            <label><em>
+                Tendință:
+            </em></label>
+            <input id="coveragelink.conclusion.trend" class="form-control" type="text" value=""
+                   name="coveragelink.conclusion.trend" disabled></input>
+          </div>
+        </div>
+      </div>
+
       <div class="form-group">
         {%- set structure = form.structure %}
         <label for="structure.value">
