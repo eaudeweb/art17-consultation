@@ -487,14 +487,22 @@ class Natura2000Habitat(Form):
 
 class TypicalSpecies(Form):
 
-    species = SpeciesField(default='', validators=[Optional()])
-    method = TextField(validators=[Optional()])
-    justification = TextField(validators=[Optional()])
+    species = SpeciesField(default='',
+                           label=u"Specii tipice",
+                           validators=[Optional()])
+    method = TextField(label=u"Metoda utilizată",
+                       validators=[Optional()])
+    justification = TextField(
+                label=u"Justificarea modificărilor (%) induse de tendințe",
+                validators=[Optional()])
     structure_and_functions_method = SelectField(default='',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS,
+                         label=u"Structura şi funcțiile - metoda utilizată",
                          validators=[Optional()],
     )
-    other_relevant_information = TextAreaField(validators=[Optional()])
+    other_relevant_information = TextAreaField(
+                        label=u"Alte informații relevante",
+                        validators=[Optional()])
 
 
 class SpeciesComment(Form):

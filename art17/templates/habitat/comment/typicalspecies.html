@@ -9,7 +9,7 @@
       <div class="form-group {{- error_cls(typicalspecies.species) }}">
 
         <label for="typicalspecies.species">
-          Specii tipice:
+          {{ form.typicalspecies.species.label }}:
         </label>
 
         {{ errors(typicalspecies.species) }}
@@ -17,17 +17,15 @@
         <div class="row">
           <div
               class="col-sm-6 {{- error_cls(typicalspecies.structure_and_functions_method) }}">
-            {{
-            typicalspecies.species(class='form-control', rows=5)
-            }}
+            {{ typicalspecies.species(class='form-control', rows=5) }}
           </div>
         </div>
       </div>
 
 
       <div class="form-group">
-        <label for="typicalspecies.method">
-          Metoda utilizată
+        <label for="form.typicalspecies.method">
+          {{ form.typicalspecies.method.label }}:
         </label>
 
         {{ errors(typicalspecies.method) }}
@@ -38,10 +36,10 @@
           </div>
         </div>
       </div>
-      
+
       <div class="form-group">
         <label for="typicalspecies.justification">
-          Justificarea modificărilor (%) induse de tendințe
+          {{ form.typicalspecies.justification.label }}:
         </label>
 
         {{ errors(typicalspecies.justification) }}
@@ -55,7 +53,7 @@
 
       <div class="form-group">
         <label for="typicalspecies.structure_and_functions_method">
-          Structura şi funcțiile - metoda utilizată
+          {{ form.typicalspecies.structure_and_functions_method.label }}:
         </label>
 
         {{ errors(typicalspecies.structure_and_functions_method) }}
@@ -69,7 +67,7 @@
 
       <div class="form-group">
         <label for="typicalspecies.other_relevant_information">
-          Alte informații relevante
+          {{ form.typicalspecies.other_relevant_information.label }}:
         </label>
 
         {{ errors(typicalspecies.other_relevant_information) }}
