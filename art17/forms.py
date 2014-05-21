@@ -608,7 +608,8 @@ class HabitatComment(Form):
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)
     report_observation = TextAreaField(validators=[Optional()])
-    published = TextAreaField(validators=[Optional()])
+    published = TextAreaField(label=u"Surse publicate",
+                              validators=[Optional()])
 
     def custom_validate(self):
         fields = list(all_fields(self))
