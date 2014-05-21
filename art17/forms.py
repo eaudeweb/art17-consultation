@@ -473,8 +473,9 @@ class Natura2000Species(Form):
 
 class Natura2000Habitat(Form):
 
-    area = FormField(AreaValue)
+    area = FormField(AreaValue, label=u"Suprafața (km2)")
     method = SelectField(default='',
+                         label=u"Metoda utilizată",
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS,
                          validators=[Optional()],
     )

@@ -7,18 +7,24 @@
       <div class="form-group">
         {%- set area = form.natura2000.area %}
         <label for="area.unit">
-          Suprafața (km<sup>2</sup>)
+          {{ area.label }}:
         </label>
 
         {{ errors(area) }}
 
         <div class="row">
           <div class="col-sm-3 {{- error_cls(area.min) }}">
+            <label>
+                {{ area.min.label }}:
+            </label>
             {{ area.min(class='form-control',
                     placeholder="valoare minimă") }}
           </div>
 
           <div class="col-sm-3 {{- error_cls(area.max) }}">
+            <label>
+                {{ area.max.label }}:
+            </label>
             {{ area.max(class='form-control',
                     placeholder="valoare maximă") }}
           </div>
@@ -27,7 +33,7 @@
 
       <div class="form-group">
         <label for="natura2000.method">
-          Metoda utilizată
+          {{ form.natura2000.method.label }}:
         </label>
 
         {{ errors(form.natura2000.method) }}
@@ -42,7 +48,7 @@
       <div class="form-group">
         {%- set trend = form.natura2000.trend %}
         <label for="natura2000.trend">
-          Tendință pe termen scurt
+          {{ trend.label }}:
         </label>
 
         {{ errors(trend) }}
