@@ -6,17 +6,27 @@
       <div class="form-group">
         {%- set structure = form.structure %}
         <label for="structure.value">
-          Structura și funcțiile specifice
+          Structura și funcțiile specifice - Evaluarea
         </label>
 
         {{ errors(structure) }}
 
         <div class="row">
+          <div class="col-md-12">
+              <p><small><em>* Daca concluzia este nevaforabilă se recomandă
+              folosirea unei tendințe.</em></small></p>
+          </div>
           <div class="col-sm-3 {{- error_cls(structure.value) }}">
+            <label for="future_prospects.value">
+                {{ structure.value.label}}:
+            </label>
             {{ structure.value(class='form-control semaphore') }}
           </div>
 
           <div class="col-sm-3 {{- error_cls(structure.trend) }}">
+            <label for="future_prospects.value">
+                {{ structure.trend.label}}:
+            </label>
             {{ structure.trend(class='form-control') }}
           </div>
         </div>
@@ -25,17 +35,27 @@
       <div class="form-group">
         {%- set future_prospects = form.future_prospects %}
         <label for="future_prospects.value">
-          Perspective viitoare
+          Perspective viitoare - Evaluarea
         </label>
 
         {{ errors(future_prospects) }}
 
         <div class="row">
+          <div class="col-md-12">
+              <p><small><em>* Daca concluzia este nevaforabilă se recomandă
+              folosirea unei tendințe.</em></small></p>
+          </div>
           <div class="col-sm-3 {{- error_cls(future_prospects.value) }}">
+            <label for="future_prospects.value">
+                {{ future_prospects.value.label}}:
+            </label>
             {{ future_prospects.value(class='form-control semaphore') }}
           </div>
 
           <div class="col-sm-3 {{- error_cls(future_prospects.trend) }}">
+            <label for="future_prospects.trend">
+                {{ future_prospects.trend.label}}:
+            </label>
             {{ future_prospects.trend(class='form-control') }}
           </div>
         </div>
@@ -50,16 +70,27 @@
         {{ errors(overall_assessment) }}
 
         <div class="row">
+          <div class="col-md-12">
+              <p><small><em>* Daca concluzia este nevaforabilă se recomandă
+              folosirea unei tendințe.</em></small></p>
+          </div>
           <div class="col-sm-3 {{- error_cls(overall_assessment.value) }}">
+            <label for="overall_assessment.value">
+                {{ overall_assessment.value.label }}:
+            </label>
             {{ overall_assessment.value(class='form-control semaphore') }}
           </div>
 
           <div class="col-sm-3 {{- error_cls(overall_assessment.trend) }}">
+            <label for="overall_assessment.trend">
+                {{ overall_assessment.trend.label }}:
+            </label>
             {{ overall_assessment.trend(class='form-control') }}
           </div>
         </div>
       </div>
 
+      {% if app_name and app_name == 'consultation' %}
       <div class="form-group">
           {%- set report_observation = form.report_observation %}
           <label for="report_observation">
@@ -74,6 +105,7 @@
             </div>
           </div>
       </div>
+      {% endif %}
     </div>
   </div>
 </div>
