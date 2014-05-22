@@ -6,6 +6,8 @@ from utils import do_csv_export
 
 DATASET = 1
 
+COMMON_HEADER = ('Cod specie', 'Nume', 'Bioregiune')
+
 
 def generic_species_exporter(format_row_cb):
     columns = []
@@ -35,8 +37,10 @@ def generic_species_exporter(format_row_cb):
 
 @exporter.command
 def species_magnitude(filename=None):
-    header = ('Cod specie', 'Nume', 'Bioregiune', 'Magn. min scurt',
-              'Magn. max scurt', 'Magn. min lung', 'Magn. max lung')
+    header = COMMON_HEADER + (
+        'Magn. min scurt', 'Magn. max scurt', 'Magn. min lung',
+        'Magn. max lung',
+    )
 
     def format_row(sp, sr):
         name = None
@@ -59,10 +63,11 @@ def species_magnitude(filename=None):
 
 @exporter.command
 def species_range(filename=None):
-    header = ('Cod specie', 'Nume', 'Bioregiune',
-              'Areal favorabil referinta',
-              'Operator - areal',
-              'Necunoscut')
+    header = COMMON_HEADER + (
+        'Areal favorabil referinta',
+        'Operator - areal',
+        'Necunoscut',
+    )
 
     def format_row(sp, sr):
         name = None
@@ -86,10 +91,9 @@ def species_range(filename=None):
 
 @exporter.command
 def species_population_range(filename=None):
-    header = ('Cod specie', 'Nume', 'Bioregiune',
-              'Populatia favorabila de referinta',
-              'Operator',
-              'Necunoscut')
+    header = COMMON_HEADER + (
+        'Populatia favorabila de referinta', 'Operator', 'Necunoscut'
+    )
 
     def format_row(sp, sr):
         name = None
@@ -114,9 +118,10 @@ def species_population_range(filename=None):
 
 @exporter.command
 def species_population_magnitude(filename=None):
-    header = ('Cod specie', 'Nume', 'Bioregiune', 'Magn. min scurt',
-              'Magn. max scurt', 'Interval incredere', 'Magn. min lung',
-              'Magn. max lung', 'Interval incredere')
+    header = COMMON_HEADER + (
+        'Magn. min scurt', 'Magn. max scurt', 'Interval incredere',
+        'Magn. min lung', 'Magn. max lung', 'Interval incredere',
+    )
 
     def format_row(sp, sr):
         name = None
@@ -141,8 +146,11 @@ def species_population_magnitude(filename=None):
 
 @exporter.command
 def species_population_units(filename=None):
-    header = (u'Unit. de măsură', u'Metoda conversie', u'Definiția localității',
-              u'Dificultăți întâmpinate')
+    header = COMMON_HEADER + (
+        u'Unit. de măsură', u'Metoda conversie',
+        u'Definiția localității',
+        u'Dificultăți întâmpinate',
+    )
 
     def format_row(sp, sr):
         name = sp.lu.display_name if sp.lu else None

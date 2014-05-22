@@ -105,6 +105,9 @@ Configurație
     Directorul de bază pentru căutări în LDAP. De exemplu
     ``'OU=SharePoint,DC=ibb,DC=local'``.
 
+``REFVAL_DIR``
+    Directorul cu valorile de referință.
+
 ``SQLALCHEMY_DATABASE_URI``
     Accesul la baza de date:
     ``'oracle://reportdata_owner:parola@localhost:1521/XE'``
