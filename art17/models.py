@@ -929,7 +929,10 @@ class Dataset(Base):
         species_final = (
             self.species_objs.filter_by(cons_role='final').count()
         )
-        species = species_new + species_draft + species_final
+        species_missing = (
+            self.species_objs.filter_by(cons_role='missing').count()
+        )
+        species = species_new + species_draft + species_final + species_missing
         habitat_new = (
             self.habitat_objs.filter_by(cons_role='assessment').count()
         )
@@ -939,14 +942,18 @@ class Dataset(Base):
         habitat_final = (
             self.habitat_objs.filter_by(cons_role='final').count()
         )
-        habitat = habitat_new + habitat_draft + habitat_final
+        habitat_missing = (
+            self.habitat_objs.filter_by(cons_role='missing').count()
+        )
+        habitat = habitat_new + habitat_draft + habitat_final + habitat_missing
         new = species_new + habitat_new
         draft = species_draft + habitat_draft
         final = species_final + habitat_final
+        missing = species_missing + habitat_missing
         all_count = habitat + species
 
         return {
-            'new': new, 'draft': draft, 'final': final,
+            'new': new, 'draft': draft, 'final': final, 'missing': missing,
             'species': species, 'habitat': habitat,
             'species_new': species_new, 'species_draft': species_draft,
             'species_final': species_final, 'habitat_new': habitat_new,

@@ -26,7 +26,13 @@
     <tr>
       <td><a href="{{ url }}">{{ record.lu.name_ro }}</a></td>
 
-      <td>{{ conclusions_html(record.conclusion_assessment) }}</td>
+      <td>
+        {% if record.is_missing() %}
+        date lipsă
+        {% else %}
+        {{ conclusions_html(record.conclusion_assessment) }}
+        {% endif %}
+      </td>
     {% endfor %}
     </tbody>
   </table>

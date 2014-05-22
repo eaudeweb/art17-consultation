@@ -26,9 +26,10 @@
       <td width="100%">{{ dataset.comment or ""|truncate(100) }}</td>
       <td class="text-right" nowrap>
         {% if dataset.preview %}
-          {{ dataset.details.all }} regiuni
+          {{ dataset.details.all }} regiuni, {{ dataset.details.missing }} lipsă
         {% else %}
           {{ dataset.details.new }} agregate,
+          {{ dataset.details.missing }} lipsă,
           {{ dataset.details.draft }} în lucru,
           {{ dataset.details.final }} finalizate
         {% endif %}
