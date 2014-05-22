@@ -172,6 +172,22 @@ Vor fi afișate tipurile de export disponibile.
 
 Import
 ~~~~~~
-Pentru import din baza de date mysql european, folosim::
+Pentru import din fișiere xml, folosim::
+   
+    $ ./manage.py import -h
 
-    $ ./manage.py import diff 'mysql://user:pass@host/db' -d <dataset_id>
+Valori de referință
+~~~~~~~~~~~~~~~~~~~
+Valorile de referință se importă din fișiere CSV cu aceeași structură 
+ca cele generate de comanda `export`. 
+
+Pașii pentru importul lor sunt:
+
+1. Crearea unui director care să conțină fișierele json, exemplu `./data`
+2. Setarea `REFVAL_DIR` în `settings.py` la acest director
+3. Rularea comenzii import pentru valori de referință.
+
+Datele importate se pot verifica în interfața de Administrare -> Valori de 
+Referință.
+
+
