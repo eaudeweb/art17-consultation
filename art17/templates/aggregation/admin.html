@@ -22,5 +22,8 @@
     <li {% if page == 'compare' %}class="active"{% endif %}>
       <a href="{{ url_for('aggregation.compare') }}">Comparație</a>
     </li>
+    <li {% if page == 'refvalues' %}class="active"{% endif %}>
+      <a href="{{ url_for('aggregation.reference_values') }}">Valori de referință</a>
+    </li>
   </ul>
 {% endblock %}

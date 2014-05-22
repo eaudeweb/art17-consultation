@@ -1,16 +1,24 @@
 from collections import OrderedDict
 from datetime import datetime
+
 from BeautifulSoup import BeautifulSoup
 import requests
 from flask import redirect, url_for, render_template, request, current_app
 from wtforms import Form, IntegerField, TextField
 from wtforms.validators import Optional
 
+from art17 import dal
 from art17.aggregation import (
     aggregation,
     aggregation_manager,
     get_species_checklist,
     get_habitat_checklist,
+    get_reporting_id,
+)
+from art17.aggregation.refvalues import (
+    load_species_refval,
+    refvalue_ok,
+    load_habitat_refval,
 )
 from art17.models import (
     Dataset,
@@ -45,15 +53,19 @@ def get_checklists():
     return Dataset.query.filter_by(checklist=True)
 
 
-def parse_checklist(list):
+def parse_checklist(checklist_qs):
     result = OrderedDict()
-    for item in list:
+    for item in checklist_qs:
         key = (item.code, item.name)
         if key not in result:
             result[key] = {'info': item, 'regions': [item.bio_region]}
         else:
             result[key]['regions'].append(item.bio_region)
     return result
+
+
+def parse_checklist_ref(checklist_qs):
+    return {(item.code, item.bio_region): item for item in checklist_qs}
 
 
 def species_from_oid(data, dataset):
@@ -219,6 +231,40 @@ def edit_checklist(dataset_id):
     )
 
 
+@aggregation.route('/admin/reference_values')
+def reference_values():
+    checklist_id = get_reporting_id()
+
+    species_refvals = load_species_refval()
+    species_checklist = get_species_checklist(dataset_id=checklist_id)
+    species_data = parse_checklist_ref(species_checklist)
+    species_list = get_species_checklist(distinct=True,
+                                         dataset_id=checklist_id)
+    habitat_refvals = load_habitat_refval()
+    habitat_checklist = get_habitat_checklist(dataset_id=checklist_id)
+    habitat_data = parse_checklist_ref(habitat_checklist)
+    habitat_list = get_habitat_checklist(distinct=True,
+                                         dataset_id=checklist_id)
+    relevant_regions = (
+        {s.bio_region for s in species_checklist}.union(
+        {h.bio_region for h in habitat_checklist}
+    ))
+    bioreg_list = dal.get_biogeo_region_list(relevant_regions)
+
+
+    return render_template(
+        'aggregation/admin/reference_values.html',
+        species_refvals=species_refvals,
+        species_data=species_data,
+        species_list=species_list,
+        habitat_refvals=habitat_refvals,
+        habitat_data=habitat_data,
+        habitat_list=habitat_list,
+        bioreg_list=bioreg_list,
+        page='refvalues',
+    )
+
+
 @aggregation_manager.command
 def checklist():
     with open('misc/ListaVerificareHabitate.xml') as fin:
@@ -231,4 +277,4 @@ def checklist():
 
 @aggregation.app_context_processor
 def inject_globals():
-    return {'checklists': get_checklists()}
+    return {'checklists': get_checklists(), 'refvalue_ok': refvalue_ok}

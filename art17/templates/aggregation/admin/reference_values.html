@@ -1,0 +1,64 @@
+{% extends 'aggregation/admin.html' %}
+
+{% macro table(species_list, species_data, species_refvals) %}
+<table class="table">
+    <tr>
+      <th></th>
+      {% for region in bioreg_list %}
+      <th>{{ region.code }}</th>
+      {% endfor %}
+    </tr>
+    {% for code, name in species_list %}
+      <tr>
+        <td>{{ name }}</td>
+        {% for region in bioreg_list %}
+            {% set check_key = (code, region.code) %}
+            {% set key = code + "-" + region.code %}
+
+            {% if check_key in species_data %}
+            <td nowrap="nowrap">
+              {% if key not in species_refvals %}
+                date lipsă
+              {% else %}
+                {% set info = refvalue_ok(species_refvals[key]) %}
+                {% if info is none %}
+                  date goale
+                {% elif not info %}
+                  date incomplete
+                {% else %}
+                  ok
+                {% endif %}
+              {% endif %}
+            </td>
+            {% else %}
+            <td class="dashboard-missingrecord">
+            </td>
+            {% endif %}
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+{% endmacro %}
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('acasǎ', home_url),
+          ('admin', url_for('.admin')),
+          ('valori de referință', none),
+      ]) }}
+{% endblock breadcrumbs %}
+
+{% block content %}
+  <h2>Valori de referință</h2>
+  <p>Statusul valorilor de referință importate în sistem. Pentru date lipsă sau
+    incomplete nu se va putea realiza agregarea.</p>
+
+  <h3>Specii</h3>
+
+  {{ table(species_list, species_data, species_refvals) }}
+
+  <h3>Habitate</h3>
+  {{ table(habitat_list, habitat_data, habitat_refvals) }}
+
+{% endblock %}
