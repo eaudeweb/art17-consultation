@@ -376,7 +376,14 @@ def xml_species(xml_path, dataset_id=1):
             speciescode = species.speciescode.text
             ok_species.append(speciescode)
             data = extract_record('etc_data_species', species)
-            species_obj = DataSpecies.query.filter_by(code=speciescode).first()
+            species_qs = DataSpecies.query.filter_by(code=speciescode)
+            species_obj = species_qs.first()
+            if species_qs.count() > 1:
+                print "Multiple objects for speciescode:", speciescode
+                for s in species_qs:
+                    if s.id != species_obj.id:
+                        print " Delete ", s.id
+                        db.session.delete(s)
             if not species_obj:
                 print "Missing species: ", speciescode
                 speciescode_numeric = int(speciescode)
@@ -519,7 +526,14 @@ def xml_habitat(xml_path, dataset_id=1):
             habcode = habitat.habitatcode.text
             ok_habitats.append(habcode)
             data = extract_record('data_habitats', habitat)
-            habitat_obj = DataHabitat.query.filter_by(code=habcode).first()
+            habitat_qs = DataHabitat.query.filter_by(code=habcode)
+            habitat_obj = habitat_qs.first()
+            if habitat_qs.count() > 1:
+                print "Multiple objects for habcode:", habcode
+                for h in habitat_qs:
+                    if h.id != habitat_obj.id:
+                        print " Delete", h.id
+                        db.session.delete(h)
 
             if not habitat_obj:
                 print "Missing habitat: ", habcode
