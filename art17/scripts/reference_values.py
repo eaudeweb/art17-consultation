@@ -18,7 +18,7 @@ def generic_species_exporter(format_row_cb):
             models.DataSpecies.query
             .join(models.DataSpecies.lu)
             .filter(models.LuHdSpecies.group_code == group.code)
-            .order_by(models.DataSpecies.code)
+            .order_by(models.LuHdSpecies.speciesname)
         )
         for sp in data_species:
             data_species_regions = (
