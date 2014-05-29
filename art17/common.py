@@ -159,6 +159,14 @@ def perm_close_consultation(subject):
     return Permission(need.admin, *get_roles_for_subject('reviewer', subject))
 
 
+def perm_view_history(subject):
+    return Permission(
+            need.admin,
+            need.reviewer,
+            need.expert,
+            need.reporter,
+            *get_roles_for_subject('reporter', subject))
+
 common = flask.Blueprint('common', __name__)
 
 
@@ -175,7 +183,7 @@ def inject_permissions():
         'perm_edit_comment': perm_edit_comment,
         'perm_update_comment_status': perm_update_comment_status,
         'perm_delete_comment': perm_delete_comment,
-        'perm_view_history': admin_permission,
+        'perm_view_history': perm_view_history,
     }
 
 
