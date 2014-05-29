@@ -18,6 +18,10 @@ class need(object):
     authenticated = RoleNeed('authenticated')
     impossible = RoleNeed('impossible')
 
+    expert = RoleNeed('expert')
+    reviewer = RoleNeed('reviewer')
+    reporter = RoleNeed('reporter')
+
     @staticmethod
     def user_id(user_id):
         return UserNeed(user_id)
