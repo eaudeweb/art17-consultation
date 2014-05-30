@@ -90,6 +90,30 @@ def species_range(filename=None):
 
 
 @exporter.command
+def species_habitat(filename=None):
+    header = COMMON_HEADER + (
+        'Suprafață habitatului',
+    )
+
+    def format_row(sp, sr):
+        name = None
+        if sp.lu:
+            name = sp.lu.display_name
+        name = name or ''
+
+        return [
+            sp.code,
+            name,
+            sr.region,
+            unicode(sr.habitat_surface_area)
+            if sr.habitat_surface_area else ''
+        ]
+
+    columns = generic_species_exporter(format_row)
+    do_csv_export(header, columns, filename)
+
+
+@exporter.command
 def species_population_range(filename=None):
     header = COMMON_HEADER + (
         'Populatia favorabila de referinta', 'Operator', 'Necunoscut'
@@ -179,6 +203,7 @@ def all(dest_dir=None):
     available = {
         'species_magnitude': species_magnitude,
         'species_range': species_range,
+        'species_habitat': species_habitat,
         'species_population_range': species_population_range,
         'species_population_magnitude': species_population_magnitude,
         'species_population_units': species_population_units,
