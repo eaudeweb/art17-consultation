@@ -92,7 +92,7 @@ def species_range(filename=None):
 @exporter.command
 def species_habitat(filename=None):
     header = COMMON_HEADER + (
-        'Suprafață habitatului',
+        u'Suprafață habitatului',
     )
 
     def format_row(sp, sr):
