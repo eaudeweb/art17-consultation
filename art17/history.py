@@ -6,7 +6,7 @@ from art17 import models, config
 from art17 import species
 from art17 import habitat
 from art17 import replies
-from art17.common import json_encode_more
+from art17.common import json_encode_more, perm_view_history
 from art17.auth import admin_permission
 from art17.dal import get_biogeo_region
 
@@ -121,12 +121,12 @@ def pretty_json_data(json_data):
 @history_consultation.route('/activitate/specii/<subject_code>/<region_code>')
 @history_aggregation.route('/dataset/<int:dataset_id>/activitate'
                            '/specii/<subject_code>/<region_code>')
-@admin_permission.require(403)
 def species_comments(subject_code, region_code, dataset_id=None):
     from art17.species import get_dataset
     dataset = get_dataset(dataset_id)
     items = dataset.get_history(subject_code, region_code)
     subject = dataset.get_subject(subject_code)
+    perm_view_history(subject).test()
     return flask.render_template('history/comments.html', **{
         'history_items': items,
         'subject_category': 'specii',
@@ -147,16 +147,18 @@ def species_comments(subject_code, region_code, dataset_id=None):
 @history_consultation.route('/activitate/habitate/<subject_code>/<region_code>')
 @history_aggregation.route('/dataset/<int:dataset_id>/activitate'
                            '/habitate/<subject_code>/<region_code>')
-@admin_permission.require(403)
 def habitat_comments(subject_code, region_code, dataset_id=None):
     from art17.habitat import get_dataset
     dataset = get_dataset(dataset_id)
     items = dataset.get_history(subject_code, region_code)
+    subject = dataset.get_subject(subject_code)
+    perm_view_history(subject).test()
+
     return flask.render_template('history/comments.html', **{
         'history_items': items,
         'subject_category': 'habitate',
         'subject_code': subject_code,
-        'subject': dataset.get_subject(subject_code),
+        'subject': subject,
         'region': get_biogeo_region(region_code),
         'dashboard_url':
             flask.url_for('dashboard.habitats') if dataset_id is None else '',
