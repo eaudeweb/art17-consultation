@@ -6,8 +6,10 @@ import requests
 from flask import redirect, url_for, render_template, request, current_app
 from wtforms import Form, IntegerField, TextField
 from wtforms.validators import Optional
+from flask.ext.principal import Permission
 
 from art17 import dal
+from art17.auth import require, need
 from art17.aggregation import (
     aggregation,
     aggregation_manager,
@@ -162,6 +164,7 @@ def admin():
 
 
 @aggregation.route('/admin/checklists/')
+@require(Permission(need.authenticated))
 def checklists():
     checklists = get_checklists()
 
