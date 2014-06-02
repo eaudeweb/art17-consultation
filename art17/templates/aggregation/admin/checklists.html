@@ -44,10 +44,13 @@
     </tbody>
   </table>
 
+  {% if perm_fetch_checklist().can() %}
   <p>
     <a class="btn btn-default" href="{{ url_for('.create') }}">
       Creează raportare</a>
   </p>
+  {% endif %}
+
 {% endblock %}
 
 {% block script %}

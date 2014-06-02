@@ -167,6 +167,11 @@ def perm_view_history(subject):
             need.reporter,
             *get_roles_for_subject('reporter', subject))
 
+
+def perm_fetch_checklist():
+    return Permission(need.admin, need.reporter)
+
+
 common = flask.Blueprint('common', __name__)
 
 
@@ -184,6 +189,7 @@ def inject_permissions():
         'perm_update_comment_status': perm_update_comment_status,
         'perm_delete_comment': perm_delete_comment,
         'perm_view_history': perm_view_history,
+        'perm_fetch_checklist': perm_fetch_checklist,
     }
 
 

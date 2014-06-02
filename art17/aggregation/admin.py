@@ -10,6 +10,7 @@ from flask.ext.principal import Permission
 
 from art17 import dal
 from art17.auth import require, need
+from art17.common import perm_fetch_checklist
 from art17.aggregation import (
     aggregation,
     aggregation_manager,
@@ -197,6 +198,7 @@ def checklist(dataset_id=None):
 
 
 @aggregation.route('/admin/checklist/create/', methods=('GET', 'POST'))
+@require(perm_fetch_checklist())
 def create():
     if request.method == "POST":
         create_checklist()
