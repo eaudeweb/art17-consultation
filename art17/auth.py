@@ -33,7 +33,7 @@ class need(object):
 
 admin_permission = Permission(need.admin)
 impossible_permission = Permission(need.impossible)
-
+authenticated_permission = Permission(need.authenticated)
 
 def user_permission(user_id):
     return Permission(UserNeed(user_id))
@@ -55,6 +55,7 @@ def register_principals(state):
 def inject_context():
     return {
         'admin_permission': admin_permission,
+        'authenticated_permission' : authenticated_permission,
         'get_profile_login_url': get_profile_login_url,
         'get_profile_logout_url': get_profile_logout_url,
     }

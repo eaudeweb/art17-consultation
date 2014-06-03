@@ -4,6 +4,7 @@ from datetime import datetime
 
 import flask
 from flask import request, render_template, redirect, url_for
+from flask.ext.principal import Permission
 from flask.views import View
 from sqlalchemy import func, or_
 from werkzeug.datastructures import MultiDict
@@ -31,7 +32,7 @@ from art17.aggregation.utils import (
     get_datasets,
     aggregation_missing_data_report
 )
-from art17.auth import admin_permission
+from art17.auth import admin_permission, require, need
 from art17.common import (
     flatten_dict,
     FINALIZED_STATUS,
@@ -161,6 +162,7 @@ def delete_dataset(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>')
+@require(Permission(need.authenticated))
 def report(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
 

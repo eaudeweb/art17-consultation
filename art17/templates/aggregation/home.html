@@ -40,7 +40,7 @@
           <button type="submit" class="btn btn-danger btn-xs">șterge</button>
           <a class="btn btn-warning btn-xs"
              href="{{ activity_url }}">activitate</a>
-          {% if show_reports %}
+          {% if authenticated_permission.can() and show_reports %}
           <a class="btn btn-default btn-xs"
              href="{{ report_url }}">rapoarte</a>
           {% endif %}
