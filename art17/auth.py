@@ -226,6 +226,10 @@ def ldap_groups_for_role(role):
         prefix = 'reviewer'
         ldap_prefix = 'G_RES_'
 
+    elif role.startswith('reporter:'):
+        prefix = 'reporter'
+        ldap_prefix = 'G_RAP_'
+
     else:
         return []
 
