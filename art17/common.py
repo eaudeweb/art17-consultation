@@ -172,6 +172,12 @@ def perm_fetch_checklist():
     return Permission(need.admin, need.reporter)
 
 
+def perm_save_record():
+    return Permission(
+            need.admin,
+            need.reviewer)
+
+
 common = flask.Blueprint('common', __name__)
 
 
@@ -190,6 +196,7 @@ def inject_permissions():
         'perm_delete_comment': perm_delete_comment,
         'perm_view_history': perm_view_history,
         'perm_fetch_checklist': perm_fetch_checklist,
+        'perm_save_record': perm_save_record,
     }
 
 
@@ -437,6 +444,7 @@ class RecordView(IndexMixin, flask.views.View):
             )
 
         if flask.request.method == 'POST':
+            perm_save_record(self.record).test()
             if self.process_form():
                 flask.flash(self.success_message, 'success')
                 if flask.request.form.get('submit', '') == 'finalize':

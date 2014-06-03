@@ -45,7 +45,7 @@
       <input type="hidden" name="next" value="{{ next_url }}">
     {%- endif %}
 
-    {%- if not record_obj.dataset.preview -%}
+    {%- if not record_obj.dataset.preview and perm_save_record().can() -%}
      <button type="submit" class="btn btn-primary">
       Salveazǎ schimbǎrile
     </button>
