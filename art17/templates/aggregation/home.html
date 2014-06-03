@@ -61,9 +61,10 @@
     </h2>
 
     <p>
+      {% if perm_aggregate_dataset().can() %}
       <a class="btn btn-primary"
          href="{{ url_for('.aggregate') }}">Agregare set de date</a>
-
+      {% endif %}
       <a class="btn btn-warning"
          href="{{ url_for('.preview', page='habitat') }}">Agregare habitat</a>
 

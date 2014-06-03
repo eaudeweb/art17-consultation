@@ -37,6 +37,7 @@ from art17.common import (
     flatten_dict,
     FINALIZED_STATUS,
     NEW_STATUS,
+    perm_aggregate_dataset,
 )
 from art17.habitat import detail as detail_habitat, HabitatCommentView
 from art17.lookup import CONCLUSIONS
@@ -76,6 +77,7 @@ def home():
 
 
 @aggregation.route('/executa_agregare', methods=['GET', 'POST'])
+@require(perm_aggregate_dataset())
 def aggregate():
     check_aggregation_perm()
     if request.method == 'POST':

@@ -178,6 +178,12 @@ def perm_save_record():
             need.reviewer)
 
 
+def perm_aggregate_dataset():
+    return Permission(
+            need.admin,
+            need.reporter)
+
+
 common = flask.Blueprint('common', __name__)
 
 
@@ -197,6 +203,7 @@ def inject_permissions():
         'perm_view_history': perm_view_history,
         'perm_fetch_checklist': perm_fetch_checklist,
         'perm_save_record': perm_save_record,
+        'perm_aggregate_dataset': perm_aggregate_dataset,
     }
 
 
