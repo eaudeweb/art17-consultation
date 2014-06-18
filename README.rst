@@ -9,8 +9,10 @@ Trebuie să fie deja instalate următoarele:
 * Compilator C
 * Python 2.7 (inclusiv header-ele pentru compilare)
 * Biblioteca de client Oracle (`instantclient-basic`, `instantclient-sdk`)
-  (instrucțiuni pentru MacOS: https://gist.github.com/mgax/6364125)
+  (instrucțiuni pentru MacOS: https://gist.github.com/mgax/6364125,
+   instrucțiuni pentru Ubuntu: https://gist.github.com/taygun/2989a7e08794bd03bd9e)
 * Biblioteci XML (`libxml2-dev`, `libxslt1-dev`)
+* Biblioteci SSL (`openssl`, `libssl-dev`)
 
 Download codul sursă::
 
@@ -155,7 +157,7 @@ Pentru a crea un nou script de migrare::
 
 Apoi se editează din: `alembic/versions/revizie.py`
 
-Pentru a aduce baza de date la zi: upgrade. Pentru a reveni la versiunea 
+Pentru a aduce baza de date la zi: upgrade. Pentru a reveni la versiunea
 dinaintea migrării::
 
     $ ./manage.py db downgrade -1
@@ -165,7 +167,7 @@ Scripturi operații cu date
 Export
 ~~~~~~
 Pentru exportul de date, folosim comanda export::
-    
+
     $ ./manage.py export -h
 
 Vor fi afișate tipurile de export disponibile.
@@ -173,13 +175,13 @@ Vor fi afișate tipurile de export disponibile.
 Import
 ~~~~~~
 Pentru import din fișiere xml, folosim::
-   
+
     $ ./manage.py import -h
 
 Valori de referință
 ~~~~~~~~~~~~~~~~~~~
-Valorile de referință se importă din fișiere CSV cu aceeași structură 
-ca cele generate de comanda `export`. 
+Valorile de referință se importă din fișiere CSV cu aceeași structură
+ca cele generate de comanda `export`.
 
 Pașii pentru importul lor sunt:
 
@@ -187,7 +189,7 @@ Pașii pentru importul lor sunt:
 2. Setarea `REFVAL_DIR` în `settings.py` la acest director
 3. Rularea comenzii import pentru valori de referință.
 
-Datele importate se pot verifica în interfața de Administrare -> Valori de 
+Datele importate se pot verifica în interfața de Administrare -> Valori de
 Referință.
 
 
