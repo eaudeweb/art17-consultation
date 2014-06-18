@@ -10,8 +10,10 @@
       <a class="btn btn-primary"
          href="{{ url_for('dashboard.index') }}">dashboard</a>
 
+      {% if admin_permission.can() %}
       <a class="btn btn-warning"
          href="{{ url_for('history_consultation.index') }}">activitate</a>
+      {% endif %}
 
       {% if config['AUTH_DEBUG'] %}
         <a class="btn btn-danger"
