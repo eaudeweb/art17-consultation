@@ -5,21 +5,21 @@
         <th>Justificarea procentului de prag pentru tendințe</th>
       </tr>
       <tr>
-        <td>{{ record.justification if record.justification else '-' | nl2br }}</td>
+        <td>{{ record.justification or '-' | nl2br }}</td>
       </tr>
 
       <tr>
         <th>Alte informații relevante</th>
       </tr>
       <tr>
-        <td>{{ record.other_relevant_information if record.other_relevant_information else '-' | nl2br }}</td>
+        <td>{{ record.other_relevant_information or '-' | nl2br }}</td>
       </tr>
 
       <tr>
         <th>Evaluare transfrontalierǎ</th>
       </tr>
       <tr>
-        <td>{{ record.transboundary_assessment if record.transboundary_assessment else '-' | nl2br }}</td>
+        <td>{{ record.transboundary_assessment or '-' | nl2br }}</td>
       </tr>
     </table>
   </div>
