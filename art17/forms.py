@@ -582,12 +582,12 @@ class SpeciesComment(Form):
             self.validate()
         finally:
             for f in mandatory_fields:
-                if not f.data:
+                if f.data in (None, ''):
                     f.errors.append(
                         u"Trebuie completat câmpul %s" % (f.label.text or f)
                     )
             if not (self.population.size.population.unit.data or
-                        self.population.size.population_alt.unit.data):
+                    self.population.size.population_alt.unit.data):
                 self.population.size.population.unit.errors.append(
                     u"Trebuie completată una dintre cele două dimensiuni"
                     u" ale populației"
@@ -653,7 +653,7 @@ class HabitatComment(Form):
             self.validate()
         finally:
             for f in mandatory_fields:
-                if not f.data:
+                if f.data in (None, ''):
                     f.errors.append(
                         u"Trebuie completat câmpul %s" % (f.label.text or f)
                     )
