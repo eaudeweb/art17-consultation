@@ -1,6 +1,5 @@
 # encoding: utf-8
-
-import pytest
+from art17.common import DEFAULT_COMMENT_ROLE
 
 COMMENT_SAVED_TXT = "Comentariul a fost înregistrat"
 MISSING_FIELD_TXT = "Suprafața este obligatorie"
@@ -101,7 +100,7 @@ SPECIES_STRUCT_DATA = {
         'surface_area': 100,
         'date': '2000-2001',
         'method': '3',
-        'quality': '2',
+        'quality': 'Good',
         'quality_explanation': 'foo explanation',
         'trend_short': {
             'trend': '0',
@@ -197,7 +196,7 @@ SPECIES_MODEL_DATA = {
     'habitat_surface_area': 100,
     'habitat_date': '2000-2001',
     'habitat_method': '3',
-    'habitat_quality': '2',
+    'habitat_quality': 'Good',
     'habitat_quality_explanation': 'foo explanation',
     'habitat_trend': '0',
     'habitat_trend_period': '2004-2005',
@@ -250,7 +249,7 @@ def _create_species_record(species_app, comment=False):
             comment = models.DataSpeciesRegion(
                 id=2,
                 species_id=1,
-                cons_role='comment',
+                cons_role=DEFAULT_COMMENT_ROLE,
                 cons_user_id='smith',
                 cons_dataset_id=1,
                 region='ALP',
@@ -281,7 +280,7 @@ def test_save_comment_record(species_app):
                              'habitat.surface_area': '100',
                              'habitat.date': '2000-2001',
                              'habitat.method': '1',
-                             'habitat.quality': '2',
+                             'habitat.quality': 'Good',
                              'habitat.quality_explanation': 'foo explanation',
                              'habitat.area_suitable': 1000},
                        follow_redirects=True)
@@ -289,7 +288,7 @@ def test_save_comment_record(species_app):
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
         comment = DataSpeciesRegion.query.get(2)
-        assert comment.cons_role == 'comment-draft'
+        assert comment.cons_role == DEFAULT_COMMENT_ROLE
         assert comment.cons_user_id == 'smith'
         assert comment.species.code == '1234'
         assert comment.region == 'ALP'
@@ -318,7 +317,7 @@ def test_edit_comment_submit(species_app):
                              'habitat.surface_area': '100',
                              'habitat.date': '2000-2001',
                              'habitat.method': '1',
-                             'habitat.quality': '2',
+                             'habitat.quality': 'Good',
                              'habitat.quality_explanation': 'foo explanation',
                              'habitat.area_suitable': 1000},
                        follow_redirects=True)
@@ -346,7 +345,7 @@ def test_extra_fields_save(species_app):
     assert COMMENT_SAVED_TXT in resp.data
     with species_app.app_context():
         comment = DataSpeciesRegion.query.get(2)
-        assert comment.cons_role == 'comment-draft'
+        assert comment.cons_role == DEFAULT_COMMENT_ROLE
         assert comment.cons_user_id == 'smith'
         assert len(list(comment.pressures)) == 1
         assert comment.pressures[0].pressure == '1'
@@ -453,7 +452,7 @@ def test_permissions(species_app):
     with species_app.app_context():
         row = models.DataSpeciesRegion.query.get(1)
         comment = models.DataSpeciesRegion.query.get(2)
-        comment.cons_role = 'comment-draft'
+        comment.cons_role = DEFAULT_COMMENT_ROLE
 
         assert common.perm_create_comment(row).needs == set([
             RoleNeed('admin'),

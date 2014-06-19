@@ -1,6 +1,5 @@
 # encoding: utf-8
-
-import pytest
+from art17.common import DEFAULT_COMMENT_ROLE, DRAFT_COMMENT_ROLE
 
 COMMENT_SAVED_TXT = "Comentariul a fost înregistrat"
 MISSING_FIELD_TXT = "Suprafața este obligatorie"
@@ -193,7 +192,7 @@ def _create_habitat_record(habitat_app, comment=False):
             comment = models.DataHabitattypeRegion(
                 id=2,
                 habitat_id=1,
-                cons_role='comment',
+                cons_role=DEFAULT_COMMENT_ROLE,
                 cons_user_id='smith',
                 region='ALP',
                 range_surface_area=1337,
@@ -228,7 +227,7 @@ def test_save_comment_record(habitat_app):
     assert COMMENT_SAVED_TXT in resp.data
     with habitat_app.app_context():
         comment = DataHabitattypeRegion.query.get(2)
-        assert comment.cons_role == 'comment-draft'
+        assert comment.cons_role == DEFAULT_COMMENT_ROLE
         assert comment.cons_user_id == 'smith'
         assert comment.habitat.code == '1234'
         assert comment.region == 'ALP'
@@ -266,7 +265,6 @@ def test_edit_comment_submit(habitat_app):
 def test_extra_fields_save(habitat_app):
     import json
     from art17.models import DataHabitattypeRegion
-    from art17 import models
     habitat_app.config['TESTING_USER_ID'] = 'smith'
     _create_habitat_record(habitat_app)
     pressure_data = json.dumps({'pressure': '1', 'ranking': 'M', 'pollutions': ['A']})
@@ -280,7 +278,7 @@ def test_extra_fields_save(habitat_app):
     assert COMMENT_SAVED_TXT in resp.data
     with habitat_app.app_context():
         comment = DataHabitattypeRegion.query.get(2)
-        assert comment.cons_role == 'comment-draft'
+        assert comment.cons_role == DEFAULT_COMMENT_ROLE
         assert comment.cons_user_id == 'smith'
         assert len(list(comment.pressures)) == 1
         assert comment.pressures[0].pressure == '1'
@@ -387,7 +385,7 @@ def test_permissions(habitat_app):
         row = models.DataHabitattypeRegion.query.get(1)
         comment = models.DataHabitattypeRegion.query.get(2)
 
-        comment.cons_role = 'comment-draft'
+        comment.cons_role = DRAFT_COMMENT_ROLE
         assert common.perm_create_comment(row).needs == set([
             RoleNeed('admin'),
             RoleNeed('expert'),
@@ -400,7 +398,7 @@ def test_permissions(habitat_app):
             UserNeed('smith'),
         ])
 
-        comment.cons_role = 'comment'
+        comment.cons_role = DEFAULT_COMMENT_ROLE
         assert common.perm_update_comment_status(comment).needs == set([
             RoleNeed('admin'),
             RoleNeed('reviewer'),

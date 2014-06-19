@@ -6,6 +6,7 @@ from art17 import species
 from art17 import common
 from art17 import habitat
 from art17 import notifications
+from art17.common import DRAFT_COMMENT_ROLE
 from art17.notifications import mail
 from test_history import species_params, habitat_params
 
@@ -164,7 +165,7 @@ def test_comment_submit_for_evaluation(params, notifications_app):
         with ldap_patch():
             with notifications_app.test_request_context():
                 comment = params.record
-                comment.cons_role = 'comment-draft'
+                comment.cons_role = DRAFT_COMMENT_ROLE
                 comment.cons_user_id = 'smith2'
                 models.db.session.add(comment)
                 models.db.session.commit()

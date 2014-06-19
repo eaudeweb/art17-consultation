@@ -2,6 +2,7 @@ from datetime import datetime
 import pytest
 from flask import json
 from art17 import models, species, habitat, history, forms, common
+from art17.common import DEFAULT_COMMENT_ROLE
 
 
 class species_params(object):
@@ -22,7 +23,7 @@ class species_params(object):
                     'habitat.surface_area': '100',
                     'habitat.date': '2000-2001',
                     'habitat.method': '1',
-                    'habitat.quality': '2',
+                    'habitat.quality': 'Good',
                     'habitat.quality_explanation': 'foo explanation',
                     'habitat.area_suitable': 1000}
 
@@ -83,7 +84,7 @@ def test_comment_add(params, app):
         history = models.History.query.all()
         comment = (
             params.comment_cls.query
-            .filter_by(cons_role='comment-draft')
+            .filter_by(cons_role=DEFAULT_COMMENT_ROLE)
             .first()
         )
         assert len(history) == 1
@@ -107,7 +108,7 @@ def test_comment_edit(params, app):
         history = models.History.query.all()
         comment = (
             params.comment_cls.query
-            .filter_by(cons_role='comment')
+            .filter_by(cons_role=DEFAULT_COMMENT_ROLE)
             .first()
         )
         assert len(history) == 1
@@ -132,7 +133,7 @@ def test_comment_update_status(params, app):
         history = models.History.query.all()
         comment = (
             params.comment_cls.query
-            .filter_by(cons_role='comment')
+            .filter_by(cons_role=DEFAULT_COMMENT_ROLE)
             .first()
         )
         assert len(history) == 1
@@ -156,7 +157,7 @@ def test_comment_delete(params, app):
         history = models.History.query.all()
         comment = (
             params.comment_cls.query
-            .filter_by(cons_role='comment')
+            .filter_by(cons_role=DEFAULT_COMMENT_ROLE)
             .first()
         )
         assert len(history) == 1
