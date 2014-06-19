@@ -47,9 +47,9 @@ APPROVED_STATUS = 'approved'
 assert APPROVED_STATUS in STATUS_VALUES
 
 CONCLUSION_COLOR = {
-    'FV': '71A057',
-    'U1': 'E7E737',
-    'U2': 'F76C27',
+    'FV': '21B24A',
+    'U1': 'FFC308',
+    'U2': 'EF1C21',
     'XX': 'FFFFFF',
 }
 
