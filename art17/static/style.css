@@ -166,7 +166,9 @@ fieldset legend {
 .conclusion-U2 a:visited {
     color: white;
 }
-.conclusion-XX { background: #FFFFFF; }
+.conclusion-XX {
+    background-color: #b4b4b4;
+}
 
 .records {
     font-size: 11px;
@@ -399,7 +401,7 @@ a.conclusion:hover {
 .FV.conclusion {
   color: #000;
   border-color: #639500;
-  background-color: #9aca3b;
+  background-color: #21B24A;
 }
 .FVU .conclusion,
 .FVU.conclusion {
@@ -411,73 +413,73 @@ a.conclusion:hover {
 .U1.conclusion {
   color: #000;
   border-color: #b05f00;
-  background-color: #e69800;
+  background-color: #FFC308;
 }
 .U1U .conclusion,
 .U1U.conclusion {
   color: #000;
   border-color: #b05f00;
-  background-color: #e69800;
+  background-color: #FFC308;
 }
 .U1M .conclusion,
 .U1M.conclusion {
   color: #000;
   border-color: #b05f00;
-  background-color: #e69800;
+  background-color: #FFC308;
 }
 .U1P .conclusion,
 .U1P.conclusion {
   color: #000;
   border-color: #b05f00;
-  background-color: #e69800;
+  background-color: #FFC308;
 }
 .U2 .conclusion,
 .U2.conclusion {
   color: #000;
   border-color: #742c2c;
-  background-color: #eb6847;
+  background-color: #EF1C21;
 }
 .U2U .conclusion,
 .U2U.conclusion {
   color: #000;
   border-color: #742c2c;
-  background-color: #eb6847;
+  background-color: #EF1C21;
 }
 .U2M .conclusion,
 .U2M.conclusion {
   color: #000;
   border-color: #742c2c;
-  background-color: #eb6847;
+  background-color: #EF1C21;
 }
 .U2P .conclusion,
 .U2P.conclusion {
   color: #000;
   border-color: #742c2c;
-  background-color: #eb6847;
+  background-color: #EF1C21;
 }
 .XX .conclusion,
 .XX.conclusion {
   color: #000;
   border-color: #888;
-  background-color: #b4b4b4;
+  background-color: #FFFFFF;
 }
 .XXU .conclusion,
 .XXU.conclusion {
   color: #000;
   border-color: #888;
-  background-color: #b4b4b4;
+  background-color: #FFFFFF;
 }
 .XU .conclusion,
 .XU.conclusion {
   color: #000;
   border-color: #888;
-  background-color: #b4b4b4;
+  background-color: #FFFFFF;
 }
 .XUU .conclusion,
 .XUU.conclusion {
   color: #000;
   border-color: #888;
-  background-color: #b4b4b4;
+  background-color: #FFFFFF;
 }
 .NA .conclusion,
 .NA.conclusion {
