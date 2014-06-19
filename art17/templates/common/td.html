@@ -11,9 +11,22 @@
 
 
 {% macro conclusion_td(conclusion) -%}
-  <td title="{{ CONCLUSIONS[conclusion.value] }}" class="text-center"><span class="conclusion {{ conclusion.value }}">{{ conclusion.value }}</span></td>
+  <td title="{{ CONCLUSIONS.get(conclusion.value) }}; {{ TREND_NAME.get(conclusion.trend) }}"
+      class="text-center conclusion-{{ conclusion.value }}">
+    {% if conclusion.value %}
+    <span class="">
+      {{ conclusion.value or '-' }}, {{ conclusion.trend or 'x' }}
+    </span>
+    {% endif %}
+  </td>
 {%- endmacro %}
 
+
+{% macro method_td(method) %}
+<td class="method">
+  {{ method_html(method) }}
+</td>
+{% endmacro %}
 
 {% macro method_html(method) %}
 {%- if method %}
@@ -195,7 +208,7 @@
 
 
 {% macro habitat_quality_html(quality) %}
-  {{- quality.value }}
+  {{- QUALITY.get(quality.value, quality.value) }}
 {%- endmacro %}
 
 
@@ -207,17 +220,6 @@
   </td>
 {%- endmacro %}
 
-
-{% macro conclusion_td_input(name) %}
-  <td>
-    <select name="{{ name }}">
-      <option>FV</option>
-      <option>U1</option>
-      <option>U2</option>
-      <option>XX</option>
-    </select>
-  </td>
-{%- endmacro %}
 
 {% macro conclusions_html(conclusion) %}
     <strong>Concluzie:</strong>

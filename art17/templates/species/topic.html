@@ -1,6 +1,6 @@
 {%- from 'common/td.html'
     import conclusion_td, reference_value_td, trend_td,
-           population_size_td, habitat_quality_td
+           population_size_td, habitat_quality_td, method_td,
     with context %}
 
 
@@ -56,7 +56,7 @@
     <td>{{ range.surface_area }}</td>
     {{ conclusion_td(range.conclusion) }}
     {{ trend_td(range.trend_short) }}
-    <td class="method">{{ range.method }}</td>
+    {{ method_td(range.method) }}
     {{ reference_value_td(range.reference_value) }}
 
     {#- population #}
@@ -71,7 +71,7 @@
     <td>{{ habitat.surface_area }}</td>
     {{ conclusion_td(habitat.conclusion) }}
     <td>{{ habitat.area_suitable }}</td>
-    <td class="method">{{ habitat.method }}</td>
+    {{ method_td(habitat.method) }}
     {{ trend_td(habitat.trend_short) }}
     {{ habitat_quality_td(habitat.quality) }}
 

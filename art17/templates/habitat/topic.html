@@ -1,5 +1,5 @@
 {%- from 'common/td.html'
-    import conclusion_td, reference_value_td, trend_td, conclusion_td_input
+    import conclusion_td, reference_value_td, trend_td, method_td
     with context %}
 
 
@@ -53,7 +53,7 @@
   {#- range #}
   {%- set range = row.range %}
   <td>{{ range.surface_area }}</td>
-  <td class="method">{{ range.method }}</td>
+  {{ method_td(range.method) }}
   {{ trend_td(range.trend_short) }}
   {{ reference_value_td(range.reference_value) }}
   {{ conclusion_td(range.conclusion) }}
@@ -61,7 +61,7 @@
   {#- coverage #}
   {%- set coverage = row.coverage %}
   <td>{{ coverage.surface_area }}</td>
-  <td class="method">{{ coverage.method }}</td>
+  {{ method_td(coverage.method) }}
   {{ trend_td(coverage.trend_short) }}
   {{ reference_value_td(coverage.reference_value) }}
   {{ conclusion_td(coverage.conclusion) }}

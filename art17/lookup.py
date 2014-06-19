@@ -43,6 +43,7 @@ TREND_OPTIONS = [
     ('+', u"În creștere"),
     ('-', u"În descreștere"),
     ('0', u"Stabilă"),
+    ('=', u"Stabilă"),
     ('x', u"Necunoscută"),
 ]
 
