@@ -62,6 +62,10 @@ AGGREGATION_STATUS_OPTIONS = [
 NEW_STATUS = 'new'
 FINALIZED_STATUS = 'finalized'
 
+DEFAULT_COMMENT_ROLE = 'comment'
+EDITABLE_COMMENT_ROLES = ('comment', 'comment-draft')
+DRAFT_COMMENT_ROLE = 'comment-draft'
+
 
 def get_population_units_ro(unit):
     return (
@@ -94,7 +98,7 @@ def perm_edit_comment(comment):
     if comment.cons_status not in EDITABLE_STATUS_LIST:
         return Permission(need.impossible)
 
-    if comment.cons_role != 'comment-draft':
+    if comment.cons_role not in EDITABLE_COMMENT_ROLES:
         return Permission(need.admin,
                           *get_roles_for_subject('reviewer', comment.subject)
         )
@@ -107,7 +111,7 @@ def perm_edit_comment(comment):
 
 
 def perm_update_comment_status(comment):
-    if comment.cons_role == 'comment-draft':
+    if comment.cons_role == DRAFT_COMMENT_ROLE:
         return Permission(need.impossible)
 
     return Permission(
@@ -117,7 +121,7 @@ def perm_update_comment_status(comment):
 
 
 def perm_submit_for_evaluation(comment):
-    if comment.cons_role != 'comment-draft':
+    if comment.cons_role != DRAFT_COMMENT_ROLE:
         return Permission(need.impossible)
 
     if comment.cons_user_id:
@@ -128,7 +132,7 @@ def perm_submit_for_evaluation(comment):
 
 
 def perm_redraft_comment(comment):
-    if comment.cons_role == 'comment-draft':
+    if comment.cons_role == DRAFT_COMMENT_ROLE:
         return Permission(need.impossible)
 
     if comment.cons_status in EDITABLE_STATUS_LIST:
@@ -173,15 +177,11 @@ def perm_fetch_checklist():
 
 
 def perm_save_record():
-    return Permission(
-            need.admin,
-            need.reviewer)
+    return Permission(need.admin, need.reviewer)
 
 
 def perm_aggregate_dataset():
-    return Permission(
-            need.admin,
-            need.reporter)
+    return Permission(need.admin, need.reporter)
 
 
 common = flask.Blueprint('common', __name__)
@@ -451,7 +451,7 @@ class RecordView(IndexMixin, flask.views.View):
             )
 
         if flask.request.method == 'POST':
-            perm_save_record(self.record).test()
+            perm_save_record().test()
             if self.process_form():
                 flask.flash(self.success_message, 'success')
                 if flask.request.form.get('submit', '') == 'finalize':
@@ -489,7 +489,9 @@ class CommentViewMixin(object):
             self.new_record = True
             self.record = self.record_cls.query.get_or_404(record_id)
             perm_create_comment(self.record).test()
-            self.object = self.dataset.create_record(cons_role='comment-draft')
+            self.object = self.dataset.create_record(
+                cons_role=DEFAULT_COMMENT_ROLE
+            )
             self.dataset.link_to_record(self.object, self.record)
             self.form = self.form_cls(flask.request.form)
 
@@ -690,7 +692,7 @@ class RedraftCommentView(flask.views.View):
         comment = self.model_cls.query.get(comment_id)
         perm_redraft_comment(comment).test()
 
-        comment.cons_role = 'comment-draft'
+        comment.cons_role = DRAFT_COMMENT_ROLE
         models.db.session.add(comment)
         models.db.session.commit()
 
