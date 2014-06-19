@@ -1,0 +1,53 @@
+{% from 'bits.html' import fonticon %}
+
+
+{%- macro consultation_cell(subject, bioreg, object_regions) %}
+  {%- set key = (subject.id, bioreg.code) %}
+  {%- if key in data_by_region %}
+    {%- set url = consultation_url(subject, bioreg=bioreg.code) %}
+    {%- set cell_data = data_by_region[key] %}
+    {%- if 'final_record' in cell_data %}
+
+      {%- set final_record = cell_data['final_record'] %}
+      {%- set conclusion_cls = (
+            'conclusion-' +
+            (final_record.conclusion_assessment or '')
+          ) %}
+      {%- set conclusion_title = (
+            CONCLUSIONS.get(final_record.conclusion_assessment, '') +
+            '; ' +
+            TREND_NAME.get(final_record.conclusion_assessment_trend, '')
+          ) %}
+
+      <td class="dashboard-commentcount {{ conclusion_cls }}">
+        <a href="{{ url }}" title="{{ conclusion_title }}">
+          Finalizat, {{ final_record.conclusion_assessment }} {{ final_record.conclusion_assessment_trend }}
+        </a>
+      </td>
+
+    {%- else %}
+
+      {%- set with_unread_reply = (
+            cell_data['with_reply'] -
+            cell_data['with_read_reply']
+          ) %}
+
+      <td class="dashboard-commentcount">
+        <a href="{{ url }}">
+          {{ cell_data['count'] }} comentarii
+        </a>
+
+        {%- if cell_data['unevaluated'] > 0 %}
+          {{ fonticon('asterisk') }}
+        {%- endif %}
+
+        {%- if with_unread_reply > 0 %}
+          {{ fonticon('comment') }}
+        {%- endif %}
+      </td>
+
+    {%- endif %}
+  {%- else %}
+    <td class="dashboard-missingrecord"></td>
+  {%- endif %}
+{%- endmacro %}

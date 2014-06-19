@@ -16,9 +16,10 @@
 {% block content %}
   {%- from 'dashboard/common.html' import
         table,
-        tabmenu,
-        consultation_cell,
+        tabmenu
       with context %}
+  {%- from 'consultation/common.html' import consultation_cell with context %}
+
 
   {{ tabmenu(current='S' + species_group.code) }}
 

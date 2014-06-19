@@ -4,9 +4,14 @@
     {%- set record = get_record(subject, bioreg, dataset_id) %}
     {% if record.is_final() %}
     {%- set url = record_details_url(record) %}
+    {%- set conclusion_text = (
+            CONCLUSIONS.get(record.conclusion_assessment, '') +
+            '; ' +
+            TREND_NAME.get(record.conclusion_assessment_trend, '')
+        ) %}
     <td class="dashboard-commentcount conclusion-{{ record.conclusion_assessment }}">
       <a href="{{ url }}"
-         title="Concluzie: {{ CONCLUSIONS[record.conclusion_assessment] }}{% if record.conclusion_assessment_trend %}; Tendință: {{ TREND_NAME[record.conclusion_assessment_trend] }} {% endif %}">
+         title="Concluzie: {{ conclusion_text }}">
         finalizat, {{ record.conclusion_assessment }} {{record.conclusion_assessment_trend }}
       </a>
     </td>
