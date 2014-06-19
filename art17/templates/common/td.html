@@ -11,7 +11,7 @@
 
 
 {% macro conclusion_td(conclusion) -%}
-  <td title="{{ CONCLUSIONS[conclusion.value] }} "><span class="conclusion {{ conclusion.value }}">{{ conclusion.value }}</span></td>
+  <td title="{{ CONCLUSIONS[conclusion.value] }}" class="text-center"><span class="conclusion {{ conclusion.value }}">{{ conclusion.value }}</span></td>
 {%- endmacro %}
 
 
@@ -130,7 +130,7 @@
 
 
 {% macro trend_td(trend) -%}
-  <td title="{{ TREND_NAME[trend.trend] }}"><span class="conclusion">{{ trend.trend }}</span>
+  <td title="{{ TREND_NAME[trend.trend] }}" class="text-center"><span class="">{{ trend.trend }}</span>
 {%- endmacro %}
 
 
