@@ -63,7 +63,8 @@ def habitats():
         if r.code in relevant_regions
     ]
 
-    return flask.render_template('dashboard/habitat.html', **{
+    return flask.render_template(
+        'consultation/habitat.html', **{
         'bioreg_list': bioreg_list,
         'tabmenu_data': list(get_tabmenu_data()),
         'habitat_list': dal.get_habitat_list(),
@@ -86,7 +87,8 @@ def species(group_code):
         if r.code in relevant_regions
     ]
 
-    return flask.render_template('dashboard/species.html', **{
+    return flask.render_template(
+        'consultation/species.html', **{
         'bioreg_list': bioreg_list,
         'tabmenu_data': list(get_tabmenu_data()),
         'species_group': dal.get_species_group(group_code),
