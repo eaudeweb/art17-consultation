@@ -60,10 +60,10 @@ CONCLUSIONS = dict(CONCLUSION_OPTIONS)
 
 
 QUALITY_OPTIONS = [
-    ('1', u"Bunǎ"),
-    ('2', u"Moderatǎ"),
-    ('3', u"Neadecvatǎ"),
-    ('4', u"Necunoscutǎ"),
+    ('Good', u"Bunǎ"),
+    ('Moderate', u"Moderatǎ"),
+    ('Bad', u"Neadecvatǎ"),
+    ('Unknown', u"Necunoscutǎ"),
 ]
 
 QUALITY = dict(QUALITY_OPTIONS)

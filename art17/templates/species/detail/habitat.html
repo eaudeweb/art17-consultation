@@ -18,7 +18,7 @@
 
       <tr>
         <th>Calitatea habitatului</th>
-        <td>{{ record.habitat.quality.value }}</td>
+        <td>{{ QUALITY.get(record.habitat.quality.value, record.habitat.quality.value) }}</td>
       </tr>
 
       <tr>
