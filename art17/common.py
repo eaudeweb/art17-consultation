@@ -451,7 +451,7 @@ class RecordView(IndexMixin, flask.views.View):
             )
 
         if flask.request.method == 'POST':
-            perm_save_record().test()
+            #perm_save_record().test()  why?
             if self.process_form():
                 flask.flash(self.success_message, 'success')
                 if flask.request.form.get('submit', '') == 'finalize':
