@@ -32,6 +32,10 @@
 
 
 {% block form_content %}
+  {% if app_name and app_name == 'consultation' %}
+    {% include 'common/comment/report_observations.html' %}
+  {% endif %}
+
   {% if not record_obj.dataset.preview %}
   <div class="row">
     <p class="col-sm-4">

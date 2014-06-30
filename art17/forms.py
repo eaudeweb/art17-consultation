@@ -607,7 +607,10 @@ class HabitatComment(Form):
     structure = FormField(Conclusion)
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)
-    report_observation = TextAreaField(validators=[Optional()])
+    report_observation = TextAreaField(
+        label=u"Observații asupra raportului",
+        validators=[Optional()],
+    )
     published = TextAreaField(label=u"Surse publicate",
                               validators=[Optional()])
 

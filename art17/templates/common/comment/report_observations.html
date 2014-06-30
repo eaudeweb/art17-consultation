@@ -1,0 +1,16 @@
+{% from 'common/comment_bits.html' import error_cls, errors %}
+
+<div class="form-group">
+  {%- set report_observation = form.report_observation %}
+  <label for="report_observation">
+    {{ report_observation.label }}:
+  </label>
+
+  {{ errors(report_observation) }}
+
+  <div class="row">
+    <div class="col-sm-12 {{- error_cls(report_observation) }}">
+      {{ report_observation(class='form-control', rows=4) }}
+    </div>
+  </div>
+</div>

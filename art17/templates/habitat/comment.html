@@ -31,6 +31,10 @@
 
 
 {% block form_content %}
+  {% if app_name and app_name == 'consultation' %}
+    {% include 'common/comment/report_observations.html' %}
+  {% endif %}
+
   <ul class="nav nav-tabs">
     <li class="active {% if form.range.errors %}text-error{% endif %}">
       <a href="#comment-range" data-toggle="tab">Proporția</a>
