@@ -21,6 +21,7 @@ class need(object):
     expert = RoleNeed('expert')
     reviewer = RoleNeed('reviewer')
     reporter = RoleNeed('reporter')
+    validator = RoleNeed('validator')
 
     @staticmethod
     def user_id(user_id):
@@ -230,6 +231,10 @@ def ldap_groups_for_role(role):
         prefix = 'reporter'
         ldap_prefix = 'G_RAP_'
 
+    elif role.startswith('validator:'):
+        prefix = 'validator'
+        ldap_prefix = 'G_VAL_'
+
     else:
         return []
 
@@ -251,6 +256,14 @@ def role_for_ldap_group(group_name):
 
     elif group_name.startswith('G_RES_'):
         prefix = 'reviewer'
+        target = group_name.split('_', 2)[2]
+
+    elif group_name.startswith('G_RAP_'):
+        prefix = 'reporter'
+        target = group_name.split('_', 2)[2]
+
+    elif group_name.startswith('G_VAL_'):
+        prefix = 'validator'
         target = group_name.split('_', 2)[2]
 
     else:
