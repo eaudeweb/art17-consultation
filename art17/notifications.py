@@ -119,6 +119,13 @@ def get_parent_object(table, objectid):
 
 
 def get_notification_emails(obj, action):
+    notification_allowed = bool(
+        flask.current_app.config.get('NOTIFICATIONS', True)
+    )
+
+    if not notification_allowed:
+        return ()
+
     if isinstance(obj, models.CommentReply):
         parent = get_parent_object(obj.parent_table, obj.parent_id)
         identifier = parent.subject_identifier
