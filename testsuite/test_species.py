@@ -457,9 +457,21 @@ def test_permissions(species_app):
         assert common.perm_create_comment(row).needs == set([
             RoleNeed('admin'),
             RoleNeed('expert'),
+            RoleNeed('reviewer'),
+            RoleNeed('reporter'),
+            RoleNeed('validator'),
             RoleNeed('expert:species'),
             RoleNeed('expert:species:M'),
             RoleNeed('expert:species:M:1234'),
+            RoleNeed('reviewer:species'),
+            RoleNeed('reviewer:species:M'),
+            RoleNeed('reviewer:species:M:1234'),
+            RoleNeed('reporter:species'),
+            RoleNeed('reporter:species:M'),
+            RoleNeed('reporter:species:M:1234'),
+            RoleNeed('validator:species'),
+            RoleNeed('validator:species:M'),
+            RoleNeed('validator:species:M:1234'),
         ])
 
         assert common.perm_edit_comment(comment).needs == set([

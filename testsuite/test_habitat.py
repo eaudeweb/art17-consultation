@@ -391,6 +391,15 @@ def test_permissions(habitat_app):
             RoleNeed('expert'),
             RoleNeed('expert:habitat'),
             RoleNeed('expert:habitat:1234'),
+            RoleNeed('reporter'),
+            RoleNeed('reporter:habitat'),
+            RoleNeed('reporter:habitat:1234'),
+            RoleNeed('reviewer'),
+            RoleNeed('reviewer:habitat'),
+            RoleNeed('reviewer:habitat:1234'),
+            RoleNeed('validator'),
+            RoleNeed('validator:habitat'),
+            RoleNeed('validator:habitat:1234'),
         ])
 
         assert common.perm_edit_comment(comment).needs == set([

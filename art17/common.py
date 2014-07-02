@@ -88,10 +88,13 @@ def get_roles_for_subject(role_base, subject):
 
 
 def perm_create_comment(record):
-    return Permission(
-        need.admin,
-        *get_roles_for_subject('expert', record.subject)
+    roles = (
+        get_roles_for_subject('expert', record.subject) +
+        get_roles_for_subject('reviewer', record.subject) +
+        get_roles_for_subject('reporter', record.subject) +
+        get_roles_for_subject('validator', record.subject)
     )
+    return Permission(need.admin, *roles)
 
 
 def perm_edit_comment(comment):
@@ -99,8 +102,9 @@ def perm_edit_comment(comment):
         return Permission(need.impossible)
 
     if comment.cons_role not in EDITABLE_COMMENT_ROLES:
-        return Permission(need.admin,
-                          *get_roles_for_subject('reviewer', comment.subject)
+        return Permission(
+            need.admin,
+            *get_roles_for_subject('reviewer', comment.subject)
         )
 
     if comment.cons_user_id:
@@ -169,6 +173,7 @@ def perm_view_history(subject):
             need.reviewer,
             need.expert,
             need.reporter,
+            need.validator,
             *get_roles_for_subject('reporter', subject))
 
 
