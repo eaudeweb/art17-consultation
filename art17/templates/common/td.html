@@ -227,7 +227,7 @@
         {{ conclusion.value }}
       </span>
       <span title="{{ TREND_NAME.get(conclusion.trend, conclusion.trend) }}">
-        {{ conclusion.trend }}
+        {{ TREND_NAME.get(conclusion.trend, conclusion.trend) or '' }}
       </span>
     {% else %}
       (n/a)

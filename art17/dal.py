@@ -140,7 +140,7 @@ class BaseDataset(object):
                 'unevaluated': 0,
                 'with_reply': 0,
                 'with_read_reply': 0,
-                'conclusion': {'value': c, 'trend': str(t)},
+                'conclusion': {'value': c, 'trend': t},
             }
 
         count_comments = (
