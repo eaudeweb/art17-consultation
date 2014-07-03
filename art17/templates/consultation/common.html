@@ -1,4 +1,5 @@
 {% from 'bits.html' import fonticon %}
+{% from 'common/td.html' import conclusion_bubble with context %}
 
 
 {%- macro consultation_cell(subject, bioreg, object_regions) %}
@@ -6,8 +7,12 @@
   {%- if key in data_by_region %}
     {%- set url = consultation_url(subject, bioreg=bioreg.code) %}
     {%- set cell_data = data_by_region[key] %}
-    {%- if 'final_record' in cell_data %}
+    {%- set with_unread_reply = (
+            cell_data['with_reply'] -
+            cell_data['with_read_reply']
+          ) %}
 
+    {%- if 'final_record' in cell_data %}
       {%- set final_record = cell_data['final_record'] %}
       {%- set conclusion_cls = (
             'conclusion-' +
@@ -19,34 +24,29 @@
             TREND_NAME.get(final_record.conclusion_assessment_trend, '')
           ) %}
 
-      <td class="dashboard-commentcount {{ conclusion_cls }}">
-        <a href="{{ url }}" title="{{ conclusion_title }}">
-          Finalizat, {{ final_record.conclusion_assessment }} {{ final_record.conclusion_assessment_trend }}
-        </a>
-      </td>
+      <td class="dashboard-commentcount {{ conclusion_cls }}" nowrap="nowrap">
+        <a href="{{ url }}" title="{{ conclusion_title }}">Finalizat</a>
+        {{ conclusion_bubble(final_record.conclusion) }}
 
     {%- else %}
-
-      {%- set with_unread_reply = (
-            cell_data['with_reply'] -
-            cell_data['with_read_reply']
-          ) %}
-
-      <td class="dashboard-commentcount">
-        <a href="{{ url }}">
-          {{ cell_data['count'] }} comentarii
-        </a>
-
-        {%- if cell_data['unevaluated'] > 0 %}
-          {{ fonticon('asterisk') }}
-        {%- endif %}
-
-        {%- if with_unread_reply > 0 %}
-          {{ fonticon('comment') }}
-        {%- endif %}
-      </td>
-
+      <td class="dashboard-commentcount" nowrap="nowrap">
+        <a href="{{ url }}">În lucru</a>
+        {{ conclusion_bubble(cell_data['conclusion']) }}
     {%- endif %}
+        <!-- common content -->
+        <br/>
+        <br/>
+
+        <span class="conclusion" title="Comentarii">
+          {%- if cell_data['unevaluated'] > 0 %}{{ fonticon('bell') }}{%- else -%}{{ fonticon('bell-alt') }}{% endif %}
+            {{ cell_data['count'] }}
+        </span>
+
+        <span class="conclusion">
+          {% if with_unread_reply %}{{ fonticon('comment') }}{% else %}{{ fonticon('comment-alt') }}{% endif %}
+            {{ cell_data['with_reply'] }}
+        </span>
+      </td>
   {%- else %}
     <td class="dashboard-missingrecord"></td>
   {%- endif %}

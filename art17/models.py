@@ -446,6 +446,11 @@ class DataHabitattypeRegion(Base, RoleMixin):
     def subject_identifier(self):
         return self.habitat.identifier
 
+    @property
+    def conclusion(self):
+        return {'value': self.conclusion_assessment,
+                'trend': self.conclusion_assessment_trend}
+
 
 class DataSpecies(Base):
     __tablename__ = u'data_species'
@@ -691,6 +696,11 @@ class DataSpeciesRegion(Base, RoleMixin):
     @conclusion_future_trends.setter
     def conclusion_future_trends(self, value):
         self.conclusion_future_trend = value
+
+    @property
+    def conclusion(self):
+        return {'value': self.conclusion_assessment,
+                'trend': self.conclusion_assessment_trend}
 
 
 class DataMeasures(Base):

@@ -221,6 +221,20 @@
 {%- endmacro %}
 
 
+{% macro conclusion_bubble(conclusion) %}
+    {%- if conclusion.value%}
+      <span class="conclusion {{ conclusion.value }}" title="{{ CONCLUSIONS[conclusion.value] }}">
+        {{ conclusion.value }}
+      </span>
+      <span title="{{ TREND_NAME.get(conclusion.trend, conclusion.trend) }}">
+        {{ conclusion.trend }}
+      </span>
+    {% else %}
+      (n/a)
+    {%- endif %}
+{% endmacro %}
+
+
 {% macro conclusions_html(conclusion) %}
     <strong>Concluzie:</strong>
     {%- if conclusion.value%}<span class="conclusion {{ conclusion.value }}">{{ conclusion.value }}</span>{{ CONCLUSIONS[conclusion.value] }}

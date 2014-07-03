@@ -127,16 +127,20 @@ class BaseDataset(object):
             .query(
                 self.record_model_subject_id,
                 self.record_model.region,
+                self.record_model.conclusion_assessment,
+                self.record_model.conclusion_assessment_trend,
             )
             .filter_by(cons_role='assessment')
             .filter_by(cons_dataset_id=self.dataset_id)
         )
-        for key in regions_query:
+        for s, r, c, t in regions_query:
+            key = s, r
             overview[key] = {
                 'count': 0,
                 'unevaluated': 0,
                 'with_reply': 0,
                 'with_read_reply': 0,
+                'conclusion': {'value': c, 'trend': str(t)},
             }
 
         count_comments = (
