@@ -256,7 +256,7 @@ def get_history_object_url(history_item):
     elif object_table == 'comment_replies':
         comment_reply = models.CommentReply.query.get(history_item.object_id)
         return get_comment_url(comment_reply.parent_table, comment_reply.parent_id)
-    return 'Eroare', 'Eroare history_item.table'
+    return None
 
 
 def get_comment_url(parent_table, parent_id):
@@ -264,13 +264,13 @@ def get_comment_url(parent_table, parent_id):
         return get_habitat_url(parent_id)
     elif parent_table == 'species':
         return get_species_url(parent_id)
-    return 'Eroare', 'Eroare comment'
+    return None
 
 
 def get_species_url(species_id):
     data_species_region = models.DataSpeciesRegion.query.get(species_id)
     if not data_species_region:
-        return 'Eroare', 'Eroare specii'
+        return None
     data_species = models.DataSpecies.query.get(data_species_region.species_id)
     url = flask.url_for('species.index', region=data_species_region.region,
                                          species=data_species.code)
@@ -280,7 +280,7 @@ def get_species_url(species_id):
 def get_habitat_url(habitat_id):
     data_habitattype_region = models.DataHabitattypeRegion.query.get(habitat_id)
     if not data_habitattype_region:
-        return 'Eroare', 'Eroare'
+        return None
     data_habitattype = models.DataHabitat.query.get(data_habitattype_region.habitat_id)
     url = flask.url_for('habitat.index', region=data_habitattype_region.region,
                                          habitat=data_habitattype.code)

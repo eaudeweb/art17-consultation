@@ -96,9 +96,9 @@ def inject_lookup_tables():
 @admin_permission.require()
 def index(dataset_id=None):
     if dataset_id:
-        consultation = False
+        base_url = flask.url_for('.index', dataset_id=dataset_id)
     else:
-        consultation=True
+        base_url = flask.url_for('.index')
     dataset_id = dataset_id or config.get_config_value('CONSULTATION_DATASET',
                                                        '1')
     page = int(flask.request.args.get('page', 1))
@@ -111,13 +111,17 @@ def index(dataset_id=None):
     paginator = Paginator(per_page=PER_PAGE, page=page, count=count)
 
     for item in history_items:
-        item.url, item.title = get_history_object_url(item)
+        result = get_history_object_url(item)
+        if result:
+            item.url, item.title = result
+        else:
+            item.url = result
 
     return flask.render_template('history/index.html', **{
         'history_items': history_items,
         'dataset_id': dataset_id,
         'paginator': paginator,
-        'consultation': consultation
+        'base_url': base_url
     })
 
 
