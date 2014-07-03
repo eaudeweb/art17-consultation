@@ -24,7 +24,8 @@
 
 {% block headline %}
   {% if new_comment -%} Adaugă {%- else -%} Modifică {%- endif %}
-  comentariu pentru habitatul
+  {% if is_final %}varianta finală{% else %}comentariu{% endif %}
+  pentru habitatul
   <em>{{ habitat.lu.code }} - {{ habitat.lu.name_ro }}</em> în
   <em>{{ record.model.lu.name_ro }}</em>
 {% endblock headline %}

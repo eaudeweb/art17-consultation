@@ -565,6 +565,12 @@ class FinalCommentMixin(object):
 
     success_message = u"Modificările au fost înregistrate."
 
+    def setup_template_context(self):
+        super(FinalCommentMixin, self).setup_template_context()
+        self.template_ctx.update({
+            'is_final': True,
+        })
+
     def setup_record_and_form(self, record_id=None, comment_id=None):
         self.record = self.record_cls.query.get_or_404(record_id)
         perm_edit_final(self.record.subject).test()
