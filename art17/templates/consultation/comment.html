@@ -1,5 +1,15 @@
 {% extends "layout.html" %}
 
+{% block messages %}
+  {{ super() }}
+  {%  if is_final_record %}
+  <div class="alert alert-warning">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    Datele din acest formular au fost copiate inițial din varianta pentru consultare.
+    Varianta finală trebuie să conțină datele ajustate în urma consultarii.
+  </div>
+  {% endif %}
+{% endblock %}
 
 {% block content %}
   <h4>

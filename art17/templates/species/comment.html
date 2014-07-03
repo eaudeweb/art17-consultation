@@ -25,7 +25,7 @@
 
 {% block headline %}
   {% if new_comment -%} Adaugă {%- else -%} Modifică {%- endif %}
-  {% if is_final %}varianta finală{% else %}comentariu{% endif %}
+  {% if is_final_record %}varianta finală{% else %}comentariu{% endif %}
   pentru specia
   <em>{{ species.lu.speciesname }}</em> în regiunea
   <em>{{ record.model.lu.name_ro }}</em>

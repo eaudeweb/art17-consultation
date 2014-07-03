@@ -568,7 +568,7 @@ class FinalCommentMixin(object):
     def setup_template_context(self):
         super(FinalCommentMixin, self).setup_template_context()
         self.template_ctx.update({
-            'is_final': True,
+            'is_final_record': True,
         })
 
     def setup_record_and_form(self, record_id=None, comment_id=None):
