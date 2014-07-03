@@ -179,9 +179,12 @@
       <td class="record-actions">
         {%- if not finalized %}
           {%- if perm_edit_final_for_this.can() %}
-            <a class="btn btn-xs btn-info"
-               href="{{ final_comment_url }}"
+            <a class="btn btn-xs btn-info" href="{{ final_comment_url }}"
+            {% if final_row %}
                title="editează">{{ fonticon('edit') }}</a>
+            {% else %}
+               title="creează">{{ fonticon('plus-sign') }} creează varianta finală</a>
+            {% endif %}
 
             {% if delete_draft_url %}
               <form method="post" action="{{ delete_draft_url }}"
