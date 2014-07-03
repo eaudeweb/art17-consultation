@@ -17,6 +17,7 @@ from art17 import models
 from art17 import dal
 from art17.auth import need, admin_permission
 from art17 import forms
+from art17.dashboard import consultation_url
 import lookup
 
 logger = logging.getLogger(__name__)
@@ -244,6 +245,46 @@ def local_date(value, format='day'):
     local_tz = tz.gettz('Europe/Bucharest')
     local_value = value.replace(tzinfo=utc).astimezone(local_tz)
     return format_datetime(local_value, DATE_FORMAT[format], locale='ro')
+
+
+def get_history_object_url(history_item):
+    object_table = history_item.table.strip()
+    if object_table == 'data_species_regions':
+        return get_species_url(history_item.object_id)
+    elif object_table == 'data_habitattype_regions':
+        return get_habitat_url(history_item.object_id)
+    elif object_table == 'comment_replies':
+        comment_reply = models.CommentReply.query.get(history_item.object_id)
+        return get_comment_url(comment_reply.parent_table, comment_reply.parent_id)
+    return 'Eroare', 'Eroare history_item.table'
+
+
+def get_comment_url(parent_table, parent_id):
+    if parent_table == 'habitat':
+        return get_habitat_url(parent_id)
+    elif parent_table == 'species':
+        return get_species_url(parent_id)
+    return 'Eroare', 'Eroare comment'
+
+
+def get_species_url(species_id):
+    data_species_region = models.DataSpeciesRegion.query.get(species_id)
+    if not data_species_region:
+        return 'Eroare', 'Eroare specii'
+    data_species = models.DataSpecies.query.get(data_species_region.species_id)
+    url = flask.url_for('species.index', region=data_species_region.region,
+                                         species=data_species.code)
+    return url, data_species.lu.display_name
+
+
+def get_habitat_url(habitat_id):
+    data_habitattype_region = models.DataHabitattypeRegion.query.get(habitat_id)
+    if not data_habitattype_region:
+        return 'Eroare', 'Eroare'
+    data_habitattype = models.DataHabitat.query.get(data_habitattype_region.habitat_id)
+    url = flask.url_for('habitat.index', region=data_habitattype_region.region,
+                                         habitat=data_habitattype.code)
+    return url, data_habitattype.lu.display_name
 
 
 @common.app_template_filter('nl2br')

@@ -18,6 +18,41 @@
                            'remove': 'danger',
                            'status': 'warning'} %}
 
+{% macro pagination(paginator, base_url) %}
+
+{% if paginator %}
+<ul class="pagination">
+
+  {% if paginator.has_prev %}
+    <li>
+      <a href="{{ base_url }}?page={{ paginator.previous_page_number }}">
+        previous</a>
+    </li>
+  {% endif %}
+
+  {% for pag in paginator %}
+    {% if pag %}
+      {% if pag == paginator.page %}
+        <li class="active"><a>{{ pag }}</a></li>
+      {% else %}
+        <li><a href="{{ base_url }}?page={{ pag }}">{{ pag }}</a></li>
+      {% endif %}
+    {% else %}
+      <li class="disabled"><a>…</a></li>
+    {% endif %}
+  {% endfor %}
+
+  {% if paginator.has_next %}
+    <li>
+      <a href="{{ base_url }}?page={{ paginator.next_page_number }}">next</a>
+    </li>
+  {% endif %}
+
+</ul>
+{% endif %}
+
+{% endmacro %}
+
 
 {% block content %}
   <h1>Activitate</h1>
@@ -26,6 +61,7 @@
     <thead>
       <th>dată</th>
       <th>tabelă</th>
+      <th>obiect</th>
       <th>acțiune</th>
       <th>user_id</th>
     </thead>
@@ -39,10 +75,19 @@
         <td title="{{ item.table.strip() }}">
           {{ TABLE_LABEL.get(item.table.strip(), '?') }}
         </td>
+        <td><a href="{{ item.url }}">{{ item.title }}</a>
         <td>{{ item.action }}</td>
         <td>{{ item.user_id }}</td>
       </tr>
     {%- endfor %}
     </tbody>
   </table>
+
+  {% if consultation %}
+    {% set base_url = url_for('.index') %}
+  {% else %}
+    {% set base_url = url_for('.index', dataset_id=dataset_id) %}
+  {% endif %}
+  {{ pagination(paginator, base_url) }}
+
 {% endblock content %}
