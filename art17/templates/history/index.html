@@ -2,10 +2,10 @@
 
 
 {% block title %}Activitate &mdash; {{ super() }}{% endblock title %}
-
+{% from 'bits.html' import pagination %}
 
 {% block breadcrumbs %}
-  {%- from 'bits.html' import breadcrumbs %}
+  {% from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
           ('acasǎ', home_url),
           ('activitate', None),
@@ -18,14 +18,13 @@
                            'remove': 'danger',
                            'status': 'warning'} %}
 
-
 {% block content %}
   <h1>Activitate</h1>
 
   <table class="table table-hover table-condensed">
     <thead>
       <th>dată</th>
-      <th>tabelă</th>
+      <th>obiect</th>
       <th>acțiune</th>
       <th>user_id</th>
     </thead>
@@ -36,13 +35,14 @@
         {%- set date = item.date|local_date('long') %}
         {%- set url = url_for('.delta', item_id=item.id) %}
         <td><a href="{{ url }}">{{ date }}</a></td>
-        <td title="{{ item.table.strip() }}">
-          {{ TABLE_LABEL.get(item.table.strip(), '?') }}
-        </td>
+        <td><a href="{{ item.url }}">{{ item.title }}</a>
         <td>{{ item.action }}</td>
         <td>{{ item.user_id }}</td>
       </tr>
     {%- endfor %}
     </tbody>
   </table>
+
+  {{ pagination(paginator, base_url) }}
+
 {% endblock content %}

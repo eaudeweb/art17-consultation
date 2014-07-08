@@ -6,9 +6,10 @@ from art17 import models, config
 from art17 import species
 from art17 import habitat
 from art17 import replies
-from art17.common import json_encode_more, perm_view_history
+from art17.common import json_encode_more, perm_view_history, get_history_object_url
 from art17.auth import admin_permission
 from art17.dal import get_biogeo_region
+from art17.pagination import Paginator
 
 history = flask.Blueprint('history', __name__)
 history_consultation = flask.Blueprint('history_consultation', __name__)
@@ -20,6 +21,8 @@ TABLE_LABEL = {
     'data_habitattype_regions': u"evaluare habitat",
     'comment_replies': u"replică",
 }
+
+PER_PAGE = 25
 
 
 @history.record
@@ -92,14 +95,33 @@ def inject_lookup_tables():
 @history_aggregation.route('/dataset/<int:dataset_id>/activitate')
 @admin_permission.require()
 def index(dataset_id=None):
+    if dataset_id:
+        base_url = flask.url_for('.index', dataset_id=dataset_id)
+    else:
+        base_url = flask.url_for('.index')
     dataset_id = dataset_id or config.get_config_value('CONSULTATION_DATASET',
                                                        '1')
+    page = int(flask.request.args.get('page', 1))
     history_items = models.History.query \
         .filter_by(dataset_id=dataset_id) \
         .order_by(models.History.date.desc()
     )
+    count = history_items.count()
+    history_items = history_items.paginate(page, PER_PAGE, False).items
+    paginator = Paginator(per_page=PER_PAGE, page=page, count=count)
+
+    for item in history_items:
+        result = get_history_object_url(item)
+        if result:
+            item.url, item.title = result
+        else:
+            item.url = result
+
     return flask.render_template('history/index.html', **{
-        'history_items': iter(history_items),
+        'history_items': history_items,
+        'dataset_id': dataset_id,
+        'paginator': paginator,
+        'base_url': base_url
     })
 
 

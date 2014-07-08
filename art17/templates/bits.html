@@ -43,3 +43,38 @@
     </div>
   {%- endfor %}
 {%- endmacro %}
+
+{% macro pagination(paginator, base_url) %}
+
+{% if paginator %}
+<ul class="pagination">
+
+  {% if paginator.has_prev %}
+    <li>
+      <a href="{{ base_url }}?page={{ paginator.previous_page_number }}">
+        previous</a>
+    </li>
+  {% endif %}
+
+  {% for pag in paginator %}
+    {% if pag %}
+      {% if pag == paginator.page %}
+        <li class="active"><a>{{ pag }}</a></li>
+      {% else %}
+        <li><a href="{{ base_url }}?page={{ pag }}">{{ pag }}</a></li>
+      {% endif %}
+    {% else %}
+      <li class="disabled"><a>…</a></li>
+    {% endif %}
+  {% endfor %}
+
+  {% if paginator.has_next %}
+    <li>
+      <a href="{{ base_url }}?page={{ paginator.next_page_number }}">next</a>
+    </li>
+  {% endif %}
+
+</ul>
+{% endif %}
+
+{% endmacro %}
