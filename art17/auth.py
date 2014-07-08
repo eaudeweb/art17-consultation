@@ -128,9 +128,10 @@ def load_reverse_proxy_auth():
 
         mapped_roles = []
         for group_name in user_info['groups']:
-            role_name = role_for_ldap_group(group_name)
-            if role_name:
-                mapped_roles.append(role_name)
+            role_names = roles_for_ldap_group(group_name)
+            for role_name in role_names:
+                if role_name:
+                    mapped_roles.append(role_name)
 
         log.debug("Role mapping: %r -> %r", user_info['groups'], mapped_roles)
 
@@ -246,9 +247,9 @@ def ldap_groups_for_role(role):
     return rv
 
 
-def role_for_ldap_group(group_name):
+def roles_for_ldap_group(group_name):
     if group_name == LDAP_ADMIN_ROLE:
-        return 'admin'
+        return ['admin']
 
     if group_name.startswith('G_EXP_'):
         prefix = 'expert'
@@ -267,11 +268,11 @@ def role_for_ldap_group(group_name):
         target = group_name.split('_', 2)[2]
 
     else:
-        return None
+        return [None]
 
     for suffix, ldap_name in LDAP_ROLE_MAP:
         if target == ldap_name:
-            return prefix + suffix
+            return [prefix, prefix + suffix]
 
     else:
-        return None
+        return [None]
