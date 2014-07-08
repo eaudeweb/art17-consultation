@@ -48,11 +48,11 @@ TREND_OPTIONS = [
 ]
 
 TREND_SIGN_OPTIONS = [
-    ('+', u", >"),
-    ('-', u", <"),
-    ('0', u", ="),
-    ('=', u", ="),
-    ('x', u", ?"),
+    ('+', u">"),
+    ('-', u"<"),
+    ('0', u"="),
+    ('=', u"="),
+    ('x', u"?"),
 ]
 
 TREND_NAME = dict(TREND_OPTIONS)

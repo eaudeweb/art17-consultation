@@ -224,7 +224,9 @@
 {% macro conclusion_bubble(conclusion) %}
     {%- if conclusion.value%}
       <span class="conclusion {{ conclusion.value }}" title="{{ CONCLUSIONS[conclusion.value] }}, {{ TREND_NAME.get(conclusion.trend, conclusion.trend) or '' }}">
-        {{ conclusion.value }}{{ TREND_SIGN_NAME.get(conclusion.trend, conclusion.trend) or '' }}
+        {{ conclusion.value }}{%- if conclusion.trend %},
+        {{ TREND_SIGN_NAME.get(conclusion.trend, conclusion.trend) or '' }}
+        {%- endif %}
       </span>
     {% else %}
       (n/a)
