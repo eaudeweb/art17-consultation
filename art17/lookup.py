@@ -47,8 +47,16 @@ TREND_OPTIONS = [
     ('x', u"Necunoscută"),
 ]
 
-TREND_NAME = dict(TREND_OPTIONS)
+TREND_SIGN_OPTIONS = [
+    ('+', u">"),
+    ('-', u"<"),
+    ('0', u"="),
+    ('=', u"="),
+    ('x', u"?"),
+]
 
+TREND_NAME = dict(TREND_OPTIONS)
+TREND_SIGN_NAME = dict(TREND_SIGN_OPTIONS)
 
 CONCLUSION_OPTIONS = [
     ('FV', u"Favorabilǎ"),

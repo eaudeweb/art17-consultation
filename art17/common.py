@@ -217,6 +217,7 @@ def inject_permissions():
 def inject_constants():
     return {
         'TREND_NAME': lookup.TREND_NAME,
+        'TREND_SIGN_NAME': lookup.TREND_SIGN_NAME,
         'METHODS_USED': lookup.METHODS_USED,
         'LU_FV_RANGE_OP': lookup.LU_FV_RANGE_OP,
         'LU_FV_RANGE_OP_FUNCT': lookup.LU_FV_RANGE_OP_FUNCT,
