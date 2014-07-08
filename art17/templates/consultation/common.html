@@ -34,9 +34,6 @@
         {{ conclusion_bubble(cell_data['conclusion']) }}
     {%- endif %}
         <!-- common content -->
-        <br/>
-        <br/>
-
         <span class="conclusion" title="Comentarii">
           {%- if cell_data['unevaluated'] > 0 %}{{ fonticon('bell') }}{%- else -%}{{ fonticon('bell-alt') }}{% endif %}
             {{ cell_data['count'] }}
