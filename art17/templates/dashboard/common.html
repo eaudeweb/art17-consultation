@@ -23,7 +23,7 @@
     {% for subject in subject_list %}
       <tr>
         {%- set name = subject.lu.name_ro or subject.lu.speciesname %}
-        <td title="{{ name }}">
+        <td style="white-space: nowrap" title="{{ name }}">
           {{ subject.code }} – {{ name|truncate(60) }}
         </td>
 
