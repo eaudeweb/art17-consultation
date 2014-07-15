@@ -12,6 +12,8 @@
           {{ form.typicalspecies.species.label }}:
         </label>
 
+        <p><em>* Numele speciilor tipice, câte unul pe fiecare linie</em></p>
+
         {{ errors(typicalspecies.species) }}
 
         <div class="row">
@@ -41,6 +43,11 @@
         <label for="typicalspecies.justification">
           {{ form.typicalspecies.justification.label }}:
         </label>
+
+         <p for="coverage.reference_value.op">
+          <em>* În cazul în care nu se folosește valoarea indicativă sugerată
+            de 1% pe an pentru evaluarea tendințelor:</em>
+         </p>
 
         {{ errors(typicalspecies.justification) }}
 
