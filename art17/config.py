@@ -11,14 +11,17 @@ CONFIGURATION = {
         'CONSULTATION_DATASET': u"Setul de date în consultare",
         'SPECIES_PRIMARY_DATA_URL': u"URL serviciu de date primare pentru specii",
         'HABITAT_PRIMARY_DATA_URL': u"URL serviciu de date primare pentru habitate",
-        'template': 'consultation/config.html',
     },
     'AGGREGATION': {
         'REPORTING_BEGIN': u"An de început pentru perioada de raportare",
         'REPORTING_END': u"An de final pentru perioada de raportare",
         'REPORTING_ID': u"Raportare curentă",
-        'template': 'aggregation/config.html',
     },
+}
+
+CONFIG_TEMPLATES = {
+    'CONSULTATION': 'consultation/config.html',
+    'AGGREGATION': 'aggregation/config.html',
 }
 
 config = flask.Blueprint('config', __name__)
@@ -32,7 +35,7 @@ def form():
         raise ValueError('Invalid config key')
 
     config_set = CONFIGURATION[config_key]
-    template_name = config_set['template']
+    template_name = CONFIG_TEMPLATES[config_key]
     config_rows = models.Config.query.filter(
         models.Config.id.in_(config_set.keys())
     )
