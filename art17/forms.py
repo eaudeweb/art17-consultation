@@ -275,7 +275,7 @@ class Range(Form):
     reference_value = FormField(ReferenceValue, label=u"Arealul favorabil de \
                                                         referință (km²)")
     reason = FormField(ReasonValue, label=u"Motivul modificării")
-    conclusion = FormField(Conclusion, label=u"Evaluarea")
+    conclusion = FormField(Conclusion, label=u"Evaluarea arealului")
 
     def __init__(self, *args, **kwargs):
         super(Range, self).__init__(*args, **kwargs)
@@ -302,7 +302,7 @@ class Population(Form):
     reference_value = FormField(ReferenceValue, label=u"Populația favorabilă de \
                                                         referință")
     reason = FormField(ReasonValue, label=u"Motivul modificării")
-    conclusion = FormField(Conclusion, label=u"Evaluarea")
+    conclusion = FormField(Conclusion, label=u"Evaluarea populației")
 
     def __init__(self, *args, **kwargs):
         super(Population, self).__init__(*args, **kwargs)
@@ -329,7 +329,7 @@ class Habitat(Form):
     area_suitable = DecimalField(label=u"Suprafața habitatului adecvată pentru specie (km²) ",
                                  validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
     reason = FormField(ReasonValue, label=u"Motivul modificării")
-    conclusion = FormField(Conclusion, label=u"Evaluarea")
+    conclusion = FormField(Conclusion, label=u"Evaluarea habitatului")
 
 
 class Coverage(Form):
@@ -345,7 +345,7 @@ class Coverage(Form):
     reference_value = FormField(ReferenceValue, label=u"Arealul favorabil de \
                                                         referință (km²)")
     reason = FormField(ReasonValue, label=u"Motivul modificării")
-    conclusion = FormField(Conclusion, label=u"Evaluarea")
+    conclusion = FormField(Conclusion, label=u"Evaluarea suprafeței")
 
     def __init__(self, *args, **kwargs):
         super(Coverage, self).__init__(*args, **kwargs)
