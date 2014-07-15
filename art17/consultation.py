@@ -1,15 +1,24 @@
 import flask
 from path import path
+from sqlalchemy import or_
+from art17.models import Dataset
 
 consultation = flask.Blueprint('consultation', __name__)
 
 
-@consultation.app_context_processor
-def inject_home_url():
-    return dict(home_url=flask.url_for('consultation.home'),
-                app_name='consultation',
+def get_datasets():
+    return Dataset.query.filter(
+        or_(Dataset.preview==False, Dataset.preview==None)
     )
 
+
+@consultation.app_context_processor
+def inject_consants():
+    return dict(
+        home_url=flask.url_for('consultation.home'),
+        app_name='consultation',
+        datasets=get_datasets(),
+    )
 
 @consultation.route('/')
 def home():

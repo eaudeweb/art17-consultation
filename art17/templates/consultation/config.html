@@ -23,16 +23,17 @@
           {{- CONFIG_LABEL[row.id] -}}
         </label>
 
-        {% if row.id == 'REPORTING_ID' %}
+        {% if row.id == 'CONSULTATION_DATASET' %}
           <select class="form-control" id="form-{{ row.id }}"
                   name="{{ row.id }}">
             <option value=""
                     {% if not row.value %}selected{% endif %}>
-              Lista inițială</option>
-            {% for o in checklists %}
+              -- nicio consultare activă --
+            </option>
+            {% for o in datasets %}
               <option value="{{ o.id }}"
                       {%- if row.value == o.id|string %}selected{% endif %}>
-                {{ o.comment }} {{ o.year_start }} - {{ o.year_end }}</option>
+                #{{ o.id }} {{ o.comment or 'Consultare inițială' }} {{ o.year_start }} - {{ o.year_end }}</option>
             {% endfor %}
           </select>
         {% else %}
