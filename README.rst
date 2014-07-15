@@ -9,15 +9,23 @@ Trebuie să fie deja instalate următoarele:
 * Compilator C
 * Python 2.7 (inclusiv header-ele pentru compilare)
 * Biblioteca de client Oracle (`instantclient-basic`, `instantclient-sdk`)
-  (instrucțiuni pentru MacOS: https://gist.github.com/mgax/6364125,
-   instrucțiuni pentru Ubuntu: https://gist.github.com/taygun/2989a7e08794bd03bd9e)
+
+    - instrucțiuni pentru MacOS: https://gist.github.com/mgax/6364125
+    - instrucțiuni pentru Ubuntu: https://gist.github.com/taygun/2989a7e08794bd03bd9e
+
 * Biblioteci XML (`libxml2-dev`, `libxslt1-dev`)
 * Biblioteci SSL (`openssl`, `libssl-dev`)
 
 Download codul sursă::
 
-    $ git clone https://github.com/eaudeweb/art17-consultation.git
+    $ git clone git@github.com:eaudeweb/art17-consultation.git
     $ cd art17-consultation
+
+Crearea și activarea mediului virtual::
+
+    $ virtualenv --no-site-packages sandbox
+    $ echo '*' > sandbox/.gitignore
+    $ source sandbox/bin/activate
 
 Instalarea bibliotecilor Python::
 
