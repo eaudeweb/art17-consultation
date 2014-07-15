@@ -11,11 +11,13 @@ CONFIGURATION = {
         'CONSULTATION_DATASET': u"Setul de date în consultare",
         'SPECIES_PRIMARY_DATA_URL': u"URL serviciu de date primare pentru specii",
         'HABITAT_PRIMARY_DATA_URL': u"URL serviciu de date primare pentru habitate",
+        'template': 'consultation/config.html',
     },
     'AGGREGATION': {
         'REPORTING_BEGIN': u"An de început pentru perioada de raportare",
         'REPORTING_END': u"An de final pentru perioada de raportare",
         'REPORTING_ID': u"Raportare curentă",
+        'template': 'aggregation/config.html',
     },
 }
 
@@ -30,6 +32,7 @@ def form():
         raise ValueError('Invalid config key')
 
     config_set = CONFIGURATION[config_key]
+    template_name = config_set['template']
     config_rows = models.Config.query.filter(
         models.Config.id.in_(config_set.keys())
     )
@@ -45,12 +48,11 @@ def form():
     else:
         base_template = ''
 
-    return flask.render_template('config.html', **{
+    return flask.render_template(template_name, **{
         'CONFIG_LABEL': config_set,
         'config_rows': config_rows,
         'base_template': base_template,
         'page': 'config',
-        'config_key': config_key,
     })
 
 

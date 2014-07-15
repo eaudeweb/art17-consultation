@@ -1,30 +1,20 @@
 {% extends base_template or "layout.html" %}
 
 
-{% block title %}Configurație &mdash; {{ super() }}{% endblock title %}
+{% block title %}Configurare &mdash; {{ super() }}{% endblock title %}
 
 
 {% block breadcrumbs %}
   {%- from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
           ('consultare', home_url),
-          ('configurație', None),
+          ('configurare', None),
       ]) }}
 {% endblock breadcrumbs %}
 
 
 {% block content %}
-  <h2>Configurație</h2>
-
-  {% if config_key == 'AGGREGATION' %}
-    <p>
-      Selectați anii de început și final impliciți pentru agregare. Aceștia sunt
-      folosiți pentru lista de verificare inițială.
-    </p>
-    <p>În cazul selectării unei alte perioade de raportare, sistemul va folosi
-      perioada definită în acea perioad.
-    </p>
-  {% endif %}
+  <h2>Configurare</h2>
 
   <form method="POST">
     {%- for row in config_rows %}

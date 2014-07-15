@@ -1,0 +1,55 @@
+{% extends base_template or "layout.html" %}
+
+
+{% block title %}Configurare &mdash; {{ super() }}{% endblock title %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('agregare', home_url),
+          ('configurare', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
+{% block content %}
+  <h2>Configurare</h2>
+
+    <p>
+      Selectați anii de început și final impliciți pentru agregare. Aceștia sunt
+      folosiți pentru lista de verificare inițială.
+    </p>
+    <p>În cazul selectării unei alte perioade de raportare, sistemul va folosi
+      perioada definită în acea perioad.
+    </p>
+
+  <form method="POST">
+    {%- for row in config_rows %}
+      <div class="form-group">
+        <label for="form-{{ row.id }}">
+          {{- CONFIG_LABEL[row.id] -}}
+        </label>
+
+        {% if row.id == 'REPORTING_ID' %}
+          <select class="form-control" id="form-{{ row.id }}"
+                  name="{{ row.id }}">
+            <option value=""
+                    {% if not row.value %}selected{% endif %}>
+              Lista inițială</option>
+            {% for o in checklists %}
+              <option value="{{ o.id }}"
+                      {%- if row.value == o.id|string %}selected{% endif %}>
+                {{ o.comment }} {{ o.year_start }} - {{ o.year_end }}</option>
+            {% endfor %}
+          </select>
+        {% else %}
+          <input class="form-control" id="form-{{ row.id }}"
+                 name="{{ row.id }}" value="{{ row.value }}">
+        {% endif %}
+      </div>
+    {%- endfor %}
+
+    <button type="submit" class="btn btn-primary">Salvează</button>
+  </form>
+{% endblock content %}
