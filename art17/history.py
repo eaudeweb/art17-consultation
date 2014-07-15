@@ -22,6 +22,19 @@ TABLE_LABEL = {
     'comment_replies': u"replică",
 }
 
+ACTIONS_TRANSLATION = {
+    ('data_species_regions', 'add'): u'adăugare comentariu',
+    ('data_species_regions', 'edit'): u'modificare comentariu',
+    ('data_species_regions', 'status'): u'evaluare comentariu',
+    ('data_species_regions', 'delete'): u'ștergere comentariu',
+    ('data_habitattype_regions', 'add'): u'adăugare comentariu',
+    ('data_habitattype_regions', 'edit'): u'modificare comentariu',
+    ('data_habitattype_regions', 'status'): u'evaluare comentariu',
+    ('data_habitattype_regions', 'delete'): u'ștergere comentariu',
+    ('comment_replies', 'add'): u'adăugare replică',
+    ('comment_replies', 'delete'): u'ștergere replică',
+}
+
 PER_PAGE = 25
 
 
@@ -104,8 +117,7 @@ def index(dataset_id=None):
     page = int(flask.request.args.get('page', 1))
     history_items = models.History.query \
         .filter_by(dataset_id=dataset_id) \
-        .order_by(models.History.date.desc()
-    )
+        .order_by(models.History.date.desc())
     count = history_items.count()
     history_items = history_items.paginate(page, PER_PAGE, False).items
     paginator = Paginator(per_page=PER_PAGE, page=page, count=count)
@@ -116,6 +128,8 @@ def index(dataset_id=None):
             item.url, item.title = result
         else:
             item.url = result
+        item.action = ACTIONS_TRANSLATION.get(
+            (item.table.strip(), item.action), item.action)
 
     return flask.render_template('history/index.html', **{
         'history_items': history_items,
