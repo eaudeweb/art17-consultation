@@ -43,9 +43,10 @@ TREND_OPTIONS = [
     ('+', u"În creștere"),
     ('-', u"În descreștere"),
     ('0', u"Stabilă"),
-    ('=', u"Stabilă"),
     ('x', u"Necunoscută"),
 ]
+
+TREND_OPTIONS_EXTENDED = TREND_OPTIONS + [('=', u"Stabilă")]
 
 TREND_SIGN_OPTIONS = [
     ('+', u">"),
@@ -55,7 +56,7 @@ TREND_SIGN_OPTIONS = [
     ('x', u"?"),
 ]
 
-TREND_NAME = dict(TREND_OPTIONS)
+TREND_NAME = dict(TREND_OPTIONS_EXTENDED)
 TREND_SIGN_NAME = dict(TREND_SIGN_OPTIONS)
 
 CONCLUSION_OPTIONS = [
