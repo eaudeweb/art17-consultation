@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 from datetime import datetime
-import time
 import urllib
 import flask
 from art17 import models, config
@@ -131,20 +130,18 @@ def index(dataset_id=None):
     form = ActivityFilterForm(start_date=start_date, end_date=end_date,
                               user_id=user_id)
 
-    start_date = start_date or \
-        datetime.fromtimestamp(time.mktime(time.gmtime(0))) \
-        .strftime(DATE_FORMAT)
-    start_date = datetime.strptime(start_date, DATE_FORMAT)
-
-    end_date = end_date or datetime.now().strftime(DATE_FORMAT)
-    end_date = datetime.strptime(end_date, DATE_FORMAT)
-
     history_items = models.History.query \
         .filter_by(dataset_id=dataset_id) \
-        .filter(models.History.date.between(start_date, end_date)) \
         .order_by(models.History.date.desc())
+    if start_date:
+        start_date = datetime.strptime(start_date, DATE_FORMAT)
+        history_items = history_items.filter(models.History.date >= start_date)
+    if end_date:
+        end_date = datetime.strptime(end_date, DATE_FORMAT)
+        history_items = history_items.filter(models.History.date <= end_date)
     if user_id:
         history_items = history_items.filter_by(user_id=user_id)
+
     count = history_items.count()
     history_items = history_items.paginate(page, PER_PAGE, False).items
     paginator = Paginator(per_page=PER_PAGE, page=page, count=count)
