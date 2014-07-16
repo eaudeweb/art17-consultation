@@ -21,6 +21,12 @@
 {% block content %}
   <h1>Activitate</h1>
 
+  <form id="filterform" method="get">
+    <input id="dp_start" type="text" name="start_date" data-date-format="dd-mm-yyyy" readonly="">
+    <input id="dp_end" type="text" name="end_date" data-date-format="dd-mm-yyyy" readonly="">
+    <input type="submit" value="Filtrează">
+  </form>
+
   <table class="table table-hover table-condensed">
     <thead>
       <th>dată</th>
@@ -46,3 +52,9 @@
   {{ pagination(paginator, base_url) }}
 
 {% endblock content %}
+
+{% block script %}
+  {%- from 'bits.html' import script %}
+  {{- super() }}
+  {{ script('datepick.js') }}
+{% endblock %}
