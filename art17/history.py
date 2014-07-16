@@ -1,6 +1,8 @@
 # encoding: utf-8
 
 from datetime import datetime
+import time
+import urllib
 import flask
 from art17 import models, config
 from art17 import species
@@ -36,6 +38,7 @@ ACTIONS_TRANSLATION = {
 }
 
 PER_PAGE = 25
+DATE_FORMAT = "%d-%m-%Y"
 
 
 @history.record
@@ -115,8 +118,19 @@ def index(dataset_id=None):
     dataset_id = dataset_id or config.get_config_value('CONSULTATION_DATASET',
                                                        '1')
     page = int(flask.request.args.get('page', 1))
+
+    min_datetime = time.mktime(time.gmtime(0))
+    start_date_str = flask.request.args.get('start_date') or \
+        datetime.fromtimestamp(min_datetime).strftime(DATE_FORMAT)
+    start_date = datetime.strptime(start_date_str, DATE_FORMAT)
+
+    end_date_str = flask.request.args.get('end_date') or \
+        datetime.now().strftime(DATE_FORMAT)
+    end_date = datetime.strptime(end_date_str, DATE_FORMAT)
+
     history_items = models.History.query \
         .filter_by(dataset_id=dataset_id) \
+        .filter(models.History.date.between(start_date, end_date)) \
         .order_by(models.History.date.desc())
     count = history_items.count()
     history_items = history_items.paginate(page, PER_PAGE, False).items
