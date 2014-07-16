@@ -22,8 +22,11 @@
   <h1>Activitate</h1>
 
   <form id="filterform" method="get">
-    <input id="dp_start" type="text" name="start_date" data-date-format="dd-mm-yyyy" readonly="">
-    <input id="dp_end" type="text" name="end_date" data-date-format="dd-mm-yyyy" readonly="">
+      {{ form.start_date.label }}
+      {{ form.start_date(**{'readonly': "", 'data-date-format': "dd-mm-yyyy"}) }}
+
+      {{ form.end_date.label }}
+      {{ form.end_date(**{'readonly': "", 'data-date-format': "dd-mm-yyyy"}) }}
     <input type="submit" value="Filtrează">
   </form>
 

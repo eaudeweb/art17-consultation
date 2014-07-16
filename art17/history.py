@@ -8,10 +8,15 @@ from art17 import models, config
 from art17 import species
 from art17 import habitat
 from art17 import replies
-from art17.common import json_encode_more, perm_view_history, get_history_object_url
+from art17.common import (
+    json_encode_more,
+    perm_view_history,
+    get_history_object_url,
+)
 from art17.auth import admin_permission
 from art17.dal import get_biogeo_region
 from art17.pagination import Paginator
+from art17.forms import ActivityFilterForm
 
 history = flask.Blueprint('history', __name__)
 history_consultation = flask.Blueprint('history_consultation', __name__)
@@ -115,18 +120,22 @@ def index(dataset_id=None):
         base_url = flask.url_for('.index', dataset_id=dataset_id)
     else:
         base_url = flask.url_for('.index')
-    dataset_id = dataset_id or config.get_config_value('CONSULTATION_DATASET',
-                                                       '1')
+    dataset_id = dataset_id or \
+        config.get_config_value('CONSULTATION_DATASET', '1')
+
     page = int(flask.request.args.get('page', 1))
+    start_date = flask.request.args.get('start_date', '')
+    end_date = flask.request.args.get('end_date', '')
 
-    min_datetime = time.mktime(time.gmtime(0))
-    start_date_str = flask.request.args.get('start_date') or \
-        datetime.fromtimestamp(min_datetime).strftime(DATE_FORMAT)
-    start_date = datetime.strptime(start_date_str, DATE_FORMAT)
+    form = ActivityFilterForm(start_date=start_date, end_date=end_date)
 
-    end_date_str = flask.request.args.get('end_date') or \
-        datetime.now().strftime(DATE_FORMAT)
-    end_date = datetime.strptime(end_date_str, DATE_FORMAT)
+    start_date = start_date or \
+        datetime.fromtimestamp(time.mktime(time.gmtime(0))) \
+        .strftime(DATE_FORMAT)
+    start_date = datetime.strptime(start_date, DATE_FORMAT)
+
+    end_date = end_date or datetime.now().strftime(DATE_FORMAT)
+    end_date = datetime.strptime(end_date, DATE_FORMAT)
 
     history_items = models.History.query \
         .filter_by(dataset_id=dataset_id) \
@@ -155,6 +164,7 @@ def index(dataset_id=None):
         'paginator': paginator,
         'base_url': base_url,
         'query_string': query_string,
+        'form': form,
     })
 
 
@@ -189,12 +199,12 @@ def species_comments(subject_code, region_code, dataset_id=None):
         'subject': subject,
         'region': get_biogeo_region(region_code),
         'dashboard_url':
-            flask.url_for('dashboard.species', group_code=subject.lu.group_code)
-            if dataset_id is None else '',
+        flask.url_for('dashboard.species', group_code=subject.lu.group_code)
+        if dataset_id is None else '',
         'record_index_url':
-            flask.url_for('species.index', region=region_code,
-                          species=subject_code)
-            if dataset_id is None else '',
+        flask.url_for('species.index', region=region_code,
+                      species=subject_code)
+        if dataset_id is None else '',
         'region_code': region_code,
     })
 
@@ -216,10 +226,9 @@ def habitat_comments(subject_code, region_code, dataset_id=None):
         'subject': subject,
         'region': get_biogeo_region(region_code),
         'dashboard_url':
-            flask.url_for('dashboard.habitats') if dataset_id is None else '',
+        flask.url_for('dashboard.habitats') if dataset_id is None else '',
         'record_index_url':
-            flask.url_for('habitat.index', region=region_code,
-                          habitat=subject_code) if dataset_id is None else ''
-        ,
+        flask.url_for('habitat.index', region=region_code,
+                      habitat=subject_code) if dataset_id is None else '',
         'region_code': region_code,
     })

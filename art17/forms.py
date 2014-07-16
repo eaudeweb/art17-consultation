@@ -4,7 +4,7 @@ import json
 from wtforms import (Form as Form_base, FormField as FormField_base,
                      TextField, TextAreaField, DecimalField, SelectField,
                      IntegerField, SelectMultipleField, BooleanField)
-from wtforms.validators import Required, Optional, NumberRange
+from wtforms.validators import Optional, NumberRange
 from wtforms.widgets import HTMLString, html_params
 from werkzeug.datastructures import MultiDict
 from werkzeug.local import LocalProxy
@@ -22,7 +22,6 @@ from art17.lookup import (
     METHODS_PRESSURES_OPTIONS,
     METHODS_THREATS_OPTIONS,
 )
-from art17 import schemas
 
 form_choices_loader = LocalProxy(
     lambda: flask.current_app.extensions['form_choices_loader']
@@ -662,3 +661,8 @@ class HabitatComment(Form):
                     )
 
         return not self.errors
+
+
+class ActivityFilterForm(Form):
+    start_date = TextField(id='dp_start', label=u'Dată început')
+    end_date = TextField(id='dp_end', label=u'Dată sfârșit')
