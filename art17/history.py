@@ -145,11 +145,16 @@ def index(dataset_id=None):
         item.action = ACTIONS_TRANSLATION.get(
             (item.table.strip(), item.action), item.action)
 
+    get_params = flask.request.args.to_dict()
+    get_params.pop('page', None)
+    query_string = urllib.urlencode(get_params)
+
     return flask.render_template('history/index.html', **{
         'history_items': history_items,
         'dataset_id': dataset_id,
         'paginator': paginator,
-        'base_url': base_url
+        'base_url': base_url,
+        'query_string': query_string,
     })
 
 
