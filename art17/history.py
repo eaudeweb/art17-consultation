@@ -126,8 +126,10 @@ def index(dataset_id=None):
     page = int(flask.request.args.get('page', 1))
     start_date = flask.request.args.get('start_date', '')
     end_date = flask.request.args.get('end_date', '')
+    user_id = flask.request.args.get('user_id', '')
 
-    form = ActivityFilterForm(start_date=start_date, end_date=end_date)
+    form = ActivityFilterForm(start_date=start_date, end_date=end_date,
+                              user_id=user_id)
 
     start_date = start_date or \
         datetime.fromtimestamp(time.mktime(time.gmtime(0))) \
@@ -141,6 +143,8 @@ def index(dataset_id=None):
         .filter_by(dataset_id=dataset_id) \
         .filter(models.History.date.between(start_date, end_date)) \
         .order_by(models.History.date.desc())
+    if user_id:
+        history_items = history_items.filter_by(user_id=user_id)
     count = history_items.count()
     history_items = history_items.paginate(page, PER_PAGE, False).items
     paginator = Paginator(per_page=PER_PAGE, page=page, count=count)

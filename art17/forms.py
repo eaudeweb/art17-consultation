@@ -22,6 +22,7 @@ from art17.lookup import (
     METHODS_PRESSURES_OPTIONS,
     METHODS_THREATS_OPTIONS,
 )
+from art17.models import History
 
 form_choices_loader = LocalProxy(
     lambda: flask.current_app.extensions['form_choices_loader']
@@ -664,5 +665,15 @@ class HabitatComment(Form):
 
 
 class ActivityFilterForm(Form):
-    start_date = TextField(id='dp_start', label=u'Dată început')
-    end_date = TextField(id='dp_end', label=u'Dată sfârșit')
+    start_date = TextField(id='dp_start', label=u'Dată început: ')
+    end_date = TextField(id='dp_end', label=u'Dată sfârșit: ')
+    user_id = SelectField(label='Utilizator: ')
+
+    def __init__(self, *args, **kwargs):
+        super(ActivityFilterForm, self).__init__(*args, **kwargs)
+        self.user_id.choices = [('', u'toți utilizatorii')] + [
+            (h.user_id, h.user_id) for h in
+            History.query
+            .with_entities(History.user_id)
+            .distinct()
+        ]
