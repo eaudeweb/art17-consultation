@@ -12,12 +12,19 @@ def get_datasets():
     )
 
 
+def get_current_dataset():
+    from art17 import config
+    dataset_id = config.get_config_value('CONSULTATION_DATASET')
+    return Dataset.query.get(dataset_id) or None
+
+
 @consultation.app_context_processor
 def inject_consants():
     return dict(
         home_url=flask.url_for('consultation.home'),
         app_name='consultation',
         datasets=get_datasets(),
+        current_dataset=get_current_dataset(),
     )
 
 @consultation.route('/')

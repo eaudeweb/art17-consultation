@@ -6,6 +6,7 @@
   <div class="container">
     <h2>Consultare publicǎ pentru Articolul 17 din Directiva Habitate</h2>
 
+    {% if current_dataset %}
     <p>
       <a class="btn btn-primary"
          href="{{ url_for('dashboard.index') }}">dashboard</a>
@@ -25,6 +26,15 @@
            href="{{ url_for('config.form') }}">configurare</a>
       {% endif %}
     </p>
+    {% else %}
+    <p>Nicio consultare nu este activă în prezent.</p>
+    <p>
+      {% if admin_permission.can() %}
+        <a class="btn btn-default"
+           href="{{ url_for('config.form') }}">configurare</a>
+      {% endif %}
+    </p>
+    {% endif %}
   </div>
 </div>
 
