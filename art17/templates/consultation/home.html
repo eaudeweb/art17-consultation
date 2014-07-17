@@ -7,6 +7,15 @@
     <h2>Consultare publicǎ pentru Articolul 17 din Directiva Habitate</h2>
 
     {% if current_dataset %}
+    <p>Consultare în curs: {% if current_dataset.year_start -%}
+      [{{ current_dataset.year_start }} - {{ current_dataset.year_end }}]
+      {%- else -%}
+      {{ current_dataset.title or 'implicită' }}
+      {% endif %}
+    </p>
+    {% set d = current_dataset.details %}
+    <p>{{ d.all }} rapoarte {#, comentarii, rapoarte cu decizie, replici la comentarii#}</p>
+
     <p>
       <a class="btn btn-primary"
          href="{{ url_for('dashboard.index') }}">dashboard</a>
