@@ -15,9 +15,8 @@ from flask.ext.script import Manager
 from werkzeug.datastructures import MultiDict
 from art17 import models
 from art17 import dal
-from art17.auth import need, admin_permission
+from art17.auth import need
 from art17 import forms
-from art17.dashboard import consultation_url
 import lookup
 
 logger = logging.getLogger(__name__)
@@ -256,7 +255,8 @@ def get_history_object_url(history_item):
         return get_habitat_url(history_item.object_id)
     elif object_table == 'comment_replies':
         comment_reply = models.CommentReply.query.get(history_item.object_id)
-        return get_comment_url(comment_reply.parent_table, comment_reply.parent_id)
+        return get_comment_url(comment_reply.parent_table,
+                               comment_reply.parent_id)
     return None
 
 
@@ -275,7 +275,7 @@ def get_species_url(species_id):
     data_species = models.DataSpecies.query.get(data_species_region.species_id)
     url = flask.url_for('species.index', region=data_species_region.region,
                                          species=data_species.code)
-    return url, data_species.lu.display_name
+    return url, data_species.lu.display_name, data_species_region.region
 
 
 def get_habitat_url(habitat_id):
@@ -285,7 +285,7 @@ def get_habitat_url(habitat_id):
     data_habitattype = models.DataHabitat.query.get(data_habitattype_region.habitat_id)
     url = flask.url_for('habitat.index', region=data_habitattype_region.region,
                                          habitat=data_habitattype.code)
-    return url, data_habitattype.lu.display_name
+    return url, data_habitattype.lu.display_name, data_habitattype_region.region
 
 
 @common.app_template_filter('nl2br')
