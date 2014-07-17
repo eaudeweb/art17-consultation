@@ -16,6 +16,7 @@ from art17.auth import admin_permission
 from art17.dal import get_biogeo_region
 from art17.pagination import Paginator
 from art17.forms import ActivityFilterForm
+from art17 import DATE_FORMAT_HISTORY
 
 history = flask.Blueprint('history', __name__)
 history_consultation = flask.Blueprint('history_consultation', __name__)
@@ -42,7 +43,6 @@ ACTIONS_TRANSLATION = {
 }
 
 PER_PAGE = 25
-DATE_FORMAT = "%d-%m-%Y"
 
 
 @history.record
@@ -134,10 +134,10 @@ def index(dataset_id=None):
         .filter_by(dataset_id=dataset_id) \
         .order_by(models.History.date.desc())
     if start_date:
-        start_date = datetime.strptime(start_date, DATE_FORMAT)
+        start_date = datetime.strptime(start_date, DATE_FORMAT_HISTORY)
         history_items = history_items.filter(models.History.date >= start_date)
     if end_date:
-        end_date = datetime.strptime(end_date, DATE_FORMAT)
+        end_date = datetime.strptime(end_date, DATE_FORMAT_HISTORY)
         history_items = history_items.filter(models.History.date <= end_date)
     if user_id:
         history_items = history_items.filter_by(user_id=user_id)

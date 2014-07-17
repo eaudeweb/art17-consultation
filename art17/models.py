@@ -1,15 +1,15 @@
 import uuid
 import argparse
 import logging
-from sqlalchemy import (Column, DateTime, ForeignKey, Index, func,
-                        String, Table, Text, Numeric, cast, Binary,
-                        Boolean, Integer, Sequence)
+from datetime import datetime
+from sqlalchemy import (Column, DateTime, ForeignKey, String, Text, Numeric,
+                        cast, Binary, Boolean, Integer, Sequence)
 from sqlalchemy.orm import relationship, foreign
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.script import Manager
+from flask.ext.script import Manager, prompt_bool
 from art17.table_sequences import get_sequence_id
+from art17 import DATE_FORMAT_HISTORY
 
 db = SQLAlchemy()
 Base = db.Model
@@ -1026,3 +1026,24 @@ def sequences():
     for a, b in pairs:
         print "    %r," % ((str(a), str(b.lower())),)
     print "]"
+
+
+@db_manager.option('-d', '--date', dest='date_str', required=True,
+                   help='date in "dd-mm-yyyy" format')
+def delete_history(date_str):
+    """ deletes History records older than date """
+    try:
+        date = datetime.strptime(date_str, DATE_FORMAT_HISTORY)
+    except ValueError as ex:
+        print 'Error: {0}'.format(ex)
+        return
+
+    records = History.query.filter(History.date < date).all()
+    records_nr = len(records)
+    confirm = ('{0} records older than {1} found. Are you sure you want to '
+               'delete them?'.format(records_nr, date_str))
+    if prompt_bool(confirm):
+        for record in records:
+            db.session.delete(record)
+            db.session.commit()
+        print '{0} records deleted.'.format(records_nr)

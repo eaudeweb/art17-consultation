@@ -1,0 +1,1 @@
+DATE_FORMAT_HISTORY = '%d-%m-%Y'
