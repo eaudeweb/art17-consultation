@@ -129,6 +129,7 @@ def index(dataset_id=None):
 
     form = ActivityFilterForm(start_date=start_date, end_date=end_date,
                               user_id=user_id)
+    form.set_user_choices(dataset_id)
 
     history_items = models.History.query \
         .filter_by(dataset_id=dataset_id) \

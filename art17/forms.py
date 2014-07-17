@@ -669,11 +669,11 @@ class ActivityFilterForm(Form):
     end_date = TextField(id='dp_end', label=u'Dată sfârșit: ')
     user_id = SelectField(label='Utilizator: ')
 
-    def __init__(self, *args, **kwargs):
-        super(ActivityFilterForm, self).__init__(*args, **kwargs)
+    def set_user_choices(self, dataset_id):
         self.user_id.choices = [('', u'toți utilizatorii')] + [
             (h.user_id, h.user_id) for h in
             History.query
+            .filter_by(dataset_id=dataset_id)
             .with_entities(History.user_id)
             .distinct()
         ]
