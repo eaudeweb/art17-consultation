@@ -52,6 +52,9 @@ def inject_funcs():
 def habitats():
     from art17.habitat import get_dataset
     habitat_dataset = get_dataset()
+    if not habitat_dataset:
+        flask.flash('No active consultation', 'danger')
+        return flask.redirect('/')
     user_id = flask.g.identity.id
     data_by_region = (
         habitat_dataset
@@ -76,6 +79,9 @@ def habitats():
 def species(group_code):
     from art17.species import get_dataset
     species_dataset = get_dataset()
+    if not species_dataset:
+        flask.flash('No active consultation', 'danger')
+        return flask.redirect('/')
     user_id = flask.g.identity.id
     data_by_region = (
         species_dataset

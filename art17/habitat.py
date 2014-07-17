@@ -1,13 +1,13 @@
-import urllib
 import flask
 from werkzeug.utils import cached_property
 from blinker import Signal
 from art17 import models
 from art17 import dal
-from art17.common import (IndexView, CommentStateView,
-                          CommentDeleteView, RecordView, CommentViewMixin,
-                          FinalCommentMixin, DeleteDraftView,
-                          CloseConsultationView, ReopenConsultationView, RedraftCommentView)
+from art17.common import (
+    IndexView, CommentStateView, CommentDeleteView, RecordView,
+    CommentViewMixin, FinalCommentMixin, DeleteDraftView,
+    CloseConsultationView, ReopenConsultationView, RedraftCommentView,
+)
 from art17 import forms
 from art17 import schemas
 from art17 import config
@@ -23,8 +23,9 @@ comment_deleted = Signal()
 
 
 def get_dataset(dataset_id=None):
-    dataset_id = dataset_id or config.get_config_value('CONSULTATION_DATASET',
-                                                       '1')
+    dataset_id = dataset_id or config.get_config_value('CONSULTATION_DATASET')
+    if not dataset_id:
+        return None
     return dal.HabitatDataset(int(dataset_id))
 
 
