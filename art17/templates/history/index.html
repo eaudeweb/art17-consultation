@@ -47,7 +47,13 @@
         {%- set date = item.date|local_date('long') %}
         {%- set url = url_for('.delta', item_id=item.id) %}
         <td><a href="{{ url }}">{{ date }}</a></td>
-        <td><a href="{{ item.url }}">{{ item.title }}</a>
+        <td>
+          {% if item.title and item.url %}
+            <a href="{{ item.url }}">{{ item.title }}</a>
+          {% else %}
+            <i>Raportul a fost șters</i>
+          {% endif %}
+        </td>
         <td>{{ item.action }}</td>
         <td>{{ item.user_id }}</td>
       </tr>
