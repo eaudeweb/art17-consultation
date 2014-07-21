@@ -2,13 +2,15 @@ import flask
 from path import path
 from sqlalchemy import or_
 from art17.models import Dataset
+from art17.habitat import get_dataset as get_habitat_dataset
+from art17.species import get_dataset as get_species_dataset
 
 consultation = flask.Blueprint('consultation', __name__)
 
 
 def get_datasets():
     return Dataset.query.filter(
-        or_(Dataset.preview==False, Dataset.preview==None)
+        or_(Dataset.preview == False, Dataset.preview == None)
     )
 
 
@@ -16,6 +18,25 @@ def get_current_dataset():
     from art17 import config
     dataset_id = config.get_config_value('CONSULTATION_DATASET')
     return Dataset.query.get(dataset_id) or None
+
+
+def get_reports_data(overview):
+    sections = ['reports', 'comments', 'replies']
+    reports_data = {
+        'final': {section: 0 for section in sections},
+        'notfinal': {section: 0 for section in sections},
+    }
+    for record, data in overview.iteritems():
+        target = 'final' if 'final_record' in data else 'notfinal'
+        reports_data[target]['reports'] += 1
+        reports_data[target]['comments'] += data['count']
+        reports_data[target]['replies'] += data['with_reply']
+    reports_data['all'] = {
+        section:
+        reports_data['final'][section] + reports_data['notfinal'][section]
+        for section in sections
+    }
+    return reports_data
 
 
 @consultation.app_context_processor
@@ -27,9 +48,28 @@ def inject_consants():
         current_dataset=get_current_dataset(),
     )
 
+
 @consultation.route('/')
 def home():
-    return flask.render_template('consultation/home.html')
+    habitat_dataset = get_habitat_dataset()
+    habitat_overview = (
+        habitat_dataset
+        .get_subject_region_overview_consultation(flask.g.identity.id)
+    )
+    habitat_details = get_reports_data(habitat_overview)
+
+    species_dataset = get_species_dataset()
+    species_overview = (
+        species_dataset
+        .get_subject_region_overview_consultation(flask.g.identity.id)
+    )
+    species_details = get_reports_data(species_overview)
+
+    return flask.render_template(
+        'consultation/home.html', **{
+            'habitat_details': habitat_details,
+            'species_details': species_details,
+        })
 
 
 @consultation.route('/_crashme')

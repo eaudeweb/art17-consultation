@@ -13,8 +13,46 @@
       {{ current_dataset.title or 'implicită' }}
       {% endif %}
     </p>
-    {% set d = current_dataset.details %}
-    <p>{{ d.all }} rapoarte {#, comentarii, rapoarte cu decizie, replici la comentarii#}</p>
+    <p>Statistici consultare:</p>
+    <ul>
+      <li>{{ species_details['all']['reports'] + habitat_details['all']['reports'] }} rapoarte </li>
+      <ul>
+        <li>
+          {{ species_details['all']['reports'] }} rapoarte pentru specii /
+          {{ species_details['all']['comments'] }} comentarii /
+          {{ species_details['all']['replies'] }} replici la comentarii
+        </li>
+        <ul>
+          <li>
+            {{ species_details['final']['reports'] }} rapoarte cu decizie luată pentru specii /
+            {{ species_details['final']['comments'] }} comentarii /
+            {{ species_details['final']['replies'] }} replici la comentarii
+          </li>
+          <li>
+            {{ species_details['notfinal']['reports'] }} rapoarte în lucru pentru specii /
+            {{ species_details['notfinal']['comments'] }} comentarii /
+            {{ species_details['notfinal']['replies'] }} replici la comentarii
+          </li>
+        </ul>
+        <li>
+          {{ habitat_details['all']['reports'] }} rapoarte pentru habitate /
+          {{ habitat_details['all']['comments'] }} comentarii /
+          {{ habitat_details['all']['replies'] }} replici la comentarii
+        </li>
+        <ul>
+          <li>
+            {{ habitat_details['final']['reports'] }} rapoarte cu decizie luată pentru habitate /
+            {{ habitat_details['final']['comments'] }} comentarii /
+            {{ habitat_details['final']['replies'] }} replici la comentarii
+          </li>
+          <li>
+            {{ habitat_details['notfinal']['reports'] }} rapoarte în lucru pentru habitate /
+            {{ habitat_details['notfinal']['comments'] }} comentarii /
+            {{ habitat_details['notfinal']['replies'] }} replici la comentarii
+          </li>
+        </ul>
+      </ul>
+    </ul>
 
     <p>
       <a class="btn btn-primary"
