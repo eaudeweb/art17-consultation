@@ -66,11 +66,12 @@ def ldap_patch():
     finally:
         ldap_access.__dict__['open_ldap_server'] = orig
         reload(notifications)
-    
+
 
 def _create_user_record(app):
     with app.app_context():
-        user = models.NotificationUser(id=1, email='user@example.com', full_name='Prenume Nume')
+        user = models.NotificationUser(id=1, email='user@example.com',
+                                       full_name='Prenume Nume')
         models.db.session.add(user)
         models.db.session.commit()
 
@@ -112,8 +113,7 @@ def test_comment_update_status(params, app):
     with mail.record_messages() as outbox:
         with ldap_patch():
             resp = client.post(params.comment_status_url,
-                               data={'status': 'approved', 'next': '/'}
-            )
+                               data={'status': 'approved', 'next': '/'})
             assert resp.status_code == 302
             assert len(outbox) == 1
             assert 'user@example.com' in outbox[0].recipients
@@ -150,7 +150,7 @@ def test_reply_add(notifications_app):
                 resp = client.get('/_fake_login/other_smith')
                 assert resp.status_code == 302
                 resp = client.post('/replici/specii/%s/nou' % params.comment_id,
-                                    data={'text': "hello world from other"})
+                                   data={'text': "hello world from other"})
                 assert resp.status_code == 302
                 assert len(outbox) == 1
 

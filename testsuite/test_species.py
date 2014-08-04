@@ -247,7 +247,6 @@ def _create_species_record(species_app, comment=False):
         record.lu = models.LuBiogeoreg(objectid=1)
         models.db.session.add(record)
 
-
         if comment:
             comment = models.DataSpeciesRegion(
                 id=2,
@@ -299,7 +298,6 @@ def test_save_comment_record(species_app):
 
 
 def test_edit_comment_form(species_app):
-    from art17.models import DataSpeciesRegion
     _create_species_record(species_app, comment=True)
     client = species_app.test_client()
     resp1 = client.get('/specii/comentarii/f3b4c23bcb88')
@@ -334,10 +332,10 @@ def test_edit_comment_submit(species_app):
 def test_extra_fields_save(species_app):
     import json
     from art17.models import DataSpeciesRegion
-    from art17 import models
     species_app.config['TESTING_USER_ID'] = 'smith'
     _create_species_record(species_app)
-    pressure_data = json.dumps({'pressure': '1', 'ranking': 'M', 'pollutions': ['A']})
+    pressure_data = json.dumps({'pressure': '1', 'ranking': 'M',
+                                'pollutions': ['A']})
     measure_data = json.dumps({'measurecode': '1', 'rankingcode': 'M'})
     client = species_app.test_client()
     resp = client.post('/specii/detalii/1/comentarii',
@@ -404,7 +402,6 @@ def test_parse():
 
 
 def test_add_comment_reply(species_app):
-    import flask
     from webtest import TestApp
     from art17.replies import replies
     from art17 import models

@@ -203,10 +203,10 @@ def test_reply_remove(app):
 
     with app.app_context():
         reply = models.CommentReply(text='hello foo',
-                                           user_id='somewho',
-                                           parent_table='species',
-                                           parent_id='123',
-                                           date=datetime(2010, 1, 4))
+                                    user_id='somewho',
+                                    parent_table='species',
+                                    parent_id='123',
+                                    date=datetime(2010, 1, 4))
         models.db.session.add(reply)
         models.db.session.commit()
         reply_id = reply.id

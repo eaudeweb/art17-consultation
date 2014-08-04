@@ -9,12 +9,12 @@ NOT_VALID = object()
     # all values are blank
     [{'trend': '', 'period.start': '', 'period.end': ''},
      {'trend': '', 'period': {'start': None, 'end': None},
-     'magnitude': {'min': None, 'max': None}}],
+      'magnitude': {'min': None, 'max': None}}],
 
     # trend and both years filled in
     [{'trend': '+', 'period.start': '2010', 'period.end': '2013'},
      {'trend': '+', 'period': {'start': 2010, 'end': 2013},
-     'magnitude': {'min': None, 'max': None}}],
+      'magnitude': {'min': None, 'max': None}}],
 
     # years filled in with bogus data
     [{'trend': '+', 'period.start': 'asdf', 'period.end': 'qwer'},

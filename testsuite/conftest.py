@@ -9,7 +9,6 @@ sys.path.append(path(__file__).abspath().parent.parent)
 
 @pytest.fixture
 def app():
-    import flask
     app = flask.Flask('art17.app')
     app.config['TESTING'] = True
     app.config['SECRET_KEY'] = 'foo'
@@ -17,6 +16,7 @@ def app():
     app.config['MAIL_DEFAULT_SENDER'] = 'no-reply@example.com'
     app.config['HABITAT_MAP_URL'] = ''
     app.config['SPECIES_MAP_URL'] = ''
+
     @app.before_request
     def set_identity():
         user_id = flask.current_app.config['TESTING_USER_ID']

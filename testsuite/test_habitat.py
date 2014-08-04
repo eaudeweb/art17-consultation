@@ -25,7 +25,7 @@ HABITAT_STRUCT_DATA = {
                 'start': '2002',
                 'end': '2003',
             },
-             'magnitude': {
+            'magnitude': {
                 'min': None,
                 'max': None,
             },
@@ -270,7 +270,8 @@ def test_extra_fields_save(habitat_app):
     from art17.models import DataHabitattypeRegion
     habitat_app.config['TESTING_USER_ID'] = 'smith'
     _create_habitat_record(habitat_app)
-    pressure_data = json.dumps({'pressure': '1', 'ranking': 'M', 'pollutions': ['A']})
+    pressure_data = json.dumps({'pressure': '1', 'ranking': 'M',
+                                'pollutions': ['A']})
     measure_data = json.dumps({'measurecode': '1', 'rankingcode': 'M'})
     client = habitat_app.test_client()
     resp = client.post('/habitate/detalii/1/comentarii',
@@ -353,7 +354,6 @@ def test_parse():
 
 
 def test_add_comment_reply(habitat_app):
-    import flask
     from webtest import TestApp
     from art17.replies import replies
     from art17 import models
