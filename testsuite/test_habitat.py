@@ -176,6 +176,9 @@ HABITAT_MODEL_DATA = {
 def _create_habitat_record(habitat_app, comment=False):
     from art17 import models
     with habitat_app.app_context():
+        config = models.Config(id='CONSULTATION_DATASET', value='1')
+        models.db.session.add(config)
+
         habitat = models.DataHabitat(id=1, code='1234')
         habitat.lu = models.LuHabitattypeCodes(objectid=1, code=1234)
         record = models.DataHabitattypeRegion(

@@ -232,6 +232,9 @@ SPECIES_MODEL_DATA = {
 def _create_species_record(species_app, comment=False):
     from art17 import models
     with species_app.app_context():
+        config = models.Config(id='CONSULTATION_DATASET', value='1')
+        models.db.session.add(config)
+
         species = models.DataSpecies(id=1, code='1234')
         species.lu = models.LuHdSpecies(objectid=1, code=1234, group_code='M')
         record = models.DataSpeciesRegion(
