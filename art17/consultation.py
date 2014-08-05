@@ -2,7 +2,7 @@ import flask
 from path import path
 
 from art17.common import get_datasets
-from art17.models import Dataset
+from art17.models import Dataset, STATUS_CLOSED, STATUS_CONSULTATION
 from art17.habitat import get_dataset as get_habitat_dataset
 from art17.species import get_dataset as get_species_dataset
 
@@ -43,6 +43,8 @@ def inject_consants():
         home_url=flask.url_for('consultation.home'),
         app_name='consultation',
         datasets=get_datasets(),
+        datasets_available=get_datasets().filter_by(status=STATUS_CONSULTATION),
+        datasets_closed=get_datasets().filter_by(status=STATUS_CLOSED),
         current_dataset=get_current_dataset(),
     )
 

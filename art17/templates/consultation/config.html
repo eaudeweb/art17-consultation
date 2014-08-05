@@ -30,7 +30,7 @@
                     {% if not row.value %}selected{% endif %}>
               -- nicio consultare activă --
             </option>
-            {% for o in datasets %}
+            {% for o in datasets_available %}
               <option value="{{ o.id }}"
                       {%- if row.value == o.id|string %}selected{% endif %}>
                 #{{ o.id }} {{ o.comment or 'Consultare inițială' }} {{ o.year_start }} - {{ o.year_end }}</option>
