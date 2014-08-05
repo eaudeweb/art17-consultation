@@ -8,8 +8,8 @@
     <thead>
     <tr>
       <th>Listă de verificare</th>
-      <th></th>
-      <th></th>
+      <th>Detalii</th>
+      <th>Acțiuni</th>
     </tr>
     </thead>
     <tbody>
@@ -25,7 +25,11 @@
     {%- set delete_url = url_for('.delete_dataset', dataset_id=list.id) %}
     {%- set edit_url = url_for('.edit_checklist', dataset_id=list.id) %}
     <tr>
-      <td><a href="{{ url_for('.checklist', dataset_id=list.id) }}">{{ list.comment or list.date }}</a></td>
+      <td>
+        <a href="{{ url_for('.checklist', dataset_id=list.id) }}">
+        {{ list.comment or list.date }}
+        </a>
+      </td>
       <td class="text-right">
         {{ list.species_checklist.count() }} specii,
         {{ list.habitat_checklist.count() }} habitate
@@ -40,6 +44,38 @@
         </form>
       </td>
     </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Set de date</th>
+      <th>Listă de verificare</th>
+      <th>Status</th>
+      <th>Acțiuni</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for dataset in datasets %}
+      <tr>
+        <td>{{ dataset }}</td>
+        <td>{{ dataset.checklist_object or 'Listă de verificare inițială' }}</td>
+        <td>{{ DATASET_STATUSES.get(dataset.status, dataset.status) }}</td>
+        <td>
+          {%- set edit_url=url_for('.edit_dataset', dataset_id=dataset.id) %}
+          {%- set delete_url=url_for('.delete_dataset', dataset_id=dataset.id) %}
+
+          <form method="post" action="{{ delete_url }}"
+              class="delete-dataset-form">
+
+          <a class="btn btn-default btn-xs" href="{{ edit_url }}">modifică</a>
+          <button type="submit" class="btn btn-danger btn-xs">șterge</button>
+          </form>
+        </td>
+      </tr>
     {% endfor %}
     </tbody>
   </table>
@@ -60,7 +96,7 @@
 <script>
   App.confirm_before_submit(
     '.delete-dataset-form',
-    "Checklist-ul va fi șters!"
+    "Sigur doriți ștergerea permanentă?"
   );
 </script>
 {% endblock script %}

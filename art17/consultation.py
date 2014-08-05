@@ -1,17 +1,13 @@
 import flask
 from path import path
-from sqlalchemy import or_
+
+from art17.common import get_datasets
 from art17.models import Dataset
 from art17.habitat import get_dataset as get_habitat_dataset
 from art17.species import get_dataset as get_species_dataset
 
+
 consultation = flask.Blueprint('consultation', __name__)
-
-
-def get_datasets():
-    return Dataset.query.filter(
-        or_(Dataset.preview == False, Dataset.preview == None)
-    )
 
 
 def get_current_dataset():

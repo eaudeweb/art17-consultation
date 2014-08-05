@@ -12,11 +12,13 @@ import flask
 import flask.views
 from flask.ext.principal import Permission, Denial
 from flask.ext.script import Manager
+from sqlalchemy import or_
 from werkzeug.datastructures import MultiDict
 from art17 import models
 from art17 import dal
 from art17.auth import need
 from art17 import forms
+from art17.models import Dataset
 import lookup
 
 logger = logging.getLogger(__name__)
@@ -775,3 +777,9 @@ def flatten_errors(errors):
 
     return '<ul>' + '\n'.join(['<li>%s</li>' % e for e in real_errors]) + \
            '</ul>'
+
+
+def get_datasets():
+    return Dataset.query.filter(
+        or_(Dataset.preview == False, Dataset.preview == None)
+    ).order_by('-year_start')

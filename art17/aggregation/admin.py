@@ -3,14 +3,15 @@ from datetime import datetime
 
 from BeautifulSoup import BeautifulSoup
 import requests
-from flask import redirect, url_for, render_template, request, current_app
-from wtforms import Form, IntegerField, TextField
+from flask import redirect, url_for, render_template, request, current_app, \
+    flash
+from wtforms import Form, IntegerField, TextField, SelectField
 from wtforms.validators import Optional
 from flask.ext.principal import Permission
 
 from art17 import dal
 from art17.auth import require, need
-from art17.common import perm_fetch_checklist
+from art17.common import perm_fetch_checklist, get_datasets
 from art17.aggregation import (
     aggregation,
     aggregation_manager,
@@ -28,6 +29,7 @@ from art17.models import (
     DataSpeciesCheckList,
     db,
     DataHabitatsCheckList,
+    DATASET_STATUSES_DICT,
 )
 
 
@@ -215,6 +217,13 @@ class ChecklistForm(Form):
     year_end = IntegerField(validators=[Optional()])
 
 
+class DatasetForm(Form):
+    comment = TextField()
+    year_start = IntegerField(validators=[Optional()])
+    year_end = IntegerField(validators=[Optional()])
+    status = SelectField(choices=DATASET_STATUSES_DICT)
+
+
 @aggregation.route('/admin/checklist/<dataset_id>/edit/',
                    methods=('GET', 'POST'))
 def edit_checklist(dataset_id):
@@ -235,6 +244,29 @@ def edit_checklist(dataset_id):
       form=form,
     )
 
+
+@aggregation.route('/admin/dataset/<dataset_id>/edit/',
+                   methods=('GET', 'POST'))
+def edit_dataset(dataset_id):
+    dataset = get_datasets().filter_by(id=dataset_id).first()
+
+    if request.method == 'POST':
+        form = DatasetForm(request.form, obj=dataset)
+        if form.validate():
+            form.populate_obj(dataset)
+            db.session.commit()
+            flash("Form successfully updated", 'success')
+        else:
+            flash("Form has errors", 'error')
+    else:
+        form = DatasetForm(obj=dataset)
+
+    return render_template(
+        'aggregation/admin/edit_dataset.html',
+        page='checklist',
+        dataset=dataset,
+        form=form,
+    )
 
 @aggregation.route('/admin/reference_values')
 def reference_values():
@@ -282,4 +314,9 @@ def checklist():
 
 @aggregation.app_context_processor
 def inject_globals():
-    return {'checklists': get_checklists(), 'refvalue_ok': refvalue_ok}
+    return {
+        'checklists': get_checklists(),
+        'datasets': get_datasets(),
+        'DATASET_STATUSES': DATASET_STATUSES_DICT,
+        'refvalue_ok': refvalue_ok,
+    }

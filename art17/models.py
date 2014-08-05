@@ -26,6 +26,21 @@ def create_esri_guid():
     return ('{%s}' % uuid.uuid4()).upper()
 
 
+(
+    STATUS_NEW,
+    STATUS_CONSULTATION,
+    STATUS_CLOSED,
+) = range(3)
+
+
+DATASET_STATUSES = (
+    (STATUS_NEW, 'New'),
+    (STATUS_CONSULTATION, 'Available'),
+    (STATUS_CLOSED, 'Closed'),
+)
+DATASET_STATUSES_DICT = [(str(a),b) for a,b in DATASET_STATUSES]
+
+
 class RoleMixin(object):
 
     def is_final(self):
@@ -924,9 +939,15 @@ class Dataset(Base):
     comment = Column('COMMENT', Text)
     preview = Column(Boolean, default=False, nullable=True)
     checklist = Column(Boolean, default=False, nullable=True)
+    status = Column(Integer, default=STATUS_NEW, nullable=False)
     year_start = Column(Integer, nullable=True)
     year_end = Column(Integer, nullable=True)
     checklist_id = Column(Integer, nullable=True)
+
+    checklist_object = relationship(
+        'Dataset', primaryjoin="foreign(Dataset.id)==Dataset.checklist_id",
+        uselist=False,
+    )
 
     @property
     def details(self):
