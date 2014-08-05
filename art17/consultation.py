@@ -52,6 +52,11 @@ def inject_consants():
 @consultation.route('/')
 def home():
     habitat_dataset = get_habitat_dataset()
+    if habitat_dataset is None:
+        return flask.render_template(
+            'consultation/home.html',
+        )
+
     habitat_overview = (
         habitat_dataset
         .get_subject_region_overview_consultation(flask.g.identity.id)

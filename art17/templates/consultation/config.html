@@ -36,6 +36,8 @@
                 #{{ o.id }} {{ o.comment or 'Consultare inițială' }} {{ o.year_start }} - {{ o.year_end }}</option>
             {% endfor %}
           </select>
+          <em>Ca să înceapă consultarea, selectați un set de date.</em>
+          <br/>
         {% else %}
           <input class="form-control" id="form-{{ row.id }}"
                  name="{{ row.id }}" value="{{ row.value }}">
