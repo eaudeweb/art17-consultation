@@ -151,7 +151,7 @@ def index(dataset_id=None):
         result = get_history_object_url(item)
         if result:
             item.url, title, region = result
-            item.title = '{0} - {1}'.format(title, region)
+            item.title = u'{0} - {1}'.format(title, region)
         else:
             item.url = result
         item.action = ACTIONS_TRANSLATION.get(
