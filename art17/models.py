@@ -40,7 +40,7 @@ DATASET_STATUSES = (
     (STATUS_CLOSED, u'Consultare închisă'),
 )
 DATASET_STATUSES_LIST = [(str(a),b) for a,b in DATASET_STATUSES]
-DATASET_STATUSES_DICT = dict(DATASET_STATUSES_LIST)
+DATASET_STATUSES_DICT = dict(DATASET_STATUSES)
 
 
 class RoleMixin(object):
