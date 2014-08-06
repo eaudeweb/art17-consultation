@@ -36,7 +36,11 @@
                 #{{ o.id }} {{ o.comment or 'Consultare inițială' }} {{ o.year_start }} - {{ o.year_end }}</option>
             {% endfor %}
           </select>
-          <em>Ca să înceapă consultarea, selectați un set de date.</em>
+          <em>
+            Ca să înceapă consultarea, selectați un set de date.
+            Seturile de date apar în lista de mai sus, odată ce sunt marcate
+            ca active din aplicația de Agregare.
+          </em>
           <br/>
         {% else %}
           <input class="form-control" id="form-{{ row.id }}"

@@ -30,7 +30,7 @@ from art17.models import (
     db,
     DataHabitatsCheckList,
     DATASET_STATUSES_DICT,
-)
+    DATASET_STATUSES_LIST)
 
 
 REGION_MAP = {
@@ -221,7 +221,7 @@ class DatasetForm(Form):
     comment = TextField()
     year_start = IntegerField(validators=[Optional()])
     year_end = IntegerField(validators=[Optional()])
-    status = SelectField(choices=DATASET_STATUSES_DICT)
+    status = SelectField(choices=DATASET_STATUSES_LIST)
 
 
 @aggregation.route('/admin/checklist/<dataset_id>/edit/',
@@ -317,6 +317,6 @@ def inject_globals():
     return {
         'checklists': get_checklists(),
         'datasets': get_datasets(),
-        'DATASET_STATUSES': dict(DATASET_STATUSES_DICT),
+        'DATASET_STATUSES': DATASET_STATUSES_DICT,
         'refvalue_ok': refvalue_ok,
     }

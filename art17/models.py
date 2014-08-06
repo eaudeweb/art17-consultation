@@ -34,11 +34,12 @@ def create_esri_guid():
 
 
 DATASET_STATUSES = (
-    (STATUS_NEW, 'New'),
-    (STATUS_CONSULTATION, 'Available'),
-    (STATUS_CLOSED, 'Closed'),
+    (STATUS_NEW, u'În lucru'),
+    (STATUS_CONSULTATION, u'Activ'),
+    (STATUS_CLOSED, u'Consultare închisă'),
 )
-DATASET_STATUSES_DICT = [(str(a),b) for a,b in DATASET_STATUSES]
+DATASET_STATUSES_LIST = [(str(a),b) for a,b in DATASET_STATUSES]
+DATASET_STATUSES_DICT = dict(DATASET_STATUSES_LIST)
 
 
 class RoleMixin(object):
