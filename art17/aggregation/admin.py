@@ -317,6 +317,6 @@ def inject_globals():
     return {
         'checklists': get_checklists(),
         'datasets': get_datasets(),
-        'DATASET_STATUSES': DATASET_STATUSES_DICT,
+        'DATASET_STATUSES': dict(DATASET_STATUSES_DICT),
         'refvalue_ok': refvalue_ok,
     }
