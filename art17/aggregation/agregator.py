@@ -41,8 +41,11 @@ def aggregate_object(obj, dataset, refvals, timestamp, user_id):
     refval_key = obj.code + "-" + obj.bio_region
     if refval_key not in refvals or not refvalue_ok(refvals[refval_key]):
         result.cons_role = 'missing'
-    else:
-        result.cons_role = 'assessment'
+        return result
+
+    # Agregation starts here
+    result.cons_role = 'assessment'
+    #result.range_trend_period = # current_checklist or dataset
     return result
 
 

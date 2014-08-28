@@ -25,6 +25,8 @@ def create_app():
         finalize=none_as_blank)
     app.config['SQLALCHEMY_POOL_RECYCLE'] = 240  # 4 minutes
     app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024  # 1MB
+    app.config.setdefault('DEFAULT_YEAR_START', 2007)
+    app.config.setdefault('DEFAULT_YEAR_END', 2012)
     app.config.from_pyfile('settings.py', silent=True)
     app.config.from_pyfile(REPO_ROOT / 'settings.py', silent=True)
     app.register_blueprint(auth)

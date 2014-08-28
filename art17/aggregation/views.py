@@ -40,6 +40,7 @@ from art17.aggregation.utils import (
     aggregation_missing_data_report,
     get_species_checklist, get_habitat_checklist, get_tabmenu_data,
     get_tabmenu_preview,
+    valid_checklist,
 )
 
 
@@ -98,6 +99,7 @@ def aggregate():
 
 @aggregation.route('/previzualizare/<page>/', methods=['GET', 'POST'])
 def preview(page):
+    current_checklist = valid_checklist()
     check_aggregation_preview_perm()
     if page == 'habitat':
         qs = list(get_habitat_checklist(distinct=True))
@@ -143,6 +145,7 @@ def preview(page):
         'form': form,
         'dataset': dataset,
         'report': report,
+        'current_checklist': current_checklist,
     })
 
 

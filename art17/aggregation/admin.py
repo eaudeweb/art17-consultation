@@ -149,6 +149,8 @@ def create_checklist():
     )
     dataset = Dataset(
         preview=True, checklist=True, date=datetime.today(),
+        year_start=current_app.config.get('DEFAULT_YEAR_START'),
+        year_end=current_app.config.get('DEFAULT_YEAR_END'),
         comment=str(datetime.now()),
     )
     db.session.add(dataset)

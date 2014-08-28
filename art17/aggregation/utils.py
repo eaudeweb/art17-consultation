@@ -1,4 +1,6 @@
+# coding=utf-8
 import flask
+from flask import current_app
 from sqlalchemy import or_
 from art17 import models, dal
 
@@ -134,6 +136,12 @@ def get_datasets():
 
 
 def get_checklist(checklist_id):
+    if checklist_id is None or checklist_id == '':
+        class DefaultCheckList(object):
+            name = u"Lista de verificare inițială"
+            year_start = current_app.config.get('DEFAULT_YEAR_START')
+            year_end = current_app.config.get('DEFAULT_YEAR_END')
+        return DefaultCheckList()
     return models.Dataset.query.filter_by(id=checklist_id).first()
 
 
@@ -248,3 +256,13 @@ def get_tabmenu_preview(dataset):
                 'label': group.description,
                 'code': 'S' + group.code,
             }
+
+
+def valid_checklist():
+    current = get_reporting_id()
+    current = get_checklist(current)
+
+    ok = all((current.year_start, current.year_end))
+    if not ok:
+        flask.flash(u"Anii de început și sfârșit nu sunt setați pentru raportarea curentă.", 'danger')
+    return current
