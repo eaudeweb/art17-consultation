@@ -254,6 +254,10 @@ def get_reporting_id():
     return current_report.value if current_report else None
 
 
+def get_checklist(checklist_id):
+    return models.Dataset.query.filter_by(id=checklist_id).first()
+
+
 def create_aggregation(timestamp, user_id):
     curr_report_id = get_reporting_id()
     species_refvals = load_species_refval()

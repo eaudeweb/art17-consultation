@@ -1,3 +1,4 @@
+# coding=utf-8
 from collections import OrderedDict
 from datetime import datetime
 
@@ -18,7 +19,7 @@ from art17.aggregation import (
     get_species_checklist,
     get_habitat_checklist,
     get_reporting_id,
-)
+    get_checklist)
 from art17.aggregation.refvalues import (
     load_species_refval,
     refvalue_ok,
@@ -298,6 +299,8 @@ def reference_values():
         .with_entities(LuGrupSpecie.code, LuGrupSpecie.description)
     )
 
+    current_checklist = get_checklist(checklist_id) or u'Lista inițială'
+
     return render_template(
         'aggregation/admin/reference_values.html',
         species_refvals=species_refvals,
@@ -308,6 +311,7 @@ def reference_values():
         habitat_list=habitat_list,
         bioreg_list=bioreg_list,
         GROUPS=groups,
+        current_checklist=current_checklist,
         page='refvalues',
     )
 
