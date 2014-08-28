@@ -177,7 +177,7 @@ def aggregate_object(obj, dataset, refvals, timestamp, user_id):
     return result
 
 
-def get_habitat_checklist(distinct=False, dataset_id=None):
+def get_habitat_checklist(distinct=False, dataset_id=None, groupped=False):
     queryset = (
         models.DataHabitatsCheckList.query
         #.filter(models.DataHabitatsCheckList.presence != 'EX')
@@ -199,10 +199,13 @@ def get_habitat_checklist(distinct=False, dataset_id=None):
                       models.DataHabitatsCheckList.code)
             .order_by(models.DataHabitatsCheckList.name)
         )
+    if groupped:
+        queryset = [a + ('',) for a in queryset]
+
     return queryset
 
 
-def get_species_checklist(distinct=False, dataset_id=None):
+def get_species_checklist(distinct=False, dataset_id=None, groupped=False):
     queryset = (
         models.DataSpeciesCheckList.query
         #.filter(models.DataSpeciesCheckList.presence != 'EX')
@@ -224,6 +227,25 @@ def get_species_checklist(distinct=False, dataset_id=None):
                       models.DataSpeciesCheckList.code)
             .order_by(models.DataSpeciesCheckList.name)
         )
+    elif groupped:
+        queryset = (
+            queryset
+            .join(models.DataSpeciesCheckList.lu)
+            .with_entities(
+                models.DataSpeciesCheckList.code,
+                models.DataSpeciesCheckList.code.concat(
+                    ' ' +
+                    models.DataSpeciesCheckList.name
+                ),
+                models.LuHdSpecies.group_code,
+            )
+            .group_by(models.DataSpeciesCheckList.name,
+                      models.DataSpeciesCheckList.code,
+                      models.LuHdSpecies.group_code)
+            .order_by(models.DataSpeciesCheckList.name)
+        )
+        queryset = sorted(queryset, key=lambda d: d[2])
+
     return queryset
 
 

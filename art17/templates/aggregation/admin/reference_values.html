@@ -8,7 +8,16 @@
       <th>{{ region.code }}</th>
       {% endfor %}
     </tr>
-    {% for code, name in species_list %}
+    {% set last_group = '' %}
+    {% for code, name, group_code in species_list %}
+      {% if group_code != last_group %}
+      <tr>
+        <td>
+            <strong>{{ GROUPS.get(group_code, group_code) }}</strong>
+        </td>
+      </tr>
+      {% set last_group = group_code %}
+      {% endif %}
       <tr>
         <td>{{ name }}</td>
         {% for region in bioreg_list %}

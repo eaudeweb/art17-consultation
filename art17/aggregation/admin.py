@@ -30,7 +30,9 @@ from art17.models import (
     db,
     DataHabitatsCheckList,
     DATASET_STATUSES_DICT,
-    DATASET_STATUSES_LIST)
+    DATASET_STATUSES_LIST,
+    LuGrupSpecie,
+)
 
 
 REGION_MAP = {
@@ -275,19 +277,26 @@ def reference_values():
     species_refvals = load_species_refval()
     species_checklist = get_species_checklist(dataset_id=checklist_id)
     species_data = parse_checklist_ref(species_checklist)
-    species_list = get_species_checklist(distinct=True,
+
+    species_list = get_species_checklist(groupped=True,
                                          dataset_id=checklist_id)
+
     habitat_refvals = load_habitat_refval()
     habitat_checklist = get_habitat_checklist(dataset_id=checklist_id)
     habitat_data = parse_checklist_ref(habitat_checklist)
     habitat_list = get_habitat_checklist(distinct=True,
-                                         dataset_id=checklist_id)
+                                         dataset_id=checklist_id,
+                                         groupped=True)
     relevant_regions = (
         {s.bio_region for s in species_checklist}.union(
         {h.bio_region for h in habitat_checklist}
     ))
     bioreg_list = dal.get_biogeo_region_list(relevant_regions)
 
+    groups = dict(
+        LuGrupSpecie.query
+        .with_entities(LuGrupSpecie.code, LuGrupSpecie.description)
+    )
 
     return render_template(
         'aggregation/admin/reference_values.html',
@@ -298,6 +307,7 @@ def reference_values():
         habitat_data=habitat_data,
         habitat_list=habitat_list,
         bioreg_list=bioreg_list,
+        GROUPS=groups,
         page='refvalues',
     )
 
