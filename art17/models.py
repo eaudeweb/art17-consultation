@@ -556,10 +556,7 @@ class DataSpeciesCheckList(Base):
                       primaryjoin=(natura_2000_code == cast(foreign(LuHdSpecies.code),
                                                 String(255))),
                       lazy='joined', innerjoin=True, uselist=False,
-                      backref=db.backref('data_checklist',
-                                         lazy='joined',
-                                         uselist=False,
-                                         innerjoin=True)
+                      backref=db.backref('data_checklist')
     )
 
     @hybrid_property
