@@ -131,3 +131,120 @@ def get_datasets():
         .order_by(models.Dataset.date)
         .all()
     )
+
+
+def get_checklist(checklist_id):
+    return models.Dataset.query.filter_by(id=checklist_id).first()
+
+
+def get_reporting_id():
+    current_report = models.Config.query.filter_by(id='REPORTING_ID').first()
+    return current_report.value if current_report else None
+
+
+def get_species_checklist(distinct=False, dataset_id=None, groupped=False):
+    queryset = (
+        models.DataSpeciesCheckList.query
+        #.filter(models.DataSpeciesCheckList.presence != 'EX')
+        .filter_by(dataset_id=dataset_id)
+        .filter(models.DataSpeciesCheckList.member_state == 'RO')
+        .order_by(models.DataSpeciesCheckList.name)
+    )
+    if distinct:
+        queryset = (
+            queryset
+            .with_entities(
+                models.DataSpeciesCheckList.code,
+                models.DataSpeciesCheckList.code.concat(
+                    ' ' +
+                    models.DataSpeciesCheckList.name
+                ),
+            )
+            .group_by(models.DataSpeciesCheckList.name,
+                      models.DataSpeciesCheckList.code)
+            .order_by(models.DataSpeciesCheckList.name)
+        )
+    elif groupped:
+        queryset = (
+            queryset
+            .join(models.DataSpeciesCheckList.lu)
+            .with_entities(
+                models.DataSpeciesCheckList.code,
+                models.DataSpeciesCheckList.code.concat(
+                    ' ' +
+                    models.DataSpeciesCheckList.name
+                ),
+                models.LuHdSpecies.group_code,
+            )
+            .group_by(models.DataSpeciesCheckList.name,
+                      models.DataSpeciesCheckList.code,
+                      models.LuHdSpecies.group_code)
+            .order_by(models.DataSpeciesCheckList.name)
+        )
+        queryset = sorted(queryset, key=lambda d: d[2])
+
+    return queryset
+
+
+def get_habitat_checklist(distinct=False, dataset_id=None, groupped=False):
+    queryset = (
+        models.DataHabitatsCheckList.query
+        #.filter(models.DataHabitatsCheckList.presence != 'EX')
+        .filter_by(dataset_id=dataset_id)
+        .filter(models.DataHabitatsCheckList.member_state == 'RO')
+        .order_by(models.DataHabitatsCheckList.name)
+    )
+    if distinct:
+        queryset = (
+            queryset
+            .with_entities(
+                models.DataHabitatsCheckList.code,
+                models.DataHabitatsCheckList.code.concat(
+                    ' ' +
+                    models.DataHabitatsCheckList.name
+                ),
+            )
+            .group_by(models.DataHabitatsCheckList.name,
+                      models.DataHabitatsCheckList.code)
+            .order_by(models.DataHabitatsCheckList.name)
+        )
+    if groupped:
+        queryset = [a + ('',) for a in queryset]
+
+    return queryset
+
+
+def get_tabmenu_data(dataset):
+    yield {
+        'url': flask.url_for('.habitats', dataset_id=dataset.id),
+        'label': "Habitate",
+        'code': 'H',
+    }
+    for group in dal.get_species_groups():
+        yield {
+            'url': flask.url_for('.species',
+                                 group_code=group.code,
+                                 dataset_id=dataset.id),
+            'label': group.description,
+            'code': 'S' + group.code,
+        }
+
+
+def get_tabmenu_preview(dataset):
+    if dataset.habitat_objs.count():
+        yield {
+            'url': flask.url_for('.habitats', dataset_id=dataset.id),
+            'label': "Habitate",
+            'code': 'H',
+        }
+    species = list(dataset.species_objs)
+    for group in dal.get_species_groups():
+        qs = [s for s in species if s.species.lu.group_code == group.code]
+        if qs:
+            yield {
+                'url': flask.url_for('.species',
+                                     group_code=group.code,
+                                     dataset_id=dataset.id),
+                'label': group.description,
+                'code': 'S' + group.code,
+            }

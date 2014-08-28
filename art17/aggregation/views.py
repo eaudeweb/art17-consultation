@@ -1,37 +1,14 @@
 # encoding: utf-8
-
 from datetime import datetime
 
 import flask
-from flask import request, render_template, redirect, url_for
+from flask import request, redirect, url_for
 from flask.ext.principal import Permission
 from flask.views import View
 from sqlalchemy import func, or_
 from werkzeug.datastructures import MultiDict
 
 from art17 import models, forms, schemas, dal
-from art17.aggregation import (
-    aggregation,
-    check_aggregation_perm,
-    create_aggregation,
-    create_preview_aggregation,
-    get_tabmenu_data,
-    get_tabmenu_preview,
-    perm_edit_record,
-    perm_finalize_record,
-    perm_definalize_record,
-    get_habitat_checklist,
-    get_species_checklist,
-    check_aggregation_preview_perm,
-)
-from art17.aggregation.forms import PreviewForm, CompareForm
-from art17.aggregation.utils import (
-    record_edit_url,
-    record_details_url,
-    record_finalize_toggle_url,
-    get_datasets,
-    aggregation_missing_data_report
-)
 from art17.auth import admin_permission, require, need
 from art17.common import (
     flatten_dict,
@@ -42,6 +19,28 @@ from art17.common import (
 from art17.habitat import detail as detail_habitat, HabitatCommentView
 from art17.lookup import CONCLUSIONS
 from art17.species import detail as detail_species, SpeciesCommentView
+from art17.aggregation import (
+    aggregation,
+    check_aggregation_perm,
+    perm_edit_record,
+    perm_finalize_record,
+    perm_definalize_record,
+    check_aggregation_preview_perm,
+)
+from art17.aggregation.agregator import (
+    create_aggregation,
+    create_preview_aggregation,
+)
+from art17.aggregation.forms import PreviewForm
+from art17.aggregation.utils import (
+    record_edit_url,
+    record_details_url,
+    record_finalize_toggle_url,
+    get_datasets,
+    aggregation_missing_data_report,
+    get_species_checklist, get_habitat_checklist, get_tabmenu_data,
+    get_tabmenu_preview,
+)
 
 
 @aggregation.route('/_ping')
@@ -582,90 +581,3 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>'
                          view_func=SpeciesFinalToggle.as_view(
                              'species-definalize',
                              finalize=False))
-
-
-@aggregation.route('/compare/select', methods=('GET', 'POST'))
-def compare():
-    if request.method == 'POST':
-        form = CompareForm(request.form)
-
-        if form.validate():
-            return flask.redirect(
-                flask.url_for(
-                    '.compare_datasets',
-                    dataset1=form.dataset1.data,
-                    dataset2=form.dataset2.data)
-            )
-    else:
-        form = CompareForm()
-    return flask.render_template('aggregation/compare.html', form=form,
-                                 page='compare')
-
-
-@aggregation.route('/compare/<int:dataset1>/<int:dataset2>/')
-def compare_datasets(dataset1, dataset2):
-    d1 = models.Dataset.query.get_or_404(dataset1)
-    d2 = models.Dataset.query.get_or_404(dataset2)
-
-    ROLE = 'final'
-
-    conclusions_s_d1 = d1.species_objs.filter_by(cons_role=ROLE)
-    conclusions_s_d2 = d2.species_objs.filter_by(cons_role=ROLE)
-
-    relevant_regions = set([r[0] for r in (
-        list(conclusions_s_d1.with_entities(models.DataSpeciesRegion.region)
-        .distinct()) +
-        list(conclusions_s_d2.with_entities(models.DataSpeciesRegion.region)
-        .distinct())
-    ) if r[0]])
-
-    s_data = {}
-    for r in conclusions_s_d1:
-        if r.species not in s_data:
-            s_data[r.species] = {'d1': {}, 'd2': {}}
-        s_data[r.species]['d1'][r.region] = r
-    for r in conclusions_s_d2:
-        if r.species not in s_data:
-            s_data[r.species] = {'d1': {}, 'd2': {}}
-        s_data[r.species]['d2'][r.region] = r
-    if None in s_data:
-        del s_data[None]
-
-    s_stat = {'objs': 0, 'diff': 0}
-    for k, v in s_data.iteritems():
-        for reg, ass in v['d1'].iteritems():
-            ass2 = v['d2'].get(reg, None)
-            if not ass2 or ass2.conclusion_assessment != ass.conclusion_assessment:
-                s_stat['diff'] += 1
-            s_stat['objs'] += 1
-
-    conclusions_h_d1 = d1.habitat_objs.filter_by(cons_role=ROLE)
-    conclusions_h_d2 = d2.habitat_objs.filter_by(cons_role=ROLE)
-
-    h_data = {}
-    for r in conclusions_h_d1:
-        if r.habitat not in h_data:
-            h_data[r.habitat] = {'d1': {}, 'd2': {}}
-        h_data[r.habitat]['d1'][r.region] = r
-    for r in conclusions_h_d2:
-        if r.habitat not in h_data:
-            h_data[r.habitat] = {'d1': {}, 'd2': {}}
-        h_data[r.habitat]['d2'][r.region] = r
-    if None in h_data:
-        del h_data[None]
-
-    h_stat = {'objs': 0, 'diff': 0}
-    for k, v in h_data.iteritems():
-        for reg, ass in v['d1'].iteritems():
-            ass2 = v['d2'].get(reg, None)
-            if not ass2 or ass2.conclusion_assessment != ass.conclusion_assessment:
-                h_stat['diff'] += 1
-            h_stat['objs'] += 1
-
-    bioreg_list = dal.get_biogeo_region_list(relevant_regions)
-    return render_template(
-        'aggregation/compare_datasets.html',
-        species_data=s_data, dataset1=d1, dataset2=d2, bioreg_list=bioreg_list,
-        habitat_data=h_data, s_stat=s_stat, h_stat=h_stat,
-        page='compare',
-    )

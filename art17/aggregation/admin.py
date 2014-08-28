@@ -3,6 +3,7 @@ from collections import OrderedDict
 from datetime import datetime
 
 from BeautifulSoup import BeautifulSoup
+import flask
 import requests
 from flask import redirect, url_for, render_template, request, current_app, \
     flash
@@ -10,21 +11,12 @@ from wtforms import Form, IntegerField, TextField, SelectField
 from wtforms.validators import Optional
 from flask.ext.principal import Permission
 
-from art17 import dal
+from art17 import dal, models
+from art17.aggregation.forms import CompareForm
+from art17.aggregation.utils import get_checklist, get_reporting_id, \
+    get_species_checklist, get_habitat_checklist
 from art17.auth import require, need
 from art17.common import perm_fetch_checklist, get_datasets
-from art17.aggregation import (
-    aggregation,
-    aggregation_manager,
-    get_species_checklist,
-    get_habitat_checklist,
-    get_reporting_id,
-    get_checklist)
-from art17.aggregation.refvalues import (
-    load_species_refval,
-    refvalue_ok,
-    load_habitat_refval,
-)
 from art17.models import (
     Dataset,
     DataSpeciesCheckList,
@@ -33,6 +25,15 @@ from art17.models import (
     DATASET_STATUSES_DICT,
     DATASET_STATUSES_LIST,
     LuGrupSpecie,
+)
+from art17.aggregation import (
+    aggregation,
+    aggregation_manager,
+)
+from art17.aggregation.refvalues import (
+    load_species_refval,
+    refvalue_ok,
+    load_habitat_refval,
 )
 
 
@@ -334,3 +335,90 @@ def inject_globals():
         'DATASET_STATUSES': DATASET_STATUSES_DICT,
         'refvalue_ok': refvalue_ok,
     }
+
+
+@aggregation.route('/admin/compare/select', methods=('GET', 'POST'))
+def compare():
+    if request.method == 'POST':
+        form = CompareForm(request.form)
+
+        if form.validate():
+            return flask.redirect(
+                flask.url_for(
+                    '.compare_datasets',
+                    dataset1=form.dataset1.data,
+                    dataset2=form.dataset2.data)
+            )
+    else:
+        form = CompareForm()
+    return flask.render_template('aggregation/compare.html', form=form,
+                                 page='compare')
+
+
+@aggregation.route('/admin/compare/<int:dataset1>/<int:dataset2>/')
+def compare_datasets(dataset1, dataset2):
+    d1 = models.Dataset.query.get_or_404(dataset1)
+    d2 = models.Dataset.query.get_or_404(dataset2)
+
+    ROLE = 'final'
+
+    conclusions_s_d1 = d1.species_objs.filter_by(cons_role=ROLE)
+    conclusions_s_d2 = d2.species_objs.filter_by(cons_role=ROLE)
+
+    relevant_regions = set([r[0] for r in (
+        list(conclusions_s_d1.with_entities(models.DataSpeciesRegion.region)
+        .distinct()) +
+        list(conclusions_s_d2.with_entities(models.DataSpeciesRegion.region)
+        .distinct())
+    ) if r[0]])
+
+    s_data = {}
+    for r in conclusions_s_d1:
+        if r.species not in s_data:
+            s_data[r.species] = {'d1': {}, 'd2': {}}
+        s_data[r.species]['d1'][r.region] = r
+    for r in conclusions_s_d2:
+        if r.species not in s_data:
+            s_data[r.species] = {'d1': {}, 'd2': {}}
+        s_data[r.species]['d2'][r.region] = r
+    if None in s_data:
+        del s_data[None]
+
+    s_stat = {'objs': 0, 'diff': 0}
+    for k, v in s_data.iteritems():
+        for reg, ass in v['d1'].iteritems():
+            ass2 = v['d2'].get(reg, None)
+            if not ass2 or ass2.conclusion_assessment != ass.conclusion_assessment:
+                s_stat['diff'] += 1
+            s_stat['objs'] += 1
+
+    conclusions_h_d1 = d1.habitat_objs.filter_by(cons_role=ROLE)
+    conclusions_h_d2 = d2.habitat_objs.filter_by(cons_role=ROLE)
+
+    h_data = {}
+    for r in conclusions_h_d1:
+        if r.habitat not in h_data:
+            h_data[r.habitat] = {'d1': {}, 'd2': {}}
+        h_data[r.habitat]['d1'][r.region] = r
+    for r in conclusions_h_d2:
+        if r.habitat not in h_data:
+            h_data[r.habitat] = {'d1': {}, 'd2': {}}
+        h_data[r.habitat]['d2'][r.region] = r
+    if None in h_data:
+        del h_data[None]
+
+    h_stat = {'objs': 0, 'diff': 0}
+    for k, v in h_data.iteritems():
+        for reg, ass in v['d1'].iteritems():
+            ass2 = v['d2'].get(reg, None)
+            if not ass2 or ass2.conclusion_assessment != ass.conclusion_assessment:
+                h_stat['diff'] += 1
+            h_stat['objs'] += 1
+
+    bioreg_list = dal.get_biogeo_region_list(relevant_regions)
+    return render_template(
+        'aggregation/compare_datasets.html',
+        species_data=s_data, dataset1=d1, dataset2=d2, bioreg_list=bioreg_list,
+        habitat_data=h_data, s_stat=s_stat, h_stat=h_stat,
+        page='compare',
+    )
