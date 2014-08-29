@@ -21,7 +21,7 @@
   <h4>Regiuni</h4>
   <table class="table">
     <tbody>
-    {% for record in dataset.species_objs %}
+    {% for record in dataset.species_objs.all() + dataset.habitat_objs.all() %}
     {%- set url = record_edit_url(record) %}
     <tr>
       <td><a href="{{ url }}">{{ record.lu.name_ro }}</a></td>
