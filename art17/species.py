@@ -22,11 +22,11 @@ comment_finalized = Signal()
 comment_deleted = Signal()
 
 
-def get_dataset(dataset_id=None):
+def get_dal(dataset_id=None):
     dataset_id = dataset_id or config.get_config_value('CONSULTATION_DATASET')
     if not dataset_id:
         return None
-    return dal.SpeciesDataset(int(dataset_id))
+    return dal.SpeciesDal(int(dataset_id))
 
 
 class SpeciesMixin(object):
@@ -34,7 +34,7 @@ class SpeciesMixin(object):
     subject_name = 'species'
     blueprint = 'species'
     parse_record = staticmethod(schemas.parse_species)
-    dataset = cached_property(lambda self: get_dataset())
+    dataset = cached_property(lambda self: get_dal())
     comment_history_view = 'history_consultation.species_comments'
 
     @cached_property
@@ -129,9 +129,8 @@ species.add_url_rule('/specii/comentarii/<int:comment_id>',
                  view_func=SpeciesCommentView.as_view('comment_edit'))
 
 
-class SpeciesCommentStateView(CommentStateView):
+class SpeciesCommentStateView(CommentStateView, SpeciesMixin):
 
-    dataset = cached_property(lambda self: get_dataset())
     signal = comment_status_changed
 
 
@@ -139,9 +138,8 @@ species.add_url_rule('/specii/comentarii/<int:comment_id>/stare',
             view_func=SpeciesCommentStateView.as_view('comment_status'))
 
 
-class SpeciesCommentDeleteView(CommentDeleteView):
+class SpeciesCommentDeleteView(CommentDeleteView, SpeciesMixin):
 
-    dataset = cached_property(lambda self: get_dataset())
     parse_commentform = staticmethod(schemas.parse_species_commentform)
     signal = comment_deleted
 
@@ -159,10 +157,9 @@ species.add_url_rule('/specii/detalii/<int:record_id>/edit_final',
                      view_func=SpeciesFinalCommentView.as_view('final_comment'))
 
 
-class SpeciesDeleteDraftView(DeleteDraftView):
+class SpeciesDeleteDraftView(DeleteDraftView, SpeciesMixin):
 
-    dataset = cached_property(lambda self: get_dataset())
-
+    pass
 
 species.add_url_rule('/specii/detalii/<int:record_id>/delete_final',
                      view_func=SpeciesDeleteDraftView.as_view('delete_draft'))
@@ -176,9 +173,8 @@ species.add_url_rule('/species/redraft/<int:comment_id>',
                      view_func=SpeciesRedraftCommentView.as_view('redraft'))
 
 
-class SpeciesCloseConsultationView(CloseConsultationView):
+class SpeciesCloseConsultationView(CloseConsultationView, SpeciesMixin):
 
-    dataset = cached_property(lambda self: get_dataset())
     parse_commentform = staticmethod(schemas.parse_species_commentform)
     flatten_commentform = staticmethod(schemas.flatten_species_commentform)
     form_cls = forms.SpeciesComment
@@ -188,9 +184,9 @@ species.add_url_rule('/specii/detalii/<int:record_id>/inchide',
             view_func=SpeciesCloseConsultationView.as_view('close'))
 
 
-class SpeciesReopenConsultationView(ReopenConsultationView):
+class SpeciesReopenConsultationView(ReopenConsultationView, SpeciesMixin):
 
-    dataset = cached_property(lambda self: get_dataset())
+    pass
 
 species.add_url_rule('/specii/detalii/<int:final_record_id>/redeschide',
             view_func=SpeciesReopenConsultationView.as_view('reopen'))

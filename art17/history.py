@@ -190,8 +190,8 @@ def pretty_json_data(json_data):
 @history_aggregation.route('/dataset/<int:dataset_id>/activitate'
                            '/specii/<subject_code>/<region_code>')
 def species_comments(subject_code, region_code, dataset_id=None):
-    from art17.species import get_dataset
-    dataset = get_dataset(dataset_id)
+    from art17.species import get_dal
+    dataset = get_dal(dataset_id)
     items = dataset.get_history(subject_code, region_code)
     subject = dataset.get_subject(subject_code)
     perm_view_history(subject).test()
@@ -216,8 +216,8 @@ def species_comments(subject_code, region_code, dataset_id=None):
 @history_aggregation.route('/dataset/<int:dataset_id>/activitate'
                            '/habitate/<subject_code>/<region_code>')
 def habitat_comments(subject_code, region_code, dataset_id=None):
-    from art17.habitat import get_dataset
-    dataset = get_dataset(dataset_id)
+    from art17.habitat import get_dal
+    dataset = get_dal(dataset_id)
     items = dataset.get_history(subject_code, region_code)
     subject = dataset.get_subject(subject_code)
     perm_view_history(subject).test()

@@ -3,8 +3,8 @@ from path import path
 
 from art17.common import get_datasets
 from art17.models import Dataset, STATUS_CLOSED, STATUS_CONSULTATION
-from art17.habitat import get_dataset as get_habitat_dataset
-from art17.species import get_dataset as get_species_dataset
+from art17.habitat import get_dal as get_habitat_dataset
+from art17.species import get_dal as get_species_dataset
 
 
 consultation = flask.Blueprint('consultation', __name__)

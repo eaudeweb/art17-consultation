@@ -234,16 +234,16 @@ class DashboardView(View):
 
     def get_context_data(self):
         dal_object = self.ds_model(self.dataset_id)
-        self.dataset = models.Dataset.query.get_or_404(self.dataset_id)
+        dataset = models.Dataset.query.get_or_404(self.dataset_id)
         object_regions = dal_object.get_subject_region_overview_aggregation()
 
         relevant_regions = set(reg for n, reg in object_regions)
         bioreg_list = dal.get_biogeo_region_list(relevant_regions)
 
-        if self.dataset.preview:
-            tabmenu = get_tabmenu_preview(self.dataset)
+        if dataset.preview:
+            tabmenu = get_tabmenu_preview(dataset)
         else:
-            tabmenu = list(get_tabmenu_data(self.dataset))
+            tabmenu = list(get_tabmenu_data(dataset))
         return {
             'current_tab': self.current_tab,
             'bioreg_list': bioreg_list,
@@ -251,11 +251,11 @@ class DashboardView(View):
             'dataset_url': flask.url_for('.dashboard',
                                          dataset_id=self.dataset_id),
             'dataset_id': self.dataset_id,
-            'object_list': self.get_object_list(),
+            'object_list': self.get_object_list(dataset),
             'object_regions': object_regions,
-            'dataset': self.dataset,
-            'habitat_count': self.dataset.habitat_objs.count(),
-            'species_count': self.dataset.species_objs.count(),
+            'dataset': dataset,
+            'habitat_count': dataset.habitat_objs.count(),
+            'species_count': dataset.species_objs.count(),
         }
 
     def dispatch_request(self, *args, **kwargs):
@@ -269,11 +269,11 @@ class DashboardView(View):
 class HabitatsDashboard(DashboardView):
 
     current_tab = 'H'
-    ds_model = dal.HabitatDataset
+    ds_model = dal.HabitatDal
 
-    def get_object_list(self):
-        if self.dataset.preview:
-            return set([h.habitat for h in self.dataset.habitat_objs])
+    def get_object_list(self, dataset):
+        if dataset.preview:
+            return set([h.habitat for h in dataset.habitat_objs])
         return dal.get_habitat_list()
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/',
@@ -282,11 +282,11 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/',
 
 class SpeciesDashboard(DashboardView):
 
-    ds_model = dal.SpeciesDataset
+    ds_model = dal.SpeciesDal
 
-    def get_object_list(self):
-        if self.dataset.preview:
-            return set([s.species for s in self.dataset.species_objs])
+    def get_object_list(self, dataset):
+        if dataset.preview:
+            return set([s.species for s in dataset.species_objs])
         return dal.get_species_list(self.group_code)
 
     def dispatch_request(self, *args, **kwargs):

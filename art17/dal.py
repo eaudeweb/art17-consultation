@@ -75,7 +75,7 @@ def get_species_group(group_code):
     )
 
 
-class BaseDataset(object):
+class BaseDal(object):
 
     def __init__(self, dataset_id):
         self.dataset_id = dataset_id
@@ -325,7 +325,7 @@ class BaseDataset(object):
         return set(row[0] for row in read_query)
 
 
-class HabitatDataset(BaseDataset):
+class HabitatDal(BaseDal):
 
     subject_model = DataHabitat
     record_model = DataHabitattypeRegion
@@ -339,7 +339,7 @@ class HabitatDataset(BaseDataset):
 
     @classmethod
     def update_extra_fields(cls, struct, comment):
-        super(HabitatDataset, cls).update_extra_fields(struct, comment)
+        super(HabitatDal, cls).update_extra_fields(struct, comment)
         for species in comment.species:
             db.session.delete(species)
         for species in struct['typicalspecies']['species']:
@@ -356,7 +356,7 @@ class HabitatDataset(BaseDataset):
         object.cons_dataset_id = self.dataset_id
 
 
-class SpeciesDataset(BaseDataset):
+class SpeciesDal(BaseDal):
 
     subject_model = DataSpecies
     record_model = DataSpeciesRegion

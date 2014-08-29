@@ -50,8 +50,8 @@ def inject_funcs():
 
 @dashboard.route('/habitate')
 def habitats():
-    from art17.habitat import get_dataset
-    habitat_dataset = get_dataset()
+    from art17.habitat import get_dal
+    habitat_dataset = get_dal()
     if not habitat_dataset:
         flask.flash('No active consultation', 'danger')
         return flask.redirect('/')
@@ -77,8 +77,8 @@ def habitats():
 
 @dashboard.route('/specii/<group_code>')
 def species(group_code):
-    from art17.species import get_dataset
-    species_dataset = get_dataset()
+    from art17.species import get_dal
+    species_dataset = get_dal()
     if not species_dataset:
         flask.flash('No active consultation', 'danger')
         return flask.redirect('/')
