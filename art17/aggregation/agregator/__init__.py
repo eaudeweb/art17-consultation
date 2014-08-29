@@ -8,6 +8,12 @@ from art17.aggregation.refvalues import (
 from art17.aggregation.utils import (
     get_reporting_id, get_habitat_checklist, get_species_checklist,
 )
+from art17.aggregation.agregator.gis import (
+    get_habitat_dist_surface,
+    get_habitat_range_surface,
+    get_species_dist_surface,
+    get_species_range_surface,
+)
 
 
 def execute_on_primary(query):
@@ -16,7 +22,7 @@ def execute_on_primary(query):
     return models.db.session.execute(query, bind=aggregation_engine)
 
 
-def aggregate_species(result, refvals):
+def aggregate_species(obj, result, refvals):
     # Areal
 
     # Populatie
@@ -40,8 +46,9 @@ def aggregate_species(result, refvals):
     return result
 
 
-def aggregate_habitat(result, refvals):
+def aggregate_habitat(obj, result, refvals):
     # Areal
+    result.range_surface_area = get_habitat_range_surface(obj.code, result.region)
 
     # Suprafata
 
@@ -92,9 +99,9 @@ def aggregate_object(obj, dataset, refvals, timestamp, user_id):
     # Agregation starts here
     result.cons_role = 'assessment'
     if isinstance(obj, models.DataHabitatsCheckList):
-        result = aggregate_habitat(result, refvals)
+        result = aggregate_habitat(obj, result, refvals)
     else:
-        result = aggregate_species(result, refvals)
+        result = aggregate_species(obj, result, refvals)
     return result
 
 

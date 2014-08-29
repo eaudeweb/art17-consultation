@@ -4,7 +4,6 @@ import flask
 from flask.ext.principal import Permission, Denial, PermissionDenied
 from flask.ext.script import Manager
 
-from art17.aggregation.agregator import aggregate_object
 from art17.aggregation.refvalues import (
     load_species_refval,
     load_habitat_refval,

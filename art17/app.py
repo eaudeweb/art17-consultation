@@ -27,6 +27,7 @@ def create_app():
     app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024  # 1MB
     app.config.setdefault('DEFAULT_YEAR_START', 2007)
     app.config.setdefault('DEFAULT_YEAR_END', 2012)
+    app.config.setdefault('GIS_API_URL', '')
     app.config.from_pyfile('settings.py', silent=True)
     app.config.from_pyfile(REPO_ROOT / 'settings.py', silent=True)
     app.register_blueprint(auth)
