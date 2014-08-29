@@ -16,9 +16,17 @@ from art17.common import (
     NEW_STATUS,
     perm_aggregate_dataset,
 )
-from art17.habitat import detail as detail_habitat, HabitatCommentView
+from art17.habitat import (
+    detail as detail_habitat,
+    HabitatCommentView,
+    get_dal as get_habitat_dal,
+)
 from art17.lookup import CONCLUSIONS
-from art17.species import detail as detail_species, SpeciesCommentView
+from art17.species import (
+    detail as detail_species,
+    SpeciesCommentView,
+    get_dal as get_species_dal,
+)
 from art17.aggregation import (
     aggregation,
     check_aggregation_perm,
@@ -352,6 +360,7 @@ class HabitatRecordView(RecordViewMixin, HabitatCommentView):
     comment_history_view = 'history_aggregation.habitat_comments'
 
     def setup_template_context(self):
+        self.dataset = get_habitat_dal(self.dataset_id)
         super(HabitatRecordView, self).setup_template_context()
         self.template_ctx.update(**{
             'dataset_id': self.dataset_id
@@ -375,6 +384,7 @@ class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
     comment_history_view = 'history_aggregation.species_comments'
 
     def setup_template_context(self):
+        self.dataset = get_species_dal(self.dataset_id)
         super(SpeciesRecordView, self).setup_template_context()
         self.template_ctx.update(**{
             'dataset_id': self.dataset_id,
