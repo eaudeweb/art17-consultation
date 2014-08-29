@@ -24,6 +24,7 @@ def execute_on_primary(query):
 
 def aggregate_species(obj, result, refvals):
     # Areal
+    result.range_surface_area = get_species_range_surface(obj.code, result.region)
 
     # Populatie
 

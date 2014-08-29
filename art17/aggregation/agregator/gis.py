@@ -12,11 +12,11 @@ SPECIES_RANGE_URL = "/IBB_RangeDistribution/MapServer/3"
 
 def generic_surface_call(url, where_query):
     url = current_app.config.get('GIS_API_URL') + url
-    url += "?" + urlencode(
+    url += "/query?" + urlencode(
         {'where': where_query, 'outFields': "SHAPE.AREA",
          'f': "json"})
 
-    logging.debug("Requesting:" + url)
+    #print "Requesting:" + url
     res = requests.get(url)
     if res.status_code == 200:
         data = res.json()
@@ -24,7 +24,7 @@ def generic_surface_call(url, where_query):
         if not data['features']:
             return None
 
-        surface = data['features']['attributes']['SHAPE.AREA']
+        surface = data['features'][0]['attributes']['SHAPE.AREA']
         # return the value in square kilometers
         return surface / (1000 * 1000)
     return None
