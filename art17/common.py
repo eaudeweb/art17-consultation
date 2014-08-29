@@ -494,10 +494,11 @@ class RecordView(IndexMixin, flask.views.View):
         self.template_ctx['template_base'] = self.template_base
 
         if self.record.is_missing():
-            return flask.render_template(
-                self.missing_template,
-                **self.template_ctx
-            )
+            flask.flash(u'Nu au existat date pentru agregarea acestei înregistrări', 'warning')
+            # return flask.render_template(
+            #     self.missing_template,
+            #     **self.template_ctx
+            # )
 
         if flask.request.method == 'POST':
             #perm_save_record().test()  why?
