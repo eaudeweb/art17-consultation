@@ -16,6 +16,52 @@ def execute_on_primary(query):
     return models.db.session.execute(query, bind=aggregation_engine)
 
 
+def aggregate_species(result, refvals):
+    # Areal
+
+    # Populatie
+
+    # Habitat
+
+    # Presiuni
+
+    # Amenintari
+
+    # Complementar
+
+    # Natura 2000
+
+    # Masuri de conservare
+
+    # Concluzii
+
+    # Bibliografie / surse publicate
+
+    return result
+
+
+def aggregate_habitat(result, refvals):
+    # Areal
+
+    # Suprafata
+
+    # Presiuni
+
+    # Amenintari
+
+    # Specii tipice
+
+    # Natura 2000
+
+    # Masuri de conservare
+
+    # Concluzii
+
+    # Bibliografie
+
+    return result
+
+
 def aggregate_object(obj, dataset, refvals, timestamp, user_id):
     """
     Aggregate a habitat or a species.
@@ -45,7 +91,10 @@ def aggregate_object(obj, dataset, refvals, timestamp, user_id):
 
     # Agregation starts here
     result.cons_role = 'assessment'
-    #result.range_trend_period = # current_checklist or dataset
+    if isinstance(obj, models.DataHabitatsCheckList):
+        result = aggregate_habitat(result, refvals)
+    else:
+        result = aggregate_species(result, refvals)
     return result
 
 
