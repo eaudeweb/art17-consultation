@@ -3,3 +3,4 @@ project_root=/path/to/repo
 user=user
 hosts=host
 sandbox=/path/to/venv
+refval_dir=/path/to/refval

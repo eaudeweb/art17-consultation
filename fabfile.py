@@ -1,6 +1,6 @@
 import ConfigParser
 from fabric.context_managers import cd, prefix
-from fabric.operations import require, sudo, get
+from fabric.operations import require, sudo, get, put
 from path import path
 from fabric.api import run, env
 from fabric.decorators import task
@@ -43,7 +43,17 @@ def export():
 
     with cd(env.project_root), prefix('source %(sandbox_activate)s' % env):
         run('mkdir -p /tmp/export')
-        run('python manage.py export all -d /tmp/export')
+        run('python manage.py export all_species -d /tmp/export')
+        run('python manage.py export all_habitat -d /tmp/export')
         run('tar czf /tmp/export.tgz /tmp/export/*')
         get('/tmp/export.tgz', '.')
         run('rm -rf /tmp/export.tgz /tmp/export')
+
+
+@task
+def upload_data():
+    require('refval_dir')
+
+    with cd(env.refval_dir):
+        put('data/species.json', '.')
+        put('data/habitats.json', '.')
