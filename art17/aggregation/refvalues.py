@@ -41,6 +41,6 @@ def refvalue_ok(refvalue):
         return None
     for k, v in refvalue.iteritems():
         v2 = v.values()
-        if ('' in v2) or (None in v2):
+        if not any(v2):
             return False
     return True
