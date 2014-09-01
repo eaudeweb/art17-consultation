@@ -12,11 +12,18 @@ SPECIES_MAP = {
     'species_population_units.csv': 'population_units'
 }
 
+HABITAT_MAP = {
+    'habitat_magnitude.csv': 'magnitude',
+    'habitat_range.csv': 'range',
+}
+
 
 @importer.command
-def species_refval(csv_dir='.'):
-    data = load_refval('species.json')
-    for filename, refval_key in SPECIES_MAP.iteritems():
+def species_refval(csv_dir='.', map=None, json_filename=None):
+    json_filename = json_filename or 'species.json'
+    data = load_refval(json_filename)
+    map = map or SPECIES_MAP
+    for filename, refval_key in map.iteritems():
         path = os.path.join(csv_dir, filename)
         if not os.path.exists(path):
             print "Missing: ", path
@@ -36,4 +43,10 @@ def species_refval(csv_dir='.'):
                 data[data_key] = data.get(data_key, {})
                 data[data_key][refval_key] = row
 
-    save_refval('species.json', data)
+    save_refval(json_filename, data)
+
+
+@importer.command
+def habitat_refval(csv_dir='.'):
+    return species_refval(csv_dir=csv_dir, map=HABITAT_MAP,
+                          json_filename='habitat.json')

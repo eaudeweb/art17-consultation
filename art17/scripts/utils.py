@@ -34,7 +34,7 @@ def generate_csv(header, rows, delimiter=','):
 
     csv_writer.writerow(header)
     for item in rows:
-        csv_writer.writerow([value.encode('utf-8') for value in item])
+        csv_writer.writerow([value for value in item])
 
     return output.getvalue()
 

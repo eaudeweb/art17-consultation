@@ -35,8 +35,30 @@ def generic_species_exporter(format_row_cb):
     return columns
 
 
+def generic_habitat_exporter(format_row_cb):
+    rows = []
+    data_habitats = (
+        models.DataHabitat.query
+        .join(models.DataHabitat.lu)
+        .order_by(models.LuHabitattypeCodes.hd_name)
+    )
+    for hb in data_habitats:
+        data_habitats_regions = (
+            hb.regions
+            .filter_by(
+                cons_dataset_id=DATASET,
+                cons_role='assessment',
+            )
+            .order_by(models.DataHabitattypeRegion.region)
+        )
+        for hr in data_habitats_regions:
+            row = format_row_cb(hb, hr)
+            rows.append(row)
+    return rows
+
+
 @exporter.command
-def species_magnitude(filename=None):
+def species_magnitude(filename=None, exporter=generic_species_exporter):
     header = COMMON_HEADER + (
         'Magn. min scurt', 'Magn. max scurt', 'Magn. min lung',
         'Magn. max lung',
@@ -47,7 +69,8 @@ def species_magnitude(filename=None):
         if sp.lu:
             name = sp.lu.display_name
         name = name or ''
-        return [
+
+        row = [
             sp.code,
             name,
             sr.region,
@@ -56,13 +79,15 @@ def species_magnitude(filename=None):
             unicode(sr.range_trend_long_magnitude_min or ''),
             unicode(sr.range_trend_long_magnitude_max or ''),
         ]
+        return row
 
-    columns = generic_species_exporter(format_row)
+    columns = exporter(format_row)
+
     do_csv_export(header, columns, filename)
 
 
 @exporter.command
-def species_range(filename=None):
+def species_range(filename=None, exporter=generic_species_exporter):
     header = COMMON_HEADER + (
         'Areal favorabil referinta',
         'Operator - areal',
@@ -85,7 +110,7 @@ def species_range(filename=None):
             'x' if sr.complementary_favourable_range_unknown else '',
         ]
 
-    columns = generic_species_exporter(format_row)
+    columns = exporter(format_row)
     do_csv_export(header, columns, filename)
 
 
@@ -137,7 +162,6 @@ def species_population_range(filename=None):
 
     columns = generic_species_exporter(format_row)
     do_csv_export(header, columns, filename)
-
 
 
 @exporter.command
@@ -196,11 +220,11 @@ def species_population_units(filename=None):
 
 
 @exporter.command
-def all(dest_dir=None):
+def all_species(dest_dir=None, mapping=None):
     """ Export all reference values
     """
     dest_dir = dest_dir or '.'
-    available = {
+    available = mapping or {
         'species_magnitude': species_magnitude,
         'species_range': species_range,
         'species_habitat': species_habitat,
@@ -214,3 +238,25 @@ def all(dest_dir=None):
         filepath = os.path.join(dest_dir, filename)
         v(filepath)
     print "Done."
+
+
+@exporter.command
+def habitat_magnitude(filename=None):
+    return species_magnitude(filename=filename,
+                             exporter=generic_habitat_exporter)
+
+
+@exporter.command
+def habitat_range(filename=None):
+    return species_range(filename=filename,
+                         exporter=generic_habitat_exporter)
+
+
+@exporter.command
+def all_habitat(dest_dir=None):
+    """ Export all reference values
+    """
+    return all_species(dest_dir=dest_dir, mapping={
+        'habitat_magnitude': habitat_magnitude,
+        'habitat_range': habitat_range,
+    })
