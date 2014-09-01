@@ -111,6 +111,12 @@ def aggregate_habitat(obj, result, refvals):
     result.range_trend_long_period = long_period
     result.range_trend_long_magnitude_min = refvals["magnitude"]["Magn. min lung"]
     result.range_trend_long_magnitude_max = refvals["magnitude"]["Magn. max lung"]
+    (
+        result.complementary_favourable_range,
+        result.complementary_favourable_range_op,
+        result.complementary_favourable_range_unknown,
+    ) = parse_complementary(refvals["range"])
+    result.complementary_favourable_range_method = EXPERT_OPINION
 
     # Suprafata
     result.coverage_surface_area = get_habitat_dist_surface(obj.code,
@@ -123,6 +129,13 @@ def aggregate_habitat(obj, result, refvals):
     result.coverage_trend_long_magnitude_min = refvals["coverage_magnitude"]["Magn. min lung"]
     result.coverage_trend_long_magnitude_max = refvals["coverage_magnitude"]["Magn. max lung"]
     result.coverage_trend_long_magnitude_ci = refvals["coverage_magnitude"]["Interval incredere lung"]
+    (
+        result.complementary_favourable_area,
+        result.complementary_favourable_area_op,
+        result.complementary_favourable_area_unknown,
+    ) = parse_complementary(refvals["coverage_range"])
+    result.complementary_favourable_area_method = EXPERT_OPINION
+
 
     # Presiuni
 
