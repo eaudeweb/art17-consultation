@@ -174,8 +174,8 @@ def species_population_range(filename=None):
 def species_population_magnitude(filename=None,
                                  exporter=generic_species_exporter):
     header = COMMON_HEADER + (
-        'Magn. min scurt', 'Magn. max scurt', 'Interval incredere',
-        'Magn. min lung', 'Magn. max lung', 'Interval incredere',
+        'Magn. min scurt', 'Magn. max scurt', 'Interval incredere scurt',
+        'Magn. min lung', 'Magn. max lung', 'Interval incredere lung',
     )
 
     def format_row(sp, sr):
@@ -294,8 +294,8 @@ def habitat_coverage_range(filename=None):
 @exporter.command
 def habitat_coverage_magnitude(filename=None):
     header = COMMON_HEADER + (
-        'Magn. min scurt', 'Magn. max scurt', 'Interval incredere',
-        'Magn. min lung', 'Magn. max lung', 'Interval incredere',
+        'Magn. min scurt', 'Magn. max scurt', 'Interval incredere scurt',
+        'Magn. min lung', 'Magn. max lung', 'Interval incredere lung',
     )
 
     def format_row(sp, sr):
