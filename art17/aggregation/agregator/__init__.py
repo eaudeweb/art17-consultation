@@ -7,7 +7,7 @@ from art17.aggregation.refvalues import (
 )
 from art17.aggregation.utils import (
     get_reporting_id, get_habitat_checklist, get_species_checklist,
-)
+    get_checklist)
 from art17.aggregation.agregator.gis import (
     get_habitat_dist_surface,
     get_habitat_range_surface,
@@ -22,10 +22,17 @@ def execute_on_primary(query):
     return models.db.session.execute(query, bind=aggregation_engine)
 
 
+def get_period(year, length):
+    return '%d-%d' % (year - length - 1, year - 1)
+
+
 def aggregate_species(obj, result, refvals):
     # Areal
     result.range_surface_area = get_species_range_surface(obj.code,
                                                           result.region)
+
+    result.range_trend_period = get_period(result.dataset.year_end, 12)
+    result.range_trend_long_period = get_period(result.dataset.year_end, 24)
 
     # Populatie
 
@@ -53,6 +60,8 @@ def aggregate_habitat(obj, result, refvals):
     # Areal
     result.range_surface_area = get_habitat_range_surface(obj.code,
                                                           result.region)
+    result.range_trend_period = get_period(result.dataset.year_end, 12)
+    result.range_trend_long_period = get_period(result.dataset.year_end, 24)
 
     # Suprafata
     result.coverage_surface_area = get_habitat_dist_surface(obj.code,
@@ -112,15 +121,17 @@ def aggregate_object(obj, dataset, refvals, timestamp, user_id):
 
 def create_aggregation(timestamp, user_id):
     curr_report_id = get_reporting_id()
-    species_refvals = load_species_refval()
-    habitat_refvals = load_habitat_refval()
-
+    curr_checklist = get_checklist(curr_report_id)
     dataset = models.Dataset(
         date=timestamp,
         user_id=user_id,
         checklist_id=curr_report_id,
+        year_start=curr_checklist.year_start, year_end=curr_checklist.year_end,
     )
     models.db.session.add(dataset)
+
+    species_refvals = load_species_refval()
+    habitat_refvals = load_habitat_refval()
 
     habitat_id_map = dict(
         models.db.session.query(
@@ -180,6 +191,16 @@ def create_aggregation(timestamp, user_id):
 
 def create_preview_aggregation(page, subject, comment, timestamp, user_id):
     curr_report_id = get_reporting_id()
+    curr_checklist = get_checklist(curr_report_id)
+    dataset = models.Dataset(
+        date=timestamp,
+        user_id=user_id,
+        preview=True,
+        comment=comment,
+        year_start=curr_checklist.year_start, year_end=curr_checklist.year_end,
+    )
+    models.db.session.add(dataset)
+
     if page == 'habitat':
         id_map = dict(
             models.db.session.query(
@@ -207,13 +228,6 @@ def create_preview_aggregation(page, subject, comment, timestamp, user_id):
     else:
         raise NotImplementedError()
 
-    dataset = models.Dataset(
-        date=timestamp,
-        user_id=user_id,
-        preview=True,
-        comment=comment,
-    )
-    models.db.session.add(dataset)
     bioregions = []
     for row in rows:
         record = aggregate_object(row, dataset, refvals, timestamp, user_id)
