@@ -15,6 +15,7 @@
     {%- block styles %}
       {{ link('lib/select2-3.4.2/select2.css') }}
       {{ link('lib/font-awesome-3.2.1/css/font-awesome.min.css') }}
+      {{ link('lib/jquery.powertip.css') }}
       <!--[if IE 7]>
         {{ link('lib/font-awesome-3.2.1/css/font-awesome-ie7.min.css') }}
       <![endif]-->
@@ -62,6 +63,7 @@
       {{ script('lib/select2-3.4.2/select2.min.js') }}
       {{ script('lib/select2-3.4.2/select2_locale_ro.js') }}
       {{ script('lib/datepicker/js/bootstrap-datepicker.js') }}
+      {{ script('lib/jquery.powertip.min.js') }}
     {% endblock %}
     {% include 'ganalytics.html' %}
   </body>

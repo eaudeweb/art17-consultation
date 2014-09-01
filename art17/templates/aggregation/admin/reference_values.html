@@ -1,31 +1,60 @@
 {% extends 'aggregation/admin.html' %}
 
+{% set REFGROUPS={'range': 'Areal', 'magnitude': 'Magnitudine Areal',
+  'population_units': 'Unitati populatie',
+  'population_magnitude': 'Magnitudine Populatie',
+  'population_range': 'Areal favorabil populatie'} %}
+
+{% macro render_refvalues(refvals) %}
+  {%- if refvals -%}
+    {%- for group,values in refvals.iteritems() -%}
+      <strong>{{ REFGROUPS.get(group, group|capitalize) }}</strong>
+
+      <table class='table table-condensed table-bordered'>
+        {%- set keys, data = values.keys(), values.values() -%}
+        <tr>
+          {%- for k in keys -%}
+            <th>{{ k }}</th>
+          {%- endfor -%}
+        </tr>
+        <tr>
+          {%- for v in data -%}
+            <th>{{ v }}</th>
+          {%- endfor -%}
+        </tr>
+      </table>
+    {% endfor -%}
+  {% endif -%}
+{% endmacro %}
+
 {% macro table(species_list, species_data, species_refvals) %}
-<table class="table">
+  <table class="table">
     <tr>
       <th></th>
       {% for region in bioreg_list %}
-      <th>{{ region.code }}</th>
+        <th>{{ region.code }}</th>
       {% endfor %}
     </tr>
     {% set last_group = '' %}
     {% for code, name, group_code in species_list %}
       {% if group_code != last_group %}
-      <tr>
-        <td>
+        <tr>
+          <td>
             <strong>{{ GROUPS.get(group_code, group_code) }}</strong>
-        </td>
-      </tr>
-      {% set last_group = group_code %}
+          </td>
+        </tr>
+        {% set last_group = group_code %}
       {% endif %}
       <tr>
         <td>{{ name }}</td>
         {% for region in bioreg_list %}
-            {% set check_key = (code, region.code) %}
-            {% set key = code + "-" + region.code %}
+          {% set check_key = (code, region.code) %}
+          {% set key = code + "-" + region.code %}
 
-            {% if check_key in species_data %}
-            <td nowrap="nowrap">
+          {% if check_key in species_data %}
+            <td nowrap="nowrap"
+                title="{{ render_refvalues(species_refvals.get(key)) }}"
+                class="gigi">
               {% if key not in species_refvals %}
                 date lipsă
               {% else %}
@@ -39,10 +68,10 @@
                 {% endif %}
               {% endif %}
             </td>
-            {% else %}
+          {% else %}
             <td class="dashboard-missingrecord">
             </td>
-            {% endif %}
+          {% endif %}
         {% endfor %}
       </tr>
     {% endfor %}
@@ -61,7 +90,8 @@
 {% block content %}
   <h2>Valori de referință</h2>
 
-  <p class="text-warning">Lista de verificare folosită este: {{ current_checklist }}</p>
+  <p class="text-warning">Lista de verificare folosită
+    este: {{ current_checklist }}</p>
 
   <p>Statusul valorilor de referință importate în sistem. Pentru date lipsă sau
     incomplete nu se va putea realiza agregarea.</p>
@@ -74,3 +104,12 @@
   {{ table(habitat_list, habitat_data, habitat_refvals) }}
 
 {% endblock %}
+
+{% block script %}
+  {{ super() }}
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('.gigi').powerTip();
+    });
+  </script>
+{% endblock script %}
