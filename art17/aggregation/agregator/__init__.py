@@ -23,26 +23,37 @@ def execute_on_primary(query):
 
 
 def get_period(year, length):
-    return '%d-%d' % (year - length - 1, year - 1)
+    return '%d-%d' % (year - length, year)
 
 
 def aggregate_species(obj, result, refvals):
+    short_period = get_period(result.dataset.year_end, 12)
+    long_period = get_period(result.dataset.year_end, 24)
     # Areal
     result.range_surface_area = get_species_range_surface(obj.code,
                                                           result.region)
 
-    result.range_trend_period = get_period(result.dataset.year_end, 12)
+    result.range_trend_period = short_period
     result.range_trend_magnitude_min = refvals["magnitude"]["Magn. min scurt"]
     result.range_trend_magnitude_max = refvals["magnitude"]["Magn. max scurt"]
-    result.range_trend_long_period = get_period(result.dataset.year_end, 24)
+    result.range_trend_long_period = long_period
     result.range_trend_long_magnitude_min = refvals["magnitude"]["Magn. min lung"]
     result.range_trend_long_magnitude_max = refvals["magnitude"]["Magn. max lung"]
 
     # Populatie
+    result.population_trend_period = short_period
+    result.population_trend_magnitude_min = refvals["population_magnitude"]["Magn. min scurt"]
+    result.population_trend_magnitude_max = refvals["population_magnitude"]["Magn. max scurt"]
+    result.population_trend_long_period = long_period
+    result.population_trend_long_magnitude_min = refvals["population_magnitude"]["Magn. min lung"]
+    result.population_trend_long_magnitude_max = refvals["population_magnitude"]["Magn. max lung"]
 
     # Habitat
     result.habitat_surface_area = get_species_dist_surface(obj.code,
                                                            result.region)
+    result.habitat_trend_period = short_period
+    result.habitat_trend_long_period = long_period
+
     # Presiuni
 
     # Amenintari
