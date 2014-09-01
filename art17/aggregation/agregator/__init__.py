@@ -32,7 +32,11 @@ def aggregate_species(obj, result, refvals):
                                                           result.region)
 
     result.range_trend_period = get_period(result.dataset.year_end, 12)
+    result.range_trend_magnitude_min = refvals["magnitude"]["Magn. min scurt"]
+    result.range_trend_magnitude_max = refvals["magnitude"]["Magn. max scurt"]
     result.range_trend_long_period = get_period(result.dataset.year_end, 24)
+    result.range_trend_long_magnitude_min = refvals["magnitude"]["Magn. min lung"]
+    result.range_trend_long_magnitude_max = refvals["magnitude"]["Magn. max lung"]
 
     # Populatie
 
@@ -113,9 +117,9 @@ def aggregate_object(obj, dataset, refvals, timestamp, user_id):
     # Agregation starts here
     result.cons_role = 'assessment'
     if isinstance(obj, models.DataHabitatsCheckList):
-        result = aggregate_habitat(obj, result, refvals)
+        result = aggregate_habitat(obj, result, refvals[refval_key])
     else:
-        result = aggregate_species(obj, result, refvals)
+        result = aggregate_species(obj, result, refvals[refval_key])
     return result
 
 
