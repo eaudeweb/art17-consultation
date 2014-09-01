@@ -19,7 +19,7 @@
         </tr>
         <tr>
           {%- for v in data -%}
-            <th>{{ v }}</th>
+            <td class='text-right'>{{ v or 'n/a' }}</td>
           {%- endfor -%}
         </tr>
       </table>
