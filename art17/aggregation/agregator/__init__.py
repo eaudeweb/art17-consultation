@@ -24,12 +24,14 @@ def execute_on_primary(query):
 
 def aggregate_species(obj, result, refvals):
     # Areal
-    result.range_surface_area = get_species_range_surface(obj.code, result.region)
+    result.range_surface_area = get_species_range_surface(obj.code,
+                                                          result.region)
 
     # Populatie
 
     # Habitat
-
+    result.habitat_surface_area = get_species_dist_surface(obj.code,
+                                                           result.region)
     # Presiuni
 
     # Amenintari
@@ -49,10 +51,12 @@ def aggregate_species(obj, result, refvals):
 
 def aggregate_habitat(obj, result, refvals):
     # Areal
-    result.range_surface_area = get_habitat_range_surface(obj.code, result.region)
+    result.range_surface_area = get_habitat_range_surface(obj.code,
+                                                          result.region)
 
     # Suprafata
-
+    result.coverage_surface_area = get_habitat_dist_surface(obj.code,
+                                                            result.region)
     # Presiuni
 
     # Amenintari
@@ -163,13 +167,13 @@ def create_aggregation(timestamp, user_id):
     print >> report, "Habitate:"
     for habitat_code, regions in sorted(habitat_report.items()):
         print >> report, "  %s: %s" % (
-        habitat_code, ', '.join(sorted(regions)))
+            habitat_code, ', '.join(sorted(regions)))
 
     print >> report, "\n\n"
     print >> report, "Specii:"
     for species_code, regions in sorted(species_report.items()):
         print >> report, "  %s: %s" % (
-        species_code, ', '.join(sorted(regions)))
+            species_code, ', '.join(sorted(regions)))
 
     return report.getvalue(), dataset
 
