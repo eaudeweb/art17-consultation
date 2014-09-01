@@ -41,6 +41,13 @@ def parse_complementary(refval):
     return value, op, unknown
 
 
+def extract_key(refval, key):
+    for k, v in refval.iteritems():
+        if key in k:
+            return v
+    return None
+
+
 def aggregate_species(obj, result, refvals):
     short_period = get_period(result.dataset.year_end, 12)
     long_period = get_period(result.dataset.year_end, 24)
@@ -81,6 +88,7 @@ def aggregate_species(obj, result, refvals):
                                                            result.region)
     result.habitat_trend_period = short_period
     result.habitat_trend_long_period = long_period
+    result.habitat_area_suitable = extract_key(refvals["habitat"], "adecvat")
 
     # Presiuni
 
