@@ -49,4 +49,4 @@ def species_refval(csv_dir='.', map=None, json_filename=None):
 @importer.command
 def habitat_refval(csv_dir='.'):
     return species_refval(csv_dir=csv_dir, map=HABITAT_MAP,
-                          json_filename='habitat.json')
+                          json_filename='habitats.json')
