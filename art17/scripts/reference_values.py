@@ -92,6 +92,8 @@ def species_range(filename=None, exporter=generic_species_exporter):
         'Areal favorabil referinta',
         'Operator - areal',
         'Necunoscut',
+        'U1',
+        'U2',
     )
 
     def format_row(sp, sr):
@@ -108,6 +110,8 @@ def species_range(filename=None, exporter=generic_species_exporter):
             unicode(sr.complementary_favourable_range_op)
             if sr.complementary_favourable_range_unknown else '',
             'x' if sr.complementary_favourable_range_unknown else '',
+            '',
+            '',
         ]
 
     columns = exporter(format_row)
@@ -141,7 +145,8 @@ def species_habitat(filename=None):
 @exporter.command
 def species_population_range(filename=None):
     header = COMMON_HEADER + (
-        'Populatia favorabila de referinta', 'Operator', 'Necunoscut'
+        'Populatia favorabila de referinta', 'Operator', 'Necunoscut', 'U1',
+        'U2',
     )
 
     def format_row(sp, sr):
@@ -158,6 +163,7 @@ def species_population_range(filename=None):
             unicode(sr.complementary_favourable_population_op)
             if sr.complementary_favourable_population_unknown else '',
             'x' if sr.complementary_favourable_population_unknown else '',
+            '', '',
         ]
 
     columns = generic_species_exporter(format_row)
@@ -165,7 +171,8 @@ def species_population_range(filename=None):
 
 
 @exporter.command
-def species_population_magnitude(filename=None):
+def species_population_magnitude(filename=None,
+                                 exporter=generic_species_exporter):
     header = COMMON_HEADER + (
         'Magn. min scurt', 'Magn. max scurt', 'Interval incredere',
         'Magn. min lung', 'Magn. max lung', 'Interval incredere',
@@ -188,7 +195,7 @@ def species_population_magnitude(filename=None):
             unicode(sr.population_trend_long_magnitude_ci or ''),
         ]
 
-    columns = generic_species_exporter(format_row)
+    columns = exporter(format_row)
     do_csv_export(header, columns, filename)
 
 
@@ -253,10 +260,72 @@ def habitat_range(filename=None):
 
 
 @exporter.command
+def habitat_coverage_range(filename=None):
+    header = COMMON_HEADER + (
+        'Suprafata favorabila referinta',
+        'Operator',
+        'Necunoscut',
+        'U1',
+        'U2',
+    )
+
+    def format_row(sp, sr):
+        name = None
+        if sp.lu:
+            name = sp.lu.display_name
+        name = name or ''
+        return [
+            sp.code,
+            name,
+            sr.region,
+            unicode(sr.complementary_favourable_area)
+            if sr.complementary_favourable_area else '',
+            unicode(sr.complementary_favourable_area_op)
+            if sr.complementary_favourable_area_unknown else '',
+            'x' if sr.complementary_favourable_area_unknown else '',
+            '',
+            '',
+        ]
+
+    columns = generic_habitat_exporter(format_row)
+    do_csv_export(header, columns, filename)
+
+
+@exporter.command
+def habitat_coverage_magnitude(filename=None):
+    header = COMMON_HEADER + (
+        'Magn. min scurt', 'Magn. max scurt', 'Interval incredere',
+        'Magn. min lung', 'Magn. max lung', 'Interval incredere',
+    )
+
+    def format_row(sp, sr):
+        name = None
+        if sp.lu:
+            name = sp.lu.display_name
+        name = name or ''
+        return [
+            sp.code,
+            name,
+            sr.region,
+            unicode(sr.coverage_trend_magnitude_min or ''),
+            unicode(sr.coverage_trend_magnitude_max or ''),
+            unicode(sr.coverage_trend_magnitude_ci or ''),
+            unicode(sr.coverage_trend_long_magnitude_min or ''),
+            unicode(sr.coverage_trend_long_magnitude_max or ''),
+            unicode(sr.coverage_trend_long_magnitude_ci or ''),
+        ]
+
+    columns = generic_habitat_exporter(format_row)
+    do_csv_export(header, columns, filename)
+
+
+@exporter.command
 def all_habitat(dest_dir=None):
     """ Export all reference values
     """
     return all_species(dest_dir=dest_dir, mapping={
         'habitat_magnitude': habitat_magnitude,
         'habitat_range': habitat_range,
+        'habitat_coverage_range': habitat_coverage_range,
+        'habitat_coverage_magnitude': habitat_coverage_magnitude,
     })

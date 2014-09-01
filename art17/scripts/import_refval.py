@@ -15,6 +15,8 @@ SPECIES_MAP = {
 HABITAT_MAP = {
     'habitat_magnitude.csv': 'magnitude',
     'habitat_range.csv': 'range',
+    'habitat_coverage_range.csv': 'coverage_range',
+    'habitat_coverage_magnitude.csv': 'coverage_magnitude',
 }
 
 
