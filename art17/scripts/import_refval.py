@@ -9,7 +9,8 @@ SPECIES_MAP = {
     'species_range.csv': 'range',
     'species_population_range.csv': 'population_range',
     'species_population_magnitude.csv': 'population_magnitude',
-    'species_population_units.csv': 'population_units'
+    'species_population_units.csv': 'population_units',
+    'species_habitat.csv': 'habitat',
 }
 
 HABITAT_MAP = {

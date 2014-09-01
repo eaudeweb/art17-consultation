@@ -121,7 +121,10 @@ def species_range(filename=None, exporter=generic_species_exporter):
 @exporter.command
 def species_habitat(filename=None):
     header = COMMON_HEADER + (
-        u'Suprafață habitatului',
+        u'Suprafața habitat',
+        u'Suprafața adecvata',
+        u'U1',
+        u'U2',
     )
 
     def format_row(sp, sr):
@@ -134,8 +137,9 @@ def species_habitat(filename=None):
             sp.code,
             name,
             sr.region,
-            unicode(sr.habitat_surface_area)
-            if sr.habitat_surface_area else ''
+            unicode(sr.habitat_surface_area or ''),
+            unicode(sr.habitat_area_suitable or ''),
+            '', ''
         ]
 
     columns = generic_species_exporter(format_row)
