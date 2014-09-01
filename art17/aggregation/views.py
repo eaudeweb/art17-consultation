@@ -166,6 +166,8 @@ def delete_dataset(dataset_id):
     if dataset.checklist:
         dataset.habitat_checklist.delete()
         dataset.species_checklist.delete()
+    models.db.session.commit()
+    dataset.checklist_id = None
     models.db.session.delete(dataset)
     models.db.session.commit()
     flask.flash(u"Setul de date a fost șters.", 'success')
