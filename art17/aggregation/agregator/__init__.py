@@ -16,6 +16,9 @@ from art17.aggregation.agregator.gis import (
 )
 
 
+EXPERT_OPINION = 'Expert opinion'
+
+
 def execute_on_primary(query):
     app = flask.current_app
     aggregation_engine = models.db.get_engine(app, 'primary')
@@ -26,19 +29,36 @@ def get_period(year, length):
     return '%d-%d' % (year - length, year)
 
 
+def parse_complementary(refval):
+    value, op, unknown = None, None, None
+    for k, v in refval.iteritems():
+        if 'favorabil' in k:
+            value = v or None
+        elif 'Operator' in k:
+            op = v or None
+        elif 'Necunoscut' in k:
+            unknown = v or None
+    return value, op, unknown
+
+
 def aggregate_species(obj, result, refvals):
     short_period = get_period(result.dataset.year_end, 12)
     long_period = get_period(result.dataset.year_end, 24)
     # Areal
     result.range_surface_area = get_species_range_surface(obj.code,
                                                           result.region)
-
     result.range_trend_period = short_period
     result.range_trend_magnitude_min = refvals["magnitude"]["Magn. min scurt"]
     result.range_trend_magnitude_max = refvals["magnitude"]["Magn. max scurt"]
     result.range_trend_long_period = long_period
     result.range_trend_long_magnitude_min = refvals["magnitude"]["Magn. min lung"]
     result.range_trend_long_magnitude_max = refvals["magnitude"]["Magn. max lung"]
+    (
+        result.complementary_favourable_range,
+        result.complementary_favourable_range_op,
+        result.complementary_favourable_range_unknown,
+    ) = parse_complementary(refvals["range"])
+    result.complementary_favourable_range_method = EXPERT_OPINION
 
     # Populatie
     result.population_trend_period = short_period
@@ -49,6 +69,12 @@ def aggregate_species(obj, result, refvals):
     result.population_trend_long_magnitude_min = refvals["population_magnitude"]["Magn. min lung"]
     result.population_trend_long_magnitude_max = refvals["population_magnitude"]["Magn. max lung"]
     result.population_trend_long_magnitude_ci = refvals["population_magnitude"]["Interval incredere lung"]
+    (
+        result.complementary_favourable_population,
+        result.complementary_favourable_population_op,
+        result.complementary_favourable_population_unknown,
+    ) = parse_complementary(refvals["population_range"])
+    result.complementary_favourable_population_method = EXPERT_OPINION
 
     # Habitat
     result.habitat_surface_area = get_species_dist_surface(obj.code,
