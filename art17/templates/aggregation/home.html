@@ -37,7 +37,9 @@
       <td nowrap>
         <form method="post" action="{{ delete_url }}"
               class="delete-dataset-form">
+          {% if dataset.id != 1 %}
           <button type="submit" class="btn btn-danger btn-xs">șterge</button>
+          {% endif %}
           <a class="btn btn-warning btn-xs"
              href="{{ activity_url }}">activitate</a>
           {% if authenticated_permission.can() and show_reports %}
