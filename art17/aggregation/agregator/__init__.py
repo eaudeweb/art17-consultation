@@ -17,6 +17,7 @@ from art17.aggregation.agregator.gis import (
 
 
 EXPERT_OPINION = 'Expert opinion'
+EXTRAPOLATION = '2'
 
 
 def execute_on_primary(query):
@@ -54,6 +55,7 @@ def aggregate_species(obj, result, refvals):
     # Areal
     result.range_surface_area = get_species_range_surface(obj.code,
                                                           result.region)
+    result.range_method = EXTRAPOLATION
     result.range_trend_period = short_period
     result.range_trend_magnitude_min = refvals["magnitude"]["Magn. min scurt"]
     result.range_trend_magnitude_max = refvals["magnitude"]["Magn. max scurt"]
@@ -69,6 +71,8 @@ def aggregate_species(obj, result, refvals):
 
     # Populatie
     result.population_trend_period = short_period
+    result.population_method = EXTRAPOLATION
+    result.population_date = get_period(result.dataset.year_end, 6)
     result.population_trend_magnitude_min = refvals["population_magnitude"]["Magn. min scurt"]
     result.population_trend_magnitude_max = refvals["population_magnitude"]["Magn. max scurt"]
     result.population_trend_magnitude_ci = refvals["population_magnitude"]["Interval incredere scurt"]
@@ -113,6 +117,7 @@ def aggregate_habitat(obj, result, refvals):
     # Areal
     result.range_surface_area = get_habitat_range_surface(obj.code,
                                                           result.region)
+    result.range_method = EXTRAPOLATION
     result.range_trend_period = short_period
     result.range_trend_magnitude_min = refvals["magnitude"]["Magn. min scurt"]
     result.range_trend_magnitude_max = refvals["magnitude"]["Magn. max scurt"]
@@ -129,6 +134,8 @@ def aggregate_habitat(obj, result, refvals):
     # Suprafata
     result.coverage_surface_area = get_habitat_dist_surface(obj.code,
                                                             result.region)
+    result.coverage_date = get_period(result.dataset.year_end, 6)
+    result.coverage_method = EXTRAPOLATION
     result.coverage_trend_period = short_period
     result.coverage_trend_magnitude_min = refvals["coverage_magnitude"]["Magn. min scurt"]
     result.coverage_trend_magnitude_max = refvals["coverage_magnitude"]["Magn. max scurt"]
