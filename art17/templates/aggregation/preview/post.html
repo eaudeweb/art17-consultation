@@ -36,4 +36,11 @@
     {% endfor %}
     </tbody>
   </table>
+
+  {% if admin_permission.can() %}
+  <div class="button-group">
+    <a class="btn btn-default" href="{{ url_for('.redo', dataset_id=dataset.id) }}">Refă agregarea</a>
+  </div>
+  {% endif %}
+
 {% endblock content %}

@@ -157,6 +157,38 @@ def preview(page):
     })
 
 
+@aggregation.route('/previzualizare/redo/<int:dataset_id>')
+@admin_permission.require()
+def redo(dataset_id):
+    """ Redo a preview aggregation """
+    dataset = (
+        models.Dataset.query
+        .filter_by(preview=True, id=dataset_id).first_or_404()
+    )
+
+    species = dataset.species_objs.first()
+    habitat = dataset.habitat_objs.first()
+
+    if not any((species, habitat)):
+        flask.abort(404)
+
+    page = 'species' if species else 'habitat'
+    subject = species.subject if species else habitat.subject
+    subject = subject.code
+
+    report, dataset = create_preview_aggregation(
+        page,
+        subject,
+        dataset.comment,
+        datetime.utcnow(),
+        flask.g.identity.id,
+    )
+    models.db.session.commit()
+    delete_dataset(dataset_id)
+    flask.flash(u'O nouă agregare a fost rulată', 'success')
+    return redirect(url_for('.post_preview', dataset_id=dataset.id))
+
+
 @aggregation.route('/sterge/<int:dataset_id>', methods=['POST'])
 @admin_permission.require()
 def delete_dataset(dataset_id):
