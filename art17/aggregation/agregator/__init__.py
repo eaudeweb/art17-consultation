@@ -30,6 +30,29 @@ def get_period(year, length):
     return '%d-%d' % (year - length, year)
 
 
+def get_conclusion(surface, refvals, refval_type):
+    vals = refvals[refval_type]
+    fv_text = "adecvat" if refval_type == 'habitat' else "favorabil"
+    FV = extract_key(vals, fv_text)
+    U1 = extract_key(vals, "U1")
+    U2 = extract_key(vals, "U2")
+
+    FV = FV and int(FV)
+    U1 = U1 and int(U1)
+    U2 = U2 and int(U2)
+
+    if not surface or not FV:
+        return 'XX'
+
+    if surface >= FV:
+        return 'FV'
+    elif surface >= U1:
+        return 'U1'
+    elif surface >= U2:
+        return 'U2'
+    return ''
+
+
 def parse_complementary(refval):
     value, op, unknown = None, None, None
     for k, v in refval.iteritems():
@@ -60,30 +83,44 @@ def aggregate_species(obj, result, refvals):
     result.range_trend_magnitude_min = refvals["magnitude"]["Magn. min scurt"]
     result.range_trend_magnitude_max = refvals["magnitude"]["Magn. max scurt"]
     result.range_trend_long_period = long_period
-    result.range_trend_long_magnitude_min = refvals["magnitude"]["Magn. min lung"]
-    result.range_trend_long_magnitude_max = refvals["magnitude"]["Magn. max lung"]
+    result.range_trend_long_magnitude_min = refvals["magnitude"][
+        "Magn. min lung"]
+    result.range_trend_long_magnitude_max = refvals["magnitude"][
+        "Magn. max lung"]
     (
         result.complementary_favourable_range,
         result.complementary_favourable_range_op,
         result.complementary_favourable_range_unknown,
     ) = parse_complementary(refvals["range"])
     result.complementary_favourable_range_method = EXPERT_OPINION
+    result.conclusion_range = get_conclusion(result.range_surface_area,
+                                             refvals, "range")
 
     # Populatie
-    result.population_size_unit = extract_key(refvals["population_units"], "Unit.")
-    result.population_additional_locality = extract_key(refvals["population_units"], "localit")
-    result.population_additional_method = extract_key(refvals["population_units"], "Metoda")
-    result.population_additional_problems = extract_key(refvals["population_units"], "Dificult")
+    result.population_size_unit = extract_key(refvals["population_units"],
+                                              "Unit.")
+    result.population_additional_locality = extract_key(
+        refvals["population_units"], "localit")
+    result.population_additional_method = extract_key(
+        refvals["population_units"], "Metoda")
+    result.population_additional_problems = extract_key(
+        refvals["population_units"], "Dificult")
     result.population_trend_period = short_period
     result.population_method = EXTRAPOLATION
     result.population_date = get_period(result.dataset.year_end, 6)
-    result.population_trend_magnitude_min = refvals["population_magnitude"]["Magn. min scurt"]
-    result.population_trend_magnitude_max = refvals["population_magnitude"]["Magn. max scurt"]
-    result.population_trend_magnitude_ci = refvals["population_magnitude"]["Interval incredere scurt"]
+    result.population_trend_magnitude_min = refvals["population_magnitude"][
+        "Magn. min scurt"]
+    result.population_trend_magnitude_max = refvals["population_magnitude"][
+        "Magn. max scurt"]
+    result.population_trend_magnitude_ci = refvals["population_magnitude"][
+        "Interval incredere scurt"]
     result.population_trend_long_period = long_period
-    result.population_trend_long_magnitude_min = refvals["population_magnitude"]["Magn. min lung"]
-    result.population_trend_long_magnitude_max = refvals["population_magnitude"]["Magn. max lung"]
-    result.population_trend_long_magnitude_ci = refvals["population_magnitude"]["Interval incredere lung"]
+    result.population_trend_long_magnitude_min = \
+        refvals["population_magnitude"]["Magn. min lung"]
+    result.population_trend_long_magnitude_max = \
+        refvals["population_magnitude"]["Magn. max lung"]
+    result.population_trend_long_magnitude_ci = \
+        refvals["population_magnitude"]["Interval incredere lung"]
     (
         result.complementary_favourable_population,
         result.complementary_favourable_population_op,
@@ -99,6 +136,9 @@ def aggregate_species(obj, result, refvals):
     result.habitat_trend_long_period = long_period
     result.habitat_area_suitable = extract_key(refvals["habitat"], "adecvat")
     result.habitat_date = get_period(result.dataset.year_end, 6)
+
+    result.conclusion_habitat = get_conclusion(result.habitat_surface_area,
+                                               refvals, "habitat")
 
     # Presiuni
 
@@ -128,14 +168,18 @@ def aggregate_habitat(obj, result, refvals):
     result.range_trend_magnitude_min = refvals["magnitude"]["Magn. min scurt"]
     result.range_trend_magnitude_max = refvals["magnitude"]["Magn. max scurt"]
     result.range_trend_long_period = long_period
-    result.range_trend_long_magnitude_min = refvals["magnitude"]["Magn. min lung"]
-    result.range_trend_long_magnitude_max = refvals["magnitude"]["Magn. max lung"]
+    result.range_trend_long_magnitude_min = refvals["magnitude"][
+        "Magn. min lung"]
+    result.range_trend_long_magnitude_max = refvals["magnitude"][
+        "Magn. max lung"]
     (
         result.complementary_favourable_range,
         result.complementary_favourable_range_op,
         result.complementary_favourable_range_unknown,
     ) = parse_complementary(refvals["range"])
     result.complementary_favourable_range_method = EXPERT_OPINION
+    result.conclusion_range = get_conclusion(result.range_surface_area,
+                                             refvals, "range")
 
     # Suprafata
     result.coverage_surface_area = get_habitat_dist_surface(obj.code,
@@ -143,19 +187,27 @@ def aggregate_habitat(obj, result, refvals):
     result.coverage_date = get_period(result.dataset.year_end, 6)
     result.coverage_method = EXTRAPOLATION
     result.coverage_trend_period = short_period
-    result.coverage_trend_magnitude_min = refvals["coverage_magnitude"]["Magn. min scurt"]
-    result.coverage_trend_magnitude_max = refvals["coverage_magnitude"]["Magn. max scurt"]
-    result.coverage_trend_magnitude_ci = refvals["coverage_magnitude"]["Interval incredere scurt"]
+    result.coverage_trend_magnitude_min = refvals["coverage_magnitude"][
+        "Magn. min scurt"]
+    result.coverage_trend_magnitude_max = refvals["coverage_magnitude"][
+        "Magn. max scurt"]
+    result.coverage_trend_magnitude_ci = refvals["coverage_magnitude"][
+        "Interval incredere scurt"]
     result.coverage_trend_long_period = long_period
-    result.coverage_trend_long_magnitude_min = refvals["coverage_magnitude"]["Magn. min lung"]
-    result.coverage_trend_long_magnitude_max = refvals["coverage_magnitude"]["Magn. max lung"]
-    result.coverage_trend_long_magnitude_ci = refvals["coverage_magnitude"]["Interval incredere lung"]
+    result.coverage_trend_long_magnitude_min = refvals["coverage_magnitude"][
+        "Magn. min lung"]
+    result.coverage_trend_long_magnitude_max = refvals["coverage_magnitude"][
+        "Magn. max lung"]
+    result.coverage_trend_long_magnitude_ci = refvals["coverage_magnitude"][
+        "Interval incredere lung"]
     (
         result.complementary_favourable_area,
         result.complementary_favourable_area_op,
         result.complementary_favourable_area_unknown,
     ) = parse_complementary(refvals["coverage_range"])
     result.complementary_favourable_area_method = EXPERT_OPINION
+    result.conclusion_area = get_conclusion(result.coverage_surface_area,
+                                            refvals, "coverage_range")
 
 
     # Presiuni
