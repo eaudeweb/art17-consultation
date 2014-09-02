@@ -70,6 +70,10 @@ def aggregate_species(obj, result, refvals):
     result.complementary_favourable_range_method = EXPERT_OPINION
 
     # Populatie
+    result.population_size_unit = extract_key(refvals["population_units"], "Unit.")
+    result.population_additional_locality = extract_key(refvals["population_units"], "localit")
+    result.population_additional_method = extract_key(refvals["population_units"], "Metoda")
+    result.population_additional_problems = extract_key(refvals["population_units"], "Dificult")
     result.population_trend_period = short_period
     result.population_method = EXTRAPOLATION
     result.population_date = get_period(result.dataset.year_end, 6)
@@ -90,9 +94,11 @@ def aggregate_species(obj, result, refvals):
     # Habitat
     result.habitat_surface_area = get_species_dist_surface(obj.code,
                                                            result.region)
+    result.habitat_method = EXTRAPOLATION
     result.habitat_trend_period = short_period
     result.habitat_trend_long_period = long_period
     result.habitat_area_suitable = extract_key(refvals["habitat"], "adecvat")
+    result.habitat_date = get_period(result.dataset.year_end, 6)
 
     # Presiuni
 
