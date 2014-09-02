@@ -61,7 +61,7 @@ def parse_complementary(refval):
         elif 'Operator' in k:
             op = v or None
         elif 'Necunoscut' in k:
-            unknown = v or None
+            unknown = 1 if v else None
     return value, op, unknown
 
 
