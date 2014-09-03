@@ -106,12 +106,15 @@ def aggregate():
 @aggregation.route('/previzualizare/<page>/', methods=['GET', 'POST'])
 def preview(page):
     current_checklist = valid_checklist()
+    checklist_id = current_checklist.id
     check_aggregation_preview_perm()
     if page == 'habitat':
-        qs = list(get_habitat_checklist(distinct=True))
+        qs = list(
+            get_habitat_checklist(dataset_id=checklist_id, distinct=True))
         qs_dict = dict(qs)
     elif page == 'species':
-        orig_qs = list(get_species_checklist(distinct=True))
+        orig_qs = list(
+            get_species_checklist(dataset_id=checklist_id, distinct=True))
         qs_dict = dict(orig_qs)
 
         orig_qs = {a[0]: a for a in orig_qs}
@@ -625,6 +628,7 @@ def refvals(page):
     else:
         flask.abort(404)
 
-    data = [(k[len(subject)+1:], v) for k, v in refvals.iteritems() if k.startswith(subject)]
+    data = [(k[len(subject) + 1:], v) for k, v in refvals.iteritems() if
+            k.startswith(subject)]
     return flask.render_template('aggregation/preview/refvals.html',
                                  refvalues=data)

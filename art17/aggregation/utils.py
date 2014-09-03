@@ -128,6 +128,7 @@ def aggregation_missing_data_report(dataset_id):
 def get_checklist(checklist_id):
     if checklist_id is None or checklist_id == '':
         class DefaultCheckList(object):
+            id = None
             name = u"Lista de verificare inițială"
             year_start = current_app.config.get('DEFAULT_YEAR_START')
             year_end = current_app.config.get('DEFAULT_YEAR_END')
