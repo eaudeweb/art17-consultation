@@ -256,6 +256,8 @@ def aggregate_object(obj, dataset, refvals, timestamp, user_id):
 
     # Agregation starts here
     result.cons_role = 'assessment'
+    result.cons_generalstatus = obj.presence
+
     if isinstance(obj, models.DataHabitatsCheckList):
         result = aggregate_habitat(obj, result, refvals[refval_key])
     else:
