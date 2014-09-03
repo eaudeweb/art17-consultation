@@ -22,6 +22,7 @@ from art17.habitat import (
     get_dal as get_habitat_dal,
 )
 from art17.lookup import CONCLUSIONS
+from art17.scripts.xml_reports import xml_species, xml_habitats
 from art17.species import (
     detail as detail_species,
     SpeciesCommentView,
@@ -266,10 +267,12 @@ def report(dataset_id):
 @aggregation.route('/preview/<int:dataset_id>/')
 def post_preview(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
+    page = 'species' if dataset.species_objs.count() else 'habitat'
 
     return flask.render_template(
         'aggregation/preview/post.html',
         dataset=dataset,
+        page=page,
     )
 
 
@@ -632,3 +635,18 @@ def refvals(page):
             k.startswith(subject)]
     return flask.render_template('aggregation/preview/refvals.html',
                                  refvalues=data)
+
+
+@aggregation.route('/export/<page>/<dataset_id>')
+@admin_permission.require()
+def export(page, dataset_id):
+    dataset = models.Dataset.query.filter_by(id=dataset_id).first_or_404()
+
+    if page == 'species':
+        xml = xml_species(dataset_id=dataset.id)
+    elif page == 'habitat':
+        xml = xml_habitats(dataset_id=dataset_id)
+    else:
+        flask.abort(404)
+
+    return flask.Response(xml, mimetype='text/xml')

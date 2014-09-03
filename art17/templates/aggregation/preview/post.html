@@ -40,6 +40,9 @@
   {% if admin_permission.can() %}
   <div class="button-group">
     <a class="btn btn-default" href="{{ url_for('.redo', dataset_id=dataset.id) }}">Refă agregarea</a>
+    <a class="btn btn-default pull-right" href="{{ url_for('.export', dataset_id=dataset.id, page=page) }}">
+      <i class="icon-download"></i> Descarcă xml
+    </a>
   </div>
   {% endif %}
 
