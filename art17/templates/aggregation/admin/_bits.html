@@ -10,7 +10,6 @@
   {%- if refvals -%}
     {%- for group,values in refvals.iteritems() -%}
       <strong>{{ REFGROUPS.get(group, group|capitalize) }}</strong>
-
       <table class='table table-condensed table-bordered'>
         {%- set keys, data = values.keys(), values.values() -%}
         <tr>

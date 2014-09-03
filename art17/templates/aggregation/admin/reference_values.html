@@ -29,7 +29,7 @@
           {% if check_key in species_data %}
             <td nowrap="nowrap"
                 title="{{ render_refvalues(species_refvals.get(key)) }}"
-                class="gigi">
+                class="ptip">
               {% if key not in species_refvals %}
                 date lipsă
               {% else %}
@@ -84,7 +84,9 @@
   {{ super() }}
   <script type="text/javascript">
     $(document).ready(function () {
-      $('.gigi').powerTip();
+      $('.ptip').powerTip({
+        smartPlacement: true, followMouse: true
+      });
     });
   </script>
 {% endblock script %}
