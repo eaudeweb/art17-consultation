@@ -12,24 +12,28 @@
 {%- macro table(bioreg_list, subject_list, cell, object_regions) %}
   <table class="table table-bordered">
     <thead>
-      <th></th>
+    <th></th>
 
-      {% for bioreg in bioreg_list %}
-        <th title="{{ bioreg.name_ro }}">{{ bioreg.code }}</th>
-      {% endfor %}
+    {% for bioreg in bioreg_list %}
+      <th title="{{ bioreg.name_ro }}">{{ bioreg.code }}</th>
+    {% endfor %}
     </thead>
 
     <tbody>
     {% for subject in subject_list %}
       <tr>
-        {%- set name = subject.lu.name_ro or subject.lu.speciesname %}
-        <td style="white-space: nowrap" title="{{ name }}">
-          {{ subject.code }} – {{ name|truncate(60) }}
-        </td>
+        {% if subject %}
+          {%- set name = subject.lu.name_ro or subject.lu.speciesname %}
+          <td style="white-space: nowrap" title="{{ name }}">
+            {{ subject.code }} – {{ name|truncate(60) }}
+          </td>
 
-        {% for bioreg in bioreg_list %}
-          {{ cell(subject, bioreg, object_regions) }}
-        {% endfor %}
+          {% for bioreg in bioreg_list %}
+            {{ cell(subject, bioreg, object_regions) }}
+          {% endfor %}
+        {% else %}
+          <td>no subject</td>
+        {% endif %}
       </tr>
     {% endfor %}
     </tbody>

@@ -264,7 +264,8 @@ def report(dataset_id):
         return data
 
     dataset.reports = reports(dataset)
-    return flask.render_template('aggregation/report.html', dataset=dataset)
+    return flask.render_template('aggregation/report.html', dataset=dataset,
+                                 dataset_id=dataset.id)
 
 
 @aggregation.route('/preview/<int:dataset_id>/')
