@@ -1,9 +1,6 @@
 import flask
 from art17 import models
-from art17.scripts import exporter
-
-
-DEFAULT_DATASET_ID=1
+from art17.scripts import exporter, DEFAULT_DATASET_ID
 
 
 @exporter.command
