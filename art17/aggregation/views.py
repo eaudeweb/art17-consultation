@@ -34,7 +34,7 @@ from art17.aggregation import (
     perm_finalize_record,
     perm_definalize_record,
     check_aggregation_preview_perm,
-)
+    load_species_refval, load_habitat_refval)
 from art17.aggregation.agregator import (
     create_aggregation,
     create_preview_aggregation,
@@ -56,6 +56,7 @@ from art17.aggregation.utils import (
 def ping():
     from art17 import models
     from datetime import datetime
+
     count = models.History.query.count()
     now = datetime.utcnow().isoformat()
     return "art17 aggregation is up; %s; %d history items" % (now, count)
@@ -73,8 +74,8 @@ def home():
     preview_list = (
         models.Dataset.query
         .filter_by(preview=True, user_id=flask.g.identity.id)
-        .filter(or_(models.Dataset.checklist==None,
-                    models.Dataset.checklist==False))
+        .filter(or_(models.Dataset.checklist == None,
+                    models.Dataset.checklist == False))
         .order_by(models.Dataset.date)
         .all()
     )
@@ -153,6 +154,7 @@ def preview(page):
         'form': form,
         'dataset': dataset,
         'report': report,
+        'page': page,
         'current_checklist': current_checklist,
     })
 
@@ -233,13 +235,14 @@ def report(dataset_id):
 
         data['species']['total_species'] = (
             models.DataSpeciesCheckList.query
-            .with_entities(func.count(models.DataSpeciesCheckList.species_name))
+            .with_entities(
+                func.count(models.DataSpeciesCheckList.species_name))
             .filter_by(dataset_id=ds.checklist_id)
             .group_by(models.DataSpeciesCheckList.species_name).count())
 
         queryset = data['species']['total_reports'] = (
-           models.DataSpeciesCheckList.query
-                .filter_by(dataset_id=ds.checklist_id).count()
+            models.DataSpeciesCheckList.query
+            .filter_by(dataset_id=ds.checklist_id).count()
         )
 
         data['habitat']['total_habitats'] = (
@@ -249,8 +252,8 @@ def report(dataset_id):
             .group_by(models.DataHabitatsCheckList.valid_name).count())
 
         queryset = data['habitat']['total_reports'] = (
-           models.DataHabitatsCheckList.query
-                .filter_by(dataset_id=ds.checklist_id).count()
+            models.DataHabitatsCheckList.query
+            .filter_by(dataset_id=ds.checklist_id).count()
         )
 
         data['missing'] = aggregation_missing_data_report(dataset_id)
@@ -271,7 +274,6 @@ def post_preview(dataset_id):
 
 
 class DashboardView(View):
-
     methods = ['GET']
 
     def get_context_data(self):
@@ -309,7 +311,6 @@ class DashboardView(View):
 
 
 class HabitatsDashboard(DashboardView):
-
     current_tab = 'H'
     ds_model = dal.HabitatDal
 
@@ -318,12 +319,12 @@ class HabitatsDashboard(DashboardView):
             return set([h.habitat for h in dataset.habitat_objs])
         return dal.get_habitat_list()
 
+
 aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/',
                          view_func=HabitatsDashboard.as_view('habitats'))
 
 
 class SpeciesDashboard(DashboardView):
-
     ds_model = dal.SpeciesDal
 
     def get_object_list(self, dataset):
@@ -335,6 +336,7 @@ class SpeciesDashboard(DashboardView):
         self.group_code = kwargs['group_code']
         self.current_tab = 'S' + self.group_code
         return super(SpeciesDashboard, self).dispatch_request(*args, **kwargs)
+
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/species/<group_code>',
                          view_func=SpeciesDashboard.as_view('species'))
@@ -358,7 +360,6 @@ def dashboard(dataset_id):
 
 
 class RecordViewMixin(object):
-
     template_base = 'aggregation/record.html'
     success_message = u"Înregistrarea a fost actualizată"
 
@@ -388,7 +389,6 @@ class RecordViewMixin(object):
 
 
 class HabitatRecordView(RecordViewMixin, HabitatCommentView):
-
     template = 'aggregation/record-habitat.html'
     missing_template = 'aggregation/record-habitat-missing.html'
     comment_history_view = 'history_aggregation.habitat_comments'
@@ -412,7 +412,6 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>/',
 
 
 class SpeciesRecordView(RecordViewMixin, SpeciesCommentView):
-
     template = 'aggregation/record-species.html'
     missing_template = 'aggregation/record-species-missing.html'
     comment_history_view = 'history_aggregation.species_comments'
@@ -440,7 +439,6 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>/',
 
 
 class IndexViewMixin(object):
-
     def dispatch_request(self, dataset_id, record_id):
         self.dataset_id = dataset_id
         self.record = self.model_cls.query.get_or_404(record_id)
@@ -457,7 +455,6 @@ class IndexViewMixin(object):
 
 
 class HabitatIndexView(IndexViewMixin, View):
-
     topic_template = 'habitat/topic.html'
     template_name = 'aggregation/index-habitat.html'
     model_cls = models.DataHabitattypeRegion
@@ -473,13 +470,11 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>/'
                          'index/',
                          view_func=HabitatIndexView.as_view('habitat-index'))
 
-
 aggregation.route('/habitate/detalii/<int:record_id>',
                   endpoint='detail-habitat')(detail_habitat)
 
 
 class SpeciesIndexView(IndexViewMixin, View):
-
     topic_template = 'species/topic.html'
     template_name = 'aggregation/index-species.html'
     model_cls = models.DataSpeciesRegion
@@ -496,13 +491,11 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>/'
                          'index/',
                          view_func=SpeciesIndexView.as_view('species-index'))
 
-
 aggregation.route('/specii/detalii/<int:record_id>',
                   endpoint='detail-species')(detail_species)
 
 
 class RecordDetails(View):
-
     template_base = 'aggregation/record-details.html'
 
     def dispatch_request(self, dataset_id, record_id):
@@ -525,7 +518,6 @@ class RecordDetails(View):
 
 
 class SpeciesDetails(RecordDetails):
-
     record_cls = models.DataSpeciesRegion
     template_name = 'species/detail.html'
     record_parser = staticmethod(schemas.parse_species)
@@ -536,7 +528,6 @@ class SpeciesDetails(RecordDetails):
 
 
 class HabitatDetails(RecordDetails):
-
     record_cls = models.DataHabitattypeRegion
     template_name = 'habitat/detail.html'
     record_parser = staticmethod(schemas.parse_habitat)
@@ -556,7 +547,6 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>'
 
 
 class RecordFinalToggle(View):
-
     def __init__(self, finalize=True):
         self.finalize = finalize
 
@@ -592,14 +582,12 @@ class RecordFinalToggle(View):
 
 
 class SpeciesFinalToggle(RecordFinalToggle):
-
     record_cls = models.DataSpeciesRegion
     form_cls = forms.SpeciesComment
     parse_commentform = staticmethod(schemas.parse_species_commentform)
 
 
 class HabitatFinalToggle(RecordFinalToggle):
-
     record_cls = models.DataHabitattypeRegion
     form_cls = forms.HabitatComment
     parse_commentform = staticmethod(schemas.parse_habitat_commentform)
@@ -628,3 +616,18 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>'
                          view_func=SpeciesFinalToggle.as_view(
                              'species-definalize',
                              finalize=False))
+
+
+@aggregation.route('/refvals/<page>')
+def refvals(page):
+    subject = request.args.get('subject')
+    if page == 'species':
+        refvals = load_species_refval()
+    elif page == 'habitat':
+        refvals = load_habitat_refval()
+    else:
+        flask.abort(404)
+
+    data = [(k[len(subject)+1:], v) for k, v in refvals.iteritems() if k.startswith(subject)]
+    return flask.render_template('aggregation/preview/refvals.html',
+                                 refvalues=data)

@@ -16,12 +16,13 @@
 {% block content %}
   <h2>Agregare specie/habitat</h2>
 
-    {% if report is none %}
+  {% if report is none %}
     <p>Făcând click pe butonul agregare, se va încerca agregarea speciei sau
       habitatului selectat.
     </p>
 
-    <p>Interval curent de raportare: {{ current_checklist.year_start }} - {{ current_checklist.year_end }}.</p>
+    <p>Interval curent de raportare: {{ current_checklist.year_start }}
+      - {{ current_checklist.year_end }}.</p>
 
     <form method="post">
       {{ form.subject(class='form-control') }}
@@ -29,7 +30,15 @@
       <button type="submit" class="btn btn-warning">Execută agregarea</button>
     </form>
 
-    {% else %}
+    <div class="row">
+      <div class="col-sm-offset-1 col-sm-10">
+        <h3>Valori de referință</h3>
+
+        <div id="refvals">
+        </div>
+      </div>
+    </div>
+  {% else %}
     <p>
       Date agregate:
       {%- set url = url_for('.dashboard', dataset_id=dataset.id) %}
@@ -40,5 +49,29 @@
 
     <pre>{{ report }}</pre>
 
-    {% endif %}
+  {% endif %}
 {% endblock content %}
+
+{% block script %}
+  {{ super() }}
+  <script>
+    $(function () {
+      // set on change
+      $('#subject').on('change', function () {
+        var subject = $(this).val();
+        var url = '{{ url_for('.refvals', page=page) }}?subject=' + subject;
+
+        $.ajax({
+          url: url,
+          method: 'GET',
+          success: function (data) {
+            $('#refvals').html(data);
+          },
+          error: function (data) {
+            alert('error');
+          }
+        });
+      }).change();
+    });
+  </script>
+{% endblock script %}

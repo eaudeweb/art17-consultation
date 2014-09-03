@@ -1,0 +1,29 @@
+{% set REFGROUPS={'range': 'Areal', 'magnitude': 'Magnitudine Areal',
+  'population_units': 'Unitati populatie',
+  'population_magnitude': 'Magnitudine Populatie',
+  'population_range': 'Areal favorabil populatie',
+  'coverage_range': 'Suprafata',
+  'coverage_magnitude': 'Magnitudine suprafata'
+  } %}
+
+{% macro render_refvalues(refvals) %}
+  {%- if refvals -%}
+    {%- for group,values in refvals.iteritems() -%}
+      <strong>{{ REFGROUPS.get(group, group|capitalize) }}</strong>
+
+      <table class='table table-condensed table-bordered'>
+        {%- set keys, data = values.keys(), values.values() -%}
+        <tr>
+          {%- for k in keys -%}
+            <th>{{ k }}</th>
+          {%- endfor -%}
+        </tr>
+        <tr>
+          {%- for v in data -%}
+            <td class='text-right'>{{ v or 'n/a' }}</td>
+          {%- endfor -%}
+        </tr>
+      </table>
+    {% endfor -%}
+  {% endif -%}
+{% endmacro %}

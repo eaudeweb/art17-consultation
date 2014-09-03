@@ -1,0 +1,14 @@
+{% from 'aggregation/admin/_bits.html' import render_refvalues %}
+
+{% if refvalues %}
+  {% for region, rv in refvalues %}
+    {% set info = refvalue_ok(rv) %}
+
+    <h4>{{ region }} -
+      {% if info is none %}date lipsă{% elif not info %}date incomplete{% else %}ok{% endif %}
+    </h4>
+    {{ render_refvalues(rv) }}
+  {% endfor %}
+{% else %}
+<p>Date de referință lipsă.</p>
+{% endif %}
