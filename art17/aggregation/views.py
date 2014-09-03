@@ -39,7 +39,6 @@ from art17.aggregation.agregator import (
     create_aggregation,
     create_preview_aggregation,
 )
-from art17.common import get_datasets
 from art17.aggregation.forms import PreviewForm
 from art17.aggregation.utils import (
     record_edit_url,
