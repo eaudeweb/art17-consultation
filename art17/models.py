@@ -994,10 +994,14 @@ class Dataset(Base):
 
         return {
             'new': new, 'draft': draft, 'final': final, 'missing': missing,
-            'species': species, 'habitat': habitat,
-            'species_new': species_new, 'species_draft': species_draft,
-            'species_final': species_final, 'habitat_new': habitat_new,
-            'habitat_draft': habitat_draft, 'habitat_final': habitat_final,
+            'species': species,
+            'habitat': habitat,
+            'species_new': species_new,
+            'species_draft': species_draft,
+            'species_final': species_final,
+            'habitat_new': habitat_new,
+            'habitat_draft': habitat_draft,
+            'habitat_final': habitat_final,
             'all': all_count,
         }
 
