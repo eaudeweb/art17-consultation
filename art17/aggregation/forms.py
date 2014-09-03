@@ -1,6 +1,6 @@
 from wtforms import SelectField, Form
 from wtforms.widgets import Select, html_params, HTMLString
-from art17.aggregation.utils import get_datasets
+from art17.common import get_datasets
 
 
 class OptgroupSelect(Select):

@@ -39,12 +39,12 @@ from art17.aggregation.agregator import (
     create_aggregation,
     create_preview_aggregation,
 )
+from art17.common import get_datasets
 from art17.aggregation.forms import PreviewForm
 from art17.aggregation.utils import (
     record_edit_url,
     record_details_url,
     record_finalize_toggle_url,
-    get_datasets,
     aggregation_missing_data_report,
     get_species_checklist, get_habitat_checklist, get_tabmenu_data,
     get_tabmenu_preview,
@@ -70,7 +70,6 @@ def crashme():
 @aggregation.route('/')
 def home():
     check_aggregation_perm()
-    dataset_list = get_datasets()
     preview_list = (
         models.Dataset.query
         .filter_by(preview=True, user_id=flask.g.identity.id)
@@ -80,7 +79,6 @@ def home():
         .all()
     )
     return flask.render_template('aggregation/home.html', **{
-        'dataset_list': dataset_list,
         'preview_datasets': preview_list,
     })
 

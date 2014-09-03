@@ -783,4 +783,4 @@ def flatten_errors(errors):
 def get_datasets():
     return Dataset.query.filter(
         or_(Dataset.preview == False, Dataset.preview == None)
-    ).order_by('-year_start')
+    ).order_by(Dataset.date)

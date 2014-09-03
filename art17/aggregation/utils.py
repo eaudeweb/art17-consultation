@@ -125,16 +125,6 @@ def aggregation_missing_data_report(dataset_id):
     }
 
 
-def get_datasets():
-    return (
-        models.Dataset.query
-        .filter(or_(models.Dataset.preview == False,
-                    models.Dataset.preview == None))
-        .order_by(models.Dataset.date)
-        .all()
-    )
-
-
 def get_checklist(checklist_id):
     if checklist_id is None or checklist_id == '':
         class DefaultCheckList(object):
