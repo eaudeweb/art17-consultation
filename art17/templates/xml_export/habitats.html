@@ -1,10 +1,4 @@
-{% macro to_bool(val) %}
-    {%- if val -%}
-        true
-    {%- else -%}
-        false
-    {%- endif -%}
-{% endmacro -%}
+{%- from 'xml_export/_bits.html' import to_bool -%}
 
 <?xml version="1.0" encoding="UTF-8"?>
 <habitat_reports xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xml:lang="en" xsi:noNamespaceSchemaLocation="http://bd.eionet.europa.eu/schemas/Art12Art17_reporting_2013/art17_habitats.xsd">
@@ -18,7 +12,7 @@
         <additional_distribution_map>{{ to_bool(habitat.additional_distribution_map) }}</additional_distribution_map>
         <range_map>{{ to_bool(habitat.range_map) }}</range_map>
         <regional>
-            {%- for region in habitat.regions.filter_by(cons_dataset_id=1) %}
+            {%- for region in habitat.regions.filter_by(cons_dataset_id=dataset_id) %}
             <region>
                 <code desc="{{ region.lu.name }}">{{ region.region }}</code>
                 <published>{{ region.published }}</published>

@@ -3,12 +3,16 @@ from art17 import models
 from art17.scripts import exporter
 
 
+DEFAULT_DATASET_ID=1
+
+
 @exporter.command
-def xml_species(filename=None):
+def xml_species(filename=None, dataset_id=None):
+    dataset_id = dataset_id or DEFAULT_DATASET_ID
     species = models.db.session.query(models.DataSpecies)
     data = flask.render_template(
                 'xml_export/species.html',
-                **{'species_list': species}
+                **{'species_list': species, 'dataset_id': dataset_id}
             )
     if filename:
         with open(filename, 'w') as file_out:
@@ -44,11 +48,12 @@ def xml_species_checklist(filename=None):
 
 
 @exporter.command
-def xml_habitats(filename=None):
+def xml_habitats(filename=None, dataset_id=None):
+    dataset_id = dataset_id or DEFAULT_DATASET_ID
     habitats = models.db.session.query(models.DataHabitat)
     data = flask.render_template(
                 'xml_export/habitats.html',
-                **{'habitats': habitats}
+                **{'habitats': habitats, 'dataset_id': dataset_id}
             )
     if filename:
         with open(filename, 'w') as file_out:
