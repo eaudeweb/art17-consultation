@@ -141,7 +141,9 @@ def get_checklist(checklist_id):
 
 def get_reporting_id():
     current_report = models.Config.query.filter_by(id='REPORTING_ID').first()
-    return current_report.value if current_report else None
+    if current_report:
+        return current_report.value or None
+    return None
 
 
 def get_species_checklist(distinct=False, dataset_id=None, groupped=False):
