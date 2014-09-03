@@ -235,10 +235,10 @@ def species_population_units(filename=None, dataset_id=None):
 
 
 @exporter.command
-def all_species(dest_dir=None, mapping=None, dataset_id=None):
+def all_species(folder=None, mapping=None, dataset_id=None):
     """ Export all reference values
     """
-    dest_dir = dest_dir or '.'
+    folder = folder or '.'
     available = mapping or {
         'species_magnitude': species_magnitude,
         'species_range': species_range,
@@ -250,7 +250,7 @@ def all_species(dest_dir=None, mapping=None, dataset_id=None):
     for k, v in available.iteritems():
         filename = '%s.csv' % k
         print "Exporting %s..." % k
-        filepath = os.path.join(dest_dir, filename)
+        filepath = os.path.join(folder, filename)
         v(filepath, dataset_id=dataset_id)
     print "Done."
 
@@ -330,10 +330,10 @@ def habitat_coverage_magnitude(filename=None, dataset_id=None):
 
 
 @exporter.command
-def all_habitat(dest_dir=None, dataset_id=None):
+def all_habitat(folder=None, dataset_id=None):
     """ Export all reference values
     """
-    return all_species(dest_dir=dest_dir, mapping={
+    return all_species(folder=folder, mapping={
         'habitat_magnitude': habitat_magnitude,
         'habitat_range': habitat_range,
         'habitat_coverage_range': habitat_coverage_range,
