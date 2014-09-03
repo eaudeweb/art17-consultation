@@ -277,6 +277,8 @@ def edit_dataset(dataset_id):
 @aggregation.route('/admin/reference_values')
 def reference_values():
     checklist_id = get_reporting_id()
+    current_checklist = get_checklist(checklist_id)
+    checklist_id = current_checklist.id
 
     species_refvals = load_species_refval()
     species_checklist = get_species_checklist(dataset_id=checklist_id)
@@ -301,8 +303,6 @@ def reference_values():
         LuGrupSpecie.query
         .with_entities(LuGrupSpecie.code, LuGrupSpecie.description)
     )
-
-    current_checklist = get_checklist(checklist_id) or u'Lista inițială'
 
     return render_template(
         'aggregation/admin/reference_values.html',

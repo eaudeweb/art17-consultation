@@ -132,6 +132,9 @@ def get_checklist(checklist_id):
             name = u"Lista de verificare inițială"
             year_start = current_app.config.get('DEFAULT_YEAR_START')
             year_end = current_app.config.get('DEFAULT_YEAR_END')
+
+            def __unicode__(self):
+                return self.name
         return DefaultCheckList()
     return models.Dataset.query.filter_by(id=checklist_id).first()
 
