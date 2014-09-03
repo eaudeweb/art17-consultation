@@ -18,6 +18,10 @@
 
   {% if report is none %}
 
+    <p class="text-warning">Lista de verificare: {{ current_checklist }}</p>
+    <p>Interval curent de raportare: {{ current_checklist.year_start }}
+      - {{ current_checklist.year_end }}.</p>
+
     <p>Făcând click pe butonul agregare, un nou set de date va fi creat prin
     agregarea datelor primare.
     </p>

@@ -49,6 +49,8 @@ from art17.aggregation.utils import (
     get_species_checklist, get_habitat_checklist, get_tabmenu_data,
     get_tabmenu_preview,
     valid_checklist,
+    get_checklist,
+    get_reporting_id,
 )
 
 
@@ -101,6 +103,7 @@ def aggregate():
     return flask.render_template('aggregation/aggregate.html', **{
         'report': report,
         'dataset': dataset,
+        'current_checklist': get_checklist(get_reporting_id()),
     })
 
 
