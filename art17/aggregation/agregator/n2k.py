@@ -3,6 +3,7 @@ from urllib import urlencode
 import requests
 
 HABITAT_COVER_URL = '/Natura2000/MapServer/3'
+SPECIES_COVER_URL = '/Natura2000/MapServer/26'
 
 
 def generic_n2k_call(url, where_query, out_fields=""):
@@ -30,3 +31,25 @@ def get_habitat_cover_range(habcode, region):
 
     values = [e['attributes']['HABITAT_COVER'] for e in data]
     return min(values), max(values)
+
+
+def get_species_population_range(speccode, region):
+    where_query = "SPECIES_CODE='%s'" % speccode
+    data = generic_n2k_call(SPECIES_COVER_URL, where_query,
+                            out_fields="SPECIES_SIZE_MIN,SPECIES_SIZE_MAX")
+    if not data:
+        return None, None
+
+    min_values = [
+        v for v in
+        (e['attributes']['SPECIES_SIZE_MIN'] for e in data)
+        if v is not None
+    ]
+
+    max_values = [
+        v for v in
+        (e['attributes']['SPECIES_SIZE_MIN'] for e in data)
+        if v is not None
+    ]
+
+    return sum(min_values) or None, sum(max_values) or None
