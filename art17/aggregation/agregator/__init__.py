@@ -2,6 +2,7 @@ from StringIO import StringIO
 from collections import defaultdict
 import flask
 from art17 import models, ROLE_AGGREGATED, ROLE_MISSING
+from art17.aggregation.agregator.n2k import get_habitat_cover_range
 from art17.aggregation.refvalues import (
     refvalue_ok, load_species_refval, load_habitat_refval,
 )
@@ -217,6 +218,9 @@ def aggregate_habitat(obj, result, refvals):
     # Specii tipice
 
     # Natura 2000
+    n2k_min, n2k_max = get_habitat_cover_range(obj.code, result.region)
+    result.natura2000_area_min = n2k_min
+    result.natura2000_area_max = n2k_max
 
     # Masuri de conservare
 
