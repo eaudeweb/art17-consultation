@@ -29,5 +29,4 @@ def get_habitat_cover_range(habcode, region):
         return None, None
 
     values = [e['attributes']['HABITAT_COVER'] for e in data]
-    print values
     return min(values), max(values)
