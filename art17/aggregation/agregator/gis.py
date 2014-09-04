@@ -38,25 +38,25 @@ def generic_surface_call(url, where_query, out_fields=""):
 
 
 def get_habitat_dist_surface(habcode, region):
-    where_query = "HABITAT=%s" % habcode
+    where_query = "HABITAT='%s'" % habcode
 
     return generic_surface_call(HABITAT_DISTRIBUTION_URL, where_query, region)
 
 
 def get_habitat_range_surface(habcode, region):
-    where_query = "HABITAT=%s" % habcode
+    where_query = "HABITAT='%s'" % habcode
 
     return generic_surface_call(HABITAT_RANGE_URL, where_query, region)
 
 
 def get_species_dist_surface(speccode, region):
-    where_query = "SPECNUM=%s" % speccode
+    where_query = "SPECNUM='%s'" % speccode
 
     return generic_surface_call(SPECIES_DISTRIBUTION_URL, where_query, region)
 
 
 def get_species_range_surface(speccode, region):
-    where_query = "SPECNUM=%s" % speccode
+    where_query = "SPECNUM='%s'" % speccode
 
     return generic_surface_call(SPECIES_RANGE_URL, where_query, region)
 
