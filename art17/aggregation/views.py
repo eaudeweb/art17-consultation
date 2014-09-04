@@ -8,7 +8,9 @@ from flask.views import View
 from sqlalchemy import func, or_
 from werkzeug.datastructures import MultiDict
 
-from art17 import models, forms, schemas, dal
+from art17 import (
+    models, forms, schemas, dal, ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL,
+)
 from art17.auth import admin_permission, require, need
 from art17.common import (
     flatten_dict,
@@ -35,7 +37,9 @@ from art17.aggregation import (
     perm_finalize_record,
     perm_definalize_record,
     check_aggregation_preview_perm,
-    load_species_refval, load_habitat_refval)
+    load_species_refval,
+    load_habitat_refval,
+)
 from art17.aggregation.agregator import (
     create_aggregation,
     create_preview_aggregation,
@@ -219,7 +223,7 @@ def report(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
 
     def reports(ds):
-        ROLE = 'assessment'
+        ROLE = ROLE_AGGREGATED
         data = {'species': {}, 'habitat': {}}
         for k, v in CONCLUSIONS.iteritems():
             data['species'][k] = (
@@ -381,8 +385,8 @@ class RecordViewMixin(object):
             self.record = self.record_cls.query.get_or_404(record_id)
             perm_edit_record(self.record).test()
             self.object = self.record
-            if self.object.cons_role == 'assessment':
-                self.object.cons_role = 'final-draft'
+            if self.object.cons_role == ROLE_AGGREGATED:
+                self.object.cons_role = ROLE_DRAFT
             self.original_data = self.parse_commentform(self.object)
             if request.method == 'POST':
                 form_data = request.form
@@ -519,7 +523,7 @@ class RecordDetails(View):
             'measures': self.record.measures.all(),
             'template_base': self.template_base,
             'comment_history_view': self.comment_history_view,
-            'finalized': self.record.is_final(),
+            'finalized': self.record.is_agg_final(),
         })
         return flask.render_template(self.template_name, **context)
 
@@ -566,18 +570,18 @@ class RecordFinalToggle(View):
             if not form.final_validate():
                 flask.flash(u"Înregistrarea NU e completă", 'danger')
                 return flask.redirect(record_edit_url(self.record))
-            if self.record.cons_role == 'final-draft':
+            if self.record.cons_role == ROLE_DRAFT:
                 self.record.cons_status = FINALIZED_STATUS
-            elif self.record.cons_role == 'assessment':
+            elif self.record.cons_role == ROLE_AGGREGATED:
                 self.record.cons_status = 'unmodified'
-            self.record.cons_role = 'final'
+            self.record.cons_role = ROLE_FINAL
             flask.flash(u"Înregistrarea a fost finalizată.", 'success')
         else:
             perm_definalize_record(self.record).test()
             if self.record.cons_status == 'unmodified':
-                self.record.cons_role = 'assessment'
+                self.record.cons_role = ROLE_AGGREGATED
             else:
-                self.record.cons_role = 'final-draft'
+                self.record.cons_role = ROLE_DRAFT
             self.record.cons_status = NEW_STATUS
             flask.flash(u"Înregistrarea a fost readusă în lucru.", 'warning')
         models.db.session.add(self.record)

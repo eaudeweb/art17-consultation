@@ -229,7 +229,7 @@ SPECIES_MODEL_DATA = {
 }
 
 
-def _create_species_record(species_app, comment=False):
+def _create_species_record(species_app, comment=False, role='assessment'):
     from art17 import models
     with species_app.app_context():
         config = models.Config(id='CONSULTATION_DATASET', value='1')
@@ -240,7 +240,7 @@ def _create_species_record(species_app, comment=False):
         record = models.DataSpeciesRegion(
             id=1,
             species=species,
-            cons_role='assessment',
+            cons_role=role,
             region='ALP',
             cons_dataset_id=1,
         )

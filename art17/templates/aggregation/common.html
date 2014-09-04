@@ -2,7 +2,7 @@
   {%- set key = (subject.id, bioreg.code) %}
   {%- if key in object_regions %}
     {%- set record = get_record(subject, bioreg, dataset_id) %}
-    {% if record.is_final() %}
+    {% if record.is_agg_final() %}
     {%- set url = record_details_url(record) %}
     {%- set conclusion_text = (
             CONCLUSIONS.get(record.conclusion_assessment, '') +

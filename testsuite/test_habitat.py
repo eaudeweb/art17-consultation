@@ -173,7 +173,7 @@ HABITAT_MODEL_DATA = {
 }
 
 
-def _create_habitat_record(habitat_app, comment=False):
+def _create_habitat_record(habitat_app, comment=False, role='assessment'):
     from art17 import models
     with habitat_app.app_context():
         config = models.Config(id='CONSULTATION_DATASET', value='1')
@@ -184,7 +184,7 @@ def _create_habitat_record(habitat_app, comment=False):
         record = models.DataHabitattypeRegion(
             id=1,
             habitat=habitat,
-            cons_role='assessment',
+            cons_role=role,
             region='ALP',
             cons_dataset_id=1,
         )

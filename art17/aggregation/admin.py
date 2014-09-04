@@ -11,7 +11,7 @@ from wtforms import Form, IntegerField, TextField, SelectField
 from wtforms.validators import Optional
 from flask.ext.principal import Permission
 
-from art17 import dal, models
+from art17 import dal, models, ROLE_FINAL
 from art17.aggregation.forms import CompareForm
 from art17.aggregation.utils import get_checklist, get_reporting_id, \
     get_species_checklist, get_habitat_checklist
@@ -362,10 +362,8 @@ def compare_datasets(dataset1, dataset2):
     d1 = models.Dataset.query.get_or_404(dataset1)
     d2 = models.Dataset.query.get_or_404(dataset2)
 
-    ROLE = 'final'
-
-    conclusions_s_d1 = d1.species_objs.filter_by(cons_role=ROLE)
-    conclusions_s_d2 = d2.species_objs.filter_by(cons_role=ROLE)
+    conclusions_s_d1 = d1.species_objs.filter_by(cons_role=ROLE_FINAL)
+    conclusions_s_d2 = d2.species_objs.filter_by(cons_role=ROLE_FINAL)
 
     relevant_regions = set([r[0] for r in (
         list(conclusions_s_d1.with_entities(models.DataSpeciesRegion.region)
@@ -394,8 +392,8 @@ def compare_datasets(dataset1, dataset2):
                 s_stat['diff'] += 1
             s_stat['objs'] += 1
 
-    conclusions_h_d1 = d1.habitat_objs.filter_by(cons_role=ROLE)
-    conclusions_h_d2 = d2.habitat_objs.filter_by(cons_role=ROLE)
+    conclusions_h_d1 = d1.habitat_objs.filter_by(cons_role=ROLE_FINAL)
+    conclusions_h_d2 = d2.habitat_objs.filter_by(cons_role=ROLE_FINAL)
 
     h_data = {}
     for r in conclusions_h_d1:

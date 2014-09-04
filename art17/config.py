@@ -14,7 +14,7 @@ CONFIGURATION = {
     },
     'AGGREGATION': {
         'REPORTING_BEGIN': u"An de început pentru perioada de raportare",
-        'REPORTING_END': u"An de final pentru perioada de raportare",
+        'REPORTING_END': u"An de sfârșit pentru perioada de raportare",
         'REPORTING_ID': u"Lista de verificare curentă",
     },
 }

@@ -1,7 +1,7 @@
 from StringIO import StringIO
 from collections import defaultdict
 import flask
-from art17 import models
+from art17 import models, ROLE_AGGREGATED, ROLE_MISSING
 from art17.aggregation.refvalues import (
     refvalue_ok, load_species_refval, load_habitat_refval,
 )
@@ -251,11 +251,11 @@ def aggregate_object(obj, dataset, refvals, timestamp, user_id):
     result.cons_user_id = user_id
     refval_key = obj.code + "-" + obj.bio_region
     if refval_key not in refvals or not refvalue_ok(refvals[refval_key]):
-        result.cons_role = 'missing'
+        result.cons_role = ROLE_MISSING
         return result
 
     # Agregation starts here
-    result.cons_role = 'assessment'
+    result.cons_role = ROLE_AGGREGATED
     result.cons_generalstatus = obj.presence
 
     if isinstance(obj, models.DataHabitatsCheckList):

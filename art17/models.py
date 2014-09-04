@@ -10,7 +10,9 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.script import Manager, prompt_bool
 from art17.table_sequences import get_sequence_id
-from art17 import DATE_FORMAT_HISTORY
+from art17 import (
+    DATE_FORMAT_HISTORY, ROLE_FINAL, ROLE_AGGREGATED, ROLE_MISSING,
+)
 
 db = SQLAlchemy()
 Base = db.Model
@@ -45,14 +47,15 @@ DATASET_STATUSES_DICT = dict(DATASET_STATUSES)
 
 class RoleMixin(object):
 
-    def is_final(self):
-        return self.cons_role == 'final'
+    def is_agg_final(self):
+        """ Final in the context of aggregation """
+        return self.cons_role == ROLE_FINAL
 
     def is_new(self):
-        return self.cons_role == 'assessment'
+        return self.cons_role == ROLE_AGGREGATED
 
     def is_missing(self):
-        return self.cons_role == 'missing'
+        return self.cons_role == ROLE_MISSING
 
 
 class LuHabitattypeCodes(Base):
