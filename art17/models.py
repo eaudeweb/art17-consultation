@@ -12,7 +12,7 @@ from flask.ext.script import Manager, prompt_bool
 from art17.table_sequences import get_sequence_id
 from art17 import (
     DATE_FORMAT_HISTORY, ROLE_FINAL, ROLE_AGGREGATED, ROLE_MISSING,
-)
+    ROLE_DRAFT)
 
 db = SQLAlchemy()
 Base = db.Model
@@ -964,29 +964,29 @@ class Dataset(Base):
     @property
     def details(self):
         species_new = (
-            self.species_objs.filter_by(cons_role='assessment').count()
+            self.species_objs.filter_by(cons_role=ROLE_AGGREGATED).count()
         )
         species_draft = (
-            self.species_objs.filter_by(cons_role='final-draft').count()
+            self.species_objs.filter_by(cons_role=ROLE_DRAFT).count()
         )
         species_final = (
-            self.species_objs.filter_by(cons_role='final').count()
+            self.species_objs.filter_by(cons_role=ROLE_FINAL).count()
         )
         species_missing = (
-            self.species_objs.filter_by(cons_role='missing').count()
+            self.species_objs.filter_by(cons_role=ROLE_MISSING).count()
         )
         species = species_new + species_draft + species_final + species_missing
         habitat_new = (
-            self.habitat_objs.filter_by(cons_role='assessment').count()
+            self.habitat_objs.filter_by(cons_role=ROLE_AGGREGATED).count()
         )
         habitat_draft = (
-            self.habitat_objs.filter_by(cons_role='final-draft').count()
+            self.habitat_objs.filter_by(cons_role=ROLE_DRAFT).count()
         )
         habitat_final = (
-            self.habitat_objs.filter_by(cons_role='final').count()
+            self.habitat_objs.filter_by(cons_role=ROLE_FINAL).count()
         )
         habitat_missing = (
-            self.habitat_objs.filter_by(cons_role='missing').count()
+            self.habitat_objs.filter_by(cons_role=ROLE_MISSING).count()
         )
         habitat = habitat_new + habitat_draft + habitat_final + habitat_missing
         new = species_new + habitat_new
