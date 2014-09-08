@@ -44,12 +44,7 @@
     </p>
   </div>
   {% else %}
-    <div class="alert alert-danger">
-      <p>Această înregistrare face parte dintr-o agregare temporară care
-      urmează să fie ștearsă. Această înregistrarea nu participă la agregarea
-      finală  care se va face în bloc.</p>
-      <p>Nu puteți salva datele.</p>
-    </div>
+    {% include 'common/comment/preview_alert.html' %}
   {% endif %}
 
   <div class="comment-species-report">

@@ -36,6 +36,10 @@
     {% include 'common/comment/report_observations.html' %}
   {% endif %}
 
+  {% if record_obj.dataset.preview %}
+    {% include 'common/comment/preview_alert.html' %}
+  {% endif %}
+
   <ul class="nav nav-tabs">
     <li class="active {% if form.range.errors %}text-error{% endif %}">
       <a href="#comment-range" data-toggle="tab">Arealul</a>
