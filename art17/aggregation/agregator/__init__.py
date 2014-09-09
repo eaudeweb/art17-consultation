@@ -1,11 +1,11 @@
 from StringIO import StringIO
 from collections import defaultdict
-import flask
 from art17 import models, ROLE_AGGREGATED, ROLE_MISSING
 from art17.aggregation.agregator.n2k import get_habitat_cover_range
 from art17.aggregation.refvalues import (
     refvalue_ok, load_species_refval, load_habitat_refval,
 )
+from art17.aggregation.agregator.primary import get_habitat_published
 from art17.aggregation.utils import (
     get_reporting_id, get_habitat_checklist, get_species_checklist,
     get_checklist)
@@ -19,12 +19,6 @@ from art17.aggregation.agregator.gis import (
 
 EXPERT_OPINION = 'Expert opinion'
 EXTRAPOLATION = '2'
-
-
-def execute_on_primary(query):
-    app = flask.current_app
-    aggregation_engine = models.db.get_engine(app, 'primary')
-    return models.db.session.execute(query, bind=aggregation_engine)
 
 
 def get_period(year, length):
@@ -227,6 +221,7 @@ def aggregate_habitat(obj, result, refvals):
     # Concluzii
 
     # Bibliografie
+    result.published = get_habitat_published(obj.code, result.region)
 
     return result
 
