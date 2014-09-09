@@ -11,7 +11,7 @@ def execute(query):
 def get_habitat_published(habcode, region):
     rv = []
     for row in execute(
-        "SELECT autori, titlu_lucrare, an, publicatie, editura, oras, volum, pagini, "
+        "SELECT autori, titlu_lucrare, an, publicatie, editura, oras, volum, pagini "
         "FROM bibliografie b, "
              "fise_padurifise_padur_8916a21f fp, "
              "fise_paduri f "
