@@ -4,7 +4,7 @@ import argparse
 import logging
 from datetime import datetime
 from sqlalchemy import (Column, DateTime, ForeignKey, String, Text, Numeric,
-                        cast, Binary, Boolean, Integer, Sequence)
+                        cast, Binary, Boolean, Integer, Sequence, func)
 from sqlalchemy.orm import relationship, foreign
 from sqlalchemy.ext.hybrid import hybrid_property
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -963,48 +963,41 @@ class Dataset(Base):
 
     @property
     def details(self):
-        species_new = (
-            self.species_objs.filter_by(cons_role=ROLE_AGGREGATED).count()
+        species_roles = dict(
+            self.species_objs
+            .with_entities(DataSpeciesRegion.cons_role,
+                           func.count(DataSpeciesRegion.id))
+            .group_by(DataSpeciesRegion.cons_role)
         )
-        species_draft = (
-            self.species_objs.filter_by(cons_role=ROLE_DRAFT).count()
+        habitat_roles = dict(
+            self.habitat_objs
+            .with_entities(DataHabitattypeRegion.cons_role,
+                           func.count(DataHabitattypeRegion.id))
+            .group_by(DataHabitattypeRegion.cons_role)
         )
-        species_final = (
-            self.species_objs.filter_by(cons_role=ROLE_FINAL).count()
+
+        new = (
+            species_roles.get(ROLE_AGGREGATED, 0) +
+            habitat_roles.get(ROLE_AGGREGATED, 0)
         )
-        species_missing = (
-            self.species_objs.filter_by(cons_role=ROLE_MISSING).count()
+        draft = (
+            species_roles.get(ROLE_DRAFT, 0) +
+            habitat_roles.get(ROLE_DRAFT, 0)
         )
-        species = species_new + species_draft + species_final + species_missing
-        habitat_new = (
-            self.habitat_objs.filter_by(cons_role=ROLE_AGGREGATED).count()
+        final = (
+            species_roles.get(ROLE_FINAL, 0) +
+            habitat_roles.get(ROLE_FINAL, 0)
         )
-        habitat_draft = (
-            self.habitat_objs.filter_by(cons_role=ROLE_DRAFT).count()
+        missing = (
+            species_roles.get(ROLE_MISSING, 0) +
+            habitat_roles.get(ROLE_MISSING, 0)
         )
-        habitat_final = (
-            self.habitat_objs.filter_by(cons_role=ROLE_FINAL).count()
-        )
-        habitat_missing = (
-            self.habitat_objs.filter_by(cons_role=ROLE_MISSING).count()
-        )
-        habitat = habitat_new + habitat_draft + habitat_final + habitat_missing
-        new = species_new + habitat_new
-        draft = species_draft + habitat_draft
-        final = species_final + habitat_final
-        missing = species_missing + habitat_missing
-        all_count = habitat + species
+        all_count = new + draft + final + missing
 
         return {
             'new': new, 'draft': draft, 'final': final, 'missing': missing,
-            'species': species,
-            'habitat': habitat,
-            'species_new': species_new,
-            'species_draft': species_draft,
-            'species_final': species_final,
-            'habitat_new': habitat_new,
-            'habitat_draft': habitat_draft,
-            'habitat_final': habitat_final,
+            'species': sum(species_roles.values()),
+            'habitat': sum(habitat_roles.values()),
             'all': all_count,
         }
 
