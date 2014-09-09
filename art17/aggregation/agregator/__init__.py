@@ -5,7 +5,10 @@ from art17.aggregation.agregator.n2k import get_habitat_cover_range
 from art17.aggregation.refvalues import (
     refvalue_ok, load_species_refval, load_habitat_refval,
 )
-from art17.aggregation.agregator.primary import get_habitat_published
+from art17.aggregation.agregator.primary import (
+    get_habitat_published,
+    get_habitat_typical_species,
+)
 from art17.aggregation.utils import (
     get_reporting_id, get_habitat_checklist, get_species_checklist,
     get_checklist)
@@ -15,6 +18,7 @@ from art17.aggregation.agregator.gis import (
     get_species_dist_surface,
     get_species_range_surface,
 )
+from art17.models import DataHabitatSpecies
 
 
 EXPERT_OPINION = 'Expert opinion'
@@ -58,6 +62,13 @@ def parse_complementary(refval):
         elif 'Necunoscut' in k:
             unknown = 1 if v else None
     return value, op, unknown
+
+
+def set_typical_species(obj, species):
+    for sp in species:
+        species_obj = DataHabitatSpecies(habitats=obj,
+                                         speciesname=sp)
+        models.db.session.add(species_obj)
 
 
 def extract_key(refval, key):
@@ -209,8 +220,6 @@ def aggregate_habitat(obj, result, refvals):
 
     # Amenintari
 
-    # Specii tipice
-
     # Natura 2000
     n2k_min, n2k_max = get_habitat_cover_range(obj.code, result.region)
     result.natura2000_area_min = n2k_min
@@ -222,6 +231,10 @@ def aggregate_habitat(obj, result, refvals):
 
     # Bibliografie
     result.published = get_habitat_published(obj.code, result.region)
+
+    # Specii tipice
+    typical_species = get_habitat_typical_species(obj.code, result.region)
+    set_typical_species(result, typical_species)
 
     return result
 

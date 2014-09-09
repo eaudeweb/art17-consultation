@@ -22,3 +22,19 @@ def get_habitat_published(habcode, region):
         ):
         rv.append(', '.join(row) + '\n')
     return ''.join(rv)
+
+
+def get_habitat_typical_species(habcode, region):
+    rv = []
+    for row in execute(
+        "SELECT DISTINCT sa.\"Name\", count(fp.\"Oid\") as cnt "
+        "FROM arboretspecii asp, fise_paduri fp, speciiarbori sa "
+        "WHERE asp.fisa_pad=fp.\"Oid\" "
+        "AND asp.species_id=sa.\"Code\" "
+        "AND fp.habitat_necorectat='{habcode}' "
+        "AND fp.reg_biogeg='{region}' "
+        "GROUP BY sa.\"Name\" "
+        "ORDER BY cnt DESC".format(habcode=habcode, region=region)
+        ):
+        rv.append(row[0])
+    return rv
