@@ -8,6 +8,7 @@ from art17.aggregation.refvalues import (
 from art17.aggregation.agregator.primary import (
     get_habitat_published,
     get_habitat_typical_species,
+    get_pressures_threats,
 )
 from art17.aggregation.utils import (
     get_reporting_id, get_habitat_checklist, get_species_checklist,
@@ -69,6 +70,28 @@ def set_typical_species(obj, species):
         species_obj = DataHabitatSpecies(habitats=obj,
                                          speciesname=sp)
         models.db.session.add(species_obj)
+
+
+def set_pressures_threats(obj, pressures_threats):
+    if isinstance(obj, models.DataHabitattypeRegion):
+        foreign_key = {'habitat': obj}
+    elif isinstance(obj, models.DataSpeciesRegion):
+        foreign_key = {'species': obj}
+    else:
+        raise RuntimeError('Unknown type %r' % type(obj))
+
+    for row in pressures_threats:
+        pressure_obj = models.DataPressuresThreats(
+            pressure=row['pressure'],
+            ranking=row['ranking'],
+            type=row['type'],
+            **foreign_key
+        )
+        pollution_obj = models.DataPressuresThreatsPollution(
+            pressure=pressure_obj,
+            pollution_qualifier=row['pollution'],
+        )
+        models.db.session.add(pressure_obj)
 
 
 def extract_key(refval, key):
@@ -235,6 +258,10 @@ def aggregate_habitat(obj, result, refvals):
     # Specii tipice
     typical_species = get_habitat_typical_species(obj.code, result.region)
     set_typical_species(result, typical_species)
+
+    # Presiuni, amenintari
+    pressures_threats = get_pressures_threats(obj.code, result.region)
+    set_pressures_threats(result, pressures_threats)
 
     return result
 
