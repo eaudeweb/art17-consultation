@@ -26,3 +26,16 @@ def get_species_habitat_trend(term, year):
     start = term_start(term, year)
 
     return 'x'
+
+
+def get_habitat_range_trend(term, year):
+    start = term_start(term, year)
+
+    return 'x'
+
+
+def get_habitat_coverage_trend(term, year):
+    start = term_start(term, year)
+
+    return 'x'
+
