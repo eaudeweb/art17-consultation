@@ -1,13 +1,28 @@
-
 (SHORT_TERM, LONG_TERM) = range(2)
 
-def get_species_range_trend(term, year):
+
+def term_start(term, year):
     if term == SHORT_TERM:
-        start = year - 12
+        return year - 12
     elif term == LONG_TERM:
-        start = year - 24
+        return year - 24
     else:
         raise ValueError("Invalid term")
 
+
+def get_species_range_trend(term, year):
+    start = term_start(term, year)
+
+    return 'x'
+
+
+def get_species_population_trend(term, year):
+    start = term_start(term, year)
+
+    return 'x'
+
+
+def get_species_habitat_trend(term, year):
+    start = term_start(term, year)
 
     return 'x'

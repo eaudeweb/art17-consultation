@@ -3,7 +3,8 @@ from collections import defaultdict
 from art17 import models, ROLE_AGGREGATED, ROLE_MISSING
 from art17.aggregation.agregator.n2k import get_habitat_cover_range
 from art17.aggregation.agregator.rest import get_species_bibliography
-from art17.aggregation.agregator.trends import get_species_range_trend
+from art17.aggregation.agregator.trends import get_species_range_trend, \
+    get_species_population_trend, get_species_habitat_trend
 from art17.aggregation.refvalues import (
     refvalue_ok, load_species_refval, load_habitat_refval,
 )
@@ -27,6 +28,8 @@ from art17.models import DataHabitatSpecies
 EXPERT_OPINION = 'Expert opinion'
 EXTRAPOLATION = '2'
 UNKNOWN_TREND = 'x'
+MISSING_DATA = '0'
+TERRAIN_DATA = '1'
 
 
 def get_period(year, length):
@@ -95,6 +98,8 @@ def set_pressures_threats(obj, pressures_threats):
             pollution_qualifier=row['pollution'],
         )
         models.db.session.add(pressure_obj)
+    obj.threats_method = TERRAIN_DATA
+    obj.pressures_method = TERRAIN_DATA
 
 
 def extract_key(refval, key):
@@ -112,11 +117,13 @@ def aggregate_species(obj, result, refvals):
     result.range_surface_area = get_species_range_surface(obj.code,
                                                           result.region)
     result.range_method = EXTRAPOLATION
-    result.range_trend = get_species_range_trend(trends.SHORT_TERM, current_year)
+    result.range_trend = get_species_range_trend(trends.SHORT_TERM,
+                                                 current_year)
     result.range_trend_period = short_period
     result.range_trend_magnitude_min = refvals["magnitude"]["Magn. min scurt"]
     result.range_trend_magnitude_max = refvals["magnitude"]["Magn. max scurt"]
-    result.range_trend_long = get_species_range_trend(trends.LONG_TERM, current_year)
+    result.range_trend_long = get_species_range_trend(trends.LONG_TERM,
+                                                      current_year)
     result.range_trend_long_period = long_period
     result.range_trend_long_magnitude_min = refvals["magnitude"][
         "Magn. min lung"]
@@ -140,6 +147,8 @@ def aggregate_species(obj, result, refvals):
         refvals["population_units"], "Metoda")
     result.population_additional_problems = extract_key(
         refvals["population_units"], "Dificult")
+    result.population_trend = get_species_population_trend(trends.SHORT_TERM,
+                                                           current_year)
     result.population_trend_period = short_period
     result.population_method = EXTRAPOLATION
     result.population_date = get_period(result.dataset.year_end, 6)
@@ -149,6 +158,9 @@ def aggregate_species(obj, result, refvals):
         "Magn. max scurt"]
     result.population_trend_magnitude_ci = refvals["population_magnitude"][
         "Interval incredere scurt"]
+    result.population_trend_method = MISSING_DATA
+    result.population_trend_long = get_species_population_trend(
+        trends.LONG_TERM, current_year)
     result.population_trend_long_period = long_period
     result.population_trend_long_magnitude_min = \
         refvals["population_magnitude"]["Magn. min lung"]
@@ -156,6 +168,7 @@ def aggregate_species(obj, result, refvals):
         refvals["population_magnitude"]["Magn. max lung"]
     result.population_trend_long_magnitude_ci = \
         refvals["population_magnitude"]["Interval incredere lung"]
+    result.population_trend_long_method = MISSING_DATA
     (
         result.complementary_favourable_population,
         result.complementary_favourable_population_op,
@@ -167,7 +180,11 @@ def aggregate_species(obj, result, refvals):
     result.habitat_surface_area = get_species_dist_surface(obj.code,
                                                            result.region)
     result.habitat_method = EXTRAPOLATION
+    result.habitat_trend = get_species_habitat_trend(trends.SHORT_TERM,
+                                                     current_year)
     result.habitat_trend_period = short_period
+    result.habitat_trend_long = get_species_habitat_trend(trends.LONG_TERM,
+                                                          current_year)
     result.habitat_trend_long_period = long_period
     result.habitat_area_suitable = extract_key(refvals["habitat"], "adecvat")
     result.habitat_date = get_period(result.dataset.year_end, 6)
@@ -175,11 +192,10 @@ def aggregate_species(obj, result, refvals):
     result.conclusion_habitat = get_conclusion(result.habitat_surface_area,
                                                refvals, "habitat")
 
-    # Presiuni
+    # Presiuni & Amenintari
+    set_pressures_threats(result, [])
 
-    # Amenintari
-
-    # Complementar
+    # Complementare
 
     # Natura 2000
 
