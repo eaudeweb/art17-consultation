@@ -15,7 +15,7 @@ def generic_n2k_call(url, where_query, out_fields=""):
         'returnGeometry': "false",
     })
 
-    print "Requesting:" + url
+    # print "Requesting:" + url
     res = requests.get(url)
     if res.status_code == 200:
         data = res.json()

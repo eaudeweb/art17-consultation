@@ -2,6 +2,7 @@ from StringIO import StringIO
 from collections import defaultdict
 from art17 import models, ROLE_AGGREGATED, ROLE_MISSING
 from art17.aggregation.agregator.n2k import get_habitat_cover_range
+from art17.aggregation.agregator.rest import get_species_bibliography
 from art17.aggregation.refvalues import (
     refvalue_ok, load_species_refval, load_habitat_refval,
 )
@@ -182,6 +183,7 @@ def aggregate_species(obj, result, refvals):
     # Concluzii
 
     # Bibliografie / surse publicate
+    result.published = get_species_bibliography(obj.code, result.region)
 
     return result
 
