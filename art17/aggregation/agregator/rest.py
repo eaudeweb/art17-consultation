@@ -3,6 +3,7 @@ from urllib import urlencode
 import requests
 
 SPECIES_BIBLIO_URL = '/Agregare/MapServer/3'
+SPECIES_PT_URL = '/Agregare/MapServer/1'
 
 
 def generic_rest_call(url, where_query, out_fields="*"):
@@ -32,3 +33,26 @@ def get_species_bibliography(specnum, region):
     )
     values = [format_string.format(**e["attributes"]) for e in data]
     return ''.join(values)
+
+
+def get_species_pressures_threats(specnum, region):
+    type_map = {
+        None: None,  # ???
+        1: 't',  # threat
+        2: 'p',  # pressure
+    }
+    where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
+    data = generic_rest_call(SPECIES_PT_URL, where_query)
+    if not data:
+        return ''
+
+    data = [e["attributes"] for e in data]
+    return [
+        {
+            'pressure': d["AMENINTARI"],
+            'ranking': d["RANG"],
+            'type': type_map[d["TIP"]],
+            'pollution': d["POLUARE"],
+        }
+        for d in data
+    ]

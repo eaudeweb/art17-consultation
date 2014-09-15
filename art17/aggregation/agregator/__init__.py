@@ -2,7 +2,8 @@ from StringIO import StringIO
 from collections import defaultdict
 from art17 import models, ROLE_AGGREGATED, ROLE_MISSING
 from art17.aggregation.agregator.n2k import get_habitat_cover_range
-from art17.aggregation.agregator.rest import get_species_bibliography
+from art17.aggregation.agregator.rest import get_species_bibliography, \
+    get_species_pressures_threats
 from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_species_population_trend, get_species_habitat_trend
 from art17.aggregation.refvalues import (
@@ -193,7 +194,8 @@ def aggregate_species(obj, result, refvals):
                                                refvals, "habitat")
 
     # Presiuni & Amenintari
-    set_pressures_threats(result, [])
+    pressure_threats = get_species_pressures_threats(obj.code, result.region)
+    set_pressures_threats(result, pressure_threats)
 
     # Complementare
 
