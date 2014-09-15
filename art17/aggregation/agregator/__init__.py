@@ -3,6 +3,7 @@ from collections import defaultdict
 from art17 import models, ROLE_AGGREGATED, ROLE_MISSING
 from art17.aggregation.agregator.n2k import get_habitat_cover_range
 from art17.aggregation.agregator.rest import get_species_bibliography
+from art17.aggregation.agregator.trends import get_species_range_trend
 from art17.aggregation.refvalues import (
     refvalue_ok, load_species_refval, load_habitat_refval,
 )
@@ -25,6 +26,7 @@ from art17.models import DataHabitatSpecies
 
 EXPERT_OPINION = 'Expert opinion'
 EXTRAPOLATION = '2'
+UNKNOWN_TREND = 'x'
 
 
 def get_period(year, length):
@@ -103,15 +105,18 @@ def extract_key(refval, key):
 
 
 def aggregate_species(obj, result, refvals):
+    current_year = result.dataset.year_end
     short_period = get_period(result.dataset.year_end, 12)
     long_period = get_period(result.dataset.year_end, 24)
     # Areal
     result.range_surface_area = get_species_range_surface(obj.code,
                                                           result.region)
     result.range_method = EXTRAPOLATION
+    result.range_trend = get_species_range_trend(trends.SHORT_TERM, current_year)
     result.range_trend_period = short_period
     result.range_trend_magnitude_min = refvals["magnitude"]["Magn. min scurt"]
     result.range_trend_magnitude_max = refvals["magnitude"]["Magn. max scurt"]
+    result.range_trend_long = get_species_range_trend(trends.LONG_TERM, current_year)
     result.range_trend_long_period = long_period
     result.range_trend_long_magnitude_min = refvals["magnitude"][
         "Magn. min lung"]
