@@ -63,3 +63,23 @@ def get_species_population_size(specnum, region):
     where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
     data = generic_rest_call(SPECIES_POP_URL, where_query) or []
     return sum(r['attributes']['NR_INDIVIZI'] for r in data)
+
+
+def get_species_habitat_quality(specnum, region):
+    OK_VALUE_LIST = [1, 2, 3]
+    VALUE_MAP = {
+        1: 'Bad',
+        2: 'Moderate',
+        3: 'Good',
+    }
+    where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
+    data = generic_rest_call(SPECIES_POP_URL, where_query) or []
+    values = [r['attributes']['CALITATE_HAB'] for r in data]
+    ok_values = [v for v in values if v in OK_VALUE_LIST]
+
+    if ok_values:
+        avg = sum(ok_values) * 1. / len(ok_values)
+        return VALUE_MAP[int(round(avg))]
+
+    else:
+        return 'Unknown'

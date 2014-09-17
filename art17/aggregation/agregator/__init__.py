@@ -3,7 +3,8 @@ from collections import defaultdict
 from art17 import models, ROLE_AGGREGATED, ROLE_MISSING
 from art17.aggregation.agregator.n2k import get_habitat_cover_range
 from art17.aggregation.agregator.rest import get_species_bibliography, \
-    get_species_pressures_threats, get_species_population_size
+    get_species_pressures_threats, get_species_population_size, \
+    get_species_habitat_quality
 from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_species_population_trend, get_species_habitat_trend, \
     get_habitat_range_trend
@@ -187,6 +188,10 @@ def aggregate_species(obj, result, refvals):
     result.habitat_surface_area = get_species_dist_surface(obj.code,
                                                            result.region)
     result.habitat_method = EXTRAPOLATION
+
+    result.habitat_quality = get_species_habitat_quality(obj.code,
+                                                         result.region)
+
     result.habitat_trend = get_species_habitat_trend(trends.SHORT_TERM,
                                                      current_year)
     result.habitat_trend_period = short_period
