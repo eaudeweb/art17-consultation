@@ -5,6 +5,7 @@ import requests
 SPECIES_BIBLIO_URL = '/Agregare/MapServer/3'
 SPECIES_PT_URL = '/Agregare/MapServer/1'
 SPECIES_POP_URL = '/Agregare/MapServer/2'
+HABITAT_SPECIES_URL = '/AgregareHabitate/MapServer/2'
 
 
 def generic_rest_call(url, where_query, out_fields="*"):
@@ -83,3 +84,9 @@ def get_species_habitat_quality(specnum, region):
 
     else:
         return 'Unknown'
+
+
+def get_habitat_typical_species(habcode, region):
+    where_query = "HABITAT='%s' AND REG_BIOGEG='%s'" % (habcode, region)
+    data = generic_rest_call(HABITAT_SPECIES_URL, where_query) or []
+    return [r['attributes']['NAME'] for r in data]
