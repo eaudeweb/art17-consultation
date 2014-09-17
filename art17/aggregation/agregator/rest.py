@@ -5,6 +5,7 @@ import requests
 SPECIES_BIBLIO_URL = '/Agregare/MapServer/3'
 SPECIES_PT_URL = '/Agregare/MapServer/1'
 SPECIES_POP_URL = '/Agregare/MapServer/2'
+HABITAT_BIBLIO_URL = '/AgregareHabitate/MapServer/1'
 HABITAT_SPECIES_URL = '/AgregareHabitate/MapServer/2'
 
 
@@ -84,6 +85,26 @@ def get_species_habitat_quality(specnum, region):
 
     else:
         return 'Unknown'
+
+
+def get_habitat_published(habcode, region):
+    FIELDS = [
+        'AUTORI',
+        'TITLU_LUCRARE',
+        'AN',
+        'PUBLICATIE',
+        'EDITURA',
+        'ORAS',
+        'VOLUM',
+        'PAGINI',
+    ]
+    where_query = "COD_HABITAT='%s' AND REG_BIOGEG='%s'" % (habcode, region)
+    data = generic_rest_call(HABITAT_BIBLIO_URL, where_query) or []
+
+    rv = []
+    for row in data:
+        rv.append(', '.join(row['attributes'][k] for k in FIELDS) + '\n')
+    return ''.join(rv)
 
 
 def get_habitat_typical_species(habcode, region):
