@@ -3,7 +3,7 @@ from collections import defaultdict
 from art17 import models, ROLE_AGGREGATED, ROLE_MISSING
 from art17.aggregation.agregator.n2k import get_habitat_cover_range
 from art17.aggregation.agregator.rest import get_species_bibliography, \
-    get_species_pressures_threats
+    get_species_pressures_threats, get_species_population_size
 from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_species_population_trend, get_species_habitat_trend, \
     get_habitat_range_trend
@@ -177,6 +177,11 @@ def aggregate_species(obj, result, refvals):
         result.complementary_favourable_population_unknown,
     ) = parse_complementary(refvals["population_range"])
     result.complementary_favourable_population_method = EXPERT_OPINION
+
+    size = get_species_population_size(obj.code, result.region)
+    result.population_size_unit = 'i'
+    result.population_minimum_size = size
+    result.population_maximum_size = size
 
     # Habitat
     result.habitat_surface_area = get_species_dist_surface(obj.code,

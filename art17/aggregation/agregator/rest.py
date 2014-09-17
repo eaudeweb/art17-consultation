@@ -4,6 +4,7 @@ import requests
 
 SPECIES_BIBLIO_URL = '/Agregare/MapServer/3'
 SPECIES_PT_URL = '/Agregare/MapServer/1'
+SPECIES_POP_URL = '/Agregare/MapServer/2'
 
 
 def generic_rest_call(url, where_query, out_fields="*"):
@@ -56,3 +57,9 @@ def get_species_pressures_threats(specnum, region):
         }
         for d in data
     ]
+
+
+def get_species_population_size(specnum, region):
+    where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
+    data = generic_rest_call(SPECIES_POP_URL, where_query) or []
+    return sum(r['attributes']['NR_INDIVIZI'] for r in data)
