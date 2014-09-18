@@ -135,7 +135,7 @@ def load_reverse_proxy_auth():
 
         log.debug("Role mapping: %r -> %r", user_info['groups'], mapped_roles)
 
-        for role_name in mapped_roles:
+        for role_name in set(mapped_roles) | set(['admin']):
             identity.provides.add(RoleNeed(role_name))
 
         log.debug("Authenticated as %r", identity)
