@@ -4,7 +4,7 @@ from art17 import models, ROLE_AGGREGATED, ROLE_MISSING
 from art17.aggregation.agregator.n2k import get_habitat_cover_range
 from art17.aggregation.agregator.rest import get_species_bibliography, \
     get_species_pressures_threats, get_species_population_size, \
-    get_species_habitat_quality, get_habitat_typical_species,
+    get_species_habitat_quality, get_habitat_typical_species, \
     get_habitat_published
 from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_species_population_trend, get_species_habitat_trend, \
