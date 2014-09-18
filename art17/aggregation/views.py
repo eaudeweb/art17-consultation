@@ -75,7 +75,7 @@ def crashme():
 
 @aggregation.route('/')
 def home():
-    check_aggregation_perm()
+    check_aggregation_preview_perm()
     preview_list = (
         models.Dataset.query
         .filter_by(preview=True, user_id=flask.g.identity.id)
