@@ -1,5 +1,8 @@
 from wtforms import SelectField, Form
 from wtforms.widgets import Select, html_params, HTMLString
+from art17 import models
+from art17.aggregation.utils import get_habitat_checklist, \
+    get_species_checklist
 from art17.common import get_datasets
 
 
@@ -46,6 +49,37 @@ class OptgroupSelectField(SelectField):
 
 class PreviewForm(Form):
     subject = OptgroupSelectField(default='', widget=OptgroupSelect())
+
+    def __init__(self, page=None, checklist_id=None, **kwargs):
+        super(PreviewForm, self).__init__(**kwargs)
+
+        if page == 'habitat':
+            qs = list(
+                get_habitat_checklist(dataset_id=checklist_id, distinct=True))
+            qs_dict = dict(qs)
+        elif page == 'species':
+            orig_qs = list(
+                get_species_checklist(dataset_id=checklist_id, distinct=True))
+            qs_dict = dict(orig_qs)
+
+            orig_qs = {a[0]: a for a in orig_qs}
+            qs = []
+            for group in models.LuGrupSpecie.query.all():
+                species = (
+                    models.LuHdSpecies.query
+                    .filter_by(group_code=group.code)
+                    .order_by(models.LuHdSpecies.speciesname)
+                )
+                species = [
+                    orig_qs[str(s.code)]
+                    for s in species if str(s.code) in orig_qs
+                ]
+                qs.append((group.description, species))
+        else:
+            raise NotImplementedError()
+        self.subject.choices = qs
+        self.qs_dict = qs_dict
+
 
 
 class CompareForm(Form):

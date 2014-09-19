@@ -12,9 +12,9 @@ from wtforms.validators import Optional
 from flask.ext.principal import Permission
 
 from art17 import dal, models, ROLE_FINAL
-from art17.aggregation.forms import CompareForm
+from art17.aggregation.forms import CompareForm, PreviewForm
 from art17.aggregation.utils import get_checklist, get_reporting_id, \
-    get_species_checklist, get_habitat_checklist
+    get_species_checklist, get_habitat_checklist, valid_checklist
 from art17.auth import require, need
 from art17.common import perm_fetch_checklist, get_datasets
 from art17.models import (
@@ -244,10 +244,10 @@ def edit_checklist(dataset_id):
         form = ChecklistForm(obj=dataset)
 
     return render_template(
-      'aggregation/admin/edit_checklist.html',
-      page='checklist',
-      dataset=dataset,
-      form=form,
+        'aggregation/admin/edit_checklist.html',
+        page='checklist',
+        dataset=dataset,
+        form=form,
     )
 
 
@@ -274,6 +274,7 @@ def edit_dataset(dataset_id):
         form=form,
     )
 
+
 @aggregation.route('/admin/reference_values')
 def reference_values():
     checklist_id = get_reporting_id()
@@ -295,8 +296,8 @@ def reference_values():
                                          groupped=True)
     relevant_regions = (
         {s.bio_region for s in species_checklist}.union(
-        {h.bio_region for h in habitat_checklist}
-    ))
+            {h.bio_region for h in habitat_checklist}
+        ))
     bioreg_list = dal.get_biogeo_region_list(relevant_regions)
 
     groups = dict(
@@ -367,9 +368,9 @@ def compare_datasets(dataset1, dataset2):
 
     relevant_regions = set([r[0] for r in (
         list(conclusions_s_d1.with_entities(models.DataSpeciesRegion.region)
-        .distinct()) +
+             .distinct()) +
         list(conclusions_s_d2.with_entities(models.DataSpeciesRegion.region)
-        .distinct())
+             .distinct())
     ) if r[0]])
 
     s_data = {}
@@ -422,3 +423,22 @@ def compare_datasets(dataset1, dataset2):
         habitat_data=h_data, s_stat=s_stat, h_stat=h_stat,
         page='compare',
     )
+
+
+@aggregation.route('/manage/reference_values/')
+@aggregation.route('/manage/reference_values/<page>', methods=['GET', 'POST'])
+def manage_refvals(page='habitat'):
+    current_checklist = valid_checklist()
+    checklist_id = current_checklist.id
+
+    dataset = None
+    form = PreviewForm(formdata=request.form, page=page,
+                       checklist_id=checklist_id)
+    report = None
+    return flask.render_template(
+        'aggregation/manage/refvals_start.html',
+        **{
+            'form': form, 'dataset': dataset, 'report': report, 'page': page,
+            'current_checklist': current_checklist,
+            'endpoint': '.manage_refvals',
+        })

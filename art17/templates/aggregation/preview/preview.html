@@ -14,22 +14,29 @@
 
 
 {% block content %}
-  <h2>Agregare specie/habitat</h2>
+  <ul class="nav nav-tabs">
+    <li {% if page == 'habitat' %}class="active"{% endif %}>
+      <a href="{{ url_for(endpoint, page='habitat') }}">Habitate</a></li>
+    <li {% if page == 'species' %}class="active"{% endif %}>
+      <a href="{{ url_for(endpoint, page='species') }}">Specii</a></li>
+  </ul>
+  <h2>{% block contenttitle %}Agregare temporară{% endblock %}</h2>
 
   {% if report is none %}
     <p class="text-warning">Lista de verificare: {{ current_checklist }}</p>
     <p>Interval curent de raportare: {{ current_checklist.year_start }}
       - {{ current_checklist.year_end }}.</p>
 
+    {% block contenttext %}
     <p>Făcând click pe butonul agregare, se va încerca agregarea speciei sau
       habitatului selectat.
     </p>
-
+    {% endblock %}
 
     <form method="post">
       {{ form.subject(class='form-control') }}
 
-      <button type="submit" class="btn btn-warning">Execută agregarea</button>
+      <button type="submit" class="btn btn-warning">{% block contentaction %}Execută agregarea{% endblock %}</button>
     </form>
 
     <div class="row">

@@ -116,35 +116,12 @@ def preview(page):
     current_checklist = valid_checklist()
     checklist_id = current_checklist.id
     check_aggregation_preview_perm()
-    if page == 'habitat':
-        qs = list(
-            get_habitat_checklist(dataset_id=checklist_id, distinct=True))
-        qs_dict = dict(qs)
-    elif page == 'species':
-        orig_qs = list(
-            get_species_checklist(dataset_id=checklist_id, distinct=True))
-        qs_dict = dict(orig_qs)
 
-        orig_qs = {a[0]: a for a in orig_qs}
-        qs = []
-        for group in models.LuGrupSpecie.query.all():
-            species = (
-                models.LuHdSpecies.query
-                .filter_by(group_code=group.code)
-                .order_by(models.LuHdSpecies.speciesname)
-            )
-            species = [
-                orig_qs[str(s.code)]
-                for s in species if str(s.code) in orig_qs
-            ]
-            qs.append((group.description, species))
-    else:
-        raise NotImplementedError()
+    report, dataset = None, None
+    form = PreviewForm(formdata=request.form, checklist_id=checklist_id,
+                       page=page)
+    qs_dict = form.qs_dict
 
-    report = None
-    dataset = None
-    form = PreviewForm(request.form)
-    form.subject.choices = qs
     if request.method == "POST":
         if form.validate():
             report, dataset = create_preview_aggregation(
@@ -159,11 +136,8 @@ def preview(page):
         else:
             flask.flash('Invalid form', 'error')
     return flask.render_template('aggregation/preview/preview.html', **{
-        'form': form,
-        'dataset': dataset,
-        'report': report,
-        'page': page,
-        'current_checklist': current_checklist,
+        'form': form, 'dataset': dataset, 'report': report, 'page': page,
+        'current_checklist': current_checklist, 'endpoint': '.preview',
     })
 
 

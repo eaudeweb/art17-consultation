@@ -1,0 +1,21 @@
+{% extends "aggregation/preview/preview.html" %}
+
+
+{% block title %}Editare valori de referință{% endblock title %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('agregare', home_url),
+          ('editare valori de referință', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+{% block contenttitle %}Editare valori de referință{% endblock %}
+
+{% block contenttext %}<p>Modificările vor fi folosite în aplicație pentru
+previzualizări. Pentru agregarea completă, datele trebuie trimise la un administrator.</p>
+{% endblock %}
+
+{% block contentaction %}Modifică valori{% endblock %}
