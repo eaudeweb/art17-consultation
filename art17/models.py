@@ -1020,6 +1020,19 @@ class Config(Base):
     value = Column(Text)
 
 
+class RefValue(Base):
+    __tablename__ = u'refvalues'
+
+    id = Column('objectid', String, primary_key=True, default=create_uuid)
+    object_type = Column(String)  # one of h - habitat, s - species
+    object_code = Column(String)
+    object_region = Column(String)
+    group = Column(String)
+    name = Column(String)
+    value = Column(String)
+    value_type = Column(String, nullable=True, default=None)
+
+
 @db_manager.option('alembic_args', nargs=argparse.REMAINDER)
 def alembic(alembic_args):
     from alembic.config import CommandLine
