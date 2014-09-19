@@ -1,5 +1,6 @@
 from flask import current_app
 from urllib import urlencode
+import logging
 import requests
 
 SPECIES_BIBLIO_URL = '/Agregare/MapServer/3'
@@ -22,6 +23,12 @@ def generic_rest_call(url, where_query, out_fields="*"):
     if res.status_code == 200:
         data = res.json()
         return data.get('features')
+    else:
+        sentry = current_app.extensions.get('sentry')
+        if sentry:
+            sentry.captureMessage(message='Webservice down: %s' % url)
+        else:
+            logging.warn('No sentry, webservice down %s' % url)
 
 
 def get_species_bibliography(specnum, region):
