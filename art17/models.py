@@ -1024,7 +1024,7 @@ class RefValue(Base):
     __tablename__ = u'refvalues'
 
     id = Column('objectid', String, primary_key=True, default=create_uuid)
-    object_type = Column(String)  # one of h - habitat, s - species
+    page = Column('object_type', String)  # one of habitat or species
     object_code = Column(String)
     object_region = Column(String)
     group = Column(String)

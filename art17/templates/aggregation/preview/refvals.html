@@ -1,7 +1,7 @@
 {% from 'aggregation/admin/_bits.html' import render_refvalues %}
 
 {% if refvalues %}
-  {% for region, rv in refvalues %}
+  {% for region, rv in refvalues.iteritems() %}
     {% set info = refvalue_ok(rv) %}
 
     <h4>{{ region }} -

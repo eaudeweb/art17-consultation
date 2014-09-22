@@ -1,0 +1,43 @@
+{% extends "aggregation/manage/refvals_start.html" %}
+{% from "aggregation/admin/_bits.html" import REFGROUPS %}
+
+
+
+{% block content %}
+  <h2>{% block contenttitle %}Editare valori de referință{% endblock %}</h2>
+
+  <div class="row">
+    <form class="col-lg-6" method="post">
+      <table class="table table-condesed table-bordered">
+        {% for region, region_data in data %}
+          <tr>
+            <th colspan="4">{{ region }}</th>
+          </tr>
+          <tr>
+            <td>Proprietate</td>
+            <td>Valoare sistem</td>
+            <td>Valoare actualizată</td>
+            <td>Valoare folosită</td>
+          </tr>
+          {% for group, values in region_data.iteritems() %}
+            <tr>
+              <th colspan="4">{{ REFGROUPS.get(group, group|capitalize) }}</th>
+            </tr>
+            {% for name, value in values.iteritems() %}
+              <tr>
+                <td>{{ name }}</td>
+                <td>{{ value }}</td>
+                <td>
+                  <input class="input-sm" type="text" name="{{ region }}={{ group }}={{ name }}"
+                         value="{{ extra.get(region, {}).get(group, {}).get(name, '') }}" />
+                </td>
+                <td>{{ full.get(region, {}).get(group, {}).get(name, '') }}</td>
+              </tr>
+            {% endfor %}
+          {% endfor %}
+        {% endfor %}
+      </table>
+      <button class="btn btn-primary">Actualizează</button>
+    </form>
+  </div>
+{% endblock %}

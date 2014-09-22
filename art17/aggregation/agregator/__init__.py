@@ -11,6 +11,7 @@ from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_habitat_range_trend
 from art17.aggregation.refvalues import (
     refvalue_ok, load_species_refval, load_habitat_refval,
+    get_subject_refvals_mixed,
 )
 from art17.aggregation.agregator.primary import (
     get_pressures_threats,
@@ -335,8 +336,7 @@ def aggregate_object(obj, dataset, refvals, timestamp, user_id):
 
     result.cons_date = timestamp
     result.cons_user_id = user_id
-    refval_key = obj.code + "-" + obj.bio_region
-    if refval_key not in refvals or not refvalue_ok(refvals[refval_key]):
+    if not refvals or not refvalue_ok(refvals):
         result.cons_role = ROLE_MISSING
         return result
 
@@ -345,9 +345,9 @@ def aggregate_object(obj, dataset, refvals, timestamp, user_id):
     result.cons_generalstatus = obj.presence
 
     if isinstance(obj, models.DataHabitatsCheckList):
-        result = aggregate_habitat(obj, result, refvals[refval_key])
+        result = aggregate_habitat(obj, result, refvals)
     else:
-        result = aggregate_species(obj, result, refvals[refval_key])
+        result = aggregate_species(obj, result, refvals)
     return result
 
 
@@ -376,7 +376,9 @@ def create_aggregation(timestamp, user_id):
 
     habitat_report = defaultdict(set)
     for row in habitat_checklist_query:
-        habitat_row = aggregate_object(row, dataset, habitat_refvals,
+        refval_key = row.code + "-" + row.bio_region
+        refvals = habitat_refvals.get(refval_key)
+        habitat_row = aggregate_object(row, dataset, refvals,
                                        timestamp, user_id)
         habitat_code = row.natura_2000_code
         habitat_id = habitat_id_map.get(habitat_code)
@@ -397,7 +399,9 @@ def create_aggregation(timestamp, user_id):
 
     species_report = defaultdict(set)
     for row in species_checklist_query:
-        species_row = aggregate_object(row, dataset, species_refvals,
+        refval_key = row.code + "-" + row.bio_region
+        refvals = species_refvals.get(refval_key)
+        species_row = aggregate_object(row, dataset, refvals,
                                        timestamp, user_id)
         species_code = row.natura_2000_code
         species_id = species_id_map.get(species_code)
@@ -444,7 +448,6 @@ def create_preview_aggregation(page, subject, comment, timestamp, user_id):
             get_habitat_checklist(dataset_id=curr_report_id)
             .filter_by(code=subject)
         )
-        refvals = load_habitat_refval()
     elif page == 'species':
         id_map = dict(
             models.db.session.query(
@@ -456,13 +459,13 @@ def create_preview_aggregation(page, subject, comment, timestamp, user_id):
             get_species_checklist(dataset_id=curr_report_id)
             .filter_by(code=subject)
         )
-        refvals = load_species_refval()
     else:
         raise NotImplementedError()
 
     bioregions = []
+    refvals = get_subject_refvals_mixed(page, subject)
     for row in rows:
-        record = aggregate_object(row, dataset, refvals, timestamp, user_id)
+        record = aggregate_object(row, dataset, refvals.get(row.bio_region), timestamp, user_id)
         record.subject_id = id_map.get(row.code)
         models.db.session.add(record)
         bioregions.append(row.bio_region)

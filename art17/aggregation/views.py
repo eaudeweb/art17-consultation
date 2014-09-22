@@ -11,6 +11,7 @@ from werkzeug.datastructures import MultiDict
 from art17 import (
     models, forms, schemas, dal, ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL,
 )
+from art17.aggregation.refvalues import get_subject_refvals_mixed
 from art17.auth import admin_permission, require, need
 from art17.common import (
     flatten_dict,
@@ -606,15 +607,8 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>'
 @aggregation.route('/refvals/<page>')
 def refvals(page):
     subject = request.args.get('subject')
-    if page == 'species':
-        refvals = load_species_refval()
-    elif page == 'habitat':
-        refvals = load_habitat_refval()
-    else:
-        flask.abort(404)
+    data = get_subject_refvals_mixed(page, subject)
 
-    data = [(k[len(subject) + 1:], v) for k, v in refvals.iteritems() if
-            k.startswith(subject)]
     return flask.render_template('aggregation/preview/refvals.html',
                                  refvalues=data)
 

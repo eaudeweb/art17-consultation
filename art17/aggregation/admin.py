@@ -34,6 +34,8 @@ from art17.aggregation.refvalues import (
     load_species_refval,
     refvalue_ok,
     load_habitat_refval,
+    get_subject_refvals, get_subject_refvals_wip, set_subject_refvals_wip,
+    get_subject_refvals_mixed,
 )
 
 
@@ -425,7 +427,7 @@ def compare_datasets(dataset1, dataset2):
     )
 
 
-@aggregation.route('/manage/reference_values/')
+@aggregation.route('/manage/reference_values/', methods=['GET', 'POST'])
 @aggregation.route('/manage/reference_values/<page>', methods=['GET', 'POST'])
 def manage_refvals(page='habitat'):
     current_checklist = valid_checklist()
@@ -435,6 +437,11 @@ def manage_refvals(page='habitat'):
     form = PreviewForm(formdata=request.form, page=page,
                        checklist_id=checklist_id)
     report = None
+    if request.method == 'POST':
+        if form.validate():
+            subject = form.subject.data
+            return redirect(
+                url_for('.manage_refvals_form', page=page, subject=subject))
     return flask.render_template(
         'aggregation/manage/refvals_start.html',
         **{
@@ -442,3 +449,20 @@ def manage_refvals(page='habitat'):
             'current_checklist': current_checklist,
             'endpoint': '.manage_refvals',
         })
+
+
+@aggregation.route('/manage/reference_values/<page>/form/<subject>',
+                   methods=['GET', 'POST'])
+def manage_refvals_form(page, subject):
+    data = get_subject_refvals(page, subject)
+
+    if request.method == "POST":
+        set_subject_refvals_wip(page, subject, request.form)
+        flask.flash(u"Valori actualizate", 'success')
+
+    extra = get_subject_refvals_wip(page, subject)
+    full = get_subject_refvals_mixed(page, subject)
+    return flask.render_template(
+        'aggregation/manage/refvals_form.html', page=page, subject=subject,
+        data=data, extra=extra, full=full,
+    )
