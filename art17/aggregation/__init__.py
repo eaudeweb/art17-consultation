@@ -97,3 +97,4 @@ def inject_funcs():
 # Import this after everything else
 import art17.aggregation.views
 import art17.aggregation.admin
+import art17.aggregation.reports
