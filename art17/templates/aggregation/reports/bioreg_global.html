@@ -1,0 +1,50 @@
+{% extends 'aggregation/reports/report.html' %}
+
+{% macro percent(percent) %}
+<td>
+  <span class="">{%- if percent -%}{{ "%.2f" % percent }}%{% else %}-{% endif %}</span>
+</td>
+{% endmacro %}
+
+{% block pagecontent %}
+
+  <h3>Bioregiuni</h3>
+  <table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+      <th rowspan="2">Bioregiune</th>
+      <th colspan="5">Habitate</th>
+      <th colspan="5">Specii</th>
+    </tr>
+    <tr>
+      <th>FV</th>
+      <th>U1</th>
+      <th>U2</th>
+      <th>XX</th>
+      <th>NA</th>
+      <th>FV</th>
+      <th>U1</th>
+      <th>U2</th>
+      <th>XX</th>
+      <th>NA</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for reg in regions %}
+      <tr>
+        <td>{{ reg }}</td>
+        {{ percent(stats['habitats'][reg].get('FV')) }}
+        {{ percent(stats['habitats'][reg].get('U1')) }}
+        {{ percent(stats['habitats'][reg].get('U2')) }}
+        {{ percent(stats['habitats'][reg].get('XX')) }}
+        {{ percent(stats['habitats'][reg].get('NA')) }}
+        {{ percent(stats['species'][reg].get('FV')) }}
+        {{ percent(stats['species'][reg].get('U1')) }}
+        {{ percent(stats['species'][reg].get('U2')) }}
+        {{ percent(stats['species'][reg].get('XX')) }}
+        {{ percent(stats['species'][reg].get('NA')) }}
+      </tr>
+    {% endfor %}
+  </table>
+
+{% endblock %}
