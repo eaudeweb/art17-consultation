@@ -248,15 +248,20 @@ def report(dataset_id):
                                  dataset_id=dataset.id)
 
 
-@aggregation.route('/raport/<int:dataset_id>/conservation_status')
-def report_conservation_status(dataset_id):
-    dataset = models.Dataset.query.get_or_404(dataset_id)
+def get_report_data(dataset):
     species = dataset.species_objs.filter(
         models.DataSpeciesRegion.cons_role.in_(
             (ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL)))
     habitats = dataset.habitat_objs.filter(
         models.DataHabitattypeRegion.cons_role.in_(
             (ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL)))
+    return species, habitats
+
+
+@aggregation.route('/raport/<int:dataset_id>/conservation_status')
+def report_conservation_status(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+    species, habitats = get_report_data(dataset)
     species = list(species)
     habitats = list(habitats)
     all_species = len(species) or 1
@@ -296,6 +301,47 @@ def report_conservation_status(dataset_id):
         'aggregation/reports/conservation_status.html',
         dataset=dataset, dataset_id=dataset.id,
         species=species, habitats=habitats, page='conservation', stats=stats)
+
+
+@aggregation.route('/raport/<int:dataset_id>/bioreg_global')
+def report_bioreg_global(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+    species, habitats = get_report_data(dataset)
+
+    all_species = species.count()
+    all_habitats = habitats.count()
+
+    REGIONS = ('ALP', 'CON', 'PAN', 'STE', 'BLS', 'MBLS')
+    stats = {
+        'species': {r:{} for r in REGIONS}, 
+        'habitats': {r:{} for r in REGIONS}
+    }
+    
+    for spec in species:
+        conclusion = spec.conclusion_assessment or 'NA'
+        stats['species'].setdefault(spec.region, {})
+        stats['species'][spec.region].setdefault(conclusion, 0)
+        stats['species'][spec.region][conclusion] += 1
+    
+    for hab in habitats:
+        conclusion = hab.conclusion_assessment or 'NA'
+        stats['habitats'].setdefault(hab.region, {})
+        stats['habitats'][hab.region].setdefault(conclusion, 0)
+        stats['habitats'][hab.region][conclusion] += 1
+
+    for k, values in stats['species'].iteritems():
+        for conclusion, v in values.iteritems():
+            all_species = sum(stats['species'][k].values()) or 1
+            stats['species'][k][conclusion] = v * 100.0 / all_species
+    for k, values in stats['habitats'].iteritems():
+        for conclusion, v in values.iteritems():
+            all_habitats = sum(stats['habitats'][k].values()) or 1
+            stats['habitats'][k][conclusion] = v * 100.0 / all_habitats
+
+    return flask.render_template(
+        'aggregation/reports/bioreg_global.html',
+        dataset=dataset, dataset_id=dataset.id, regions=REGIONS,
+        species=species, habitats=habitats, page='bioreg', stats=stats)
 
 
 @aggregation.route('/preview/<int:dataset_id>/')

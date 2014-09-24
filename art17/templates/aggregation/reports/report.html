@@ -26,9 +26,9 @@
     <li {% if page == 'conservation' %}class="active"{% endif %}>
       <a href="{{ url_for('.report_conservation_status', dataset_id=dataset.id) }}">
         Evaluare stare conservare {# 11 #}</a></li>
-{#    <li {% if page == 'species' %}class="active"{% endif %}>#}
-{#      <a href="{{ url_for('.report', dataset_id=dataset.id) }}">#}
-{#        Evaluare per regiune(12)</a></li>#}
+    <li {% if page == 'bioreg' %}class="active"{% endif %}>
+      <a href="{{ url_for('.report_bioreg_global', dataset_id=dataset.id) }}">
+        Evaluare globala bioregiuni</a></li>
   </ul>
 
   {% block pagecontent %}
