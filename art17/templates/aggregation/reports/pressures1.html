@@ -1,0 +1,35 @@
+{% extends 'aggregation/reports/report.html' %}
+
+{% from 'aggregation/reports/_bits.html' import percent %}
+
+{% block pagecontent %}
+
+  <h3>Frecvența Presiuni/Amenințări</h3>
+  <table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+      <th rowspan="2">Presiuni și Amenințări</th>
+      <th colspan="2">Habitate</th>
+      <th colspan="2">Specii</th>
+    </tr>
+    <tr>
+      <th>Amenințări</th>
+      <th>Presiuni</th>
+      <th>Amenințări</th>
+      <th>Presiuni</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for k in pressures %}
+      <tr>
+        <td>{{ k }} - {{ pressures[k] }}</td>
+        {{ percent(stats[k]['habitats']['threats']) }}
+        {{ percent(stats[k]['habitats']['pressures']) }}
+        {{ percent(stats[k]['species']['threats']) }}
+        {{ percent(stats[k]['species']['pressures']) }}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

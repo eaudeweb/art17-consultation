@@ -998,6 +998,12 @@ class Dataset(Base):
             'new': new, 'draft': draft, 'final': final, 'missing': missing,
             'species': sum(species_roles.values()),
             'habitat': sum(habitat_roles.values()),
+            'habitat_new': habitat_roles.get(ROLE_AGGREGATED, 0),
+            'habitat_draft': habitat_roles.get(ROLE_DRAFT, 0),
+            'habitat_final': habitat_roles.get(ROLE_FINAL, 0),
+            'species_new': species_roles.get(ROLE_AGGREGATED, 0),
+            'species_draft': species_roles.get(ROLE_DRAFT, 0),
+            'species_final': species_roles.get(ROLE_FINAL, 0),
             'all': all_count,
         }
 

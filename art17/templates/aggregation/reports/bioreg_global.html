@@ -1,10 +1,6 @@
 {% extends 'aggregation/reports/report.html' %}
 
-{% macro percent(percent) %}
-<td>
-  <span class="">{%- if percent -%}{{ "%.2f" % percent }}%{% else %}-{% endif %}</span>
-</td>
-{% endmacro %}
+{% from 'aggregation/reports/_bits.html' import percent %}
 
 {% block pagecontent %}
 
