@@ -23,23 +23,24 @@ def get_report_data(dataset):
 def report(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
 
+    species, habitats = get_report_data(dataset)
+
     def reports(ds):
-        ROLE = ROLE_AGGREGATED
         data = {'species': {}, 'habitat': {}}
         for k, v in CONCLUSIONS.iteritems():
             data['species'][k] = (
-                ds.species_objs
-                .filter_by(cons_role=ROLE, conclusion_assessment=k).count()
+                species
+                .filter_by(conclusion_assessment=k).count()
             )
             data['habitat'][k] = (
-                ds.habitat_objs
-                .filter_by(cons_role=ROLE, conclusion_assessment=k).count()
+                habitats
+                .filter_by(conclusion_assessment=k).count()
             )
         data['species']['total'] = (
-            ds.species_objs.filter_by(cons_role=ROLE).count()
+            species.count()
         )
         data['habitat']['total'] = (
-            ds.habitat_objs.filter_by(cons_role=ROLE).count()
+            species.count()
         )
 
         data['species']['total_species'] = (
@@ -75,6 +76,7 @@ def report(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/conservation_status')
+@require(Permission(need.authenticated))
 def report_conservation_status(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
@@ -120,6 +122,7 @@ def report_conservation_status(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/bioreg_global')
+@require(Permission(need.authenticated))
 def report_bioreg_global(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)

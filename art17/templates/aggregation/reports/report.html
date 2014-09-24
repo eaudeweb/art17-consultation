@@ -49,10 +49,10 @@
     <p>{{ dataset.reports.missing.missing_species.count() }} <strong>specii
       lipsă</strong></p>
 
-    {{ table(dataset.reports.missing.bioreg_list,
-           dataset.reports.missing.species_list,
-           cell,
-           dataset.reports.missing.species_regions) }}
+{#    {{ table(dataset.reports.missing.bioreg_list,#}
+{#           dataset.reports.missing.species_list,#}
+{#           cell,#}
+{#           dataset.reports.missing.species_regions) }}#}
 
     <h4>Habitate</h4>
     {{ report_table(dataset.reports.habitat) }}
@@ -66,10 +66,10 @@
     <p>{{ dataset.reports.missing.missing_habitats.count() }} <strong>habitate
       lipsă</strong></p>
 
-    {{ table(dataset.reports.missing.bioreg_list,
-           dataset.reports.missing.habitat_list,
-           cell,
-           dataset.reports.missing.habitat_regions) }}
+{#    {{ table(dataset.reports.missing.bioreg_list,#}
+{#           dataset.reports.missing.habitat_list,#}
+{#           cell,#}
+{#           dataset.reports.missing.habitat_regions) }}#}
 
   {% endblock pagecontent %}
 {% endblock content %}
