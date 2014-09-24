@@ -1,0 +1,18 @@
+{% macro report_table(data) %}
+  <table class="table">
+    <tr>
+      <th>Favorabilă</th>
+      <th>Nefavorabilă-Inadecvat</th>
+      <th>Nefavorabilă-Rău</th>
+      <th>Necunoscută</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <td>{{ data.FV }}</td>
+      <td>{{ data.U1 }}</td>
+      <td>{{ data.U2 }}</td>
+      <td>{{ data.XX }}</td>
+      <td>{{ data.total }}</td>
+    </tr>
+  </table>
+{% endmacro %}

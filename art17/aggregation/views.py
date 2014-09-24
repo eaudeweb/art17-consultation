@@ -243,8 +243,59 @@ def report(dataset_id):
         return data
 
     dataset.reports = reports(dataset)
-    return flask.render_template('aggregation/report.html', dataset=dataset,
+    return flask.render_template('aggregation/reports/report.html',
+                                 dataset=dataset,
                                  dataset_id=dataset.id)
+
+
+@aggregation.route('/raport/<int:dataset_id>/conservation_status')
+def report_conservation_status(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+    species = dataset.species_objs.filter(
+        models.DataSpeciesRegion.cons_role.in_(
+            (ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL)))
+    habitats = dataset.habitat_objs.filter(
+        models.DataHabitattypeRegion.cons_role.in_(
+            (ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL)))
+    species = list(species)
+    habitats = list(habitats)
+    all_species = len(species) or 1
+    all_habitats = len(habitats) or 1
+    stats = {
+        'species': {'range': {}, 'population': {}, 'habitat': {}, 'future': {}, 
+            'assessment': {}}, 
+        'habitats': {'range': {}, 'area': {}, 'structure': {}, 'future': {}, 
+            'assessment': {}}
+    }     
+
+    def set_stat(conclusion, stats):
+        conclusion = conclusion or '-'
+        stats.setdefault(conclusion, 0)
+        stats[conclusion] += 1
+
+    for spec in species:
+        set_stat(spec.conclusion_range, stats['species']['range'])
+        set_stat(spec.conclusion_population, stats['species']['population'])
+        set_stat(spec.conclusion_habitat, stats['species']['habitat'])
+        set_stat(spec.conclusion_future, stats['species']['future'])
+        set_stat(spec.conclusion_assessment, stats['species']['assessment'])
+    for hab in habitats:
+        set_stat(hab.conclusion_range, stats['habitats']['range'])
+        set_stat(hab.conclusion_area, stats['habitats']['area'])
+        set_stat(hab.conclusion_structure, stats['habitats']['structure'])
+        set_stat(hab.conclusion_future, stats['habitats']['future'])
+        set_stat(hab.conclusion_assessment, stats['habitats']['assessment'])
+    for k, values in stats['species'].iteritems():
+        for conclusion, v in values.iteritems():
+            stats['species'][k][conclusion] = v * 100.0 / all_species
+    for k, values in stats['habitats'].iteritems():
+        for conclusion, v in values.iteritems():
+            stats['habitats'][k][conclusion] = v * 100.0 / all_habitats
+
+    return flask.render_template(
+        'aggregation/reports/conservation_status.html',
+        dataset=dataset, dataset_id=dataset.id,
+        species=species, habitats=habitats, page='conservation', stats=stats)
 
 
 @aggregation.route('/preview/<int:dataset_id>/')
