@@ -9,7 +9,7 @@
 
 {% macro conclusion_span(conclusion, percent) %}
 <span class="conclusion {{ conclusion }}">{{ conclusion }}</span>: 
-<span class="pull-right">{{ percent or 0 }}%</span>
+<span class="pull-right">{%- if percent -%}{{ "%.2f" % percent }}%{% else %}-{% endif %}</span>
 <br/>
 {% endmacro %}
 
@@ -42,9 +42,13 @@
     <tbody>
     {% for spec in species %}
       <tr>
+        {% if spec.species %}
         <td>{{ spec.species.name }}</td>
-        <td>{{ spec.species.lu.group_code }}</td>
+        <td>{{ spec.species.lu and spec.species.lu.group_code }}</td>
         <td>{{ spec.species.code }}</td>
+        {% else %}
+        <td colspan="3"><em>valoare lipsă</em></td>
+        {% endif %}
         <td>{{ spec.region }}</td>
         {{ conclusion_cell(spec.conclusion_range) }}
         {{ conclusion_cell(spec.conclusion_population) }}
@@ -79,8 +83,12 @@
     </tr>
     {% for hab in habitats %}
       <tr>
-        <td>{{ hab.habitat.lu.display_name }}</td>
+        {% if hab.habitat %}
+        <td>{{ hab.habitat.lu and hab.habitat.lu.display_name }}</td>
         <td>{{ hab.habitat.code }}</td>
+        {% else %}
+        <td colspan="2"><em>valoare lipsă</em></td>
+        {% endif %}
         <td>{{ hab.region }}</td>
         {{ conclusion_cell(hab.conclusion_range) }}
         {{ conclusion_cell(hab.conclusion_area) }}
