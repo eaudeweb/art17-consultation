@@ -98,3 +98,4 @@ def inject_funcs():
 import art17.aggregation.views
 import art17.aggregation.admin
 import art17.aggregation.reports
+import art17.aggregation.checklist

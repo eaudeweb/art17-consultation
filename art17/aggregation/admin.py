@@ -1,17 +1,14 @@
 # coding=utf-8
 from collections import OrderedDict
-from datetime import datetime
 
-from BeautifulSoup import BeautifulSoup
 import flask
-import requests
-from flask import redirect, url_for, render_template, request, current_app, \
-    flash
+from flask import redirect, url_for, render_template, request, flash
 from wtforms import Form, IntegerField, TextField, SelectField
 from wtforms.validators import Optional
 from flask.ext.principal import Permission
 
 from art17 import dal, models, ROLE_FINAL
+from art17.aggregation.checklist import create_checklist
 from art17.aggregation.forms import CompareForm, PreviewForm
 from art17.aggregation.utils import get_checklist, get_reporting_id, \
     get_species_checklist, get_habitat_checklist, valid_checklist
@@ -19,16 +16,13 @@ from art17.auth import require, need
 from art17.common import perm_fetch_checklist, get_datasets
 from art17.models import (
     Dataset,
-    DataSpeciesCheckList,
     db,
-    DataHabitatsCheckList,
     DATASET_STATUSES_DICT,
     DATASET_STATUSES_LIST,
     LuGrupSpecie,
 )
 from art17.aggregation import (
     aggregation,
-    aggregation_manager,
 )
 from art17.aggregation.refvalues import (
     load_species_refval,
@@ -37,27 +31,6 @@ from art17.aggregation.refvalues import (
     get_subject_refvals, get_subject_refvals_wip, set_subject_refvals_wip,
     get_subject_refvals_mixed,
 )
-
-
-REGION_MAP = {
-    'Panonica': 'PAN',
-    'Alpina': 'ALP',
-    'Continentala': 'CON',
-    'Stepica': 'STE',
-    'Mediteraneana': 'MED',
-    'Boreala': 'BOR',
-    'Marea Neagra': 'MBLS',
-    'Pontic': 'BLS',
-}
-
-PRESENCE_MAP = {
-    'Prezent': '1',
-    'Rezerva stiintifica': 'SR',
-    'Reintrodus': '1',
-    'Extinct': 'EXB',
-    'Extinct in salbaticie': 'EXB',
-    'Marginal': 'MAR',
-}
 
 
 def get_checklists():
@@ -73,100 +46,6 @@ def parse_checklist(checklist_qs):
         else:
             result[key]['regions'].append(item.bio_region)
     return result
-
-
-def parse_checklist_ref(checklist_qs):
-    return {(item.code, item.bio_region): item for item in checklist_qs}
-
-
-def species_from_oid(data, dataset):
-    b = BeautifulSoup(data)
-    entries = b.findAll("entry")
-
-    species = []
-    for e in entries:
-        cod_specie = e.content.findAll("d:codspecie")[0].text
-        name = e.content.findAll("d:denumirestiintifica")[0].text
-        region = e.content.findAll("d:bioregiune")[0].text
-        presence = e.content.findAll("d:statusverificare")[0].text
-        guid = e.content.findAll("d:id")[0].text
-        if region not in REGION_MAP:
-            raise ValueError('Unknown region: ' + region)
-        region = REGION_MAP[region]
-        if presence not in PRESENCE_MAP:
-            raise ValueError('Unknown presence: ' + presence)
-        presence = PRESENCE_MAP[presence]
-        data = {
-            'code': cod_specie, 'name': name, 'bio_region': region,
-            'presence': presence, 'globalid': guid,
-            'hd_name': name,
-            'member_state': 'RO',
-        }
-        if dataset:
-            data['dataset_id'] = dataset.id
-            species.append(DataSpeciesCheckList(**data))
-        else:
-            species.append(data)
-    return species
-
-
-def habitats_from_oid(data, dataset):
-    b = BeautifulSoup(data)
-    entries = b.findAll("entry")
-
-    habitats = []
-    for e in entries:
-        cod = e.content.findAll("d:codhabitat")[0].text
-        name = e.content.findAll("d:numehabitat")[0].text
-        region = e.content.findAll("d:bioregiune")[0].text
-        presence = e.content.findAll("d:statusverificare")[0].text
-        guid = e.content.findAll("d:id")[0].text
-        if region not in REGION_MAP:
-            raise ValueError('Unknown region: ' + region)
-        region = REGION_MAP[region]
-        if presence not in PRESENCE_MAP:
-            raise ValueError('Unknown presence: ' + presence)
-        presence = PRESENCE_MAP[presence]
-        data = {
-            'code': cod, 'name': name, 'bio_region': region,
-            'presence': presence, 'globalid': guid,
-            'member_state': 'RO',
-        }
-        if dataset:
-            data['dataset_id'] = dataset.id
-            habitats.append(DataHabitatsCheckList(**data))
-        else:
-            habitats.append(data)
-    return habitats
-
-
-def create_checklist():
-    species_endpoint = current_app.config.get(
-        'OID_SPECIES',
-        'http://natura.anpm.ro/api/CNSERVICE.svc/ListaVerificareSpecii',
-    )
-    habitats_endpoint = current_app.config.get(
-        'OID_HABITATS',
-        'http://natura.anpm.ro/api/CNSERVICE.svc/ListaVerificareHabitate',
-    )
-    dataset = Dataset(
-        preview=True, checklist=True, date=datetime.today(),
-        year_start=current_app.config.get('DEFAULT_YEAR_START'),
-        year_end=current_app.config.get('DEFAULT_YEAR_END'),
-        comment=str(datetime.now()),
-    )
-    db.session.add(dataset)
-    db.session.commit()
-
-    response = requests.get(species_endpoint)
-    species = species_from_oid(response.content, dataset)
-
-    response = requests.get(habitats_endpoint)
-    habitats = habitats_from_oid(response.content, dataset)
-
-    for o in species + habitats:
-        db.session.add(o)
-    db.session.commit()
 
 
 @aggregation.route('/admin/')
@@ -322,16 +201,6 @@ def reference_values():
     )
 
 
-@aggregation_manager.command
-def checklist():
-    with open('misc/ListaVerificareHabitate.xml') as fin:
-        habitats = habitats_from_oid(fin, None)
-        print "Habitat:", habitats[0] if habitats else '-'
-    with open('misc/ListaVerificareSpecii.xml') as fin:
-        species = species_from_oid(fin, None)
-        print "Specie:", species[0] if species else '-'
-
-
 @aggregation.app_context_processor
 def inject_globals():
     return {
@@ -466,3 +335,7 @@ def manage_refvals_form(page, subject):
         'aggregation/manage/refvals_form.html', page=page, subject=subject,
         data=data, extra=extra, full=full,
     )
+
+
+def parse_checklist_ref(checklist_qs):
+    return {(item.code, item.bio_region): item for item in checklist_qs}
