@@ -7,7 +7,7 @@ import requests
 from art17.aggregation import aggregation_manager
 from art17.models import (
     Dataset, db, DataHabitatsCheckList, DataSpeciesCheckList,
-)
+    LuHdSpecies, LuHabitattypeCodes)
 
 
 REGION_MAP = {
@@ -75,6 +75,7 @@ def habitats_from_oid(data, dataset):
         region = e.content.findAll("d:bioregiune")[0].text
         presence = e.content.findAll("d:statusverificare")[0].text
         guid = e.content.findAll("d:id")[0].text
+        priority = e.content.findAll("d:prioritatehabitat")[0].text == "true"
         if region not in REGION_MAP:
             raise ValueError('Unknown region: ' + region)
         region = REGION_MAP[region]
@@ -85,6 +86,7 @@ def habitats_from_oid(data, dataset):
             'code': cod, 'name': name, 'bio_region': region,
             'presence': presence, 'globalid': guid,
             'member_state': 'RO',
+            'priority': '1' if priority else '',
         }
         if dataset:
             data['dataset_id'] = dataset.id
@@ -112,6 +114,7 @@ def species_from_oid(data, dataset):
             dh5 = e.content.findAll("d:dh5")[0].text == "true"
         else:
             raise ValueError('Missing dh')
+        priority = e.content.findAll("d:prioritatespecie")[0].text == "true"
         if region not in REGION_MAP:
             raise ValueError('Unknown region: ' + region)
         region = REGION_MAP[region]
@@ -123,6 +126,7 @@ def species_from_oid(data, dataset):
             'presence': presence, 'globalid': guid,
             'hd_name': name,
             'member_state': 'RO',
+            'priority': '1' if priority else '',
             'annex_ii': yn(dh2), 'annex_iv': yn(dh4), 'annex_v': yn(dh5),
         }
         if dataset:
@@ -141,3 +145,23 @@ def checklist():
     with open('misc/ListaVerificareSpecii.xml') as fin:
         species = species_from_oid(fin, None)
         print "Specie:", species[0] if species else '-'
+
+
+@aggregation_manager.command
+def fix_checklist():
+    print("Fix initial checklist with data from adiacent tables.")
+    print("Species...")
+    hd_map = dict(LuHdSpecies.query.with_entities(LuHdSpecies.code,
+                                                  LuHdSpecies.annexpriority))
+    for sc in DataSpeciesCheckList.query.filter_by(dataset_id=None):
+        sc.priority = str(hd_map.get(sc.natura_2000_code, ''))
+
+    hd_map = dict(
+        LuHabitattypeCodes.query.with_entities(LuHabitattypeCodes.code,
+                                               LuHabitattypeCodes.priority)
+    )
+    print("Habitats...")
+    for hb in DataHabitatsCheckList.query.filter_by(dataset_id=None):
+        hb.priority = str(hd_map.get(hb.natura_2000_code, ''))
+    print("Commit")
+    db.session.commit()
