@@ -109,6 +109,13 @@ class DatasetForm(Form):
     year_start = IntegerField(validators=[Optional()])
     year_end = IntegerField(validators=[Optional()])
     status = SelectField(choices=DATASET_STATUSES_LIST)
+    checklist_id = SelectField(validators=[Optional()], choices=[])
+
+    def __init__(self, *args, **kwargs):
+        super(DatasetForm, self).__init__(*args, **kwargs)
+        self.checklist_id.choices = [
+            (unicode(c.id), unicode(c)) for c in get_checklists()
+        ]
 
 
 @aggregation.route('/admin/checklist/<dataset_id>/edit/',

@@ -39,6 +39,12 @@
       {% endif %}
       <label for="status">Status</label>
       {{ form.status(class='form-control') }}
+    
+      {% if form.checklist_id.errors %}
+      <p class="text-danger">{{ form.checklist_id.errors }} {{ form.checklist_id.data }}</p>
+      {% endif %}
+      <label for="checklist_id">Listă de verificare</label>
+      {{ form.checklist_id(class='form-control') }}
     </div>
 
     <button type="submit" class="btn btn-default">Modifică</button>
