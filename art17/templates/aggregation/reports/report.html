@@ -26,6 +26,9 @@
     <li {% if page == 'bioreg' %}class="active"{% endif %}>
       <a href="{{ url_for('.report_bioreg_global', dataset_id=dataset.id) }}">
         Evaluare globala bioregiuni</a></li>
+    <li {% if page == 'bioreg_annex' %}class="active"{% endif %}>
+      <a href="{{ url_for('.report_bioreg_annex', dataset_id=dataset.id) }}">
+        Numar specii pe bioregiuni</a></li>
     <li {% if page == 'pressures1' %}class="active"{% endif %}>
       <a href="{{ url_for('.report_pressures1', dataset_id=dataset.id) }}">
         Frecvența Presiuni/Amenințări</a></li>

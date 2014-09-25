@@ -3,7 +3,8 @@ from flask import render_template
 from sqlalchemy import func
 from art17.aggregation import aggregation
 from art17 import models, ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL
-from art17.aggregation.utils import aggregation_missing_data_report
+from art17.aggregation.utils import aggregation_missing_data_report, \
+    get_checklist
 from art17.auth import require, need
 from art17.lookup import CONCLUSIONS
 
@@ -32,6 +33,17 @@ def get_report_data(dataset):
     habitats = dataset.habitat_objs.filter(
         models.DataHabitattypeRegion.cons_role.in_(
             (ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL)))
+    return species, habitats
+
+
+def get_checklist_data(dataset):
+    checklist = get_checklist(dataset.checklist_id)
+    species = (
+        models.DataSpeciesCheckList.query.filter_by(dataset_id=checklist.id)
+    )
+    habitats = (
+        models.DataSpeciesCheckList.query.filter_by(dataset_id=checklist.id)
+    )
     return species, habitats
 
 
@@ -180,6 +192,53 @@ def report_bioreg_global(dataset_id):
         species=species, habitats=habitats, page='bioreg', stats=stats)
 
 
+@aggregation.route('/raport/<int:dataset_id>/bioreg_annex')
+@require(Permission(need.authenticated))
+def report_bioreg_annex(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+    species, habitats = get_checklist_data(dataset)
+
+    all_species = species.count()
+    all_habitats = habitats.count()
+
+    REGIONS = (
+        'ALP', 'CON', 'PAN', 'STE', 'BLS', 'MBLS', 'MED', 'ATL', 'BOR', 'MAC',
+        'MATL', 'MMED', 'MMAC', 'MBAL',
+    )
+    stats = {
+        'species': {
+            r: {annex: {'n': 0, 'p': 0} for annex in (2, 4, 5)}
+            for r in REGIONS
+        },
+        'habitats': {r: {'n': 0, 'p': 0} for r in REGIONS}
+    }
+
+    for spec in species:
+        if spec.has_annex(2):
+            if spec.priority:
+                stats['species'][spec.bio_region][2]['p'] += 1
+            else:
+                stats['species'][spec.bio_region][2]['n'] += 1
+            for annex in (4, 5):
+                if spec.has_annex(annex):
+                    stats['species'][spec.bio_region][annex]['p'] += 1
+        else:
+            for annex in (4, 5):
+                if spec.has_annex(annex):
+                    stats['species'][spec.bio_region][annex]['n'] += 1
+    for hab in habitats:
+        if hab.priority:
+            stats['habitats'][hab.bio_region]['p'] += 1
+        else:
+            stats['habitats'][hab.bio_region]['n'] += 1
+
+    return render_template(
+        'aggregation/reports/bioreg_annex.html',
+        dataset=dataset, dataset_id=dataset.id, regions=REGIONS,
+        species=species, habitats=habitats, page='bioreg_annex', stats=stats,
+        current_checklist=get_checklist(dataset.checklist_id))
+
+
 @aggregation.route('/raport/<int:dataset_id>/pressures1')
 def report_pressures1(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
@@ -229,15 +288,23 @@ def report_pressures1(dataset_id):
             [val for name, val in habitat_pres if name and name.startswith(k)])
         stats[k]['habitats']['threats'] = sum(
             [val for name, val in habitat_thr if name and name.startswith(k)])
-    all_spec_pres = sum([stats[k]['species']['pressures'] for k in PRESSURES]) or 1
-    all_spec_thr = sum([stats[k]['species']['threats'] for k in PRESSURES]) or 1
-    all_hab_pres = sum([stats[k]['habitats']['pressures'] for k in PRESSURES]) or 1
-    all_hab_thr = sum([stats[k]['habitats']['threats'] for k in PRESSURES]) or 1
+    all_spec_pres = sum(
+        [stats[k]['species']['pressures'] for k in PRESSURES]) or 1
+    all_spec_thr = sum(
+        [stats[k]['species']['threats'] for k in PRESSURES]) or 1
+    all_hab_pres = sum(
+        [stats[k]['habitats']['pressures'] for k in PRESSURES]) or 1
+    all_hab_thr = sum(
+        [stats[k]['habitats']['threats'] for k in PRESSURES]) or 1
     for k in PRESSURES:
-        stats[k]['species']['pressures'] = stats[k]['species']['pressures'] * 100.0 / all_spec_pres
-        stats[k]['species']['threats'] = stats[k]['species']['threats'] * 100.0 / all_spec_thr
-        stats[k]['habitats']['pressures'] = stats[k]['habitats']['pressures'] * 100.0 / all_hab_pres
-        stats[k]['habitats']['threats'] = stats[k]['habitats']['threats'] * 100.0 / all_hab_thr
+        stats[k]['species']['pressures'] = stats[k]['species'][
+                                               'pressures'] * 100.0 / all_spec_pres
+        stats[k]['species']['threats'] = stats[k]['species'][
+                                             'threats'] * 100.0 / all_spec_thr
+        stats[k]['habitats']['pressures'] = stats[k]['habitats'][
+                                                'pressures'] * 100.0 / all_hab_pres
+        stats[k]['habitats']['threats'] = stats[k]['habitats'][
+                                              'threats'] * 100.0 / all_hab_thr
 
     return render_template(
         'aggregation/reports/pressures1.html',

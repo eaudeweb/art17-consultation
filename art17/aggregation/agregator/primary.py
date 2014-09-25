@@ -1,11 +1,16 @@
 import flask
+import logging
 from art17 import models
 
 
 def execute(query):
     app = flask.current_app
-    aggregation_engine = models.db.get_engine(app, 'primary')
-    return models.db.session.execute(query, bind=aggregation_engine)
+    try:
+        aggregation_engine = models.db.get_engine(app, 'primary')
+        return models.db.session.execute(query, bind=aggregation_engine)
+    except AssertionError as e:
+        logging.exception(e)
+        return []
 
 
 def get_habitat_published(habcode, region):

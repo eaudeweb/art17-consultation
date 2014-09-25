@@ -1,0 +1,50 @@
+{% extends 'aggregation/reports/report.html' %}
+
+{% from 'aggregation/reports/_bits.html' import percent %}
+
+{% block pagecontent %}
+
+  <h3>Număr de habitate grupate</h3>
+  <p class="text-warning">Lista de verificare: {{ current_checklist }}</p>
+
+  <table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+      <th rowspan="3">Bioregiune</th>
+      <th colspan="2">Habitate</th>
+      <th colspan="6">Specii</th>
+    </tr>
+    <tr>
+      <th colspan="2">Anexa I</th>
+      <th colspan="2">Anexa II</th>
+      <th colspan="2">Anexa IV</th>
+      <th colspan="2">Anexa V</th>
+    </tr>
+    <tr>
+      <th>Neprioritare</th>
+      <th>Prioritare</th>
+      <th>Neprioritare</th>
+      <th>Prioritare</th>
+      <th>Inclusiv cele din anexa II</th>
+      <th>Fără cele din anexa II</th>
+      <th>Inclusiv cele din anexa II</th>
+      <th>Fără cele din anexa II</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for reg in regions %}
+      <tr>
+        <td>{{ reg }}</td>
+        <td>{{ stats['habitats'][reg]['n'] }}</td>
+        <td>{{ stats['habitats'][reg]['p'] }}</td>
+        <td>{{ stats['species'][reg][2]['n'] }}</td>
+        <td>{{ stats['species'][reg][2]['p'] }}</td>
+        <td>{{ stats['species'][reg][4]['p'] }}</td>
+        <td>{{ stats['species'][reg][4]['n'] }}</td>
+        <td>{{ stats['species'][reg][5]['p'] }}</td>
+        <td>{{ stats['species'][reg][5]['n'] }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+
+{% endblock %}

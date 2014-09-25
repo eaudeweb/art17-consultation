@@ -580,6 +580,15 @@ class DataSpeciesCheckList(Base):
     def name(self, value):
         self.species_name = value
 
+    def has_annex(self, value):
+        if value == 2:
+            return self.annex_ii and self.annex_ii.startswith('Y')
+        elif value == 4:
+            return self.annex_iv and self.annex_iv.startswith('Y')
+        elif value == 5:
+            return self.annex_v and self.annex_v.startswith('Y')
+        return False
+
 
 class DataSpeciesRegion(Base, RoleMixin):
     __tablename__ = u'data_species_regions'
