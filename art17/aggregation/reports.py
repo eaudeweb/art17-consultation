@@ -25,6 +25,8 @@ PRESSURES = {
     'U': 'presiuni si amenintari necunoscute',
 }
 
+DATA_CATEGORIES = ('species', 'habitat')
+
 
 def get_report_data(dataset):
     species = dataset.species_objs.filter(
@@ -45,6 +47,31 @@ def get_checklist_data(dataset):
         models.DataSpeciesCheckList.query.filter_by(dataset_id=checklist.id)
     )
     return species, habitats
+
+
+def get_measures_count(data_query, attr_name):
+    return (
+        data_query.join(models.DataMeasures)
+        .filter(
+            models.DataMeasures.lu_ranking.has(name='high importance'),
+            getattr(models.DataMeasures, attr_name) != None,
+        ).with_entities(
+            models.DataMeasures.measurecode,
+            func.count(models.DataMeasures.id),
+        ).group_by(models.DataMeasures.measurecode)
+    ).all()
+
+
+def add_to_measures_dict(measures_dict, measures_query, category):
+    idx = DATA_CATEGORIES.index(category)
+    for measure_code, reports_count in measures_query:
+        if measure_code not in measures_dict:
+            measures_dict[measure_code] = {
+                'measure': models.LuMeasures.query.filter_by(
+                    code=measure_code).first(),
+                DATA_CATEGORIES[not idx]: 0,
+            }
+        measures_dict[measure_code][DATA_CATEGORIES[idx]] = reports_count
 
 
 @aggregation.route('/raport/<int:dataset_id>')
@@ -310,3 +337,22 @@ def report_pressures1(dataset_id):
         'aggregation/reports/pressures1.html',
         dataset=dataset, dataset_id=dataset.id, pressures=PRESSURES,
         species=species, habitats=habitats, page='pressures1', stats=stats)
+
+
+@aggregation.route('/raport/<int:dataset_id>/measures')
+def report_measures_high_importance(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+    species, habitats = get_report_data(dataset)
+
+    species_measures_count = get_measures_count(species, 'species_id')
+    habitat_measures_count = get_measures_count(habitats, 'habitat_id')
+    measures_dict = {}
+    add_to_measures_dict(measures_dict, species_measures_count, 'species')
+    add_to_measures_dict(measures_dict, habitat_measures_count, 'habitat')
+    ordered_keys = measures_dict.keys()
+    ordered_keys.sort()
+
+    return render_template(
+        'aggregation/reports/measures.html',
+        dataset=dataset, count=measures_dict, ordered_keys=ordered_keys,
+        page='measures')

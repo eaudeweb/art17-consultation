@@ -32,6 +32,9 @@
     <li {% if page == 'pressures1' %}class="active"{% endif %}>
       <a href="{{ url_for('.report_pressures1', dataset_id=dataset.id) }}">
         Frecvența Presiuni/Amenințări</a></li>
+    <li {% if page == 'measures' %}class="active"{% endif %}>
+      <a href="{{ url_for('.report_measures_high_importance', dataset_id=dataset.id) }}">
+        Măsuri importanță mare</a></li>
   </ul>
 
   {% block pagecontent %}

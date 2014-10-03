@@ -1,0 +1,25 @@
+{% extends 'aggregation/reports/report.html' %}
+
+{% block pagecontent %}
+
+  <h3>Evaluări pentru care s-au raportat măsuri cu importanță mare</h3>
+  <table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+      <th>Măsuri</th>
+      <th>Specii</th>
+      <th>Habitate</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for measure_code in ordered_keys %}
+      <tr>
+          <td>{{ measure_code }}. {{ count[measure_code]['measure'].name_ro }}</td>
+          <td>{{ count[measure_code]['species'] }}</td>
+          <td>{{ count[measure_code]['habitat'] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
