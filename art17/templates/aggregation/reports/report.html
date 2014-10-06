@@ -20,6 +20,9 @@
     <li {% if not page %}class="active"{% endif %}>
       <a href="{{ url_for('.report', dataset_id=dataset.id) }}">Overview</a>
     </li>
+    <li {% if page == 'missing' %}class="active"{% endif %}>
+      <a href="{{ url_for('.report_missing', dataset_id=dataset.id) }}">
+        Rapoarte vs Lista de verificare {# 10 #}</a></li>
     <li {% if page == 'conservation' %}class="active"{% endif %}>
       <a href="{{ url_for('.report_conservation_status', dataset_id=dataset.id) }}">
         Evaluare stare conservare {# 11 #}</a></li>

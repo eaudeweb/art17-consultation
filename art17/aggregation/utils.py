@@ -2,7 +2,7 @@
 import flask
 from flask import current_app
 from sqlalchemy import or_
-from art17 import models, dal
+from art17 import models, dal, ROLE_MISSING
 
 
 def record_index_url(subject, region, dataset_id):
@@ -101,9 +101,8 @@ def get_record(subject, region, dataset_id):
 def aggregation_missing_data_report(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
 
-    ROLE = 'missing'
-    species = dataset.species_objs.filter_by(cons_role=ROLE)
-    habitats = dataset.habitat_objs.filter_by(cons_role=ROLE)
+    species = dataset.species_objs.filter_by(cons_role=ROLE_MISSING)
+    habitats = dataset.habitat_objs.filter_by(cons_role=ROLE_MISSING)
 
     species_list = set([s.species for s in species])
     habitat_list = set([h.habitat for h in habitats])

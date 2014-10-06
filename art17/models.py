@@ -123,6 +123,17 @@ class LuHdSpecies(Base):
     def speciescode(self, value):
         self.code = value
 
+    @property
+    def dh_list(self):
+        lst = []
+        if self.annexii == 'Y':
+            lst += ['DH2']
+        if self.annexiv == 'Y':
+            lst += ['DH4']
+        if self.annexv == 'Y':
+            lst += ['DH5']
+        return ', '.join(lst)
+
 
 class LuBiogeoreg(Base):
     __tablename__ = u'lu_biogeoreg'

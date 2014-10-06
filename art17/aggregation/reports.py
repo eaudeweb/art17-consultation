@@ -1,9 +1,8 @@
-from decimal import Decimal
 from flask.ext.principal import Permission
 from flask import render_template
 from sqlalchemy import func
 from art17.aggregation import aggregation
-from art17 import models, ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL
+from art17 import models, ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL, ROLE_MISSING
 from art17.aggregation.utils import aggregation_missing_data_report, \
     get_checklist
 from art17.auth import require, need
@@ -403,12 +402,31 @@ def report_measures_high_importance(dataset_id):
                      for code in MEASURES.keys()}
     add_to_measures_dict(measures_dict, species_measures_count, 'species')
     add_to_measures_dict(measures_dict, habitat_measures_count, 'habitat')
+    ordered_keys = measures_dict.keys()
+    ordered_keys.sort()
 
     return render_template(
         'aggregation/reports/measures.html',
         dataset=dataset, count=measures_dict, names=MEASURES,
         ordered_keys=get_ordered_measures_codes(), page='measures')
 
+@aggregation.route('/raport/<int:dataset_id>/missing')
+def report_missing(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+
+    species = dataset.species_objs.filter_by(cons_role=ROLE_MISSING)
+    habitats = dataset.habitat_objs.filter_by(cons_role=ROLE_MISSING)
+
+    groups = dict(
+        models.LuGrupSpecie.query
+        .with_entities(models.LuGrupSpecie.code, models.LuGrupSpecie.description)
+    )
+
+    return render_template(
+        'aggregation/reports/missing.html', dataset=dataset,
+        page='missing', missing_species=species, missing_habitats=habitats,
+        GROUPS=groups,
+    )
 
 @aggregation.route('/raport/<int:dataset_id>/measures_effects')
 def report_measures_effects(dataset_id):
