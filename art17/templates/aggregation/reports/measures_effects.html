@@ -1,0 +1,65 @@
+{% extends 'aggregation/reports/report.html' %}
+
+{% block pagecontent %}
+
+  <h3>Procente evaluări pentru care a fost raportat efectul unei măsuri de conservare</h3>
+
+  <table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+      <th rowspan="2">Măsuri</th>
+      <th colspan="5">HABITATE (%)</th>
+    </tr>
+    <tr>
+      <th>Menținere</th>
+      <th>Îmbunătățire</th>
+      <th>Termen lung</th>
+      <th>Fără efect</th>
+      <th>Necunoscut/Neevaluat</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for measure_code in ordered_keys %}
+      <tr>
+          <td>{{ measure_code }} {{ names[measure_code] }}</td>
+          <td>{{ habitat_count[measure_code]['broad_evaluation_maintain'] }}</td>
+          <td>{{ habitat_count[measure_code]['broad_evaluation_enhance'] }}</td>
+          <td>{{ habitat_count[measure_code]['broad_evaluation_longterm'] }}</td>
+          <td>{{ habitat_count[measure_code]['broad_evaluation_noeffect'] }}</td>
+          <td>{{ habitat_count[measure_code]['broad_evaluation_unknown'] +
+              habitat_count[measure_code]['broad_evaluation_notevaluated'] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+      <th rowspan="2">Măsuri</th>
+      <th colspan="5">SPECII (%)</th>
+    </tr>
+    <tr>
+      <th>Menținere</th>
+      <th>Îmbunătățire</th>
+      <th>Termen lung</th>
+      <th>Fără efect</th>
+      <th>Necunoscut/Neevaluat</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for measure_code in ordered_keys %}
+      <tr>
+          <td>{{ measure_code }} {{ names[measure_code] }}</td>
+          <td>{{ species_count[measure_code]['broad_evaluation_maintain'] }}</td>
+          <td>{{ species_count[measure_code]['broad_evaluation_enhance'] }}</td>
+          <td>{{ species_count[measure_code]['broad_evaluation_longterm'] }}</td>
+          <td>{{ species_count[measure_code]['broad_evaluation_noeffect'] }}</td>
+          <td>{{ species_count[measure_code]['broad_evaluation_unknown'] +
+              species_count[measure_code]['broad_evaluation_notevaluated'] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

@@ -35,6 +35,9 @@
     <li {% if page == 'measures' %}class="active"{% endif %}>
       <a href="{{ url_for('.report_measures_high_importance', dataset_id=dataset.id) }}">
         Măsuri importanță mare</a></li>
+    <li {% if page == 'measures_effects' %}class="active"{% endif %}>
+      <a href="{{ url_for('.report_measures_effects', dataset_id=dataset.id) }}">
+        Efecte măsuri</a></li>
   </ul>
 
   {% block pagecontent %}

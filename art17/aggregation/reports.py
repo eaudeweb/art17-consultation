@@ -1,3 +1,4 @@
+from decimal import Decimal
 from flask.ext.principal import Permission
 from flask import render_template
 from sqlalchemy import func
@@ -37,6 +38,22 @@ MEASURES = {
     '9.': 'Masuri legate de utilizarea unor resurse speciale',
 }
 
+EFFECTS = [
+    'broad_evaluation_maintain',
+    'broad_evaluation_enhance',
+    'broad_evaluation_longterm',
+    'broad_evaluation_noeffect',
+    'broad_evaluation_unknown',
+    'broad_evaluation_notevaluated',
+]
+
+
+def get_ordered_measures_codes():
+    codes = MEASURES.keys()
+    codes.sort()
+    return codes
+
+
 def get_report_data(dataset):
     species = dataset.species_objs.filter(
         models.DataSpeciesRegion.cons_role.in_(
@@ -71,9 +88,43 @@ def get_measures_count(data_query, attr_name):
     ).all()
 
 
+def get_measures(data_query, attr_name):
+    return (
+        data_query.join(models.DataMeasures)
+        .filter(getattr(models.DataMeasures, attr_name) != None)
+        .with_entities(
+            models.DataMeasures.measurecode,
+            models.DataMeasures.broad_evaluation_maintain,
+            models.DataMeasures.broad_evaluation_enhance,
+            models.DataMeasures.broad_evaluation_longterm,
+            models.DataMeasures.broad_evaluation_noeffect,
+            models.DataMeasures.broad_evaluation_unknown,
+            models.DataMeasures.broad_evaluation_notevaluated,
+        ))
+
+
 def add_to_measures_dict(measures_dict, measures_query, category):
     for measure_code, reports_count in measures_query:
         measures_dict[measure_code[:2]][category] += reports_count
+
+
+def get_effects_dict(data_measures):
+    effects_dict = {code: {effect: 0 for effect in EFFECTS}
+                    for code in MEASURES.keys()}
+    measures_dict = {code: 0 for code in MEASURES.keys()}
+
+    for data_measure in data_measures:
+        categ_code = data_measure.measurecode[:2]
+        measures_dict[categ_code] += 1
+        for effect in EFFECTS:
+            effects_dict[categ_code][effect] += getattr(data_measure, effect)
+
+    for measure_code, total in measures_dict.iteritems():
+        for effect in EFFECTS:
+            effects_dict[measure_code][effect] = (
+                effects_dict[measure_code][effect] * 100 / total
+            ).quantize(Decimal('1.00'))
+    return effects_dict
 
 
 @aggregation.route('/raport/<int:dataset_id>')
@@ -352,10 +403,26 @@ def report_measures_high_importance(dataset_id):
                      for code in MEASURES.keys()}
     add_to_measures_dict(measures_dict, species_measures_count, 'species')
     add_to_measures_dict(measures_dict, habitat_measures_count, 'habitat')
-    ordered_keys = measures_dict.keys()
-    ordered_keys.sort()
 
     return render_template(
         'aggregation/reports/measures.html',
         dataset=dataset, count=measures_dict, names=MEASURES,
-        ordered_keys=ordered_keys, page='measures',)
+        ordered_keys=get_ordered_measures_codes(), page='measures')
+
+
+@aggregation.route('/raport/<int:dataset_id>/measures_effects')
+def report_measures_effects(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+    species, habitat = get_report_data(dataset)
+
+    species_data_measures = get_measures(species, 'species_id')
+    habitat_data_measures = get_measures(habitat, 'habitat_id')
+
+    species_effects_dict = get_effects_dict(species_data_measures)
+    habitat_effects_dict = get_effects_dict(habitat_data_measures)
+
+    return render_template(
+        'aggregation/reports/measures_effects.html',
+        dataset=dataset, species_count=species_effects_dict,
+        habitat_count=habitat_effects_dict, names=MEASURES,
+        ordered_keys=get_ordered_measures_codes(), page='measures_effects')
