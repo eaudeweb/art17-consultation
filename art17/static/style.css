@@ -487,3 +487,6 @@ a.conclusion:hover {
   border-color: #4774c7;
   background-color: #78bbee;
 }
+.number {
+  text-align: right;
+}

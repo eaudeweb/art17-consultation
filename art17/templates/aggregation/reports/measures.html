@@ -2,7 +2,8 @@
 
 {% block pagecontent %}
 
-  <h3>Evaluări pentru care s-au raportat măsuri cu importanță mare</h3>
+  <h3>Numărul evaluărilor de habitate/specii pentru care au fost raportate una
+      sau mai multe măsuri cu importanță "mare"</h3>
   <table class="table table-bordered table-condensed">
     <thead>
     <tr>
@@ -15,8 +16,8 @@
       {% for measure_code in ordered_keys %}
       <tr>
           <td>{{ measure_code }} {{ names[measure_code] }}</td>
-          <td>{{ count[measure_code]['species'] }}</td>
-          <td>{{ count[measure_code]['habitat'] }}</td>
+          <td class="number">{{ count[measure_code]['species'] }}</td>
+          <td class="number">{{ count[measure_code]['habitat'] }}</td>
       </tr>
       {% endfor %}
     </tbody>
