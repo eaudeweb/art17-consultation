@@ -47,6 +47,30 @@ EFFECTS = [
     'broad_evaluation_notevaluated',
 ]
 
+METHOD_FIELDS = {
+    'habitat': [
+        'range_method',
+        'coverage_method',
+        'coverage_trend_method',
+        'structure_and_functions_method',
+        'natura2000_area_method',
+    ],
+    'species': [
+        'range_method',
+        'population_method',
+        'population_trend_method',
+        'habitat_method',
+        'natura2000_population_method',
+    ],
+}
+
+METHODS = [
+    ('1', 'Opinie expert'),
+    ('2', 'Extrapolare'),
+    ('3', 'Studiu complet'),
+    ('0', 'Lipsa date'),
+]
+
 
 def get_ordered_measures_codes():
     codes = MEASURES.keys()
@@ -452,3 +476,49 @@ def report_measures_effects(dataset_id):
         dataset=dataset, species_count=species_effects_dict,
         habitat_count=habitat_effects_dict, names=MEASURES,
         ordered_keys=get_ordered_measures_codes(), page='measures_effects')
+
+
+@aggregation.route('/raport/<int:dataset_id>/quality')
+def report_quality(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+    species, habitat = get_report_data(dataset)
+
+    habitat_count = Decimal(habitat.count())
+    habitat_methods_quality = {
+        method: {
+            field: (
+                habitat
+                .filter(getattr(models.DataHabitattypeRegion, field) == method)
+                .count()
+                * 100 / habitat_count
+            ).quantize(Decimal('1.00'))
+            for field in METHOD_FIELDS['habitat']
+        }
+        for method, _ in METHODS
+    }
+    for method, fields in habitat_methods_quality.iteritems():
+        habitat_methods_quality[method]['average'] = (
+            sum(fields.values()) / len(fields))
+
+    species_count = Decimal(species.count())
+    species_methods_quality = {
+        method: {
+            field: (
+                species
+                .filter(getattr(models.DataSpeciesRegion, field) == method)
+                .count()
+                * 100 / species_count
+            ).quantize(Decimal('1.00'))
+            for field in METHOD_FIELDS['species']
+        }
+        for method, _ in METHODS
+    }
+    for method, fields in species_methods_quality.iteritems():
+        species_methods_quality[method]['average'] = (
+            sum(fields.values()) / len(fields))
+
+    return render_template(
+        'aggregation/reports/quality.html',
+        dataset=dataset, fields=METHOD_FIELDS, methods=METHODS, page='quality',
+        habitat_methods_quality=habitat_methods_quality,
+        species_methods_quality=species_methods_quality)

@@ -1,0 +1,58 @@
+{% extends 'aggregation/reports/report.html' %}
+
+{% block pagecontent %}
+
+  <h3>Rapoarte de calitate a datelor pentru specii/habitate</h3>
+
+  <h4>Habitate - metodele folosite pentru valorile estimate și trenduri</h4>
+  <table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Areal</th>
+      <th>Suprafața</th>
+      <th>Tendința suprafeței</th>
+      <th>Structura și funcții</th>
+      <th>Natura 2000</th>
+      <th>Media</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for method_value, method_name in methods %}
+        <tr>
+          <td>{{ method_name }} (%)</td>
+          {% for field in fields['habitat'] %}
+            <td>{{ habitat_methods_quality[method_value][field] }}</td>
+          {% endfor %}
+          <td>{{ habitat_methods_quality[method_value]['average'] }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h4>Specii - metodele folosite pentru valorile estimate și trenduri</h4>
+  <table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Areal</th>
+      <th>Poplația</th>
+      <th>Tendința populației</th>
+      <th>Habitat</th>
+      <th>Natura 2000</th>
+      <th>Media</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for method_value, method_name in methods %}
+        <tr>
+          <td>{{ method_name }} (%)</td>
+          {% for field in fields['species'] %}
+            <td>{{ species_methods_quality[method_value][field] }}</td>
+          {% endfor %}
+          <td>{{ species_methods_quality[method_value]['average'] }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
