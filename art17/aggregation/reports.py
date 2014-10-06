@@ -1,3 +1,4 @@
+from decimal import Decimal
 from flask.ext.principal import Permission
 from flask import render_template
 from sqlalchemy import func
@@ -319,6 +320,7 @@ def report_bioreg_annex(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/pressures1')
+@require(Permission(need.authenticated))
 def report_pressures1(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
@@ -392,6 +394,7 @@ def report_pressures1(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/measures')
+@require(Permission(need.authenticated))
 def report_measures_high_importance(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
@@ -410,7 +413,9 @@ def report_measures_high_importance(dataset_id):
         dataset=dataset, count=measures_dict, names=MEASURES,
         ordered_keys=get_ordered_measures_codes(), page='measures')
 
+
 @aggregation.route('/raport/<int:dataset_id>/missing')
+@require(Permission(need.authenticated))
 def report_missing(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
 
@@ -419,7 +424,8 @@ def report_missing(dataset_id):
 
     groups = dict(
         models.LuGrupSpecie.query
-        .with_entities(models.LuGrupSpecie.code, models.LuGrupSpecie.description)
+        .with_entities(models.LuGrupSpecie.code,
+                       models.LuGrupSpecie.description)
     )
 
     return render_template(
@@ -428,7 +434,9 @@ def report_missing(dataset_id):
         GROUPS=groups,
     )
 
+
 @aggregation.route('/raport/<int:dataset_id>/measures_effects')
+@require(Permission(need.authenticated))
 def report_measures_effects(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
