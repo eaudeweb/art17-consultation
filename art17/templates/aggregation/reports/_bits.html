@@ -1,24 +1,55 @@
 {% macro report_table(data) %}
-  <table class="table">
+  <table class="table table-condensed" style="width: 400px">
     <tr>
       <th>Favorabilă</th>
-      <th>Nefavorabilă-Inadecvat</th>
-      <th>Nefavorabilă-Rău</th>
-      <th>Necunoscută</th>
-      <th>Total</th>
+      <td>{{ data.FV }}</td>
     </tr>
     <tr>
-      <td>{{ data.FV }}</td>
+      <th>Nefavorabilă-Inadecvat</th>
       <td>{{ data.U1 }}</td>
+    </tr>
+    <tr>
+      <th>Nefavorabilă-Rău</th>
       <td>{{ data.U2 }}</td>
+    </tr>
+    <tr>
+      <th>Necunoscută</th>
       <td>{{ data.XX }}</td>
+    </tr>
+    <tr>
+      <th>Total</th>
       <td>{{ data.total }}</td>
     </tr>
   </table>
 {% endmacro %}
 
 {% macro percent(percent) %}
-<td class="text-right">
-  <span class="">{%- if percent -%}{{ "%.2f" % percent }}%{% else %}-{% endif %}</span>
-</td>
+  <td class="text-right">
+    <span class="">{%- if percent -%}{{ "%.2f" % percent }}%{% else %}
+      -{% endif %}</span>
+  </td>
+{% endmacro %}
+
+{% macro report_menu() %}
+  <li {% if page == 'missing' %}class="active"{% endif %}>
+    <a href="{{ url_for('.report_missing', dataset_id=dataset.id) }}">
+      #1 Rapoarte vs Lista de verificare {# 1 #}</a></li>
+  <li {% if page == 'bioreg_annex' %}class="active"{% endif %}>
+    <a href="{{ url_for('.report_bioreg_annex', dataset_id=dataset.id) }}">
+      #10 Numar specii pe bioregiuni</a></li>
+  <li {% if page == 'conservation' %}class="active"{% endif %}>
+    <a href="{{ url_for('.report_conservation_status', dataset_id=dataset.id) }}">
+      #11 Evaluare stare conservare {# 11 #}</a></li>
+  <li {% if page == 'bioreg' %}class="active"{% endif %}>
+    <a href="{{ url_for('.report_bioreg_global', dataset_id=dataset.id) }}">
+      #12 Evaluare globala bioregiuni</a></li>
+  <li {% if page == 'pressures1' %}class="active"{% endif %}>
+    <a href="{{ url_for('.report_pressures1', dataset_id=dataset.id) }}">
+      #18 Frecvența Presiuni/Amenințări</a></li>
+  <li {% if page == 'measures' %}class="active"{% endif %}>
+    <a href="{{ url_for('.report_measures_high_importance', dataset_id=dataset.id) }}">
+      #20 Măsuri importanță mare</a></li>
+  <li {% if page == 'measures_effects' %}class="active"{% endif %}>
+    <a href="{{ url_for('.report_measures_effects', dataset_id=dataset.id) }}">
+      #21 Efecte măsuri</a></li>
 {% endmacro %}

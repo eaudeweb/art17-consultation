@@ -1,0 +1,32 @@
+{% extends 'aggregation/reports/report.html' %}
+{% from 'aggregation/reports/_bits.html' import report_menu %}
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('agregare', home_url),
+          ('set de date', url_for('.dashboard', dataset_id=dataset.id)),
+          ('rapoarte', url_for('.report', dataset_id=dataset.id)),
+          ('raport', none),
+      ]) }}
+{% endblock breadcrumbs %}
+
+{% block content %}
+  <div class="pull-right">
+    <ul class="nav nav-pills navbar-right">
+      <li class="dropdown">
+        <a class="dropdown-toggle"
+           data-toggle="dropdown"
+           href="#">
+          Sari la raport
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          {{ report_menu() }}
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  {% block pagecontent %}{% endblock %}
+{% endblock %}
