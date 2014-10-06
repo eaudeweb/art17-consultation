@@ -121,9 +121,9 @@ def get_effects_dict(data_measures):
 
     for measure_code, total in measures_dict.iteritems():
         for effect in EFFECTS:
-            effects_dict[measure_code][effect] = (
-                effects_dict[measure_code][effect] * 100 / total
-            ).quantize(Decimal('1.00'))
+            res = effects_dict[measure_code][effect] * 100 / total \
+                if total else 0
+            effects_dict[measure_code][effect] = res.quantize(Decimal('1.00'))
     return effects_dict
 
 
