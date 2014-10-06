@@ -52,4 +52,7 @@
   <li {% if page == 'measures_effects' %}class="active"{% endif %}>
     <a href="{{ url_for('.report_measures_effects', dataset_id=dataset.id) }}">
       #21 Efecte măsuri</a></li>
+  <li {% if page == 'quality' %}class="active"{% endif %}>
+    <a href="{{ url_for('.report_quality', dataset_id=dataset.id) }}">
+      #22 Calitatea datelor</a></li>
 {% endmacro %}

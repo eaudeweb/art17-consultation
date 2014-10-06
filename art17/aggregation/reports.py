@@ -479,6 +479,7 @@ def report_measures_effects(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/quality')
+@require(Permission(need.authenticated))
 def report_quality(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
