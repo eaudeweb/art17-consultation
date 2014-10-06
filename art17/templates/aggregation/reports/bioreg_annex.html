@@ -10,39 +10,39 @@
   <table class="table table-bordered table-condensed">
     <thead>
     <tr>
-      <th rowspan="3">Bioregiune</th>
-      <th colspan="2">Habitate</th>
-      <th colspan="6">Specii</th>
+      <th rowspan="3" class="text-center">Bioregiune</th>
+      <th colspan="2" class="text-center">Habitate</th>
+      <th colspan="6" class="text-center">Specii</th>
     </tr>
     <tr>
-      <th colspan="2">Anexa I</th>
-      <th colspan="2">Anexa II</th>
-      <th colspan="2">Anexa IV</th>
-      <th colspan="2">Anexa V</th>
+      <th colspan="2" class="text-center">Anexa I</th>
+      <th colspan="2" class="text-center">Anexa II</th>
+      <th colspan="2" class="text-center">Anexa IV</th>
+      <th colspan="2" class="text-center">Anexa V</th>
     </tr>
     <tr>
-      <th>Neprioritare</th>
-      <th>Prioritare</th>
-      <th>Neprioritare</th>
-      <th>Prioritare</th>
-      <th>Inclusiv cele din anexa II</th>
-      <th>Fără cele din anexa II</th>
-      <th>Inclusiv cele din anexa II</th>
-      <th>Fără cele din anexa II</th>
+      <th class="text-center">Neprioritare</th>
+      <th class="text-center">Prioritare</th>
+      <th class="text-center">Neprioritare</th>
+      <th class="text-center">Prioritare</th>
+      <th class="text-center">Inclusiv cele din anexa II</th>
+      <th class="text-center">Fără cele din anexa II</th>
+      <th class="text-center">Inclusiv cele din anexa II</th>
+      <th class="text-center">Fără cele din anexa II</th>
     </tr>
     </thead>
     <tbody>
     {% for reg in regions %}
       <tr>
         <td>{{ reg }}</td>
-        <td>{{ stats['habitats'][reg]['n'] }}</td>
-        <td>{{ stats['habitats'][reg]['p'] }}</td>
-        <td>{{ stats['species'][reg][2]['n'] }}</td>
-        <td>{{ stats['species'][reg][2]['p'] }}</td>
-        <td>{{ stats['species'][reg][4]['p'] }}</td>
-        <td>{{ stats['species'][reg][4]['n'] }}</td>
-        <td>{{ stats['species'][reg][5]['p'] }}</td>
-        <td>{{ stats['species'][reg][5]['n'] }}</td>
+        <td class="text-right">{{ stats['habitats'][reg]['n'] }}</td>
+        <td class="text-right">{{ stats['habitats'][reg]['p'] }}</td>
+        <td class="text-right">{{ stats['species'][reg][2]['n'] }}</td>
+        <td class="text-right">{{ stats['species'][reg][2]['p'] }}</td>
+        <td class="text-right">{{ stats['species'][reg][4]['p'] }}</td>
+        <td class="text-right">{{ stats['species'][reg][4]['n'] }}</td>
+        <td class="text-right">{{ stats['species'][reg][5]['p'] }}</td>
+        <td class="text-right">{{ stats['species'][reg][5]['n'] }}</td>
       </tr>
     {% endfor %}
   </table>

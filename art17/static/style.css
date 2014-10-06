@@ -490,3 +490,8 @@ a.conclusion:hover {
 .number {
   text-align: right;
 }
+
+
+body thead {
+    background-color: #fcfcfc;
+}
