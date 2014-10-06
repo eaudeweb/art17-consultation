@@ -25,8 +25,17 @@ PRESSURES = {
     'U': 'presiuni si amenintari necunoscute',
 }
 
-DATA_CATEGORIES = ('species', 'habitat')
-
+MEASURES = {
+    '1.': 'Fara masuri',
+    '2.': 'Masuri in legatura cu agricultura si habitatele deschise',
+    '3.': 'Masuri legate de paduri si habitate forestiere',
+    '4.': 'Masuri legate de mlastini, apa dulce si habitate de coasta',
+    '5.': 'Masuri legate de habitatele marine',
+    '6.': 'Masuri legate de planificarea spatiala',
+    '7.': 'Masuri legate de vanatoare si pescuit si managementul speciilor',
+    '8.': 'Masuri legate de ariile urbane, industriale, energie si transport',
+    '9.': 'Masuri legate de utilizarea unor resurse speciale',
+}
 
 def get_report_data(dataset):
     species = dataset.species_objs.filter(
@@ -63,15 +72,8 @@ def get_measures_count(data_query, attr_name):
 
 
 def add_to_measures_dict(measures_dict, measures_query, category):
-    idx = DATA_CATEGORIES.index(category)
     for measure_code, reports_count in measures_query:
-        if measure_code not in measures_dict:
-            measures_dict[measure_code] = {
-                'measure': models.LuMeasures.query.filter_by(
-                    code=measure_code).first(),
-                DATA_CATEGORIES[not idx]: 0,
-            }
-        measures_dict[measure_code][DATA_CATEGORIES[idx]] = reports_count
+        measures_dict[measure_code[:2]][category] += reports_count
 
 
 @aggregation.route('/raport/<int:dataset_id>')
@@ -346,7 +348,8 @@ def report_measures_high_importance(dataset_id):
 
     species_measures_count = get_measures_count(species, 'species_id')
     habitat_measures_count = get_measures_count(habitats, 'habitat_id')
-    measures_dict = {}
+    measures_dict = {code: {'species': 0, 'habitat': 0}
+                     for code in MEASURES.keys()}
     add_to_measures_dict(measures_dict, species_measures_count, 'species')
     add_to_measures_dict(measures_dict, habitat_measures_count, 'habitat')
     ordered_keys = measures_dict.keys()
@@ -354,5 +357,5 @@ def report_measures_high_importance(dataset_id):
 
     return render_template(
         'aggregation/reports/measures.html',
-        dataset=dataset, count=measures_dict, ordered_keys=ordered_keys,
-        page='measures')
+        dataset=dataset, count=measures_dict, names=MEASURES,
+        ordered_keys=ordered_keys, page='measures',)

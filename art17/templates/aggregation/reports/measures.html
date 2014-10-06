@@ -14,7 +14,7 @@
     <tbody>
       {% for measure_code in ordered_keys %}
       <tr>
-          <td>{{ measure_code }}. {{ count[measure_code]['measure'].name_ro }}</td>
+          <td>{{ measure_code }} {{ names[measure_code] }}</td>
           <td>{{ count[measure_code]['species'] }}</td>
           <td>{{ count[measure_code]['habitat'] }}</td>
       </tr>
