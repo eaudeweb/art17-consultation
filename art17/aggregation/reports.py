@@ -146,7 +146,7 @@ def get_effects_dict(data_measures):
     for measure_code, total in measures_dict.iteritems():
         for effect in EFFECTS:
             res = effects_dict[measure_code][effect] * 100 / total \
-                if total else 0
+                if total else Decimal(0)
             effects_dict[measure_code][effect] = res.quantize(Decimal('1.00'))
     return effects_dict
 
