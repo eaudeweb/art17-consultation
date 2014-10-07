@@ -33,19 +33,19 @@
 {% macro report_menu() %}
   <li {% if page == 'missing' %}class="active"{% endif %}>
     <a href="{{ url_for('.report_missing', dataset_id=dataset.id) }}">
-      #1 Rapoarte vs Lista de verificare {# 1 #}</a></li>
+      #1 Număr de rapoarte incarcate în raport cu lista de verificare {# 1 #}</a></li>
   <li {% if page == 'bioreg_annex' %}class="active"{% endif %}>
     <a href="{{ url_for('.report_bioreg_annex', dataset_id=dataset.id) }}">
-      #10 Numar specii pe bioregiuni</a></li>
+      #10 Numarul de habitate și specii {# 10 #}</a></li>
   <li {% if page == 'conservation' %}class="active"{% endif %}>
     <a href="{{ url_for('.report_conservation_status', dataset_id=dataset.id) }}">
-      #11 Evaluare stare conservare {# 11 #}</a></li>
+      #11 Evaluarea globala a statutului de conservare a speciilor si habitatelor {# 11 #}</a></li>
   <li {% if page == 'bioreg' %}class="active"{% endif %}>
     <a href="{{ url_for('.report_bioreg_global', dataset_id=dataset.id) }}">
-      #12 Evaluare globala bioregiuni</a></li>
+      #12 Evaluarea globala a statutului de conservare a speciilor si habitatelor pe bioregiuni</a></li>
   <li {% if page == 'pressures1' %}class="active"{% endif %}>
     <a href="{{ url_for('.report_pressures1', dataset_id=dataset.id) }}">
-      #18 Frecvența Presiuni/Amenințări</a></li>
+      #18 Frecvența principalelor Presiuni/Amenințări</a></li>
   <li {% if page == 'measures' %}class="active"{% endif %}>
     <a href="{{ url_for('.report_measures_high_importance', dataset_id=dataset.id) }}">
       #20 Măsuri importanță mare</a></li>

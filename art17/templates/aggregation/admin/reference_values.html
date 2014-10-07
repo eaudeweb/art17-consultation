@@ -3,6 +3,15 @@
 {% from 'aggregation/admin/_bits.html' import render_refvalues %}
 
 {% macro table(species_list, species_data, species_refvals) %}
+   <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#refvalues-habitat" data-toggle="tab">Habitate</a>
+    </li>
+    <li class="active">
+      <a href="#refvalues-species" data-toggle="tab">Specii</a>
+    </li>
+  </ul>
+
   <table class="table">
     <tr>
       <th></th>
