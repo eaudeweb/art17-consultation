@@ -24,7 +24,9 @@
 
 {% block pagecontent %}
 
-  <h3>Specii</h3>
+  <h3>Evaluarea globala a statutului de conservare a speciilor si habitatelor</h3>
+
+  <h4>Specii</h4>
   <table class="table table-bordered table-condensed">
     <thead>
     <tr>
@@ -43,8 +45,11 @@
     {% for spec in species %}
       <tr>
         {% if spec.species %}
-        <td>{{ spec.species.name }}</td>
-        <td>{{ spec.species.lu and spec.species.lu.group_code }}</td>
+        <td>{{ spec.species.lu and spec.species.lu.hdname }}</td>
+        <td>
+          {% set group=spec.species.lu and spec.species.lu.group_code %}
+          {{ GROUPS.get(group, group) }}
+        </td>
         <td>{{ spec.species.code }}</td>
         {% else %}
         <td colspan="3"><em>valoare lipsă</em></td>
@@ -69,7 +74,7 @@
     </tfoot>
   </table>
 
-  <h3>Habitate</h3>
+  <h4>Habitate</h4>
   <table class="table table-bordered table-condensed">
     <tr>
       <th>Nume</th>
@@ -84,7 +89,7 @@
     {% for hab in habitats %}
       <tr>
         {% if hab.habitat %}
-        <td>{{ hab.habitat.lu and hab.habitat.lu.display_name }}</td>
+        <td>{{ hab.habitat.lu and hab.habitat.lu.hd_name }}</td>
         <td>{{ hab.habitat.code }}</td>
         {% else %}
         <td colspan="2"><em>valoare lipsă</em></td>

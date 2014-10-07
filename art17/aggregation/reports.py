@@ -248,10 +248,19 @@ def report_conservation_status(dataset_id):
         for conclusion, v in values.iteritems():
             stats['habitats'][k][conclusion] = v * 100.0 / all_habitats
 
+    groups = dict(
+        models.LuGrupSpecie.query
+        .with_entities(models.LuGrupSpecie.code,
+                       models.LuGrupSpecie.description)
+    )
+    species = list(species)
+    species.sort(key=lambda s: s.species.name if s.species else s)
+
     return render_template(
         'aggregation/reports/conservation_status.html',
         dataset=dataset, dataset_id=dataset.id,
-        species=species, habitats=habitats, page='conservation', stats=stats)
+        species=species, habitats=habitats, page='conservation', stats=stats,
+        GROUPS=groups)
 
 
 @aggregation.route('/raport/<int:dataset_id>/bioreg_global')
