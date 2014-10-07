@@ -151,6 +151,23 @@ def get_effects_dict(data_measures):
     return effects_dict
 
 
+def get_methods_quality_dict(data_query, data_class, category):
+    count = Decimal(data_query.count())
+    methods_quality = {
+        method: {
+            field: (
+                data_query.filter(getattr(data_class, field) == method).count()
+                * 100 / count
+            ).quantize(Decimal('1.00'))
+            for field in METHOD_FIELDS[category]
+        }
+        for method, _ in METHODS
+    }
+    for method, fields in methods_quality.iteritems():
+        methods_quality[method]['average'] = sum(fields.values()) / len(fields)
+    return methods_quality
+
+
 @aggregation.route('/raport/<int:dataset_id>')
 @require(Permission(need.authenticated))
 def report(dataset_id):
@@ -493,39 +510,10 @@ def report_quality(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
 
-    habitat_count = Decimal(habitat.count())
-    habitat_methods_quality = {
-        method: {
-            field: (
-                habitat
-                .filter(getattr(models.DataHabitattypeRegion, field) == method)
-                .count()
-                * 100 / habitat_count
-            ).quantize(Decimal('1.00'))
-            for field in METHOD_FIELDS['habitat']
-        }
-        for method, _ in METHODS
-    }
-    for method, fields in habitat_methods_quality.iteritems():
-        habitat_methods_quality[method]['average'] = (
-            sum(fields.values()) / len(fields))
-
-    species_count = Decimal(species.count())
-    species_methods_quality = {
-        method: {
-            field: (
-                species
-                .filter(getattr(models.DataSpeciesRegion, field) == method)
-                .count()
-                * 100 / species_count
-            ).quantize(Decimal('1.00'))
-            for field in METHOD_FIELDS['species']
-        }
-        for method, _ in METHODS
-    }
-    for method, fields in species_methods_quality.iteritems():
-        species_methods_quality[method]['average'] = (
-            sum(fields.values()) / len(fields))
+    habitat_methods_quality = get_methods_quality_dict(
+        habitat, models.DataHabitattypeRegion, 'habitat')
+    species_methods_quality = get_methods_quality_dict(
+        species, models.DataSpeciesRegion, 'species')
 
     return render_template(
         'aggregation/reports/quality.html',
