@@ -3,15 +3,6 @@
 {% from 'aggregation/admin/_bits.html' import render_refvalues %}
 
 {% macro table(species_list, species_data, species_refvals) %}
-   <ul class="nav nav-tabs">
-    <li class="active">
-      <a href="#refvalues-habitat" data-toggle="tab">Habitate</a>
-    </li>
-    <li class="active">
-      <a href="#refvalues-species" data-toggle="tab">Specii</a>
-    </li>
-  </ul>
-
   <table class="table">
     <tr>
       <th></th>
@@ -23,7 +14,7 @@
     {% for code, name, group_code in species_list %}
       {% if group_code != last_group %}
         <tr>
-          <td>
+          <td colspan="{{ bioreg_list|length }}" class="text-center">
             <strong>{{ GROUPS.get(group_code, group_code) }}</strong>
           </td>
         </tr>
@@ -38,7 +29,7 @@
           {% if check_key in species_data %}
             <td nowrap="nowrap"
                 title="{{ render_refvalues(species_refvals.get(key)) }}"
-                class="ptip">
+                class="ptip text-center">
               {% if key not in species_refvals %}
                 date lipsă
               {% else %}
@@ -46,9 +37,9 @@
                 {% if info is none %}
                   date goale
                 {% elif not info %}
-                  date incomplete
+                  incomplet
                 {% else %}
-                  ok
+                  complet
                 {% endif %}
               {% endif %}
             </td>
@@ -80,13 +71,23 @@
   <p>Statusul valorilor de referință importate în sistem. Pentru date lipsă sau
     incomplete nu se va putea realiza agregarea.</p>
 
-  <h3>Specii</h3>
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#refvalues-habitat" data-toggle="tab">Habitate</a>
+    </li>
+    <li>
+      <a href="#refvalues-species" data-toggle="tab">Specii</a>
+    </li>
+  </ul>
 
-  {{ table(species_list, species_data, species_refvals) }}
-
-  <h3>Habitate</h3>
-  {{ table(habitat_list, habitat_data, habitat_refvals) }}
-
+  <div class="tab-content">
+    <div class="tab-pane active" id="refvalues-habitat">
+      {{ table(habitat_list, habitat_data, habitat_refvals) }}
+    </div>
+    <div class="tab-pane" id="refvalues-species">
+      {{ table(species_list, species_data, species_refvals) }}
+    </div>
+  </div>
 {% endblock %}
 
 {% block script %}
