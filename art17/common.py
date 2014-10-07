@@ -7,6 +7,8 @@ from decimal import Decimal
 import urllib
 import logging
 from babel.dates import format_datetime
+from flask import render_template
+from flask.views import MethodView
 from jinja2 import evalcontextfilter, Markup, escape
 import flask
 import flask.views
@@ -784,3 +786,12 @@ def get_datasets():
     return Dataset.query.filter(
         or_(Dataset.preview == False, Dataset.preview == None)
     ).order_by(Dataset.date)
+
+
+class TemplateView(MethodView):
+    def get_context(self, **kwargs):
+        return {}
+
+    def get(self):
+        context = self.get_context()
+        return render_template(self.template_name, **context)

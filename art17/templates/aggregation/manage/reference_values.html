@@ -1,0 +1,52 @@
+{% extends 'aggregation/preview/preview.html' %}
+
+{% from 'aggregation/admin/_bits.html' import render_refvalues, refvalues_table with context %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('agregare', home_url),
+          ('editare valori de referință', url_for('.manage_refvals_table')),
+          ('lista' if not data else 'formular', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+{% block content %}
+  <h2>Valori de referință</h2>
+
+  <p class="text-warning">Lista de verificare folosită
+    este: {{ current_checklist }}</p>
+
+  <p>Statusul valorilor de referință importate în sistem. Pentru date lipsă sau
+    incomplete nu se va putea realiza agregarea.</p>
+
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#refvalues-habitat" data-toggle="tab">Habitate</a>
+    </li>
+    <li>
+      <a href="#refvalues-species" data-toggle="tab">Specii</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="refvalues-habitat">
+      {{ refvalues_table(habitat_list, habitat_data, habitat_refvals, page='habitat') }}
+    </div>
+    <div class="tab-pane" id="refvalues-species">
+      {{ refvalues_table(species_list, species_data, species_refvals, page='species') }}
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+  {{ super() }}
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('.ptip').powerTip({
+        smartPlacement: true, followMouse: true
+      });
+    });
+  </script>
+{% endblock script %}

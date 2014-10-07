@@ -13,7 +13,7 @@ from art17.aggregation.forms import CompareForm, PreviewForm
 from art17.aggregation.utils import get_checklist, get_reporting_id, \
     get_species_checklist, get_habitat_checklist, valid_checklist
 from art17.auth import require, need
-from art17.common import perm_fetch_checklist, get_datasets
+from art17.common import perm_fetch_checklist, get_datasets, TemplateView
 from art17.models import (
     Dataset,
     db,
@@ -163,49 +163,54 @@ def edit_dataset(dataset_id):
     )
 
 
-@aggregation.route('/admin/reference_values')
-def reference_values():
-    checklist_id = get_reporting_id()
-    current_checklist = get_checklist(checklist_id)
-    checklist_id = current_checklist.id
+class ReferenceValues(TemplateView):
+    template_name = 'aggregation/admin/reference_values.html'
 
-    species_refvals = load_species_refval()
-    species_checklist = get_species_checklist(dataset_id=checklist_id)
-    species_data = parse_checklist_ref(species_checklist)
+    def get_context(self, **kwargs):
+        checklist_id = get_reporting_id()
+        current_checklist = get_checklist(checklist_id)
+        checklist_id = current_checklist.id
 
-    species_list = get_species_checklist(groupped=True,
-                                         dataset_id=checklist_id)
+        species_refvals = load_species_refval()
+        species_checklist = get_species_checklist(dataset_id=checklist_id)
+        species_data = parse_checklist_ref(species_checklist)
 
-    habitat_refvals = load_habitat_refval()
-    habitat_checklist = get_habitat_checklist(dataset_id=checklist_id)
-    habitat_data = parse_checklist_ref(habitat_checklist)
-    habitat_list = get_habitat_checklist(distinct=True,
-                                         dataset_id=checklist_id,
-                                         groupped=True)
-    relevant_regions = (
-        {s.bio_region for s in species_checklist}.union(
-            {h.bio_region for h in habitat_checklist}
-        ))
-    bioreg_list = dal.get_biogeo_region_list(relevant_regions)
+        species_list = get_species_checklist(groupped=True,
+                                             dataset_id=checklist_id)
 
-    groups = dict(
-        LuGrupSpecie.query
-        .with_entities(LuGrupSpecie.code, LuGrupSpecie.description)
-    )
+        habitat_refvals = load_habitat_refval()
+        habitat_checklist = get_habitat_checklist(dataset_id=checklist_id)
+        habitat_data = parse_checklist_ref(habitat_checklist)
+        habitat_list = get_habitat_checklist(distinct=True,
+                                             dataset_id=checklist_id,
+                                             groupped=True)
+        relevant_regions = (
+            {s.bio_region for s in species_checklist}.union(
+                {h.bio_region for h in habitat_checklist}
+            ))
+        bioreg_list = dal.get_biogeo_region_list(relevant_regions)
 
-    return render_template(
-        'aggregation/admin/reference_values.html',
-        species_refvals=species_refvals,
-        species_data=species_data,
-        species_list=species_list,
-        habitat_refvals=habitat_refvals,
-        habitat_data=habitat_data,
-        habitat_list=habitat_list,
-        bioreg_list=bioreg_list,
-        GROUPS=groups,
-        current_checklist=current_checklist,
-        page='refvalues',
-    )
+        groups = dict(
+            LuGrupSpecie.query
+            .with_entities(LuGrupSpecie.code, LuGrupSpecie.description)
+        )
+
+        return dict(
+            species_refvals=species_refvals,
+            species_data=species_data,
+            species_list=species_list,
+            habitat_refvals=habitat_refvals,
+            habitat_data=habitat_data,
+            habitat_list=habitat_list,
+            bioreg_list=bioreg_list,
+            GROUPS=groups,
+            current_checklist=current_checklist,
+            page='refvalues',
+        )
+
+
+aggregation.add_url_rule('/admin/reference_values',
+                         view_func=ReferenceValues.as_view('reference_values'))
 
 
 @aggregation.app_context_processor
@@ -325,6 +330,15 @@ def manage_refvals(page='habitat'):
             'current_checklist': current_checklist,
             'endpoint': '.manage_refvals',
         })
+
+
+class ManageReferenceValues(ReferenceValues):
+    template_name = 'aggregation/manage/reference_values.html'
+
+
+aggregation.add_url_rule('/manage/reference_values/table',
+                         view_func=ManageReferenceValues.as_view(
+                             'manage_refvals_table'))
 
 
 @aggregation.route('/manage/reference_values/<page>/form/<subject>',

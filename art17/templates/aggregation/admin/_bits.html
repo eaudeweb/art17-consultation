@@ -26,3 +26,58 @@
     {% endfor -%}
   {% endif -%}
 {% endmacro %}
+
+
+{% macro refvalues_table(species_list, species_data, species_refvals, page='species') %}
+  <table class="table">
+    <tr>
+      <th></th>
+      {% for region in bioreg_list %}
+        <th>{{ region.code }}</th>
+      {% endfor %}
+    </tr>
+    {% set last_group = '' %}
+    {% for code, name, group_code in species_list %}
+      {% if group_code != last_group %}
+        <tr>
+          <td colspan="{{ bioreg_list|length }}" class="text-center">
+            <strong>{{ GROUPS.get(group_code, group_code) }}</strong>
+          </td>
+        </tr>
+        {% set last_group = group_code %}
+      {% endif %}
+      <tr>
+        <td>
+          {% set edit_url=url_for('.manage_refvals_form', page=page, subject=code) %}
+          <a href="{{ edit_url }}">{{ name }}</a>
+        </td>
+        {% for region in bioreg_list %}
+          {% set check_key = (code, region.code) %}
+          {% set key = code + "-" + region.code %}
+
+          {% if check_key in species_data %}
+            <td nowrap="nowrap"
+                title="{{ render_refvalues(species_refvals.get(key)) }}"
+                class="ptip text-center">
+              {% if key not in species_refvals %}
+                date lipsă
+              {% else %}
+                {% set info = refvalue_ok(species_refvals[key]) %}
+                {% if info is none %}
+                  date goale
+                {% elif not info %}
+                  incomplet
+                {% else %}
+                  complet
+                {% endif %}
+              {% endif %}
+            </td>
+          {% else %}
+            <td class="dashboard-missingrecord">
+            </td>
+          {% endif %}
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+{% endmacro %}
