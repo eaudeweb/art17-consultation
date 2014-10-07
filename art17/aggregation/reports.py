@@ -533,8 +533,7 @@ def report_quality(dataset_id):
                             complementary_favourable_range=None,
                             complementary_favourable_range_op=None,
                             complementary_favourable_range_unknown=None,
-                            )
-                        .count()),
+                        ).count()),
             'unknown': (habitat
                         .filter_by(complementary_favourable_range_unknown=1)
                         .count()),
@@ -589,6 +588,12 @@ def report_quality(dataset_id):
         'threats': {
             'unknown': habitat.filter_by(threats_method=None).count(),
         },
+        'natura2000': {
+            'missing': habitat.filter_by(
+                natura2000_area_min=None,
+                natura2000_area_max=None,
+            ).count(),
+        },
         'conclusion_assessment': {
             'missing': habitat.filter_by(conclusion_assessment=None).count(),
             'unknown': habitat.filter_by(
@@ -603,18 +608,128 @@ def report_quality(dataset_id):
                 conclusion_assessment_trend=UNKNOWN_TREND,
             ).count(),
         },
-        'natura2000': {
-            'missing': habitat.filter_by(
-                natura2000_area_min=None,
-                natura2000_area_max=None,
-            ).count(),
-        },
     }
     habitat_count = Decimal(habitat.count())
     habitat_unknown_data = {
-        k: {ik: (iv * 100 / habitat_count).quantize(Decimal('1.00'))
+        k: {ik: ((iv * 100 / habitat_count) if habitat_count else Decimal(0))
+            .quantize(Decimal('1.00'))
             for ik, iv in v.iteritems()}
         for k, v in habitat_unknown_data.iteritems()
+    }
+
+    species_unknown_data = {
+        'range_surface_area': {
+            'missing': species.filter_by(range_method=MISSING_METHOD).count(),
+            'unknown': species.filter_by(range_surface_area=None).count(),
+        },
+        'range_trend': {
+            'missing': species.filter_by(range_trend=None).count(),
+            'unknown': species.filter_by(range_trend=UNKNOWN_TREND).count(),
+        },
+        'complementary_favourable_range': {
+            'missing': (species
+                        .filter_by(
+                            complementary_favourable_range=None,
+                            complementary_favourable_range_op=None,
+                            complementary_favourable_range_unknown=None,
+                        ).count()),
+            'unknown': (species
+                        .filter_by(complementary_favourable_range_unknown=1)
+                        .count()),
+        },
+        'conclusion_range': {
+            'missing': species.filter_by(conclusion_range=None).count(),
+            'unknown': species.filter_by(
+                conclusion_range=UNKNOWN_CONCLUSION,
+            ).count(),
+        },
+        'population_size_unit': {
+            'missing': species.filter_by(
+                population_method=MISSING_METHOD,
+            ).count(),
+            'unknown': species.filter_by(population_size_unit=None).count(),
+        },
+        'population_trend': {
+            'missing': species.filter_by(population_trend=None).count(),
+            'unknown': species.filter_by(
+                population_trend=UNKNOWN_TREND,
+            ).count(),
+        },
+        'complementary_favourable_population': {
+            'missing': (species.filter_by(
+                complementary_favourable_population=None,
+                complementary_favourable_population_op=None,
+                complementary_favourable_population_unknown=None,
+            ).count()),
+            'unknown': (species.filter_by(
+                complementary_favourable_population_unknown=1,
+            ).count()),
+        },
+        'conclusion_population': {
+            'missing': species.filter_by(conclusion_population=None).count(),
+            'unknown': species.filter_by(
+                conclusion_population=UNKNOWN_CONCLUSION,
+            ).count(),
+        },
+        'habitat_surface_area': {
+            'missing': species.filter_by(
+                habitat_method=MISSING_METHOD,
+            ).count(),
+            'unknown': species.filter_by(habitat_surface_area=None).count(),
+        },
+        'habitat_trend': {
+            'missing': species.filter_by(habitat_trend=None).count(),
+            'unknown': species.filter_by(habitat_trend=UNKNOWN_TREND).count(),
+        },
+        'habitat_area_suitable': {
+            'missing': species.filter_by(habitat_area_suitable=0).count(),
+            'unknown': species.filter_by(habitat_area_suitable=None).count(),
+        },
+        'conclusion_habitat': {
+            'missing': species.filter_by(conclusion_habitat=None).count(),
+            'unknown': species.filter_by(
+                conclusion_habitat=UNKNOWN_CONCLUSION,
+            ).count(),
+        },
+        'conclusion_future': {
+            'missing': species.filter_by(conclusion_future=None).count(),
+            'unknown': species.filter_by(
+                conclusion_future=UNKNOWN_CONCLUSION,
+            ).count(),
+        },
+        'pressures': {
+            'unknown': species.filter_by(pressures_method=None).count(),
+        },
+        'threats': {
+            'unknown': species.filter_by(threats_method=None).count(),
+        },
+        'natura2000': {
+            'missing': species.filter_by(
+                natura2000_population_min=None,
+                natura2000_population_max=None,
+            ).count(),
+        },
+        'conclusion_assessment': {
+            'missing': species.filter_by(conclusion_assessment=None).count(),
+            'unknown': species.filter_by(
+                conclusion_assessment=UNKNOWN_CONCLUSION,
+            ).count(),
+        },
+        'conclusion_assessment_trend': {
+            'missing': species.filter_by(
+                conclusion_assessment_trend=None,
+            ).count(),
+            'unknown': species.filter_by(
+                conclusion_assessment_trend=UNKNOWN_TREND,
+            ).count(),
+        },
+    }
+    species_count = Decimal(species.count())
+    species_unknown_data = {
+        k: {ik: ((iv * 100 / species_count) if species_count else Decimal(0))
+            .quantize(Decimal('1.00'))
+            for ik, iv in v.iteritems()}
+        for k, v in species_unknown_data.iteritems()
     }
 
     return render_template(
@@ -623,4 +738,5 @@ def report_quality(dataset_id):
         habitat_methods_quality=habitat_methods_quality,
         species_methods_quality=species_methods_quality,
         habitat_unknown_data=habitat_unknown_data,
+        species_unknown_data=species_unknown_data,
     )
