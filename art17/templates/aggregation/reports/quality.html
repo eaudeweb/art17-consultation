@@ -4,6 +4,100 @@
 
   <h3>Rapoarte de calitate a datelor pentru specii/habitate</h3>
 
+  <h4>Habitate - informații obligatorii lipsă/necunoscut (%)</h4>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>% lipsă</th>
+        <th>% necunoscut</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th rowspan="4">Areal habitate</th>
+        <th>Suprafața</th>
+        <td class="text-right">{{ habitat_unknown_data['range_surface_area']['missing'] }}</td>
+        <td class="text-right">{{ habitat_unknown_data['range_surface_area']['unknown'] }}</td>
+      </tr>
+        <th>Tendința</th>
+        <td class="text-right">{{ habitat_unknown_data['range_trend']['missing'] }}</td>
+        <td class="text-right">{{ habitat_unknown_data['range_trend']['unknown'] }}</td>
+      <tr>
+        <th>Valoarea de referință</th>
+        <td class="text-right">{{ habitat_unknown_data['complementary_favourable_range']['missing'] }}</td>
+        <td class="text-right">{{ habitat_unknown_data['complementary_favourable_range']['unknown'] }}</td>
+      </tr>
+      <tr>
+        <th>Concluzia</th>
+        <td class="text-right">{{ habitat_unknown_data['conclusion_range']['missing'] }}</td>
+        <td class="text-right">{{ habitat_unknown_data['conclusion_range']['unknown'] }}</td>
+      </tr>
+      <tr>
+        <th rowspan="4">Suprafața habitate</th>
+        <th>Suprafața</th>
+        <td class="text-right">{{ habitat_unknown_data['coverage_surface_area']['missing'] }}</td>
+        <td class="text-right">{{ habitat_unknown_data['coverage_surface_area']['unknown'] }}</td>
+      </tr>
+        <th>Tendința</th>
+        <td class="text-right">{{ habitat_unknown_data['coverage_trend']['missing'] }}</td>
+        <td class="text-right">{{ habitat_unknown_data['coverage_trend']['unknown'] }}</td>
+      <tr>
+        <th>Valoarea de referință</th>
+        <td class="text-right">{{ habitat_unknown_data['complementary_favourable_area']['missing'] }}</td>
+        <td class="text-right">{{ habitat_unknown_data['complementary_favourable_area']['unknown'] }}</td>
+      </tr>
+      <tr>
+        <th>Concluzia</th>
+        <td class="text-right">{{ habitat_unknown_data['conclusion_area']['missing'] }}</td>
+        <td class="text-right">{{ habitat_unknown_data['conclusion_area']['unknown'] }}</td>
+      </tr>
+      <tr>
+        <th>Structură și funcții</th>
+        <th>Concluzia</th>
+        <td class="text-right">{{ habitat_unknown_data['conclusion_structure']['missing'] }}</td>
+        <td class="text-right">{{ habitat_unknown_data['conclusion_structure']['unknown'] }}</td>
+      </tr>
+      <tr>
+        <th>Perspective</th>
+        <th>Concluzia</th>
+        <td class="text-right">{{ habitat_unknown_data['conclusion_future']['missing'] }}</td>
+        <td class="text-right">{{ habitat_unknown_data['conclusion_future']['unknown'] }}</td>
+      </tr>
+      <tr>
+        <th colspan="2">Presiuni</th>
+        <td class="text-right">-</td>
+        <td class="text-right">{{ habitat_unknown_data['pressures']['unknown'] }}</td>
+      </tr>
+      <tr>
+        <th colspan="2">Amenințări</th>
+        <td class="text-right">-</td>
+        <td class="text-right">{{ habitat_unknown_data['threats']['unknown'] }}</td>
+      </tr>
+      <tr>
+        <th>Natura 2000</th>
+        <th>Acoperirea</th>
+        <td class="text-right">{{ habitat_unknown_data['natura2000']['missing'] }}</td>
+        <td class="text-right">-</td>
+      </tr>
+      <tr>
+        <th rowspan="2">Global</th>
+        <th>Concluzia</th>
+        <td class="text-right">{{ habitat_unknown_data['conclusion_assessment']['missing'] }}</td>
+        <td class="text-right">{{ habitat_unknown_data['conclusion_assessment']['unknown'] }}</td>
+      </tr>
+      <tr>
+        <th>Tendința</th>
+        <td class="text-right">{{
+            habitat_unknown_data['conclusion_assessment_trend']['missing'] }}</td>
+        <td class="text-right">{{
+            habitat_unknown_data['conclusion_assessment_trend']['unknown'] }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
   <h4>Habitate - metodele folosite pentru valorile estimate și trenduri</h4>
   <table class="table table-bordered table-condensed">
     <thead>
@@ -20,11 +114,11 @@
     <tbody>
       {% for method_value, method_name in methods %}
         <tr>
-          <td>{{ method_name }} (%)</td>
+          <th>{{ method_name }} (%)</th>
           {% for field in fields['habitat'] %}
-            <td>{{ habitat_methods_quality[method_value][field] }}</td>
+            <td class="text-right">{{ habitat_methods_quality[method_value][field] }}</td>
           {% endfor %}
-          <td>{{ habitat_methods_quality[method_value]['average'] }}</td>
+          <td class="text-right">{{ habitat_methods_quality[method_value]['average'] }}</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -46,11 +140,11 @@
     <tbody>
       {% for method_value, method_name in methods %}
         <tr>
-          <td>{{ method_name }} (%)</td>
+          <th>{{ method_name }} (%)</th>
           {% for field in fields['species'] %}
-            <td>{{ species_methods_quality[method_value][field] }}</td>
+            <td class="text-right">{{ species_methods_quality[method_value][field] }}</td>
           {% endfor %}
-          <td>{{ species_methods_quality[method_value]['average'] }}</td>
+          <td class="text-right">{{ species_methods_quality[method_value]['average'] }}</td>
         </tr>
       {% endfor %}
     </tbody>

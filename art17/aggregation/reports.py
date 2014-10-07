@@ -71,6 +71,9 @@ METHODS = [
     ('0', 'Lipsa date'),
 ]
 
+UNKNOWN_TREND = 'x'
+UNKNOWN_CONCLUSION = 'XX'
+MISSING_METHOD = '0'
 
 def get_ordered_measures_codes():
     codes = MEASURES.keys()
@@ -515,8 +518,109 @@ def report_quality(dataset_id):
     species_methods_quality = get_methods_quality_dict(
         species, models.DataSpeciesRegion, 'species')
 
+    habitat_unknown_data = {
+        'range_surface_area': {
+            'missing': habitat.filter_by(range_method=MISSING_METHOD).count(),
+            'unknown': habitat.filter_by(range_surface_area=None).count(),
+        },
+        'range_trend': {
+            'missing': habitat.filter_by(range_trend=None).count(),
+            'unknown': habitat.filter_by(range_trend=UNKNOWN_TREND).count(),
+        },
+        'complementary_favourable_range': {
+            'missing': (habitat
+                        .filter_by(
+                            complementary_favourable_range=None,
+                            complementary_favourable_range_op=None,
+                            complementary_favourable_range_unknown=None,
+                            )
+                        .count()),
+            'unknown': (habitat
+                        .filter_by(complementary_favourable_range_unknown=1)
+                        .count()),
+        },
+        'conclusion_range': {
+            'missing': habitat.filter_by(conclusion_range=None).count(),
+            'unknown': habitat.filter_by(
+                conclusion_range=UNKNOWN_CONCLUSION,
+            ).count(),
+        },
+        'coverage_surface_area': {
+            'missing': habitat.filter_by(
+                coverage_method=MISSING_METHOD,
+            ).count(),
+            'unknown': habitat.filter_by(coverage_surface_area=None).count(),
+        },
+        'coverage_trend': {
+            'missing': habitat.filter_by(coverage_trend=None).count(),
+            'unknown': habitat.filter_by(coverage_trend=UNKNOWN_TREND).count(),
+        },
+        'complementary_favourable_area': {
+            'missing': habitat.filter_by(
+                complementary_favourable_area=None,
+                complementary_favourable_area_op=None,
+                complementary_favourable_area_unknown=None,
+            ).count(),
+            'unknown': habitat.filter_by(
+                complementary_favourable_area_unknown=1)
+            .count(),
+        },
+        'conclusion_area': {
+            'missing': habitat.filter_by(conclusion_area=None).count(),
+            'unknown': habitat.filter_by(
+                conclusion_area=UNKNOWN_CONCLUSION,
+            ).count(),
+        },
+        'conclusion_structure': {
+            'missing': habitat.filter_by(conclusion_structure=None).count(),
+            'unknown': habitat.filter_by(
+                conclusion_structure=UNKNOWN_CONCLUSION,
+            ).count(),
+        },
+        'conclusion_future': {
+            'missing': habitat.filter_by(conclusion_future=None).count(),
+            'unknown': habitat.filter_by(
+                conclusion_future=UNKNOWN_CONCLUSION,
+            ).count(),
+        },
+        'pressures': {
+            'unknown': habitat.filter_by(pressures_method=None).count(),
+        },
+        'threats': {
+            'unknown': habitat.filter_by(threats_method=None).count(),
+        },
+        'conclusion_assessment': {
+            'missing': habitat.filter_by(conclusion_assessment=None).count(),
+            'unknown': habitat.filter_by(
+                conclusion_assessment=UNKNOWN_CONCLUSION,
+            ).count(),
+        },
+        'conclusion_assessment_trend': {
+            'missing': habitat.filter_by(
+                conclusion_assessment_trend=None,
+            ).count(),
+            'unknown': habitat.filter_by(
+                conclusion_assessment_trend=UNKNOWN_TREND,
+            ).count(),
+        },
+        'natura2000': {
+            'missing': habitat.filter_by(
+                natura2000_area_min=None,
+                natura2000_area_max=None,
+            ).count(),
+        },
+    }
+    habitat_count = Decimal(habitat.count())
+    habitat_unknown_data = {
+        k: {ik: (iv * 100 / habitat_count).quantize(Decimal('1.00'))
+            for ik, iv in v.iteritems()}
+        for k, v in habitat_unknown_data.iteritems()
+    }
+
     return render_template(
         'aggregation/reports/quality.html',
         dataset=dataset, fields=METHOD_FIELDS, methods=METHODS, page='quality',
         habitat_methods_quality=habitat_methods_quality,
-        species_methods_quality=species_methods_quality)
+        species_methods_quality=species_methods_quality,
+        habitat_unknown_data=habitat_unknown_data,
+    )
