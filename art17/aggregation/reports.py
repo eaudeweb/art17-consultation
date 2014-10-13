@@ -75,6 +75,7 @@ UNKNOWN_TREND = 'x'
 UNKNOWN_CONCLUSION = 'XX'
 MISSING_METHOD = '0'
 
+
 def get_ordered_measures_codes():
     codes = MEASURES.keys()
     codes.sort()
@@ -169,6 +170,16 @@ def get_methods_quality_dict(data_query, data_class, category):
     for method, fields in methods_quality.iteritems():
         methods_quality[method]['average'] = sum(fields.values()) / len(fields)
     return methods_quality
+
+
+@aggregation.app_context_processor
+def inject_consts():
+    groups = dict(
+        models.LuGrupSpecie.query
+        .with_entities(models.LuGrupSpecie.code,
+                       models.LuGrupSpecie.description)
+    )
+    return dict(GROUPS=groups)
 
 
 @aggregation.route('/raport/<int:dataset_id>')
@@ -530,10 +541,10 @@ def report_quality(dataset_id):
         'complementary_favourable_range': {
             'missing': (habitat
                         .filter_by(
-                            complementary_favourable_range=None,
-                            complementary_favourable_range_op=None,
-                            complementary_favourable_range_unknown=None,
-                        ).count()),
+                complementary_favourable_range=None,
+                complementary_favourable_range_op=None,
+                complementary_favourable_range_unknown=None,
+            ).count()),
             'unknown': (habitat
                         .filter_by(complementary_favourable_range_unknown=1)
                         .count()),
@@ -562,7 +573,7 @@ def report_quality(dataset_id):
             ).count(),
             'unknown': habitat.filter_by(
                 complementary_favourable_area_unknown=1)
-            .count(),
+                .count(),
         },
         'conclusion_area': {
             'missing': habitat.filter_by(conclusion_area=None).count(),
@@ -629,10 +640,10 @@ def report_quality(dataset_id):
         'complementary_favourable_range': {
             'missing': (species
                         .filter_by(
-                            complementary_favourable_range=None,
-                            complementary_favourable_range_op=None,
-                            complementary_favourable_range_unknown=None,
-                        ).count()),
+                complementary_favourable_range=None,
+                complementary_favourable_range_op=None,
+                complementary_favourable_range_unknown=None,
+            ).count()),
             'unknown': (species
                         .filter_by(complementary_favourable_range_unknown=1)
                         .count()),
@@ -739,4 +750,16 @@ def report_quality(dataset_id):
         species_methods_quality=species_methods_quality,
         habitat_unknown_data=habitat_unknown_data,
         species_unknown_data=species_unknown_data,
+    )
+
+
+@aggregation.route('/raport/<int:dataset_id>/validation')
+@require(Permission(need.authenticated))
+def report_validation(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+    species, habitat = get_report_data(dataset)
+
+    return render_template(
+        'aggregation/reports/validation.html',
+        dataset=dataset, species=species, habitats=habitat,
     )

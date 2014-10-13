@@ -34,6 +34,9 @@
   <li {% if page == 'missing' %}class="active"{% endif %}>
     <a href="{{ url_for('.report_missing', dataset_id=dataset.id) }}">
       #1 Număr de rapoarte incarcate în raport cu lista de verificare {# 1 #}</a></li>
+  <li {% if page == 'validation' %}class="active"{% endif %}>
+    <a href="{{ url_for('.report_validation', dataset_id=dataset.id) }}">
+      #8 Situatie cu inregistrarile validate si cele nevalidate {# 8 #}</a></li>
   <li {% if page == 'bioreg_annex' %}class="active"{% endif %}>
     <a href="{{ url_for('.report_bioreg_annex', dataset_id=dataset.id) }}">
       #10 Numarul de habitate și specii {# 10 #}</a></li>
