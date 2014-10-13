@@ -1,0 +1,48 @@
+{% extends 'aggregation/reports/report_base.html' %}
+
+{% block pagecontent %}
+
+  <h3>Modificarea statutului de conservare al speciilor si habitatelor
+    procentual</h3>
+
+  <table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+      <th rowspan="2">An evaluare</th>
+      <th rowspan="2">Set</th>
+      <th colspan="5" class="text-center">Habitate (%)</th>
+      <th colspan="5" class="text-center">Specii (%)</th>
+    </tr>
+    <tr>
+      <th>FV</th>
+      <th>NA</th>
+      <th>U1</th>
+      <th>U2</th>
+      <th>XX</th>
+      <th>FV</th>
+      <th>NA</th>
+      <th>U1</th>
+      <th>U2</th>
+      <th>XX</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for set in datasets %}
+      <tr>
+        <td>{{ set.year_start }} - {{ set.year_end }}</td>
+        <td>#{{ set.id }}</td>
+        <td>{{ set.habitat['FV'] }}</td>
+        <td>{{ set.habitat['NA'] }}</td>
+        <td>{{ set.habitat['U1'] }}</td>
+        <td>{{ set.habitat['U2'] }}</td>
+        <td>{{ set.habitat['XX'] }}</td>
+        <td>{{ set.species['FV'] }}</td>
+        <td>{{ set.species['NA'] }}</td>
+        <td>{{ set.species['U1'] }}</td>
+        <td>{{ set.species['U2'] }}</td>
+        <td>{{ set.species['XX'] }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

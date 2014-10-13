@@ -7,6 +7,7 @@ from art17 import models, ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL, ROLE_MISSING
 from art17.aggregation.utils import aggregation_missing_data_report, \
     get_checklist
 from art17.auth import require, need
+from art17.common import get_datasets
 from art17.lookup import CONCLUSIONS
 
 PRESSURES = {
@@ -762,4 +763,27 @@ def report_validation(dataset_id):
     return render_template(
         'aggregation/reports/validation.html',
         dataset=dataset, species=species, habitats=habitat,
+    )
+
+
+@aggregation.route('/raport/<int:dataset_id>/13')
+@require(Permission(need.authenticated))
+def report_13(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+
+    datasets = list(get_datasets())
+    for ds in datasets:
+        species, habitat = get_report_data(ds)
+
+        species = species.with_entities(
+            models.DataSpeciesRegion.conclusion_assessment,
+            func.count(models.DataSpeciesRegion.id)
+        ).group_by(models.DataSpeciesRegion.conclusion_assessment)
+        ds.species = dict(species)
+        ds.species['NA'] = ds.species[None]
+        ds.habitat = {}
+
+    return render_template(
+        'aggregation/reports/13.html',
+        dataset=dataset, datasets=datasets,
     )

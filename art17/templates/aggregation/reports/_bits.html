@@ -46,6 +46,9 @@
   <li {% if page == 'bioreg' %}class="active"{% endif %}>
     <a href="{{ url_for('.report_bioreg_global', dataset_id=dataset.id) }}">
       #12 Evaluarea globala a statutului de conservare a speciilor si habitatelor pe bioregiuni</a></li>
+  <li {% if page == '13' %}class="active"{% endif %}>
+    <a href="{{ url_for('.report_13', dataset_id=dataset.id) }}">
+      #13 Modificarea statutului de conservare</a></li>
   <li {% if page == 'pressures1' %}class="active"{% endif %}>
     <a href="{{ url_for('.report_pressures1', dataset_id=dataset.id) }}">
       #18 Frecvența principalelor Presiuni/Amenințări</a></li>
