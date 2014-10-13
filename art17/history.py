@@ -7,6 +7,10 @@ from art17 import models, config
 from art17 import species
 from art17 import habitat
 from art17 import replies
+from art17.aggregation import (
+    species_record_finalize, species_record_definalize,
+    habitat_record_definalize, habitat_record_finalize,
+)
 from art17.aggregation.utils import get_history_aggregation_record_url
 from art17.common import (
     json_encode_more,
@@ -23,7 +27,6 @@ history = flask.Blueprint('history', __name__)
 history_consultation = flask.Blueprint('history_consultation', __name__)
 history_aggregation = flask.Blueprint('history_aggregation', __name__)
 
-
 TABLE_LABEL = {
     'data_species_regions': u"evaluare specie",
     'data_habitattype_regions': u"evaluare habitat",
@@ -35,10 +38,14 @@ ACTIONS_TRANSLATION = {
     ('data_species_regions', 'edit'): u'modificare comentariu',
     ('data_species_regions', 'status'): u'evaluare comentariu',
     ('data_species_regions', 'delete'): u'ștergere comentariu',
+    ('data_species_regions', 'finalize'): u'finalizare',
+    ('data_species_regions', 'definalize'): u'definalizare',
     ('data_habitattype_regions', 'add'): u'adăugare comentariu',
     ('data_habitattype_regions', 'edit'): u'modificare comentariu',
     ('data_habitattype_regions', 'status'): u'evaluare comentariu',
     ('data_habitattype_regions', 'delete'): u'ștergere comentariu',
+    ('data_habitattype_regions', 'finalize'): u'finalizare',
+    ('data_habitattype_regions', 'definalize'): u'definalizare',
     ('comment_replies', 'add'): u'adăugare replică',
     ('comment_replies', 'delete'): u'ștergere replică',
 }
@@ -72,6 +79,20 @@ def register_handlers(state):
             table='comment_replies', action='add')
     connect(replies.reply_removed, app,
             table='comment_replies', action='remove')
+
+
+@history_aggregation.record
+def register_aggregation_handlers(state):
+    app = state.app
+
+    connect(species_record_finalize, app,
+            table='data_species_regions', action='finalize')
+    connect(species_record_definalize, app,
+            table='data_species_regions', action='definalize')
+    connect(habitat_record_finalize, app,
+            table='data_habitattype_regions', action='finalize')
+    connect(habitat_record_definalize, app,
+            table='data_habitattype_regions', action='definalize')
 
 
 def connect(signal, sender, **more_kwargs):
@@ -120,13 +141,25 @@ def index(dataset_id=None):
         # Aggregation
         base_url = flask.url_for('.index', dataset_id=dataset_id)
         item_url = get_history_aggregation_record_url
+        history_items = (
+            models.History.query
+            .filter_by(dataset_id=dataset_id)
+            .filter(
+                models.History.table.startswith('data_habitattype_regions') |
+                models.History.table.startswith('data_species_regions')
+            )
+            .order_by(models.History.date.desc())
+        )
     else:
         # Consultation
         base_url = flask.url_for('.index')
         item_url = get_history_object_url
-    dataset_id = dataset_id or \
-        config.get_config_value('CONSULTATION_DATASET', '1')
-
+        dataset_id = config.get_config_value('CONSULTATION_DATASET', '1')
+        history_items = (
+            models.History.query
+            .filter_by(dataset_id=dataset_id)
+            .order_by(models.History.date.desc())
+        )
     page = int(flask.request.args.get('page', 1))
     start_date = flask.request.args.get('start_date', '')
     end_date = flask.request.args.get('end_date', '')
@@ -136,9 +169,6 @@ def index(dataset_id=None):
                               user_id=user_id)
     form.set_user_choices(dataset_id)
 
-    history_items = models.History.query \
-        .filter_by(dataset_id=dataset_id) \
-        .order_by(models.History.date.desc())
     if start_date:
         start_date = datetime.strptime(start_date, DATE_FORMAT_HISTORY)
         history_items = history_items.filter(models.History.date >= start_date)
@@ -196,6 +226,7 @@ def pretty_json_data(json_data):
                            '/specii/<subject_code>/<region_code>')
 def species_comments(subject_code, region_code, dataset_id=None):
     from art17.species import get_dal
+
     dataset = get_dal(dataset_id)
     items = dataset.get_history(subject_code, region_code)
     subject = dataset.get_subject(subject_code)
@@ -207,21 +238,24 @@ def species_comments(subject_code, region_code, dataset_id=None):
         'subject': subject,
         'region': get_biogeo_region(region_code),
         'dashboard_url':
-        flask.url_for('dashboard.species', group_code=subject.lu.group_code)
-        if dataset_id is None else '',
+            flask.url_for('dashboard.species',
+                          group_code=subject.lu.group_code)
+            if dataset_id is None else '',
         'record_index_url':
-        flask.url_for('species.index', region=region_code,
-                      species=subject_code)
-        if dataset_id is None else '',
+            flask.url_for('species.index', region=region_code,
+                          species=subject_code)
+            if dataset_id is None else '',
         'region_code': region_code,
     })
 
 
-@history_consultation.route('/activitate/habitate/<subject_code>/<region_code>')
+@history_consultation.route(
+    '/activitate/habitate/<subject_code>/<region_code>')
 @history_aggregation.route('/dataset/<int:dataset_id>/activitate'
                            '/habitate/<subject_code>/<region_code>')
 def habitat_comments(subject_code, region_code, dataset_id=None):
     from art17.habitat import get_dal
+
     dataset = get_dal(dataset_id)
     items = dataset.get_history(subject_code, region_code)
     subject = dataset.get_subject(subject_code)
@@ -234,9 +268,9 @@ def habitat_comments(subject_code, region_code, dataset_id=None):
         'subject': subject,
         'region': get_biogeo_region(region_code),
         'dashboard_url':
-        flask.url_for('dashboard.habitats') if dataset_id is None else '',
+            flask.url_for('dashboard.habitats') if dataset_id is None else '',
         'record_index_url':
-        flask.url_for('habitat.index', region=region_code,
-                      habitat=subject_code) if dataset_id is None else '',
+            flask.url_for('habitat.index', region=region_code,
+                          habitat=subject_code) if dataset_id is None else '',
         'region_code': region_code,
     })

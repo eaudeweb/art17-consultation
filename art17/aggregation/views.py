@@ -3,7 +3,6 @@ from datetime import datetime
 
 import flask
 from flask import request, redirect, url_for
-from flask.ext.principal import Permission
 from flask.views import View
 from sqlalchemy import func, or_
 from werkzeug.datastructures import MultiDict
@@ -12,7 +11,7 @@ from art17 import (
     models, forms, schemas, dal, ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL,
 )
 from art17.aggregation.refvalues import get_subject_refvals_mixed
-from art17.auth import admin_permission, require, need
+from art17.auth import admin_permission, require
 from art17.common import (
     flatten_dict,
     FINALIZED_STATUS,
@@ -24,7 +23,6 @@ from art17.habitat import (
     HabitatCommentView,
     get_dal as get_habitat_dal,
 )
-from art17.lookup import CONCLUSIONS
 from art17.scripts.xml_reports import xml_species, xml_habitats
 from art17.species import (
     detail as detail_species,
@@ -38,8 +36,8 @@ from art17.aggregation import (
     perm_finalize_record,
     perm_definalize_record,
     check_aggregation_preview_perm,
-    load_species_refval,
-    load_habitat_refval,
+    species_record_finalize, species_record_definalize,
+    habitat_record_finalize, habitat_record_definalize,
 )
 from art17.aggregation.agregator import (
     create_aggregation,
@@ -50,8 +48,7 @@ from art17.aggregation.utils import (
     record_edit_url,
     record_details_url,
     record_finalize_toggle_url,
-    aggregation_missing_data_report,
-    get_species_checklist, get_habitat_checklist, get_tabmenu_data,
+    get_tabmenu_data,
     get_tabmenu_preview,
     valid_checklist,
     get_checklist,
@@ -483,6 +480,7 @@ class RecordFinalToggle(View):
 
     def dispatch_request(self, dataset_id, record_id):
         self.record = self.record_cls.query.get(record_id)
+        app = flask.current_app._get_current_object()
         if self.finalize:
             perm_finalize_record(self.record).test()
             data = self.parse_commentform(self.record)
@@ -495,6 +493,8 @@ class RecordFinalToggle(View):
             elif self.record.cons_role == ROLE_AGGREGATED:
                 self.record.cons_status = 'unmodified'
             self.record.cons_role = ROLE_FINAL
+            self.record.cons_user_id = flask.g.identity.id # set the user id
+            self.record_finalize.send(app, ob=self.record)
             flask.flash(u"Înregistrarea a fost finalizată.", 'success')
         else:
             perm_definalize_record(self.record).test()
@@ -503,6 +503,7 @@ class RecordFinalToggle(View):
             else:
                 self.record.cons_role = ROLE_DRAFT
             self.record.cons_status = NEW_STATUS
+            self.record_definalize.send(app, ob=self.record)
             flask.flash(u"Înregistrarea a fost readusă în lucru.", 'warning')
         models.db.session.add(self.record)
         models.db.session.commit()
@@ -516,12 +517,16 @@ class SpeciesFinalToggle(RecordFinalToggle):
     record_cls = models.DataSpeciesRegion
     form_cls = forms.SpeciesComment
     parse_commentform = staticmethod(schemas.parse_species_commentform)
+    record_finalize = species_record_finalize
+    record_definalize = species_record_definalize
 
 
 class HabitatFinalToggle(RecordFinalToggle):
     record_cls = models.DataHabitattypeRegion
     form_cls = forms.HabitatComment
     parse_commentform = staticmethod(schemas.parse_habitat_commentform)
+    record_finalize = habitat_record_finalize
+    record_definalize = habitat_record_definalize
 
 
 aggregation.add_url_rule('/dataset/<int:dataset_id>/habitate/<int:record_id>'

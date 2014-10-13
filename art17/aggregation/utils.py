@@ -72,12 +72,12 @@ def get_history_aggregation_record_url(history_item):
     object_id = history_item.object_id
     if object_table == 'data_species_regions':
         obj = models.DataSpeciesRegion.query.get(object_id)
-        title = obj.species.lu.display_name
+        title = obj and obj.species.lu.display_name
     elif object_table == 'data_habitattype_regions':
         obj = models.DataHabitattypeRegion.query.get(object_id)
-        title = obj.lu.display_name
+        title = obj and obj.habitat.lu.display_name
     else:
-        raise RuntimeError("Expecting a species or a habitat")
+        return '', '', ''
     if obj:
         return record_details_url(obj), title, obj.region
     return ''

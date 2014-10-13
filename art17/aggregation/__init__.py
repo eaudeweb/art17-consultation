@@ -1,4 +1,5 @@
 # encoding: utf-8
+from blinker import Signal
 
 import flask
 from flask.ext.principal import Permission, Denial, PermissionDenied
@@ -24,6 +25,11 @@ from art17.auth import need
 
 aggregation = flask.Blueprint('aggregation', __name__)
 aggregation_manager = Manager()
+
+species_record_finalize = Signal()
+species_record_definalize = Signal()
+habitat_record_finalize = Signal()
+habitat_record_definalize = Signal()
 
 
 def perm_edit_record(record):
