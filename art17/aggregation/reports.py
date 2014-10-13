@@ -787,3 +787,46 @@ def report_13(dataset_id):
         'aggregation/reports/13.html',
         dataset=dataset, datasets=datasets,
     )
+
+
+@aggregation.route('/raport/<int:dataset_id>/14')
+@require(Permission(need.authenticated))
+def report_14(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+    species, habitat = get_report_data(dataset)
+
+    species_mod = species.filter(
+        (models.DataSpeciesRegion.range_reasons_for_change_a == 1) |
+        (models.DataSpeciesRegion.range_reasons_for_change_b == 1) |
+        (models.DataSpeciesRegion.range_reasons_for_change_c == 1) |
+        (models.DataSpeciesRegion.population_reasons_for_change_a == 1) |
+        (models.DataSpeciesRegion.population_reasons_for_change_b == 1) |
+        (models.DataSpeciesRegion.population_reasons_for_change_c == 1) |
+        (models.DataSpeciesRegion.habitat_reasons_for_change_a == 1) |
+        (models.DataSpeciesRegion.habitat_reasons_for_change_b == 1) |
+        (models.DataSpeciesRegion.habitat_reasons_for_change_c == 1)
+    ).count()
+    species_real = species.filter(
+        (models.DataSpeciesRegion.range_reasons_for_change_a == 1) |
+        (models.DataSpeciesRegion.population_reasons_for_change_a == 1) |
+        (models.DataSpeciesRegion.habitat_reasons_for_change_a == 1)
+    ).count()
+
+    habitat_mod = habitat.filter(
+        (models.DataHabitattypeRegion.range_reasons_for_change_a == 1) |
+        (models.DataHabitattypeRegion.range_reasons_for_change_b == 1) |
+        (models.DataHabitattypeRegion.range_reasons_for_change_c == 1) |
+        (models.DataHabitattypeRegion.area_reasons_for_change_a == 1) |
+        (models.DataHabitattypeRegion.area_reasons_for_change_b == 1) |
+        (models.DataHabitattypeRegion.area_reasons_for_change_c == 1)
+    ).count()
+    habitat_real = habitat.filter(
+         (models.DataHabitattypeRegion.range_reasons_for_change_a == 1) |
+         (models.DataHabitattypeRegion.area_reasons_for_change_a == 1)
+    ).count()
+
+    return render_template(
+        'aggregation/reports/14.html',
+        dataset=dataset, species_mod=species_mod, species_real=species_real,
+        habitat_mod=habitat_mod, habitat_real=habitat_real,
+    )

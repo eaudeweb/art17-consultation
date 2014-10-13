@@ -1,0 +1,29 @@
+{% extends 'aggregation/reports/report_base.html' %}
+
+{% block pagecontent %}
+
+  <h3>Pentru cate specii s-a modificat statutul de conservare al speciilor
+    si habitatelor procentual fata de raportarea anterioara</h3>
+
+  <table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Specii</th>
+      <th>Habitate</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>% din evaluari modificate</td>
+      <td>{{ species_mod }}</td>
+      <td>{{ habitat_mod }}</td>
+    </tr>
+    <tr>
+      <td>% din total modificari considerate reale</td>
+      <td>{{ species_real }}</td>
+      <td>{{ habitat_real }}</td>
+    </tr>
+    </tbody>
+  </table>
+{% endblock %}
