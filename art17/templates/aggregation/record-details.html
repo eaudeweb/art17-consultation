@@ -15,11 +15,13 @@
       {% set url = record_finalize_toggle_url(record_obj, False) %}
       <a href="{{ url }}" class="btn btn-primary aggregation-definalize">Readu în lucru</a>
       <a href="{{ history_url }}" class="btn btn-warning">Istorie</a>
+      <span>Finalizat de: {{ record_obj.cons_user_id or 'N/A' }}</span>
     {% else %}
       <a href="{{ record_edit_url(record_obj) }}" class="btn btn-default">Editează</a>
       <a href="{{ history_url }}" class="btn btn-warning">Istorie</a>
       {% set url = record_finalize_toggle_url(record_obj, True) %}
       <a href="{{ url }}" class="btn btn-primary aggregation-finalize">Finalizează</a>
+      <span>Ultima modificare: {{ record_obj.cons_user_id or 'N/A' }}</span>
     {% endif %}
     {{ super() }}
 {% endblock %}
