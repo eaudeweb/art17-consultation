@@ -41,10 +41,11 @@ def record_edit_url(record):
 
 def record_details_url(record):
     if isinstance(record, models.DataHabitattypeRegion):
-        return flask.url_for('.habitat-details', dataset_id=record.cons_dataset_id,
+        return flask.url_for('aggregation.habitat-details',
+                             dataset_id=record.cons_dataset_id,
                              record_id=record.id)
     elif isinstance(record, models.DataSpeciesRegion):
-        return flask.url_for('.species-details',
+        return flask.url_for('aggregation.species-details',
                              dataset_id=record.cons_dataset_id,
                              record_id=record.id)
     raise RuntimeError("Expecting a species or a habitat object")
@@ -64,6 +65,22 @@ def record_history_url(record):
                              region_code=record.region,
         )
     raise RuntimeError("Expecting a species or a habitat object")
+
+
+def get_history_aggregation_record_url(history_item):
+    object_table = history_item.table.strip()
+    object_id = history_item.object_id
+    if object_table == 'data_species_regions':
+        obj = models.DataSpeciesRegion.query.get(object_id)
+        title = obj.species.lu.display_name
+    elif object_table == 'data_habitattype_regions':
+        obj = models.DataHabitattypeRegion.query.get(object_id)
+        title = obj.lu.display_name
+    else:
+        raise RuntimeError("Expecting a species or a habitat")
+    if obj:
+        return record_details_url(obj), title, obj.region
+    return ''
 
 
 def record_finalize_toggle_url(record, finalize):

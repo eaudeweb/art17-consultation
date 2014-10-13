@@ -7,6 +7,7 @@ from art17 import models, config
 from art17 import species
 from art17 import habitat
 from art17 import replies
+from art17.aggregation.utils import get_history_aggregation_record_url
 from art17.common import (
     json_encode_more,
     perm_view_history,
@@ -116,9 +117,13 @@ def inject_lookup_tables():
 @admin_permission.require()
 def index(dataset_id=None):
     if dataset_id:
+        # Aggregation
         base_url = flask.url_for('.index', dataset_id=dataset_id)
+        item_url = get_history_aggregation_record_url
     else:
+        # Consultation
         base_url = flask.url_for('.index')
+        item_url = get_history_object_url
     dataset_id = dataset_id or \
         config.get_config_value('CONSULTATION_DATASET', '1')
 
@@ -148,7 +153,7 @@ def index(dataset_id=None):
     paginator = Paginator(per_page=PER_PAGE, page=page, count=count)
 
     for item in history_items:
-        result = get_history_object_url(item)
+        result = item_url(item)
         if result:
             item.url, title, region = result
             item.title = u'{0} - {1}'.format(title, region)
