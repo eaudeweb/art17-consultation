@@ -38,16 +38,21 @@ ACTIONS_TRANSLATION = {
     ('data_species_regions', 'edit'): u'modificare comentariu',
     ('data_species_regions', 'status'): u'evaluare comentariu',
     ('data_species_regions', 'delete'): u'ștergere comentariu',
-    ('data_species_regions', 'finalize'): u'finalizare',
-    ('data_species_regions', 'definalize'): u'definalizare',
     ('data_habitattype_regions', 'add'): u'adăugare comentariu',
     ('data_habitattype_regions', 'edit'): u'modificare comentariu',
     ('data_habitattype_regions', 'status'): u'evaluare comentariu',
     ('data_habitattype_regions', 'delete'): u'ștergere comentariu',
-    ('data_habitattype_regions', 'finalize'): u'finalizare',
-    ('data_habitattype_regions', 'definalize'): u'definalizare',
     ('comment_replies', 'add'): u'adăugare replică',
     ('comment_replies', 'delete'): u'ștergere replică',
+}
+
+ACTIONS_TRANSLATION_AGG = {
+    ('data_species_regions', 'edit'): u'modificare înregistrare',
+    ('data_species_regions', 'finalize'): u'finalizare',
+    ('data_species_regions', 'definalize'): u'definalizare',
+    ('data_habitattype_regions', 'edit'): u'modificare înregistrare',
+    ('data_habitattype_regions', 'finalize'): u'finalizare',
+    ('data_habitattype_regions', 'definalize'): u'definalizare',
 }
 
 PER_PAGE = 25
@@ -150,6 +155,7 @@ def index(dataset_id=None):
             )
             .order_by(models.History.date.desc())
         )
+        TRANS = ACTIONS_TRANSLATION_AGG
     else:
         # Consultation
         base_url = flask.url_for('.index')
@@ -160,6 +166,7 @@ def index(dataset_id=None):
             .filter_by(dataset_id=dataset_id)
             .order_by(models.History.date.desc())
         )
+        TRANS = ACTIONS_TRANSLATION
     page = int(flask.request.args.get('page', 1))
     start_date = flask.request.args.get('start_date', '')
     end_date = flask.request.args.get('end_date', '')
@@ -189,8 +196,9 @@ def index(dataset_id=None):
             item.title = u'{0} - {1}'.format(title, region)
         else:
             item.url = result
-        item.action = ACTIONS_TRANSLATION.get(
+        item.action = TRANS.get(
             (item.table.strip(), item.action), item.action)
+
 
     get_params = flask.request.args.to_dict()
     get_params.pop('page', None)
