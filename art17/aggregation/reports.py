@@ -762,7 +762,7 @@ def report_validation(dataset_id):
 
     return render_template(
         'aggregation/reports/validation.html',
-        dataset=dataset, species=species, habitats=habitat,
+        page='validation', dataset=dataset, species=species, habitats=habitat,
     )
 
 
@@ -791,7 +791,7 @@ def report_13(dataset_id):
 
     return render_template(
         'aggregation/reports/13.html',
-        dataset=dataset, datasets=datasets,
+        page='13', dataset=dataset, datasets=datasets,
     )
 
 
@@ -833,8 +833,9 @@ def report_14(dataset_id):
 
     return render_template(
         'aggregation/reports/14.html',
-        dataset=dataset, species_mod=species_mod, species_real=species_real,
-        habitat_mod=habitat_mod, habitat_real=habitat_real,
+        page='14', dataset=dataset, species_mod=species_mod,
+        species_real=species_real, habitat_mod=habitat_mod,
+        habitat_real=habitat_real,
     )
 
 
@@ -874,7 +875,8 @@ def report_15(dataset_id):
 
     return render_template(
         'aggregation/reports/15.html',
-        dataset=dataset, species=species_data, habitats=habitat_data,
+        page='15', dataset=dataset, species=species_data,
+        habitats=habitat_data,
     )
 
 
