@@ -927,9 +927,10 @@ def report_17(dataset_id):
             ).count(),
         },
     }
+    species_count = species.count() or 1
     for param, data in species_data.iteritems():
         for reason, value in data.iteritems():
-            species_data[param][reason] = value * 100.0 / species.count()
+            species_data[param][reason] = value * 100.0 / species_count
 
     habitat_data = {
         'range': {
@@ -955,9 +956,10 @@ def report_17(dataset_id):
             ).count(),
         },
     }
+    habitat_count = habitat.count() or 1
     for param, data in habitat_data.iteritems():
         for reason, value in data.iteritems():
-            habitat_data[param][reason] = value * 100.0 / habitat.count()
+            habitat_data[param][reason] = value * 100.0 / habitat_count
 
     return render_template(
         'aggregation/reports/17.html',
