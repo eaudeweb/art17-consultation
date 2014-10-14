@@ -876,3 +876,82 @@ def report_15(dataset_id):
         'aggregation/reports/15.html',
         dataset=dataset, species=species_data, habitats=habitat_data,
     )
+
+
+@aggregation.route('/raport/<int:dataset_id>/17')
+@require(Permission(need.authenticated))
+def report_17(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+    species, habitat = get_report_data(dataset)
+
+    species_data = {
+        'range': {
+            'real': species.filter(
+                (models.DataSpeciesRegion.range_reasons_for_change_a == 1)
+            ).count(),
+            'newinfo': species.filter(
+                (models.DataSpeciesRegion.range_reasons_for_change_b == 1)
+            ).count(),
+            'other': species.filter(
+                (models.DataSpeciesRegion.range_reasons_for_change_c == 1)
+            ).count(),
+        },
+        'population': {
+            'real': species.filter(
+                (models.DataSpeciesRegion.population_reasons_for_change_a == 1)
+            ).count(),
+            'newinfo': species.filter(
+                (models.DataSpeciesRegion.population_reasons_for_change_b == 1)
+            ).count(),
+            'other': species.filter(
+                (models.DataSpeciesRegion.population_reasons_for_change_c == 1)
+            ).count(),
+        },
+        'habitat': {
+            'real': species.filter(
+                (models.DataSpeciesRegion.habitat_reasons_for_change_a == 1)
+            ).count(),
+            'newinfo': species.filter(
+                (models.DataSpeciesRegion.habitat_reasons_for_change_b == 1)
+            ).count(),
+            'other': species.filter(
+                (models.DataSpeciesRegion.habitat_reasons_for_change_c == 1)
+            ).count(),
+        },
+    }
+    for param, data in species_data.iteritems():
+        for reason, value in data.iteritems():
+            species_data[param][reason] = value * 100.0 / species.count()
+
+    habitat_data = {
+        'range': {
+            'real': habitat.filter(
+                (models.DataHabitattypeRegion.range_reasons_for_change_a == 1)
+            ).count(),
+            'newinfo': habitat.filter(
+                (models.DataHabitattypeRegion.range_reasons_for_change_b == 1)
+            ).count(),
+            'other': habitat.filter(
+                (models.DataHabitattypeRegion.range_reasons_for_change_c == 1)
+            ).count(),
+        },
+        'area': {
+            'real': habitat.filter(
+                (models.DataHabitattypeRegion.area_reasons_for_change_a == 1)
+            ).count(),
+            'newinfo': habitat.filter(
+                (models.DataHabitattypeRegion.area_reasons_for_change_b == 1)
+            ).count(),
+            'other': habitat.filter(
+                (models.DataHabitattypeRegion.area_reasons_for_change_c == 1)
+            ).count(),
+        },
+    }
+    for param, data in habitat_data.iteritems():
+        for reason, value in data.iteritems():
+            habitat_data[param][reason] = value * 100.0 / habitat.count()
+
+    return render_template(
+        'aggregation/reports/17.html',
+        page='17', dataset=dataset, species=species_data, habitat=habitat_data,
+    )

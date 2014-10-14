@@ -1,0 +1,51 @@
+{% extends 'aggregation/reports/report_base.html' %}
+
+{% block pagecontent %}
+
+  <h3>Motivele modificărilor valorilor parametrilor raportați între două
+      perioade de raportare succesive (schimbare reala, informații noi, altă
+      metodă utilizată etc.)</h3>
+
+  <table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+      <th rowspan="2">Motiv de schimbare</th>
+      <th colspan="2">Habitate</th>
+      <th colspan="3">Specii/Subspecii</th>
+    </tr>
+    <tr>
+      <th>Suprafața areal</th>
+      <th>Suprafața distribuție</th>
+      <th>Suprafața areal</th>
+      <th>Mărimea populației</th>
+      <th>Suprafața habitatului speciei</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th>Schimbare reală</th>
+      <td>{{ habitat['range']['real'] }}</td>
+      <td>{{ habitat['area']['real'] }}</td>
+      <td>{{ species['range']['real'] }}</td>
+      <td>{{ species['population']['real'] }}</td>
+      <td>{{ species['habitat']['real'] }}</td>
+    </tr>
+    <tr>
+      <th>Informații noi</th>
+      <td>{{ habitat['range']['newinfo'] }}</td>
+      <td>{{ habitat['area']['newinfo'] }}</td>
+      <td>{{ species['range']['newinfo'] }}</td>
+      <td>{{ species['population']['newinfo'] }}</td>
+      <td>{{ species['habitat']['newinfo'] }}</td>
+    </tr>
+    <tr>
+      <th>Altă metodă utilizată</th>
+      <td>{{ habitat['range']['other'] }}</td>
+      <td>{{ habitat['area']['other'] }}</td>
+      <td>{{ species['range']['other'] }}</td>
+      <td>{{ species['population']['other'] }}</td>
+      <td>{{ species['habitat']['other'] }}</td>
+    </tr>
+    </tbody>
+  </table>
+{% endblock %}

@@ -55,6 +55,10 @@
   <li {% if page == '15' %}class="active"{% endif %}>
     <a href="{{ url_for('.report_15', dataset_id=dataset.id) }}">
       #15 Imbunatatirea/deteriorarea trendului habitatelor si speciilor</a></li>
+  <li {% if page == '17' %}class="active"{% endif %}>
+    <a href="{{ url_for('.report_17', dataset_id=dataset.id) }}">
+      #17 Motivele modificărilor valorilor parametrilor raportați între două
+      perioade de raportare succesive</a></li>
   <li {% if page == 'pressures1' %}class="active"{% endif %}>
     <a href="{{ url_for('.report_pressures1', dataset_id=dataset.id) }}">
       #18 Frecvența principalelor Presiuni/Amenințări</a></li>
