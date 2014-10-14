@@ -817,6 +817,9 @@ def report_14(dataset_id):
         (models.DataSpeciesRegion.population_reasons_for_change_a == 1) |
         (models.DataSpeciesRegion.habitat_reasons_for_change_a == 1)
     ).count()
+    species_count = species.count() or 1
+    species_mod *= 100.0 / species_count
+    species_real *= 100.0 / species_count
 
     habitat_mod = habitat.filter(
         (models.DataHabitattypeRegion.range_reasons_for_change_a == 1) |
@@ -830,6 +833,9 @@ def report_14(dataset_id):
         (models.DataHabitattypeRegion.range_reasons_for_change_a == 1) |
         (models.DataHabitattypeRegion.area_reasons_for_change_a == 1)
     ).count()
+    habitat_count = habitat.count() or 1
+    habitat_mod *= 100.0 / habitat_count
+    habitat_real *= 100.0 / habitat_count
 
     return render_template(
         'aggregation/reports/14.html',
