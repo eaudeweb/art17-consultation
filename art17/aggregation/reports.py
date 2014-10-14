@@ -965,3 +965,30 @@ def report_17(dataset_id):
         'aggregation/reports/17.html',
         page='17', dataset=dataset, species=species_data, habitat=habitat_data,
     )
+
+
+@aggregation.route('/raport/<int:dataset_id>/16')
+@require(Permission(need.authenticated))
+def report_16(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+    species, habitat = get_report_data(dataset)
+
+    groups = list(models.LuGrupSpecie.query.all())
+    CONC = CONCLUSIONS.keys() + [None]
+    species_groups = {group: {key: 0 for key in CONC} for group in groups}
+    for spec in species:
+        group = spec.species and spec.species.lu and spec.species.lu.group
+        conc = spec.conclusion_assessment or None
+        if group:
+            species_groups[group][conc] += 1
+
+    habitat_groups = {'Habitate': {key: 0 for key in CONC}}
+    for hab in habitat:
+        conc = hab.conclusion_assessment or None
+        habitat_groups['Habitate'][conc] += 1
+
+    return render_template(
+        'aggregation/reports/16.html',
+        dataset=dataset, species_groups=species_groups,
+        habitat_groups=habitat_groups,
+    )

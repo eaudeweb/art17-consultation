@@ -35,18 +35,16 @@ def create_esri_guid():
     STATUS_CLOSED,
 ) = range(3)
 
-
 DATASET_STATUSES = (
     (STATUS_NEW, u'În lucru'),
     (STATUS_CONSULTATION, u'Activ'),
     (STATUS_CLOSED, u'Consultare închisă'),
 )
-DATASET_STATUSES_LIST = [(str(a),b) for a,b in DATASET_STATUSES]
+DATASET_STATUSES_LIST = [(str(a), b) for a, b in DATASET_STATUSES]
 DATASET_STATUSES_DICT = dict(DATASET_STATUSES)
 
 
 class RoleMixin(object):
-
     def is_agg_final(self):
         """ Final in the context of aggregation """
         return self.cons_role == ROLE_FINAL
@@ -91,9 +89,9 @@ class LuHdSpecies(Base):
     __tablename__ = u'lu_hd_species'
 
     objectid = Column(
-       Integer,
-       Sequence(get_sequence_id('lu_hd_species')),
-       primary_key=True,
+        Integer,
+        Sequence(get_sequence_id('lu_hd_species')),
+        primary_key=True,
     )
     code = Column('speciescode', Numeric)
     hdname = Column(String)
@@ -110,6 +108,12 @@ class LuHdSpecies(Base):
     annexv_comment = Column(Text)
     etc_comments = Column(String)
     globalid = Column(String, default=create_esri_guid)
+
+    group = relationship(LuGrupSpecie,
+                         primaryjoin=(
+                         group_code == cast(foreign(LuGrupSpecie.code),
+                                            String(255))),
+                         lazy='joined', innerjoin=True, uselist=False)
 
     @property
     def display_name(self):
@@ -383,12 +387,17 @@ class DataHabitattypeRegion(Base, RoleMixin):
     range_trend_magnitude_max = Column('range_trend_mag_max', Numeric)
     range_trend_long_period = Column(String)
     range_trend_long = Column(String)
-    range_trend_long_magnitude_min = Column('range_trend_long_mag_min', Numeric)
-    range_trend_long_magnitude_max = Column('range_trend_long_mag_max', Numeric)
+    range_trend_long_magnitude_min = Column('range_trend_long_mag_min',
+                                            Numeric)
+    range_trend_long_magnitude_max = Column('range_trend_long_mag_max',
+                                            Numeric)
     complementary_favourable_range = Column('compl_favourable_range', Numeric)
-    complementary_favourable_range_op = Column('comp_favourable_range_op', String)
-    complementary_favourable_range_unknown = Column('comp_favourable_range_x', Numeric)
-    complementary_favourable_range_method = Column('comp_favourable_range_met', Text)
+    complementary_favourable_range_op = Column('comp_favourable_range_op',
+                                               String)
+    complementary_favourable_range_unknown = Column('comp_favourable_range_x',
+                                                    Numeric)
+    complementary_favourable_range_method = Column('comp_favourable_range_met',
+                                                   Text)
     range_reasons_for_change_a = Column('r_reasons_for_change_a', Numeric)
     range_reasons_for_change_b = Column('r_reasons_for_change_b', Numeric)
     range_reasons_for_change_c = Column('r_reasons_for_change_c', Numeric)
@@ -403,14 +412,20 @@ class DataHabitattypeRegion(Base, RoleMixin):
     coverage_trend_method = Column(String)
     coverage_trend_long_period = Column(String)
     coverage_trend_long = Column(String)
-    coverage_trend_long_magnitude_min = Column('coverage_trend_long_mag_min', Numeric)
-    coverage_trend_long_magnitude_max = Column('coverage_trend_long_mag_max', Numeric)
-    coverage_trend_long_magnitude_ci = Column('coverage_trend_long_mag_ci', Numeric)
+    coverage_trend_long_magnitude_min = Column('coverage_trend_long_mag_min',
+                                               Numeric)
+    coverage_trend_long_magnitude_max = Column('coverage_trend_long_mag_max',
+                                               Numeric)
+    coverage_trend_long_magnitude_ci = Column('coverage_trend_long_mag_ci',
+                                              Numeric)
     coverage_trend_long_method = Column(String)
     complementary_favourable_area = Column('comp_favourable_area', Numeric)
-    complementary_favourable_area_op = Column('comp_favourable_area_op', String)
-    complementary_favourable_area_unknown = Column('comp_favourable_area_x', Numeric)
-    complementary_favourable_area_method = Column('comp_favourable_area_method', Text)
+    complementary_favourable_area_op = Column('comp_favourable_area_op',
+                                              String)
+    complementary_favourable_area_unknown = Column('comp_favourable_area_x',
+                                                   Numeric)
+    complementary_favourable_area_method = Column(
+        'comp_favourable_area_method', Text)
     area_reasons_for_change_a = Column(Numeric)
     area_reasons_for_change_b = Column(Numeric)
     area_reasons_for_change_c = Column(Numeric)
@@ -418,7 +433,8 @@ class DataHabitattypeRegion(Base, RoleMixin):
     threats_method = Column(String)
     typical_species_method = Column(Text)
     justification = Column(Text)
-    structure_and_functions_method = Column('structure_and_func_method', String)
+    structure_and_functions_method = Column('structure_and_func_method',
+                                            String)
     other_relevant_information = Column(Text)
     conclusion_range = Column(String)
     conclusion_range_trend = Column(String)
@@ -447,14 +463,14 @@ class DataHabitattypeRegion(Base, RoleMixin):
     globalid = Column(String, default=create_esri_guid)
 
     habitat = relationship(u'DataHabitat',
-        backref=db.backref('regions', lazy='dynamic'))
+                           backref=db.backref('regions', lazy='dynamic'))
 
     lu = relationship(LuBiogeoreg,
                       primaryjoin=(region == foreign(LuBiogeoreg.code)),
                       innerjoin=True, uselist=False, passive_deletes=True)
 
     dataset = relationship('Dataset',
-        backref=db.backref('habitat_objs', lazy='dynamic'))
+                           backref=db.backref('habitat_objs', lazy='dynamic'))
 
     def get_pressures(self):
         return self.pressures.filter_by(type='p')
@@ -569,8 +585,9 @@ class DataSpeciesCheckList(Base):
                                                          lazy='dynamic'))
 
     lu = relationship(LuHdSpecies,
-                      primaryjoin=(natura_2000_code == cast(foreign(LuHdSpecies.code),
-                                                String(255))),
+                      primaryjoin=(
+                      natura_2000_code == cast(foreign(LuHdSpecies.code),
+                                               String(255))),
                       lazy='joined', innerjoin=True, uselist=False,
                       backref=db.backref('data_checklist')
     )
@@ -621,12 +638,17 @@ class DataSpeciesRegion(Base, RoleMixin):
     range_trend_magnitude_max = Column('range_trend_mag_max', Numeric)
     range_trend_long_period = Column(String)
     range_trend_long = Column(String)
-    range_trend_long_magnitude_min = Column('range_trend_long_mag_min', Numeric)
-    range_trend_long_magnitude_max = Column('range_trend_long_mag_max', Numeric)
+    range_trend_long_magnitude_min = Column('range_trend_long_mag_min',
+                                            Numeric)
+    range_trend_long_magnitude_max = Column('range_trend_long_mag_max',
+                                            Numeric)
     complementary_favourable_range = Column('comp_favourable_range', Numeric)
-    complementary_favourable_range_op = Column('comp_favourable_range_op', String)
-    complementary_favourable_range_unknown = Column('comp_favourable_range_x', Numeric)
-    complementary_favourable_range_method = Column('comp_favourable_range_met', Text)
+    complementary_favourable_range_op = Column('comp_favourable_range_op',
+                                               String)
+    complementary_favourable_range_unknown = Column('comp_favourable_range_x',
+                                                    Numeric)
+    complementary_favourable_range_method = Column('comp_favourable_range_met',
+                                                   Text)
     range_reasons_for_change_a = Column('r_reasons_for_change_a', Numeric)
     range_reasons_for_change_b = Column('r_reasons_for_change_b', Numeric)
     range_reasons_for_change_c = Column('r_reasons_for_change_c', Numeric)
@@ -649,17 +671,27 @@ class DataSpeciesRegion(Base, RoleMixin):
     population_trend_method = Column('pop_trend_method', String)
     population_trend_long_period = Column('pop_trend_long_period', String)
     population_trend_long = Column(String)
-    population_trend_long_magnitude_min = Column('pop_trend_long_mag_min', Numeric)
-    population_trend_long_magnitude_max = Column('pop_trend_long_mag_max', Numeric)
-    population_trend_long_magnitude_ci = Column('pop_trend_long_mag_ci', Numeric)
+    population_trend_long_magnitude_min = Column('pop_trend_long_mag_min',
+                                                 Numeric)
+    population_trend_long_magnitude_max = Column('pop_trend_long_mag_max',
+                                                 Numeric)
+    population_trend_long_magnitude_ci = Column('pop_trend_long_mag_ci',
+                                                Numeric)
     population_trend_long_method = Column('pop_trend_long_method', String)
-    complementary_favourable_population = Column('comp_favourable_pop', Numeric)
-    complementary_favourable_population_op = Column('comp_favourable_pop_op', String)
-    complementary_favourable_population_unknown = Column('comp_favourable_pop_x', Numeric)
-    complementary_favourable_population_method = Column('comp_favourable_pop_met', Text)
-    population_reasons_for_change_a = Column('pop_reasons_for_change_a', Numeric)
-    population_reasons_for_change_b = Column('pop_reasons_for_change_b', Numeric)
-    population_reasons_for_change_c = Column('pop_reasons_for_change_c', Numeric)
+    complementary_favourable_population = Column('comp_favourable_pop',
+                                                 Numeric)
+    complementary_favourable_population_op = Column('comp_favourable_pop_op',
+                                                    String)
+    complementary_favourable_population_unknown = Column(
+        'comp_favourable_pop_x', Numeric)
+    complementary_favourable_population_method = Column(
+        'comp_favourable_pop_met', Text)
+    population_reasons_for_change_a = Column('pop_reasons_for_change_a',
+                                             Numeric)
+    population_reasons_for_change_b = Column('pop_reasons_for_change_b',
+                                             Numeric)
+    population_reasons_for_change_c = Column('pop_reasons_for_change_c',
+                                             Numeric)
     habitat_surface_area = Column(Numeric)
     habitat_date = Column(String)
     habitat_method = Column(String)
@@ -670,9 +702,12 @@ class DataSpeciesRegion(Base, RoleMixin):
     habitat_trend_long_period = Column(String)
     habitat_trend_long = Column(String)
     habitat_area_suitable = Column(Numeric)
-    habitat_reasons_for_change_a = Column('habitat_reasons_for_change__61', Numeric)
-    habitat_reasons_for_change_b = Column('habitat_reasons_for_change__62', Numeric)
-    habitat_reasons_for_change_c = Column('habitat_reasons_for_change__63', Numeric)
+    habitat_reasons_for_change_a = Column('habitat_reasons_for_change__61',
+                                          Numeric)
+    habitat_reasons_for_change_b = Column('habitat_reasons_for_change__62',
+                                          Numeric)
+    habitat_reasons_for_change_c = Column('habitat_reasons_for_change__63',
+                                          Numeric)
     pressures_method = Column(String)
     threats_method = Column(String)
     justification = Column(Text)
@@ -691,7 +726,8 @@ class DataSpeciesRegion(Base, RoleMixin):
     natura2000_population_unit = Column(String)
     natura2000_population_min = Column(Numeric)
     natura2000_population_max = Column(Numeric)
-    natura2000_population_method = Column('natura2000_population_metho_82', String)
+    natura2000_population_method = Column('natura2000_population_metho_82',
+                                          String)
     natura2000_population_trend = Column(String)
     validated = Column(Integer)
     validation_date = Column(DateTime)
@@ -707,14 +743,14 @@ class DataSpeciesRegion(Base, RoleMixin):
     cons_dataset_id = Column(ForeignKey('datasets.objectid'))
 
     species = relationship(u'DataSpecies',
-        backref=db.backref('regions', lazy='dynamic'))
+                           backref=db.backref('regions', lazy='dynamic'))
 
     lu = relationship(LuBiogeoreg,
                       primaryjoin=(region == foreign(LuBiogeoreg.code)),
                       innerjoin=True, uselist=False, passive_deletes=True)
 
     dataset = relationship('Dataset',
-        backref=db.backref('species_objs', lazy='dynamic'))
+                           backref=db.backref('species_objs', lazy='dynamic'))
 
     def get_pressures(self):
         return self.pressures.filter_by(type='p')
@@ -762,8 +798,10 @@ class DataMeasures(Base):
         primary_key=True,
     )
     measurecode = Column(String)
-    species_id = Column('measure_sr_id', Numeric, ForeignKey(DataSpeciesRegion.id))
-    habitat_id = Column('measure_hr_id', Numeric, ForeignKey(DataHabitattypeRegion.id))
+    species_id = Column('measure_sr_id', Numeric,
+                        ForeignKey(DataSpeciesRegion.id))
+    habitat_id = Column('measure_hr_id', Numeric,
+                        ForeignKey(DataHabitattypeRegion.id))
     type_legal = Column(Numeric)
     type_administrative = Column(Numeric)
     type_contractual = Column(Numeric)
@@ -778,24 +816,27 @@ class DataMeasures(Base):
     broad_evaluation_longterm = Column(Numeric)
     broad_evaluation_noeffect = Column(Numeric)
     broad_evaluation_unknown = Column(Numeric)
-    broad_evaluation_notevaluated = Column('broad_evaluation_notevaluat_18', Numeric)
+    broad_evaluation_notevaluated = Column('broad_evaluation_notevaluat_18',
+                                           Numeric)
     validated = Column(Integer)
     validation_date = Column(DateTime)
     globalid = Column(String, default=create_esri_guid)
 
     species = relationship(u'DataSpeciesRegion',
-        backref=db.backref('measures', lazy='dynamic'))
+                           backref=db.backref('measures', lazy='dynamic'))
 
     habitat = relationship(u'DataHabitattypeRegion',
-        backref=db.backref('measures', lazy='dynamic'))
+                           backref=db.backref('measures', lazy='dynamic'))
 
     lu = relationship(LuMeasures,
                       primaryjoin=(measurecode == foreign(LuMeasures.code)),
                       innerjoin=True, uselist=False, passive_deletes=True)
 
     lu_ranking = relationship(LuRanking,
-                      primaryjoin=(rankingcode == foreign(LuRanking.code)),
-                      innerjoin=True, uselist=False, passive_deletes=True)
+                              primaryjoin=(
+                              rankingcode == foreign(LuRanking.code)),
+                              innerjoin=True, uselist=False,
+                              passive_deletes=True)
 
     @hybrid_property
     def ranking(self):
@@ -835,18 +876,19 @@ class DataPressuresThreats(Base):
     globalid = Column(String, default=create_esri_guid)
 
     species = relationship(u'DataSpeciesRegion',
-        backref=db.backref('pressures', lazy='dynamic'))
+                           backref=db.backref('pressures', lazy='dynamic'))
 
     habitat = relationship(u'DataHabitattypeRegion',
-        backref=db.backref('pressures', lazy='dynamic'))
+                           backref=db.backref('pressures', lazy='dynamic'))
 
     lu = relationship(LuThreats,
                       primaryjoin=(pressure == foreign(LuThreats.code)),
                       innerjoin=True, uselist=False, passive_deletes=True)
 
     lu_ranking = relationship(LuRanking,
-                      primaryjoin=(ranking == foreign(LuRanking.code)),
-                      innerjoin=True, uselist=False, passive_deletes=True)
+                              primaryjoin=(ranking == foreign(LuRanking.code)),
+                              innerjoin=True, uselist=False,
+                              passive_deletes=True)
 
     @hybrid_property
     def code(self):
@@ -866,18 +908,21 @@ class DataPressuresThreatsPollution(Base):
         Sequence(get_sequence_id('data_pressures_threats_pol')),
         primary_key=True,
     )
-    pollution_pressure_id = Column(Integer, ForeignKey(DataPressuresThreats.id))
+    pollution_pressure_id = Column(Integer,
+                                   ForeignKey(DataPressuresThreats.id))
     pollution_qualifier = Column(String)
     validated = Column(Integer)
     validation_date = Column(DateTime)
     globalid = Column(String, default=create_esri_guid)
 
     lu = relationship(LuPollution,
-            primaryjoin=(pollution_qualifier == foreign(LuPollution.code)),
-            innerjoin=True, uselist=False, passive_deletes=True)
+                      primaryjoin=(
+                      pollution_qualifier == foreign(LuPollution.code)),
+                      innerjoin=True, uselist=False, passive_deletes=True)
 
     pressure = relationship(u'DataPressuresThreats',
-        backref=db.backref('pollutions', lazy='dynamic', cascade='all'))
+                            backref=db.backref('pollutions', lazy='dynamic',
+                                               cascade='all'))
 
     @hybrid_property
     def code(self):
@@ -907,7 +952,7 @@ class DataHabitatSpecies(Base):
     globalid = Column(String, default=create_esri_guid)
 
     habitats = relationship(u'DataHabitattypeRegion',
-        backref=db.backref('species', lazy='dynamic'))
+                            backref=db.backref('species', lazy='dynamic'))
 
 
 class Attachment(Base):
@@ -934,10 +979,9 @@ class CommentReply(Base):
 
     @property
     def thread_users(self):
-        return {r for r, in db.session.query(CommentReply.user_id)\
-            .filter_by(parent_table=self.parent_table)\
+        return {r for r, in db.session.query(CommentReply.user_id) \
+            .filter_by(parent_table=self.parent_table) \
             .filter_by(parent_id=self.parent_id)}
-
 
 
 class CommentReplyRead(Base):
@@ -1064,6 +1108,7 @@ class RefValue(Base):
 @db_manager.option('alembic_args', nargs=argparse.REMAINDER)
 def alembic(alembic_args):
     from alembic.config import CommandLine
+
     logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
     logging.getLogger('alembic').setLevel(logging.INFO)
     CommandLine().main(argv=alembic_args)

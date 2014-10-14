@@ -1,0 +1,69 @@
+{% extends 'aggregation/reports/report_base.html' %}
+
+{% block pagecontent %}
+
+  <h3>Evaluarea globala a statutului de conservare pe fiecare grup de
+    specii si categorie de habitat procentual (%)</h3>
+
+  <h4>Specii</h4>
+  <table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+      <th rowspan="2">Grup specii</th>
+      <th rowspan="2">Perioada evaluare</th>
+      <th colspan="5" class="text-center">Specii (%)</th>
+    </tr>
+    <tr>
+      <th>FV</th>
+      <th>NA</th>
+      <th>XX</th>
+      <th>U1</th>
+      <th>U2</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for group, data in species_groups.iteritems() %}
+      <tr>
+        <td>{{ group.description }}</td>
+        <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>
+        <td>{{ data.FV }}</td>
+        <td>{{ data[none] }}</td>
+        <td>{{ data.XX }}</td>
+        <td>{{ data.U1 }}</td>
+        <td>{{ data.U2 }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <h4>Habitate</h4>
+  <table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+      <th rowspan="2">Grup</th>
+      <th rowspan="2">Perioada evaluare</th>
+      <th colspan="5" class="text-center">Habitate (%)</th>
+    </tr>
+    <tr>
+      <th>FV</th>
+      <th>NA</th>
+      <th>XX</th>
+      <th>U1</th>
+      <th>U2</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for group, data in habitat_groups.iteritems() %}
+      <tr>
+        <td>{{ group }}</td>
+        <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>
+        <td>{{ data.FV }}</td>
+        <td>{{ data[none] }}</td>
+        <td>{{ data.XX }}</td>
+        <td>{{ data.U1 }}</td>
+        <td>{{ data.U2 }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
