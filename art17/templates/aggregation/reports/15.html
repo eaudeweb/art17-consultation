@@ -1,0 +1,53 @@
+{% extends 'aggregation/reports/report_base.html' %}
+
+{% block pagecontent %}
+
+  <h3>Imbunatatirea/deteriorarea trendului habitatelor si speciilor cu
+    statut de conservare inadecvat/nefavorabil (%)</h3>
+
+  <table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+      <th>Statutul de <br/>conservare</th>
+      <th>U1+</th>
+      <th>U1=</th>
+      <th>U1-</th>
+      <th>U1x</th>
+      <th>U1na</th>
+      <th>U2+</th>
+      <th>U2=</th>
+      <th>U2-</th>
+      <th>U2x</th>
+      <th>U2na</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Habitate (%)</td>
+      <td>{{ habitats['U1+'] or 0 }}</td>
+      <td>{{ habitats['U1='] or 0 }}</td>
+      <td>{{ habitats['U1-'] or 0 }}</td>
+      <td>{{ habitats['U1x'] or 0 }}</td>
+      <td>{{ habitats['U1'] or 0 }}</td>
+      <td>{{ habitats['U2+'] or 0 }}</td>
+      <td>{{ habitats['U2='] or 0 }}</td>
+      <td>{{ habitats['U2-'] or 0 }}</td>
+      <td>{{ habitats['U2x'] or 0 }}</td>
+      <td>{{ habitats['U2'] or 0 }}</td>
+    </tr>
+    <tr>
+      <td>Specii (%)</td>
+      <td>{{ species['U1+'] or 0 }}</td>
+      <td>{{ species['U1='] or 0 }}</td>
+      <td>{{ species['U1-'] or 0 }}</td>
+      <td>{{ species['U1x'] or 0 }}</td>
+      <td>{{ species['U1'] or 0 }}</td>
+      <td>{{ species['U2+'] or 0 }}</td>
+      <td>{{ species['U2='] or 0 }}</td>
+      <td>{{ species['U2-'] or 0 }}</td>
+      <td>{{ species['U2x'] or 0 }}</td>
+      <td>{{ species['U2'] or 0 }}</td>
+    </tr>
+    </tbody>
+  </table>
+{% endblock %}

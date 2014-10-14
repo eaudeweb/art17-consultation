@@ -827,12 +827,52 @@ def report_14(dataset_id):
         (models.DataHabitattypeRegion.area_reasons_for_change_c == 1)
     ).count()
     habitat_real = habitat.filter(
-         (models.DataHabitattypeRegion.range_reasons_for_change_a == 1) |
-         (models.DataHabitattypeRegion.area_reasons_for_change_a == 1)
+        (models.DataHabitattypeRegion.range_reasons_for_change_a == 1) |
+        (models.DataHabitattypeRegion.area_reasons_for_change_a == 1)
     ).count()
 
     return render_template(
         'aggregation/reports/14.html',
         dataset=dataset, species_mod=species_mod, species_real=species_real,
         habitat_mod=habitat_mod, habitat_real=habitat_real,
+    )
+
+
+@aggregation.route('/raport/<int:dataset_id>/15')
+@require(Permission(need.authenticated))
+def report_15(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+    species, habitat = get_report_data(dataset)
+
+    species_data = species.with_entities(
+        func.concat(models.DataSpeciesRegion.conclusion_assessment,
+                    models.DataSpeciesRegion.conclusion_assessment_trend),
+        func.count(models.DataSpeciesRegion.id)
+    ).group_by(models.DataSpeciesRegion.conclusion_assessment,
+               models.DataSpeciesRegion.conclusion_assessment_trend)
+
+    species_count = species.filter(
+        models.DataSpeciesRegion.conclusion_assessment.startswith('U')
+    ).count() or 1
+    species_data = dict(species_data) or {}
+    for key, value in species_data.iteritems():
+        species_data[key] = value * 100.0 / species_count
+
+    habitat_data = habitat.with_entities(
+        func.concat(models.DataHabitattypeRegion.conclusion_assessment,
+                    models.DataHabitattypeRegion.conclusion_assessment_trend),
+        func.count(models.DataHabitattypeRegion.id)
+    ).group_by(models.DataHabitattypeRegion.conclusion_assessment,
+               models.DataHabitattypeRegion.conclusion_assessment_trend)
+
+    habitat_count = habitat.filter(
+        models.DataHabitattypeRegion.conclusion_assessment.startswith('U')
+    ).count() or 1
+    habitat_data = dict(habitat_data) or {}
+    for key, value in habitat_data.iteritems():
+        habitat_data[key] = value * 100.0 / habitat_count
+
+    return render_template(
+        'aggregation/reports/15.html',
+        dataset=dataset, species=species_data, habitats=habitat_data,
     )

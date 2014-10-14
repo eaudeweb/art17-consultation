@@ -52,6 +52,9 @@
   <li {% if page == '14' %}class="active"{% endif %}>
     <a href="{{ url_for('.report_14', dataset_id=dataset.id) }}">
       #14 Modificarea statutului de conservare procentual</a></li>
+  <li {% if page == '15' %}class="active"{% endif %}>
+    <a href="{{ url_for('.report_15', dataset_id=dataset.id) }}">
+      #15 Imbunatatirea/deteriorarea trendului habitatelor si speciilor</a></li>
   <li {% if page == 'pressures1' %}class="active"{% endif %}>
     <a href="{{ url_for('.report_pressures1', dataset_id=dataset.id) }}">
       #18 Frecvența principalelor Presiuni/Amenințări</a></li>
