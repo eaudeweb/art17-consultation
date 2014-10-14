@@ -780,8 +780,14 @@ def report_13(dataset_id):
             func.count(models.DataSpeciesRegion.id)
         ).group_by(models.DataSpeciesRegion.conclusion_assessment)
         ds.species = dict(species)
-        ds.species['NA'] = ds.species[None]
-        ds.habitat = {}
+        ds.species['NA'] = ds.species.get(None, 0)
+
+        habitats = habitat.with_entities(
+            models.DataHabitattypeRegion.conclusion_assessment,
+            func.count(models.DataHabitattypeRegion.id)
+        ).group_by(models.DataHabitattypeRegion.conclusion_assessment)
+        ds.habitat = dict(habitats)
+        ds.habitat['NA'] = ds.habitat.get(None, 0)
 
     return render_template(
         'aggregation/reports/13.html',

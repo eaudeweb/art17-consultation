@@ -31,16 +31,16 @@
       <tr>
         <td>{{ set.year_start }} - {{ set.year_end }}</td>
         <td>#{{ set.id }}</td>
-        <td>{{ set.habitat['FV'] }}</td>
-        <td>{{ set.habitat['NA'] }}</td>
-        <td>{{ set.habitat['U1'] }}</td>
-        <td>{{ set.habitat['U2'] }}</td>
-        <td>{{ set.habitat['XX'] }}</td>
-        <td>{{ set.species['FV'] }}</td>
-        <td>{{ set.species['NA'] }}</td>
-        <td>{{ set.species['U1'] }}</td>
-        <td>{{ set.species['U2'] }}</td>
-        <td>{{ set.species['XX'] }}</td>
+        <td>{{ set.habitat['FV'] or 0 }}</td>
+        <td>{{ set.habitat['NA'] or 0 }}</td>
+        <td>{{ set.habitat['U1'] or 0 }}</td>
+        <td>{{ set.habitat['U2'] or 0 }}</td>
+        <td>{{ set.habitat['XX'] or 0 }}</td>
+        <td>{{ set.species['FV'] or 0 }}</td>
+        <td>{{ set.species['NA'] or 0 }}</td>
+        <td>{{ set.species['U1'] or 0 }}</td>
+        <td>{{ set.species['U2'] or 0 }}</td>
+        <td>{{ set.species['XX'] or 0 }}</td>
       </tr>
     {% endfor %}
     </tbody>
