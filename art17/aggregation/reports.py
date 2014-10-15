@@ -783,28 +783,32 @@ def report_validation(dataset_id):
 @require(Permission(need.authenticated))
 def report_13(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
+    species, habitat = get_report_data(dataset)
 
-    datasets = list(get_datasets())
-    for ds in datasets:
-        species, habitat = get_report_data(ds)
+    species_count = species.count() or 1
+    habitat_count = habitat.count() or 1
 
-        species = species.with_entities(
-            models.DataSpeciesRegion.conclusion_assessment,
-            func.count(models.DataSpeciesRegion.id)
-        ).group_by(models.DataSpeciesRegion.conclusion_assessment)
-        ds.species = dict(species)
-        ds.species['NA'] = ds.species.get(None, 0)
+    species = species.with_entities(
+        models.DataSpeciesRegion.conclusion_assessment,
+        func.count(models.DataSpeciesRegion.id)
+    ).group_by(models.DataSpeciesRegion.conclusion_assessment)
+    dataset.species = dict(species)
+    dataset.species['NA'] = dataset.species.get(None, 0)
+    for key, value in dataset.species.iteritems():
+        dataset.species[key] = value * 100.0 / species_count
 
-        habitats = habitat.with_entities(
-            models.DataHabitattypeRegion.conclusion_assessment,
-            func.count(models.DataHabitattypeRegion.id)
-        ).group_by(models.DataHabitattypeRegion.conclusion_assessment)
-        ds.habitat = dict(habitats)
-        ds.habitat['NA'] = ds.habitat.get(None, 0)
+    habitats = habitat.with_entities(
+        models.DataHabitattypeRegion.conclusion_assessment,
+        func.count(models.DataHabitattypeRegion.id)
+    ).group_by(models.DataHabitattypeRegion.conclusion_assessment)
+    dataset.habitat = dict(habitats)
+    dataset.habitat['NA'] = dataset.habitat.get(None, 0)
+    for key, value in dataset.habitat.iteritems():
+        dataset.habitat[key] = value * 100.0 / habitat_count
 
     return render_template(
         'aggregation/reports/13.html',
-        page='13', dataset=dataset, datasets=datasets,
+        page='13', dataset=dataset,
     )
 
 

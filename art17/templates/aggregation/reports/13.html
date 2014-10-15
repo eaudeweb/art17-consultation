@@ -27,22 +27,20 @@
     </tr>
     </thead>
     <tbody>
-    {% for set in datasets %}
       <tr>
-        <td>{{ set.year_start }} - {{ set.year_end }}</td>
-        <td>#{{ set.id }}</td>
-        <td>{{ set.habitat['FV'] or 0 }}</td>
-        <td>{{ set.habitat['NA'] or 0 }}</td>
-        <td>{{ set.habitat['U1'] or 0 }}</td>
-        <td>{{ set.habitat['U2'] or 0 }}</td>
-        <td>{{ set.habitat['XX'] or 0 }}</td>
-        <td>{{ set.species['FV'] or 0 }}</td>
-        <td>{{ set.species['NA'] or 0 }}</td>
-        <td>{{ set.species['U1'] or 0 }}</td>
-        <td>{{ set.species['U2'] or 0 }}</td>
-        <td>{{ set.species['XX'] or 0 }}</td>
+        <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>
+        <td>#{{ dataset.id }}</td>
+        <td>{{ dataset.habitat['FV'] or 0 }}</td>
+        <td>{{ dataset.habitat['NA'] or 0 }}</td>
+        <td>{{ dataset.habitat['U1'] or 0 }}</td>
+        <td>{{ dataset.habitat['U2'] or 0 }}</td>
+        <td>{{ dataset.habitat['XX'] or 0 }}</td>
+        <td>{{ dataset.species['FV'] or 0 }}</td>
+        <td>{{ dataset.species['NA'] or 0 }}</td>
+        <td>{{ dataset.species['U1'] or 0 }}</td>
+        <td>{{ dataset.species['U2'] or 0 }}</td>
+        <td>{{ dataset.species['XX'] or 0 }}</td>
       </tr>
-    {% endfor %}
     </tbody>
   </table>
 {% endblock %}
