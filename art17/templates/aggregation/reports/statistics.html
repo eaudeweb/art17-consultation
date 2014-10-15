@@ -1,0 +1,69 @@
+{% extends 'aggregation/reports/report_base.html' %}
+
+{% block pagecontent %}
+
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#missing-species" data-toggle="tab">Specii</a>
+    </li>
+    <li>
+      <a href="#missing-habitat" data-toggle="tab">Habitate</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="missing-species">
+        {#  {{ report_table(dataset.reports.species) }}#}
+        <p>Numărul de specii în
+            checklist: {{ dataset.reports.species.get('total_species') }} </p>
+
+        <p>Numărul total de rapoarte în
+            checklist: {{ dataset.reports.species.get('total_reports') }}</p>
+
+        <p>Numărul de rapoarte agregate
+            (noi): {{ dataset.details.species_new }}</p>
+
+        <p>Numărul de rapoarte în
+            lucru: {{ dataset.details.species_draft }}</p>
+
+        <p>Numărul de rapoarte
+            finalizate: {{ dataset.details.species_final }}</p>
+
+        <p>{{ dataset.reports.missing.missing_species.count() }} <strong>specii
+            lipsă</strong></p>
+
+        {#    {{ table(dataset.reports.missing.bioreg_list,#}
+        {#           dataset.reports.missing.species_list,#}
+        {#           cell,#}
+        {#           dataset.reports.missing.species_regions) }}#}
+
+    </div>
+    <div class="tab-pane" id="missing-habitat">
+
+        {#  {{ report_table(dataset.reports.habitat) }}#}
+        <p>Numărul de habitate în
+            checklist: {{ dataset.reports.habitat.get('total_habitats') }} </p>
+
+        <p>Numărul total de rapoarte în
+            checklist: {{ dataset.reports.habitat.get('total_reports') }}</p>
+
+        <p>Numărul de rapoarte agregate
+            (noi): {{ dataset.details.habitat_new }}</p>
+
+        <p>Numărul de rapoarte în
+            lucru: {{ dataset.details.habitat_draft }}</p>
+
+        <p>Numărul de rapoarte
+            finalizate: {{ dataset.details.habitat_final }}</p>
+
+        <p>{{ dataset.reports.missing.missing_habitats.count() }} <strong>habitate
+            lipsă</strong></p>
+
+        {#    {{ table(dataset.reports.missing.bioreg_list,#}
+        {#           dataset.reports.missing.habitat_list,#}
+        {#           cell,#}
+        {#           dataset.reports.missing.habitat_regions) }}#}
+    </div>
+  </div>
+
+{% endblock%}

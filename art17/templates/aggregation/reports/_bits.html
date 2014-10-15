@@ -73,4 +73,7 @@
   <li {% if page == 'quality' %}class="active"{% endif %}>
     <a href="{{ url_for('.report_quality', dataset_id=dataset.id) }}">
       #22 Rapoarte de calitate a datelor pentru specii/habitate</a></li>
+  <li {% if page == 'stats' %}class="active"{% endif %}>
+    <a href="{{ url_for('.report_statistics', dataset_id=dataset.id) }}">
+      #23 Statistici pentru specii/habitate</a></li>
 {% endmacro %}
