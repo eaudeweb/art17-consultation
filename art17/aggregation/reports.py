@@ -760,6 +760,19 @@ def report_validation(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
 
+    species = (
+        species
+        .join(models.DataSpeciesRegion.species)
+        .join(models.DataSpecies.lu)
+        .join(models.LuHdSpecies.group)
+        .order_by(models.LuGrupSpecie.description, models.DataSpecies.code)
+    )
+    habitat = (
+        habitat
+        .join(models.DataHabitattypeRegion.habitat)
+        .order_by(models.DataHabitat.code)
+    )
+
     return render_template(
         'aggregation/reports/validation.html',
         page='validation', dataset=dataset, species=species, habitats=habitat,
