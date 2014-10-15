@@ -245,8 +245,18 @@ def report(dataset_id):
 def report_conservation_status(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
-    species = sorted(species, key=lambda x: getattr(x.species, 'code', None))
-    habitats = sorted(habitats, key=lambda x: getattr(x.habitat, 'code', None))
+    species = list(
+        species
+        .join(models.DataSpeciesRegion.species)
+        .join(models.DataSpecies.lu)
+        .join(models.LuHdSpecies.group)
+        .order_by(models.LuGrupSpecie.description, models.DataSpecies.code)
+    )
+    habitats = list(
+        habitats
+        .join(models.DataHabitattypeRegion.habitat)
+        .order_by(models.DataHabitat.code)
+    )
     all_species = len(species) or 1
     all_habitats = len(habitats) or 1
     stats = {
@@ -285,8 +295,6 @@ def report_conservation_status(dataset_id):
         .with_entities(models.LuGrupSpecie.code,
                        models.LuGrupSpecie.description)
     )
-    species = list(species)
-    species.sort(key=lambda s: s.species.name if s.species else s)
 
     return render_template(
         'aggregation/reports/conservation_status.html',
