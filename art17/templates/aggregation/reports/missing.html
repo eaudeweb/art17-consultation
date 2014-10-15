@@ -3,6 +3,9 @@
 {% block pagecontent %}
 
   <h3>Număr de rapoarte incarcate în raport cu lista de verificare</h3>
+  <p>Numarul de rapoarte incarcate (rapoarte xml) in raport cu lista de
+  verificare (rapoarte in plus, rapoarte in minus) cu evidentierea bioregiunii
+  in care a fost sau nu a fost incarcat raportul.</p>
   <h4>Specii</h4>
   <table class="table table-bordered table-condensed">
     <thead>
@@ -30,6 +33,13 @@
       <th colspan="5" class="text-center">Rapoarte în minus față de lista de verificare</th>
     </tr>
     </tbody>
+    {% if not missing_species.count() %}
+    <tbody>
+    <tr>
+      <td colspan="5" class="text-center">Nu există rapoarte în minus față de lista de verificare.</td>
+    </tr>
+    </tbody>
+    {% endif %}
     <tbody>
     {% for species in missing_species %}
       <tr>
@@ -70,6 +80,13 @@
       <th colspan="5" class="text-center">Rapoarte în minus față de lista de verificare</th>
     </tr>
     </tbody>
+    {% if not missing_habitats.count() %}
+    <tbody>
+    <tr>
+      <td colspan="5" class="text-center">Nu există rapoarte în minus față de lista de verificare.</td>
+    </tr>
+    </tbody>
+    {% endif %}
     <tbody>
     {% for habitat in missing_habitats %}
       <tr>
