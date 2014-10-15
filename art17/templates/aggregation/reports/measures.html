@@ -16,7 +16,7 @@
     <tbody>
       {% for measure_code in ordered_keys %}
       <tr>
-          <th>{{ measure_code }} {{ names[measure_code] }}</th>
+          <td>{{ measure_code }} {{ names[measure_code] }}</td>
           <td class="text-right">{{ count[measure_code]['species'] }}</td>
           <td class="text-right">{{ count[measure_code]['habitat'] }}</td>
       </tr>

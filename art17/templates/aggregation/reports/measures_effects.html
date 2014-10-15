@@ -33,13 +33,13 @@
        <tbody>
          {% for measure_code in ordered_keys %}
          <tr>
-             <th>{{ measure_code }} {{ names[measure_code] }}</th>
-             <td class="text-right">{{ species_count[measure_code]['broad_evaluation_maintain'] }}</td>
-             <td class="text-right">{{ species_count[measure_code]['broad_evaluation_enhance'] }}</td>
-             <td class="text-right">{{ species_count[measure_code]['broad_evaluation_longterm'] }}</td>
-             <td class="text-right">{{ species_count[measure_code]['broad_evaluation_noeffect'] }}</td>
+             <td>{{ measure_code }} {{ names[measure_code] }}</td>
+             <td class="text-right">{{ species_count[measure_code]['broad_evaluation_maintain'] }}%</td>
+             <td class="text-right">{{ species_count[measure_code]['broad_evaluation_enhance'] }}%</td>
+             <td class="text-right">{{ species_count[measure_code]['broad_evaluation_longterm'] }}%</td>
+             <td class="text-right">{{ species_count[measure_code]['broad_evaluation_noeffect'] }}%</td>
              <td class="text-right">{{ species_count[measure_code]['broad_evaluation_unknown'] +
-                 species_count[measure_code]['broad_evaluation_notevaluated'] }}</td>
+                 species_count[measure_code]['broad_evaluation_notevaluated'] }}%</td>
          </tr>
          {% endfor %}
        </tbody>
@@ -64,13 +64,13 @@
         <tbody>
           {% for measure_code in ordered_keys %}
           <tr>
-              <th>{{ measure_code }} {{ names[measure_code] }}</th>
-              <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_maintain'] }}</td>
-              <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_enhance'] }}</td>
-              <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_longterm'] }}</td>
-              <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_noeffect'] }}</td>
+              <td>{{ measure_code }} {{ names[measure_code] }}</td>
+              <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_maintain'] }}%</td>
+              <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_enhance'] }}%</td>
+              <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_longterm'] }}%</td>
+              <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_noeffect'] }}%</td>
               <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_unknown'] +
-                  habitat_count[measure_code]['broad_evaluation_notevaluated'] }}</td>
+                  habitat_count[measure_code]['broad_evaluation_notevaluated'] }}%</td>
           </tr>
           {% endfor %}
         </tbody>
