@@ -245,8 +245,8 @@ def report(dataset_id):
 def report_conservation_status(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
-    species = list(species)
-    habitats = list(habitats)
+    species = sorted(species, key=lambda x: getattr(x.species, 'code', None))
+    habitats = sorted(habitats, key=lambda x: getattr(x.habitat, 'code', None))
     all_species = len(species) or 1
     all_habitats = len(habitats) or 1
     stats = {
