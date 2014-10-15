@@ -990,6 +990,9 @@ def report_16(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
 
+    species_count = species.count() or 1
+    habitat_count = habitat.count() or 1
+
     groups = list(models.LuGrupSpecie.query.all())
     CONC = CONCLUSIONS.keys() + [None]
     species_groups = {group: {key: 0 for key in CONC} for group in groups}
@@ -998,11 +1001,17 @@ def report_16(dataset_id):
         conc = spec.conclusion_assessment or None
         if group:
             species_groups[group][conc] += 1
+    for group, species in species_groups.iteritems():
+        for key, value in species.iteritems():
+            species[key] = value * 100.0 / species_count
 
     habitat_groups = {'Habitate': {key: 0 for key in CONC}}
     for hab in habitat:
         conc = hab.conclusion_assessment or None
         habitat_groups['Habitate'][conc] += 1
+    for group, habitat in habitat_groups.iteritems():
+        for key, value in habitat.iteritems():
+            habitat[key] = value * 100.0 / habitat_count
 
     return render_template(
         'aggregation/reports/16.html',
