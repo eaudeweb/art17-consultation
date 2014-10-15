@@ -1,5 +1,7 @@
 {% extends 'aggregation/reports/report_base.html' %}
 
+{% from 'aggregation/reports/_bits.html' import percent %}
+
 {% block pagecontent %}
 
   <h3>Pentru cate specii s-a modificat statutul de conservare al speciilor
@@ -16,13 +18,13 @@
     <tbody>
     <tr>
       <th>% din evaluari modificate</th>
-      <td>{{ species_mod }}</td>
-      <td>{{ habitat_mod }}</td>
+      {{ percent(species_mod, '0%') }}</td>
+      {{ percent(habitat_mod, '0%') }}</td>
     </tr>
     <tr>
       <th>% din total modificari considerate reale</th>
-      <td>{{ species_real }}</td>
-      <td>{{ habitat_real }}</td>
+      {{ percent(species_real, '0%') }}</td>
+      {{ percent(habitat_real, '0%') }}</td>
     </tr>
     </tbody>
   </table>

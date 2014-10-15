@@ -1,5 +1,7 @@
 {% extends 'aggregation/reports/report_base.html' %}
 
+{% from 'aggregation/reports/_bits.html' import percent %}
+
 {% block pagecontent %}
 
   <h3>Imbunatatirea/deteriorarea trendului habitatelor si speciilor cu
@@ -24,29 +26,29 @@
     <tbody>
     <tr>
       <td>Habitate (%)</td>
-      <td>{{ habitats['U1+'] or 0 }}</td>
-      <td>{{ habitats['U1='] or 0 }}</td>
-      <td>{{ habitats['U1-'] or 0 }}</td>
-      <td>{{ habitats['U1x'] or 0 }}</td>
-      <td>{{ habitats['U1'] or 0 }}</td>
-      <td>{{ habitats['U2+'] or 0 }}</td>
-      <td>{{ habitats['U2='] or 0 }}</td>
-      <td>{{ habitats['U2-'] or 0 }}</td>
-      <td>{{ habitats['U2x'] or 0 }}</td>
-      <td>{{ habitats['U2'] or 0 }}</td>
+      {{ percent(habitats['U1+'], '0%') }}
+      {{ percent(habitats['U1='], '0%') }}
+      {{ percent(habitats['U1-'], '0%') }}
+      {{ percent(habitats['U1x'], '0%') }}
+      {{ percent(habitats['U1'], '0%') }}
+      {{ percent(habitats['U2+'], '0%') }}
+      {{ percent(habitats['U2='], '0%') }}
+      {{ percent(habitats['U2-'], '0%') }}
+      {{ percent(habitats['U2x'], '0%') }}
+      {{ percent(habitats['U2'], '0%') }}
     </tr>
     <tr>
       <td>Specii (%)</td>
-      <td>{{ species['U1+'] or 0 }}</td>
-      <td>{{ species['U1='] or 0 }}</td>
-      <td>{{ species['U1-'] or 0 }}</td>
-      <td>{{ species['U1x'] or 0 }}</td>
-      <td>{{ species['U1'] or 0 }}</td>
-      <td>{{ species['U2+'] or 0 }}</td>
-      <td>{{ species['U2='] or 0 }}</td>
-      <td>{{ species['U2-'] or 0 }}</td>
-      <td>{{ species['U2x'] or 0 }}</td>
-      <td>{{ species['U2'] or 0 }}</td>
+      {{ percent(species['U1+'], '0%') }}
+      {{ percent(species['U1='], '0%') }}
+      {{ percent(species['U1-'], '0%') }}
+      {{ percent(species['U1x'], '0%') }}
+      {{ percent(species['U1'], '0%') }}
+      {{ percent(species['U2+'], '0%') }}
+      {{ percent(species['U2='], '0%') }}
+      {{ percent(species['U2-'], '0%') }}
+      {{ percent(species['U2x'], '0%') }}
+      {{ percent(species['U2'], '0%') }}
     </tr>
     </tbody>
   </table>

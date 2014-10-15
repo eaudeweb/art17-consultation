@@ -1,5 +1,7 @@
 {% extends 'aggregation/reports/report_base.html' %}
 
+{% from 'aggregation/reports/_bits.html' import percent %}
+
 {% block pagecontent %}
 
   <h3>Motivele modificărilor valorilor parametrilor raportați între două
@@ -24,27 +26,27 @@
     <tbody>
     <tr>
       <th>Schimbare reală</th>
-      <td>{{ habitat['range']['real'] }}</td>
-      <td>{{ habitat['area']['real'] }}</td>
-      <td>{{ species['range']['real'] }}</td>
-      <td>{{ species['population']['real'] }}</td>
-      <td>{{ species['habitat']['real'] }}</td>
+      {{ percent(habitat['range']['real'], '0%') }}
+      {{ percent(habitat['area']['real'], '0%') }}
+      {{ percent(species['range']['real'], '0%') }}
+      {{ percent(species['population']['real'], '0%') }}
+      {{ percent(species['habitat']['real'], '0%') }}
     </tr>
     <tr>
       <th>Informații noi</th>
-      <td>{{ habitat['range']['newinfo'] }}</td>
-      <td>{{ habitat['area']['newinfo'] }}</td>
-      <td>{{ species['range']['newinfo'] }}</td>
-      <td>{{ species['population']['newinfo'] }}</td>
-      <td>{{ species['habitat']['newinfo'] }}</td>
+      {{ percent(habitat['range']['newinfo'], '0%') }}
+      {{ percent(habitat['area']['newinfo'], '0%') }}
+      {{ percent(species['range']['newinfo'], '0%') }}
+      {{ percent(species['population']['newinfo'], '0%') }}
+      {{ percent(species['habitat']['newinfo'], '0%') }}
     </tr>
     <tr>
       <th>Altă metodă utilizată</th>
-      <td>{{ habitat['range']['other'] }}</td>
-      <td>{{ habitat['area']['other'] }}</td>
-      <td>{{ species['range']['other'] }}</td>
-      <td>{{ species['population']['other'] }}</td>
-      <td>{{ species['habitat']['other'] }}</td>
+      {{ percent(habitat['range']['other'], '0%') }}
+      {{ percent(habitat['area']['other'], '0%') }}
+      {{ percent(species['range']['other'], '0%') }}
+      {{ percent(species['population']['other'], '0%') }}
+      {{ percent(species['habitat']['other'], '0%') }}
     </tr>
     </tbody>
   </table>

@@ -23,10 +23,10 @@
   </table>
 {% endmacro %}
 
-{% macro percent(percent) %}
+{% macro percent(percent, default='-') %}
   <td class="text-right">
     <span class="">{%- if percent -%}{{ "%.2f" % percent }}%{% else %}
-      -{% endif %}</span>
+        {{ default }}{% endif %}</span>
   </td>
 {% endmacro %}
 

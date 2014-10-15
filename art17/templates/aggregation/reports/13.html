@@ -1,5 +1,7 @@
 {% extends 'aggregation/reports/report_base.html' %}
 
+{% from 'aggregation/reports/_bits.html' import percent %}
+
 {% block pagecontent %}
 
   <h3>Modificarea statutului de conservare al speciilor si habitatelor
@@ -30,16 +32,16 @@
       <tr>
         <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>
         <td>#{{ dataset.id }}</td>
-        <td>{{ dataset.habitat['FV'] or 0 }}</td>
-        <td>{{ dataset.habitat['NA'] or 0 }}</td>
-        <td>{{ dataset.habitat['U1'] or 0 }}</td>
-        <td>{{ dataset.habitat['U2'] or 0 }}</td>
-        <td>{{ dataset.habitat['XX'] or 0 }}</td>
-        <td>{{ dataset.species['FV'] or 0 }}</td>
-        <td>{{ dataset.species['NA'] or 0 }}</td>
-        <td>{{ dataset.species['U1'] or 0 }}</td>
-        <td>{{ dataset.species['U2'] or 0 }}</td>
-        <td>{{ dataset.species['XX'] or 0 }}</td>
+        {{ percent(dataset.habitat['FV'], '0%') }}
+        {{ percent(dataset.habitat['NA'], '0%') }}
+        {{ percent(dataset.habitat['U1'], '0%') }}
+        {{ percent(dataset.habitat['U2'], '0%') }}
+        {{ percent(dataset.habitat['XX'], '0%') }}
+        {{ percent(dataset.species['FV'], '0%') }}
+        {{ percent(dataset.species['NA'], '0%') }}
+        {{ percent(dataset.species['U1'], '0%') }}
+        {{ percent(dataset.species['U2'], '0%') }}
+        {{ percent(dataset.species['XX'], '0%') }}
       </tr>
     </tbody>
   </table>
