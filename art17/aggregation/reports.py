@@ -1015,6 +1015,6 @@ def report_16(dataset_id):
 
     return render_template(
         'aggregation/reports/16.html',
-        dataset=dataset, species_groups=species_groups,
+        page='16', dataset=dataset, species_groups=species_groups,
         habitat_groups=habitat_groups,
     )
