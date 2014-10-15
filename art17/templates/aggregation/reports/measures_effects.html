@@ -5,62 +5,77 @@
   <h3>Procentele evaluărilor de habitate/specii pentru care au fost raportate
       efectele unei anumite măsuri de conservare</h3>
 
-  <table class="table table-bordered table-condensed">
-    <thead>
-    <tr>
-      <th rowspan="2">Măsuri</th>
-      <th colspan="5">HABITATE (%)</th>
-    </tr>
-    <tr>
-      <th>Menținere</th>
-      <th>Îmbunătățire</th>
-      <th>Termen lung</th>
-      <th>Fără efect</th>
-      <th>Necunoscut/Neevaluat</th>
-    </tr>
-    </thead>
-    <tbody>
-      {% for measure_code in ordered_keys %}
-      <tr>
-          <th>{{ measure_code }} {{ names[measure_code] }}</th>
-          <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_maintain'] }}</td>
-          <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_enhance'] }}</td>
-          <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_longterm'] }}</td>
-          <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_noeffect'] }}</td>
-          <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_unknown'] +
-              habitat_count[measure_code]['broad_evaluation_notevaluated'] }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#effects-species" data-toggle="tab">Specii</a>
+    </li>
+    <li>
+      <a href="#effects-habitat" data-toggle="tab">Habitate</a>
+    </li>
+  </ul>
 
-  <table class="table table-bordered table-condensed">
-    <thead>
-    <tr>
-      <th rowspan="2">Măsuri</th>
-      <th colspan="5">SPECII (%)</th>
-    </tr>
-    <tr>
-      <th>Menținere</th>
-      <th>Îmbunătățire</th>
-      <th>Termen lung</th>
-      <th>Fără efect</th>
-      <th>Necunoscut/Neevaluat</th>
-    </tr>
-    </thead>
-    <tbody>
-      {% for measure_code in ordered_keys %}
-      <tr>
-          <th>{{ measure_code }} {{ names[measure_code] }}</th>
-          <td class="text-right">{{ species_count[measure_code]['broad_evaluation_maintain'] }}</td>
-          <td class="text-right">{{ species_count[measure_code]['broad_evaluation_enhance'] }}</td>
-          <td class="text-right">{{ species_count[measure_code]['broad_evaluation_longterm'] }}</td>
-          <td class="text-right">{{ species_count[measure_code]['broad_evaluation_noeffect'] }}</td>
-          <td class="text-right">{{ species_count[measure_code]['broad_evaluation_unknown'] +
-              species_count[measure_code]['broad_evaluation_notevaluated'] }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="tab-content">
+    <div class="tab-pane active" id="effects-species">
+     <table class="table table-bordered table-condensed">
+       <thead>
+       <tr>
+         <th rowspan="2">Măsuri</th>
+         <th colspan="5">SPECII (%)</th>
+       </tr>
+       <tr>
+         <th>Menținere</th>
+         <th>Îmbunătățire</th>
+         <th>Termen lung</th>
+         <th>Fără efect</th>
+         <th>Necunoscut/Neevaluat</th>
+       </tr>
+       </thead>
+       <tbody>
+         {% for measure_code in ordered_keys %}
+         <tr>
+             <th>{{ measure_code }} {{ names[measure_code] }}</th>
+             <td class="text-right">{{ species_count[measure_code]['broad_evaluation_maintain'] }}</td>
+             <td class="text-right">{{ species_count[measure_code]['broad_evaluation_enhance'] }}</td>
+             <td class="text-right">{{ species_count[measure_code]['broad_evaluation_longterm'] }}</td>
+             <td class="text-right">{{ species_count[measure_code]['broad_evaluation_noeffect'] }}</td>
+             <td class="text-right">{{ species_count[measure_code]['broad_evaluation_unknown'] +
+                 species_count[measure_code]['broad_evaluation_notevaluated'] }}</td>
+         </tr>
+         {% endfor %}
+       </tbody>
+     </table>
+
+    </div>
+    <div class="tab-pane" id="effects-habitat">
+      <table class="table table-bordered table-condensed">
+        <thead>
+        <tr>
+          <th rowspan="2">Măsuri</th>
+          <th colspan="5">HABITATE (%)</th>
+        </tr>
+        <tr>
+          <th>Menținere</th>
+          <th>Îmbunătățire</th>
+          <th>Termen lung</th>
+          <th>Fără efect</th>
+          <th>Necunoscut/Neevaluat</th>
+        </tr>
+        </thead>
+        <tbody>
+          {% for measure_code in ordered_keys %}
+          <tr>
+              <th>{{ measure_code }} {{ names[measure_code] }}</th>
+              <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_maintain'] }}</td>
+              <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_enhance'] }}</td>
+              <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_longterm'] }}</td>
+              <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_noeffect'] }}</td>
+              <td class="text-right">{{ habitat_count[measure_code]['broad_evaluation_unknown'] +
+                  habitat_count[measure_code]['broad_evaluation_notevaluated'] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 
 {% endblock %}

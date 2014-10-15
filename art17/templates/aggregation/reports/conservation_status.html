@@ -26,92 +26,104 @@
 
   <h3>Evaluarea globala a statutului de conservare a speciilor si habitatelor</h3>
 
-  <h4>Specii</h4>
-  <table class="table table-bordered table-condensed">
-    <thead>
-    <tr>
-      <th>Nume</th>
-      <th>Grup</th>
-      <th>Cod N2000</th>
-      <th>Bioregiune</th>
-      <th>Evaluare Areal</th>
-      <th>Evaluare Populație</th>
-      <th>Evaluare Habitate</th>
-      <th>Evaluare Perspective</th>
-      <th>Evaluare Globală</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for spec in species %}
-      <tr>
-        {% if spec.species %}
-        <td>{{ spec.species.lu and spec.species.lu.hdname }}</td>
-        <td>
-          {% set group=spec.species.lu and spec.species.lu.group_code %}
-          {{ GROUPS.get(group, group) }}
-        </td>
-        <td>{{ spec.species.code }}</td>
-        {% else %}
-        <td colspan="3"><em>valoare lipsă</em></td>
-        {% endif %}
-        <td>{{ spec.region }}</td>
-        {{ conclusion_cell(spec.conclusion_range) }}
-        {{ conclusion_cell(spec.conclusion_population) }}
-        {{ conclusion_cell(spec.conclusion_habitat) }}
-        {{ conclusion_cell(spec.conclusion_future) }}
-        {{ conclusion_cell(spec.conclusion_assessment) }}
-      </tr>
-    {% endfor %}</tbody>
-    <tfoot>
-    <tr>
-      <th colspan="4">Total:</th>
-      {{ conclusion_stats(stats['species']['range']) }}
-      {{ conclusion_stats(stats['species']['population']) }}
-      {{ conclusion_stats(stats['species']['habitat']) }}
-      {{ conclusion_stats(stats['species']['future']) }}
-      {{ conclusion_stats(stats['species']['assessment']) }}
-    </tr>
-    </tfoot>
-  </table>
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#conservation-species" data-toggle="tab">Specii</a>
+    </li>
+    <li>
+      <a href="#conservation-habitat" data-toggle="tab">Habitate</a>
+    </li>
+  </ul>
 
-  <h4>Habitate</h4>
-  <table class="table table-bordered table-condensed">
-    <tr>
-      <th>Nume</th>
-      <th>Cod N2000</th>
-      <th>Bioregiune</th>
-      <th>Evaluare Areal</th>
-      <th>Evaluare Suprafața</th>
-      <th>Evaluare Struct. func</th>
-      <th>Evaluare Perspectiva</th>
-      <th>Evaluare Globală</th>
-    </tr>
-    {% for hab in habitats %}
-      <tr>
-        {% if hab.habitat %}
-        <td>{{ hab.habitat.lu and hab.habitat.lu.hd_name }}</td>
-        <td>{{ hab.habitat.code }}</td>
-        {% else %}
-        <td colspan="2"><em>valoare lipsă</em></td>
-        {% endif %}
-        <td>{{ hab.region }}</td>
-        {{ conclusion_cell(hab.conclusion_range) }}
-        {{ conclusion_cell(hab.conclusion_area) }}
-        {{ conclusion_cell(hab.conclusion_structure) }}
-        {{ conclusion_cell(hab.conclusion_future) }}
-        {{ conclusion_cell(hab.conclusion_assessment) }}
-      </tr>
-    {% endfor %}
-    <tfoot>
-    <tr>
-      <th colspan="3">Total:</th>
-      {{ conclusion_stats(stats['habitats']['range']) }}
-      {{ conclusion_stats(stats['habitats']['area']) }}
-      {{ conclusion_stats(stats['habitats']['structure']) }}
-      {{ conclusion_stats(stats['habitats']['future']) }}
-      {{ conclusion_stats(stats['habitats']['assessment']) }}
-    </tr>
-    </tfoot>
-  </table>
+  <div class="tab-content">
+    <div class="tab-pane active" id="conservation-species">
+     <table class="table table-bordered table-condensed">
+       <thead>
+       <tr>
+         <th>Nume</th>
+         <th>Grup</th>
+         <th>Cod N2000</th>
+         <th>Bioregiune</th>
+         <th>Evaluare Areal</th>
+         <th>Evaluare Populație</th>
+         <th>Evaluare Habitate</th>
+         <th>Evaluare Perspective</th>
+         <th>Evaluare Globală</th>
+       </tr>
+       </thead>
+       <tbody>
+       {% for spec in species %}
+         <tr>
+           {% if spec.species %}
+           <td>{{ spec.species.lu and spec.species.lu.hdname }}</td>
+           <td>
+             {% set group=spec.species.lu and spec.species.lu.group_code %}
+             {{ GROUPS.get(group, group) }}
+           </td>
+           <td>{{ spec.species.code }}</td>
+           {% else %}
+           <td colspan="3"><em>valoare lipsă</em></td>
+           {% endif %}
+           <td>{{ spec.region }}</td>
+           {{ conclusion_cell(spec.conclusion_range) }}
+           {{ conclusion_cell(spec.conclusion_population) }}
+           {{ conclusion_cell(spec.conclusion_habitat) }}
+           {{ conclusion_cell(spec.conclusion_future) }}
+           {{ conclusion_cell(spec.conclusion_assessment) }}
+         </tr>
+       {% endfor %}</tbody>
+       <tfoot>
+       <tr>
+         <th colspan="4">Total:</th>
+         {{ conclusion_stats(stats['species']['range']) }}
+         {{ conclusion_stats(stats['species']['population']) }}
+         {{ conclusion_stats(stats['species']['habitat']) }}
+         {{ conclusion_stats(stats['species']['future']) }}
+         {{ conclusion_stats(stats['species']['assessment']) }}
+       </tr>
+       </tfoot>
+     </table>
+    </div>
+    <div class="tab-pane" id="conservation-habitat">
+     <table class="table table-bordered table-condensed">
+       <tr>
+         <th>Nume</th>
+         <th>Cod N2000</th>
+         <th>Bioregiune</th>
+         <th>Evaluare Areal</th>
+         <th>Evaluare Suprafața</th>
+         <th>Evaluare Struct. func</th>
+         <th>Evaluare Perspectiva</th>
+         <th>Evaluare Globală</th>
+       </tr>
+       {% for hab in habitats %}
+         <tr>
+           {% if hab.habitat %}
+           <td>{{ hab.habitat.lu and hab.habitat.lu.hd_name }}</td>
+           <td>{{ hab.habitat.code }}</td>
+           {% else %}
+           <td colspan="2"><em>valoare lipsă</em></td>
+           {% endif %}
+           <td>{{ hab.region }}</td>
+           {{ conclusion_cell(hab.conclusion_range) }}
+           {{ conclusion_cell(hab.conclusion_area) }}
+           {{ conclusion_cell(hab.conclusion_structure) }}
+           {{ conclusion_cell(hab.conclusion_future) }}
+           {{ conclusion_cell(hab.conclusion_assessment) }}
+         </tr>
+       {% endfor %}
+       <tfoot>
+       <tr>
+         <th colspan="3">Total:</th>
+         {{ conclusion_stats(stats['habitats']['range']) }}
+         {{ conclusion_stats(stats['habitats']['area']) }}
+         {{ conclusion_stats(stats['habitats']['structure']) }}
+         {{ conclusion_stats(stats['habitats']['future']) }}
+         {{ conclusion_stats(stats['habitats']['assessment']) }}
+       </tr>
+       </tfoot>
+     </table>
+    </div>
+  </div>
 
 {% endblock %}

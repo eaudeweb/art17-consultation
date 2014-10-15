@@ -10,59 +10,72 @@
 
   <h3>Situatie cu inregistrarile validate si cele nevalidate</h3>
 
-  <h4>Specii</h4>
-  <table class="table table-bordered table-condensed">
-    <thead>
-    <tr>
-      <th>Grup</th>
-      <th>Cod</th>
-      <th>Specie</th>
-      <th>Bioregiune</th>
-      <th>Validator</th>
-      <th>Status</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for spec in species %}
-      <tr>
-        <td>
-          {% set group=spec.species.lu and spec.species.lu.group_code %}
-          {{ GROUPS.get(group, group) }}</td>
-        <td>{{ spec.species and spec.species.code }}</td>
-        <td>{{ spec.species and spec.species.lu and spec.species.lu.hdname }}</td>
-        <td>{{ spec.region }}</td>
-        <td>{{ spec.cons_user_id }}</td>
-        <td>
-          {{ status(spec) }}
-        </td>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#validation-species" data-toggle="tab">Specii</a>
+    </li>
+    <li>
+      <a href="#validation-habitat" data-toggle="tab">Habitate</a>
+    </li>
+  </ul>
 
-  <h4>Habitate</h4>
-  <table class="table table-bordered">
-    <thead>
-    <tr>
-      <th>Cod</th>
-      <th>Habitat</th>
-      <th>Bioregiune</th>
-      <th>Validator</th>
-      <th>Status</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for hab in habitats %}
-      <tr>
-        <td>{{ hab.habitat and hab.habitat.code }}</td>
-        <td>{{ hab.habitat and hab.habitat.lu and hab.habitat.lu.hd_name }}</td>
-        <td>{{ hab.region }}</td>
-        <td>{{ hab.cons_user_id }}</td>
-        <td>
-          {{ status(hab) }}
-        </td>
-      </tr>
-    {% endfor %}
-    </tbody>
+  <div class="tab-content">
+    <div class="tab-pane active" id="validation-species">
+      <table class="table table-bordered table-condensed">
+        <thead>
+        <tr>
+          <th>Grup</th>
+          <th>Cod</th>
+          <th>Specie</th>
+          <th>Bioregiune</th>
+          <th>Validator</th>
+          <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for spec in species %}
+          <tr>
+            <td>
+              {% set group=spec.species.lu and spec.species.lu.group_code %}
+              {{ GROUPS.get(group, group) }}</td>
+            <td>{{ spec.species and spec.species.code }}</td>
+            <td>{{ spec.species and spec.species.lu and spec.species.lu.hdname }}</td>
+            <td>{{ spec.region }}</td>
+            <td>{{ spec.cons_user_id }}</td>
+            <td>
+              {{ status(spec) }}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
   </table>
+    </div>
+    <div class="tab-pane" id="validation-habitat">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Cod</th>
+          <th>Habitat</th>
+          <th>Bioregiune</th>
+          <th>Validator</th>
+          <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for hab in habitats %}
+          <tr>
+            <td>{{ hab.habitat and hab.habitat.code }}</td>
+            <td>{{ hab.habitat and hab.habitat.lu and hab.habitat.lu.hd_name }}</td>
+            <td>{{ hab.region }}</td>
+            <td>{{ hab.cons_user_id }}</td>
+            <td>
+              {{ status(hab) }}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 {% endblock %}

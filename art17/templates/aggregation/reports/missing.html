@@ -6,95 +6,107 @@
   <p>Numarul de rapoarte incarcate (rapoarte xml) in raport cu lista de
   verificare (rapoarte in plus, rapoarte in minus) cu evidentierea bioregiunii
   in care a fost sau nu a fost incarcat raportul.</p>
-  <h4>Specii</h4>
-  <table class="table table-bordered table-condensed">
-    <thead>
-    <tr>
-      <th>Grup Specie</th>
-      <th>Cod N2000</th>
-      <th>Denumire științifică<br/>
-        (denumire populară)
-      </th>
-      <th>Anexa DH</th>
-      <th>Bioregiune</th>
-    </tr>
-    </thead>
-    <tbody class="thead">
-    <tr>
-      <th colspan="5" class="text-center">Rapoarte în plus față de lista de verificare</th>
-    </tr>
-    <tr>
-      <td colspan="5" class="text-center">Nu există rapoarte în plus față de lista de verificare.</td>
-    </tr>
-    </tbody>
 
-    <tbody class="thead">
-    <tr>
-      <th colspan="5" class="text-center">Rapoarte în minus față de lista de verificare</th>
-    </tr>
-    </tbody>
-    {% if not missing_species.count() %}
-    <tbody>
-    <tr>
-      <td colspan="5" class="text-center">Nu există rapoarte în minus față de lista de verificare.</td>
-    </tr>
-    </tbody>
-    {% endif %}
-    <tbody>
-    {% for species in missing_species %}
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#missing-species" data-toggle="tab">Specii</a>
+    </li>
+    <li>
+      <a href="#missing-habitat" data-toggle="tab">Habitate</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="missing-species">
+      <table class="table table-bordered table-condensed">
+        <thead>
+        <tr>
+          <th>Grup Specie</th>
+          <th>Cod N2000</th>
+          <th>Denumire științifică<br/>
+            (denumire populară)
+          </th>
+          <th>Anexa DH</th>
+          <th>Bioregiune</th>
+        </tr>
+        </thead>
+        <tbody class="thead">
+        <tr>
+          <th colspan="5" class="text-center">Rapoarte în plus față de lista de verificare</th>
+        </tr>
+        <tr>
+          <td colspan="5" class="text-center">Nu există rapoarte în plus față de lista de verificare.</td>
+        </tr>
+        </tbody>
+        <tbody class="thead">
+        <tr>
+          <th colspan="5" class="text-center">Rapoarte în minus față de lista de verificare</th>
+        </tr>
+        </tbody>
+        {% if not missing_species.count() %}
+        <tbody>
+        <tr>
+          <td colspan="5" class="text-center">Nu există rapoarte în minus față de lista de verificare.</td>
+        </tr>
+        </tbody>
+        {% endif %}
+        <tbody>
+        {% for species in missing_species %}
+          <tr>
+            <td>{{ GROUPS.get(species.species.lu.group_code, species.species.lu.group_code) }}</td>
+            <td>{{ species.species.code }}</td>
+            <td>{{ species.species.lu.speciesname }}
+              {% if species.species.common_speciesname %}
+                ({{ species.species.common_speciesname }})
+              {% endif %}
+            </td>
+            <td>{{ species.species.lu.dh_list }}</td>
+            <td>{{ species.region }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-pane" id="missing-habitat">
+      <table class="table table-bordered table-condensed">
+      <thead>
       <tr>
-        <td>{{ GROUPS.get(species.species.lu.group_code, species.species.lu.group_code) }}</td>
-        <td>{{ species.species.code }}</td>
-        <td>{{ species.species.lu.speciesname }}
-          {% if species.species.common_speciesname %}
-            ({{ species.species.common_speciesname }})
-          {% endif %}
-        </td>
-        <td>{{ species.species.lu.dh_list }}</td>
-        <td>{{ species.region }}</td>
+        <th>Cod N2000</th>
+        <th>Habitat</th>
+        <th>Bioregiune</th>
       </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody class="thead">
+        <tr>
+          <th colspan="5" class="text-center">Rapoarte în plus față de lista de verificare</th>
+        </tr>
+        <tr>
+          <td colspan="5" class="text-center">Nu există rapoarte în plus față de lista de verificare.</td>
+        </tr>
+        </tbody>
+        <tbody class="thead">
+        <tr>
+          <th colspan="5" class="text-center">Rapoarte în minus față de lista de verificare</th>
+        </tr>
+        </tbody>
+        {% if not missing_habitats.count() %}
+        <tbody>
+        <tr>
+          <td colspan="5" class="text-center">Nu există rapoarte în minus față de lista de verificare.</td>
+        </tr>
+        </tbody>
+        {% endif %}
+        <tbody>
+        {% for habitat in missing_habitats %}
+          <tr>
+          <td>{{ habitat.habitat.code }}</td>
+          <td>{{ habitat.habitat and habitat.habitat.lu.name_ro }}</td>
+          <td>{{ habitat.region }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-  <h4>Habitate</h4>
-  <table class="table table-bordered table-condensed">
-  <thead>
-  <tr>
-    <th>Cod N2000</th>
-    <th>Habitat</th>
-    <th>Bioregiune</th>
-  </tr>
-  </thead>
-  <tbody class="thead">
-    <tr>
-      <th colspan="5" class="text-center">Rapoarte în plus față de lista de verificare</th>
-    </tr>
-    <tr>
-      <td colspan="5" class="text-center">Nu există rapoarte în plus față de lista de verificare.</td>
-    </tr>
-    </tbody>
-
-    <tbody class="thead">
-    <tr>
-      <th colspan="5" class="text-center">Rapoarte în minus față de lista de verificare</th>
-    </tr>
-    </tbody>
-    {% if not missing_habitats.count() %}
-    <tbody>
-    <tr>
-      <td colspan="5" class="text-center">Nu există rapoarte în minus față de lista de verificare.</td>
-    </tr>
-    </tbody>
-    {% endif %}
-    <tbody>
-    {% for habitat in missing_habitats %}
-      <tr>
-      <td>{{ habitat.habitat.code }}</td>
-      <td>{{ habitat.habitat and habitat.habitat.lu.name_ro }}</td>
-      <td>{{ habitat.region }}</td>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
 {% endblock %}
