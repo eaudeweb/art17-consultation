@@ -38,11 +38,11 @@
          <tr>
            <td>{{ group.description }}</td>
            <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>
-           <td>{{ data.FV }}</td>
-           <td>{{ data[none] }}</td>
-           <td>{{ data.XX }}</td>
-           <td>{{ data.U1 }}</td>
-           <td>{{ data.U2 }}</td>
+           {{ percent(data.FV, '0%') }}
+           {{ percent(data[none], '0%') }}
+           {{ percent(data.XX, '0%') }}
+           {{ percent(data.U1, '0%') }}
+           {{ percent(data.U2, '0%') }}
          </tr>
        {% endfor %}
        </tbody>
@@ -69,11 +69,11 @@
          <tr>
            <td>{{ group }}</td>
            <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>
-           <td>{{ data.FV }}</td>
-           <td>{{ data[none] }}</td>
-           <td>{{ data.XX }}</td>
-           <td>{{ data.U1 }}</td>
-           <td>{{ data.U2 }}</td>
+           {{ percent(data.FV, '0%') }}
+           {{ percent(data[none], '0%') }}
+           {{ percent(data.XX, '0%') }}
+           {{ percent(data.U1, '0%') }}
+           {{ percent(data.U2, '0%') }}
          </tr>
        {% endfor %}
        </tbody>
