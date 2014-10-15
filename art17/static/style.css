@@ -491,3 +491,7 @@ a.conclusion:hover {
 body thead {
     background-color: #fcfcfc;
 }
+
+.content .nav-tabs {
+    margin-bottom: 10px;
+}
