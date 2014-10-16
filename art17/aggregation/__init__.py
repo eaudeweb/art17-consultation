@@ -5,11 +5,6 @@ import flask
 from flask.ext.principal import Permission, Denial, PermissionDenied
 from flask.ext.script import Manager
 
-from art17.aggregation.refvalues import (
-    load_species_refval,
-    load_habitat_refval,
-    refvalue_ok,
-)
 from art17.aggregation.utils import (
     record_index_url,
     record_dashboard_url,

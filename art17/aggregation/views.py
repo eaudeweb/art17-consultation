@@ -4,7 +4,7 @@ from datetime import datetime
 import flask
 from flask import request, redirect, url_for
 from flask.views import View
-from sqlalchemy import func, or_
+from sqlalchemy import or_
 from werkzeug.datastructures import MultiDict
 
 from art17 import (
@@ -59,7 +59,6 @@ from art17.aggregation.utils import (
 @aggregation.route('/_ping')
 def ping():
     from art17 import models
-    from datetime import datetime
 
     count = models.History.query.count()
     now = datetime.utcnow().isoformat()
@@ -493,7 +492,7 @@ class RecordFinalToggle(View):
             elif self.record.cons_role == ROLE_AGGREGATED:
                 self.record.cons_status = 'unmodified'
             self.record.cons_role = ROLE_FINAL
-            self.record.cons_user_id = flask.g.identity.id # set the user id
+            self.record.cons_user_id = flask.g.identity.id  # set the user id
             self.record_finalize.send(app, ob=self.record)
             flask.flash(u"Înregistrarea a fost finalizată.", 'success')
         else:
