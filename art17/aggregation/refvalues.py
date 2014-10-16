@@ -112,4 +112,3 @@ def set_subject_refvals_wip(page, subject, data):
                 db.session.add(existing)
 
     db.session.commit()
-

@@ -23,6 +23,8 @@ from art17.models import (
 )
 from art17.aggregation import (
     aggregation,
+    perm_edit_refvals,
+    perm_view_refvals,
 )
 from art17.aggregation.refvalues import (
     load_species_refval,
@@ -317,7 +319,7 @@ def compare_datasets(dataset1, dataset2):
 
 @aggregation.route('/manage/reference_values/', methods=['GET', 'POST'])
 @aggregation.route('/manage/reference_values/<page>', methods=['GET', 'POST'])
-@require(Permission(need.admin))
+@require(perm_edit_refvals())
 def manage_refvals(page='habitat'):
     current_checklist = valid_checklist()
     checklist_id = current_checklist.id
@@ -342,7 +344,7 @@ def manage_refvals(page='habitat'):
 
 class ManageReferenceValues(ReferenceValues):
     template_name = 'aggregation/manage/reference_values.html'
-    decorators = [require(Permission(need.admin))]
+    decorators = [require(perm_view_refvals())]
 
 
 aggregation.add_url_rule('/manage/reference_values/table',
@@ -352,7 +354,7 @@ aggregation.add_url_rule('/manage/reference_values/table',
 
 @aggregation.route('/manage/reference_values/<page>/form/<subject>',
                    methods=['GET', 'POST'])
-@require(Permission(need.admin))
+@require(perm_edit_refvals())
 def manage_refvals_form(page, subject):
     data = get_subject_refvals(page, subject)
 

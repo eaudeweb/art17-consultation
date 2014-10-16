@@ -35,6 +35,7 @@ from art17.aggregation import (
     perm_finalize_record,
     perm_definalize_record,
     perm_preview_aggregation,
+    perm_view_refvals,
     species_record_finalize, species_record_definalize,
     habitat_record_finalize, habitat_record_definalize,
 )
@@ -553,6 +554,7 @@ aggregation.add_url_rule('/dataset/<int:dataset_id>/specii/<int:record_id>'
 
 
 @aggregation.route('/refvals/<page>')
+@require(perm_view_refvals())
 def refvals(page):
     subject = request.args.get('subject')
     data = get_subject_refvals_mixed(page, subject)
