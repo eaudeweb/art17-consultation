@@ -1,12 +1,11 @@
 from decimal import Decimal
-from flask.ext.principal import Permission
 from flask import render_template
 from sqlalchemy import func
-from art17.aggregation import aggregation
+from art17.aggregation import aggregation, perm_view_reports
 from art17 import models, ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL, ROLE_MISSING
 from art17.aggregation.utils import aggregation_missing_data_report, \
     get_checklist
-from art17.auth import require, need
+from art17.auth import require
 from art17.lookup import CONCLUSIONS
 
 PRESSURES = {
@@ -183,7 +182,7 @@ def inject_consts():
 
 
 @aggregation.route('/raport/<int:dataset_id>')
-@require(Permission(need.authenticated))
+@require(perm_view_reports())
 def report(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     return render_template('aggregation/reports/report.html',
@@ -192,7 +191,7 @@ def report(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/conservation_status')
-@require(Permission(need.authenticated))
+@require(perm_view_reports())
 def report_conservation_status(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
@@ -255,7 +254,7 @@ def report_conservation_status(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/bioreg_global')
-@require(Permission(need.authenticated))
+@require(perm_view_reports())
 def report_bioreg_global(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
@@ -297,7 +296,7 @@ def report_bioreg_global(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/bioreg_annex')
-@require(Permission(need.authenticated))
+@require(perm_view_reports())
 def report_bioreg_annex(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_checklist_data(dataset)
@@ -341,7 +340,7 @@ def report_bioreg_annex(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/pressures1')
-@require(Permission(need.authenticated))
+@require(perm_view_reports())
 def report_pressures1(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
@@ -415,7 +414,7 @@ def report_pressures1(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/measures')
-@require(Permission(need.authenticated))
+@require(perm_view_reports())
 def report_measures_high_importance(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
@@ -436,7 +435,7 @@ def report_measures_high_importance(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/missing')
-@require(Permission(need.authenticated))
+@require(perm_view_reports())
 def report_missing(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
 
@@ -457,7 +456,7 @@ def report_missing(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/measures_effects')
-@require(Permission(need.authenticated))
+@require(perm_view_reports())
 def report_measures_effects(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
@@ -476,7 +475,7 @@ def report_measures_effects(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/quality')
-@require(Permission(need.authenticated))
+@require(perm_view_reports())
 def report_quality(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
@@ -711,7 +710,7 @@ def report_quality(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/validation')
-@require(Permission(need.authenticated))
+@require(perm_view_reports())
 def report_validation(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
@@ -736,7 +735,7 @@ def report_validation(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/13')
-@require(Permission(need.authenticated))
+@require(perm_view_reports())
 def report_13(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
@@ -769,7 +768,7 @@ def report_13(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/14')
-@require(Permission(need.authenticated))
+@require(perm_view_reports())
 def report_14(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
@@ -819,7 +818,7 @@ def report_14(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/15')
-@require(Permission(need.authenticated))
+@require(perm_view_reports())
 def report_15(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
@@ -860,7 +859,7 @@ def report_15(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/17')
-@require(Permission(need.authenticated))
+@require(perm_view_reports())
 def report_17(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
@@ -941,7 +940,7 @@ def report_17(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/16')
-@require(Permission(need.authenticated))
+@require(perm_view_reports())
 def report_16(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
@@ -977,7 +976,7 @@ def report_16(dataset_id):
 
 
 @aggregation.route('/raport/<int:dataset_id>/statistics')
-@require(Permission(need.authenticated))
+@require(perm_view_reports())
 def report_statistics(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
 

@@ -61,6 +61,10 @@ def perm_preview_aggregation():
     return Permission(need.admin, need.expert, need.reporter)
 
 
+def perm_view_reports():
+    return Permission(need.admin, need.expert, need.reporter, need.reviewer)
+
+
 @aggregation.app_context_processor
 def inject_funcs():
     return dict(
