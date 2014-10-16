@@ -34,7 +34,7 @@ from art17.aggregation import (
     perm_edit_record,
     perm_finalize_record,
     perm_definalize_record,
-    check_aggregation_preview_perm,
+    perm_preview_aggregation,
     species_record_finalize, species_record_definalize,
     habitat_record_finalize, habitat_record_definalize,
 )
@@ -70,8 +70,8 @@ def crashme():
 
 
 @aggregation.route('/')
+@require(perm_preview_aggregation())
 def home():
-    check_aggregation_preview_perm()
     preview_list = (
         models.Dataset.query
         .filter_by(preview=True, user_id=flask.g.identity.id)
@@ -107,10 +107,10 @@ def aggregate():
 
 
 @aggregation.route('/previzualizare/<page>/', methods=['GET', 'POST'])
+@require(perm_preview_aggregation())
 def preview(page):
     current_checklist = valid_checklist()
     checklist_id = current_checklist.id
-    check_aggregation_preview_perm()
 
     report, dataset = None, None
     form = PreviewForm(formdata=request.form, checklist_id=checklist_id,
@@ -187,6 +187,7 @@ def delete_dataset(dataset_id):
 
 
 @aggregation.route('/preview/<int:dataset_id>/')
+@require(perm_preview_aggregation())
 def post_preview(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     page = 'species' if dataset.species_objs.count() else 'habitat'
