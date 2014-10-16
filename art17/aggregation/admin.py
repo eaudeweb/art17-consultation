@@ -13,7 +13,7 @@ from art17.aggregation.forms import CompareForm, PreviewForm
 from art17.aggregation.utils import get_checklist, get_reporting_id, \
     get_species_checklist, get_habitat_checklist, valid_checklist
 from art17.auth import require, need
-from art17.common import perm_fetch_checklist, get_datasets, TemplateView
+from art17.common import get_datasets, TemplateView
 from art17.models import (
     Dataset,
     db,
@@ -49,12 +49,13 @@ def parse_checklist(checklist_qs):
 
 
 @aggregation.route('/admin/')
+@require(Permission(need.admin))
 def admin():
     return redirect(url_for('.checklists'))
 
 
 @aggregation.route('/admin/checklists/')
-@require(Permission(need.authenticated))
+@require(Permission(need.admin))
 def checklists():
     checklists = get_checklists()
 
@@ -72,6 +73,7 @@ def checklists():
 
 @aggregation.route('/admin/checklist/initial/')
 @aggregation.route('/admin/checklist/<dataset_id>/')
+@require(Permission(need.admin))
 def checklist(dataset_id=None):
     species = get_species_checklist(dataset_id=dataset_id)
     habitats = get_habitat_checklist(dataset_id=dataset_id)
@@ -87,7 +89,7 @@ def checklist(dataset_id=None):
 
 
 @aggregation.route('/admin/checklist/create/', methods=('GET', 'POST'))
-@require(perm_fetch_checklist())
+@require(Permission(need.admin))
 def create():
     if request.method == "POST":
         create_checklist()
@@ -120,6 +122,7 @@ class DatasetForm(Form):
 
 @aggregation.route('/admin/checklist/<dataset_id>/edit/',
                    methods=('GET', 'POST'))
+@require(Permission(need.admin))
 def edit_checklist(dataset_id):
     dataset = get_checklists().filter_by(id=dataset_id).first()
 
@@ -141,6 +144,7 @@ def edit_checklist(dataset_id):
 
 @aggregation.route('/admin/dataset/<dataset_id>/edit/',
                    methods=('GET', 'POST'))
+@require(Permission(need.admin))
 def edit_dataset(dataset_id):
     dataset = get_datasets().filter_by(id=dataset_id).first()
 
@@ -165,6 +169,7 @@ def edit_dataset(dataset_id):
 
 class ReferenceValues(TemplateView):
     template_name = 'aggregation/admin/reference_values.html'
+    decorators = [require(Permission(need.admin))]
 
     def get_context(self, **kwargs):
         checklist_id = get_reporting_id()
@@ -224,6 +229,7 @@ def inject_globals():
 
 
 @aggregation.route('/admin/compare/select', methods=('GET', 'POST'))
+@require(Permission(need.admin))
 def compare():
     if request.method == 'POST':
         form = CompareForm(request.form)
@@ -242,6 +248,7 @@ def compare():
 
 
 @aggregation.route('/admin/compare/<int:dataset1>/<int:dataset2>/')
+@require(Permission(need.admin))
 def compare_datasets(dataset1, dataset2):
     d1 = models.Dataset.query.get_or_404(dataset1)
     d2 = models.Dataset.query.get_or_404(dataset2)
@@ -310,6 +317,7 @@ def compare_datasets(dataset1, dataset2):
 
 @aggregation.route('/manage/reference_values/', methods=['GET', 'POST'])
 @aggregation.route('/manage/reference_values/<page>', methods=['GET', 'POST'])
+@require(Permission(need.admin))
 def manage_refvals(page='habitat'):
     current_checklist = valid_checklist()
     checklist_id = current_checklist.id
@@ -334,6 +342,7 @@ def manage_refvals(page='habitat'):
 
 class ManageReferenceValues(ReferenceValues):
     template_name = 'aggregation/manage/reference_values.html'
+    decorators = [require(Permission(need.admin))]
 
 
 aggregation.add_url_rule('/manage/reference_values/table',
@@ -343,6 +352,7 @@ aggregation.add_url_rule('/manage/reference_values/table',
 
 @aggregation.route('/manage/reference_values/<page>/form/<subject>',
                    methods=['GET', 'POST'])
+@require(Permission(need.admin))
 def manage_refvals_form(page, subject):
     data = get_subject_refvals(page, subject)
 

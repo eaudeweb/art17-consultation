@@ -75,7 +75,7 @@ def get_population_units_ro(unit):
     return (
         models.db.session
         .query(models.LuPopulation.name_ro)
-        .filter(models.LuPopulation.code==unit)
+        .filter(models.LuPopulation.code == unit)
         .scalar()
     )
 
@@ -181,10 +181,6 @@ def perm_view_history(subject):
             *get_roles_for_subject('reporter', subject))
 
 
-def perm_fetch_checklist():
-    return Permission(need.admin, need.reporter)
-
-
 def perm_save_record():
     return Permission(need.admin, need.reviewer)
 
@@ -210,7 +206,6 @@ def inject_permissions():
         'perm_update_comment_status': perm_update_comment_status,
         'perm_delete_comment': perm_delete_comment,
         'perm_view_history': perm_view_history,
-        'perm_fetch_checklist': perm_fetch_checklist,
         'perm_save_record': perm_save_record,
         'perm_aggregate_dataset': perm_aggregate_dataset,
     }
