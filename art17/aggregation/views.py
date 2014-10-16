@@ -31,7 +31,6 @@ from art17.species import (
 )
 from art17.aggregation import (
     aggregation,
-    check_aggregation_perm,
     perm_edit_record,
     perm_finalize_record,
     perm_definalize_record,
@@ -89,7 +88,6 @@ def home():
 @aggregation.route('/executa_agregare', methods=['GET', 'POST'])
 @require(perm_aggregate_dataset())
 def aggregate():
-    check_aggregation_perm()
     if request.method == 'POST':
         report, dataset = create_aggregation(
             datetime.utcnow(),
