@@ -141,7 +141,6 @@ def aggregation_missing_data_report(dataset_id):
     }
 
 
-
 def get_checklist(checklist_id):
     class DefaultCL(object):
         id = None
@@ -281,3 +280,26 @@ def valid_checklist():
     if not ok:
         flask.flash(u"Anii de început și sfârșit nu sunt setați pentru raportarea curentă.", 'danger')
     return current
+
+
+def get_subject_name(page, code, dataset_id):
+    if page == 'habitat':
+        model = models.DataHabitatsCheckList
+    elif page == 'species':
+        model = models.DataSpeciesCheckList
+    else:
+        raise NotImplementedError()
+    name = (
+        model.query
+        .filter_by(
+            dataset_id=dataset_id,
+            natura_2000_code=code,
+            member_state='RO',
+        )
+        .with_entities(model.name)
+        .distinct()
+        .first()[0]
+    )
+    return name
+
+

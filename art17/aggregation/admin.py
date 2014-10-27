@@ -10,8 +10,10 @@ from flask.ext.principal import Permission
 from art17 import dal, models, ROLE_FINAL
 from art17.aggregation.checklist import create_checklist
 from art17.aggregation.forms import CompareForm, PreviewForm
-from art17.aggregation.utils import get_checklist, get_reporting_id, \
-    get_species_checklist, get_habitat_checklist, valid_checklist
+from art17.aggregation.utils import (
+    get_checklist, get_reporting_id, get_species_checklist,
+    get_habitat_checklist, valid_checklist, get_subject_name,
+)
 from art17.auth import require, need
 from art17.common import get_datasets, TemplateView
 from art17.models import (
@@ -364,9 +366,13 @@ def manage_refvals_form(page, subject):
 
     extra = get_subject_refvals_wip(page, subject)
     full = get_subject_refvals_mixed(page, subject)
+    checklist_id = get_reporting_id()
+    current_checklist = get_checklist(checklist_id)
+    checklist_id = current_checklist.id
+    name = get_subject_name(page, subject, checklist_id)
     return flask.render_template(
         'aggregation/manage/refvals_form.html', page=page, subject=subject,
-        data=data, extra=extra, full=full,
+        data=data, extra=extra, full=full, name=name,
     )
 
 
