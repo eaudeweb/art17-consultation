@@ -37,6 +37,8 @@
         {% endfor %}
       </table>
       <button class="btn btn-primary">Actualizează</button>
+      {% set download_url=url_for('.download_refvals', page=page, subject=subject) %}
+      <a href="{{ download_url }}" class="btn btn-primary col-sm-offset-1">Descarcă Excel</a>
     </form>
   </div>
 {% endblock %}

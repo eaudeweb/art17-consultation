@@ -2,10 +2,13 @@
 from collections import OrderedDict
 
 import flask
-from flask import redirect, url_for, render_template, request, flash
+from flask import redirect, url_for, render_template, request, flash, Response, make_response, send_file
 from wtforms import Form, IntegerField, TextField, SelectField
 from wtforms.validators import Optional
 from flask.ext.principal import Permission
+from openpyxl import Workbook
+from openpyxl.writer.excel import save_virtual_workbook
+
 
 from art17 import dal, models, ROLE_FINAL
 from art17.aggregation.checklist import create_checklist
@@ -374,6 +377,42 @@ def manage_refvals_form(page, subject):
         'aggregation/manage/refvals_form.html', page=page, subject=subject,
         data=data, extra=extra, full=full, name=name,
     )
+
+
+@aggregation.route('/manage/reference_values/<page>/form/<subject>/download',
+                   methods=['GET'])
+def download_refvals(page, subject):
+    REFGROUPS = {
+        'range': 'Areal', 'magnitude': 'Magnitudine Areal',
+        'population_units': 'Unitati populatie',
+        'population_magnitude': 'Magnitudine Populatie',
+        'population_range': 'Areal favorabil populatie',
+        'coverage_range': 'Suprafata',
+        'coverage_magnitude': 'Magnitudine suprafata',
+    }
+    full = get_subject_refvals_mixed(page, subject)
+    checklist_id = get_reporting_id()
+    current_checklist = get_checklist(checklist_id)
+    checklist_id = current_checklist.id
+    name = get_subject_name(page, subject, checklist_id)
+    wb = Workbook()
+    sheet_names = list(set([y for x in full.values() for y in x.keys()]))
+    wb.remove_sheet(wb.get_sheet_by_name('Sheet'))
+    for sheet_name in sheet_names:
+        ws = wb.create_sheet()
+        ws.title = REFGROUPS.get(sheet_name)
+        ws.append(['COD SPECIE', 'NUME', 'BIOREGIUNE', 'OPERATORI'])
+
+    for (bioregion, info) in full.iteritems():
+        for sheet_name, operators in info.iteritems():
+            ws = wb.get_sheet_by_name(REFGROUPS.get(sheet_name))
+            for operator, value in operators.iteritems():
+                ws.append([subject, name, bioregion, operator+": "+value])
+
+    response = Response(save_virtual_workbook(wb), mimetype="text/csv")
+    response.headers.add('Content-Disposition',
+                         'attachment; filename={}.xls'.format(subject))
+    return response
 
 
 def parse_checklist_ref(checklist_qs):
