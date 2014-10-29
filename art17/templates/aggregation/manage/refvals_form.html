@@ -7,38 +7,63 @@
 
   <div class="row">
     <form class="col-lg-6" method="post">
-      <table class="table table-condesed table-bordered">
+      <ul id="myTab" class="nav nav-tabs" role="tablist">
+        {% set first_region=data|first %}
+        <li class="active"><a href="#{{ first_region.0 }}" role="tab" data-toggle="tab">{{ first_region.0 }}</a></li>
         {% for region, region_data in data %}
-          <tr>
-            <th colspan="4">{{ region }}</th>
-          </tr>
-          <tr>
-            <td>Proprietate</td>
-            <td>Valoare sistem</td>
-            <td>Valoare actualizată</td>
-            <td>Valoare folosită</td>
-          </tr>
-          {% for group, values in region_data.iteritems() %}
-            <tr>
-              <th colspan="4">{{ REFGROUPS.get(group, group|capitalize) }}</th>
-            </tr>
-            {% for name, value in values.iteritems() %}
-              <tr>
-                <td>{{ name }}</td>
-                <td>{{ value }}</td>
-                <td>
-                  <input class="input-sm" type="text" name="{{ region }}={{ group }}={{ name }}"
-                         value="{{ extra.get(region, {}).get(group, {}).get(name, '') }}" />
-                </td>
-                <td>{{ full.get(region, {}).get(group, {}).get(name, '') }}</td>
-              </tr>
-            {% endfor %}
-          {% endfor %}
+          {% if region != first_region.0 %}
+            <li><a href="#{{ region }}" role="tab" data-toggle="tab">{{ region }}</a></li>
+          {% endif %}
         {% endfor %}
-      </table>
+      </ul>
+      <div id="refvals-form" class="tab-content">
+        {% for region, region_data in data %}
+          <div class="tab-pane fade active in" id="{{ region }}">
+            <table class="table table-condesed table-bordered">
+              <tr>
+                <th colspan="4">{{ region }}</th>
+              </tr>
+              <tr>
+                <td>Proprietate</td>
+                <td>Valoare sistem</td>
+                <td>Valoare actualizată</td>
+                <td>Valoare folosită</td>
+              </tr>
+              {% for group, values in region_data.iteritems() %}
+                <tr>
+                  <th colspan="4">{{ REFGROUPS.get(group, group|capitalize) }}</th>
+                </tr>
+                {% for name, value in values.iteritems() %}
+                  <tr>
+                    <td>{{ name }}</td>
+                    <td>{{ value }}</td>
+                    <td>
+                      <input class="input-sm" type="text" name="{{ region }}={{ group }}={{ name }}"
+                             value="{{ extra.get(region, {}).get(group, {}).get(name, '') }}" />
+                    </td>
+                    <td>{{ full.get(region, {}).get(group, {}).get(name, '') }}</td>
+                  </tr>
+                {% endfor %}
+              {% endfor %}
+            </table>
+          </div>
+        {% endfor %}
+      </div>
       <button class="btn btn-primary">Actualizează</button>
       {% set download_url=url_for('.download_refvals', page=page, subject=subject) %}
       <a href="{{ download_url }}" class="btn btn-primary col-sm-offset-1">Descarcă Excel</a>
     </form>
   </div>
+
+  {% block script %}
+    {{ super() }}
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#refvals-form a').click(function (e) {
+          e.preventDefault()
+          $(this).tab('show')
+        })
+      });
+    </script>
+  {% endblock script %}
 {% endblock %}
