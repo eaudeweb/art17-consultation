@@ -2,7 +2,7 @@
 from collections import OrderedDict
 
 import flask
-from flask import redirect, url_for, render_template, request, flash, Response, make_response, send_file
+from flask import redirect, url_for, render_template, request, flash, Response
 from wtforms import Form, IntegerField, TextField, SelectField
 from wtforms.validators import Optional
 from flask.ext.principal import Permission
