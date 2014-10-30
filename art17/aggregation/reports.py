@@ -318,11 +318,16 @@ def report_conservation_status(dataset_id):
                        models.LuGrupSpecie.description)
     )
 
-    return render_template(
+    html = render_template(
         'aggregation/reports/conservation_status.html',
         dataset=dataset, dataset_id=dataset.id,
         species=species, habitats=habitats, page='conservation', stats=stats,
         GROUPS=groups)
+
+    if request.args.get('download'):
+        return get_excel_document(html, 'Raport_11')
+
+    return html
 
 
 @aggregation.route('/raport/<int:dataset_id>/bioreg_global')
@@ -361,10 +366,15 @@ def report_bioreg_global(dataset_id):
             all_habitats = sum(stats['habitats'][k].values()) or 1
             stats['habitats'][k][conclusion] = v * 100.0 / all_habitats
 
-    return render_template(
+    html = render_template(
         'aggregation/reports/bioreg_global.html',
         dataset=dataset, dataset_id=dataset.id, regions=REGIONS,
         species=species, habitats=habitats, page='bioreg', stats=stats)
+
+    if request.args.get('download'):
+        return get_excel_document(html, 'Raport_12')
+
+    return html
 
 
 @aggregation.route('/raport/<int:dataset_id>/bioreg_annex')
@@ -404,11 +414,16 @@ def report_bioreg_annex(dataset_id):
         else:
             stats['habitats'][hab.bio_region]['n'] += 1
 
-    return render_template(
+    html = render_template(
         'aggregation/reports/bioreg_annex.html',
         dataset=dataset, dataset_id=dataset.id, regions=REGIONS,
         species=species, habitats=habitats, page='bioreg_annex', stats=stats,
         current_checklist=get_checklist(dataset.checklist_id))
+
+    if request.args.get('download'):
+        return get_excel_document(html, 'Raport_10')
+
+    return html
 
 
 @aggregation.route('/raport/<int:dataset_id>/pressures1')
@@ -479,10 +494,15 @@ def report_pressures1(dataset_id):
         stats[k]['habitats']['threats'] = stats[k]['habitats'][
                                               'threats'] * 100.0 / all_hab_thr
 
-    return render_template(
+    html = render_template(
         'aggregation/reports/pressures1.html',
         dataset=dataset, dataset_id=dataset.id, pressures=PRESSURES,
         species=species, habitats=habitats, page='pressures1', stats=stats)
+
+    if request.args.get('download'):
+        return get_excel_document(html, 'Raport_18')
+
+    return html
 
 
 @aggregation.route('/raport/<int:dataset_id>/measures')
@@ -500,10 +520,15 @@ def report_measures_high_importance(dataset_id):
     ordered_keys = measures_dict.keys()
     ordered_keys.sort()
 
-    return render_template(
+    html = render_template(
         'aggregation/reports/measures.html',
         dataset=dataset, count=measures_dict, names=MEASURES,
         ordered_keys=get_ordered_measures_codes(), page='measures')
+
+    if request.args.get('download'):
+        return get_excel_document(html, 'Raport_20')
+
+    return html
 
 
 @aggregation.route('/raport/<int:dataset_id>/missing')
@@ -526,7 +551,7 @@ def report_missing(dataset_id):
         GROUPS=groups,
     )
     if request.args.get('download'):
-        return get_excel_document(html, 'Raport 1')
+        return get_excel_document(html, 'Raport_1')
 
     return html
 
@@ -543,11 +568,16 @@ def report_measures_effects(dataset_id):
     species_effects_dict = get_effects_dict(species_data_measures)
     habitat_effects_dict = get_effects_dict(habitat_data_measures)
 
-    return render_template(
+    html = render_template(
         'aggregation/reports/measures_effects.html',
         dataset=dataset, species_count=species_effects_dict,
         habitat_count=habitat_effects_dict, names=MEASURES,
         ordered_keys=get_ordered_measures_codes(), page='measures_effects')
+
+    if request.args.get('download'):
+        return get_excel_document(html, 'Raport_21')
+
+    return html
 
 
 @aggregation.route('/raport/<int:dataset_id>/quality')
@@ -775,7 +805,7 @@ def report_quality(dataset_id):
         for k, v in species_unknown_data.iteritems()
     }
 
-    return render_template(
+    html = render_template(
         'aggregation/reports/quality.html',
         dataset=dataset, fields=METHOD_FIELDS, methods=METHODS, page='quality',
         habitat_methods_quality=habitat_methods_quality,
@@ -783,6 +813,11 @@ def report_quality(dataset_id):
         habitat_unknown_data=habitat_unknown_data,
         species_unknown_data=species_unknown_data,
     )
+
+    if request.args.get('download'):
+        return get_excel_document(html, 'Raport_22')
+
+    return html
 
 
 @aggregation.route('/raport/<int:dataset_id>/validation')
@@ -804,10 +839,15 @@ def report_validation(dataset_id):
         .order_by(models.DataHabitat.code)
     )
 
-    return render_template(
+    html = render_template(
         'aggregation/reports/validation.html',
         page='validation', dataset=dataset, species=species, habitats=habitat,
     )
+
+    if request.args.get('download'):
+        return get_excel_document(html, 'Raport_8')
+
+    return html
 
 
 @aggregation.route('/raport/<int:dataset_id>/13')
@@ -837,10 +877,15 @@ def report_13(dataset_id):
     for key, value in dataset.habitat.iteritems():
         dataset.habitat[key] = value * 100.0 / habitat_count
 
-    return render_template(
+    html = render_template(
         'aggregation/reports/13.html',
         page='13', dataset=dataset,
     )
+
+    if request.args.get('download'):
+        return get_excel_document(html, 'Raport_13')
+
+    return html
 
 
 @aggregation.route('/raport/<int:dataset_id>/14')
@@ -885,12 +930,17 @@ def report_14(dataset_id):
     habitat_mod *= 100.0 / habitat_count
     habitat_real *= 100.0 / habitat_count
 
-    return render_template(
+    html = render_template(
         'aggregation/reports/14.html',
         page='14', dataset=dataset, species_mod=species_mod,
         species_real=species_real, habitat_mod=habitat_mod,
         habitat_real=habitat_real,
     )
+
+    if request.args.get('download'):
+        return get_excel_document(html, 'Raport_14')
+
+    return html
 
 
 @aggregation.route('/raport/<int:dataset_id>/15')
@@ -927,11 +977,16 @@ def report_15(dataset_id):
     for key, value in habitat_data.iteritems():
         habitat_data[key] = value * 100.0 / habitat_count
 
-    return render_template(
+    html = render_template(
         'aggregation/reports/15.html',
         page='15', dataset=dataset, species=species_data,
         habitats=habitat_data,
     )
+
+    if request.args.get('download'):
+        return get_excel_document(html, 'Raport_15')
+
+    return html
 
 
 @aggregation.route('/raport/<int:dataset_id>/17')
@@ -1009,10 +1064,15 @@ def report_17(dataset_id):
         for reason, value in data.iteritems():
             habitat_data[param][reason] = value * 100.0 / habitat_count
 
-    return render_template(
+    html = render_template(
         'aggregation/reports/17.html',
         page='17', dataset=dataset, species=species_data, habitat=habitat_data,
     )
+
+    if request.args.get('download'):
+        return get_excel_document(html, 'Raport_17')
+
+    return html
 
 
 @aggregation.route('/raport/<int:dataset_id>/16')
@@ -1044,11 +1104,16 @@ def report_16(dataset_id):
         for key, value in habitat.iteritems():
             habitat[key] = value * 100.0 / habitat_count
 
-    return render_template(
+    html = render_template(
         'aggregation/reports/16.html',
         page='16', dataset=dataset, species_groups=species_groups,
         habitat_groups=habitat_groups,
     )
+
+    if request.args.get('download'):
+        return get_excel_document(html, 'Raport_16')
+
+    return html
 
 
 @aggregation.route('/raport/<int:dataset_id>/statistics')
@@ -1103,7 +1168,12 @@ def report_statistics(dataset_id):
         return data
 
     dataset.reports = reports(dataset)
-    return render_template(
+    html = render_template(
         'aggregation/reports/statistics.html',
         page='stats', dataset=dataset,
     )
+
+    if request.args.get('download'):
+        return get_excel_document(html, 'Raport_23')
+
+    return html
