@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from openpyxl import Workbook
 from openpyxl.cell import get_column_letter
 from openpyxl.writer.excel import save_virtual_workbook
-from openpyxl.styles import PatternFill, Style, Font, Alignment
+from openpyxl.styles import PatternFill, Style, Font, Alignment, Border, Side
 from flask import render_template, request, Response
 from sqlalchemy import func
 
@@ -193,34 +193,49 @@ def get_excel_document(html, filename):
         font=Font(bold=True),
         fill=PatternFill(start_color='EEEEEE', end_color='EEEEEE',
                          fill_type='solid'),
-        alignment=Alignment(horizontal='center'),
+        border=Border(left=Side(border_style='thick'),
+                      right=Side(border_style='thick'),
+                      top=Side(border_style='thick'),
+                      bottom=Side(border_style='thick')),
+        alignment=Alignment(horizontal='center', vertical='center'),
     )
 
     for table, sheet in zip(tables, wb.worksheets):
-        tab_id = table.parent.attr('id')
+        tab_id = table.parent.get('id')
         if tab_id:
             sheet.title = TABS[tab_id.split('-')[-1]]
+        rowspans = {}
 
         for row_idx, row in enumerate(table.find_all('tr'), start=1):
             cells = row.find_all('th') or row.find_all('td')
+            colshift = 0
 
             for col_idx, cell in enumerate(cells, start=1):
                 colspan = cell.get('colspan')
                 colspan = int(colspan) - 1 if colspan else 0
+
                 rowspan = cell.get('rowspan')
                 rowspan = int(rowspan) - 1 if rowspan else 0
+
+                if rowspans.get(col_idx):
+                    rowspans[col_idx] -= 1
+                    colshift += 1
+                if rowspan:
+                    rowspans[col_idx] = rowspan
 
                 if colspan or rowspan:
                     sheet.merge_cells(
                         start_row=row_idx,
-                        start_column=col_idx,
+                        start_column=col_idx + colshift,
                         end_row=row_idx + rowspan,
-                        end_column=col_idx + colspan)
+                        end_column=col_idx + colshift + colspan)
 
-                c = sheet['{}{}'.format(get_column_letter(col_idx), row_idx)]
+                c = sheet['{}{}'.format(get_column_letter(col_idx + colshift), row_idx)]
                 c.value = ' '.join(cell.text.split())
                 if cell.name == 'th':
                     c.style = style
+
+                colshift += colspan
 
     resp = Response(save_virtual_workbook(wb), mimetype="text/csv")
     resp.headers.add('Content-Disposition',
