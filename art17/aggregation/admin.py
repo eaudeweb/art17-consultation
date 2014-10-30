@@ -15,7 +15,7 @@ from art17.aggregation.checklist import create_checklist
 from art17.aggregation.forms import CompareForm, PreviewForm
 from art17.aggregation.utils import (
     get_checklist, get_reporting_id, get_species_checklist,
-    get_habitat_checklist, valid_checklist, get_subject_name,
+    get_habitat_checklist, valid_checklist,
 )
 from art17.auth import require, need
 from art17.common import get_datasets, TemplateView
@@ -372,7 +372,13 @@ def manage_refvals_form(page, subject):
     checklist_id = get_reporting_id()
     current_checklist = get_checklist(checklist_id)
     checklist_id = current_checklist.id
-    name = get_subject_name(page, subject, checklist_id)
+    if page == 'habitat':
+        names = get_habitat_checklist(distinct=True, dataset_id=checklist_id)
+    elif page == 'species':
+        names = get_species_checklist(distinct=True, dataset_id=checklist_id)
+    name_and_code = names.filter_by(code=subject).first()[1]
+    _, _, name = name_and_code.partition(subject)
+
     return flask.render_template(
         'aggregation/manage/refvals_form.html', page=page, subject=subject,
         data=data, extra=extra, full=full, name=name,
@@ -390,22 +396,31 @@ def download_refvals(page, subject):
         'coverage_range': 'Suprafata',
         'coverage_magnitude': 'Magnitudine suprafata',
     }
-    full = get_subject_refvals_mixed(page, subject)
     checklist_id = get_reporting_id()
     current_checklist = get_checklist(checklist_id)
     checklist_id = current_checklist.id
-    name = get_subject_name(page, subject, checklist_id)
+    if page == 'habitat':
+        names = get_habitat_checklist(distinct=True, dataset_id=checklist_id)
+    elif page == 'species':
+        names = get_species_checklist(distinct=True, dataset_id=checklist_id)
+    else:
+        raise NotImplementedError()
+    name_and_code = names.filter_by(code=subject).first()[1]
+    _, _, name = name_and_code.partition(subject)
+    full = get_subject_refvals_mixed(page, subject)
     wb = Workbook()
     sheet_names = list(set([y for x in full.values() for y in x.keys()]))
     wb.remove_sheet(wb.get_sheet_by_name('Sheet'))
     for sheet_name in sheet_names:
         ws = wb.create_sheet()
-        ws.title = REFGROUPS.get(sheet_name)
+        ws.title = REFGROUPS.get(sheet_name, sheet_name.title())
         ws.append(['COD SPECIE', 'NUME', 'BIOREGIUNE', 'OPERATORI'])
 
     for (bioregion, info) in full.iteritems():
         for sheet_name, operators in info.iteritems():
-            ws = wb.get_sheet_by_name(REFGROUPS.get(sheet_name))
+            ws = wb.get_sheet_by_name(
+                REFGROUPS.get(sheet_name, sheet_name.title())
+            )
             for operator, value in operators.iteritems():
                 ws.append([subject, name, bioregion, operator+": "+value])
 
