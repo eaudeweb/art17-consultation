@@ -54,16 +54,4 @@
       <a href="{{ download_url }}" class="btn btn-primary col-sm-offset-1">Descarcă Excel</a>
     </form>
   </div>
-
-  {% block script %}
-    {{ super() }}
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $('#refvals-form a').click(function (e) {
-          e.preventDefault()
-          $(this).tab('show')
-        })
-      });
-    </script>
-  {% endblock script %}
 {% endblock %}
