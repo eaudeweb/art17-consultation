@@ -1,6 +1,12 @@
 from decimal import Decimal
-from flask import render_template
+from bs4 import BeautifulSoup
+from openpyxl import Workbook
+from openpyxl.cell import get_column_letter
+from openpyxl.writer.excel import save_virtual_workbook
+from openpyxl.styles import PatternFill, Style, Font, Alignment
+from flask import render_template, request, Response
 from sqlalchemy import func
+
 from art17.aggregation import aggregation, perm_view_reports
 from art17 import models, ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL, ROLE_MISSING
 from art17.aggregation.utils import aggregation_missing_data_report, \
@@ -73,6 +79,11 @@ METHODS = [
 UNKNOWN_TREND = 'x'
 UNKNOWN_CONCLUSION = 'XX'
 MISSING_METHOD = '0'
+
+TABS = {
+    'species': 'Specii',
+    'habitat': 'Habitate',
+}
 
 
 def get_ordered_measures_codes():
@@ -169,6 +180,52 @@ def get_methods_quality_dict(data_query, data_class, category):
     for method, fields in methods_quality.iteritems():
         methods_quality[method]['average'] = sum(fields.values()) / len(fields)
     return methods_quality
+
+
+def get_excel_document(html, filename):
+    wb = Workbook()
+    soup = BeautifulSoup(html)
+    tables = soup.find('div', {'class': 'content'}).find_all('table')
+    for _ in range(len(tables) - len(wb.worksheets)):
+        wb.create_sheet()
+
+    style = Style(
+        font=Font(bold=True),
+        fill=PatternFill(start_color='EEEEEE', end_color='EEEEEE',
+                         fill_type='solid'),
+        alignment=Alignment(horizontal='center'),
+    )
+
+    for table, sheet in zip(tables, wb.worksheets):
+        tab_id = table.parent.attr('id')
+        if tab_id:
+            sheet.title = TABS[tab_id.split('-')[-1]]
+
+        for row_idx, row in enumerate(table.find_all('tr'), start=1):
+            cells = row.find_all('th') or row.find_all('td')
+
+            for col_idx, cell in enumerate(cells, start=1):
+                colspan = cell.get('colspan')
+                colspan = int(colspan) - 1 if colspan else 0
+                rowspan = cell.get('rowspan')
+                rowspan = int(rowspan) - 1 if rowspan else 0
+
+                if colspan or rowspan:
+                    sheet.merge_cells(
+                        start_row=row_idx,
+                        start_column=col_idx,
+                        end_row=row_idx + rowspan,
+                        end_column=col_idx + colspan)
+
+                c = sheet['{}{}'.format(get_column_letter(col_idx), row_idx)]
+                c.value = ' '.join(cell.text.split())
+                if cell.name == 'th':
+                    c.style = style
+
+    resp = Response(save_virtual_workbook(wb), mimetype="text/csv")
+    resp.headers.add('Content-Disposition',
+                     'attachment; filename={}.xls'.format(filename))
+    return resp
 
 
 @aggregation.app_context_processor
@@ -448,11 +505,15 @@ def report_missing(dataset_id):
                        models.LuGrupSpecie.description)
     )
 
-    return render_template(
+    html = render_template(
         'aggregation/reports/missing.html', dataset=dataset,
         page='missing', missing_species=species, missing_habitats=habitats,
         GROUPS=groups,
     )
+    if request.args.get('download'):
+        return get_excel_document(html, 'Raport 1')
+
+    return html
 
 
 @aggregation.route('/raport/<int:dataset_id>/measures_effects')
