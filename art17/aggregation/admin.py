@@ -15,7 +15,7 @@ from art17.aggregation.checklist import create_checklist
 from art17.aggregation.forms import CompareForm, PreviewForm
 from art17.aggregation.utils import (
     get_checklist, get_reporting_id, get_species_checklist,
-    get_habitat_checklist, valid_checklist,
+    get_habitat_checklist, valid_checklist, sum_of_reports,
 )
 from art17.auth import require, need
 from art17.common import get_datasets, TemplateView
@@ -232,6 +232,7 @@ def inject_globals():
         'datasets': get_datasets(),
         'DATASET_STATUSES': DATASET_STATUSES_DICT,
         'refvalue_ok': refvalue_ok,
+        'sum_of_reports': sum_of_reports,
     }
 
 

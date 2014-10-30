@@ -4,9 +4,9 @@
 
 {% block pagecontent %}
 
-  <h3>Numărul de habitate și specii</h3>
-  <p>Numărul de habitate și specii pe fiecare regiune biogeografică și regiunea
-  Marea Neagra (grupate pe anexe)</p>
+  <h3>Numărul de rapoarte pentru habitate și specii</h3>
+  <p>Numărul de rapoarte pentru habitate și specii pe fiecare regiune biogeografică și regiunea
+    Marea Neagra (grupate pe anexe)</p>
 
   <table class="table table-bordered table-condensed">
     <thead>
@@ -46,6 +46,20 @@
         <td class="text-right">{{ stats['species'][reg][5]['n'] }}</td>
       </tr>
     {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>Numărul total</td>
+        <td class="text-right"><b>{{ sum_of_reports(stats, regions, 'habitats', 'n') }}</b></td>
+        <td class="text-right"><b>{{ sum_of_reports(stats, regions, 'habitats', 'p') }}</b></td>
+        <td class="text-right"><b>{{ sum_of_reports(stats, regions, 'species', 'n', 2) }}</b></td>
+        <td class="text-right"><b>{{ sum_of_reports(stats, regions, 'species', 'p', 2) }}</b></td>
+        <td class="text-right"><b>{{ sum_of_reports(stats, regions, 'species', 'p', 4) }}</b></td>
+        <td class="text-right"><b>{{ sum_of_reports(stats, regions, 'species', 'n', 4) }}</b></td>
+        <td class="text-right"><b>{{ sum_of_reports(stats, regions, 'species', 'p', 5) }}</b></td>
+        <td class="text-right"><b>{{ sum_of_reports(stats, regions, 'species', 'n', 5) }}</b></td>
+      </tr>
+    </tfoot>
   </table>
 
   <p class="text-warning">Lista de verificare: {{ current_checklist }}</p>

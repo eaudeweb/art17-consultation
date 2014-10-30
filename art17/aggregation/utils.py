@@ -280,3 +280,11 @@ def valid_checklist():
     if not ok:
         flask.flash(u"Anii de început și sfârșit nu sunt setați pentru raportarea curentă.", 'danger')
     return current
+
+
+def sum_of_reports(stats, regions, page, letter, number=None):
+    stats = stats[page]
+    if number:
+        return sum([stats[reg][number][letter] for reg in regions])
+    return sum([stats[reg][letter] for reg in regions])
+
