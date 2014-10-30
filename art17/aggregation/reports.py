@@ -218,10 +218,14 @@ def get_excel_document(html, filename):
                 rowspan = int(rowspan) - 1 if rowspan else 0
 
                 if rowspans.get(col_idx):
-                    rowspans[col_idx] -= 1
-                    colshift += 1
+                    if rowspans[col_idx][0]:
+                        rowspans[col_idx][0] -= 1
+                        colshift += rowspans[col_idx][1]
                 if rowspan:
-                    rowspans[col_idx] = rowspan
+                    if rowspans.get(col_idx - 1):
+                        rowspans[col_idx - 1][1] += 1
+                    else:
+                        rowspans[col_idx] = [rowspan, 1]
 
                 if colspan or rowspan:
                     sheet.merge_cells(
