@@ -100,7 +100,7 @@
        {% for hab in habitats %}
          <tr>
            {% if hab.habitat %}
-           <td>{{ hab.habitat.lu and hab.habitat.lu.hd_name }}</td>
+           <td>{{ hab.habitat.lu and hab.habitat.lu.name_ro }}</td>
            <td>{{ hab.habitat.code }}</td>
            {% else %}
            <td colspan="2"><em>valoare lipsă</em></td>
