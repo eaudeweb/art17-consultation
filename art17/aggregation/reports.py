@@ -207,7 +207,7 @@ def get_excel_document(html, filename):
         rowspans = {}
 
         for row_idx, row in enumerate(table.find_all('tr'), start=1):
-            cells = row.find_all('th') or row.find_all('td')
+            cells = row.find_all('th') + row.find_all('td')
             colshift = 0
 
             for col_idx, cell in enumerate(cells, start=1):
