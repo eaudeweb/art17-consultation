@@ -57,6 +57,7 @@ class PreviewForm(Form):
             qs = list(
                 get_habitat_checklist(dataset_id=checklist_id, distinct=True))
             qs_dict = dict(qs)
+            qs.sort(key=lambda x: x[0])
         elif page == 'species':
             orig_qs = list(
                 get_species_checklist(dataset_id=checklist_id, distinct=True))
