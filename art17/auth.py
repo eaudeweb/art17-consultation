@@ -56,7 +56,7 @@ def register_principals(state):
 def inject_context():
     return {
         'admin_permission': admin_permission,
-        'authenticated_permission' : authenticated_permission,
+        'authenticated_permission': authenticated_permission,
         'get_profile_login_url': get_profile_login_url,
         'get_profile_logout_url': get_profile_logout_url,
     }
