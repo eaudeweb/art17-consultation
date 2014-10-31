@@ -234,7 +234,8 @@ def get_excel_document(html, filename):
                         end_row=row_idx + rowspan,
                         end_column=col_idx + colshift + colspan)
 
-                c = sheet['{}{}'.format(get_column_letter(col_idx + colshift), row_idx)]
+                c = sheet['{}{}'.format(get_column_letter(col_idx + colshift),
+                                        row_idx)]
                 c.value = ' '.join(cell.text.split())
                 if cell.name == 'th':
                     c.style = style
