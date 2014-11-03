@@ -729,7 +729,6 @@ def report_validation(dataset_id):
         .join(models.LuHdSpecies.group)
         .order_by(models.LuGrupSpecie.description, models.DataSpecies.code)
     )
-    #import pdb; pdb.set_trace()
     habitat = (
         habitat
         .join(models.DataHabitattypeRegion.habitat)
