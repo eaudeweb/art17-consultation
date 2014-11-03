@@ -1,4 +1,5 @@
 {% extends 'aggregation/reports/report_base.html' %}
+{% from 'bits.html' import script %}
 
 {% block pagecontent %}
 
@@ -18,8 +19,8 @@
 
   <div class="tab-content">
     <div class="tab-pane active" id="missing-species">
-      <table class="table table-bordered table-condensed">
-        <thead>
+      <table class="table table-bordered table-condensed" id="filter-table-1">
+        <thead class="thead">
         <tr>
           <th>Grup Specie</th>
           <th>Cod N2000</th>
@@ -30,25 +31,34 @@
           <th>Bioregiune</th>
         </tr>
         </thead>
-        <tbody class="thead">
+        <tfoot style="display: table-header-group;">
+        <tr>
+          <th class="searchable"></th>
+          <th></th>
+          <th class="searchable"></th>
+          <th class="searchable"></th>
+          <th class="searchable"></th>
+        </tr>
+        </tfoot>
+        <thead>
         <tr>
           <th colspan="5" class="text-center">Rapoarte în plus față de lista de verificare</th>
         </tr>
         <tr>
           <td colspan="5" class="text-center">Nu există rapoarte în plus față de lista de verificare.</td>
         </tr>
-        </tbody>
-        <tbody class="thead">
+        </thead>
+        <thead>
         <tr>
           <th colspan="5" class="text-center">Rapoarte în minus față de lista de verificare</th>
         </tr>
-        </tbody>
+        </thead>
         {% if not missing_species.count() %}
-        <tbody>
+        <thead>
         <tr>
           <td colspan="5" class="text-center">Nu există rapoarte în minus față de lista de verificare.</td>
         </tr>
-        </tbody>
+        </thead>
         {% endif %}
         <tbody>
         {% for species in missing_species %}
@@ -68,7 +78,7 @@
       </table>
     </div>
     <div class="tab-pane" id="missing-habitat">
-      <table class="table table-bordered table-condensed">
+      <table class="table table-bordered table-condensed" id="filter-table-2">
       <thead>
       <tr>
         <th>Cod N2000</th>
@@ -76,19 +86,26 @@
         <th>Bioregiune</th>
       </tr>
       </thead>
-      <tbody class="thead">
+      <tfoot style="display: table-header-group;">
+      <tr>
+        <th></th>
+        <th class="searchable"></th>
+        <th class="searchable"></th>
+      </tr>
+      </tfoot>
+      <thead>
         <tr>
           <th colspan="5" class="text-center">Rapoarte în plus față de lista de verificare</th>
         </tr>
         <tr>
           <td colspan="5" class="text-center">Nu există rapoarte în plus față de lista de verificare.</td>
         </tr>
-        </tbody>
-        <tbody class="thead">
+      </thead>
+      <thead>
         <tr>
           <th colspan="5" class="text-center">Rapoarte în minus față de lista de verificare</th>
         </tr>
-        </tbody>
+      </thead>
         {% if not missing_habitats.count() %}
         <tbody>
         <tr>
@@ -110,3 +127,14 @@
   </div>
 
 {% endblock %}
+
+{% block script %}
+{{ super() }}
+{{ script('datatables_filter.js') }}
+<script>
+  $(function () {
+    enable_filtering('#filter-table-1');
+    enable_filtering('#filter-table-2');
+  });
+</script>
+{% endblock script %}
