@@ -301,16 +301,23 @@ def report_bioreg_annex(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_checklist_data(dataset)
 
-    REGIONS = (
-        'ALP', 'CON', 'PAN', 'STE', 'BLS', 'MBLS', 'MED', 'ATL', 'BOR', 'MAC',
-        'MATL', 'MMED', 'MMAC', 'MBAL',
-    )
+    def _get_regions(model):
+        regions = (
+            model
+            .filter_by(member_state='RO')
+            .with_entities('bio_region')
+            .distinct()
+        )
+        return [r for r, in regions]
+    species_regions = _get_regions(species)
+    habitats_regions = _get_regions(habitats)
+    regions = list(set(species_regions + habitats_regions))
     stats = {
         'species': {
             r: {annex: {'n': 0, 'p': 0} for annex in (2, 4, 5)}
-            for r in REGIONS
+            for r in regions
         },
-        'habitats': {r: {'n': 0, 'p': 0} for r in REGIONS}
+        'habitats': {r: {'n': 0, 'p': 0} for r in regions}
     }
 
     for spec in species:
@@ -334,7 +341,7 @@ def report_bioreg_annex(dataset_id):
 
     return render_template(
         'aggregation/reports/bioreg_annex.html',
-        dataset=dataset, dataset_id=dataset.id, regions=REGIONS,
+        dataset=dataset, dataset_id=dataset.id, regions=regions,
         species=species, habitats=habitats, page='bioreg_annex', stats=stats,
         current_checklist=get_checklist(dataset.checklist_id))
 
@@ -722,6 +729,7 @@ def report_validation(dataset_id):
         .join(models.LuHdSpecies.group)
         .order_by(models.LuGrupSpecie.description, models.DataSpecies.code)
     )
+    #import pdb; pdb.set_trace()
     habitat = (
         habitat
         .join(models.DataHabitattypeRegion.habitat)
