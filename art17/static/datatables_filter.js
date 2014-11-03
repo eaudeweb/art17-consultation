@@ -1,8 +1,8 @@
 $( function () {
-  $('tfoot').hide();
+  $('tfoot.thead').hide();
 
   $('#dt-filter').click(function() {
-    $('tfoot').toggle();
+    $('tfoot.thead').toggle();
   });
 });
 

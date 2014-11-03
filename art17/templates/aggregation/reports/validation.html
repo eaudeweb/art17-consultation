@@ -1,4 +1,5 @@
 {% extends 'aggregation/reports/report_base.html' %}
+{% from 'bits.html' import script %}
 
 {% macro status(spec) %}
   {% if spec.is_agg_final -%}validat
@@ -21,7 +22,7 @@
 
   <div class="tab-content">
     <div class="tab-pane active" id="validation-species">
-      <table class="table table-bordered table-condensed">
+      <table class="table table-bordered table-condensed" id="filter-table-1">
         <thead>
         <tr>
           <th>Grup</th>
@@ -32,6 +33,16 @@
           <th>Status</th>
         </tr>
         </thead>
+        <tfoot class="thead">
+        <tr>
+          <th class="searchable"></th>
+          <th></th>
+          <th class="searchable"></th>
+          <th class="searchable"></th>
+          <th></th>
+          <th class="searchable"></th>
+        </tr>
+        </tfoot>
         <tbody>
         {% for spec in species %}
           <tr>
@@ -51,7 +62,7 @@
   </table>
     </div>
     <div class="tab-pane" id="validation-habitat">
-      <table class="table table-bordered">
+      <table class="table table-bordered" id="filter-table-2">
         <thead>
         <tr>
           <th>Cod</th>
@@ -61,6 +72,15 @@
           <th>Status</th>
         </tr>
         </thead>
+        <tfoot style="display: table-header-group;">
+        <tr>
+          <th></th>
+          <th class="searchable"></th>
+          <th class="searchable"></th>
+          <th></th>
+          <th class="searchable"></th>
+        </tr>
+        </tfoot>
         <tbody>
         {% for hab in habitats %}
           <tr>
@@ -79,3 +99,14 @@
   </div>
 
 {% endblock %}
+
+{% block script %}
+{{ super() }}
+{{ script('datatables_filter.js') }}
+<script>
+  $(function () {
+    enable_filtering('#filter-table-1');
+    enable_filtering('#filter-table-2');
+  });
+</script>
+{% endblock script %}
