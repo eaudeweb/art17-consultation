@@ -14,7 +14,10 @@
 {% endblock breadcrumbs %}
 
 {% block content %}
-  <a class="btn btn-default pull-right" href="{{ url_for('.report', dataset_id=dataset.id) }}">Rapoarte</a>
+  <div class="pull-right">
+    <a class="btn btn-default" href="{{ url_for('.report', dataset_id=dataset.id) }}">Rapoarte</a>
+    <a class="btn btn-default" href="{{ url_for('.export_all', dataset_id=dataset.id) }}">Exporturi</a>
+  </div>
   <h2>Set de date, {{ dataset.user_id or "-" }}, {{ dataset.date }}</h2>
 
   <p>{{ dataset.comment }}</p>
