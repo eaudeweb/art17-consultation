@@ -1,6 +1,9 @@
 from StringIO import StringIO
 from collections import defaultdict
 from art17 import models, ROLE_AGGREGATED, ROLE_MISSING
+from art17.aggregation.agregator.conclusions import \
+    get_habitat_conclusion_future, get_overall_habitat_conclusion, \
+    get_overall_species_conclusion, get_species_conclusion_future
 from art17.aggregation.agregator.n2k import get_habitat_cover_range
 from art17.aggregation.agregator.rest import get_species_bibliography, \
     get_species_pressures_threats, get_species_population_size, \
@@ -214,10 +217,14 @@ def aggregate_species(obj, result, refvals):
 
     # Masuri de conservare
 
-    # Concluzii
-
     # Bibliografie / surse publicate
     result.published = get_species_bibliography(obj.code, result.region)
+
+    # Future
+    result.conclusion_future = get_species_conclusion_future(obj.code, result.region)
+
+    # Concluzii Overall
+    result.conclusion_assessment = get_overall_species_conclusion(result)
 
     return result
 
@@ -298,7 +305,6 @@ def aggregate_habitat(obj, result, refvals):
 
     # Masuri de conservare
 
-    # Concluzii
 
     # Bibliografie
     result.published = get_habitat_published(obj.code, result.region)
@@ -310,6 +316,12 @@ def aggregate_habitat(obj, result, refvals):
     # Presiuni, amenintari
     pressures_threats = get_pressures_threats(obj.code, result.region)
     set_pressures_threats(result, pressures_threats)
+
+    # Future
+    result.conclusion_future = get_habitat_conclusion_future(obj.code, result.region)
+
+    # Concluzii Overall
+    result.conclusion_assessment = get_overall_habitat_conclusion(result)
 
     return result
 
