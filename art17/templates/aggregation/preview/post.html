@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% from 'common/td.html' import conclusions_html %}
+{% from 'common/td.html' import conclusions_html with context %}
 
 {% block title %}Agregare &mdash; {{ super() }}{% endblock title %}
 
@@ -30,7 +30,7 @@
         {% if record.is_missing() %}
         date lipsă
         {% else %}
-        {{ conclusions_html(record.conclusion_assessment) }}
+        {{ conclusions_html(record.conclusion) }}
         {% endif %}
       </td>
     {% endfor %}
