@@ -432,7 +432,7 @@ def download_refvals(page, subject):
 
     response = Response(save_virtual_workbook(wb), mimetype="text/csv")
     response.headers.add('Content-Disposition',
-                         'attachment; filename={}.xls'.format(subject))
+                         'attachment; filename={}'.format(subject))
     return response
 
 

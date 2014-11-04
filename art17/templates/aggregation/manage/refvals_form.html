@@ -3,22 +3,20 @@
 
 
 {% block content %}
-  <h2>{% block contenttitle %}Editare valori de referință [{{ subject }} {{ name }}]{% endblock %}</h2>
+  <h2>{% block contenttitle %}Editare valori de referință {{ subject }} {{ name }}{% endblock %}</h2>
 
   <div class="row">
     <form class="col-lg-6" method="post">
       <ul id="myTab" class="nav nav-tabs" role="tablist">
-        {% set first_region=data|first %}
-        <li class="active"><a href="#{{ first_region.0 }}" role="tab" data-toggle="tab">{{ first_region.0 }}</a></li>
         {% for region, region_data in data %}
-          {% if region != first_region.0 %}
-            <li><a href="#{{ region }}" role="tab" data-toggle="tab">{{ region }}</a></li>
-          {% endif %}
+          <li{% if loop.index==1 %} class="active"{% endif %}>
+            <a href="#{{ region }}" role="tab" data-toggle="tab">{{ region }}</a>
+          </li>
         {% endfor %}
       </ul>
       <div id="refvals-form" class="tab-content">
         {% for region, region_data in data %}
-          <div class="tab-pane fade active in" id="{{ region }}">
+          <div class="tab-pane fade{% if loop.index==1 %} active in{% endif %}" id="{{ region }}">
             <table class="table table-condesed table-bordered">
               <tr>
                 <th colspan="4">{{ region }}</th>
@@ -51,7 +49,7 @@
       </div>
       <button class="btn btn-primary">Actualizează</button>
       {% set download_url=url_for('.download_refvals', page=page, subject=subject) %}
-      <a href="{{ download_url }}" class="btn btn-default col-sm-offset-1">Descarcă Excel</a>
+      <a href="{{ download_url }}" class="btn btn-default col-sm-offset-1"><i class="icon-download"></i> Descarcă Excel</a>
     </form>
   </div>
 {% endblock %}
