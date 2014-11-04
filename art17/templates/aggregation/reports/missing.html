@@ -86,7 +86,7 @@
         <th>Bioregiune</th>
       </tr>
       </thead>
-      <tfoot style="display: table-header-group;">
+      <tfoot class="thead">
       <tr>
         <th></th>
         <th class="searchable"></th>
@@ -107,11 +107,11 @@
         </tr>
       </thead>
         {% if not missing_habitats.count() %}
-        <tbody>
+        <thead>
         <tr>
           <td colspan="5" class="text-center">Nu există rapoarte în minus față de lista de verificare.</td>
         </tr>
-        </tbody>
+        </thead>
         {% endif %}
         <tbody>
         {% for habitat in missing_habitats %}
