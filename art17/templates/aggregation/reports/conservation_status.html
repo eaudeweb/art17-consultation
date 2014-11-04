@@ -8,17 +8,17 @@
 {% endmacro %}
 
 {% macro conclusion_span(conclusion, percent) %}
-<span class="conclusion {{ conclusion }}">{{ conclusion }}</span>: 
+<span class="conclusion {{ conclusion }}">{{ conclusion }}</span>:
 <span class="pull-right">{%- if percent -%}{{ "%.2f" % percent }}%{% else %}-{% endif %}</span>
 <br/>
 {% endmacro %}
 
 {% macro conclusion_stats(stats) %}
   <th nowrap="nowrap" style="width: 110px">
-    {{ conclusion_span('FV', stats.get('FV')) }}    
-    {{ conclusion_span('U1', stats.get('U1')) }}    
-    {{ conclusion_span('U2', stats.get('U2')) }}    
-    {{ conclusion_span('XX', stats.get('XX')) }}   
+    {{ conclusion_span('FV', stats.get('FV')) }}
+    {{ conclusion_span('U1', stats.get('U1')) }}
+    {{ conclusion_span('U2', stats.get('U2')) }}
+    {{ conclusion_span('XX', stats.get('XX')) }}
   </th>
 {% endmacro %}
 
@@ -42,8 +42,9 @@
        <thead>
        <tr>
          <th>Nume</th>
+         <th>Cod</th>
+         <th>Prioritar</th>
          <th>Grup</th>
-         <th>Cod N2000</th>
          <th>Bioregiune</th>
          <th>Evaluare Areal</th>
          <th>Evaluare Populație</th>
@@ -57,11 +58,14 @@
          <tr>
            {% if spec.species %}
            <td>{{ spec.species.lu and spec.species.lu.hdname }}</td>
+           <td>{{ spec.species.code }}</td>
+           <td>{{ spec.species and spec.species.lu and
+                  spec.species.lu.data_checklist and
+                  spec.species.lu.data_checklist.priority }}</td>
            <td>
              {% set group=spec.species.lu and spec.species.lu.group_code %}
              {{ GROUPS.get(group, group) }}
            </td>
-           <td>{{ spec.species.code }}</td>
            {% else %}
            <td colspan="3"><em>valoare lipsă</em></td>
            {% endif %}
@@ -89,7 +93,8 @@
      <table class="table table-bordered table-condensed">
        <tr>
          <th>Nume</th>
-         <th>Cod N2000</th>
+         <th>Cod</th>
+         <th>Prioritar</th>
          <th>Bioregiune</th>
          <th>Evaluare Areal</th>
          <th>Evaluare Suprafața</th>
@@ -102,6 +107,9 @@
            {% if hab.habitat %}
            <td>{{ hab.habitat.lu and hab.habitat.lu.hd_name }}</td>
            <td>{{ hab.habitat.code }}</td>
+           <td>{{ hab.habitat and hab.habitat.lu and
+                  hab.habitat.lu.data_checklist and
+                  hab.habitat.lu.data_checklist.priority }}</td>
            {% else %}
            <td colspan="2"><em>valoare lipsă</em></td>
            {% endif %}
