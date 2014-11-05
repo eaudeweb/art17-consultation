@@ -81,11 +81,6 @@ UNKNOWN_TREND = 'x'
 UNKNOWN_CONCLUSION = 'XX'
 MISSING_METHOD = '0'
 
-TABS = {
-    'species': 'Specii',
-    'habitat': 'Habitate',
-}
-
 
 def get_ordered_measures_codes():
     codes = MEASURES.keys()
