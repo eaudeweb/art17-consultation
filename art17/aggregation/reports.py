@@ -204,10 +204,10 @@ def get_excel_document(html, filename):
             for cell in row.cells:
                 sheet.merge_cells(
                     start_row=cell.row.idx,
-                    start_column=cell.column.idx + cell.colshift,
+                    start_column=cell.col_idx,
                     end_row=cell.row.idx + cell.rowspan,
-                    end_column=cell.column.idx + cell.colshift + cell.colspan)
-                col_letter = get_column_letter(cell.column.idx + cell.colshift)
+                    end_column=cell.col_idx + cell.colspan)
+                col_letter = get_column_letter(cell.col_idx)
                 sheet_cell = sheet[col_letter + str(cell.row.idx)]
                 sheet_cell.value = cell.text
                 if cell.tag == 'th':
