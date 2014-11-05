@@ -1,5 +1,4 @@
 from decimal import Decimal
-from bs4 import BeautifulSoup
 from openpyxl import Workbook
 from openpyxl.cell import get_column_letter
 from openpyxl.writer.excel import save_virtual_workbook
@@ -13,6 +12,7 @@ from art17.aggregation.utils import aggregation_missing_data_report, \
     get_checklist
 from art17.auth import require
 from art17.lookup import CONCLUSIONS
+from art17.aggregation.export import get_tables
 
 PRESSURES = {
     'A': 'Agricultura',
@@ -183,12 +183,10 @@ def get_methods_quality_dict(data_query, data_class, category):
 
 
 def get_excel_document(html, filename):
+    tables = get_tables(html)
     wb = Workbook()
-    soup = BeautifulSoup(html)
-    tables = soup.find('div', {'class': 'content'}).find_all('table')
     for _ in range(len(tables) - len(wb.worksheets)):
         wb.create_sheet()
-
     style = Style(
         font=Font(bold=True),
         fill=PatternFill(start_color='EEEEEE', end_color='EEEEEE',
@@ -201,46 +199,19 @@ def get_excel_document(html, filename):
     )
 
     for table, sheet in zip(tables, wb.worksheets):
-        tab_id = table.parent.get('id')
-        if tab_id:
-            sheet.title = TABS[tab_id.split('-')[-1]]
-        rowspans = {}
-
-        for row_idx, row in enumerate(table.find_all('tr'), start=1):
-            cells = row.find_all('th') + row.find_all('td')
-            colshift = 0
-
-            for col_idx, cell in enumerate(cells, start=1):
-                colspan = cell.get('colspan')
-                colspan = int(colspan) - 1 if colspan else 0
-
-                rowspan = cell.get('rowspan')
-                rowspan = int(rowspan) - 1 if rowspan else 0
-
-                if rowspans.get(col_idx):
-                    if rowspans[col_idx][0]:
-                        rowspans[col_idx][0] -= 1
-                        colshift += rowspans[col_idx][1]
-                if rowspan:
-                    if rowspans.get(col_idx - 1):
-                        rowspans[col_idx - 1][1] += 1
-                    else:
-                        rowspans[col_idx] = [rowspan, 1]
-
-                if colspan or rowspan:
-                    sheet.merge_cells(
-                        start_row=row_idx,
-                        start_column=col_idx + colshift,
-                        end_row=row_idx + rowspan,
-                        end_column=col_idx + colshift + colspan)
-
-                c = sheet['{}{}'.format(get_column_letter(col_idx + colshift),
-                                        row_idx)]
-                c.value = ' '.join(cell.text.split())
-                if cell.name == 'th':
-                    c.style = style
-
-                colshift += colspan
+        sheet.title = table.title
+        for row in table.rows:
+            for cell in row.cells:
+                sheet.merge_cells(
+                    start_row=cell.row.idx,
+                    start_column=cell.column.idx + cell.colshift,
+                    end_row=cell.row.idx + cell.rowspan,
+                    end_column=cell.column.idx + cell.colshift + cell.colspan)
+                col_letter = get_column_letter(cell.column.idx + cell.colshift)
+                sheet_cell = sheet[col_letter + str(cell.row.idx)]
+                sheet_cell.value = cell.text
+                if cell.tag == 'th':
+                    sheet_cell.style = style
 
     resp = Response(save_virtual_workbook(wb), mimetype="text/csv")
     resp.headers.add('Content-Disposition',
