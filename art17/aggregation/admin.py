@@ -390,7 +390,8 @@ def manage_refvals_form(page, subject):
                    methods=['GET'])
 def download_refvals(page, subject):
     REFGROUPS = {
-        'range': 'Areal', 'magnitude': 'Magnitudine Areal',
+        'range': 'Areal',
+        'magnitude': 'Magnitudine Areal',
         'population_units': 'Unitati populatie',
         'population_magnitude': 'Magnitudine Populatie',
         'population_range': 'Areal favorabil populatie',
@@ -409,25 +410,29 @@ def download_refvals(page, subject):
     name_and_code = names.filter_by(code=subject).first()[1]
     _, _, name = name_and_code.partition(subject)
     full = get_subject_refvals_mixed(page, subject)
+
+    changed_dict = {}
+    for (region, d1) in full.items():
+        for(sheet_name, d2) in d1.items():
+            if sheet_name not in changed_dict.keys():
+                changed_dict[sheet_name] = {}
+            changed_dict[sheet_name][region] = d2
+
     wb = Workbook()
-    sheet_names = list(set([y for x in full.values() for y in x.keys()]))
     wb.remove_sheet(wb.get_sheet_by_name('Sheet'))
-    for sheet_name in sheet_names:
+
+    for (sheet_name, d1) in changed_dict.items():
         ws = wb.create_sheet()
         ws.title = REFGROUPS.get(sheet_name, sheet_name.title())
-        ws.append(['COD SPECIE', 'NUME', 'BIOREGIUNE', 'OPERATORI'])
-
-    for (bioregion, info) in full.iteritems():
-        for sheet_name, operators in info.iteritems():
-            ws = wb.get_sheet_by_name(
-                REFGROUPS.get(sheet_name, sheet_name.title())
-            )
-            for operator, value in operators.iteritems():
-                ws.append([subject, name, bioregion, operator+": "+value])
+        operators = d1.values()[0].keys()
+        ws.append(['COD SPECIE', 'NUME', 'BIOREGIUNE'] + operators)
+        for (bioregion, d2) in d1.items():
+            ws.append([subject, name, bioregion] +
+                      [d2.get(operator) for operator in operators])
 
     response = Response(save_virtual_workbook(wb), mimetype="text/csv")
     response.headers.add('Content-Disposition',
-                         'attachment; filename={}.xls'.format(subject))
+                         'attachment; filename={}'.format(subject))
     return response
 
 
