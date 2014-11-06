@@ -42,10 +42,10 @@
      <table class="table table-bordered table-condensed" id="filter-table-1">
        <thead>
          <tr>
-           <th>Nume</th>
-           <th>Grup</th>
            <th>Cod</th>
            <th>Prioritar</th>
+           <th>Nume</th>
+           <th>Grup</th>
            <th>Bioregiune</th>
            <th>Evaluare Areal</th>
            <th>Evaluare Populație</th>
@@ -57,8 +57,9 @@
        <tfoot class="thead">
          <tr>
            <th class="searchable"></th>
-           <th class="searchable"></th>
            <th></th>
+           <th class="searchable"></th>
+           <th class="searchable"></th>
            <th class="searchable"></th>
            <th></th>
            <th></th>
@@ -71,15 +72,15 @@
          {% for spec in species %}
            <tr>
              {% if spec.species %}
+             <td>{{ spec.species.code }}</td>
+             <td>{{ spec.species and spec.species.lu and
+                  spec.species.lu.data_checklist and
+                  spec.species.lu.data_checklist.priority }}</td>
              <td>{{ spec.species.lu and spec.species.lu.hdname }}</td>
              <td>
                {% set group=spec.species.lu and spec.species.lu.group_code %}
                {{ GROUPS.get(group, group) }}
              </td>
-             <td>{{ spec.species.code }}</td>
-             <td>{{ spec.species and spec.species.lu and
-                  spec.species.lu.data_checklist and
-                  spec.species.lu.data_checklist.priority }}</td>
              {% else %}
              <td colspan="4"><em>valoare lipsă</em></td>
              {% endif %}
@@ -105,12 +106,12 @@
      </table>
     </div>
     <div class="tab-pane" id="conservation-habitat">
-     <table class="table table-bordered table-condensed">
+     <table class="table table-bordered table-condensed" id="filter-table-2">
        <thead>
          <tr>
-           <th>Nume</th>
            <th>Cod</th>
            <th>Prioritar</th>
+           <th>Nume</th>
            <th>Bioregiune</th>
            <th>Evaluare Areal</th>
            <th>Evaluare Suprafața</th>
@@ -124,6 +125,7 @@
            <th class="searchable"></th>
            <th></th>
            <th class="searchable"></th>
+           <th class="searchable"></th>
            <th></th>
            <th></th>
            <th></th>
@@ -135,11 +137,11 @@
          {% for hab in habitats %}
            <tr>
              {% if hab.habitat %}
-             <td>{{ hab.habitat.lu and hab.habitat.lu.hd_name }}</td>
              <td>{{ hab.habitat.code }}</td>
              <td>{{ hab.habitat and hab.habitat.lu and
                   hab.habitat.lu.data_checklist and
                   hab.habitat.lu.data_checklist.priority }}</td>
+             <td>{{ hab.habitat.lu and hab.habitat.lu.hd_name }}</td>
              {% else %}
              <td colspan="3"><em>valoare lipsă</em></td>
              {% endif %}
