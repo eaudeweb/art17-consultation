@@ -15,13 +15,16 @@
   <div class="pull-right">
 
     {% if page in ['missing', 'validation', 'conservation'] %}
-      <button id="dt-filter" type="button" class="btn btn-primary"
+      <button id="dt-filter" type="button" class="btn btn-default"
           data-toggle="button" aria-pressed="false" autocomplete="off">
         Filtrare
       </button>
     {% endif %}
 
-    <a href="?download=1" class="btn btn-primary">Descarcă Excel</a>
+    <a href="?download=1" class="btn btn-default">
+      <i class="icon-download"></i>
+      Descarcă Excel
+    </a>
 
     <ul class="nav nav-pills navbar-right">
       <li class="dropdown">
