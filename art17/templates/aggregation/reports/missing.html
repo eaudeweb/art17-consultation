@@ -22,9 +22,9 @@
       <table class="table table-bordered table-condensed" id="filter-table-1">
         <thead>
         <tr>
-          <th>Nume</th>
           <th>Cod</th>
           <th>Prioritar</th>
+          <th>Nume</th>
           <th>Grup Specie</th>
           <th>Anexa DH</th>
           <th>Bioregiune</th>
@@ -37,36 +37,37 @@
           <th class="searchable"></th>
           <th class="searchable"></th>
           <th class="searchable"></th>
+          <th class="searchable"></th>
         </tr>
         </tfoot>
         <thead>
         <tr>
-          <th colspan="5" class="text-center">Rapoarte în plus față de lista de verificare</th>
+          <th colspan="6" class="text-center">Rapoarte în plus față de lista de verificare</th>
         </tr>
         <tr>
-          <td colspan="5" class="text-center">Nu există rapoarte în plus față de lista de verificare.</td>
+          <td colspan="6" class="text-center">Nu există rapoarte în plus față de lista de verificare.</td>
         </tr>
         </thead>
         <thead>
         <tr>
-          <th colspan="5" class="text-center">Rapoarte în minus față de lista de verificare</th>
+          <th colspan="6" class="text-center">Rapoarte în minus față de lista de verificare</th>
         </tr>
         </thead>
         {% if not missing_species.count() %}
         <thead>
         <tr>
-          <td colspan="5" class="text-center">Nu există rapoarte în minus față de lista de verificare.</td>
+          <td colspan="6" class="text-center">Nu există rapoarte în minus față de lista de verificare.</td>
         </tr>
         </thead>
         {% endif %}
         <tbody>
         {% for species in missing_species %}
           <tr>
-            <td>{{ species.species.lu.speciesname }}</td>
             <td>{{ species.species.code }}</td>
             <td>{{ species.species.lu and
                    species.species.lu.data_checklist and
                    species.species.lu.data_checklist.priority }}</td>
+            <td>{{ species.species.lu.speciesname }}</td>
             <td>{{ GROUPS.get(species.species.lu.group_code, species.species.lu.group_code) }}</td>
             <td>{{ species.species.lu.dh_list }}</td>
             <td>{{ species.region }}</td>
@@ -87,6 +88,7 @@
       </thead>
       <tfoot class="thead">
       <tr>
+        <th class="searchable"></th>
         <th></th>
         <th class="searchable"></th>
         <th class="searchable"></th>
@@ -94,21 +96,21 @@
       </tfoot>
       <thead>
         <tr>
-          <th colspan="3" class="text-center">Rapoarte în plus față de lista de verificare</th>
+          <th colspan="4" class="text-center">Rapoarte în plus față de lista de verificare</th>
         </tr>
         <tr>
-          <td colspan="3" class="text-center">Nu există rapoarte în plus față de lista de verificare.</td>
+          <td colspan="4" class="text-center">Nu există rapoarte în plus față de lista de verificare.</td>
         </tr>
       </thead>
       <thead>
         <tr>
-          <th colspan="3" class="text-center">Rapoarte în minus față de lista de verificare</th>
+          <th colspan="4" class="text-center">Rapoarte în minus față de lista de verificare</th>
         </tr>
       </thead>
         {% if not missing_habitats.count() %}
         <thead>
         <tr>
-          <td colspan="3" class="text-center">Nu există rapoarte în minus față de lista de verificare.</td>
+          <td colspan="4" class="text-center">Nu există rapoarte în minus față de lista de verificare.</td>
         </tr>
         </thead>
         {% endif %}

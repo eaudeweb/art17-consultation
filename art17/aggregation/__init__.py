@@ -17,6 +17,7 @@ from art17.aggregation.utils import (
 from art17.common import get_roles_for_subject
 from art17.auth import need
 
+MIMETYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
 aggregation = flask.Blueprint('aggregation', __name__)
 aggregation_manager = Manager()

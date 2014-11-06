@@ -7,7 +7,7 @@ from flask import render_template, request, Response
 from sqlalchemy import func
 from functools import wraps
 
-from art17.aggregation import aggregation, perm_view_reports
+from art17.aggregation import aggregation, perm_view_reports, MIMETYPE
 from art17 import models, ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL, ROLE_MISSING
 from art17.aggregation.utils import aggregation_missing_data_report, \
     get_checklist
@@ -209,9 +209,9 @@ def get_excel_document(html, filename):
                 if cell.tag == 'th':
                     sheet_cell.style = style
 
-    resp = Response(save_virtual_workbook(wb), mimetype="text/csv")
+    resp = Response(save_virtual_workbook(wb), mimetype=MIMETYPE)
     resp.headers.add('Content-Disposition',
-                     'attachment; filename={}.xls'.format(filename))
+                     'attachment; filename={}.xlsx'.format(filename))
     return resp
 
 

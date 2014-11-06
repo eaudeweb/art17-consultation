@@ -9,7 +9,6 @@ from flask.ext.principal import Permission
 from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook
 
-
 from art17 import dal, models, ROLE_FINAL
 from art17.aggregation.checklist import create_checklist
 from art17.aggregation.forms import CompareForm, PreviewForm
@@ -30,7 +29,7 @@ from art17.aggregation import (
     aggregation,
     perm_edit_refvals,
     perm_view_refvals,
-)
+    MIMETYPE)
 from art17.aggregation.refvalues import (
     load_species_refval,
     refvalue_ok,
@@ -413,7 +412,7 @@ def download_refvals(page, subject):
 
     changed_dict = {}
     for (region, d1) in full.items():
-        for(sheet_name, d2) in d1.items():
+        for (sheet_name, d2) in d1.items():
             if sheet_name not in changed_dict.keys():
                 changed_dict[sheet_name] = {}
             changed_dict[sheet_name][region] = d2
@@ -430,9 +429,9 @@ def download_refvals(page, subject):
             ws.append([subject, name, bioregion] +
                       [d2.get(operator) for operator in operators])
 
-    response = Response(save_virtual_workbook(wb), mimetype="text/csv")
+    response = Response(save_virtual_workbook(wb), mimetype=MIMETYPE)
     response.headers.add('Content-Disposition',
-                         'attachment; filename={}'.format(subject))
+                         'attachment; filename={}.xlsx'.format(subject))
     return response
 
 
