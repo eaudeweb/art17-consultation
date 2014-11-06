@@ -1,12 +1,19 @@
 from decimal import Decimal
-from flask import render_template
+from openpyxl import Workbook
+from openpyxl.cell import get_column_letter
+from openpyxl.writer.excel import save_virtual_workbook
+from openpyxl.styles import PatternFill, Style, Font, Alignment, Border, Side
+from flask import render_template, request, Response
 from sqlalchemy import func
+from functools import wraps
+
 from art17.aggregation import aggregation, perm_view_reports
 from art17 import models, ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL, ROLE_MISSING
 from art17.aggregation.utils import aggregation_missing_data_report, \
     get_checklist
 from art17.auth import require
 from art17.lookup import CONCLUSIONS
+from art17.aggregation.export import get_tables
 
 PRESSURES = {
     'A': 'Agricultura',
@@ -171,6 +178,55 @@ def get_methods_quality_dict(data_query, data_class, category):
     return methods_quality
 
 
+def get_excel_document(html, filename):
+    tables = get_tables(html)
+    wb = Workbook()
+    for _ in range(len(tables) - len(wb.worksheets)):
+        wb.create_sheet()
+    style = Style(
+        font=Font(bold=True),
+        fill=PatternFill(start_color='EEEEEE', end_color='EEEEEE',
+                         fill_type='solid'),
+        border=Border(left=Side(border_style='thick'),
+                      right=Side(border_style='thick'),
+                      top=Side(border_style='thick'),
+                      bottom=Side(border_style='thick')),
+        alignment=Alignment(horizontal='center', vertical='center'),
+    )
+
+    for table, sheet in zip(tables, wb.worksheets):
+        sheet.title = table.title
+        for row in table.rows:
+            for cell in row.cells:
+                sheet.merge_cells(
+                    start_row=cell.row.idx,
+                    start_column=cell.col_idx,
+                    end_row=cell.row.idx + cell.rowspan,
+                    end_column=cell.col_idx + cell.colspan)
+                col_letter = get_column_letter(cell.col_idx)
+                sheet_cell = sheet[col_letter + str(cell.row.idx)]
+                sheet_cell.value = cell.text
+                if cell.tag == 'th':
+                    sheet_cell.style = style
+
+    resp = Response(save_virtual_workbook(wb), mimetype="text/csv")
+    resp.headers.add('Content-Disposition',
+                     'attachment; filename={}.xls'.format(filename))
+    return resp
+
+
+def download(report_name):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            html = func(*args, **kwargs)
+            if request.args.get('download'):
+                return get_excel_document(html, report_name)
+            return html
+        return wrapper
+    return decorator
+
+
 @aggregation.app_context_processor
 def inject_consts():
     groups = dict(
@@ -192,6 +248,7 @@ def report(dataset_id):
 
 @aggregation.route('/raport/<int:dataset_id>/conservation_status')
 @require(perm_view_reports())
+@download('Raport_11')
 def report_conservation_status(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
@@ -255,6 +312,7 @@ def report_conservation_status(dataset_id):
 
 @aggregation.route('/raport/<int:dataset_id>/bioreg_global')
 @require(perm_view_reports())
+@download('Raport_12')
 def report_bioreg_global(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
@@ -297,6 +355,7 @@ def report_bioreg_global(dataset_id):
 
 @aggregation.route('/raport/<int:dataset_id>/bioreg_annex')
 @require(perm_view_reports())
+@download('Raport_10')
 def report_bioreg_annex(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_checklist_data(dataset)
@@ -348,6 +407,7 @@ def report_bioreg_annex(dataset_id):
 
 @aggregation.route('/raport/<int:dataset_id>/pressures1')
 @require(perm_view_reports())
+@download('Raport_18')
 def report_pressures1(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
@@ -422,6 +482,7 @@ def report_pressures1(dataset_id):
 
 @aggregation.route('/raport/<int:dataset_id>/measures')
 @require(perm_view_reports())
+@download('Raport_20')
 def report_measures_high_importance(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
@@ -443,6 +504,7 @@ def report_measures_high_importance(dataset_id):
 
 @aggregation.route('/raport/<int:dataset_id>/missing')
 @require(perm_view_reports())
+@download('Raport_1')
 def report_missing(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
 
@@ -464,6 +526,7 @@ def report_missing(dataset_id):
 
 @aggregation.route('/raport/<int:dataset_id>/measures_effects')
 @require(perm_view_reports())
+@download('Raport_21')
 def report_measures_effects(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
@@ -483,6 +546,7 @@ def report_measures_effects(dataset_id):
 
 @aggregation.route('/raport/<int:dataset_id>/quality')
 @require(perm_view_reports())
+@download('Raport_22')
 def report_quality(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
@@ -718,6 +782,7 @@ def report_quality(dataset_id):
 
 @aggregation.route('/raport/<int:dataset_id>/validation')
 @require(perm_view_reports())
+@download('Raport_8')
 def report_validation(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
@@ -743,6 +808,7 @@ def report_validation(dataset_id):
 
 @aggregation.route('/raport/<int:dataset_id>/13')
 @require(perm_view_reports())
+@download('Raport_13')
 def report_13(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
@@ -776,6 +842,7 @@ def report_13(dataset_id):
 
 @aggregation.route('/raport/<int:dataset_id>/14')
 @require(perm_view_reports())
+@download('Raport_14')
 def report_14(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
@@ -826,6 +893,7 @@ def report_14(dataset_id):
 
 @aggregation.route('/raport/<int:dataset_id>/15')
 @require(perm_view_reports())
+@download('Raport_15')
 def report_15(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
@@ -867,6 +935,7 @@ def report_15(dataset_id):
 
 @aggregation.route('/raport/<int:dataset_id>/17')
 @require(perm_view_reports())
+@download('Raport_17')
 def report_17(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
@@ -948,6 +1017,7 @@ def report_17(dataset_id):
 
 @aggregation.route('/raport/<int:dataset_id>/16')
 @require(perm_view_reports())
+@download('Raport_16')
 def report_16(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
@@ -984,6 +1054,7 @@ def report_16(dataset_id):
 
 @aggregation.route('/raport/<int:dataset_id>/statistics')
 @require(perm_view_reports())
+@download('Raport_23')
 def report_statistics(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
 

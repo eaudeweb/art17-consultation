@@ -13,56 +13,61 @@
 
   <div class="tab-content">
     <div class="tab-pane active" id="missing-species">
-        {#  {{ report_table(dataset.reports.species) }}#}
-        <p>Numărul de specii în
-            checklist: {{ dataset.reports.species.get('total_species') }} </p>
-
-        <p>Numărul total de rapoarte în
-            checklist: {{ dataset.reports.species.get('total_reports') }}</p>
-
-        <p>Numărul de rapoarte agregate
-            (noi): {{ dataset.details.species_new }}</p>
-
-        <p>Numărul de rapoarte în
-            lucru: {{ dataset.details.species_draft }}</p>
-
-        <p>Numărul de rapoarte
-            finalizate: {{ dataset.details.species_final }}</p>
-
-        <p>{{ dataset.reports.missing.missing_species.count() }} <strong>specii
-            lipsă</strong></p>
-
-        {#    {{ table(dataset.reports.missing.bioreg_list,#}
-        {#           dataset.reports.missing.species_list,#}
-        {#           cell,#}
-        {#           dataset.reports.missing.species_regions) }}#}
-
+      <table class="table table-bordered table-condensed">
+        <tr>
+          <td>Numărul de specii în checklist</td>
+          <td class="text-right">{{ dataset.reports.species.get('total_species') }} </td>
+        </tr>
+        <tr>
+          <td>Numărul total de rapoarte în checklist</td>
+          <td class="text-right">{{ dataset.reports.species.get('total_reports') }}</td>
+        </tr>
+        <tr>
+          <td>Numărul de rapoarte agregate (noi)</td>
+          <td class="text-right">{{ dataset.details.species_new }}</td>
+        </tr>
+        <tr>
+          <td>Numărul de rapoarte în lucru</td>
+          <td class="text-right">{{ dataset.details.species_draft }}</td>
+        </tr>
+        <tr>
+          <td>Numărul de rapoarte finalizate</td>
+          <td class="text-right">{{ dataset.details.species_final }}</td>
+        </tr>
+        <tr>
+          <th>Numărul de specii lipsă </th>
+          <th class="text-right">{{ dataset.reports.missing.missing_species.count() }}</th>
+        </tr>
+      </table>
     </div>
+
     <div class="tab-pane" id="missing-habitat">
-
-        {#  {{ report_table(dataset.reports.habitat) }}#}
-        <p>Numărul de habitate în
-            checklist: {{ dataset.reports.habitat.get('total_habitats') }} </p>
-
-        <p>Numărul total de rapoarte în
-            checklist: {{ dataset.reports.habitat.get('total_reports') }}</p>
-
-        <p>Numărul de rapoarte agregate
-            (noi): {{ dataset.details.habitat_new }}</p>
-
-        <p>Numărul de rapoarte în
-            lucru: {{ dataset.details.habitat_draft }}</p>
-
-        <p>Numărul de rapoarte
-            finalizate: {{ dataset.details.habitat_final }}</p>
-
-        <p>{{ dataset.reports.missing.missing_habitats.count() }} <strong>habitate
-            lipsă</strong></p>
-
-        {#    {{ table(dataset.reports.missing.bioreg_list,#}
-        {#           dataset.reports.missing.habitat_list,#}
-        {#           cell,#}
-        {#           dataset.reports.missing.habitat_regions) }}#}
+      <table class="table table-bordered table-condensed">
+        <tr>
+          <td>Numărul de habitate în checklist</td>
+          <td class="text-right">{{ dataset.reports.habitat.get('total_habitats') }} </td>
+        </tr>
+        <tr>
+          <td>Numărul total de rapoarte în checklist</td>
+          <td class="text-right">{{ dataset.reports.habitat.get('total_reports') }}</td>
+        </tr>
+        <tr>
+          <td>Numărul de rapoarte agregate (noi)</td>
+          <td class="text-right">{{ dataset.details.habitat_new }}</td>
+        </tr>
+        <tr>
+          <td>Numărul de rapoarte în lucru</td>
+          <td class="text-right">{{ dataset.details.habitat_draft }}</td>
+        </tr>
+        <tr>
+          <td>Numărul de rapoarte finalizate</td>
+          <td class="text-right">{{ dataset.details.habitat_final }}</td>
+        </tr>
+        <tr>
+          <th>Numărul de habitate lipsă </th>
+          <th class="text-right">{{ dataset.reports.missing.missing_habitats.count() }}</th>
+        </tr>
+      </table>
     </div>
   </div>
 
