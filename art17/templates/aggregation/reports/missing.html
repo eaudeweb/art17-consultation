@@ -21,8 +21,9 @@
       <table class="table table-bordered table-condensed">
         <thead>
         <tr>
+          <th>Cod</th>
+          <th>Prioritar</th>
           <th>Grup Specie</th>
-          <th>Cod N2000</th>
           <th>Denumire științifică<br/>
             (denumire populară)
           </th>
@@ -53,8 +54,11 @@
         <tbody>
         {% for species in missing_species %}
           <tr>
-            <td>{{ GROUPS.get(species.species.lu.group_code, species.species.lu.group_code) }}</td>
             <td>{{ species.species.code }}</td>
+            <td>{{ species.species.lu and
+                   species.species.lu.data_checklist and
+                   species.species.lu.data_checklist.priority }}</td>
+            <td>{{ GROUPS.get(species.species.lu.group_code, species.species.lu.group_code) }}</td>
             <td>{{ species.species.lu.speciesname }}
               {% if species.species.common_speciesname %}
                 ({{ species.species.common_speciesname }})
@@ -71,7 +75,8 @@
       <table class="table table-bordered table-condensed">
       <thead>
       <tr>
-        <th>Cod N2000</th>
+        <th>Cod</th>
+        <th>Prioritar</th>
         <th>Habitat</th>
         <th>Bioregiune</th>
       </tr>
@@ -100,6 +105,9 @@
         {% for habitat in missing_habitats %}
           <tr>
           <td>{{ habitat.habitat.code }}</td>
+          <td>{{ habitat.habitat.lu and
+                 habitat.habitat.lu.data_checklist and
+                 habitat.habitat.lu.data_checklist.priority }}</td>
           <td>{{ habitat.habitat and habitat.habitat.lu.name_ro }}</td>
           <td>{{ habitat.region }}</td>
           </tr>
