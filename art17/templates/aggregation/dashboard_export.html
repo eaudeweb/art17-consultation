@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}Dashboard export &mdash; {{ super() }}{% endblock title %}
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('agregare', home_url),
+          ('set de date', url_for('.dashboard', dataset_id=dataset.id)),
+          ('exporturi', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+{% block content %}
+
+  <h2>Set de date, {{ dataset.user_id or "-" }}, {{ dataset.date }}</h2>
+  <p>{{ dataset.comment }}</p>
+  <p>
+    <a class="btn btn-default" href="{{ url_for('.export', dataset_id=dataset.id, page='habitat') }}">
+      <i class="icon-download"></i> Export habitate
+    </a>
+    Exportă habitate pentru setul de date curent în format XML<br/>
+  </p>
+  <hr/>
+  <p>
+    <a class="btn btn-default" href="{{ url_for('.export', dataset_id=dataset.id, page='species') }}">
+      <i class="icon-download"></i> Export specii
+    </a>
+    Exportă specii pentru setul de date curent în format XML<br/>
+  </p>
+
+{% endblock content %}

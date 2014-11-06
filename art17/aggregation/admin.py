@@ -2,16 +2,21 @@
 from collections import OrderedDict
 
 import flask
-from flask import redirect, url_for, render_template, request, flash
+from flask import redirect, url_for, render_template, request, flash, Response
 from wtforms import Form, IntegerField, TextField, SelectField
 from wtforms.validators import Optional
 from flask.ext.principal import Permission
+from openpyxl import Workbook
+from openpyxl.writer.excel import save_virtual_workbook
+
 
 from art17 import dal, models, ROLE_FINAL
 from art17.aggregation.checklist import create_checklist
 from art17.aggregation.forms import CompareForm, PreviewForm
-from art17.aggregation.utils import get_checklist, get_reporting_id, \
-    get_species_checklist, get_habitat_checklist, valid_checklist
+from art17.aggregation.utils import (
+    get_checklist, get_reporting_id, get_species_checklist,
+    get_habitat_checklist, valid_checklist, sum_of_reports,
+)
 from art17.auth import require, need
 from art17.common import get_datasets, TemplateView
 from art17.models import (
@@ -227,6 +232,7 @@ def inject_globals():
         'datasets': get_datasets(),
         'DATASET_STATUSES': DATASET_STATUSES_DICT,
         'refvalue_ok': refvalue_ok,
+        'sum_of_reports': sum_of_reports,
     }
 
 
@@ -364,10 +370,65 @@ def manage_refvals_form(page, subject):
 
     extra = get_subject_refvals_wip(page, subject)
     full = get_subject_refvals_mixed(page, subject)
+    checklist_id = get_reporting_id()
+    current_checklist = get_checklist(checklist_id)
+    checklist_id = current_checklist.id
+    if page == 'habitat':
+        names = get_habitat_checklist(distinct=True, dataset_id=checklist_id)
+    elif page == 'species':
+        names = get_species_checklist(distinct=True, dataset_id=checklist_id)
+    name_and_code = names.filter_by(code=subject).first()[1]
+    _, _, name = name_and_code.partition(subject)
+
     return flask.render_template(
         'aggregation/manage/refvals_form.html', page=page, subject=subject,
-        data=data, extra=extra, full=full,
+        data=data, extra=extra, full=full, name=name,
     )
+
+
+@aggregation.route('/manage/reference_values/<page>/form/<subject>/download',
+                   methods=['GET'])
+def download_refvals(page, subject):
+    REFGROUPS = {
+        'range': 'Areal', 'magnitude': 'Magnitudine Areal',
+        'population_units': 'Unitati populatie',
+        'population_magnitude': 'Magnitudine Populatie',
+        'population_range': 'Areal favorabil populatie',
+        'coverage_range': 'Suprafata',
+        'coverage_magnitude': 'Magnitudine suprafata',
+    }
+    checklist_id = get_reporting_id()
+    current_checklist = get_checklist(checklist_id)
+    checklist_id = current_checklist.id
+    if page == 'habitat':
+        names = get_habitat_checklist(distinct=True, dataset_id=checklist_id)
+    elif page == 'species':
+        names = get_species_checklist(distinct=True, dataset_id=checklist_id)
+    else:
+        raise NotImplementedError()
+    name_and_code = names.filter_by(code=subject).first()[1]
+    _, _, name = name_and_code.partition(subject)
+    full = get_subject_refvals_mixed(page, subject)
+    wb = Workbook()
+    sheet_names = list(set([y for x in full.values() for y in x.keys()]))
+    wb.remove_sheet(wb.get_sheet_by_name('Sheet'))
+    for sheet_name in sheet_names:
+        ws = wb.create_sheet()
+        ws.title = REFGROUPS.get(sheet_name, sheet_name.title())
+        ws.append(['COD SPECIE', 'NUME', 'BIOREGIUNE', 'OPERATORI'])
+
+    for (bioregion, info) in full.iteritems():
+        for sheet_name, operators in info.iteritems():
+            ws = wb.get_sheet_by_name(
+                REFGROUPS.get(sheet_name, sheet_name.title())
+            )
+            for operator, value in operators.iteritems():
+                ws.append([subject, name, bioregion, operator+": "+value])
+
+    response = Response(save_virtual_workbook(wb), mimetype="text/csv")
+    response.headers.add('Content-Disposition',
+                         'attachment; filename={}.xls'.format(subject))
+    return response
 
 
 def parse_checklist_ref(checklist_qs):

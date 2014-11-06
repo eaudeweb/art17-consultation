@@ -286,6 +286,15 @@ def dashboard(dataset_id):
                                         dataset_id=dataset_id))
 
 
+@aggregation.route('/dataset/<int:dataset_id>/exports/')
+def export_all(dataset_id):
+    dataset = models.Dataset.query.get(dataset_id)
+    return flask.render_template(
+        'aggregation/dashboard_export.html',
+        dataset=dataset,
+    )
+
+
 class RecordViewMixin(object):
     template_base = 'aggregation/record.html'
     success_message = u"Înregistrarea a fost actualizată"

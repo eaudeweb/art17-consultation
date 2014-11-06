@@ -25,9 +25,10 @@
       <table class="table table-bordered table-condensed" id="filter-table-1">
         <thead>
         <tr>
-          <th>Grup</th>
           <th>Cod</th>
+          <th>Prioritar</th>
           <th>Specie</th>
+          <th>Grup</th>
           <th>Bioregiune</th>
           <th>Validator</th>
           <th>Status</th>
@@ -46,11 +47,14 @@
         <tbody>
         {% for spec in species %}
           <tr>
+            <td>{{ spec.species and spec.species.code }}</td>
+            <td>{{ spec.species and spec.species.lu and
+                   spec.species.lu.data_checklist and
+                   spec.species.lu.data_checklist.priority }}</td>
+            <td>{{ spec.species and spec.species.lu and spec.species.lu.hdname }}</td>
             <td>
               {% set group=spec.species.lu and spec.species.lu.group_code %}
               {{ GROUPS.get(group, group) }}</td>
-            <td>{{ spec.species and spec.species.code }}</td>
-            <td>{{ spec.species and spec.species.lu and spec.species.lu.hdname }}</td>
             <td>{{ spec.region }}</td>
             <td>{{ spec.cons_user_id }}</td>
             <td>
@@ -59,13 +63,14 @@
           </tr>
         {% endfor %}
         </tbody>
-  </table>
+      </table>
     </div>
     <div class="tab-pane" id="validation-habitat">
       <table class="table table-bordered" id="filter-table-2">
         <thead>
         <tr>
           <th>Cod</th>
+          <th>Prioritar</th>
           <th>Habitat</th>
           <th>Bioregiune</th>
           <th>Validator</th>
@@ -85,6 +90,9 @@
         {% for hab in habitats %}
           <tr>
             <td>{{ hab.habitat and hab.habitat.code }}</td>
+            <td>{{ hab.habitat and hab.habitat.lu and
+                   hab.habitat.lu.data_checklist and
+                   hab.habitat.lu.data_checklist.priority }}</td>
             <td>{{ hab.habitat and hab.habitat.lu and hab.habitat.lu.hd_name }}</td>
             <td>{{ hab.region }}</td>
             <td>{{ hab.cons_user_id }}</td>
