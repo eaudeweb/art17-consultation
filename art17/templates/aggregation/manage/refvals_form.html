@@ -3,43 +3,56 @@
 
 
 {% block content %}
-  <h2>{% block contenttitle %}Editare valori de referință {{ subject }} {{ name }}{% endblock %}</h2>
+  <h2>
+    {%- block contenttitle -%}
+      Editare valori de referință {{ subject }}
+      {{ name }}
+    {%- endblock -%}
+  </h2>
 
+  <P><em>Valoarea inițială Simshab</em> reprezintă valoarea din sistem care
+    este folosită pentru agregări complete. Valoarea din coloana <em>Modifică
+      valoare</em> va fi folosită pentru previzualizarea agregării si poate fi
+    descărcată și trimisă responsabilului, pentru a înlocui ulterior valoarea
+    de sistem.
+  </P>
   <div class="row">
     <form class="col-lg-6" method="post">
       <ul id="myTab" class="nav nav-tabs" role="tablist">
         {% for region, region_data in data %}
           <li{% if loop.index==1 %} class="active"{% endif %}>
-            <a href="#{{ region }}" role="tab" data-toggle="tab">{{ region }}</a>
+            <a href="#{{ region }}" role="tab"
+               data-toggle="tab">{{ REGIONS.get(region, region) }}</a>
           </li>
         {% endfor %}
       </ul>
       <div id="refvals-form" class="tab-content">
         {% for region, region_data in data %}
-          <div class="tab-pane fade{% if loop.index==1 %} active in{% endif %}" id="{{ region }}">
+          <div class="tab-pane fade{% if loop.index==1 %} active in{% endif %}"
+               id="{{ region }}">
             <table class="table table-condesed table-bordered">
+              <thead>
               <tr>
-                <th colspan="4">{{ region }}</th>
+                <th>Proprietate</th>
+                <th>Valoare inițială Simshab</th>
+                <th>Modifică valoare</th>
               </tr>
-              <tr>
-                <td>Proprietate</td>
-                <td>Valoare sistem</td>
-                <td>Valoare actualizată</td>
-                <td>Valoare folosită</td>
-              </tr>
+              </thead>
               {% for group, values in region_data.iteritems() %}
                 <tr>
-                  <th colspan="4">{{ REFGROUPS.get(group, group|capitalize) }}</th>
+                  <th colspan="4">
+                    <em>{{ REFGROUPS.get(group, group|capitalize) }}</em></th>
                 </tr>
                 {% for name, value in values.iteritems() %}
                   <tr>
                     <td>{{ name }}</td>
                     <td>{{ value }}</td>
                     <td>
-                      <input class="input-sm" type="text" name="{{ region }}={{ group }}={{ name }}"
-                             value="{{ extra.get(region, {}).get(group, {}).get(name, '') }}" />
+                      <input class="input-sm" type="text"
+                             name="{{ region }}={{ group }}={{ name }}"
+                             value="{{ extra.get(region, {}).get(group, {}).get(name, '') }}"/>
                     </td>
-                    <td>{{ full.get(region, {}).get(group, {}).get(name, '') }}</td>
+                    <!--<td>{{ full.get(region, {}).get(group, {}).get(name, '') }}</td>-->
                   </tr>
                 {% endfor %}
               {% endfor %}
@@ -48,8 +61,12 @@
         {% endfor %}
       </div>
       <button class="btn btn-primary">Actualizează</button>
+
       {% set download_url=url_for('.download_refvals', page=page, subject=subject) %}
-      <a href="{{ download_url }}" class="btn btn-default col-sm-offset-1"><i class="icon-download"></i> Descarcă Excel</a>
+      <a href="{{ download_url }}" class="btn btn-default">
+        <i class="icon-download"></i>
+        Descarcă Excel
+      </a>
     </form>
   </div>
 {% endblock %}

@@ -38,6 +38,15 @@ from art17.aggregation.refvalues import (
     get_subject_refvals_mixed,
 )
 
+REGIONS = {
+    'ALP': 'Alpina',
+    'CON': 'Continentala',
+    'PAN': 'Panonica',
+    'STE': 'Stepica',
+    'BLS': 'Boreala',
+    'MBLS': 'Marea Neagra',
+}
+
 
 def get_checklists():
     return Dataset.query.filter_by(checklist=True)
@@ -381,7 +390,7 @@ def manage_refvals_form(page, subject):
 
     return flask.render_template(
         'aggregation/manage/refvals_form.html', page=page, subject=subject,
-        data=data, extra=extra, full=full, name=name,
+        data=data, extra=extra, full=full, name=name, REGIONS=REGIONS,
     )
 
 

@@ -11,12 +11,14 @@
     {%- for group,values in refvals.iteritems() -%}
       <strong>{{ REFGROUPS.get(group, group|capitalize) }}</strong>
       <table class='table table-condensed table-bordered'>
+        <thead>
         {%- set keys, data = values.keys(), values.values() -%}
         <tr>
           {%- for k in keys -%}
             <th>{{ k }}</th>
           {%- endfor -%}
         </tr>
+        </thead>
         <tr>
           {%- for v in data -%}
             <td class='text-right'>{{ v or 'n/a' }}</td>
@@ -30,12 +32,14 @@
 
 {% macro refvalues_table(species_list, species_data, species_refvals, page='species') %}
   <table class="table">
+    <thead>
     <tr>
       <th></th>
       {% for region in bioreg_list %}
         <th>{{ region.code }}</th>
       {% endfor %}
     </tr>
+    </thead>
     {% set last_group = '' %}
     {% for code, name, group_code in species_list %}
       {% if group_code != last_group %}

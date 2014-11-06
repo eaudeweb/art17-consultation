@@ -12,30 +12,33 @@
 
         <table class="table table-bordered recorddetail-table table-vertical"
                id="threats_container">
+          <thead>
           <tr>
             <th>Amenințare</th>
             <th>Clasificare</th>
             <th>Calificativ de poluare</th>
             <th>Acțiuni</th>
           </tr>
+          </thead>
           {% for p in threats.threats.data %}
-          <tr data-id="{{ p.id }}">
-            <td>{{ PRESSURES[p.pressure] }}</td>
-            <td>({{ p.ranking }}) {{ RANKING_STATUS.get(p.ranking) }}</td>
-            <td>
-              {% if p.pollutions %}
-              {% for pol in p.pollutions %}
-                {{ pol }} {{ POLLUTION_STATUS.get(pol) }},
-              {% endfor %}
-              {% endif %}
-            </td>
-            <td>
-              <button type="button"
-                      class="btn btn-danger btn-sm hidepressure"
-                      title="Șterge amenițare">șterge</button>
-              {{ threats.threats.render_input(p) }}
-            </td>
-          </tr>
+            <tr data-id="{{ p.id }}">
+              <td>{{ PRESSURES[p.pressure] }}</td>
+              <td>({{ p.ranking }}) {{ RANKING_STATUS.get(p.ranking) }}</td>
+              <td>
+                {% if p.pollutions %}
+                  {% for pol in p.pollutions %}
+                    {{ pol }} {{ POLLUTION_STATUS.get(pol) }},
+                  {% endfor %}
+                {% endif %}
+              </td>
+              <td>
+                <button type="button"
+                        class="btn btn-danger btn-sm hidepressure"
+                        title="Șterge amenițare">șterge
+                </button>
+                {{ threats.threats.render_input(p) }}
+              </td>
+            </tr>
           {% endfor %}
 
           <tr>

@@ -11,6 +11,7 @@
         {{ errors(measures.measures) }}
 
         <table class="table table-bordered recorddetail-table table-vertical" id="measures_container">
+        <thead>
          <tr>
           <th rowspan="2">Mǎsurǎ</th>
           <th colspan="5">Tip</th>
@@ -21,23 +22,24 @@
         </tr>
 
         <tr class="sub-header">
-          <td title="Legal">Leg.</td>
-          <td title="Administrativ">Adm.</td>
-          <td title="Contractual">Contr.</td>
-          <td title="Recurent">Rec.</td>
-          <td title="Unic (one-off)">Unic</td>
+          <th title="Legal">Leg.</th>
+          <th title="Administrativ">Adm.</th>
+          <th title="Contractual">Contr.</th>
+          <th title="Recurent">Rec.</th>
+          <th title="Unic (one-off)">Unic</th>
 
-          <td title="În interiorul sitului">In.</td>
-          <td title="În afara sitului">Out.</td>
-          <td title="În interiorul și în afara sitului">Ambele</td>
+          <th title="În interiorul sitului">In.</th>
+          <th title="În afara sitului">Out.</th>
+          <th title="În interiorul și în afara sitului">Ambele</th>
 
-          <td title="Menținere">Men.</td>
-          <td title="Îmbunǎtǎțire">Imb.</td>
-          <td title="Termen lung">T. lung</td>
-          <td title="Fǎrǎ efect">F ef.</td>
-          <td title="Necunoscut">Nec.</td>
-          <td title="Neevaluat">Neval.</td>
+          <th title="Menținere">Men.</th>
+          <th title="Îmbunǎtǎțire">Imb.</th>
+          <th title="Termen lung">T. lung</th>
+          <th title="Fǎrǎ efect">F ef.</th>
+          <th title="Necunoscut">Nec.</th>
+          <th title="Neevaluat">Neval.</th>
         </tr>
+       </thead>
 
         {% for m in measures.measures.data %}
         <tr data-id="{{ m.id }}">

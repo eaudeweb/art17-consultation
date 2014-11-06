@@ -14,7 +14,8 @@
     </thead>
     <tbody>
     <tr>
-      <td><a href="{{ url_for('.checklist') }}">Lista de verificare inițială</a></td>
+      <td>
+        <a href="{{ url_for('.checklist') }}">Lista de verificare inițială</a></td>
       <td class="text-right">
         {{ default_list.species_checklist|count }} specii,
         {{ default_list.habitat_checklist|count }} habitate
