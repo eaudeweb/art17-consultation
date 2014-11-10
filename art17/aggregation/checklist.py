@@ -165,3 +165,29 @@ def fix_checklist():
         hb.priority = str(hd_map.get(hb.natura_2000_code, ''))
     print("Commit")
     db.session.commit()
+
+
+@aggregation_manager.command
+def fix_checklist_priority(checklist_id):
+    print("Fix initial checklist with data from a checklist.")
+    print("Species...")
+    hd_map = dict(
+        DataSpeciesCheckList.query
+        .filter_by(dataset_id=checklist_id)
+        .with_entities(DataSpeciesCheckList.natura_2000_code,
+                       DataSpeciesCheckList.priority)
+    )
+    for sc in DataSpeciesCheckList.query.filter_by(dataset_id=None):
+        sc.priority = str(hd_map.get(sc.natura_2000_code, '') or '')
+
+    hd_map = dict(
+        DataHabitatsCheckList.query
+        .filter_by(dataset_id=checklist_id)
+        .with_entities(DataHabitatsCheckList.natura_2000_code,
+                       DataHabitatsCheckList.priority)
+    )
+    print("Habitats...")
+    for hb in DataHabitatsCheckList.query.filter_by(dataset_id=None):
+        hb.priority = str(hd_map.get(hb.natura_2000_code, '') or '')
+    print("Commit")
+    db.session.commit()
