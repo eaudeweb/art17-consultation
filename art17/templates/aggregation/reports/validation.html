@@ -34,17 +34,17 @@
           <th>Status</th>
         </tr>
         </thead>
-        <tfoot class="thead">
+        <tbody class="thead">
         <tr>
           <th class="searchable"></th>
-          <th></th>
+          <th class="searchable"></th>
           <th class="searchable"></th>
           <th class="searchable"></th>
           <th class="searchable"></th>
           <th class="searchable"></th>
           <th class="searchable"></th>
         </tr>
-        </tfoot>
+        </tbody>
         <tbody>
         {% for spec in species %}
           <tr>
@@ -57,7 +57,11 @@
               {% set group=spec.species.lu and spec.species.lu.group_code %}
               {{ GROUPS.get(group, group) }}</td>
             <td>{{ spec.region }}</td>
-            <td>{{ spec.cons_user_id }}</td>
+            <td>
+              {% if not spec.is_new() %}
+                {{ spec.cons_user_id }}
+              {% endif %}
+            </td>
             <td>
               {{ status(spec) }}
             </td>
@@ -78,16 +82,16 @@
           <th>Status</th>
         </tr>
         </thead>
-        <tfoot class="thead">
+        <tbody class="thead">
         <tr>
           <th class="searchable"></th>
-          <th></th>
+          <th class="searchable"></th>
           <th class="searchable"></th>
           <th class="searchable"></th>
           <th class="searchable"></th>
           <th class="searchable"></th>
         </tr>
-        </tfoot>
+        </tbody>
         <tbody>
         {% for hab in habitats %}
           <tr>
@@ -97,7 +101,11 @@
                    hab.habitat.lu.data_checklist.priority }}</td>
             <td>{{ hab.habitat and hab.habitat.lu and hab.habitat.lu.hd_name }}</td>
             <td>{{ hab.region }}</td>
-            <td>{{ hab.cons_user_id }}</td>
+            <td>
+              {% if not hab.is_new() %}
+                {{ hab.cons_user_id }}
+              {% endif %}
+            </td>
             <td>
               {{ status(hab) }}
             </td>

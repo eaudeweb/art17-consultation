@@ -1,13 +1,13 @@
 $( function () {
-  $('tfoot.thead').hide();
+  $('tbody.thead').hide();
 
   $('#dt-filter').click(function() {
-    $('tfoot.thead').toggle();
+    $('tbody.thead').toggle();
   });
 });
 
 function enable_filtering(table_id) {
-  $(table_id + ' tfoot th.searchable').each( function () {
+  $(table_id + ' tbody th.searchable').each( function () {
     var title = $(table_id + ' thead th').eq( $(this).index() ).text();
     $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
   });
