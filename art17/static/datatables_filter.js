@@ -1,13 +1,13 @@
 $( function () {
-  $('tbody.thead').hide();
+  $('thead.thead').hide();
 
   $('#dt-filter').click(function() {
-    $('tbody.thead').toggle();
+    $('thead.thead').toggle();
   });
 });
 
 function enable_filtering(table_id) {
-  $(table_id + ' tbody th.searchable').each( function () {
+  $(table_id + ' thead th.searchable').each( function () {
     var title = $(table_id + ' thead th').eq( $(this).index() ).text();
     $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
   });
@@ -22,7 +22,7 @@ function enable_filtering(table_id) {
 
   // Apply the search
   table.columns().eq( 0 ).each( function ( colIdx ) {
-    $( 'input', table.column( colIdx ).footer() ).on( 'keyup change', function () {
+    $(table_id + ' thead.thead input').eq( colIdx ).on( 'keyup change', function () {
       table
         .column( colIdx )
         .search( this.value )
