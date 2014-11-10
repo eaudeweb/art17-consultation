@@ -11,6 +11,9 @@ def execute(query):
     except AssertionError as e:
         logging.exception(e)
         return []
+    except Exception as e:
+        logging.exception(e)
+        return []
 
 
 def get_habitat_published(habcode, region):
