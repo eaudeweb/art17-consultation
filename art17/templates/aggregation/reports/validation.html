@@ -96,9 +96,11 @@
         {% for hab in habitats %}
           <tr>
             <td>{{ hab.habitat and hab.habitat.code }}</td>
-            <td class="text-center">{{ hab.habitat and hab.habitat.lu and
-                   hab.habitat.lu.data_checklist and
-                   hab.habitat.lu.data_checklist.priority and '*' }}</td>
+            <td class="text-center">
+              {{ hab.habitat and hab.habitat.lu and
+                 hab.habitat.data_checklist and
+                 hab.habitat.data_checklist.priority and '*' }}
+            </td>
             <td>{{ hab.habitat and hab.habitat.lu and hab.habitat.lu.hd_name }}</td>
             <td>{{ hab.region }}</td>
             <td>

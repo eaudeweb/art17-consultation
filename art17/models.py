@@ -348,6 +348,14 @@ class DataHabitatsCheckList(Base):
     dataset = relationship('Dataset', backref=db.backref('habitat_checklist',
                                                          lazy='dynamic'))
 
+    lu = relationship(DataHabitat,
+                      primaryjoin=(
+                      natura_2000_code == cast(foreign(DataHabitat.code),
+                                               String(255))),
+                      lazy='joined', innerjoin=True, uselist=False,
+                      backref=db.backref('data_checklist')
+    )
+
     @hybrid_property
     def code(self):
         return self.natura_2000_code

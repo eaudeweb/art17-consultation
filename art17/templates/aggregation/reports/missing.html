@@ -118,9 +118,11 @@
         {% for habitat in missing_habitats %}
           <tr>
           <td>{{ habitat.habitat.code }}</td>
-          <td class="text-center">{{ habitat.habitat.lu and
-                 habitat.habitat.lu.data_checklist and
-                 habitat.habitat.lu.data_checklist.priority and '*' }}</td>
+          <td class="text-center">
+              {{ hab.habitat and hab.habitat.lu and
+                 hab.habitat.data_checklist and
+                 hab.habitat.data_checklist.priority and '*' }}
+          </td>
           <td>{{ habitat.habitat and habitat.habitat.lu.name_ro }}</td>
           <td>{{ habitat.region }}</td>
           </tr>
