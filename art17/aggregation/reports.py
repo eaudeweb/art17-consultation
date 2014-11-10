@@ -16,6 +16,7 @@ from art17.aggregation.utils import aggregation_missing_data_report, \
 from art17.auth import require
 from art17.lookup import CONCLUSIONS
 from art17.aggregation.export import get_tables
+from art17.models import STATUS_CLOSED
 
 PRESSURES = {
     'A': 'Agricultura',
@@ -852,32 +853,40 @@ def report_validation(dataset_id):
 @download('Raport_13')
 def report_13(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
-    species, habitat = get_report_data(dataset)
 
-    species_count = species.count() or 1
-    habitat_count = habitat.count() or 1
+    datasets = set(
+        list(models.Dataset.query.filter_by(status=STATUS_CLOSED)) + [dataset]
+    )
+    for ds in datasets:
+        species, habitat = get_report_data(ds)
 
-    species = species.with_entities(
-        models.DataSpeciesRegion.conclusion_assessment,
-        func.count(models.DataSpeciesRegion.id)
-    ).group_by(models.DataSpeciesRegion.conclusion_assessment)
-    dataset.species = dict(species)
-    dataset.species['NA'] = dataset.species.get(None, 0)
-    for key, value in dataset.species.iteritems():
-        dataset.species[key] = value * 100.0 / species_count
+        species_count = species.count() or 1
+        habitat_count = habitat.count() or 1
 
-    habitats = habitat.with_entities(
-        models.DataHabitattypeRegion.conclusion_assessment,
-        func.count(models.DataHabitattypeRegion.id)
-    ).group_by(models.DataHabitattypeRegion.conclusion_assessment)
-    dataset.habitat = dict(habitats)
-    dataset.habitat['NA'] = dataset.habitat.get(None, 0)
-    for key, value in dataset.habitat.iteritems():
-        dataset.habitat[key] = value * 100.0 / habitat_count
+        species = species.with_entities(
+            models.DataSpeciesRegion.conclusion_assessment,
+            func.count(models.DataSpeciesRegion.id)
+        ).group_by(models.DataSpeciesRegion.conclusion_assessment)
+        ds.species = dict(species)
+        ds.species['NA'] = ds.species.get(None, 0)
+        for key, value in ds.species.iteritems():
+            ds.species[key] = value * 100.0 / species_count
+
+        habitats = habitat.with_entities(
+            models.DataHabitattypeRegion.conclusion_assessment,
+            func.count(models.DataHabitattypeRegion.id)
+        ).group_by(models.DataHabitattypeRegion.conclusion_assessment)
+        ds.habitat = dict(habitats)
+        ds.habitat['NA'] = ds.habitat.get(None, 0)
+        for key, value in ds.habitat.iteritems():
+            ds.habitat[key] = value * 100.0 / habitat_count
+
+    datasets = list(datasets)
+    datasets.sort(key=lambda d: d.year_end, reverse=True)
 
     return render_template(
         'aggregation/reports/13.html',
-        page='13', dataset=dataset,
+        page='13', datasets=datasets, dataset=dataset,
     )
 
 

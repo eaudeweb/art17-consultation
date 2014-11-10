@@ -28,20 +28,22 @@
     </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>
-        <td>#{{ dataset.id }}</td>
-        {{ percent(dataset.habitat['FV'], '0%') }}
-        {{ percent(dataset.habitat['NA'], '0%') }}
-        {{ percent(dataset.habitat['U1'], '0%') }}
-        {{ percent(dataset.habitat['U2'], '0%') }}
-        {{ percent(dataset.habitat['XX'], '0%') }}
-        {{ percent(dataset.species['FV'], '0%') }}
-        {{ percent(dataset.species['NA'], '0%') }}
-        {{ percent(dataset.species['U1'], '0%') }}
-        {{ percent(dataset.species['U2'], '0%') }}
-        {{ percent(dataset.species['XX'], '0%') }}
+    {% for ds in datasets %}
+      <tr {% if ds != dataset %}style="background-color: #f6f6f6;"{% endif %}>
+        <td>{{ ds.year_start }} - {{ ds.year_end }}</td>
+        <td>#{{ ds.id }}</td>
+        {{ percent(ds.habitat['FV'], '0%') }}
+        {{ percent(ds.habitat['NA'], '0%') }}
+        {{ percent(ds.habitat['U1'], '0%') }}
+        {{ percent(ds.habitat['U2'], '0%') }}
+        {{ percent(ds.habitat['XX'], '0%') }}
+        {{ percent(ds.species['FV'], '0%') }}
+        {{ percent(ds.species['NA'], '0%') }}
+        {{ percent(ds.species['U1'], '0%') }}
+        {{ percent(ds.species['U2'], '0%') }}
+        {{ percent(ds.species['XX'], '0%') }}
       </tr>
     </tbody>
+    {% endfor %}
   </table>
 {% endblock %}
