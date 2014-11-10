@@ -6,9 +6,11 @@ from openpyxl.styles import PatternFill, Style, Font, Alignment, Border, Side
 from flask import render_template, request, Response
 from sqlalchemy import func
 from functools import wraps
+from sqlalchemy.orm import joinedload
 
 from art17.aggregation import aggregation, perm_view_reports, MIMETYPE
 from art17 import models, ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL, ROLE_MISSING
+from art17.aggregation.forms import WhatForm
 from art17.aggregation.utils import aggregation_missing_data_report, \
     get_checklist
 from art17.auth import require
@@ -88,13 +90,22 @@ def get_ordered_measures_codes():
     return codes
 
 
-def get_report_data(dataset):
-    species = dataset.species_objs.filter(
-        models.DataSpeciesRegion.cons_role.in_(
-            (ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL)))
-    habitats = dataset.habitat_objs.filter(
-        models.DataHabitattypeRegion.cons_role.in_(
-            (ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL)))
+def get_report_data(dataset, roles=None):
+    roles = roles or (ROLE_AGGREGATED, ROLE_DRAFT, ROLE_FINAL)
+    species = (
+        dataset.species_objs
+        .join(models.DataSpeciesRegion.species)
+        .options(
+            joinedload(models.DataSpeciesRegion.species)
+        ).filter(models.DataSpeciesRegion.cons_role.in_(roles))
+    )
+    habitats = (
+        dataset.habitat_objs
+        .join(models.DataHabitattypeRegion.habitat)
+        .options(
+            joinedload(models.DataHabitattypeRegion.habitat)
+        ).filter(models.DataHabitattypeRegion.cons_role.in_(roles))
+    )
     return species, habitats
 
 
@@ -104,7 +115,7 @@ def get_checklist_data(dataset):
         models.DataSpeciesCheckList.query.filter_by(dataset_id=checklist.id)
     )
     habitats = (
-        models.DataSpeciesCheckList.query.filter_by(dataset_id=checklist.id)
+        models.DataHabitatsCheckList.query.filter_by(dataset_id=checklist.id)
     )
     return species, habitats
 
@@ -223,7 +234,9 @@ def download(report_name):
             if request.args.get('download'):
                 return get_excel_document(html, report_name)
             return html
+
         return wrapper
+
     return decorator
 
 
@@ -358,18 +371,31 @@ def report_bioreg_global(dataset_id):
 @download('Raport_10')
 def report_bioreg_annex(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
-    species, habitats = get_checklist_data(dataset)
+    species_cl, habitats_cl = get_checklist_data(dataset)
 
-    def _get_regions(model):
+    if request.args.get('what'):
+        what_form = WhatForm(request.args)
+    else:
+        what_form = WhatForm()
+    if what_form.what.data == 1:
+        roles = (ROLE_FINAL,)
+    elif what_form.what.data == 2:
+        roles = (ROLE_AGGREGATED, ROLE_DRAFT)
+    else:
+        roles = None
+    species, habitats = get_report_data(dataset, roles=roles)
+
+    def _get_regions(queryset):
         regions = (
-            model
+            queryset
             .filter_by(member_state='RO')
             .with_entities('bio_region')
             .distinct()
         )
         return [r for r, in regions]
-    species_regions = _get_regions(species)
-    habitats_regions = _get_regions(habitats)
+
+    species_regions = _get_regions(species_cl)
+    habitats_regions = _get_regions(habitats_cl)
     regions = list(set(species_regions + habitats_regions))
     stats = {
         'species': {
@@ -378,8 +404,17 @@ def report_bioreg_annex(dataset_id):
         },
         'habitats': {r: {'n': 0, 'p': 0} for r in regions}
     }
+    species_cl = {
+        (s.code, s.bio_region): s for s in species_cl
+    }
+    habitats_cl = {
+        (h.code, h.bio_region): h for h in habitats_cl
+    }
 
-    for spec in species:
+    for s in species:
+        spec = species_cl.get((s.species and s.species.code, s.region), None)
+        if not spec:
+            continue
         if spec.has_annex(2):
             if spec.priority:
                 stats['species'][spec.bio_region][2]['p'] += 1
@@ -392,7 +427,10 @@ def report_bioreg_annex(dataset_id):
             for annex in (4, 5):
                 if spec.has_annex(annex):
                     stats['species'][spec.bio_region][annex]['n'] += 1
-    for hab in habitats:
+    for h in habitats:
+        hab = habitats_cl.get((h.habitat and h.habitat.code, h.region), None)
+        if not hab:
+            continue
         if hab.priority:
             stats['habitats'][hab.bio_region]['p'] += 1
         else:
@@ -401,8 +439,11 @@ def report_bioreg_annex(dataset_id):
     return render_template(
         'aggregation/reports/bioreg_annex.html',
         dataset=dataset, dataset_id=dataset.id, regions=regions,
-        species=species, habitats=habitats, page='bioreg_annex', stats=stats,
-        current_checklist=get_checklist(dataset.checklist_id))
+        species=species_cl, habitats=habitats_cl, page='bioreg_annex',
+        stats=stats,
+        current_checklist=get_checklist(dataset.checklist_id),
+        what_form=what_form,
+    )
 
 
 @aggregation.route('/raport/<int:dataset_id>/pressures1')

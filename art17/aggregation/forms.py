@@ -7,7 +7,6 @@ from art17.common import get_datasets
 
 
 class OptgroupSelect(Select):
-
     def __call__(self, field, **kwargs):
         kwargs.setdefault('id', field.id)
         if self.multiple:
@@ -26,7 +25,6 @@ class OptgroupSelect(Select):
 
 
 class OptgroupSelectField(SelectField):
-
     def iter_choices(self, choices=None):
         choices = choices if choices is not None else self.choices
         for value, label in choices:
@@ -82,7 +80,6 @@ class PreviewForm(Form):
         self.qs_dict = qs_dict
 
 
-
 class CompareForm(Form):
     dataset1 = SelectField()
     dataset2 = SelectField()
@@ -99,3 +96,8 @@ class CompareForm(Form):
             self.dataset1.errors.append('Cannot compare to self')
             return False
         return res
+
+
+class WhatForm(Form):
+    what = SelectField(choices=((0, 'Toate'), (1, 'Valide'), (2, 'Nevalid')),
+                       default=0, coerce=int)

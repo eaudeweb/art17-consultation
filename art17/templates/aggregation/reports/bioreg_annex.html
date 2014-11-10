@@ -8,6 +8,14 @@
   <p>Numărul de rapoarte pentru habitate și specii pe fiecare regiune biogeografică și regiunea
     Marea Neagra (grupate pe anexe)</p>
 
+  <form method="get" action="" id="filterform">
+    <label for="what">
+      Arată:
+    </label>
+
+    {{ what_form.what() }}
+  </form>
+
   <table class="table table-bordered table-condensed">
     <thead>
     <tr>
@@ -64,4 +72,14 @@
 
   <p class="text-warning">Lista de verificare: {{ current_checklist }}</p>
 
+{% endblock %}
+
+{% block script %}
+  {{ super() }}
+
+  <script type="text/javascript">
+    $('#what').change(function () {
+      $('#filterform').submit();
+    })
+  </script>
 {% endblock %}
