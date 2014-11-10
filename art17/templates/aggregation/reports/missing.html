@@ -64,9 +64,9 @@
         {% for species in missing_species %}
           <tr>
             <td>{{ species.species.code }}</td>
-            <td>{{ species.species.lu and
+            <td class="text-center">{{ species.species.lu and
                    species.species.lu.data_checklist and
-                   species.species.lu.data_checklist.priority }}</td>
+                   species.species.lu.data_checklist.priority and '*' }}</td>
             <td>{{ species.species.lu.speciesname }}</td>
             <td>{{ GROUPS.get(species.species.lu.group_code, species.species.lu.group_code) }}</td>
             <td>{{ species.species.lu.dh_list }}</td>
@@ -118,9 +118,9 @@
         {% for habitat in missing_habitats %}
           <tr>
           <td>{{ habitat.habitat.code }}</td>
-          <td>{{ habitat.habitat.lu and
+          <td class="text-center">{{ habitat.habitat.lu and
                  habitat.habitat.lu.data_checklist and
-                 habitat.habitat.lu.data_checklist.priority }}</td>
+                 habitat.habitat.lu.data_checklist.priority and '*' }}</td>
           <td>{{ habitat.habitat and habitat.habitat.lu.name_ro }}</td>
           <td>{{ habitat.region }}</td>
           </tr>

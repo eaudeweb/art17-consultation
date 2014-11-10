@@ -73,9 +73,9 @@
            <tr>
              {% if spec.species %}
              <td>{{ spec.species.code }}</td>
-             <td>{{ spec.species and spec.species.lu and
+             <td class="text-center">{{ spec.species and spec.species.lu and
                   spec.species.lu.data_checklist and
-                  spec.species.lu.data_checklist.priority }}</td>
+                  spec.species.lu.data_checklist.priority and '*' }}</td>
              <td>{{ spec.species.lu and spec.species.lu.hdname }}</td>
              <td>
                {% set group=spec.species.lu and spec.species.lu.group_code %}
@@ -138,9 +138,9 @@
            <tr>
              {% if hab.habitat %}
              <td>{{ hab.habitat.code }}</td>
-             <td>{{ hab.habitat and hab.habitat.lu and
+             <td class="text-center">{{ hab.habitat and hab.habitat.lu and
                   hab.habitat.lu.data_checklist and
-                  hab.habitat.lu.data_checklist.priority }}</td>
+                  hab.habitat.lu.data_checklist.priority and '*' }}</td>
              <td>{{ hab.habitat.lu and hab.habitat.lu.hd_name }}</td>
              {% else %}
              <td colspan="3"><em>valoare lipsă</em></td>
