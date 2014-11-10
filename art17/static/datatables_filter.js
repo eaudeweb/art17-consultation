@@ -18,6 +18,7 @@ function enable_filtering(table_id) {
   });
 
   $('.dataTables_filter').hide();
+  $('.dataTables_info').hide();
   $('.dataTables_empty').parent().parent().hide();
 
   // Apply the search
