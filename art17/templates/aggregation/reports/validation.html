@@ -2,8 +2,8 @@
 {% from 'bits.html' import script %}
 
 {% macro status(spec) %}
-  {% if spec.is_agg_final -%}validat
-  {%- elif spec.is_new -%}nou
+  {% if spec.is_agg_final() -%}validat
+  {%- elif spec.is_new() -%}nou
   {%- else -%}în lucru{%- endif %}
 {% endmacro %}
 
