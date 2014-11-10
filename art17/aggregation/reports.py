@@ -187,10 +187,10 @@ def get_excel_document(html, filename):
         font=Font(bold=True),
         fill=PatternFill(start_color='EEEEEE', end_color='EEEEEE',
                          fill_type='solid'),
-        border=Border(left=Side(border_style='thick'),
-                      right=Side(border_style='thick'),
-                      top=Side(border_style='thick'),
-                      bottom=Side(border_style='thick')),
+        border=Border(left=Side(border_style='thin'),
+                      right=Side(border_style='thin'),
+                      top=Side(border_style='thin'),
+                      bottom=Side(border_style='thin')),
         alignment=Alignment(horizontal='center', vertical='center'),
     )
 
