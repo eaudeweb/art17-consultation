@@ -164,6 +164,8 @@ def get_effects_dict(data_measures):
 
     for data_measure in data_measures:
         categ_code = data_measure.measurecode[:2]
+        if categ_code == u'1':
+            categ_code = u'1.'
         measures_dict[categ_code] += 1
         for effect in EFFECTS:
             effects_dict[categ_code][effect] += getattr(data_measure, effect)
