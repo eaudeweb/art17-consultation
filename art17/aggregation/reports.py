@@ -4,7 +4,7 @@ from openpyxl import Workbook
 from openpyxl.cell import get_column_letter
 from openpyxl.writer.excel import save_virtual_workbook
 from openpyxl.styles import PatternFill, Style, Font, Alignment, Border, Side
-from flask import render_template, request, Response
+from flask import render_template, request, Response, abort
 from sqlalchemy import func, and_
 from functools import wraps
 from sqlalchemy.orm import joinedload
@@ -81,7 +81,7 @@ METHODS = [
     ('0', 'Lipsa date'),
 ]
 
-REPORTS_NAMES = [
+REPORT_NAMES = [
     u'#1 Număr de rapoarte încărcate în raport cu lista de verificare',
     u'#2 Situație cu înregistrările validate și cele nevalidate',
     u'#3 Numărul de rapoarte pentru habitate și specii',
@@ -273,7 +273,7 @@ def inject_consts():
         .with_entities(models.LuGrupSpecie.code,
                        models.LuGrupSpecie.description)
     )
-    return dict(GROUPS=groups, REPORTS_NAMES=REPORTS_NAMES)
+    return dict(GROUPS=groups, REPORT_NAMES=REPORT_NAMES)
 
 
 @aggregation.route('/raport/<int:dataset_id>')
@@ -1213,4 +1213,6 @@ pages_to_views = {
 @require(perm_view_reports())
 @download()
 def report_view(dataset_id, page):
+    if page not in pages_to_views:
+        abort(404)
     return pages_to_views[page](dataset_id, page)

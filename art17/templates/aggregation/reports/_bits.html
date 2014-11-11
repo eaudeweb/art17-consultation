@@ -31,9 +31,10 @@
 {% endmacro %}
 
 {% macro report_menu() %}
-  {% for report_name in REPORTS_NAMES %}
-    <li {% if page == 'raport' + loop.index|string %}class="active"{% endif %}>
-      <a href="{{ url_for('.report_view', dataset_id=dataset.id, page='raport' + loop.index|string ) }}">
+  {% for report_name in REPORT_NAMES %}
+    {% set report_id = 'raport' + loop.index|string %}
+    <li {% if page == report_id %}class="active"{% endif %}>
+      <a href="{{ url_for('.report_view', dataset_id=dataset.id, page=report_id) }}">
           {{ report_name }}
       </a>
     </li>
