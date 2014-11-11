@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from decimal import Decimal
 from openpyxl import Workbook
 from openpyxl.cell import get_column_letter
@@ -78,6 +79,24 @@ METHODS = [
     ('2', 'Extrapolare'),
     ('3', 'Studiu complet'),
     ('0', 'Lipsa date'),
+]
+
+REPORTS_NAMES = [
+    u'#1 Număr de rapoarte încărcate în raport cu lista de verificare',
+    u'#2 Situație cu înregistrările validate și cele nevalidate',
+    u'#3 Numărul de rapoarte pentru habitate și specii',
+    u'#4 Evaluarea globală a statutului de conservare a speciilor și habitatelor',
+    u'#5 Evaluarea globală a statutului de conservare a speciilor și habitatelor pe bioregiuni',
+    u'#6 Statutul de conservare a speciilor și habitatelor',
+    u'#7 Modificarea statutului de conservare procentual',
+    u'#8 Îmbunătățirea/deteriorarea trendului habitatelor și speciilor',
+    u'#9 Evaluarea globală a statutului de conservare pe grupuri de specii și habitate procentual',
+    u'#10 Motivele modificărilor valorilor parametrilor raportați între două perioade de raportare succesive',
+    u'#11 Frecvența principalelor Presiuni/Amenințări',
+    u'#12 Numărul evaluărilor de habitate/specii pentru care au fost raportate măsuri cu importanță mare',
+    u'#13 Procentele evaluărilor de habitate/specii pentru care a fost raportat efectul unei măsuri de conservare',
+    u'#14 Rapoarte de calitate a datelor pentru specii/habitate',
+    u'#15 Statistici pentru specii/habitate',
 ]
 
 UNKNOWN_TREND = 'x'
@@ -232,11 +251,12 @@ def get_excel_document(html, filename):
     return resp
 
 
-def download(report_name):
+def download():
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
             html = func(*args, **kwargs)
+            report_name = kwargs.get('page', 'raport')
             if request.args.get('download'):
                 return get_excel_document(html, report_name)
             return html
@@ -253,7 +273,7 @@ def inject_consts():
         .with_entities(models.LuGrupSpecie.code,
                        models.LuGrupSpecie.description)
     )
-    return dict(GROUPS=groups)
+    return dict(GROUPS=groups, REPORTS_NAMES=REPORTS_NAMES)
 
 
 @aggregation.route('/raport/<int:dataset_id>')
@@ -265,10 +285,7 @@ def report(dataset_id):
                            dataset_id=dataset.id)
 
 
-@aggregation.route('/raport/<int:dataset_id>/conservation_status')
-@require(perm_view_reports())
-@download('Raport_11')
-def report_conservation_status(dataset_id):
+def report_conservation_status(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
     species = list(
@@ -325,14 +342,11 @@ def report_conservation_status(dataset_id):
     return render_template(
         'aggregation/reports/conservation_status.html',
         dataset=dataset, dataset_id=dataset.id,
-        species=species, habitats=habitats, page='conservation', stats=stats,
+        species=species, habitats=habitats, page=page, stats=stats,
         GROUPS=groups)
 
 
-@aggregation.route('/raport/<int:dataset_id>/bioreg_global')
-@require(perm_view_reports())
-@download('Raport_12')
-def report_bioreg_global(dataset_id):
+def report_bioreg_global(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
 
@@ -369,13 +383,10 @@ def report_bioreg_global(dataset_id):
     return render_template(
         'aggregation/reports/bioreg_global.html',
         dataset=dataset, dataset_id=dataset.id, regions=REGIONS,
-        species=species, habitats=habitats, page='bioreg', stats=stats)
+        species=species, habitats=habitats, page=page, stats=stats)
 
 
-@aggregation.route('/raport/<int:dataset_id>/bioreg_annex')
-@require(perm_view_reports())
-@download('Raport_10')
-def report_bioreg_annex(dataset_id):
+def report_bioreg_annex(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species_cl, habitats_cl = get_checklist_data(dataset)
 
@@ -445,17 +456,14 @@ def report_bioreg_annex(dataset_id):
     return render_template(
         'aggregation/reports/bioreg_annex.html',
         dataset=dataset, dataset_id=dataset.id, regions=regions,
-        species=species_cl, habitats=habitats_cl, page='bioreg_annex',
+        species=species_cl, habitats=habitats_cl, page=page,
         stats=stats,
         current_checklist=get_checklist(dataset.checklist_id),
         what_form=what_form,
     )
 
 
-@aggregation.route('/raport/<int:dataset_id>/pressures1')
-@require(perm_view_reports())
-@download('Raport_18')
-def report_pressures1(dataset_id):
+def report_pressures1(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
 
@@ -524,13 +532,10 @@ def report_pressures1(dataset_id):
     return render_template(
         'aggregation/reports/pressures1.html',
         dataset=dataset, dataset_id=dataset.id, pressures=PRESSURES,
-        species=species, habitats=habitats, page='pressures1', stats=stats)
+        species=species, habitats=habitats, page=page, stats=stats)
 
 
-@aggregation.route('/raport/<int:dataset_id>/measures')
-@require(perm_view_reports())
-@download('Raport_20')
-def report_measures_high_importance(dataset_id):
+def report_measures_high_importance(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
 
@@ -546,13 +551,10 @@ def report_measures_high_importance(dataset_id):
     return render_template(
         'aggregation/reports/measures.html',
         dataset=dataset, count=measures_dict, names=MEASURES,
-        ordered_keys=get_ordered_measures_codes(), page='measures')
+        ordered_keys=get_ordered_measures_codes(), page=page, )
 
 
-@aggregation.route('/raport/<int:dataset_id>/missing')
-@require(perm_view_reports())
-@download('Raport_1')
-def report_missing(dataset_id):
+def report_missing(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
 
     species = dataset.species_objs.filter_by(cons_role=ROLE_MISSING)
@@ -566,15 +568,12 @@ def report_missing(dataset_id):
 
     return render_template(
         'aggregation/reports/missing.html', dataset=dataset,
-        page='missing', missing_species=species, missing_habitats=habitats,
+        page=page, missing_species=species, missing_habitats=habitats,
         GROUPS=groups,
     )
 
 
-@aggregation.route('/raport/<int:dataset_id>/measures_effects')
-@require(perm_view_reports())
-@download('Raport_21')
-def report_measures_effects(dataset_id):
+def report_measures_effects(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
 
@@ -588,13 +587,10 @@ def report_measures_effects(dataset_id):
         'aggregation/reports/measures_effects.html',
         dataset=dataset, species_count=species_effects_dict,
         habitat_count=habitat_effects_dict, names=MEASURES,
-        ordered_keys=get_ordered_measures_codes(), page='measures_effects')
+        ordered_keys=get_ordered_measures_codes(), page=page, )
 
 
-@aggregation.route('/raport/<int:dataset_id>/quality')
-@require(perm_view_reports())
-@download('Raport_22')
-def report_quality(dataset_id):
+def report_quality(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
 
@@ -857,7 +853,7 @@ def report_quality(dataset_id):
 
     return render_template(
         'aggregation/reports/quality.html',
-        dataset=dataset, fields=METHOD_FIELDS, methods=METHODS, page='quality',
+        dataset=dataset, fields=METHOD_FIELDS, methods=METHODS, page=page,
         habitat_methods_quality=habitat_methods_quality,
         species_methods_quality=species_methods_quality,
         habitat_unknown_data=habitat_unknown_data,
@@ -865,10 +861,7 @@ def report_quality(dataset_id):
     )
 
 
-@aggregation.route('/raport/<int:dataset_id>/validation')
-@require(perm_view_reports())
-@download('Raport_8')
-def report_validation(dataset_id):
+def report_validation(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
 
@@ -887,14 +880,11 @@ def report_validation(dataset_id):
 
     return render_template(
         'aggregation/reports/validation.html',
-        page='validation', dataset=dataset, species=species, habitats=habitat,
+        page=page, dataset=dataset, species=species, habitats=habitat,
     )
 
 
-@aggregation.route('/raport/<int:dataset_id>/13')
-@require(perm_view_reports())
-@download('Raport_13')
-def report_13(dataset_id):
+def report_13(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
 
     datasets = set(
@@ -929,14 +919,11 @@ def report_13(dataset_id):
 
     return render_template(
         'aggregation/reports/13.html',
-        page='13', datasets=datasets, dataset=dataset,
+        page=page, datasets=datasets, dataset=dataset,
     )
 
 
-@aggregation.route('/raport/<int:dataset_id>/14')
-@require(perm_view_reports())
-@download('Raport_14')
-def report_14(dataset_id):
+def report_14(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
 
@@ -978,16 +965,13 @@ def report_14(dataset_id):
 
     return render_template(
         'aggregation/reports/14.html',
-        page='14', dataset=dataset, species_mod=species_mod,
+        page=page, dataset=dataset, species_mod=species_mod,
         species_real=species_real, habitat_mod=habitat_mod,
         habitat_real=habitat_real,
     )
 
 
-@aggregation.route('/raport/<int:dataset_id>/15')
-@require(perm_view_reports())
-@download('Raport_15')
-def report_15(dataset_id):
+def report_15(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
 
@@ -1021,15 +1005,12 @@ def report_15(dataset_id):
 
     return render_template(
         'aggregation/reports/15.html',
-        page='15', dataset=dataset, species=species_data,
+        page=page, dataset=dataset, species=species_data,
         habitats=habitat_data,
     )
 
 
-@aggregation.route('/raport/<int:dataset_id>/17')
-@require(perm_view_reports())
-@download('Raport_17')
-def report_17(dataset_id):
+def report_17(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
 
@@ -1104,14 +1085,11 @@ def report_17(dataset_id):
 
     return render_template(
         'aggregation/reports/17.html',
-        page='17', dataset=dataset, species=species_data, habitat=habitat_data,
+        page=page, dataset=dataset, species=species_data, habitat=habitat_data,
     )
 
 
-@aggregation.route('/raport/<int:dataset_id>/16')
-@require(perm_view_reports())
-@download('Raport_16')
-def report_16(dataset_id):
+def report_16(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
 
     datasets = set(
@@ -1150,14 +1128,11 @@ def report_16(dataset_id):
 
     return render_template(
         'aggregation/reports/16.html',
-        page='16', dataset=dataset, datasets=datasets,
+        page=page, dataset=dataset, datasets=datasets,
     )
 
 
-@aggregation.route('/raport/<int:dataset_id>/statistics23')
-@require(perm_view_reports())
-@download('Raport_23')
-def report_statistics(dataset_id):
+def report_statistics(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
 
     species, habitats = get_report_data(dataset)
@@ -1211,5 +1186,31 @@ def report_statistics(dataset_id):
     dataset.reports = reports(dataset)
     return render_template(
         'aggregation/reports/statistics.html',
-        page='stats', dataset=dataset,
+        page=page, dataset=dataset,
     )
+
+
+pages_to_views = {
+    'raport1': report_missing,
+    'raport2': report_validation,
+    'raport3': report_bioreg_annex,
+    'raport4': report_conservation_status,
+    'raport5': report_bioreg_global,
+    'raport6': report_13,
+    'raport7': report_14,
+    'raport8': report_15,
+    'raport9': report_16,
+    'raport10': report_17,
+    'raport11': report_pressures1,
+    'raport12': report_measures_high_importance,
+    'raport13': report_measures_effects,
+    'raport14': report_quality,
+    'raport15': report_statistics,
+}
+
+
+@aggregation.route('/raport/<int:dataset_id>/<page>')
+@require(perm_view_reports())
+@download()
+def report_view(dataset_id, page):
+    return pages_to_views[page](dataset_id, page)
