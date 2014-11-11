@@ -16,12 +16,13 @@
 
     {% if page in ['missing', 'validation', 'conservation'] %}
       <button id="dt-filter" type="button" class="btn btn-default"
-          data-toggle="button" aria-pressed="false" autocomplete="off">
+              data-toggle="button" aria-pressed="false" autocomplete="off">
         Filtrare
       </button>
     {% endif %}
 
-    <a href="?download=1" class="btn btn-default">
+    <a href="?download=1{% if what_form %}&what={{ what_form.what.data }}{% endif %}"
+       class="btn btn-default">
       <i class="icon-download"></i>
       Descarcă Excel
     </a>
