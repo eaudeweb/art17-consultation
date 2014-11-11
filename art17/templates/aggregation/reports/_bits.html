@@ -31,60 +31,14 @@
 {% endmacro %}
 
 {% macro report_menu() %}
-  <li {% if page == 'missing' %}class="active"{% endif %}>
-    <a href="{{ url_for('.report_missing', dataset_id=dataset.id) }}">
-      #1 Număr de rapoarte încărcate în raport cu lista de verificare
-      {# 1 #}</a></li>
-  <li {% if page == 'validation' %}class="active"{% endif %}>
-    <a href="{{ url_for('.report_validation', dataset_id=dataset.id) }}">
-      #2 Situație cu înregistrările validate și cele nevalidate {# 8 #}</a>
-  </li>
-  <li {% if page == 'bioreg_annex' %}class="active"{% endif %}>
-    <a href="{{ url_for('.report_bioreg_annex', dataset_id=dataset.id) }}">
-      #3 Numărul de rapoarte pentru habitate și specii {# 10 #}</a></li>
-  <li {% if page == 'conservation' %}class="active"{% endif %}>
-    <a href="{{ url_for('.report_conservation_status', dataset_id=dataset.id) }}">
-      #4 Evaluarea globală a statutului de conservare a speciilor și
-      habitatelor {# 11 #}</a></li>
-  <li {% if page == 'bioreg' %}class="active"{% endif %}>
-    <a href="{{ url_for('.report_bioreg_global', dataset_id=dataset.id) }}">
-      #5 Evaluarea globală a statutului de conservare a speciilor și
-      habitatelor pe bioregiuni</a></li>
-  <li {% if page == '13' %}class="active"{% endif %}>
-    <a href="{{ url_for('.report_13', dataset_id=dataset.id) }}">
-      #6 Statutul de conservare a speciilor și habitatelor</a></li>
-  <li {% if page == '14' %}class="active"{% endif %}>
-    <a href="{{ url_for('.report_14', dataset_id=dataset.id) }}">
-      #7 Modificarea statutului de conservare procentual</a></li>
-  <li {% if page == '15' %}class="active"{% endif %}>
-    <a href="{{ url_for('.report_15', dataset_id=dataset.id) }}">
-      #8 Îmbunătățirea/deteriorarea trendului habitatelor și speciilor</a>
-  </li>
-  <li {% if page == '16' %}class="active"{% endif %}>
-    <a href="{{ url_for('.report_16', dataset_id=dataset.id) }}">
-      #9 Evaluarea globală a statutului de conservare pe grupuri de specii și
-      habitate procentual</a></li>
-  <li {% if page == '17' %}class="active"{% endif %}>
-    <a href="{{ url_for('.report_17', dataset_id=dataset.id) }}">
-      #10 Motivele modificărilor valorilor parametrilor raportați între două
-      perioade de raportare succesive</a></li>
-  <li {% if page == 'pressures1' %}class="active"{% endif %}>
-    <a href="{{ url_for('.report_pressures1', dataset_id=dataset.id) }}">
-      #11 Frecvența principalelor Presiuni/Amenințări</a></li>
-  <li {% if page == 'measures' %}class="active"{% endif %}>
-    <a href="{{ url_for('.report_measures_high_importance', dataset_id=dataset.id) }}">
-      #12 Numărul evaluărilor de habitate/specii pentru care au fost raportate
-      măsuri cu importanță mare</a></li>
-  <li {% if page == 'measures_effects' %}class="active"{% endif %}>
-    <a href="{{ url_for('.report_measures_effects', dataset_id=dataset.id) }}">
-      #13 Procentele evaluărilor de habitate/specii pentru care a fost raportat
-      efectul unei măsuri de conservare</a></li>
-  <li {% if page == 'quality' %}class="active"{% endif %}>
-    <a href="{{ url_for('.report_quality', dataset_id=dataset.id) }}">
-      #14 Rapoarte de calitate a datelor pentru specii/habitate</a></li>
-  <li {% if page == 'stats' %}class="active"{% endif %}>
-    <a href="{{ url_for('.report_statistics', dataset_id=dataset.id) }}">
-      #15 Statistici pentru specii/habitate</a></li>
+  {% for report_name in REPORT_NAMES %}
+    {% set report_id = 'raport' + loop.index|string %}
+    <li {% if page == report_id %}class="active"{% endif %}>
+      <a href="{{ url_for('.report_view', dataset_id=dataset.id, page=report_id) }}">
+          {{ report_name }}
+      </a>
+    </li>
+  {% endfor %}
 {% endmacro %}
 
 {% macro conclusions_th() %}
