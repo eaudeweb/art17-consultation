@@ -115,16 +115,16 @@
         </thead>
         {% endif %}
         <tbody>
-        {% for habitat in missing_habitats %}
+        {% for hab in missing_habitats %}
           <tr>
-          <td>{{ habitat.habitat.code }}</td>
+          <td>{{ hab.habitat.code }}</td>
           <td class="text-center">
               {{ hab.habitat and hab.habitat.lu and
                  hab.habitat.data_checklist and
                  hab.habitat.data_checklist.priority and '*' }}
           </td>
-          <td>{{ habitat.habitat and habitat.habitat.lu.name_ro }}</td>
-          <td>{{ habitat.region }}</td>
+          <td>{{ hab.habitat and hab.habitat.lu.name_ro }}</td>
+          <td>{{ hab.region }}</td>
           </tr>
         {% endfor %}
         </tbody>
