@@ -1,6 +1,6 @@
 {% extends 'aggregation/reports/report_base.html' %}
 
-{% from 'aggregation/reports/_bits.html' import percent %}
+{% from 'aggregation/reports/_bits.html' import percent, conclusions_th %}
 
 {% block pagecontent %}
 
@@ -10,40 +10,30 @@
     <thead>
     <tr>
       <th rowspan="2">An evaluare</th>
-      <th rowspan="2">Set</th>
       <th colspan="5" class="text-center">Habitate (%)</th>
       <th colspan="5" class="text-center">Specii (%)</th>
     </tr>
     <tr>
-      <th>FV</th>
-      <th>NA</th>
-      <th>U1</th>
-      <th>U2</th>
-      <th>XX</th>
-      <th>FV</th>
-      <th>NA</th>
-      <th>U1</th>
-      <th>U2</th>
-      <th>XX</th>
+      {{ conclusions_th() }}
+      {{ conclusions_th() }}
     </tr>
     </thead>
     <tbody>
     {% for ds in datasets %}
       <tr {% if ds != dataset %}style="background-color: #f6f6f6;"{% endif %}>
         <td>{{ ds.year_start }} - {{ ds.year_end }}</td>
-        <td>#{{ ds.id }}</td>
         {{ percent(ds.habitat['FV'], '0%') }}
-        {{ percent(ds.habitat['NA'], '0%') }}
         {{ percent(ds.habitat['U1'], '0%') }}
         {{ percent(ds.habitat['U2'], '0%') }}
         {{ percent(ds.habitat['XX'], '0%') }}
+        {{ percent(ds.habitat['NA'], '0%') }}
         {{ percent(ds.species['FV'], '0%') }}
-        {{ percent(ds.species['NA'], '0%') }}
         {{ percent(ds.species['U1'], '0%') }}
         {{ percent(ds.species['U2'], '0%') }}
         {{ percent(ds.species['XX'], '0%') }}
+        {{ percent(ds.species['NA'], '0%') }}
       </tr>
-    </tbody>
+      </tbody>
     {% endfor %}
   </table>
 {% endblock %}

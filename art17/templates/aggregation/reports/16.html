@@ -1,6 +1,6 @@
 {% extends 'aggregation/reports/report_base.html' %}
 
-{% from 'aggregation/reports/_bits.html' import percent %}
+{% from 'aggregation/reports/_bits.html' import percent, conclusions_th %}
 
 {% block pagecontent %}
 
@@ -23,11 +23,7 @@
        <tr>
          <th>Grup specii</th>
          <th>Perioadă evaluare</th>
-         <th>FV</th>
-         <th>NA</th>
-         <th>XX</th>
-         <th>U1</th>
-         <th>U2</th>
+         {{ conclusions_th() }}
        </tr>
        </thead>
        <tbody>
@@ -36,10 +32,10 @@
            <td>{{ group.description }}</td>
            <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>
            {{ percent(data.FV, '0%') }}
-           {{ percent(data[none], '0%') }}
-           {{ percent(data.XX, '0%') }}
            {{ percent(data.U1, '0%') }}
            {{ percent(data.U2, '0%') }}
+           {{ percent(data.XX, '0%') }}
+           {{ percent(data[none], '0%') }}
          </tr>
        {% endfor %}
        </tbody>
@@ -51,11 +47,7 @@
        <tr>
          <th>Grup</th>
          <th>Perioadă evaluare</th>
-         <th>FV</th>
-         <th>NA</th>
-         <th>XX</th>
-         <th>U1</th>
-         <th>U2</th>
+         {{ conclusions_th() }}
        </tr>
        </thead>
        <tbody>
@@ -64,10 +56,10 @@
            <td>{{ group }}</td>
            <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>
            {{ percent(data.FV, '0%') }}
-           {{ percent(data[none], '0%') }}
-           {{ percent(data.XX, '0%') }}
            {{ percent(data.U1, '0%') }}
            {{ percent(data.U2, '0%') }}
+           {{ percent(data.XX, '0%') }}
+           {{ percent(data[none], '0%') }}
          </tr>
        {% endfor %}
        </tbody>

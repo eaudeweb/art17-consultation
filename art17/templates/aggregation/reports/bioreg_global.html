@@ -1,6 +1,6 @@
 {% extends 'aggregation/reports/report_base.html' %}
 
-{% from 'aggregation/reports/_bits.html' import percent %}
+{% from 'aggregation/reports/_bits.html' import percent, conclusions_th %}
 
 {% block pagecontent %}
 
@@ -17,16 +17,8 @@
       <th colspan="5">Specii</th>
     </tr>
     <tr>
-      <th class="dashboard-commentcount conclusion-FV">FV</th>
-      <th class="dashboard-commentcount conclusion-U1">U1</th>
-      <th class="dashboard-commentcount conclusion-U2">U2</th>
-      <th class="dashboard-commentcount conclusion-XX">XX</th>
-      <th class="dashboard-commentcount conclusion-NA">NA</th>
-      <th class="dashboard-commentcount conclusion-FV">FV</th>
-      <th class="dashboard-commentcount conclusion-U1">U1</th>
-      <th class="dashboard-commentcount conclusion-U2">U2</th>
-      <th class="dashboard-commentcount conclusion-XX">XX</th>
-      <th class="dashboard-commentcount conclusion-NA">NA</th>
+      {{ conclusions_th() }}
+      {{ conclusions_th() }}
     </tr>
     </thead>
     <tbody>
