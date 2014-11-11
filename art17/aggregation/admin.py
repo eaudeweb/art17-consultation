@@ -130,9 +130,10 @@ class DatasetForm(Form):
 
     def __init__(self, *args, **kwargs):
         super(DatasetForm, self).__init__(*args, **kwargs)
-        self.checklist_id.choices = [
-            (unicode(c.id), unicode(c)) for c in get_checklists()
-        ]
+        self.checklist_id.choices = (
+            [('', u'Lista de verificare inițială')] +
+            [(unicode(c.id), unicode(c)) for c in get_checklists()]
+        )
 
 
 @aggregation.route('/admin/checklist/<dataset_id>/edit/',
