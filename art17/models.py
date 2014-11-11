@@ -352,7 +352,7 @@ class DataHabitatsCheckList(Base):
                       primaryjoin=(
                       natura_2000_code == cast(foreign(DataHabitat.code),
                                                String(255))),
-                      lazy='joined', innerjoin=True, uselist=False,
+                      lazy='joined', innerjoin=False, uselist=False,
                       backref=db.backref('data_checklist')
     )
 
@@ -596,7 +596,7 @@ class DataSpeciesCheckList(Base):
                       primaryjoin=(
                       natura_2000_code == cast(foreign(LuHdSpecies.code),
                                                String(255))),
-                      lazy='joined', innerjoin=True, uselist=False,
+                      lazy='joined', innerjoin=False, uselist=False,
                       backref=db.backref('data_checklist')
     )
 
