@@ -179,7 +179,7 @@ def get_effects_dict(data_measures):
 
 
 def get_methods_quality_dict(data_query, data_class, category):
-    count = Decimal(data_query.count())
+    count = Decimal(data_query.count() or 1)
     methods_quality = {
         method: {
             field: (
