@@ -151,7 +151,10 @@ def get_measures(data_query, attr_name):
 
 def add_to_measures_dict(measures_dict, measures_query, category):
     for measure_code, reports_count in measures_query:
-        measures_dict[measure_code[:2]][category] += reports_count
+        code = measure_code[:2]
+        if code == u'1':
+            code = u'1.'
+        measures_dict[code][category] += reports_count
 
 
 def get_effects_dict(data_measures):
