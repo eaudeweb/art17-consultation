@@ -4,7 +4,7 @@ from openpyxl.cell import get_column_letter
 from openpyxl.writer.excel import save_virtual_workbook
 from openpyxl.styles import PatternFill, Style, Font, Alignment, Border, Side
 from flask import render_template, request, Response
-from sqlalchemy import func
+from sqlalchemy import func, and_
 from functools import wraps
 from sqlalchemy.orm import joinedload
 
@@ -600,92 +600,109 @@ def report_quality(dataset_id):
 
     habitat_unknown_data = {
         'range_surface_area': {
-            'missing': habitat.filter_by(range_method=MISSING_METHOD).count(),
-            'unknown': habitat.filter_by(range_surface_area=None).count(),
+            'missing': habitat.filter(
+                models.DataHabitattypeRegion.range_method == MISSING_METHOD).count(),
+            'unknown': habitat.filter(
+                models.DataHabitattypeRegion.range_surface_area == None).count(),
         },
         'range_trend': {
-            'missing': habitat.filter_by(range_trend=None).count(),
-            'unknown': habitat.filter_by(range_trend=UNKNOWN_TREND).count(),
+            'missing': habitat.filter(
+                models.DataHabitattypeRegion.range_trend == None).count(),
+            'unknown': habitat.filter(
+                models.DataHabitattypeRegion.range_trend == UNKNOWN_TREND).count(),
         },
         'complementary_favourable_range': {
             'missing': (habitat
-                        .filter_by(
-                complementary_favourable_range=None,
-                complementary_favourable_range_op=None,
-                complementary_favourable_range_unknown=None,
+                        .filter(and_(
+                models.DataHabitattypeRegion.complementary_favourable_range == None,
+                models.DataHabitattypeRegion.complementary_favourable_range_op == None,
+                models.DataHabitattypeRegion.complementary_favourable_range_unknown == None
+            )
             ).count()),
             'unknown': (habitat
-                        .filter_by(complementary_favourable_range_unknown=1)
+                        .filter(
+                models.DataHabitattypeRegion.complementary_favourable_range_unknown == 1)
                         .count()),
         },
         'conclusion_range': {
-            'missing': habitat.filter_by(conclusion_range=None).count(),
-            'unknown': habitat.filter_by(
-                conclusion_range=UNKNOWN_CONCLUSION,
+            'missing': habitat.filter(
+                models.DataHabitattypeRegion.conclusion_range == None).count(),
+            'unknown': habitat.filter(
+                models.DataHabitattypeRegion.conclusion_range == UNKNOWN_CONCLUSION,
             ).count(),
         },
         'coverage_surface_area': {
-            'missing': habitat.filter_by(
-                coverage_method=MISSING_METHOD,
+            'missing': habitat.filter(
+                models.DataHabitattypeRegion.coverage_method == MISSING_METHOD,
             ).count(),
-            'unknown': habitat.filter_by(coverage_surface_area=None).count(),
+            'unknown': habitat.filter(
+                models.DataHabitattypeRegion.coverage_surface_area == None
+            ).count(),
         },
         'coverage_trend': {
-            'missing': habitat.filter_by(coverage_trend=None).count(),
-            'unknown': habitat.filter_by(coverage_trend=UNKNOWN_TREND).count(),
+            'missing': habitat.filter(
+                models.DataHabitattypeRegion.coverage_trend == None).count(),
+            'unknown': habitat.filter(
+                models.DataHabitattypeRegion.coverage_trend == UNKNOWN_TREND).count(),
         },
         'complementary_favourable_area': {
-            'missing': habitat.filter_by(
-                complementary_favourable_area=None,
-                complementary_favourable_area_op=None,
-                complementary_favourable_area_unknown=None,
+            'missing': habitat.filter(and_(
+                models.DataHabitattypeRegion.complementary_favourable_area == None,
+                models.DataHabitattypeRegion.complementary_favourable_area_op == None,
+                models.DataHabitattypeRegion.complementary_favourable_area_unknown == None)
             ).count(),
-            'unknown': habitat.filter_by(
-                complementary_favourable_area_unknown=1)
+            'unknown': habitat.filter(
+                models.DataHabitattypeRegion.complementary_favourable_area_unknown == 1)
                 .count(),
         },
         'conclusion_area': {
-            'missing': habitat.filter_by(conclusion_area=None).count(),
-            'unknown': habitat.filter_by(
-                conclusion_area=UNKNOWN_CONCLUSION,
+            'missing': habitat.filter(
+                models.DataHabitattypeRegion.conclusion_area == None).count(),
+            'unknown': habitat.filter(
+                models.DataHabitattypeRegion.conclusion_area == UNKNOWN_CONCLUSION,
             ).count(),
         },
         'conclusion_structure': {
-            'missing': habitat.filter_by(conclusion_structure=None).count(),
-            'unknown': habitat.filter_by(
-                conclusion_structure=UNKNOWN_CONCLUSION,
+            'missing': habitat.filter(
+                models.DataHabitattypeRegion.conclusion_structure == None).count(),
+            'unknown': habitat.filter(
+                models.DataHabitattypeRegion.conclusion_structure == UNKNOWN_CONCLUSION,
             ).count(),
         },
         'conclusion_future': {
-            'missing': habitat.filter_by(conclusion_future=None).count(),
-            'unknown': habitat.filter_by(
-                conclusion_future=UNKNOWN_CONCLUSION,
+            'missing': habitat.filter(
+                models.DataHabitattypeRegion.conclusion_future == None).count(),
+            'unknown': habitat.filter(
+                models.DataHabitattypeRegion.conclusion_future == UNKNOWN_CONCLUSION,
             ).count(),
         },
         'pressures': {
-            'unknown': habitat.filter_by(pressures_method=None).count(),
+            'unknown': habitat.filter(
+                models.DataHabitattypeRegion.pressures_method == None).count(),
         },
         'threats': {
-            'unknown': habitat.filter_by(threats_method=None).count(),
+            'unknown': habitat.filter(
+                models.DataHabitattypeRegion.threats_method == None).count(),
         },
         'natura2000': {
-            'missing': habitat.filter_by(
-                natura2000_area_min=None,
-                natura2000_area_max=None,
-            ).count(),
+            'missing': habitat.filter(and_(
+                models.DataHabitattypeRegion.natura2000_area_min == None,
+                models.DataHabitattypeRegion.natura2000_area_max == None,
+            )).count(),
         },
         'conclusion_assessment': {
-            'missing': habitat.filter_by(conclusion_assessment=None).count(),
-            'unknown': habitat.filter_by(
-                conclusion_assessment=UNKNOWN_CONCLUSION,
+            'missing': habitat.filter(
+                models.DataHabitattypeRegion.conclusion_assessment == None).count(),
+            'unknown': habitat.filter(
+                models.DataHabitattypeRegion.conclusion_assessment == UNKNOWN_CONCLUSION,
             ).count(),
         },
         'conclusion_assessment_trend': {
-            'missing': habitat.filter_by(
-                conclusion_assessment_trend=None,
+            'missing': habitat.filter(
+                models.DataHabitattypeRegion.conclusion_assessment_trend == None,
             ).count(),
-            'unknown': habitat.filter_by(
-                conclusion_assessment_trend=UNKNOWN_TREND,
+            'unknown': habitat.filter(
+                models.DataHabitattypeRegion.conclusion_assessment_trend == UNKNOWN_TREND,
             ).count(),
         },
     }
@@ -699,108 +716,129 @@ def report_quality(dataset_id):
 
     species_unknown_data = {
         'range_surface_area': {
-            'missing': species.filter_by(range_method=MISSING_METHOD).count(),
-            'unknown': species.filter_by(range_surface_area=None).count(),
+            'missing': species.filter(
+                models.DataSpeciesRegion.range_method == MISSING_METHOD).count(),
+            'unknown': species.filter(
+                models.DataSpeciesRegion.range_surface_area == None).count(),
         },
         'range_trend': {
-            'missing': species.filter_by(range_trend=None).count(),
-            'unknown': species.filter_by(range_trend=UNKNOWN_TREND).count(),
+            'missing': species.filter(
+                models.DataSpeciesRegion.range_trend == None).count(),
+            'unknown': species.filter(
+                models.DataSpeciesRegion.range_trend == UNKNOWN_TREND).count(),
         },
         'complementary_favourable_range': {
             'missing': (species
-                        .filter_by(
-                complementary_favourable_range=None,
-                complementary_favourable_range_op=None,
-                complementary_favourable_range_unknown=None,
+                        .filter(and_(
+                models.DataSpeciesRegion.complementary_favourable_range == None,
+                models.DataSpeciesRegion.complementary_favourable_range_op == None,
+                models.DataSpeciesRegion.complementary_favourable_range_unknown == None,
+            )
             ).count()),
             'unknown': (species
-                        .filter_by(complementary_favourable_range_unknown=1)
+                        .filter(
+                models.DataSpeciesRegion.complementary_favourable_range_unknown == 1)
                         .count()),
         },
         'conclusion_range': {
-            'missing': species.filter_by(conclusion_range=None).count(),
-            'unknown': species.filter_by(
-                conclusion_range=UNKNOWN_CONCLUSION,
+            'missing': species.filter(
+                models.DataSpeciesRegion.conclusion_range == None).count(),
+            'unknown': species.filter(
+                models.DataSpeciesRegion.conclusion_range == UNKNOWN_CONCLUSION,
             ).count(),
         },
         'population_size_unit': {
-            'missing': species.filter_by(
-                population_method=MISSING_METHOD,
+            'missing': species.filter(
+                models.DataSpeciesRegion.population_method == MISSING_METHOD,
             ).count(),
-            'unknown': species.filter_by(population_size_unit=None).count(),
+            'unknown': species.filter(
+                models.DataSpeciesRegion.population_size_unit == None).count(),
         },
         'population_trend': {
-            'missing': species.filter_by(population_trend=None).count(),
-            'unknown': species.filter_by(
-                population_trend=UNKNOWN_TREND,
+            'missing': species.filter(
+                models.DataSpeciesRegion.population_trend == None).count(),
+            'unknown': species.filter(
+                models.DataSpeciesRegion.population_trend == UNKNOWN_TREND,
             ).count(),
         },
         'complementary_favourable_population': {
-            'missing': (species.filter_by(
-                complementary_favourable_population=None,
-                complementary_favourable_population_op=None,
-                complementary_favourable_population_unknown=None,
-            ).count()),
-            'unknown': (species.filter_by(
-                complementary_favourable_population_unknown=1,
+            'missing': (species.filter(and_(
+                models.DataSpeciesRegion.complementary_favourable_population == None,
+                models.DataSpeciesRegion.complementary_favourable_population_op == None,
+                models.DataSpeciesRegion.complementary_favourable_population_unknown == None,
+            )).count()),
+            'unknown': (species.filter(
+                models.DataSpeciesRegion.complementary_favourable_population_unknown == 1,
             ).count()),
         },
         'conclusion_population': {
-            'missing': species.filter_by(conclusion_population=None).count(),
-            'unknown': species.filter_by(
-                conclusion_population=UNKNOWN_CONCLUSION,
+            'missing': species.filter(
+                models.DataSpeciesRegion.conclusion_population == None).count(),
+            'unknown': species.filter(
+                models.DataSpeciesRegion.conclusion_population == UNKNOWN_CONCLUSION,
             ).count(),
         },
         'habitat_surface_area': {
-            'missing': species.filter_by(
-                habitat_method=MISSING_METHOD,
+            'missing': species.filter(
+                models.DataSpeciesRegion.habitat_method == MISSING_METHOD,
             ).count(),
-            'unknown': species.filter_by(habitat_surface_area=None).count(),
+            'unknown': species.filter(
+                models.DataSpeciesRegion.habitat_surface_area == None).count(),
         },
         'habitat_trend': {
-            'missing': species.filter_by(habitat_trend=None).count(),
-            'unknown': species.filter_by(habitat_trend=UNKNOWN_TREND).count(),
+            'missing': species.filter(
+                models.DataSpeciesRegion.habitat_trend == None).count(),
+            'unknown': species.filter(
+                models.DataSpeciesRegion.habitat_trend == UNKNOWN_TREND).count(),
         },
         'habitat_area_suitable': {
-            'missing': species.filter_by(habitat_area_suitable=0).count(),
-            'unknown': species.filter_by(habitat_area_suitable=None).count(),
+            'missing': species.filter(
+                models.DataSpeciesRegion.habitat_area_suitable == 0).count(),
+            'unknown': species.filter(
+                models.DataSpeciesRegion.habitat_area_suitable == None).count(),
         },
         'conclusion_habitat': {
-            'missing': species.filter_by(conclusion_habitat=None).count(),
-            'unknown': species.filter_by(
-                conclusion_habitat=UNKNOWN_CONCLUSION,
+            'missing': species.filter(
+                models.DataSpeciesRegion.conclusion_habitat == None).count(),
+            'unknown': species.filter(
+                models.DataSpeciesRegion.conclusion_habitat == UNKNOWN_CONCLUSION,
             ).count(),
         },
         'conclusion_future': {
-            'missing': species.filter_by(conclusion_future=None).count(),
-            'unknown': species.filter_by(
-                conclusion_future=UNKNOWN_CONCLUSION,
+            'missing': species.filter(
+                models.DataSpeciesRegion.conclusion_future == None).count(),
+            'unknown': species.filter(
+                models.DataSpeciesRegion.conclusion_future == UNKNOWN_CONCLUSION,
             ).count(),
         },
         'pressures': {
-            'unknown': species.filter_by(pressures_method=None).count(),
+            'unknown': species.filter(
+                models.DataSpeciesRegion.pressures_method == None).count(),
         },
         'threats': {
-            'unknown': species.filter_by(threats_method=None).count(),
+            'unknown': species.filter(
+                models.DataSpeciesRegion.threats_method == None).count(),
         },
         'natura2000': {
-            'missing': species.filter_by(
-                natura2000_population_min=None,
-                natura2000_population_max=None,
+            'missing': species.filter(and_(
+                models.DataSpeciesRegion.natura2000_population_min == None,
+                models.DataSpeciesRegion.natura2000_population_max == None,
+            )
             ).count(),
         },
         'conclusion_assessment': {
-            'missing': species.filter_by(conclusion_assessment=None).count(),
-            'unknown': species.filter_by(
-                conclusion_assessment=UNKNOWN_CONCLUSION,
+            'missing': species.filter(
+                models.DataSpeciesRegion.conclusion_assessment == None).count(),
+            'unknown': species.filter(
+                models.DataSpeciesRegion.conclusion_assessment == UNKNOWN_CONCLUSION,
             ).count(),
         },
         'conclusion_assessment_trend': {
-            'missing': species.filter_by(
-                conclusion_assessment_trend=None,
+            'missing': species.filter(
+                models.DataSpeciesRegion.conclusion_assessment_trend == None,
             ).count(),
-            'unknown': species.filter_by(
-                conclusion_assessment_trend=UNKNOWN_TREND,
+            'unknown': species.filter(
+                models.DataSpeciesRegion.conclusion_assessment_trend == UNKNOWN_TREND,
             ).count(),
         },
     }
@@ -1102,7 +1140,7 @@ def report_16(dataset_id):
     )
 
 
-@aggregation.route('/raport/<int:dataset_id>/statistics')
+@aggregation.route('/raport/<int:dataset_id>/statistics23')
 @require(perm_view_reports())
 @download('Raport_23')
 def report_statistics(dataset_id):
@@ -1115,11 +1153,13 @@ def report_statistics(dataset_id):
         for k, v in CONCLUSIONS.iteritems():
             data['species'][k] = (
                 species
-                .filter_by(conclusion_assessment=k).count()
+                .filter(
+                    models.DataSpeciesRegion.conclusion_assessment == k).count()
             )
             data['habitat'][k] = (
                 habitats
-                .filter_by(conclusion_assessment=k).count()
+                .filter(
+                    models.DataHabitattypeRegion.conclusion_assessment == k).count()
             )
         data['species']['total'] = (
             species.count()
