@@ -353,12 +353,12 @@ def report_bioreg_global(dataset_id):
         stats['habitats'][hab.region][conclusion] += 1
 
     for k, values in stats['species'].iteritems():
+        all_species = sum(stats['species'][k].values()) or 1
         for conclusion, v in values.iteritems():
-            all_species = sum(stats['species'][k].values()) or 1
             stats['species'][k][conclusion] = v * 100.0 / all_species
     for k, values in stats['habitats'].iteritems():
+        all_habitats = sum(stats['habitats'][k].values()) or 1
         for conclusion, v in values.iteritems():
-            all_habitats = sum(stats['habitats'][k].values()) or 1
             stats['habitats'][k][conclusion] = v * 100.0 / all_habitats
 
     return render_template(
