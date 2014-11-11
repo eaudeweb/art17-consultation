@@ -9,7 +9,7 @@ $( function () {
 function enable_filtering(table_id) {
   $(table_id + ' thead th.searchable').each( function () {
     var title = $(table_id + ' thead th').eq( $(this).index() ).text();
-    $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    $(this).html( '<input type="text" placeholder="Filtreaza '+title+'" />' );
   });
 
   // DataTable
