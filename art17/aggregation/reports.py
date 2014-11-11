@@ -1108,37 +1108,44 @@ def report_17(dataset_id):
 @download('Raport_16')
 def report_16(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
-    species, habitat = get_report_data(dataset)
 
-    species_count = species.count() or 1
-    habitat_count = habitat.count() or 1
+    datasets = set(
+        list(models.Dataset.query.filter_by(status=STATUS_CLOSED)) + [dataset]
+    )
+    for ds in datasets:
+        species, habitat = get_report_data(ds)
 
-    groups = list(models.LuGrupSpecie.query.all())
-    CONC = CONCLUSIONS.keys() + [None]
-    species_groups = {group: {key: 0 for key in CONC} for group in groups}
-    for spec in species:
-        group = spec.species and spec.species.lu and spec.species.lu.group
-        conc = spec.conclusion_assessment or None
-        if group:
-            species_groups[group][conc] += 1
-    for group, species in species_groups.iteritems():
-        for key, value in species.iteritems():
-            species[key] = value * 100.0 / species_count
+        species_count = species.count() or 1
+        habitat_count = habitat.count() or 1
 
-    habitat_groups = {'Habitate': {key: 0 for key in CONC}}
-    for hab in habitat:
-        conc = hab.conclusion_assessment or None
-        habitat_groups['Habitate'][conc] += 1
-    for group, habitat in habitat_groups.iteritems():
-        for key, value in habitat.iteritems():
-            habitat[key] = value * 100.0 / habitat_count
+        groups = list(models.LuGrupSpecie.query.all())
+        CONC = CONCLUSIONS.keys() + [None]
+        species_groups = {group: {key: 0 for key in CONC} for group in groups}
+        for spec in species:
+            group = spec.species and spec.species.lu and spec.species.lu.group
+            conc = spec.conclusion_assessment or None
+            if group:
+                species_groups[group][conc] += 1
+        for group, species in species_groups.iteritems():
+            for key, value in species.iteritems():
+                species[key] = value * 100.0 / species_count
 
-    species_groups = list(species_groups.iteritems())
-    species_groups.sort(key=lambda a: a[0])
+        habitat_groups = {'Habitate': {key: 0 for key in CONC}}
+        for hab in habitat:
+            conc = hab.conclusion_assessment or None
+            habitat_groups['Habitate'][conc] += 1
+        for group, habitat in habitat_groups.iteritems():
+            for key, value in habitat.iteritems():
+                habitat[key] = value * 100.0 / habitat_count
+
+        species_groups = list(species_groups.iteritems())
+        species_groups.sort(key=lambda a: a[0].description)
+        ds.species_groups = species_groups
+        ds.habitat_groups = habitat_groups
+
     return render_template(
         'aggregation/reports/16.html',
-        page='16', dataset=dataset, species_groups=species_groups,
-        habitat_groups=habitat_groups,
+        page='16', dataset=dataset, datasets=datasets,
     )
 
 

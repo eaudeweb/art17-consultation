@@ -18,52 +18,59 @@
 
   <div class="tab-content">
     <div class="tab-pane active" id="rep16-species">
-     <table class="table table-bordered table-condensed">
-       <thead>
-       <tr>
-         <th>Grup specii</th>
-{#         <th>Perioadă evaluare</th>#}
-         {{ conclusions_th() }}
-       </tr>
-       </thead>
-       <tbody>
-       {% for group, data in species_groups %}
-         <tr>
-           <td>{{ group.description }}</td>
-{#           <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>#}
-           {{ percent(data.FV, '0%') }}
-           {{ percent(data.U1, '0%') }}
-           {{ percent(data.U2, '0%') }}
-           {{ percent(data.XX, '0%') }}
-           {{ percent(data[none], '0%') }}
-         </tr>
-       {% endfor %}
-       </tbody>
-     </table>
+      {% for ds in datasets %}
+        <h3>{{ ds.year_start }} - {{ ds.year_end }}</h3>
+        <table class="table table-bordered table-condensed">
+          <thead>
+          <tr>
+            <th>Grup specii</th>
+            {#         <th>Perioadă evaluare</th>#}
+            {{ conclusions_th() }}
+          </tr>
+          </thead>
+          <tbody>
+          {% for group, data in ds.species_groups %}
+            <tr>
+              <td>{{ group.description }}</td>
+              {#           <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>#}
+              {{ percent(data.FV, '0%') }}
+              {{ percent(data.U1, '0%') }}
+              {{ percent(data.U2, '0%') }}
+              {{ percent(data.XX, '0%') }}
+              {{ percent(data[none], '0%') }}
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      {% endfor %}
     </div>
     <div class="tab-pane" id="rep16-habitat">
-     <table class="table table-bordered table-condensed">
-       <thead>
-       <tr>
-         <th>Grup</th>
-{#         <th>Perioadă evaluare</th>#}
-         {{ conclusions_th() }}
-       </tr>
-       </thead>
-       <tbody>
-       {% for group, data in habitat_groups.iteritems() %}
-         <tr>
-           <td>{{ group }}</td>
-{#           <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>#}
-           {{ percent(data.FV, '0%') }}
-           {{ percent(data.U1, '0%') }}
-           {{ percent(data.U2, '0%') }}
-           {{ percent(data.XX, '0%') }}
-           {{ percent(data[none], '0%') }}
-         </tr>
-       {% endfor %}
-       </tbody>
-     </table>
+      {% for ds in datasets %}
+        <h3>{{ ds.year_start }} - {{ ds.year_end }}</h3>
+
+        <table class="table table-bordered table-condensed">
+          <thead>
+          <tr>
+            <th>Grup</th>
+            {#         <th>Perioadă evaluare</th>#}
+            {{ conclusions_th() }}
+          </tr>
+          </thead>
+          <tbody>
+          {% for group, data in ds.habitat_groups.iteritems() %}
+            <tr>
+              <td>{{ group }}</td>
+              {#           <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>#}
+              {{ percent(data.FV, '0%') }}
+              {{ percent(data.U1, '0%') }}
+              {{ percent(data.U2, '0%') }}
+              {{ percent(data.XX, '0%') }}
+              {{ percent(data[none], '0%') }}
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      {% endfor %}
     </div>
   </div>
 
