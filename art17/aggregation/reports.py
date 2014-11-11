@@ -1133,6 +1133,8 @@ def report_16(dataset_id):
         for key, value in habitat.iteritems():
             habitat[key] = value * 100.0 / habitat_count
 
+    species_groups = list(species_groups.iteritems())
+    species_groups.sort(key=lambda a: a[0])
     return render_template(
         'aggregation/reports/16.html',
         page='16', dataset=dataset, species_groups=species_groups,

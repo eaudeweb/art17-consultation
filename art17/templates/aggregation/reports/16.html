@@ -22,15 +22,15 @@
        <thead>
        <tr>
          <th>Grup specii</th>
-         <th>Perioadă evaluare</th>
+{#         <th>Perioadă evaluare</th>#}
          {{ conclusions_th() }}
        </tr>
        </thead>
        <tbody>
-       {% for group, data in species_groups.iteritems() %}
+       {% for group, data in species_groups %}
          <tr>
            <td>{{ group.description }}</td>
-           <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>
+{#           <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>#}
            {{ percent(data.FV, '0%') }}
            {{ percent(data.U1, '0%') }}
            {{ percent(data.U2, '0%') }}
@@ -46,7 +46,7 @@
        <thead>
        <tr>
          <th>Grup</th>
-         <th>Perioadă evaluare</th>
+{#         <th>Perioadă evaluare</th>#}
          {{ conclusions_th() }}
        </tr>
        </thead>
@@ -54,7 +54,7 @@
        {% for group, data in habitat_groups.iteritems() %}
          <tr>
            <td>{{ group }}</td>
-           <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>
+{#           <td>{{ dataset.year_start }} - {{ dataset.year_end }}</td>#}
            {{ percent(data.FV, '0%') }}
            {{ percent(data.U1, '0%') }}
            {{ percent(data.U2, '0%') }}
