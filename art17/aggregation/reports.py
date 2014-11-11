@@ -113,10 +113,14 @@ def get_report_data(dataset, roles=None):
 def get_checklist_data(dataset):
     checklist = get_checklist(dataset.checklist_id)
     species = (
-        models.DataSpeciesCheckList.query.filter_by(dataset_id=checklist.id)
+        models.DataSpeciesCheckList.query.filter_by(
+            dataset_id=checklist.id, member_state='RO',
+        )
     )
     habitats = (
-        models.DataHabitatsCheckList.query.filter_by(dataset_id=checklist.id)
+        models.DataHabitatsCheckList.query.filter_by(
+            dataset_id=checklist.id, member_state='RO',
+        )
     )
     return species, habitats
 
@@ -1182,27 +1186,24 @@ def report_statistics(dataset_id):
             habitats.count()
         )
 
+        species_cl, habitats_cl = get_checklist_data(ds)
         data['species']['total_species'] = (
-            models.DataSpeciesCheckList.query
+            species_cl
             .with_entities(
                 func.count(models.DataSpeciesCheckList.species_name))
-            .filter_by(dataset_id=ds.checklist_id)
             .group_by(models.DataSpeciesCheckList.species_name).count())
 
         data['species']['total_reports'] = (
-            models.DataSpeciesCheckList.query
-            .filter_by(dataset_id=ds.checklist_id).count()
+            species_cl.count()
         )
 
         data['habitat']['total_habitats'] = (
-            models.DataHabitatsCheckList.query
+            habitats_cl
             .with_entities(func.count(models.DataHabitatsCheckList.valid_name))
-            .filter_by(dataset_id=ds.checklist_id)
             .group_by(models.DataHabitatsCheckList.valid_name).count())
 
         data['habitat']['total_reports'] = (
-            models.DataHabitatsCheckList.query
-            .filter_by(dataset_id=ds.checklist_id).count()
+            habitats_cl.count()
         )
 
         data['missing'] = aggregation_missing_data_report(dataset_id)
