@@ -22,6 +22,7 @@
 
 
   {% set code = species_group and species_group.code %}
+  {% set code = code or 'X' %}
   {{ tabmenu(current='S' + code) }}
 
   {{ table(bioreg_list, species_list, consultation_cell) }}
