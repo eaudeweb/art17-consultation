@@ -21,7 +21,8 @@
   {%- from 'consultation/common.html' import consultation_cell with context %}
 
 
-  {{ tabmenu(current='S' + species_group.code) }}
+  {% set code = species_group and species_group.code %}
+  {{ tabmenu(current='S' + code) }}
 
   {{ table(bioreg_list, species_list, consultation_cell) }}
 {% endblock content %}
