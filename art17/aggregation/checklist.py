@@ -196,6 +196,46 @@ def fix_checklist_priority(checklist_id):
     db.session.commit()
 
 
+def create_unknown_group():
+    group_id = LuGrupSpecie.query.all()[-1].oid + 1
+    group = LuGrupSpecie(oid=group_id, code='X', description='Necunoscut')
+    db.session.add(group)
+    db.session.commit()
+    return group
+
+
+def create_luhd_species(code, name):
+    group = LuGrupSpecie.query.filter_by(code='X').first() \
+        or create_unknown_group()
+    luhd_species = LuHdSpecies(code=code, group_code=group.code,
+                               speciesname=name)
+    db.session.add(luhd_species)
+    db.session.commit()
+
+
+def create_data_species(code, region, name):
+    LuHdSpecies.query.filter_by(code=code).first() \
+        or create_luhd_species(code, name)
+    data_species = DataSpecies(code=code, common_speciesname=name)
+    db.session.add(data_species)
+    db.session.commit()
+    return data_species
+
+
+def create_lu_habitat(code, name):
+    lu_habitat = LuHabitattypeCodes(code=code, name_ro=name)
+    db.session.add(lu_habitat)
+    db.session.commit()
+
+
+def create_data_habitat(code, region, name):
+    LuHabitattypeCodes(code=code, name_ro=name) \
+        or create_lu_habitat(code, name)
+    data_habitat = DataHabitat(code=code)
+    db.session.add(data_habitat)
+    return data_habitat
+
+
 @aggregation_manager.command
 def insert_missing(dataset_id):
     dataset = Dataset.query.filter_by(id=dataset_id).first()
@@ -206,34 +246,26 @@ def insert_missing(dataset_id):
     species_chk = dataset.checklist_object.species_checklist.all()
     if len(species_ds) < len(species_chk):
         print 'Inserting missing species...'
-        checklist_species = set((s.code, s.bio_region) for s in species_chk)
+        checklist_species = {(s.code, s.bio_region): s for s in species_chk}
         dataset_species = set((s.species.code, s.region) for s in species_ds
                               if s.species)
-        missing = checklist_species - dataset_species
+        missing = set(checklist_species.keys()) - dataset_species
         for code, region in missing:
-            data_species = DataSpecies.query.filter_by(code=code).first()
-            if not data_species:
-                group = LuGrupSpecie.query.filter_by(code='X').first()
-                if not group:
-                    group_id = LuGrupSpecie.query.all()[-1].oid + 1
-                    group = LuGrupSpecie(oid=group_id,
-                                         code='X',
-                                         description='Necunoscut')
-                luhd_species = LuHdSpecies(code=code, group=group)
-                data_species = DataSpecies(code=code, lu=luhd_species)
-                db.session.add(group, luhd_species, data_species)
+            spec = checklist_species[(code, region)]
+            data_species = DataSpecies.query.filter_by(code=code).first() \
+                or create_data_species(code, region, spec.name)
 
             data_species_region = DataSpeciesRegion(
-                species=data_species,
+                species_id=data_species.id,
                 region=region,
                 cons_dataset_id=dataset_id,
                 cons_role=ROLE_MISSING,
             )
             db.session.add(data_species_region)
             db.session.commit()
-            print 'Species with code: {} and region {} inserted.'.format(
-                code, region
-            )
+
+            print 'Species "{}" with code {} and region {} inserted.'.format(
+                spec.name, code, region)
     else:
         print 'No missing species.'
 
@@ -241,27 +273,24 @@ def insert_missing(dataset_id):
     habitat_chk = dataset.checklist_object.habitat_checklist.all()
     if len(habitat_ds) < len(habitat_chk):
         print 'Inserting missing habitats...'
-        checklist_habitat = set((h.code, h.bio_region) for h in habitat_chk)
+        checklist_habitat = {(h.code, h.bio_region): h for h in habitat_chk}
         dataset_habitat = set((h.habitat.code, h.region) for h in habitat_ds
                               if h.habitat)
-        missing = checklist_habitat - dataset_habitat
+        missing = set(checklist_habitat.keys()) - dataset_habitat
         for code, region in missing:
-            data_habitat = DataHabitat.query.filter_by(code=code).first()
-            if not data_habitat:
-                lu_habitat = LuHabitattypeCodes(code=code)
-                data_habitat = DataHabitat(code=code, lu=lu_habitat)
-                db.session.add(lu_habitat, data_habitat)
+            hab = checklist_habitat[(code, region)]
+            data_habitat = DataHabitat.query.filter_by(code=code).first() \
+                or create_data_habitat(code, region, hab.name)
 
             data_habitat_region = DataHabitattypeRegion(
-                habitat=data_habitat,
+                habitat_id=data_habitat.id,
                 region=region,
                 cons_dataset_id=dataset_id,
                 cons_role=ROLE_MISSING,
             )
             db.session.add(data_habitat_region)
             db.session.commit()
-            print 'Habitat with code: {} and region {} inserted.'.format(
-                code, region
-            )
+            print 'Habitat "{}" with code: {} and region {} inserted.'.format(
+                hab.name, code, region)
     else:
         print 'No missing habitats.'
