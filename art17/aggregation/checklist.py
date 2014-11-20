@@ -273,12 +273,13 @@ def insert_missing(dataset_id):
 
     species_ds = dataset.agg_species.all()
     species_chk = dataset.checklist_object.species_checklist.all()
-    if len(species_ds) < len(species_chk):
+
+    checklist_species = {(s.code, s.bio_region): s for s in species_chk}
+    dataset_species = set((s.species.code, s.region) for s in species_ds
+                          if s.species)
+    missing = set(checklist_species.keys()) - dataset_species
+    if missing:
         print 'Inserting missing species...'
-        checklist_species = {(s.code, s.bio_region): s for s in species_chk}
-        dataset_species = set((s.species.code, s.region) for s in species_ds
-                              if s.species)
-        missing = set(checklist_species.keys()) - dataset_species
         for code, region in missing:
             spec = checklist_species[(code, region)]
             data_species = DataSpecies.query.filter_by(code=code).first() \
@@ -300,12 +301,12 @@ def insert_missing(dataset_id):
 
     habitat_ds = dataset.agg_habitat.all()
     habitat_chk = dataset.checklist_object.habitat_checklist.all()
-    if len(habitat_ds) < len(habitat_chk):
+    checklist_habitat = {(h.code, h.bio_region): h for h in habitat_chk}
+    dataset_habitat = set((h.habitat.code, h.region) for h in habitat_ds
+                          if h.habitat)
+    missing = set(checklist_habitat.keys()) - dataset_habitat
+    if missing:
         print 'Inserting missing habitats...'
-        checklist_habitat = {(h.code, h.bio_region): h for h in habitat_chk}
-        dataset_habitat = set((h.habitat.code, h.region) for h in habitat_ds
-                              if h.habitat)
-        missing = set(checklist_habitat.keys()) - dataset_habitat
         for code, region in missing:
             hab = checklist_habitat[(code, region)]
             data_habitat = DataHabitat.query.filter_by(code=code).first() \
@@ -337,7 +338,7 @@ def remove_missing(dataset_id):
                 DataSpeciesRegion.lu == None)
         )
     )
-    print species_qs.count(), 'missing species'
+    print species_qs.count(), 'extra species'
     for s in species_qs:
         s.cons_dataset_id = None
 
@@ -347,7 +348,7 @@ def remove_missing(dataset_id):
                 DataHabitattypeRegion.lu == None)
         )
     )
-    print habitat_qs.count(), 'missing habitats'
+    print habitat_qs.count(), 'extra habitats'
     for h in habitat_qs:
         h.cons_dataset_id = None
 
