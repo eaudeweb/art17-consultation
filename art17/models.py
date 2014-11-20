@@ -12,7 +12,7 @@ from flask.ext.script import Manager, prompt_bool
 from art17.table_sequences import get_sequence_id
 from art17 import (
     DATE_FORMAT_HISTORY, ROLE_FINAL, ROLE_AGGREGATED, ROLE_MISSING,
-    ROLE_DRAFT)
+    ROLE_DRAFT, CONS_ROLES)
 
 db = SQLAlchemy()
 Base = db.Model
@@ -757,8 +757,9 @@ class DataSpeciesRegion(Base, RoleMixin):
                       primaryjoin=(region == foreign(LuBiogeoreg.code)),
                       innerjoin=True, uselist=False, passive_deletes=True)
 
-    dataset = relationship('Dataset',
-                           backref=db.backref('species_objs', lazy='dynamic'))
+    dataset = relationship(
+        'Dataset',
+        backref=db.backref('species_objs', lazy='dynamic'))
 
     def get_pressures(self):
         return self.pressures.filter_by(type='p')
@@ -1034,6 +1035,20 @@ class Dataset(Base):
         'Dataset', primaryjoin="foreign(Dataset.id)==Dataset.checklist_id",
         uselist=False,
     )
+
+    @property
+    def agg_species(self):
+        return (
+            self.species_objs
+            .filter(~DataSpeciesRegion.cons_role.in_(CONS_ROLES))
+        )
+
+    @property
+    def agg_habitat(self):
+        return (
+            self.habitat_objs
+            .filter(~DataHabitattypeRegion.cons_role.in_(CONS_ROLES))
+        )
 
     @property
     def details(self):

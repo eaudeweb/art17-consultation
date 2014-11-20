@@ -230,7 +230,7 @@ def create_lu_habitat(code, name):
 
 
 def create_data_habitat(code, region, name):
-    LuHabitattypeCodes(code=code, name_ro=name) \
+    LuHabitattypeCodes.query.filter_by(code=code, name_ro=name).first() \
         or create_lu_habitat(code, name)
     data_habitat = DataHabitat(code=code)
     db.session.add(data_habitat)
@@ -271,7 +271,7 @@ def insert_missing(dataset_id):
     if not dataset:
         exit('No dataset found with the specified id.')
 
-    species_ds = dataset.species_objs.all()
+    species_ds = dataset.agg_species.all()
     species_chk = dataset.checklist_object.species_checklist.all()
     if len(species_ds) < len(species_chk):
         print 'Inserting missing species...'
@@ -293,12 +293,12 @@ def insert_missing(dataset_id):
             db.session.add(data_species_region)
             db.session.commit()
 
-            print 'Species "{}" with code {} and region {} inserted.'.format(
+            print u'Species "{}" with code {} and region {} inserted.'.format(
                 spec.name, code, region)
     else:
         print 'No missing species.'
 
-    habitat_ds = dataset.habitat_objs.all()
+    habitat_ds = dataset.agg_habitat.all()
     habitat_chk = dataset.checklist_object.habitat_checklist.all()
     if len(habitat_ds) < len(habitat_chk):
         print 'Inserting missing habitats...'
@@ -319,7 +319,7 @@ def insert_missing(dataset_id):
             )
             db.session.add(data_habitat_region)
             db.session.commit()
-            print 'Habitat "{}" with code: {} and region {} inserted.'.format(
+            print u'Habitat "{}" with code: {} and region {} inserted.'.format(
                 hab.name, code, region)
     else:
         print 'No missing habitats.'
