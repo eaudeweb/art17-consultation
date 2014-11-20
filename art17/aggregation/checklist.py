@@ -230,7 +230,7 @@ def create_lu_habitat(code, name):
 
 
 def create_data_habitat(code, region, name):
-    LuHabitattypeCodes.query.filter_by(code=code, name_ro=name).first() \
+    LuHabitattypeCodes.query.filter_by(code=code).first() \
         or create_lu_habitat(code, name)
     data_habitat = DataHabitat(code=code)
     db.session.add(data_habitat)
