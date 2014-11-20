@@ -3,7 +3,6 @@ from datetime import datetime
 from BeautifulSoup import BeautifulSoup
 from flask import current_app
 import requests
-from sqlalchemy import or_
 
 from art17.aggregation import aggregation_manager
 from art17.models import (
@@ -333,20 +332,21 @@ def remove_missing(dataset_id):
         exit('No dataset found with the specified id.')
 
     species_qs = (
-        dataset.agg_species.filter(
-            or_(DataSpeciesRegion.species_id == None,
-                DataSpeciesRegion.lu == None)
-        )
+        db.session.query(DataSpeciesRegion)
+        .outerjoin(DataSpecies, DataSpecies.id == DataSpeciesRegion.species_id)
+        .filter(DataSpeciesRegion.cons_dataset_id == dataset_id,
+                DataSpecies.id == None)
     )
     print species_qs.count(), 'extra species'
     for s in species_qs:
         s.cons_dataset_id = None
 
     habitat_qs = (
-        dataset.agg_habitat.filter(
-            or_(DataHabitattypeRegion.habitat_id == None,
-                DataHabitattypeRegion.lu == None)
-        )
+        db.session.query(DataHabitattypeRegion)
+        .outerjoin(DataHabitat,
+                   DataHabitat.id == DataHabitattypeRegion.habitat_id)
+        .filter(DataHabitattypeRegion.cons_dataset_id == dataset_id,
+                DataHabitat.id == None)
     )
     print habitat_qs.count(), 'extra habitats'
     for h in habitat_qs:
