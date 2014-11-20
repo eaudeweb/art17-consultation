@@ -3,6 +3,7 @@ from datetime import datetime
 from BeautifulSoup import BeautifulSoup
 from flask import current_app
 import requests
+from sqlalchemy import or_
 
 from art17.aggregation import aggregation_manager
 from art17.models import (
@@ -237,6 +238,34 @@ def create_data_habitat(code, region, name):
 
 
 @aggregation_manager.command
+def analyse(dataset_id):
+    dataset = Dataset.query.filter_by(id=dataset_id).first()
+    if not dataset:
+        exit('No dataset found with the specified id.')
+
+    species_ds = len(dataset.species_objs.all())
+    species_chk = len(dataset.checklist_object.species_checklist.all())
+    if species_ds < species_chk:
+        print species_chk - species_ds, 'missing species'
+    elif species_ds > species_chk:
+        print species_ds - species_chk, 'extra species'
+    else:
+        print 'No missing species'
+
+    habitat_ds = len(dataset.habitat_objs.all())
+    habitat_chk = len(dataset.checklist_object.habitat_checklist.all())
+    if habitat_ds < habitat_chk:
+        print habitat_chk - habitat_ds, 'missing habitats'
+    elif habitat_ds > habitat_chk:
+        print habitat_ds - habitat_chk, 'extra habitats'
+    else:
+        print 'No missing habitat'
+
+    print species_ds, 'ds', species_chk, 'chk species'
+    print habitat_ds, 'ds', habitat_chk, 'chk habitats'
+
+
+@aggregation_manager.command
 def insert_missing(dataset_id):
     dataset = Dataset.query.filter_by(id=dataset_id).first()
     if not dataset:
@@ -294,3 +323,32 @@ def insert_missing(dataset_id):
                 hab.name, code, region)
     else:
         print 'No missing habitats.'
+
+
+@aggregation_manager.command
+def remove_missing(dataset_id):
+    dataset = Dataset.query.filter_by(id=dataset_id).first()
+    if not dataset:
+        exit('No dataset found with the specified id.')
+
+    species_qs = (
+        dataset.species_objs.filter(
+            or_(DataSpeciesRegion.species_id == None,
+                DataSpeciesRegion.lu == None)
+        )
+    )
+    print species_qs.count(), 'missing species'
+    for s in species_qs:
+        s.cons_dataset_id = None
+
+    habitat_qs = (
+        dataset.habitat_objs.filter(
+            or_(DataHabitattypeRegion.habitat_id == None,
+                DataHabitattypeRegion.lu == None)
+        )
+    )
+    print habitat_qs.count(), 'missing habitats'
+    for h in habitat_qs:
+        h.cons_dataset_id = None
+
+    db.session.commit()
