@@ -243,7 +243,7 @@ def analyse(dataset_id):
     if not dataset:
         exit('No dataset found with the specified id.')
 
-    species_ds = len(dataset.species_objs.all())
+    species_ds = len(dataset.agg_species.all())
     species_chk = len(dataset.checklist_object.species_checklist.all())
     if species_ds < species_chk:
         print species_chk - species_ds, 'missing species'
@@ -252,7 +252,7 @@ def analyse(dataset_id):
     else:
         print 'No missing species'
 
-    habitat_ds = len(dataset.habitat_objs.all())
+    habitat_ds = len(dataset.agg_habitat.all())
     habitat_chk = len(dataset.checklist_object.habitat_checklist.all())
     if habitat_ds < habitat_chk:
         print habitat_chk - habitat_ds, 'missing habitats'
@@ -332,7 +332,7 @@ def remove_missing(dataset_id):
         exit('No dataset found with the specified id.')
 
     species_qs = (
-        dataset.species_objs.filter(
+        dataset.agg_species.filter(
             or_(DataSpeciesRegion.species_id == None,
                 DataSpeciesRegion.lu == None)
         )
@@ -342,7 +342,7 @@ def remove_missing(dataset_id):
         s.cons_dataset_id = None
 
     habitat_qs = (
-        dataset.habitat_objs.filter(
+        dataset.agg_habitat.filter(
             or_(DataHabitattypeRegion.habitat_id == None,
                 DataHabitattypeRegion.lu == None)
         )
