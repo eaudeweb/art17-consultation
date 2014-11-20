@@ -67,7 +67,7 @@
             <td class="text-center">{{ species.species.lu and
                    species.species.lu.data_checklist and
                    species.species.lu.data_checklist.priority and '*' }}</td>
-            <td>{{ species.species.lu.speciesname }}</td>
+            <td>{{ species.species.lu and species.species.lu.hdname }}</td>
             <td>{{ GROUPS.get(species.species.lu.group_code, species.species.lu.group_code) }}</td>
             <td>{{ species.species.lu.dh_list }}</td>
             <td>{{ species.region }}</td>
