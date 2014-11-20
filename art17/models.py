@@ -1053,13 +1053,13 @@ class Dataset(Base):
     @property
     def details(self):
         species_roles = dict(
-            self.species_objs
+            self.agg_species
             .with_entities(DataSpeciesRegion.cons_role,
                            func.count(DataSpeciesRegion.id))
             .group_by(DataSpeciesRegion.cons_role)
         )
         habitat_roles = dict(
-            self.habitat_objs
+            self.agg_habitat
             .with_entities(DataHabitattypeRegion.cons_role,
                            func.count(DataHabitattypeRegion.id))
             .group_by(DataHabitattypeRegion.cons_role)

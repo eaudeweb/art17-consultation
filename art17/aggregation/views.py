@@ -225,8 +225,8 @@ class DashboardView(View):
             'object_list': self.get_object_list(dataset),
             'object_regions': object_regions,
             'dataset': dataset,
-            'habitat_count': dataset.habitat_objs.count(),
-            'species_count': dataset.species_objs.count(),
+            'habitat_count': dataset.agg_habitat.count(),
+            'species_count': dataset.agg_species.count(),
         }
 
     def dispatch_request(self, *args, **kwargs):
