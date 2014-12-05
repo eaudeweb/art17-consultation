@@ -99,5 +99,5 @@ class CompareForm(Form):
 
 
 class WhatForm(Form):
-    what = SelectField(choices=((0, 'Toate'), (1, 'Valide'), (2, 'Nevalid')),
-                       default=0, coerce=int)
+    CHOICES = ((0, 'Toate'), (1, 'Valide'), (2, 'Nevalide'))
+    what = SelectField(choices=CHOICES, default=0, coerce=int)
