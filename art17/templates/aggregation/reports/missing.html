@@ -63,10 +63,12 @@
         <tbody>
         {% for species in missing_species %}
           <tr>
+            {% set subject=spec.species and spec.species.code, spec.region %}
+            {% set cl=species_cl.get(subject) %}
             <td>{{ species.species.code }}</td>
-            <td class="text-center">{{ species.species.lu and
-                   species.species.lu.data_checklist and
-                   species.species.lu.data_checklist.priority and '*' }}</td>
+            <td class="text-center">
+              {{ cl and cl.priority and '*' }}
+            </td>
             <td>{{ species.species.lu and species.species.lu.hdname }}</td>
             <td>{{ GROUPS.get(species.species.lu.group_code, species.species.lu.group_code) }}</td>
             <td>{{ species.species.lu.dh_list }}</td>
@@ -117,11 +119,11 @@
         <tbody>
         {% for hab in missing_habitats %}
           <tr>
+          {% set subject=hab.habitat and hab.habitat.code, hab.region %}
+          {% set cl=habitats_cl.get(subject) %}
           <td>{{ hab.habitat.code }}</td>
           <td class="text-center">
-              {{ hab.habitat and hab.habitat.lu and
-                 hab.habitat.data_checklist and
-                 hab.habitat.data_checklist.priority and '*' }}
+            {{ cl and cl.priority and '*' }}
           </td>
           <td>{{ hab.habitat and hab.habitat.lu.name_ro }}</td>
           <td>{{ hab.region }}</td>

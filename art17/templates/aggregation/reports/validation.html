@@ -48,10 +48,11 @@
         <tbody>
         {% for spec in species %}
           <tr>
+            {% set subject=spec.species and spec.species.code, spec.region %}
+            {% set cl=species_cl.get(subject) %}
             <td>{{ spec.species and spec.species.code }}</td>
-            <td class="text-center">{{ spec.species and spec.species.lu and
-                   spec.species.lu.data_checklist and
-                   spec.species.lu.data_checklist.priority and '*' }}</td>
+            <td class="text-center">
+              {{  cl and cl.priority and '*' }}
             <td>{{ spec.species and spec.species.lu and spec.species.lu.hdname }}</td>
             <td>
               {% set group=spec.species.lu and spec.species.lu.group_code %}
@@ -95,11 +96,11 @@
         <tbody>
         {% for hab in habitats %}
           <tr>
+            {% set subject=hab.habitat and hab.habitat.code, hab.region %}
+            {% set cl=habitats_cl.get(subject) %}
             <td>{{ hab.habitat and hab.habitat.code }}</td>
             <td class="text-center">
-              {{ hab.habitat and hab.habitat.lu and
-                 hab.habitat.data_checklist and
-                 hab.habitat.data_checklist.priority and '*' }}
+              {{ cl and cl.priority and '*' }}
             </td>
             <td>{{ hab.habitat and hab.habitat.lu and hab.habitat.lu.name_ro }}</td>
             <td>{{ hab.region }}</td>

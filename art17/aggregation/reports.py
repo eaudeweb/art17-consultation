@@ -144,6 +144,17 @@ def get_checklist_data(dataset):
     return species, habitats
 
 
+def get_checklist_map(dataset):
+    species_cl, habitats_cl = get_checklist_data(dataset)
+    return _get_map(species_cl), _get_map(habitats_cl)
+
+
+def _get_map(checklist_qs):
+    return {
+        (s.code, s.bio_region): s for s in checklist_qs
+    }
+
+
 def get_measures_count(data_query, attr_name):
     return (
         data_query.join(models.DataMeasures)
@@ -292,6 +303,7 @@ def report(dataset_id):
 def report_conservation_status(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitats = get_report_data(dataset)
+    species_cl, habitats_cl = get_checklist_map(dataset)
     species = list(
         species
         .join(models.DataSpeciesRegion.species)
@@ -347,7 +359,9 @@ def report_conservation_status(dataset_id, page):
         'aggregation/reports/conservation_status.html',
         dataset=dataset, dataset_id=dataset.id,
         species=species, habitats=habitats, page=page, stats=stats,
-        GROUPS=groups)
+        species_cl=species_cl, habitats_cl=habitats_cl,
+        GROUPS=groups,
+    )
 
 
 def report_bioreg_global(dataset_id, page):
@@ -563,6 +577,7 @@ def report_missing(dataset_id, page):
 
     species = dataset.species_objs.filter_by(cons_role=ROLE_MISSING)
     habitats = dataset.habitat_objs.filter_by(cons_role=ROLE_MISSING)
+    species_cl, habitats_cl = get_checklist_map(dataset)
 
     groups = dict(
         models.LuGrupSpecie.query
@@ -573,7 +588,7 @@ def report_missing(dataset_id, page):
     return render_template(
         'aggregation/reports/missing.html', dataset=dataset,
         page=page, missing_species=species, missing_habitats=habitats,
-        GROUPS=groups,
+        GROUPS=groups, species_cl=species_cl, habitats_cl=habitats_cl,
     )
 
 
@@ -868,6 +883,7 @@ def report_quality(dataset_id, page):
 def report_validation(dataset_id, page):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     species, habitat = get_report_data(dataset)
+    species_cl, habitats_cl = get_checklist_map(dataset)
 
     species = (
         species
@@ -885,6 +901,7 @@ def report_validation(dataset_id, page):
     return render_template(
         'aggregation/reports/validation.html',
         page=page, dataset=dataset, species=species, habitats=habitat,
+        species_cl=species_cl, habitats_cl=habitats_cl,
     )
 
 
