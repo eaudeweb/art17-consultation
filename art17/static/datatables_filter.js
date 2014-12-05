@@ -14,7 +14,7 @@ function enable_filtering(table_id) {
 
   // DataTable
   var table = $(table_id).DataTable({
-    paging: false,
+    paging: false
   });
 
   $('.dataTables_filter').hide();

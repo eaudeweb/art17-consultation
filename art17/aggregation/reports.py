@@ -1217,3 +1217,11 @@ def report_view(dataset_id, page):
     if page not in pages_to_views:
         abort(404)
     return pages_to_views[page](dataset_id, page)
+
+
+@aggregation.route('/export_excel/', methods=('GET', 'POST'))
+@aggregation.route('/export_excel/<page>', methods=('GET', 'POST'))
+def export_service(page=None):
+    report_name = page or 'raport'
+    html = request.form.get('html') or ''
+    return get_excel_document(html, report_name)
