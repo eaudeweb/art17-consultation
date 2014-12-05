@@ -26,7 +26,9 @@ function enable_filtering(table_id) {
     $(table_id + ' thead.thead input').eq( colIdx ).on( 'keyup change', function () {
       table
         .column( colIdx )
-        .search( this.value )
+        .search(
+            jQuery.fn.DataTable.ext.type.search.string( this.value )
+        )
         .draw();
       });
   });
