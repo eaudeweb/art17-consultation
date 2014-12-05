@@ -22,7 +22,8 @@ def get_property(td_tag, prop_name):
 class BSTable(object):
     def __init__(self, table_tag):
         tab_id = table_tag.parent.get('id')
-        self.title = TABS[tab_id.split('-')[-1]] if tab_id else 'Raport'
+        tab_id = tab_id and tab_id.split('-')[-1]
+        self.title = TABS.get(tab_id, 'Raport')
         self.colshift = []
         rows = table_tag.find_all('tr')
         self.rows = [BSRow(i, r, self) for i, r in enumerate(rows, start=1)]
