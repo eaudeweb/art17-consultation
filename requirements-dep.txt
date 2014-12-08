@@ -1,0 +1,2 @@
+-r requirements.txt
+cx-Oracle==5.1.3
