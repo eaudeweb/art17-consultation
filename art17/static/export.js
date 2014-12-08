@@ -5,8 +5,15 @@ $(function () {
     });
 });
 
+function get_current_html() {
+    if ($('.tab-pane.active').length > 0) {
+        return $('.tab-pane.active').html();
+    }
+    return $('body').html();
+}
+
 function export_current() {
-    var html = $('body').html();
+    var html = get_current_html();
     var url = '/export_excel/';
     var form = $('<form>', {
         'action': url,

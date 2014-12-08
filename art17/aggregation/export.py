@@ -9,7 +9,11 @@ TABS = {
 
 def get_tables(html):
     soup = BeautifulSoup(html)
-    tables = soup.find('div', {'class': 'content'}).find_all('table')
+    data = soup.find('div', {'class': 'content'})
+    if data:
+        tables = data.find_all('table')
+    else:
+        tables = soup.find_all('table')
     tables = [BSTable(table) for table in tables]
     return tables
 
