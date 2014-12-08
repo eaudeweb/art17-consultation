@@ -236,6 +236,7 @@ def _create_species_record(species_app, comment=False, role='assessment'):
         models.db.session.add(config)
 
         species = models.DataSpecies(id=1, code='1234')
+        group = models.LuGrupSpecie(oid=1, code='M')
         species.lu = models.LuHdSpecies(objectid=1, code=1234, group_code='M')
         record = models.DataSpeciesRegion(
             id=1,
@@ -245,6 +246,7 @@ def _create_species_record(species_app, comment=False, role='assessment'):
             cons_dataset_id=1,
         )
         record.lu = models.LuBiogeoreg(objectid=1)
+        models.db.session.add(group)
         models.db.session.add(record)
 
         if comment:
