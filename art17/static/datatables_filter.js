@@ -14,11 +14,13 @@ function enable_filtering(table_id) {
 
   // DataTable
   var table = $(table_id).DataTable({
-    paging: false
+    "paging": false,
+    "fnInfoCallback": function(oSettings, iStart, iEnd, iMax, iTotal, sPre) {
+        return iTotal + " inregistrari";
+    }
   });
 
   $('.dataTables_filter').hide();
-  $('.dataTables_info').hide();
   $('.dataTables_empty').parent().parent().hide();
 
   // Apply the search
