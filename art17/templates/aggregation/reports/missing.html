@@ -61,18 +61,18 @@
         </thead>
         {% endif %}
         <tbody>
-        {% for species in missing_species %}
+        {% for spec in missing_species %}
           <tr>
             {% set subject=spec.species and spec.species.code, spec.region %}
             {% set cl=species_cl.get(subject) %}
-            <td>{{ species.species.code }}</td>
+            <td>{{ spec.species.code }}</td>
             <td class="text-center">
               {{ cl and cl.priority and '*' }}
             </td>
-            <td>{{ species.species.lu and species.species.lu.hdname }}</td>
-            <td>{{ GROUPS.get(species.species.lu.group_code, species.species.lu.group_code) }}</td>
-            <td>{{ species.species.lu.dh_list }}</td>
-            <td>{{ species.region }}</td>
+            <td>{{ spec.species.lu and spec.species.lu.hdname }}</td>
+            <td>{{ GROUPS.get(spec.species.lu.group_code, spec.species.lu.group_code) }}</td>
+            <td>{{ spec.species.lu.dh_list }}</td>
+            <td>{{ spec.region }}</td>
           </tr>
         {% endfor %}
         </tbody>
