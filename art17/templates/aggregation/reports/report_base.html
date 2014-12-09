@@ -22,6 +22,7 @@
     {% endif %}
 
     <a href="?download=1{% if what_form %}&what={{ what_form.what.data }}{% endif %}"
+        export-url="{{ url_for('.export_service') }}"
        class="btn btn-default download-button">
       <i class="icon-download"></i>
       Descarcă Excel

@@ -14,7 +14,7 @@ function get_current_html() {
 
 function export_current() {
     var html = get_current_html();
-    var url = '/export_excel/';
+    var url = $('.download-button').attr('export-url');
     var form = $('<form>', {
         'action': url,
         'method': 'POST'
