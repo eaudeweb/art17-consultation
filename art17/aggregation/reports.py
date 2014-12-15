@@ -108,9 +108,9 @@ def get_report_name(page, dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     report_name = page or 'report'
     if dataset.year_start and dataset.year_end:
-        report_name = '{}_{}-{}'.format(report_name,
-                                        dataset.year_start,
-                                        dataset.year_end)
+        report_name = u'{}_{}-{}'.format(report_name,
+                                         dataset.year_start,
+                                         dataset.year_end)
     return report_name
 
 
