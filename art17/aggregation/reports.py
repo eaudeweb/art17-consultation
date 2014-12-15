@@ -104,6 +104,16 @@ UNKNOWN_CONCLUSION = 'XX'
 MISSING_METHOD = '0'
 
 
+def get_report_name(page, dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+    report_name = page or 'report'
+    if dataset.year_start and dataset.year_end:
+        report_name = u'{}_{}-{}'.format(report_name,
+                                         dataset.year_start,
+                                         dataset.year_end)
+    return report_name
+
+
 def get_ordered_measures_codes():
     codes = MEASURES.keys()
     codes.sort()
@@ -271,8 +281,10 @@ def download():
         @wraps(func)
         def wrapper(*args, **kwargs):
             html = func(*args, **kwargs)
-            report_name = kwargs.get('page', 'raport')
             if request.args.get('download'):
+                page = kwargs.get('page')
+                dataset_id = kwargs.get('dataset_id')
+                report_name = get_report_name(page, dataset_id)
                 return get_excel_document(html, report_name)
             return html
 
@@ -965,8 +977,8 @@ def report_14(dataset_id, page):
         (models.DataSpeciesRegion.habitat_reasons_for_change_a == 1)
     ).count()
     species_count = species.count() or 1
+    species_real *= 100.0 / (species_mod or 1)
     species_mod *= 100.0 / species_count
-    species_real *= 100.0 / species_count
 
     habitat_mod = habitat.filter(
         (models.DataHabitattypeRegion.range_reasons_for_change_a == 1) |
@@ -981,8 +993,8 @@ def report_14(dataset_id, page):
         (models.DataHabitattypeRegion.area_reasons_for_change_a == 1)
     ).count()
     habitat_count = habitat.count() or 1
+    habitat_real *= 100.0 / (habitat_mod or 1)
     habitat_mod *= 100.0 / habitat_count
-    habitat_real *= 100.0 / habitat_count
 
     return render_template(
         'aggregation/reports/14.html',
@@ -1236,9 +1248,10 @@ def report_view(dataset_id, page):
     return pages_to_views[page](dataset_id, page)
 
 
-@aggregation.route('/export_excel/', methods=('GET', 'POST'))
-@aggregation.route('/export_excel/<page>', methods=('GET', 'POST'))
-def export_service(page=None):
-    report_name = page or 'raport'
+@aggregation.route('/<int:dataset_id>/export_excel/', methods=('GET', 'POST'))
+@aggregation.route('/<int:dataset_id>/export_excel/<page>',
+                   methods=('GET', 'POST'))
+def export_service(dataset_id, page=None):
+    report_name = get_report_name(page, dataset_id)
     html = request.form.get('html') or ''
     return get_excel_document(html, report_name)

@@ -23,13 +23,17 @@ def get_property(td_tag, prop_name):
     return int(prop_value) - 1 if prop_value else 0
 
 
+def not_searchable_tr(tag):
+    return tag.name == 'tr' and 'ignore-export' not in tag.get('class', [])
+
+
 class BSTable(object):
     def __init__(self, table_tag):
         tab_id = table_tag.parent.get('id')
         tab_id = tab_id and tab_id.split('-')[-1]
         self.title = TABS.get(tab_id, 'Raport')
         self.colshift = []
-        rows = table_tag.find_all('tr')
+        rows = table_tag.find_all(not_searchable_tr)
         self.rows = [BSRow(i, r, self) for i, r in enumerate(rows, start=1)]
 
     def update_colshift(self, col, rows, shift, source='colspan'):
@@ -42,7 +46,7 @@ class BSRow(object):
     def __init__(self, idx, tr_tag, table):
         self.idx = idx
         self.table = table
-        cells = tr_tag.find_all('th') + tr_tag.find_all('td')
+        cells = tr_tag.find_all(lambda tag: tag.name in ('td', 'th'))
         self.cells = [BSCell(i, c, self) for i, c in enumerate(cells, start=1)]
 
 
