@@ -79,7 +79,6 @@ class MultipleJSONField(SelectMultipleField):
 
 
 class SpeciesField(TextAreaField):
-
     def process_formdata(self, valuelist):
         if valuelist:
             self.data = [l.strip() for l in valuelist[0].split('\n')]
@@ -140,9 +139,11 @@ class PopulationValue(Form):
 
 class AreaValue(Form):
     min = DecimalField(label=u"Min",
-        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+                       validators=[
+                           Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
     max = DecimalField(label=u"Max",
-        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+                       validators=[
+                           Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
 
 
 class MagnitudeValue(AreaValue):
@@ -168,7 +169,7 @@ def set_required_error_message(field):
 def set_only_one_error_message(fields):
     message = u"Doar unul dintre: %s poate fi completat" % \
               (', '.join([f.label.text for f in fields])
-    )
+              )
     fields[0].errors.append(message)
 
 
@@ -247,7 +248,7 @@ class PopulationSize(Form):
                            label=u"Estimarea mărimii populației (număr de \
                            indivizi sau valori agreate)")
     population_alt = FormField(PopulationValue,
-                           label=u"Estimarea mărimii populației (altfel decât \
+                               label=u"Estimarea mărimii populației (altfel decât \
                            număr de indivizi)")
 
     def __init__(self, *args, **kwargs):
@@ -266,7 +267,8 @@ class PopulationSize(Form):
 class Range(Form):
     surface_area = DecimalField(label=u"Suprafață (km²)",
                                 validators=[Optional
-                                (u"Mǎrimea trebuie sǎ fie de tip numeric")])
+                                            (
+                                                u"Mǎrimea trebuie sǎ fie de tip numeric")])
     method = SelectField(label=u"Metoda utilizată - suprafața arealului",
                          default='',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
@@ -285,6 +287,12 @@ class Range(Form):
             referință - metoda folosită pentru stabilirea acestei valori"
 
 
+class HabitatRange(Range):
+    method = SelectField(label=u"Metoda utilizată - suprafața habitatului",
+                         default='',
+                         choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
+
+
 class Population(Form):
     size = FormField(PopulationSize)
     additional_locality = TextAreaField(label=u"Definiția localității",
@@ -297,7 +305,8 @@ class Population(Form):
     method = SelectField(default='',
                          label=u"Metoda utilizată - mărimea populației",
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
-    trend_short = FormField(TrendCI, label=u"Tendință pe termen scurt (12 ani)")
+    trend_short = FormField(TrendCI,
+                            label=u"Tendință pe termen scurt (12 ani)")
     trend_long = FormField(TrendCI, label=u"Tendință pe termen lung (24 ani)")
     reference_value = FormField(ReferenceValue, label=u"Populația favorabilă de \
                                                         referință")
@@ -314,7 +323,8 @@ class Population(Form):
 
 class Habitat(Form):
     surface_area = DecimalField(label=u"Suprafață (km²)",
-        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+                                validators=[Optional(
+                                    u"Mǎrimea trebuie sǎ fie de tip numeric")])
     date = TextField(label=u"Anul / Perioada", validators=[Optional()])
     method = SelectField(label=u"Metoda utilizată - habitatul speciei",
                          default='',
@@ -326,8 +336,9 @@ class Habitat(Form):
                             (descrieți modul în care aceasta a fost evaluată)")
     trend_short = FormField(Trend, label=u"Tendință pe termen scurt (12 ani)")
     trend_long = FormField(Trend, label=u"Tendință pe termen lung (24 ani)")
-    area_suitable = DecimalField(label=u"Suprafața habitatului adecvată pentru specie (km²) ",
-                                 validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
+    area_suitable = DecimalField(
+        label=u"Suprafața habitatului adecvată pentru specie (km²) ",
+        validators=[Optional(u"Mǎrimea trebuie sǎ fie de tip numeric")])
     reason = FormField(ReasonValue, label=u"Motivul modificării")
     conclusion = FormField(Conclusion, label=u"Evaluarea habitatului")
 
@@ -335,12 +346,14 @@ class Habitat(Form):
 class Coverage(Form):
     surface_area = DecimalField(label=u"Suprafață (km²)",
                                 validators=[Optional
-                                (u"Mǎrimea trebuie sǎ fie de tip numeric")])
+                                            (
+                                                u"Mǎrimea trebuie sǎ fie de tip numeric")])
     date = TextField(label=u"Anul / Perioada", validators=[Optional()])
     method = SelectField(label=u"Metoda utilizată - suprafața arealului",
                          default='',
                          choices=EMPTY_CHOICE + METHODS_USED_OPTIONS)
-    trend_short = FormField(TrendCI, label=u"Tendință pe termen scurt (12 ani)")
+    trend_short = FormField(TrendCI,
+                            label=u"Tendință pe termen scurt (12 ani)")
     trend_long = FormField(TrendCI, label=u"Tendință pe termen lung (24 ani)")
     reference_value = FormField(ReferenceValue, label=u"Suprafața favorabilă "
                                                       u"de referință (km²)")
@@ -437,20 +450,18 @@ class Measures(Form):
 
 
 class Infocomp(Form):
-
     justification = TextField(
-                        label=u"Justificarea procentului de prag pentru tendințe",
-                        validators=[Optional()])
+        label=u"Justificarea procentului de prag pentru tendințe",
+        validators=[Optional()])
     other_relevant_information = TextField(
-                        label=u"Alte informații relevante",
-                        validators=[Optional()])
+        label=u"Alte informații relevante",
+        validators=[Optional()])
     transboundary_assessment = TextField(
-                        label=u"Evaluare transfrontalieră",
-                        validators=[Optional()])
+        label=u"Evaluare transfrontalieră",
+        validators=[Optional()])
 
 
 class Natura2000Species(Form):
-
     population = FormField(PopulationValue, label=u"Mărimea populației")
     method = SelectField(label=u"Metoda utilizată",
                          default='Metoda utilizată',
@@ -472,7 +483,6 @@ class Natura2000Species(Form):
 
 
 class Natura2000Habitat(Form):
-
     area = FormField(AreaValue, label=u"Suprafața acoperită de habitat (km2)")
     method = SelectField(
         default='', label=u"Metoda utilizată",
@@ -487,23 +497,22 @@ class Natura2000Habitat(Form):
 
 
 class TypicalSpecies(Form):
-
     species = SpeciesField(default='',
                            label=u"Specii tipice",
                            validators=[Optional()])
     method = TextField(label=u"Metoda utilizată",
                        validators=[Optional()])
     justification = TextField(
-                label=u"Justificarea modificărilor (%) induse de tendințe",
-                validators=[Optional()])
+        label=u"Justificarea modificărilor (%) induse de tendințe",
+        validators=[Optional()])
     structure_and_functions_method = SelectField(default='',
-                         choices=EMPTY_CHOICE + METHODS_USED_OPTIONS,
-                         label=u"Structura şi funcțiile - metoda utilizată",
-                         validators=[Optional()],
+                                                 choices=EMPTY_CHOICE + METHODS_USED_OPTIONS,
+                                                 label=u"Structura şi funcțiile - metoda utilizată",
+                                                 validators=[Optional()],
     )
     other_relevant_information = TextAreaField(
-                        label=u"Alte informații relevante",
-                        validators=[Optional()])
+        label=u"Alte informații relevante",
+        validators=[Optional()])
 
 
 class SpeciesComment(Form):
@@ -518,12 +527,12 @@ class SpeciesComment(Form):
     future_prospects = FormField(Conclusion)
     overall_assessment = FormField(Conclusion)
     report_observation = TextAreaField(
-                            label=u"Observații asupra raportului",
-                            validators=[Optional()])
+        label=u"Observații asupra raportului",
+        validators=[Optional()])
     generalstatus = SelectField(default='1')
     published = TextAreaField(
-                        label=u"Surse publicate",
-                        validators=[Optional()])
+        label=u"Surse publicate",
+        validators=[Optional()])
 
     def __init__(self, *args, **kwargs):
         super(SpeciesComment, self).__init__(*args, **kwargs)
@@ -587,7 +596,7 @@ class SpeciesComment(Form):
                         u"Trebuie completat câmpul %s" % (f.label.text or f)
                     )
             if not (self.population.size.population.unit.data or
-                    self.population.size.population_alt.unit.data):
+                        self.population.size.population_alt.unit.data):
                 self.population.size.population.unit.errors.append(
                     u"Trebuie completată una dintre cele două dimensiuni"
                     u" ale populației"
@@ -597,7 +606,7 @@ class SpeciesComment(Form):
 
 
 class HabitatComment(Form):
-    range = FormField(Range)
+    range = FormField(HabitatRange)
     coverage = FormField(Coverage)
     pressures = FormField(Pressures)
     threats = FormField(Threats)
@@ -673,7 +682,7 @@ class ActivityFilterForm(Form):
         self.user_id.choices = [('', u'toți utilizatorii')] + [
             (h.user_id, h.user_id) for h in
             History.query
-            .filter_by(dataset_id=dataset_id)
-            .with_entities(History.user_id)
-            .distinct()
+                .filter_by(dataset_id=dataset_id)
+                .with_entities(History.user_id)
+                .distinct()
         ]
