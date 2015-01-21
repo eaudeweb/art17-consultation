@@ -145,8 +145,11 @@ def aggregate_species(obj, result, refvals):
                                              refvals, "range")
 
     # Populatie
-    result.population_size_unit = extract_key(refvals["population_units"],
-                                              "Unit.")
+    size = get_species_population_size(obj.code, result.region)
+    result.population_size_unit = 'i'
+    result.population_minimum_size = size
+    result.population_maximum_size = size
+
     result.population_additional_locality = extract_key(
         refvals["population_units"], "localit")
     result.population_additional_method = extract_key(
@@ -182,10 +185,6 @@ def aggregate_species(obj, result, refvals):
     ) = parse_complementary(refvals["population_range"])
     result.complementary_favourable_population_method = EXPERT_OPINION
 
-    size = get_species_population_size(obj.code, result.region)
-    result.population_size_unit = 'i'
-    result.population_minimum_size = size
-    result.population_maximum_size = size
 
     # Habitat
     result.habitat_surface_area = get_species_dist_surface(obj.code,
