@@ -61,7 +61,6 @@ def get_pressures_threats(habcode, region):
         "FROM amenintari_pad a, "
              "fise_paduri fp "
         "WHERE a.fise_paduri=fp.\"Oid\" "
-        #"AND a.tip=1 "
         "AND fp.habitat_necorectat='{habcode}' "
         "AND fp.reg_biogeg='{region}' ".format(habcode=habcode, region=region)
         ):
