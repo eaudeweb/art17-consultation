@@ -1,3 +1,4 @@
+from flask import current_app as app
 from StringIO import StringIO
 from collections import defaultdict
 from art17 import models, ROLE_AGGREGATED, ROLE_MISSING
@@ -51,10 +52,32 @@ def get_period(year, length):
     return '%d-%d' % (year - length, year)
 
 
+def get_computed_conclusion(surface, refvals, refval_type):
+    vals = refvals[refval_type]
+    fv_text = "adecvat" if refval_type == 'habitat' else "favorabil"
+
+    FV = extract_key(vals, fv_text)
+    FV = FV and int(FV)
+    if not surface or not FV:
+        return 'XX'
+
+    U1 = FV * (1 - app.config['U1_U2_THRESHOLD'])
+    U2 = 0
+
+    if surface >= FV:
+        return 'FV'
+    elif surface > U1:
+        return 'U1'
+    elif surface >= U2:
+        return 'U2'
+    return ''
+
+
 def get_conclusion(surface, refvals, refval_type):
     vals = refvals[refval_type]
     fv_text = "adecvat" if refval_type == 'habitat' else "favorabil"
     FV = extract_key(vals, fv_text)
+
     U1 = extract_key(vals, "U1")
     U2 = extract_key(vals, "U2")
 
@@ -165,8 +188,8 @@ def aggregate_species(obj, result, refvals, prev):
         result.complementary_favourable_range_unknown,
     ) = parse_complementary(refvals["range"])
     result.complementary_favourable_range_method = EXPERT_OPINION
-    result.conclusion_range = get_conclusion(result.range_surface_area,
-                                             refvals, "range")
+    result.conclusion_range = get_computed_conclusion(
+        result.range_surface_area, refvals, "range")
 
     # Populatie
     size = get_species_population_size(obj.code, result.region)
@@ -283,8 +306,8 @@ def aggregate_habitat(obj, result, refvals, prev):
         result.complementary_favourable_range_unknown,
     ) = parse_complementary(refvals["range"])
     result.complementary_favourable_range_method = EXPERT_OPINION
-    result.conclusion_range = get_conclusion(result.range_surface_area,
-                                             refvals, "range")
+    result.conclusion_range = get_computed_conclusion(
+        result.range_surface_area, refvals, "range")
 
     # Suprafata
     result.coverage_surface_area = get_habitat_dist_surface(obj.code,
