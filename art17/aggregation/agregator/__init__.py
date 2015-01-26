@@ -135,6 +135,7 @@ def get_method(count):
 
 def aggregate_species(obj, result, refvals):
     current_year = result.dataset.year_end
+    current_period = get_period(result.dataset.year_end, 6)
     short_period = get_period(result.dataset.year_end, 12)
     long_period = get_period(result.dataset.year_end, 24)
     # Bibliografie / surse publicate
@@ -181,7 +182,7 @@ def aggregate_species(obj, result, refvals):
                                                            current_year)
     result.population_trend_period = short_period
     result.population_method = EXTRAPOLATION_METHOD
-    result.population_date = get_period(result.dataset.year_end, 6)
+    result.population_date = current_period
     result.population_trend_magnitude_min = refvals["population_magnitude"][
         "Magn. min scurt"]
     result.population_trend_magnitude_max = refvals["population_magnitude"][
@@ -222,7 +223,7 @@ def aggregate_species(obj, result, refvals):
                                                           current_year)
     result.habitat_trend_long_period = long_period
     result.habitat_area_suitable = extract_key(refvals["habitat"], "adecvat")
-    result.habitat_date = get_period(result.dataset.year_end, 6)
+    result.habitat_date = current_period
 
     result.conclusion_habitat = get_conclusion(result.habitat_surface_area,
                                                refvals, "habitat")
@@ -252,6 +253,7 @@ def aggregate_species(obj, result, refvals):
 
 def aggregate_habitat(obj, result, refvals):
     current_year = result.dataset.year_end
+    current_period = get_period(result.dataset.year_end, 6)
     short_period = get_period(result.dataset.year_end, 12)
     long_period = get_period(result.dataset.year_end, 24)
     # Bibliografie
@@ -285,7 +287,7 @@ def aggregate_habitat(obj, result, refvals):
     # Suprafata
     result.coverage_surface_area = get_habitat_dist_surface(obj.code,
                                                             result.region)
-    result.coverage_date = get_period(result.dataset.year_end, 6)
+    result.coverage_date = current_period
     result.coverage_method = get_method(count)
     result.coverage_trend = get_habitat_range_trend(trends.SHORT_TERM,
                                                     current_year)
