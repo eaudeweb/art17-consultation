@@ -13,6 +13,8 @@ from art17.aggregation.agregator.rest import get_species_bibliography, \
 from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_species_population_trend, get_species_habitat_trend, \
     get_habitat_range_trend
+from art17.aggregation.prev import load_species_prev, load_habitat_prev, \
+    get_subject_prev
 from art17.aggregation.refvalues import (
     refvalue_ok, load_species_refval, load_habitat_refval,
     get_subject_refvals_mixed,
@@ -133,7 +135,7 @@ def get_method(count):
         return COMPLETE_METHOD
 
 
-def aggregate_species(obj, result, refvals):
+def aggregate_species(obj, result, refvals, prev):
     current_year = result.dataset.year_end
     current_period = get_period(result.dataset.year_end, 6)
     short_period = get_period(result.dataset.year_end, 12)
@@ -251,7 +253,7 @@ def aggregate_species(obj, result, refvals):
     return result
 
 
-def aggregate_habitat(obj, result, refvals):
+def aggregate_habitat(obj, result, refvals, prev):
     current_year = result.dataset.year_end
     current_period = get_period(result.dataset.year_end, 6)
     short_period = get_period(result.dataset.year_end, 12)
@@ -346,7 +348,7 @@ def aggregate_habitat(obj, result, refvals):
     return result
 
 
-def aggregate_object(obj, dataset, refvals, timestamp, user_id):
+def aggregate_object(obj, dataset, refvals, timestamp, user_id, prev):
     """
     Aggregate a habitat or a species.
     Returns a new row to be inserted into database.
@@ -377,13 +379,15 @@ def aggregate_object(obj, dataset, refvals, timestamp, user_id):
     result.cons_generalstatus = obj.presence
 
     if isinstance(obj, models.DataHabitatsCheckList):
-        result = aggregate_habitat(obj, result, refvals)
+        result = aggregate_habitat(obj, result, refvals, prev)
     else:
-        result = aggregate_species(obj, result, refvals)
+        result = aggregate_species(obj, result, refvals, prev)
     return result
 
 
 def create_aggregation(timestamp, user_id):
+    """ Run the full aggregation on all items in the checklist.
+    """
     curr_report_id = get_reporting_id()
     curr_checklist = get_checklist(curr_report_id)
     dataset = models.Dataset(
@@ -396,6 +400,9 @@ def create_aggregation(timestamp, user_id):
 
     species_refvals = load_species_refval()
     habitat_refvals = load_habitat_refval()
+
+    species_prev = load_species_prev(dataset)
+    habitat_prev = load_habitat_prev(dataset)
 
     habitat_id_map = dict(
         models.db.session.query(
@@ -411,7 +418,7 @@ def create_aggregation(timestamp, user_id):
         refval_key = row.code + "-" + row.bio_region
         refvals = habitat_refvals.get(refval_key)
         habitat_row = aggregate_object(row, dataset, refvals,
-                                       timestamp, user_id)
+                                       timestamp, user_id, habitat_prev)
         habitat_code = row.natura_2000_code
         habitat_id = habitat_id_map.get(habitat_code)
 
@@ -434,7 +441,7 @@ def create_aggregation(timestamp, user_id):
         refval_key = row.code + "-" + row.bio_region
         refvals = species_refvals.get(refval_key)
         species_row = aggregate_object(row, dataset, refvals,
-                                       timestamp, user_id)
+                                       timestamp, user_id, species_prev)
         species_code = row.natura_2000_code
         species_id = species_id_map.get(species_code)
         species_row.subject_id = species_id
@@ -458,6 +465,8 @@ def create_aggregation(timestamp, user_id):
 
 
 def create_preview_aggregation(page, subject, comment, timestamp, user_id):
+    """ Aggregate a single species/habitat
+    """
     curr_report_id = get_reporting_id()
     curr_checklist = get_checklist(curr_report_id)
     dataset = models.Dataset(
@@ -496,6 +505,7 @@ def create_preview_aggregation(page, subject, comment, timestamp, user_id):
 
     bioregions = []
     refvals = get_subject_refvals_mixed(page, subject)
+    prev = get_subject_prev(subject, dataset)
     for row in rows:
         record = aggregate_object(row, dataset, refvals.get(row.bio_region), timestamp, user_id)
         record.subject_id = id_map.get(row.code)
