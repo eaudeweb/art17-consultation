@@ -4,7 +4,8 @@ from art17 import models, ROLE_AGGREGATED, ROLE_MISSING
 from art17.aggregation.agregator.conclusions import \
     get_habitat_conclusion_future, get_overall_habitat_conclusion, \
     get_overall_species_conclusion, get_species_conclusion_future
-from art17.aggregation.agregator.n2k import get_habitat_cover_range
+from art17.aggregation.agregator.n2k import get_habitat_cover_range, \
+    get_species_population_range
 from art17.aggregation.agregator.rest import get_species_bibliography, \
     get_species_pressures_threats, get_species_population_size, \
     get_species_habitat_quality, get_habitat_typical_species, \
@@ -213,6 +214,10 @@ def aggregate_species(obj, result, refvals):
     # Complementare
 
     # Natura 2000
+    n2k_min, n2k_max, n2k_unit = get_species_population_range(obj.code, result.region)
+    result.natura2000_population_unit = n2k_unit
+    result.natura2000_population_min = n2k_min
+    result.natura2000_population_max = n2k_max
 
     # Masuri de conservare
 

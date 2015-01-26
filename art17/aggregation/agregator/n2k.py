@@ -35,8 +35,10 @@ def get_habitat_cover_range(habcode, region):
 
 def get_species_population_range(speccode, region):
     where_query = "SPECIES_CODE='%s'" % speccode
-    data = generic_n2k_call(SPECIES_COVER_URL, where_query,
-                            out_fields="SPECIES_SIZE_MIN,SPECIES_SIZE_MAX")
+    data = generic_n2k_call(
+        SPECIES_COVER_URL, where_query,
+        out_fields="SPECIES_SIZE_MIN,SPECIES_SIZE_MAX,SPECIES_UNIT"
+    )
     if not data:
         return None, None
 
@@ -51,5 +53,13 @@ def get_species_population_range(speccode, region):
         (e['attributes']['SPECIES_SIZE_MIN'] for e in data)
         if v is not None
     ]
+    units = [
+        v for v in
+        (e['attributes']['SPECIES_UNIT'] for e in data)
+        if v is not None
+    ]
+    unit = (units and units[0]) or None
+    min_value, max_value = sum(min_values) or None, sum(max_values) or None
+    print "AICI", unit
 
-    return sum(min_values) or None, sum(max_values) or None
+    return min_value, max_value, unit
