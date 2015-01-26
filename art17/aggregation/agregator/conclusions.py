@@ -3,6 +3,7 @@ U1 = 'U1'
 U2 = 'U2'
 XX = 'XX'
 
+
 def get_habitat_conclusion_future(code, region):
     return FV
 
