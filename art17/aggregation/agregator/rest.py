@@ -33,16 +33,14 @@ def generic_rest_call(url, where_query, out_fields="*"):
 
 def get_species_bibliography(specnum, region):
     where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
-    data = generic_rest_call(SPECIES_BIBLIO_URL, where_query)
-    if not data:
-        return ''
+    data = generic_rest_call(SPECIES_BIBLIO_URL, where_query) or []
 
     format_string = (
         u"{AUTORI} {TITLU_LUCRARE} {AN} {PUBLICATIE} "
         u"{EDITURA} {ORAS} {VOLUM} {PAGINI}\n"
     )
     values = [format_string.format(**e["attributes"]) for e in data]
-    return ''.join(values)
+    return ''.join(values), len(data)
 
 
 def get_species_pressures_threats(specnum, region):
@@ -111,7 +109,7 @@ def get_habitat_published(habcode, region):
     rv = []
     for row in data:
         rv.append(', '.join(row['attributes'][k] for k in FIELDS) + '\n')
-    return ''.join(rv)
+    return ''.join(rv), len(data)
 
 
 def get_habitat_typical_species(habcode, region):

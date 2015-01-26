@@ -120,6 +120,9 @@ def aggregate_species(obj, result, refvals):
     current_year = result.dataset.year_end
     short_period = get_period(result.dataset.year_end, 12)
     long_period = get_period(result.dataset.year_end, 24)
+    # Bibliografie / surse publicate
+    result.published, count = get_species_bibliography(obj.code, result.region)
+
     # Areal
     result.range_surface_area = get_species_range_surface(obj.code,
                                                           result.region)
@@ -221,9 +224,6 @@ def aggregate_species(obj, result, refvals):
 
     # Masuri de conservare
 
-    # Bibliografie / surse publicate
-    result.published = get_species_bibliography(obj.code, result.region)
-
     # Future
     result.conclusion_future = get_species_conclusion_future(obj.code, result.region)
 
@@ -237,6 +237,9 @@ def aggregate_habitat(obj, result, refvals):
     current_year = result.dataset.year_end
     short_period = get_period(result.dataset.year_end, 12)
     long_period = get_period(result.dataset.year_end, 24)
+    # Bibliografie
+    result.published, count = get_habitat_published(obj.code, result.region)
+
     # Areal
     result.range_surface_area = get_habitat_range_surface(obj.code,
                                                           result.region)
@@ -298,9 +301,7 @@ def aggregate_habitat(obj, result, refvals):
                                             refvals, "coverage_range")
 
 
-    # Presiuni
-
-    # Amenintari
+    # Presiuni & Amenintari ??
 
     # Natura 2000
     n2k_min, n2k_max = get_habitat_cover_range(obj.code, result.region)
@@ -308,10 +309,6 @@ def aggregate_habitat(obj, result, refvals):
     result.natura2000_area_max = n2k_max
 
     # Masuri de conservare
-
-
-    # Bibliografie
-    result.published = get_habitat_published(obj.code, result.region)
 
     # Specii tipice
     typical_species = get_habitat_typical_species(obj.code, result.region)
