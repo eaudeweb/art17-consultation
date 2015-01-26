@@ -495,3 +495,7 @@ body thead {
 .content .nav-tabs {
   margin-bottom: 10px;
 }
+
+.habitat-suitable {
+    max-width: 180px;
+}
