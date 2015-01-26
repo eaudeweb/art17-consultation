@@ -33,7 +33,13 @@ from art17.models import DataHabitatSpecies
 
 
 EXPERT_OPINION = 'Expert opinion'
-EXTRAPOLATION = '2'
+
+EXPERT_METHOD = '1'
+EXTRAPOLATION_METHOD = '2'
+COMPLETE_METHOD = '3'
+MISSING_METHOD = '0'
+UNKNOWN_METHOD = ''
+
 UNKNOWN_TREND = 'x'
 MISSING_DATA = '0'
 TERRAIN_DATA = '1'
@@ -116,6 +122,17 @@ def extract_key(refval, key):
     return None
 
 
+def get_method(count):
+    if count is None:
+        return UNKNOWN_METHOD
+    if count < 99:
+        return EXPERT_METHOD
+    elif count < 299:
+        return EXTRAPOLATION_METHOD
+    else:
+        return COMPLETE_METHOD
+
+
 def aggregate_species(obj, result, refvals):
     current_year = result.dataset.year_end
     short_period = get_period(result.dataset.year_end, 12)
@@ -126,7 +143,7 @@ def aggregate_species(obj, result, refvals):
     # Areal
     result.range_surface_area = get_species_range_surface(obj.code,
                                                           result.region)
-    result.range_method = EXTRAPOLATION
+    result.range_method = get_method(count)
     result.range_trend = get_species_range_trend(trends.SHORT_TERM,
                                                  current_year)
     result.range_trend_period = short_period
@@ -163,7 +180,7 @@ def aggregate_species(obj, result, refvals):
     result.population_trend = get_species_population_trend(trends.SHORT_TERM,
                                                            current_year)
     result.population_trend_period = short_period
-    result.population_method = EXTRAPOLATION
+    result.population_method = EXTRAPOLATION_METHOD
     result.population_date = get_period(result.dataset.year_end, 6)
     result.population_trend_magnitude_min = refvals["population_magnitude"][
         "Magn. min scurt"]
@@ -193,7 +210,7 @@ def aggregate_species(obj, result, refvals):
     # Habitat
     result.habitat_surface_area = get_species_dist_surface(obj.code,
                                                            result.region)
-    result.habitat_method = EXTRAPOLATION
+    result.habitat_method = get_method(count)
 
     result.habitat_quality = get_species_habitat_quality(obj.code,
                                                          result.region)
@@ -243,7 +260,7 @@ def aggregate_habitat(obj, result, refvals):
     # Areal
     result.range_surface_area = get_habitat_range_surface(obj.code,
                                                           result.region)
-    result.range_method = EXTRAPOLATION
+    result.range_method = get_method(count)
     result.range_trend = get_habitat_range_trend(trends.SHORT_TERM,
                                                  current_year)
     result.range_trend_period = short_period
@@ -269,7 +286,7 @@ def aggregate_habitat(obj, result, refvals):
     result.coverage_surface_area = get_habitat_dist_surface(obj.code,
                                                             result.region)
     result.coverage_date = get_period(result.dataset.year_end, 6)
-    result.coverage_method = EXTRAPOLATION
+    result.coverage_method = get_method(count)
     result.coverage_trend = get_habitat_range_trend(trends.SHORT_TERM,
                                                     current_year)
     result.coverage_trend_period = short_period
