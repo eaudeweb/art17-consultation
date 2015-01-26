@@ -34,7 +34,7 @@
   <table class="table">
     <thead>
     <tr>
-      <th></th>
+      <th>{% if page == 'species' %}Specie{% else %}Habitat{% endif %}</th>
       {% for region in bioreg_list %}
         <th>{{ region.code }}</th>
       {% endfor %}
