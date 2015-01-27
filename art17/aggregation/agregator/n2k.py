@@ -40,7 +40,7 @@ def get_species_population_range(speccode, region):
         out_fields="SPECIES_SIZE_MIN,SPECIES_SIZE_MAX,SPECIES_UNIT"
     )
     if not data:
-        return None, None
+        return None, None, None
 
     min_values = [
         v for v in
@@ -60,6 +60,5 @@ def get_species_population_range(speccode, region):
     ]
     unit = (units and units[0]) or None
     min_value, max_value = sum(min_values) or None, sum(max_values) or None
-    print "AICI", unit
 
     return min_value, max_value, unit

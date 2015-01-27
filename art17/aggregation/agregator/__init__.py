@@ -13,7 +13,7 @@ from art17.aggregation.agregator.rest import get_species_bibliography, \
     get_habitat_published
 from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_species_population_trend, get_species_habitat_trend, \
-    get_habitat_range_trend
+    get_habitat_range_trend, SHORT_TERM, LONG_TERM
 from art17.aggregation.prev import load_species_prev, load_habitat_prev, \
     get_subject_prev
 from art17.aggregation.refvalues import (
@@ -170,13 +170,11 @@ def aggregate_species(obj, result, refvals, prev):
     result.range_surface_area = get_species_range_surface(obj.code,
                                                           result.region)
     result.range_method = get_method(count)
-    result.range_trend = get_species_range_trend(trends.SHORT_TERM,
-                                                 current_year)
+    result.range_trend = get_species_range_trend(SHORT_TERM, current_year)
     result.range_trend_period = short_period
     result.range_trend_magnitude_min = refvals["magnitude"]["Magn. min scurt"]
     result.range_trend_magnitude_max = refvals["magnitude"]["Magn. max scurt"]
-    result.range_trend_long = get_species_range_trend(trends.LONG_TERM,
-                                                      current_year)
+    result.range_trend_long = get_species_range_trend(LONG_TERM, current_year)
     result.range_trend_long_period = long_period
     result.range_trend_long_magnitude_min = refvals["magnitude"][
         "Magn. min lung"]
@@ -203,7 +201,7 @@ def aggregate_species(obj, result, refvals, prev):
         refvals["population_units"], "Metoda")
     result.population_additional_problems = extract_key(
         refvals["population_units"], "Dificult")
-    result.population_trend = get_species_population_trend(trends.SHORT_TERM,
+    result.population_trend = get_species_population_trend(SHORT_TERM,
                                                            current_year)
     result.population_trend_period = short_period
     result.population_method = EXTRAPOLATION_METHOD
@@ -215,8 +213,8 @@ def aggregate_species(obj, result, refvals, prev):
     result.population_trend_magnitude_ci = refvals["population_magnitude"][
         "Interval incredere scurt"]
     result.population_trend_method = MISSING_DATA
-    result.population_trend_long = get_species_population_trend(
-        trends.LONG_TERM, current_year)
+    result.population_trend_long = get_species_population_trend(LONG_TERM,
+                                                                current_year)
     result.population_trend_long_period = long_period
     result.population_trend_long_magnitude_min = \
         refvals["population_magnitude"]["Magn. min lung"]
@@ -232,7 +230,6 @@ def aggregate_species(obj, result, refvals, prev):
     ) = parse_complementary(refvals["population_range"])
     result.complementary_favourable_population_method = EXPERT_OPINION
 
-
     # Habitat
     result.habitat_surface_area = get_species_dist_surface(obj.code,
                                                            result.region)
@@ -241,10 +238,9 @@ def aggregate_species(obj, result, refvals, prev):
     result.habitat_quality = get_species_habitat_quality(obj.code,
                                                          result.region)
 
-    result.habitat_trend = get_species_habitat_trend(trends.SHORT_TERM,
-                                                     current_year)
+    result.habitat_trend = get_species_habitat_trend(SHORT_TERM, current_year)
     result.habitat_trend_period = short_period
-    result.habitat_trend_long = get_species_habitat_trend(trends.LONG_TERM,
+    result.habitat_trend_long = get_species_habitat_trend(LONG_TERM,
                                                           current_year)
     result.habitat_trend_long_period = long_period
     result.habitat_area_suitable = extract_key(refvals["habitat"], "adecvat")
@@ -260,7 +256,8 @@ def aggregate_species(obj, result, refvals, prev):
     # Complementare
 
     # Natura 2000
-    n2k_min, n2k_max, n2k_unit = get_species_population_range(obj.code, result.region)
+    n2k_min, n2k_max, n2k_unit = get_species_population_range(obj.code,
+                                                              result.region)
     result.natura2000_population_unit = n2k_unit
     result.natura2000_population_min = n2k_min
     result.natura2000_population_max = n2k_max
@@ -268,7 +265,8 @@ def aggregate_species(obj, result, refvals, prev):
     # Masuri de conservare
 
     # Future
-    result.conclusion_future = get_species_conclusion_future(obj.code, result.region)
+    result.conclusion_future = get_species_conclusion_future(obj.code,
+                                                             result.region)
 
     # Concluzii Overall
     result.conclusion_assessment = get_overall_species_conclusion(result)
@@ -288,13 +286,11 @@ def aggregate_habitat(obj, result, refvals, prev):
     result.range_surface_area = get_habitat_range_surface(obj.code,
                                                           result.region)
     result.range_method = get_method(count)
-    result.range_trend = get_habitat_range_trend(trends.SHORT_TERM,
-                                                 current_year)
+    result.range_trend = get_habitat_range_trend(SHORT_TERM, current_year)
     result.range_trend_period = short_period
     result.range_trend_magnitude_min = refvals["magnitude"]["Magn. min scurt"]
     result.range_trend_magnitude_max = refvals["magnitude"]["Magn. max scurt"]
-    result.range_trend_long = get_habitat_range_trend(trends.LONG_TERM,
-                                                      current_year)
+    result.range_trend_long = get_habitat_range_trend(LONG_TERM, current_year)
     result.range_trend_long_period = long_period
     result.range_trend_long_magnitude_min = refvals["magnitude"][
         "Magn. min lung"]
@@ -314,8 +310,7 @@ def aggregate_habitat(obj, result, refvals, prev):
                                                             result.region)
     result.coverage_date = current_period
     result.coverage_method = get_method(count)
-    result.coverage_trend = get_habitat_range_trend(trends.SHORT_TERM,
-                                                    current_year)
+    result.coverage_trend = get_habitat_range_trend(SHORT_TERM, current_year)
     result.coverage_trend_period = short_period
     result.coverage_trend_magnitude_min = refvals["coverage_magnitude"][
         "Magn. min scurt"]
@@ -324,7 +319,7 @@ def aggregate_habitat(obj, result, refvals, prev):
     result.coverage_trend_magnitude_ci = refvals["coverage_magnitude"][
         "Interval incredere scurt"]
     result.coverage_trend_method = MISSING_DATA
-    result.coverage_trend_long = get_habitat_range_trend(trends.LONG_TERM,
+    result.coverage_trend_long = get_habitat_range_trend(LONG_TERM,
                                                          current_year)
 
     result.coverage_trend_long_period = long_period
@@ -344,7 +339,6 @@ def aggregate_habitat(obj, result, refvals, prev):
     result.conclusion_area = get_conclusion(result.coverage_surface_area,
                                             refvals, "coverage_range")
 
-
     # Presiuni & Amenintari ??
 
     # Natura 2000
@@ -363,7 +357,8 @@ def aggregate_habitat(obj, result, refvals, prev):
     set_pressures_threats(result, pressures_threats)
 
     # Future
-    result.conclusion_future = get_habitat_conclusion_future(obj.code, result.region)
+    result.conclusion_future = get_habitat_conclusion_future(obj.code,
+                                                             result.region)
 
     # Concluzii Overall
     result.conclusion_assessment = get_overall_habitat_conclusion(result)
@@ -528,9 +523,10 @@ def create_preview_aggregation(page, subject, comment, timestamp, user_id):
 
     bioregions = []
     refvals = get_subject_refvals_mixed(page, subject)
-    prev = get_subject_prev(subject, dataset)
+    prev = get_subject_prev(page, dataset)
     for row in rows:
-        record = aggregate_object(row, dataset, refvals.get(row.bio_region), timestamp, user_id)
+        record = aggregate_object(row, dataset, refvals.get(row.bio_region),
+                                  timestamp, user_id, prev)
         record.subject_id = id_map.get(row.code)
         models.db.session.add(record)
         bioregions.append(row.bio_region)
