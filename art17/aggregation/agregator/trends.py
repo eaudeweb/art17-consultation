@@ -10,10 +10,24 @@ def term_start(term, year):
         raise ValueError("Invalid term")
 
 
-def get_species_range_trend(term, year):
-    start = term_start(term, year)
+def get_trend(term, year, current, prev, key):
+    if not prev:
+        return 'x'
 
-    return 'x'
+    start = term_start(term, year)
+    hist_values = [p[key] for p in prev if p[key] and p['year'] > start]
+    average = sum(hist_values) / len(hist_values)
+
+    if current > average:
+        return '+'
+    elif current == average:
+        return '='
+    elif current < average:
+        return '-'
+
+
+def get_species_range_trend(term, year, current_value, prev):
+    return get_trend(term, year, current_value, prev, 'range_surface_area')
 
 
 def get_species_population_trend(term, year):
@@ -22,20 +36,13 @@ def get_species_population_trend(term, year):
     return 'x'
 
 
-def get_species_habitat_trend(term, year):
-    start = term_start(term, year)
-
-    return 'x'
+def get_species_habitat_trend(term, year, current_value, prev):
+    return get_trend(term, year, current_value, prev, 'habitat_surface_area')
 
 
-def get_habitat_range_trend(term, year):
-    start = term_start(term, year)
-
-    return 'x'
+def get_habitat_range_trend(term, year, current_value, prev):
+    return get_trend(term, year, current_value, prev, 'range_surface_area')
 
 
-def get_habitat_coverage_trend(term, year):
-    start = term_start(term, year)
-
-    return 'x'
-
+def get_habitat_coverage_trend(term, year, current_value, prev):
+    return get_trend(term, year, current_value, prev, 'coverage_surface_area')

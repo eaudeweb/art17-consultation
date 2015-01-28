@@ -13,7 +13,7 @@ from art17.aggregation.agregator.rest import get_species_bibliography, \
     get_habitat_published
 from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_species_population_trend, get_species_habitat_trend, \
-    get_habitat_range_trend, SHORT_TERM, LONG_TERM
+    get_habitat_range_trend, get_habitat_coverage_trend, SHORT_TERM, LONG_TERM
 from art17.aggregation.prev import load_species_prev, load_habitat_prev, \
     get_subject_prev
 from art17.aggregation.refvalues import (
@@ -182,6 +182,8 @@ def aggregate_species(obj, result, refvals, prev):
     current_period = get_period(result.dataset.year_end, 6)
     short_period = get_period(result.dataset.year_end, 12)
     long_period = get_period(result.dataset.year_end, 24)
+
+    code_reg = '{}-{}'.format(obj.code, result.region)
     # Bibliografie / surse publicate
     result.published, count = get_species_bibliography(obj.code, result.region)
 
@@ -189,11 +191,13 @@ def aggregate_species(obj, result, refvals, prev):
     result.range_surface_area = get_species_range_surface(obj.code,
                                                           result.region)
     result.range_method = get_method(count)
-    result.range_trend = get_species_range_trend(SHORT_TERM, current_year)
+    result.range_trend = get_species_range_trend(
+        SHORT_TERM, current_year, result.range_surface_area, prev[code_reg])
     result.range_trend_period = short_period
     result.range_trend_magnitude_min = refvals["magnitude"]["Magn. min scurt"]
     result.range_trend_magnitude_max = refvals["magnitude"]["Magn. max scurt"]
-    result.range_trend_long = get_species_range_trend(LONG_TERM, current_year)
+    result.range_trend_long = get_species_range_trend(
+        LONG_TERM, current_year, result.range_surface_area, prev[code_reg])
     result.range_trend_long_period = long_period
     result.range_trend_long_magnitude_min = refvals["magnitude"][
         "Magn. min lung"]
@@ -257,10 +261,11 @@ def aggregate_species(obj, result, refvals, prev):
     result.habitat_quality = get_species_habitat_quality(obj.code,
                                                          result.region)
 
-    result.habitat_trend = get_species_habitat_trend(SHORT_TERM, current_year)
+    result.habitat_trend = get_species_habitat_trend(
+        SHORT_TERM, current_year, result.habitat_surface_area, prev[code_reg])
     result.habitat_trend_period = short_period
-    result.habitat_trend_long = get_species_habitat_trend(LONG_TERM,
-                                                          current_year)
+    result.habitat_trend_long = get_species_habitat_trend(
+        LONG_TERM, current_year, result.habitat_surface_area, prev[code_reg])
     result.habitat_trend_long_period = long_period
     result.habitat_area_suitable = extract_key(refvals["habitat"], "adecvat")
     result.habitat_date = current_period
@@ -298,6 +303,8 @@ def aggregate_habitat(obj, result, refvals, prev):
     current_period = get_period(result.dataset.year_end, 6)
     short_period = get_period(result.dataset.year_end, 12)
     long_period = get_period(result.dataset.year_end, 24)
+
+    code_reg = '{}-{}'.format(obj.code, result.region)
     # Bibliografie
     result.published, count = get_habitat_published(obj.code, result.region)
 
@@ -305,11 +312,13 @@ def aggregate_habitat(obj, result, refvals, prev):
     result.range_surface_area = get_habitat_range_surface(obj.code,
                                                           result.region)
     result.range_method = get_method(count)
-    result.range_trend = get_habitat_range_trend(SHORT_TERM, current_year)
+    result.range_trend = get_habitat_range_trend(
+        SHORT_TERM, current_year, result.range_surface_area, prev[code_reg])
     result.range_trend_period = short_period
     result.range_trend_magnitude_min = refvals["magnitude"]["Magn. min scurt"]
     result.range_trend_magnitude_max = refvals["magnitude"]["Magn. max scurt"]
-    result.range_trend_long = get_habitat_range_trend(LONG_TERM, current_year)
+    result.range_trend_long = get_habitat_range_trend(
+        LONG_TERM, current_year, result.range_surface_area, prev[code_reg])
     result.range_trend_long_period = long_period
     result.range_trend_long_magnitude_min = refvals["magnitude"][
         "Magn. min lung"]
@@ -329,7 +338,8 @@ def aggregate_habitat(obj, result, refvals, prev):
                                                             result.region)
     result.coverage_date = current_period
     result.coverage_method = get_method(count)
-    result.coverage_trend = get_habitat_range_trend(SHORT_TERM, current_year)
+    result.coverage_trend = get_habitat_coverage_trend(
+        SHORT_TERM, current_year, result.coverage_surface_area, prev[code_reg])
     result.coverage_trend_period = short_period
     result.coverage_trend_magnitude_min = refvals["coverage_magnitude"][
         "Magn. min scurt"]
@@ -338,8 +348,8 @@ def aggregate_habitat(obj, result, refvals, prev):
     result.coverage_trend_magnitude_ci = refvals["coverage_magnitude"][
         "Interval incredere scurt"]
     result.coverage_trend_method = MISSING_DATA
-    result.coverage_trend_long = get_habitat_range_trend(LONG_TERM,
-                                                         current_year)
+    result.coverage_trend_long = get_habitat_coverage_trend(
+        LONG_TERM, current_year, result.coverage_surface_area, prev[code_reg])
 
     result.coverage_trend_long_period = long_period
     result.coverage_trend_long_magnitude_min = refvals["coverage_magnitude"][
