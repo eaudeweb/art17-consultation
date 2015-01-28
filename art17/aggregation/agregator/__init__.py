@@ -52,12 +52,33 @@ def get_period(year, length):
     return '%d-%d' % (year - length, year)
 
 
-def get_computed_conclusion(surface, refvals, refval_type):
+def get_FV(refvals, refval_type):
     vals = refvals[refval_type]
     fv_text = "adecvat" if refval_type == 'habitat' else "favorabil"
-
     FV = extract_key(vals, fv_text)
-    FV = FV and int(FV)
+    return FV and int(FV)
+
+
+def get_computed_conclusion_quality(surface, quality, refvals, refval_type):
+    FV = get_FV(refvals, refval_type)
+
+    if surface is None or FV is None:
+        return 'XX'
+
+    if (surface >= FV or surface == 0) and quality in ('Good', 'Moderate'):
+        return 'FV'
+
+    U1 = FV * (1 - app.config['U1_U2_THRESHOLD'])
+
+    if surface <= U1 or quality == 'Bad':
+        return 'U2'
+
+    return 'U1'
+
+
+def get_computed_conclusion(surface, refvals, refval_type):
+    FV = get_FV(refvals, refval_type)
+
     if not surface or not FV:
         return 'XX'
 
@@ -74,14 +95,12 @@ def get_computed_conclusion(surface, refvals, refval_type):
 
 
 def get_conclusion(surface, refvals, refval_type):
-    vals = refvals[refval_type]
-    fv_text = "adecvat" if refval_type == 'habitat' else "favorabil"
-    FV = extract_key(vals, fv_text)
+    FV = get_FV(refvals, refval_type)
 
+    vals = refvals[refval_type]
     U1 = extract_key(vals, "U1")
     U2 = extract_key(vals, "U2")
 
-    FV = FV and int(FV)
     U1 = U1 and int(U1)
     U2 = U2 and int(U2)
 
@@ -246,8 +265,8 @@ def aggregate_species(obj, result, refvals, prev):
     result.habitat_area_suitable = extract_key(refvals["habitat"], "adecvat")
     result.habitat_date = current_period
 
-    result.conclusion_habitat = get_conclusion(result.habitat_surface_area,
-                                               refvals, "habitat")
+    result.conclusion_habitat = get_computed_conclusion_quality(
+        result.habitat_surface_area, result.habitat_quality, refvals, "habitat")
 
     # Presiuni & Amenintari
     pressure_threats = get_species_pressures_threats(obj.code, result.region)
