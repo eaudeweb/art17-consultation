@@ -29,6 +29,7 @@ def create_app():
     app.config.setdefault('DEFAULT_YEAR_END', 2012)
     app.config.setdefault('GIS_API_URL', '')
     app.config.setdefault('U1_U2_THRESHOLD', 0.1)
+    app.config.setdefault('ACCEPTED_AVG_VARIATION', 0.1)
     app.config.from_pyfile('settings.py', silent=True)
     app.config.from_pyfile(REPO_ROOT / 'settings.py', silent=True)
     app.register_blueprint(auth)
@@ -131,7 +132,6 @@ def create_manager(app):
 
 
 def main():
-    import os
     import logging
     logging.basicConfig()
     logging.getLogger('werkzeug').setLevel(logging.INFO)

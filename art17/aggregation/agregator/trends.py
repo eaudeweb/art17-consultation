@@ -1,3 +1,6 @@
+from flask import current_app as app
+
+
 (SHORT_TERM, LONG_TERM) = range(2)
 
 
@@ -17,13 +20,15 @@ def get_trend(term, year, current, prev, key):
     start = term_start(term, year)
     hist_values = [p[key] for p in prev if p[key] and p['year'] > start]
     average = sum(hist_values) / len(hist_values)
+    min_value = (1 - app.config['ACCEPTED_AVG_VARIATION']) * average
+    max_value = (1 + app.config['ACCEPTED_AVG_VARIATION']) * average
 
-    if current > average:
+    if current > max_value:
         return '+'
-    elif current == average:
-        return '='
-    elif current < average:
+    elif current < min_value:
         return '-'
+    else:
+        return '='
 
 
 def get_species_range_trend(term, year, current_value, prev):

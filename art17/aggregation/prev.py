@@ -4,6 +4,10 @@ from art17.models import (
 )
 
 
+def get_acronym(code, region):
+    return '{}-{}'.format(code, region)
+
+
 def get_subject_prev(subject, dataset):
     if subject == 'species':
         return load_species_prev(dataset)
@@ -33,7 +37,7 @@ def load_species_prev(dataset):
     )
     hist_data = {}
     for s in species:
-        code_region = '{}-{}'.format(s.code, s.region)
+        code_region = get_acronym(s.code, s.region)
         trend_data = {
             'year': s.year_end,
             'range_surface_area': s.range_surface_area,
@@ -64,7 +68,7 @@ def load_habitat_prev(dataset):
     )
     hist_data = {}
     for h in habitats:
-        code_region = '{}-{}'.format(h.code, h.region)
+        code_region = get_acronym(h.code, h.region)
         trend_data = {
             'year': h.year_end,
             'range_surface_area': h.range_surface_area,
