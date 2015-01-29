@@ -13,15 +13,26 @@ def term_start(term, year):
         raise ValueError("Invalid term")
 
 
+def average(values):
+    return float(sum(values)) / (len(values) or 1)
+
+
 def get_trend(term, year, current, prev, key):
     if not prev:
         return 'x'
 
     start = term_start(term, year)
-    hist_values = [p[key] for p in prev if p[key] and p['year'] > start]
-    average = float(sum(hist_values)) / len(hist_values)
-    min_value = (1 - app.config['ACCEPTED_AVG_VARIATION']) * average
-    max_value = (1 + app.config['ACCEPTED_AVG_VARIATION']) * average
+
+    if isinstance(key, tuple):
+        prev_values = [average([p[k] for k in key if p[k]])
+                       for p in prev if p['year'] > start]
+    else:
+        prev_values = [p[key] for p in prev if p['year'] > start]
+    prev_values = [p for p in prev_values if p]
+
+    avg = average(prev_values)
+    min_value = (1 - app.config['ACCEPTED_AVG_VARIATION']) * avg
+    max_value = (1 + app.config['ACCEPTED_AVG_VARIATION']) * avg
 
     if current > max_value:
         return '+'
@@ -35,10 +46,9 @@ def get_species_range_trend(term, year, current_value, prev):
     return get_trend(term, year, current_value, prev, 'range_surface_area')
 
 
-def get_species_population_trend(term, year):
-    start = term_start(term, year)
-
-    return 'x'
+def get_species_population_trend(term, year, current_value, prev):
+    return get_trend(term, year, current_value, prev,
+                     ('population_minimum_size', 'population_maximum_size'))
 
 
 def get_species_habitat_trend(term, year, current_value, prev):

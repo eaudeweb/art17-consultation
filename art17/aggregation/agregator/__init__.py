@@ -226,8 +226,8 @@ def aggregate_species(obj, result, refvals, prev):
         refvals["population_units"], "Metoda")
     result.population_additional_problems = extract_key(
         refvals["population_units"], "Dificult")
-    result.population_trend = get_species_population_trend(SHORT_TERM,
-                                                           current_year)
+    result.population_trend = get_species_population_trend(
+        SHORT_TERM, current_year, size, prev)
     result.population_trend_period = short_period
     result.population_method = get_method(count)
     result.population_date = current_period
@@ -238,8 +238,8 @@ def aggregate_species(obj, result, refvals, prev):
     result.population_trend_magnitude_ci = refvals["population_magnitude"][
         "Interval incredere scurt"]
     result.population_trend_method = MISSING_DATA
-    result.population_trend_long = get_species_population_trend(LONG_TERM,
-                                                                current_year)
+    result.population_trend_long = get_species_population_trend(
+        LONG_TERM, current_year, size, prev)
     result.population_trend_long_period = long_period
     result.population_trend_long_magnitude_min = \
         refvals["population_magnitude"]["Magn. min lung"]
