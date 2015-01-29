@@ -1,3 +1,4 @@
+# coding=utf-8
 from flask import current_app as app
 from StringIO import StringIO
 from collections import defaultdict
@@ -215,9 +216,9 @@ def aggregate_species(obj, result, refvals, prev):
 
     # Populatie
     size = get_species_population_size(obj.code, result.region)
-    result.population_size_unit = 'i'
+    result.population_size_unit = refvals['population_units'][
+        u'Unit. de măsură']
     result.population_minimum_size = size
-    result.population_maximum_size = size
 
     result.population_additional_locality = extract_key(
         refvals["population_units"], "localit")
