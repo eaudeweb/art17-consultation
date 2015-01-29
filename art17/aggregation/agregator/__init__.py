@@ -228,7 +228,7 @@ def aggregate_species(obj, result, refvals, prev):
     result.population_trend = get_species_population_trend(SHORT_TERM,
                                                            current_year)
     result.population_trend_period = short_period
-    result.population_method = EXTRAPOLATION_METHOD
+    result.population_method = get_method(count)
     result.population_date = current_period
     result.population_trend_magnitude_min = refvals["population_magnitude"][
         "Magn. min scurt"]
