@@ -19,7 +19,7 @@ def get_trend(term, year, current, prev, key):
 
     start = term_start(term, year)
     hist_values = [p[key] for p in prev if p[key] and p['year'] > start]
-    average = sum(hist_values) / len(hist_values)
+    average = float(sum(hist_values)) / len(hist_values)
     min_value = (1 - app.config['ACCEPTED_AVG_VARIATION']) * average
     max_value = (1 + app.config['ACCEPTED_AVG_VARIATION']) * average
 
