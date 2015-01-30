@@ -1,0 +1,29 @@
+{% extends "layout.html" %} 
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('agregare', home_url),
+          ('Documentație algoritmi', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+{% block content %}
+<h1>Algoritmi de agregare în SIMSHAB</h1>
+<p>Acest document prezintă algoritmii de agregare a datelor primare (date
+colectate de către experți) despre specii și habitate din Articolul 17
+Directiva Habitate, algoritmi folosiți în agregagrea automată din SIMSHAB.
+Structura documentului urmărește structura interfeței de vizualizare a datelor
+agregate (vezi seturi de date din <a
+    href="https://www.simshab.ro/agregare/">https://www.simshab.ro/agregare/</a>.</p>
+ 
+<p>Datorită faptului că România a raportat pentru prima dată în 2013 pentru
+Directiva Habitate și deci nu există valori de referință anterioare pentru
+câmpurile înregistrărilor de raportare, au fost create niște tabele cu valori
+de referință pentru fiecare specie și tip de habitat din listă. Acestea se pot
+consulta și edita la adresa <a
+    href="https://www.simshab.ro/agregare/manage/reference_values/table">https://www.simshab.ro/agregare/manage/reference_values/table</a>
+Inițial, aceste câmpuri au fost completate cu valorile raportate în 2013, acolo
+unde a fost posibil.
+</p> 
+{% endblock %}

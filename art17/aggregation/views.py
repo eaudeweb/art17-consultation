@@ -83,6 +83,7 @@ def home():
     )
     return flask.render_template('aggregation/home.html', **{
         'preview_datasets': preview_list,
+        'home': True,
     })
 
 
@@ -198,6 +199,11 @@ def post_preview(dataset_id):
         dataset=dataset,
         page=page,
     )
+
+
+@aggregation.route('/algoritmi')
+def docs():
+    return flask.render_template('aggregation/docs.html')
 
 
 class DashboardView(View):

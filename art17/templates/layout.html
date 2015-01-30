@@ -44,8 +44,15 @@
         {{ flash_messages() }}
       {% endblock %}
       <div class="content">
+
       {% block before_content %}
+        {% if app_name == 'aggregation' and not home %}
+        <div class="pull-right">
+            <a class="btn btn-default" href="{{ url_for('aggregation.docs') }}">Algoritmi agregare</a>
+        </div>
+        {% endif %}
       {% endblock %}
+
       {% block content %}
         <h1>Hello, world!</h1>
       {% endblock %}
