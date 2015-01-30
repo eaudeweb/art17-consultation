@@ -196,6 +196,7 @@
             <label for="trend_short.period.method">
                 {{ trend_short.method.label }}:
             </label>
+            {{ errors(trend_short.method) }}
             {{ trend_short.method(class='form-control') }}
           </div>
         </div>
@@ -235,18 +236,6 @@
                     placeholder="interval de încredere") }}
           </div>
         </div>
-
-        <label for="trend_short.method">
-          Metoda utilizată - tendința pe termen scurt
-        </label>
-
-        {{ errors(trend_short.method) }}
-
-        <div class="row">
-          <div class="col-sm-6 {{- error_cls(trend_short.method) }}">
-            {{ trend_short.method(class='form-control') }}
-          </div>
-        </div>
       </div>
 
       <div class="form-group">
@@ -283,8 +272,9 @@
 
           <div class="col-sm-2 {{- error_cls(trend_long.method) }}">
             <label for="population.trend_long.method">
-                {{ trend_long.method.label }}:
+              {{ trend_long.method.label }}:
             </label>
+            {{ errors(trend_long.method) }}
             {{ trend_long.method(class='form-control') }}
           </div>
         </div>
@@ -320,18 +310,6 @@
             </label>
             {{ magnitude.ci(class='form-control',
                     placeholder="interval de încredere") }}
-          </div>
-        </div>
-
-        <label for="population.trend_long.method">
-          Metoda utilizată - tendința pe termen lung
-        </label>
-
-        {{ errors(trend_long.method) }}
-
-        <div class="row">
-          <div class="col-sm-6 {{- error_cls(trend_long.method) }}">
-            {{ trend_long.method(class='form-control') }}
           </div>
         </div>
       </div>
