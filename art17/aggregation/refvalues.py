@@ -46,6 +46,13 @@ def refvalue_ok(refvalue):
     return True
 
 
+def extract_key(refval, key):
+    for k, v in refval.iteritems():
+        if key in k:
+            return v
+    return None
+
+
 def get_subject_refvals(page, subject):
     if page == 'species':
         refvals = load_species_refval()

@@ -1,7 +1,6 @@
 # coding=utf-8
 import flask
 from flask import current_app
-from sqlalchemy import or_
 from art17 import models, dal, ROLE_MISSING
 
 
@@ -30,7 +29,8 @@ def record_dashboard_url(record):
 
 def record_edit_url(record):
     if isinstance(record, models.DataHabitattypeRegion):
-        return flask.url_for('.habitat-edit', dataset_id=record.cons_dataset_id,
+        return flask.url_for('.habitat-edit',
+                             dataset_id=record.cons_dataset_id,
                              record_id=record.id)
     elif isinstance(record, models.DataSpeciesRegion):
         return flask.url_for('.species-edit',
@@ -56,14 +56,12 @@ def record_history_url(record):
         return flask.url_for('history_aggregation.habitat_comments',
                              dataset_id=record.cons_dataset_id,
                              subject_code=record.habitat.code,
-                             region_code=record.region,
-        )
+                             region_code=record.region)
     elif isinstance(record, models.DataSpeciesRegion):
         return flask.url_for('history_aggregation.habitat_comments',
                              dataset_id=record.cons_dataset_id,
                              subject_code=record.species.code,
-                             region_code=record.region,
-        )
+                             region_code=record.region)
     raise RuntimeError("Expecting a species or a habitat object")
 
 
@@ -147,6 +145,7 @@ def get_checklist(checklist_id):
         name = u"Lista de verificare inițială"
         year_start = current_app.config.get('DEFAULT_YEAR_START')
         year_end = current_app.config.get('DEFAULT_YEAR_END')
+
         def __unicode__(self):
             return self.name
 
@@ -278,7 +277,8 @@ def valid_checklist():
 
     ok = all((current.year_start, current.year_end))
     if not ok:
-        flask.flash(u"Anii de început și sfârșit nu sunt setați pentru raportarea curentă.", 'danger')
+        flask.flash(u"Anii de început și sfârșit nu sunt setați pentru "
+                    u"raportarea curentă.", 'danger')
     return current
 
 
@@ -288,3 +288,6 @@ def sum_of_reports(stats, regions, page, letter, number=None):
         return sum([stats[reg][number][letter] for reg in regions])
     return sum([stats[reg][letter] for reg in regions])
 
+
+def average(values):
+    return float(sum(values)) / (len(values) or 1)

@@ -1,5 +1,7 @@
 from flask import current_app as app
 
+from art17.aggregation.utils import average
+
 
 (SHORT_TERM, LONG_TERM) = range(2)
 
@@ -11,10 +13,6 @@ def term_start(term, year):
         return year - 24
     else:
         raise ValueError("Invalid term")
-
-
-def average(values):
-    return float(sum(values)) / (len(values) or 1)
 
 
 def get_trend(term, year, current, prev, key):

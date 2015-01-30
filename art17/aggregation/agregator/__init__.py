@@ -1,11 +1,14 @@
 # coding=utf-8
-from flask import current_app as app
 from StringIO import StringIO
 from collections import defaultdict
 from art17 import models, ROLE_AGGREGATED, ROLE_MISSING
-from art17.aggregation.agregator.conclusions import \
-    get_habitat_conclusion_future, get_overall_habitat_conclusion, \
-    get_overall_species_conclusion, get_species_conclusion_future
+from art17.aggregation.agregator.conclusions import (
+    get_species_conclusion_range, get_species_conclusion_population,
+    get_species_conclusion_habitat, get_species_conclusion_future,
+    get_overall_species_conclusion,
+    get_habitat_conclusion_range, get_habitat_conclusion_area,
+    get_habitat_conclusion_future, get_overall_habitat_conclusion,
+)
 from art17.aggregation.agregator.n2k import get_habitat_cover_range, \
     get_species_population_range
 from art17.aggregation.agregator.rest import get_species_bibliography, \
@@ -19,7 +22,7 @@ from art17.aggregation.prev import load_species_prev, load_habitat_prev, \
     get_subject_prev, get_acronym
 from art17.aggregation.refvalues import (
     refvalue_ok, load_species_refval, load_habitat_refval,
-    get_subject_refvals_mixed,
+    get_subject_refvals_mixed, extract_key,
 )
 from art17.aggregation.agregator.primary import (
     get_pressures_threats,
@@ -51,70 +54,6 @@ TERRAIN_DATA = '1'
 
 def get_period(year, length):
     return '%d-%d' % (year - length, year)
-
-
-def get_FV(refvals, refval_type):
-    vals = refvals[refval_type]
-    fv_text = "adecvat" if refval_type == 'habitat' else "favorabil"
-    FV = extract_key(vals, fv_text)
-    return FV and int(FV)
-
-
-def get_computed_conclusion_quality(surface, quality, refvals, refval_type):
-    FV = get_FV(refvals, refval_type)
-
-    if surface is None or FV is None:
-        return 'XX'
-
-    if (surface >= FV or surface == 0) and quality in ('Good', 'Moderate'):
-        return 'FV'
-
-    U1 = FV * (1 - app.config['U1_U2_THRESHOLD'])
-
-    if surface <= U1 or quality == 'Bad':
-        return 'U2'
-
-    return 'U1'
-
-
-def get_computed_conclusion(surface, refvals, refval_type):
-    FV = get_FV(refvals, refval_type)
-
-    if not surface or not FV:
-        return 'XX'
-
-    U1 = FV * (1 - app.config['U1_U2_THRESHOLD'])
-    U2 = 0
-
-    if surface >= FV:
-        return 'FV'
-    elif surface > U1:
-        return 'U1'
-    elif surface >= U2:
-        return 'U2'
-    return ''
-
-
-def get_conclusion(surface, refvals, refval_type):
-    FV = get_FV(refvals, refval_type)
-
-    vals = refvals[refval_type]
-    U1 = extract_key(vals, "U1")
-    U2 = extract_key(vals, "U2")
-
-    U1 = U1 and int(U1)
-    U2 = U2 and int(U2)
-
-    if not surface or not FV:
-        return 'XX'
-
-    if surface >= FV:
-        return 'FV'
-    elif surface >= U1:
-        return 'U1'
-    elif surface >= U2:
-        return 'U2'
-    return ''
 
 
 def parse_complementary(refval):
@@ -158,13 +97,6 @@ def set_pressures_threats(obj, pressures_threats):
         models.db.session.add(pressure_obj)
     obj.threats_method = TERRAIN_DATA
     obj.pressures_method = TERRAIN_DATA
-
-
-def extract_key(refval, key):
-    for k, v in refval.iteritems():
-        if key in k:
-            return v
-    return None
 
 
 def get_method(count):
@@ -211,8 +143,8 @@ def aggregate_species(obj, result, refvals, prev):
         result.complementary_favourable_range_unknown,
     ) = parse_complementary(refvals["range"])
     result.complementary_favourable_range_method = EXPERT_OPINION
-    result.conclusion_range = get_computed_conclusion(
-        result.range_surface_area, refvals, "range")
+    result.conclusion_range = get_species_conclusion_range(
+        result.range_surface_area, refvals)
 
     # Populatie
     size = get_species_population_size(obj.code, result.region)
@@ -254,6 +186,9 @@ def aggregate_species(obj, result, refvals, prev):
         result.complementary_favourable_population_unknown,
     ) = parse_complementary(refvals["population_range"])
     result.complementary_favourable_population_method = EXPERT_OPINION
+    result.conclusion_population = get_species_conclusion_population(
+        result.population_minimum_size, result.population_maximum_size,
+        refvals, prev, result.dataset.year_end)
 
     # Habitat
     result.habitat_surface_area = get_species_dist_surface(obj.code,
@@ -272,8 +207,8 @@ def aggregate_species(obj, result, refvals, prev):
     result.habitat_area_suitable = extract_key(refvals["habitat"], "adecvat")
     result.habitat_date = current_period
 
-    result.conclusion_habitat = get_computed_conclusion_quality(
-        result.habitat_surface_area, result.habitat_quality, refvals, "habitat")
+    result.conclusion_habitat = get_species_conclusion_habitat(
+        result.habitat_surface_area, result.habitat_quality, refvals)
 
     # Presiuni & Amenintari
     pressure_threats = get_species_pressures_threats(obj.code, result.region)
@@ -333,8 +268,8 @@ def aggregate_habitat(obj, result, refvals, prev):
         result.complementary_favourable_range_unknown,
     ) = parse_complementary(refvals["range"])
     result.complementary_favourable_range_method = EXPERT_OPINION
-    result.conclusion_range = get_computed_conclusion(
-        result.range_surface_area, refvals, "range")
+    result.conclusion_range = get_habitat_conclusion_range(
+        result.range_surface_area, refvals)
 
     # Suprafata
     result.coverage_surface_area = get_habitat_dist_surface(obj.code,
@@ -368,8 +303,8 @@ def aggregate_habitat(obj, result, refvals, prev):
         result.complementary_favourable_area_unknown,
     ) = parse_complementary(refvals["coverage_range"])
     result.complementary_favourable_area_method = EXPERT_OPINION
-    result.conclusion_area = get_conclusion(result.coverage_surface_area,
-                                            refvals, "coverage_range")
+    result.conclusion_area = get_habitat_conclusion_area(
+        result.coverage_surface_area, refvals)
 
     # Presiuni & Amenintari ??
 
