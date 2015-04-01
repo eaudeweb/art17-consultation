@@ -1269,6 +1269,8 @@ def report_maps(dataset_id):
         queryset = view.record_cls.query.filter_by(cons_dataset_id=dataset_id)
         data = []
         for o in queryset:
+            if not o.subject:
+                continue
             o.map_url = view.get_map_url(o.subject.code, o.region)
             data.append(o)
         return data
