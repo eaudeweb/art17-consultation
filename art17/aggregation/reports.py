@@ -15,9 +15,11 @@ from art17.aggregation.forms import WhatForm
 from art17.aggregation.utils import aggregation_missing_data_report, \
     get_checklist
 from art17.auth import require
+from art17.habitat import HabitatCommentView
 from art17.lookup import CONCLUSIONS
 from art17.aggregation.export import get_tables
 from art17.models import STATUS_CLOSED
+from art17.species import SpeciesCommentView
 
 PRESSURES = {
     'A': 'Agricultura',
@@ -1255,3 +1257,23 @@ def export_service(dataset_id, page=None):
     report_name = get_report_name(page, dataset_id)
     html = request.form.get('html') or ''
     return get_excel_document(html, report_name)
+
+
+@aggregation.route('/raport/<int:dataset_id>/harti')
+@require(perm_view_reports())
+def report_maps(dataset_id):
+    dataset = models.Dataset.query.get_or_404(dataset_id)
+
+    def _get_objects(view_cls):
+        view = view_cls()
+        queryset = view.record_cls.query.filter_by(cons_dataset_id=dataset_id)
+        data = []
+        for o in queryset:
+            o.map_url = view.get_map_url(o.subject.code, o.region)
+            data.append(o)
+        return data
+
+    return render_template('aggregation/reports/maps.html',
+                           species=_get_objects(SpeciesCommentView),
+                           habitats=_get_objects(HabitatCommentView),
+                           dataset=dataset)

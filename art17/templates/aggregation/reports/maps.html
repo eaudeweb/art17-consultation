@@ -1,0 +1,62 @@
+{% extends 'aggregation/reports/report_base.html' %}
+
+{% block pagecontent %}
+
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#map-species" data-toggle="tab">Specii</a>
+    </li>
+    <li>
+      <a href="#map-habitat" data-toggle="tab">Habitate</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="map-species">
+      <table class="table table-bordered table-condensed">
+        <thead>
+        <tr>
+          <th>Cod</th>
+          <th>Specie</th>
+          <th>Regiune</th>
+          <th>Harta</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for object in species %}
+          <tr>
+            <td>{{ object.subject.code }}</td>
+            <td>{{ object.subject.lu.display_name }}</td>
+            <td>{{ object.region }}</td>
+            <td><a href="{{ object.map_url }}">harta</a></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tab-pane" id="map-habitat">
+      <table class="table table-bordered table-condensed">
+        <thead>
+        <tr>
+          <th>Cod</th>
+          <th>Habitat</th>
+          <th>Regiune</th>
+          <th>Harta</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for object in habitats %}
+          <tr>
+            <td>{{ object.subject.lu.code }}</td>
+            <td>{{ object.subject.lu.display_name }}</td>
+            <td>{{ object.region }}</td>
+            <td><a href="{{ object.map_url }}">harta</a></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+{% endblock %}
