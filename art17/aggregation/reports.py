@@ -1266,12 +1266,20 @@ def report_maps(dataset_id):
 
     def _get_objects(view_cls):
         view = view_cls()
-        queryset = view.record_cls.query.filter_by(cons_dataset_id=dataset_id)
+        ids = dict(
+            view.record_cls.query
+            .filter_by(cons_dataset_id=dataset_id)
+            .with_entities(view.record_cls.subject_id, view.record_cls.id)
+        ).values()
+        queryset = (
+            view.record_cls.query
+            .filter(view.record_cls.id.in_(ids))
+        )
         data = []
         for o in queryset:
             if not o.subject:
                 continue
-            o.map_url = view.get_map_url(o.subject.code, o.region)
+            o.map_url = view.get_map_url(o.subject.code)
             data.append(o)
         return data
 

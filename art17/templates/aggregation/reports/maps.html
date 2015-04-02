@@ -18,7 +18,6 @@
         <tr>
           <th>Cod</th>
           <th>Specie</th>
-          <th>Regiune</th>
           <th>Harta</th>
         </tr>
         </thead>
@@ -27,7 +26,6 @@
           <tr>
             <td>{{ object.subject.code }}</td>
             <td>{{ object.subject.lu.display_name }}</td>
-            <td>{{ object.region }}</td>
             <td><a href="{{ object.map_url }}">harta</a></td>
           </tr>
         {% endfor %}
@@ -41,7 +39,6 @@
         <tr>
           <th>Cod</th>
           <th>Habitat</th>
-          <th>Regiune</th>
           <th>Harta</th>
         </tr>
         </thead>
@@ -50,7 +47,6 @@
           <tr>
             <td>{{ object.subject.lu.code }}</td>
             <td>{{ object.subject.lu.display_name }}</td>
-            <td>{{ object.region }}</td>
             <td><a href="{{ object.map_url }}">harta</a></td>
           </tr>
         {% endfor %}
