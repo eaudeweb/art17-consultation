@@ -118,6 +118,7 @@ HABITAT_STRUCT_DATA = {
         'structure_and_functions_method': '3',
         'other_relevant_information': 'free text 4',
     },
+    'generalstatus': '1',
 }
 
 
@@ -170,6 +171,7 @@ HABITAT_MODEL_DATA = {
     'justification': 'free text 2',
     'other_relevant_information': 'free text 4',
     'structure_and_functions_method': '3',
+    'cons_generalstatus': '1',
 }
 
 
@@ -422,3 +424,20 @@ def test_permissions(habitat_app):
             RoleNeed('admin'),
             UserNeed('smith'),
         ])
+
+
+def test_save_marginal_presence_comment(habitat_app):
+    from art17.models import DataHabitattypeRegion
+    #habitat_app.config['TESTING_USER_ID'] = 'smith'
+    _create_habitat_record(habitat_app)
+    client = habitat_app.test_client()
+    resp = client.post(
+        '/habitate/detalii/1/comentarii',
+        data={'generalstatus': 'SR TAX'},
+        follow_redirects=True,
+    )
+    assert resp.status_code == 200
+    assert COMMENT_SAVED_TXT in resp.data
+    with habitat_app.app_context():
+        comment = DataHabitattypeRegion.query.get(2)
+        assert comment.cons_generalstatus == 'SR TAX'

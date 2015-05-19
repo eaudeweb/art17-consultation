@@ -342,6 +342,7 @@ def parse_habitat(row, is_comment=False):
     rv['structure'] = parse_conclusion(row, 'conclusion_structure')
     rv['future_prospects'] = parse_conclusion(row, 'conclusion_future')
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
+    rv['generalstatus'] = row.cons_generalstatus
     return rv
 
 
@@ -431,6 +432,7 @@ def parse_habitat_commentform(row):
     rv['overall_assessment'] = parse_conclusion(row, 'conclusion_assessment')
     rv['report_observation'] = row.cons_report_observation
     rv['published'] = row.published
+    rv['generalstatus'] = row.cons_generalstatus
 
     return rv
 
@@ -601,3 +603,4 @@ def flatten_habitat_commentform(struct, obj):
     obj.justification = struct['typicalspecies']['justification']
     obj.structure_and_functions_method = struct['typicalspecies']['structure_and_functions_method']
     obj.other_relevant_information = struct['typicalspecies']['other_relevant_information']
+    obj.cons_generalstatus = struct['generalstatus']
