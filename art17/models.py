@@ -467,6 +467,7 @@ class DataHabitattypeRegion(Base, RoleMixin):
     cons_deleted = Column(Boolean, default=False)
     cons_report_observation = Column(Text)
     cons_dataset_id = Column(ForeignKey('datasets.objectid'))
+    cons_generalstatus = Column(String)
     globalid = Column(String, default=create_esri_guid)
 
     habitat = relationship(u'DataHabitat',
