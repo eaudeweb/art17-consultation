@@ -410,5 +410,9 @@ class FormChoicesLoader(object):
     def get_lu_measures(self):
         return db.session.query(LuMeasures.code, LuMeasures.name_ro).all()
 
-    def get_lu_presence(self):
-        return db.session.query(LuPresence.code, LuPresence.name_ro).all()
+    def get_lu_presence(self, reporting=None):
+        q = db.session.query(LuPresence.code, LuPresence.name_ro)
+        if reporting:
+            q = q.filter(getattr(LuPresence, reporting) == 'y')
+        return q.all()
+

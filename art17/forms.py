@@ -515,7 +515,28 @@ class TypicalSpecies(Form):
         validators=[Optional()])
 
 
-class SpeciesComment(Form):
+class CommentForm(Form):
+    generalstatus = SelectField(default='1')
+
+    def __init__(self, *args, **kwargs):
+        super(CommentForm, self).__init__(*args, **kwargs)
+        self.generalstatus.choices = form_choices_loader.get_lu_presence(
+            self.reporting)
+
+    def custom_validate(self):
+        generalstatus_field = self.generalstatus
+        fields = list(f for f in all_fields(self) if f != generalstatus_field)
+        empty = [f for f in fields if not f.data]
+
+        if empty and len(empty) == len(fields):
+            if generalstatus_field.data == '1':
+                fields[0].errors.append(u"Completați cel puțin o valoare.")
+                return False
+
+        return True
+
+
+class SpeciesComment(CommentForm):
     range = FormField(Range)
     population = FormField(Population)
     habitat = FormField(Habitat)
@@ -529,26 +550,10 @@ class SpeciesComment(Form):
     report_observation = TextAreaField(
         label=u"Observații asupra raportului",
         validators=[Optional()])
-    generalstatus = SelectField(default='1')
     published = TextAreaField(
         label=u"Surse publicate",
         validators=[Optional()])
-
-    def __init__(self, *args, **kwargs):
-        super(SpeciesComment, self).__init__(*args, **kwargs)
-        self.generalstatus.choices = form_choices_loader.get_lu_presence()
-
-    def custom_validate(self):
-        generalstatus_field = self.generalstatus
-        fields = list(f for f in all_fields(self) if f != generalstatus_field)
-        empty = [f for f in fields if not f.data]
-
-        if empty and len(empty) == len(fields):
-            if generalstatus_field.data == '1':
-                fields[0].errors.append(u"Completați cel puțin o valoare.")
-                return False
-
-        return True
+    reporting = 'species_reporting'
 
     def final_validate(self):
         mandatory_fields = (
@@ -605,7 +610,7 @@ class SpeciesComment(Form):
         return not self.errors
 
 
-class HabitatComment(Form):
+class HabitatComment(CommentForm):
     range = FormField(HabitatRange)
     coverage = FormField(Coverage)
     pressures = FormField(Pressures)
@@ -622,16 +627,7 @@ class HabitatComment(Form):
     )
     published = TextAreaField(label=u"Surse publicate",
                               validators=[Optional()])
-
-    def custom_validate(self):
-        fields = list(all_fields(self))
-        empty = [f for f in fields if not f.data]
-
-        if empty and len(empty) == len(fields):
-            fields[0].errors.append(u"Completați cel puțin o valoare.")
-            return False
-
-        return True
+    reporting = 'habitat_reporting'
 
     def final_validate(self):
         mandatory_fields = (

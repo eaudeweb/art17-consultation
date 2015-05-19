@@ -36,7 +36,13 @@
     {% include 'common/comment/report_observations.html' %}
   {% endif %}
 
-  {% if record_obj.dataset.preview %}
+  {% if not record_obj.dataset.preview %}
+  <div class="row">
+    <p class="col-sm-4">
+      {{ form.generalstatus(class='form-control') }}
+    </p>
+  </div>
+  {% else %}
     {% include 'common/comment/preview_alert.html' %}
   {% endif %}
 
@@ -86,3 +92,24 @@
     {% include "common/comment/sources.html" with context %}
   </div>
 {% endblock form_content %}
+
+
+{% block script %}
+{{- super() }}
+<script>
+(function() {
+  "use strict";
+  var select = $('[name=generalstatus]');
+  var form_content = $('.comment-species-report');
+
+  select.change(function() {
+    if(select.val() == '1') {
+      form_content.show();
+    }
+    else {
+      form_content.hide();
+    }
+  });
+})();
+</script>
+{% endblock script %}
