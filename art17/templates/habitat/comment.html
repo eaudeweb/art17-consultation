@@ -46,50 +46,52 @@
     {% include 'common/comment/preview_alert.html' %}
   {% endif %}
 
-  <ul class="nav nav-tabs">
-    <li class="active {% if form.range.errors %}text-error{% endif %}">
-      <a href="#comment-range" data-toggle="tab">Arealul</a>
-    </li>
-    <li {% if form.coverage.errors %}class="text-error"{% endif %}>
-      <a href="#comment-area" data-toggle="tab">Distribuția</a>
-    </li>
-    <li {% if form.pressures.errors %}class="text-error"{% endif %}>
-      <a href="#comment-pressures" data-toggle="tab">Presiuni</a>
-    </li>
-    <li {% if form.threats.errors %}class="text-error"{% endif %}>
-      <a href="#comment-threats" data-toggle="tab">Amenințări</a>
-    </li>
-    <li {% if form.typicalspecies.errors %}class="text-error"{% endif %}>
-      <a href="#comment-typicalspecies" data-toggle="tab">Specii tipice</a>
-    </li>
-    <li {% if form.natura2000.errors %}class="text-error"{% endif %}>
-      <a href="#comment-natura2000" data-toggle="tab">Natura 2000</a>
-    </li>
-    <li {% if form.measures.errors %}class="text-error"{% endif %}>
-      <a href="#comment-measures" data-toggle="tab">Măsuri de conservare</a>
-    </li>
-    <li {% if form.structure.errors or
-              form.future_prospects.errors or
-              form.overall_assessment.errors -%}
-            class="text-error"
-        {%- endif %}>
-      <a href="#comment-conclusion" data-toggle="tab">Concluzii</a>
-    </li>
-    <li {% if form.published.errors %}class="text-error"{% endif %}>
-      <a href="#comment-sources" data-toggle="tab">Surse publicate</a>
-    </li>
-  </ul>
+  <div class="comment-habitat-report">
+    <ul class="nav nav-tabs">
+      <li class="active {% if form.range.errors %}text-error{% endif %}">
+        <a href="#comment-range" data-toggle="tab">Arealul</a>
+      </li>
+      <li {% if form.coverage.errors %}class="text-error"{% endif %}>
+        <a href="#comment-area" data-toggle="tab">Distribuția</a>
+      </li>
+      <li {% if form.pressures.errors %}class="text-error"{% endif %}>
+        <a href="#comment-pressures" data-toggle="tab">Presiuni</a>
+      </li>
+      <li {% if form.threats.errors %}class="text-error"{% endif %}>
+        <a href="#comment-threats" data-toggle="tab">Amenințări</a>
+      </li>
+      <li {% if form.typicalspecies.errors %}class="text-error"{% endif %}>
+        <a href="#comment-typicalspecies" data-toggle="tab">Specii tipice</a>
+      </li>
+      <li {% if form.natura2000.errors %}class="text-error"{% endif %}>
+        <a href="#comment-natura2000" data-toggle="tab">Natura 2000</a>
+      </li>
+      <li {% if form.measures.errors %}class="text-error"{% endif %}>
+        <a href="#comment-measures" data-toggle="tab">Măsuri de conservare</a>
+      </li>
+      <li {% if form.structure.errors or
+                form.future_prospects.errors or
+                form.overall_assessment.errors -%}
+              class="text-error"
+          {%- endif %}>
+        <a href="#comment-conclusion" data-toggle="tab">Concluzii</a>
+      </li>
+      <li {% if form.published.errors %}class="text-error"{% endif %}>
+        <a href="#comment-sources" data-toggle="tab">Surse publicate</a>
+      </li>
+    </ul>
 
-  <div class="tab-content">
-    {% include "habitat/comment/range.html" with context %}
-    {% include "habitat/comment/area.html" with context %}
-    {% include "common/comment/pressures.html" with context %}
-    {% include "common/comment/threats.html" with context %}
-    {% include "habitat/comment/typicalspecies.html" with context %}
-    {% include "habitat/comment/natura2000.html" with context %}
-    {% include "common/comment/measures.html" with context %}
-    {% include "habitat/comment/conclusion.html" with context %}
-    {% include "common/comment/sources.html" with context %}
+    <div class="tab-content">
+      {% include "habitat/comment/range.html" with context %}
+      {% include "habitat/comment/area.html" with context %}
+      {% include "common/comment/pressures.html" with context %}
+      {% include "common/comment/threats.html" with context %}
+      {% include "habitat/comment/typicalspecies.html" with context %}
+      {% include "habitat/comment/natura2000.html" with context %}
+      {% include "common/comment/measures.html" with context %}
+      {% include "habitat/comment/conclusion.html" with context %}
+      {% include "common/comment/sources.html" with context %}
+    </div>
   </div>
 {% endblock form_content %}
 
@@ -100,7 +102,7 @@
 (function() {
   "use strict";
   var select = $('[name=generalstatus]');
-  var form_content = $('.comment-species-report');
+  var form_content = $('.comment-habitat-report');
 
   select.change(function() {
     if(select.val() == '1') {
@@ -109,7 +111,7 @@
     else {
       form_content.hide();
     }
-  });
+  }).change();
 })();
 </script>
 {% endblock script %}
