@@ -595,17 +595,17 @@ class SpeciesComment(CommentForm):
         try:
             self.validate()
         finally:
-            for f in mandatory_fields:
-                if f.data in (None, ''):
-                    f.errors.append(
-                        u"Trebuie completat câmpul %s" % (f.label.text or f)
-                    )
-            if not (self.population.size.population.unit.data or
+            if self.generalstatus.data == '1':
+                for f in mandatory_fields:
+                    if f.data in (None, ''):
+                        f.errors.append(u"Trebuie completat câmpul %s"
+                                        % (f.label.text or f))
+                if not (self.population.size.population.unit.data or
                         self.population.size.population_alt.unit.data):
-                self.population.size.population.unit.errors.append(
-                    u"Trebuie completată una dintre cele două dimensiuni"
-                    u" ale populației"
-                )
+                    self.population.size.population.unit.errors.append(
+                        u"Trebuie completată una dintre cele două dimensiuni"
+                        u" ale populației"
+                    )
 
         return not self.errors
 
@@ -660,11 +660,11 @@ class HabitatComment(CommentForm):
         try:
             self.validate()
         finally:
-            for f in mandatory_fields:
-                if f.data in (None, ''):
-                    f.errors.append(
-                        u"Trebuie completat câmpul %s" % (f.label.text or f)
-                    )
+            if self.generalstatus.data == '1':
+                for f in mandatory_fields:
+                    if f.data in (None, ''):
+                        f.errors.append(u"Trebuie completat câmpul %s"
+                                        % (f.label.text or f))
 
         return not self.errors
 
