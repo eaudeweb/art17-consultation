@@ -365,6 +365,7 @@ def update_object(obj, data):
     for k, v in data.iteritems():
         setattr(obj, k, v)
 
+
 @importer.command
 def xml_species(xml_path, dataset_id=1):
 
@@ -515,6 +516,92 @@ def xml_species_checklist(xml_path, dataset_id=None):
     db.session.commit()
 
 
+def parse_habitat(habitat):
+    habcode = habitat.habitatcode.text
+    data = extract_record('data_habitats', habitat)
+    habitat_qs = DataHabitat.query.filter_by(code=habcode)
+    habitat_obj = habitat_qs.first()
+    if habitat_qs.count() > 1:
+        print "Multiple objects for habcode:", habcode
+        for h in habitat_qs:
+            print " Delete", h.id
+            db.session.delete(h)
+        habitat_obj = None
+
+    if not habitat_obj:
+        print "Missing habitat: ", habcode
+        habitat_obj = DataHabitat(country='RO', code=habcode, **data)
+        db.session.add(habitat_obj)
+        print "Added new habitat."
+    print "Habitat: ", habitat_obj.id, habitat_obj.code
+    return habitat_obj
+
+
+def parse_habregion(region, habitat_obj, dataset_id):
+    regioncode = region.code.text
+    data = extract_record('data_habitattype_reg', region)
+
+    # Get existing region and update
+    habitat_region = (
+        habitat_obj.regions.filter_by(region=regioncode,
+                                      cons_role='assessment',
+                                      cons_dataset_id=dataset_id)
+    ).first()
+    if not habitat_region:
+        print " Missing habitat region: ", regioncode
+        habitat_region = DataHabitattypeRegion(habitat=habitat_obj,
+                                               region=regioncode,
+                                               cons_dataset_id=dataset_id,
+                                               cons_role='assessment',
+                                               cons_status=None)
+        db.session.add(habitat_region)
+    print " Region:", regioncode, habitat_region.id
+    update_object(habitat_region, data)
+    # Get all measures
+    for existing_measure in habitat_region.measures:
+        db.session.delete(existing_measure)
+    for measure in region.measures.find_all('measure'):
+        data = extract_record('data_measures', measure)
+        measure_obj = DataMeasures(habitat=habitat_region, **data)
+        db.session.add(measure_obj)
+        print "  added measure: ", measure_obj.code
+    # Get all pressures
+    for existing_pressure in habitat_region.get_pressures():
+        print "  deleting", existing_pressure.id
+        db.session.delete(existing_pressure)
+    for pressure in region.pressures.find_all('pressure'):
+        data = extract_record('data_pressures_threats', pressure)
+        data['type'] = 'p'
+        pressure_obj = (
+            DataPressuresThreats(habitat=habitat_region, **data)
+        )
+        db.session.add(pressure_obj)
+        print "  added pressure: ", pressure_obj.code
+        for p in pressure.pollution_qualifiers.find_all('pollution_qualifier'):
+            data = extract_record('data_pressures_threats_pol', p)
+            pol_obj = DataPressuresThreatsPollution(pressure=pressure_obj, **data)
+            db.session.add(pol_obj)
+            print "   added pollution: ", pol_obj.code
+    # Get all threats
+    for existing_threat in habitat_region.get_threats():
+        print "  deleting", existing_threat.id
+        db.session.delete(existing_threat)
+    for threat in region.threats.find_all('threat'):
+        data = extract_record('data_pressures_threats', threat)
+        data['type'] = 't'
+        threat_obj = (
+            DataPressuresThreats(habitat=habitat_region, **data)
+        )
+        db.session.add(pressure_obj)
+        print "  added threat: ", threat_obj.code
+        for p in threat.pollution_qualifiers.find_all('pollution_qualifier'):
+            data = extract_record('data_pressures_threats_pol', p)
+            pol_obj = DataPressuresThreatsPollution(pressure=threat_obj, **data)
+            db.session.add(pol_obj)
+            print "   added pollution: ", pol_obj.code
+    return regioncode
+
+
 @importer.command
 def xml_habitat(xml_path, dataset_id=1):
 
@@ -523,92 +610,12 @@ def xml_habitat(xml_path, dataset_id=1):
 
         ok_habitats = []
         for habitat in parser.find_all('habitat_report'):
-            habcode = habitat.habitatcode.text
-            ok_habitats.append(habcode)
-            data = extract_record('data_habitats', habitat)
-            habitat_qs = DataHabitat.query.filter_by(code=habcode)
-            habitat_obj = habitat_qs.first()
-            if habitat_qs.count() > 1:
-                print "Multiple objects for habcode:", habcode
-                for h in habitat_qs:
-                    print " Delete", h.id
-                    db.session.delete(h)
-                habitat_obj = None
-
-            if not habitat_obj:
-                print "Missing habitat: ", habcode
-                habitat_obj = DataHabitat(country='RO', code=habcode,
-                                          **data)
-                db.session.add(habitat_obj)
-                print "Added new habitat."
-            print "Habitat: ", habitat_obj.id, habitat_obj.code
+            habitat_obj = parse_habitat(habitat)
+            ok_habitats.append(habitat_obj.code)
             ok_regions = []
             for region in habitat.regional.find_all('region'):
-                regioncode = region.code.text
+                regioncode = parse_habregion(region, habitat_obj, dataset_id)
                 ok_regions.append(regioncode)
-                data = extract_record('data_habitattype_reg', region)
-
-                # Get existing region and update
-                habitat_region = (
-                    habitat_obj.regions.filter_by(region=regioncode,
-                                                  cons_role='assessment',
-                                                  cons_dataset_id=dataset_id)
-                ).first()
-                if not habitat_region:
-                    print " Missing habitat region: ", regioncode
-                    habitat_region = (
-                        DataHabitattypeRegion(habitat=habitat_obj,
-                                              region=regioncode,
-                                              cons_dataset_id=dataset_id,
-                                              cons_role='assessment',
-                                              cons_status=None,
-                        )
-                    )
-                    db.session.add(habitat_region)
-                print " Region:", regioncode, habitat_region.id
-                update_object(habitat_region, data)
-                # Get all measures
-                for existing_measure in habitat_region.measures:
-                    db.session.delete(existing_measure)
-                for measure in region.measures.find_all('measure'):
-                    data = extract_record('data_measures', measure)
-                    measure_obj = DataMeasures(habitat=habitat_region, **data)
-                    db.session.add(measure_obj)
-                    print "  added measure: ", measure_obj.code
-                # Get all pressures
-                for existing_pressure in habitat_region.get_pressures():
-                    print "  deleting", existing_pressure.id
-                    db.session.delete(existing_pressure)
-                for pressure in region.pressures.find_all('pressure'):
-                    data = extract_record('data_pressures_threats', pressure)
-                    data['type'] = 'p'
-                    pressure_obj = (
-                        DataPressuresThreats(habitat=habitat_region, **data)
-                    )
-                    db.session.add(pressure_obj)
-                    print "  added pressure: ", pressure_obj.code
-                    for p in pressure.pollution_qualifiers.find_all('pollution_qualifier'):
-                        data = extract_record('data_pressures_threats_pol', p)
-                        pol_obj = DataPressuresThreatsPollution(pressure=pressure_obj, **data)
-                        db.session.add(pol_obj)
-                        print "   added pollution: ", pol_obj.code
-                # Get all threats
-                for existing_threat in habitat_region.get_threats():
-                    print "  deleting", existing_threat.id
-                    db.session.delete(existing_threat)
-                for threat in region.threats.find_all('threat'):
-                    data = extract_record('data_pressures_threats', threat)
-                    data['type'] = 't'
-                    threat_obj = (
-                        DataPressuresThreats(habitat=habitat_region, **data)
-                    )
-                    db.session.add(pressure_obj)
-                    print "  added threat: ", threat_obj.code
-                    for p in threat.pollution_qualifiers.find_all('pollution_qualifier'):
-                        data = extract_record('data_pressures_threats_pol', p)
-                        pol_obj = DataPressuresThreatsPollution(pressure=threat_obj, **data)
-                        db.session.add(pol_obj)
-                        print "   added pollution: ", pol_obj.code
             for existing_region in habitat_obj.regions.filter_by(cons_dataset_id=dataset_id):
                 if existing_region.region not in ok_regions:
                     print " Deleting existing region: ", existing_region.region
@@ -620,6 +627,24 @@ def xml_habitat(xml_path, dataset_id=1):
                     print " - ", existing_region.region
                     db.session.delete(existing_region)
 
+    db.session.commit()
+
+
+@importer.command
+def xml_hab(xml_path, code, region, dataset_id=1):
+    with open(xml_path, 'r') as fin:
+        parser = BeautifulSoup(fin)
+        habitat_node = parser.find('habitatcode', text=code)
+        if not habitat_node:
+            exit('No habitat found for the code given.')
+
+        habitat_node = habitat_node.parent
+        habitat_obj = parse_habitat(habitat_node)
+
+        region_node = habitat_node.regional.find('code', text=region)
+        if not region_node:
+            exit('No region found with the code given.')
+        parse_habregion(region_node.parent, habitat_obj, dataset_id)
     db.session.commit()
 
 
