@@ -1,7 +1,7 @@
 # coding=utf-8
 import flask
 from flask import current_app
-from art17 import models, dal, ROLE_MISSING
+from art17 import models, dal, ROLE_MISSING, CONS_ROLES
 
 
 def record_index_url(subject, region, dataset_id):
@@ -97,17 +97,21 @@ def record_finalize_toggle_url(record, finalize):
 def get_record(subject, region, dataset_id):
     obj = None
     if isinstance(subject, models.DataHabitat):
-        obj = models.DataHabitattypeRegion.query.filter_by(
-            cons_dataset_id=dataset_id,
-            habitat=subject,
-            region=region.code,
+        obj = (
+            models.DataHabitattypeRegion.query
+            .filter_by(
+                cons_dataset_id=dataset_id,
+                habitat=subject,
+                region=region.code,
+            )
+            .filter(~models.DataHabitattypeRegion.cons_role.in_(CONS_ROLES))
         ).first()
     if isinstance(subject, models.DataSpecies):
         obj = models.DataSpeciesRegion.query.filter_by(
             cons_dataset_id=dataset_id,
             species=subject,
             region=region.code,
-        ).first()
+        ).filter(~models.DataSpeciesRegion.cons_role.in_(CONS_ROLES)).first()
     if obj:
         return obj
     raise RuntimeError("Expecting a speciesregion or a habitattyperegion")
