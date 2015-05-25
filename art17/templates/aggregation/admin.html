@@ -6,7 +6,8 @@
   {%- from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
           ('agregare', home_url),
-          ('admin', None),
+          ('administrare', '.admin'),
+          ('seturi de date', None),
       ]) }}
 {% endblock breadcrumbs %}
 
@@ -15,13 +16,13 @@
   {{ super() }}
   <ul class="nav nav-tabs">
     <li {% if page == 'checklist' %}class="active"{% endif %}>
-      <a href="{{ url_for('aggregation.checklists') }}">Raportări</a>
+      <a href="{{ url_for('aggregation.checklists') }}">Seturi de date</a>
     </li>
     <li {% if page == 'config' %}class="active"{% endif %}>
       <a href="{{ url_for('config.form') }}">Configurare</a>
     </li>
     <li {% if page == 'compare' %}class="active"{% endif %}>
-      <a href="{{ url_for('aggregation.compare') }}">Comparație</a>
+      <a href="{{ url_for('aggregation.compare') }}">Comparație seturi de date</a>
     </li>
     <li {% if page == 'refvalues' %}class="active"{% endif %}>
       <a href="{{ url_for('aggregation.reference_values') }}">Valori de referință</a>

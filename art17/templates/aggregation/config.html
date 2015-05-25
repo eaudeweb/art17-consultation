@@ -8,6 +8,7 @@
   {%- from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
           ('agregare', home_url),
+          ('administrare', url_for('aggregation.admin')),
           ('configurare', None),
       ]) }}
 {% endblock breadcrumbs %}
