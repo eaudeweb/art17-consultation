@@ -366,6 +366,101 @@ def update_object(obj, data):
         setattr(obj, k, v)
 
 
+def parse_species(species):
+    speciescode = species.speciescode.text
+    data = extract_record('etc_data_species', species)
+    species_qs = DataSpecies.query.filter_by(code=speciescode)
+    species_obj = species_qs.first()
+    if species_qs.count() > 1:
+        print "Multiple objects for speciescode:", speciescode
+        for s in species_qs:
+            print " Delete ", s.id
+            db.session.delete(s)
+        species_obj = None
+    if not species_obj:
+        print "Missing species: ", speciescode
+        speciescode_numeric = int(speciescode)
+        species_lu_obj = (LuHdSpecies.query
+                          .filter_by(code=speciescode_numeric)
+                          .first())
+        if not species_lu_obj:
+            lu_data = extract_record('lu_hd_species', species)
+            lu_data['group_code'] = 'X'  # unknown
+            species_lu_obj = LuHdSpecies(**lu_data)
+            db.session.add(species_lu_obj)
+            print "Added species hd."
+        species_obj = DataSpecies(country='RO', code=speciescode, **data)
+        db.session.add(species_obj)
+        print "Added new species."
+    print ("Species: ", species_obj.id, species_obj.code,
+           species_obj.alternative_speciesname)
+    return species_obj
+
+
+def parse_specregion(region, species_obj, dataset_id):
+    regioncode = region.code.text
+    data = extract_record('etc_data_species_regions', region)
+
+    # Get existing region and update
+    species_region = (
+        species_obj.regions.filter_by(region=regioncode,
+                                      cons_role='assessment',
+                                      cons_dataset_id=dataset_id)
+    ).first()
+    if not species_region:
+        print " Missing species region: ", regioncode
+        species_region = (
+            DataSpeciesRegion(species=species_obj,
+                              region=regioncode,
+                              cons_dataset_id=dataset_id,
+                              cons_role='assessment',
+                              cons_status=None,
+                              cons_generalstatus='1',
+                              ))
+        db.session.add(species_region)
+    print " Region:", regioncode, species_region.id
+    update_object(species_region, data)
+    # Get all measures
+    for existing_measure in species_region.measures:
+        db.session.delete(existing_measure)
+    for measure in region.measures.find_all('measure'):
+        data = extract_record('data_measures', measure)
+        measure_obj = DataMeasures(species=species_region, **data)
+        db.session.add(measure_obj)
+        print "  added measure: ", measure_obj.code
+    # Get all pressures
+    for existing_pressure in species_region.get_pressures():
+        print "  deleting", existing_pressure.id
+        db.session.delete(existing_pressure)
+    for pressure in region.pressures.find_all('pressure'):
+        data = extract_record('data_pressures_threats', pressure)
+        data['type'] = 'p'
+        pressure_obj = DataPressuresThreats(species=species_region, **data)
+        db.session.add(pressure_obj)
+        print "  added pressure: ", pressure_obj.code
+        for p in pressure.pollution_qualifiers.find_all('pollution_qualifier'):
+            data = extract_record('data_pressures_threats_pol', p)
+            pol_obj = DataPressuresThreatsPollution(pressure=pressure_obj, **data)
+            db.session.add(pol_obj)
+            print "   added pollution: ", pol_obj.code
+    # Get all threats
+    for existing_threat in species_region.get_threats():
+        print "  deleting", existing_threat.id
+        db.session.delete(existing_threat)
+    for threat in region.threats.find_all('threat'):
+        data = extract_record('data_pressures_threats', threat)
+        data['type'] = 't'
+        threat_obj = DataPressuresThreats(species=species_region, **data)
+        db.session.add(pressure_obj)
+        print "  added threat: ", threat_obj.code
+        for p in threat.pollution_qualifiers.find_all('pollution_qualifier'):
+            data = extract_record('data_pressures_threats_pol', p)
+            pol_obj = DataPressuresThreatsPollution(pressure=threat_obj, **data)
+            db.session.add(pol_obj)
+            print "   added pollution: ", pol_obj.code
+    return regioncode
+
+
 @importer.command
 def xml_species(xml_path, dataset_id=1):
 
@@ -374,100 +469,12 @@ def xml_species(xml_path, dataset_id=1):
 
         ok_species = []
         for species in parser.find_all('species_report'):
-            speciescode = species.speciescode.text
-            ok_species.append(speciescode)
-            data = extract_record('etc_data_species', species)
-            species_qs = DataSpecies.query.filter_by(code=speciescode)
-            species_obj = species_qs.first()
-            if species_qs.count() > 1:
-                print "Multiple objects for speciescode:", speciescode
-                for s in species_qs:
-                    print " Delete ", s.id
-                    db.session.delete(s)
-                species_obj = None
-            if not species_obj:
-                print "Missing species: ", speciescode
-                speciescode_numeric = int(speciescode)
-                species_lu_obj = LuHdSpecies.query.filter_by(code=speciescode_numeric).first()
-                if not species_lu_obj:
-                    lu_data = extract_record('lu_hd_species', species)
-                    lu_data['group_code'] = 'X'  # unknown
-                    species_lu_obj = LuHdSpecies(**lu_data)
-                    db.session.add(species_lu_obj)
-                    print "Added species hd."
-                species_obj = DataSpecies(country='RO', code=speciescode,
-                                          **data)
-                db.session.add(species_obj)
-                print "Added new species."
-            print "Species: ", species_obj.id, species_obj.code, species_obj.alternative_speciesname
+            species_obj = parse_species(species)
+            ok_species.append(species_obj.code)
             ok_regions = []
             for region in species.regional.find_all('region'):
-                regioncode = region.code.text
+                regioncode = parse_specregion(region, species_obj, dataset_id)
                 ok_regions.append(regioncode)
-                data = extract_record('etc_data_species_regions', region)
-
-                # Get existing region and update
-                species_region = (
-                    species_obj.regions.filter_by(region=regioncode,
-                                                  cons_role='assessment',
-                                                  cons_dataset_id=dataset_id)
-                ).first()
-                if not species_region:
-                    print " Missing species region: ", regioncode
-                    species_region = (
-                        DataSpeciesRegion(species=species_obj,
-                                          region=regioncode,
-                                          cons_dataset_id=dataset_id,
-                                          cons_role='assessment',
-                                          cons_status=None,
-                                          cons_generalstatus='1',
-                        )
-                    )
-                    db.session.add(species_region)
-                print " Region:", regioncode, species_region.id
-                update_object(species_region, data)
-                # Get all measures
-                for existing_measure in species_region.measures:
-                    db.session.delete(existing_measure)
-                for measure in region.measures.find_all('measure'):
-                    data = extract_record('data_measures', measure)
-                    measure_obj = DataMeasures(species=species_region, **data)
-                    db.session.add(measure_obj)
-                    print "  added measure: ", measure_obj.code
-                # Get all pressures
-                for existing_pressure in species_region.get_pressures():
-                    print "  deleting", existing_pressure.id
-                    db.session.delete(existing_pressure)
-                for pressure in region.pressures.find_all('pressure'):
-                    data = extract_record('data_pressures_threats', pressure)
-                    data['type'] = 'p'
-                    pressure_obj = (
-                        DataPressuresThreats(species=species_region, **data)
-                    )
-                    db.session.add(pressure_obj)
-                    print "  added pressure: ", pressure_obj.code
-                    for p in pressure.pollution_qualifiers.find_all('pollution_qualifier'):
-                        data = extract_record('data_pressures_threats_pol', p)
-                        pol_obj = DataPressuresThreatsPollution(pressure=pressure_obj, **data)
-                        db.session.add(pol_obj)
-                        print "   added pollution: ", pol_obj.code
-                # Get all threats
-                for existing_threat in species_region.get_threats():
-                    print "  deleting", existing_threat.id
-                    db.session.delete(existing_threat)
-                for threat in region.threats.find_all('threat'):
-                    data = extract_record('data_pressures_threats', threat)
-                    data['type'] = 't'
-                    threat_obj = (
-                        DataPressuresThreats(species=species_region, **data)
-                    )
-                    db.session.add(pressure_obj)
-                    print "  added threat: ", threat_obj.code
-                    for p in threat.pollution_qualifiers.find_all('pollution_qualifier'):
-                        data = extract_record('data_pressures_threats_pol', p)
-                        pol_obj = DataPressuresThreatsPollution(pressure=threat_obj, **data)
-                        db.session.add(pol_obj)
-                        print "   added pollution: ", pol_obj.code
             for existing_region in species_obj.regions.filter_by(cons_dataset_id=dataset_id):
                 if existing_region.region not in ok_regions:
                     print " Deleting existing region: ", existing_region.region
@@ -478,6 +485,24 @@ def xml_species(xml_path, dataset_id=1):
                 for existing_region in existing_species.regions.filter_by(cons_dataset_id=dataset_id):
                     print " - ", existing_region.region
                     db.session.delete(existing_region)
+    db.session.commit()
+
+
+@importer.command
+def xml_species_single(xml_path, code, region, dataset_id=1):
+    with open(xml_path, 'r') as fin:
+        parser = BeautifulSoup(fin)
+        species_node = parser.find('speciescode', text=code)
+        if not species_node:
+            exit('No species found for the code given.')
+
+        species_node = species_node.parent
+        species_obj = parse_species(species_node)
+
+        region_node = species_node.regional.find('code', text=region)
+        if not region_node:
+            exit('No region found with the code given.')
+        parse_specregion(region_node.parent, species_obj, dataset_id)
     db.session.commit()
 
 
@@ -631,7 +656,7 @@ def xml_habitat(xml_path, dataset_id=1):
 
 
 @importer.command
-def xml_hab(xml_path, code, region, dataset_id=1):
+def xml_habitat_single(xml_path, code, region, dataset_id=1):
     with open(xml_path, 'r') as fin:
         parser = BeautifulSoup(fin)
         habitat_node = parser.find('habitatcode', text=code)
