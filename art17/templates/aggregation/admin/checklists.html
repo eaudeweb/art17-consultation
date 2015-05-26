@@ -2,57 +2,6 @@
 
 
 {% block content %}
-  <h2>Liste de verificare</h2>
-
-  <table class="table">
-    <thead>
-    <tr>
-      <th>Listă de verificare</th>
-      <th>Interval raportare</th>
-      <th>Detalii</th>
-      <th>Acțiuni</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>
-        <a href="{{ url_for('.checklist') }}">Lista de verificare inițială</a>
-      </td>
-      <td>{{ default_list.year_start }} - {{ default_list.year_end }}</td>
-      <td class="text-right">
-        {{ default_list.species_checklist|count }} specii,
-        {{ default_list.habitat_checklist|count }} habitate
-      </td>
-      <td></td>
-    </tr>
-    {% for list in checklists %}
-      {%- set delete_url = url_for('.delete_dataset', dataset_id=list.id) %}
-      {%- set edit_url = url_for('.edit_checklist', dataset_id=list.id) %}
-      <tr>
-        <td>
-          <a href="{{ url_for('.checklist', dataset_id=list.id) }}">
-            {{ list.comment or list.date }}
-          </a>
-        </td>
-        <td>{{ list.year_start }} - {{ list.year_end }}</td>
-        <td class="text-right">
-          {{ list.species_checklist.count() }} specii,
-          {{ list.habitat_checklist.count() }} habitate
-        </td>
-        <td>
-          <form method="post" action="{{ delete_url }}"
-                class="delete-dataset-form">
-            <a class="btn btn-warning btn-xs"
-               href="{{ edit_url }}">modifică</a>
-            <button type="submit" class="btn btn-danger btn-xs">șterge</button>
-            <input type="hidden" name="next"
-                   value="{{ url_for('.checklists') }}"/>
-          </form>
-        </td>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
 
   <h2>Raportări existente</h2>
 
@@ -88,9 +37,61 @@
     </tbody>
   </table>
 
+  <h2>Liste de verificare</h2>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Listă de verificare</th>
+      <th>Interval raportare</th>
+      <th>Detalii</th>
+      <th>Acțiuni</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for list in checklists %}
+      {%- set delete_url = url_for('.delete_dataset', dataset_id=list.id) %}
+      {%- set edit_url = url_for('.edit_checklist', dataset_id=list.id) %}
+      <tr>
+        <td>
+          <a href="{{ url_for('.checklist', dataset_id=list.id) }}">
+            {{ list.comment or list.date }}
+          </a>
+        </td>
+        <td>{{ list.year_start }} - {{ list.year_end }}</td>
+        <td class="text-right">
+          {{ list.species_checklist.count() }} specii,
+          {{ list.habitat_checklist.count() }} habitate
+        </td>
+        <td>
+          <form method="post" action="{{ delete_url }}"
+                class="delete-dataset-form">
+            <a class="btn btn-warning btn-xs"
+               href="{{ edit_url }}">modifică</a>
+            <button type="submit" class="btn btn-danger btn-xs">șterge</button>
+            <input type="hidden" name="next"
+                   value="{{ url_for('.checklists') }}"/>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <td>
+        <a href="{{ url_for('.checklist') }}">Lista de verificare inițială</a>
+      </td>
+      <td>{{ default_list.year_start }} - {{ default_list.year_end }}</td>
+      <td class="text-right">
+        {{ default_list.species_checklist|count }} specii,
+        {{ default_list.habitat_checklist|count }} habitate
+      </td>
+      <td></td>
+    </tr>
+    </tbody>
+  </table>
+
   <p>
     <a class="btn btn-default" href="{{ url_for('.create') }}">
-      Creează raportare</a>
+      Descarcă listă de verificare</a>
   </p>
 
 {% endblock %}

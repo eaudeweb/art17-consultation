@@ -1,3 +1,4 @@
+# coding=utf-8
 from datetime import datetime
 
 from BeautifulSoup import BeautifulSoup
@@ -53,7 +54,8 @@ def create_checklist():
     dataset = Dataset(
         preview=True, checklist=True, date=datetime.today(),
         year_start=year_start, year_end=year_end,
-        comment=str(datetime.now()),
+        comment=u'Listă de verificare preluată la {}'.format(
+            datetime.now().strftime('%Y-%m-%d %H:%M')),
     )
     db.session.add(dataset)
     db.session.commit()

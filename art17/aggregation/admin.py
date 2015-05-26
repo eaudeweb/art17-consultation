@@ -49,7 +49,7 @@ REGIONS = {
 
 
 def get_checklists():
-    return Dataset.query.filter_by(checklist=True)
+    return Dataset.query.filter_by(checklist=True).order_by(Dataset.date.desc())
 
 
 def parse_checklist(checklist_qs):
@@ -117,8 +117,6 @@ def create():
 
 class ChecklistForm(Form):
     comment = TextField()
-    year_start = IntegerField(validators=[Optional()])
-    year_end = IntegerField(validators=[Optional()])
 
 
 class DatasetForm(Form):
@@ -147,6 +145,7 @@ def edit_checklist(dataset_id):
         if form.validate():
             form.populate_obj(dataset)
             db.session.commit()
+            return redirect(url_for('.admin'))
     else:
         form = ChecklistForm(obj=dataset)
 
