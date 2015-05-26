@@ -12,6 +12,7 @@ from flask.views import MethodView
 from jinja2 import evalcontextfilter, Markup, escape
 import flask
 import flask.views
+from flask import current_app
 from flask.ext.principal import Permission, Denial
 from flask.ext.script import Manager
 from sqlalchemy import or_
@@ -173,12 +174,12 @@ def perm_close_consultation(subject):
 
 def perm_view_history(subject):
     return Permission(
-            need.admin,
-            need.reviewer,
-            need.expert,
-            need.reporter,
-            need.validator,
-            *get_roles_for_subject('reporter', subject))
+        need.admin,
+        need.reviewer,
+        need.expert,
+        need.reporter,
+        need.validator,
+        *get_roles_for_subject('reporter', subject))
 
 
 def perm_save_record():
@@ -226,8 +227,8 @@ def inject_constants():
         'METHODS_PRESSURES': lookup.METHODS_PRESSURES,
         'METHODS_THREATS': lookup.METHODS_THREATS,
         'GENERALSTATUS_CHOICES': dict(models.db.session.query(
-                                    models.LuPresence.code,
-                                    models.LuPresence.name_ro).all()),
+            models.LuPresence.code,
+            models.LuPresence.name_ro).all()),
         'RANKING_STATUS': dict(dal.FormChoicesLoader().get_lu_ranking()),
         'POLLUTION_STATUS': dict(dal.FormChoicesLoader().get_lu_pollution()),
         'get_population_units_ro':  get_population_units_ro,
@@ -273,25 +274,25 @@ def get_species_url(species_id):
         return None
     data_species = models.DataSpecies.query.get(data_species_region.species_id)
     url = flask.url_for('species.index', region=data_species_region.region,
-                                         species=data_species.code)
+                        species=data_species.code)
     return url, data_species.lu.display_name, data_species_region.region
 
 
 def get_habitat_url(habitat_id):
-    data_habitattype_region = models.DataHabitattypeRegion.query.get(habitat_id)
-    if not data_habitattype_region:
+    data_habitat_reg = models.DataHabitattypeRegion.query.get(habitat_id)
+    if not data_habitat_reg:
         return None
-    data_habitattype = models.DataHabitat.query.get(data_habitattype_region.habitat_id)
-    url = flask.url_for('habitat.index', region=data_habitattype_region.region,
-                                         habitat=data_habitattype.code)
-    return url, data_habitattype.lu.display_name, data_habitattype_region.region
+    data_habitat = models.DataHabitat.query.get(data_habitat_reg.habitat_id)
+    url = flask.url_for('habitat.index', region=data_habitat_reg.region,
+                        habitat=data_habitat.code)
+    return url, data_habitat.lu.display_name, data_habitat_reg.region
 
 
 @common.app_template_filter('nl2br')
 @evalcontextfilter
 def nl2br(eval_ctx, value):
-    result = u'\n\n'.join(u'<p>%s</p>' % p.replace('\n', '<br>\n') \
-        for p in _paragraph_re.split(escape(value)))
+    result = u'\n\n'.join(u'<p>%s</p>' % p.replace('\n', '<br>\n')
+                          for p in _paragraph_re.split(escape(value)))
     if eval_ctx.autoescape:
         result = Markup(result)
     return result
@@ -519,11 +520,11 @@ class RecordView(IndexMixin, flask.views.View):
         addform_measure = forms.MeasuresForm(prefix='addform_measure.')
 
         self.template_ctx.update({
-                'addform_pressure': addform_pressure,
-                'addform_threat': forms.PressureForm(prefix='addform_threat.'),
-                'addform_measure': addform_measure,
-                'PRESSURES': dict(addform_pressure.pressure.choices),
-                'MEASURES': dict(addform_measure.measurecode.choices)})
+            'addform_pressure': addform_pressure,
+            'addform_threat': forms.PressureForm(prefix='addform_threat.'),
+            'addform_measure': addform_measure,
+            'PRESSURES': dict(addform_pressure.pressure.choices),
+            'MEASURES': dict(addform_measure.measurecode.choices)})
         return flask.render_template(self.template, **self.template_ctx)
 
 
@@ -559,11 +560,10 @@ class CommentViewMixin(object):
                                "record_id and comment_id")
 
         if flask.request.method == 'POST' \
-            and flask.request.form.get('submit') == 'evaluation':
+                and flask.request.form.get('submit') == 'evaluation':
             perm_submit_for_evaluation(self.object).test()
             self.object.cons_role = 'comment'
             self.submit_for_evaluation = True
-
 
 
 class CommentStateView(flask.views.View):
@@ -790,3 +790,14 @@ class TemplateView(MethodView):
     def get(self):
         context = self.get_context()
         return render_template(self.template_name, **context)
+
+
+def get_year_start():
+    cnf_year = models.Config.query.filter_by(id='REPORTING_BEGIN').first()
+    if cnf_year:
+        return int(cnf_year.value)
+    return current_app.config.get('DEFAULT_YEAR_START')
+
+
+def get_year_end(year_start):
+    return year_start + current_app.config['REPORTING_FREQUENCY'] - 1

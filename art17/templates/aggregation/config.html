@@ -1,5 +1,6 @@
 {% extends base_template or "layout.html" %}
 
+{% set checklists = checklists.filter_by(year_start=year_start) %}
 
 {% block title %}Configurare &mdash; {{ super() }}{% endblock title %}
 
@@ -17,13 +18,21 @@
 {% block content %}
   <h2>Configurare</h2>
 
+  <p>
+    Perioada curentă de raportare este:
+    <strong>{{ year_start }} - {{ year_end }}</strong>
+  </p>
+
+  {% if year_start != config.DEFAULT_YEAR_START and not checklists.count() %}
     <p>
-      Selectați anii de început și de sfârșit impliciți pentru agregare. Aceștia sunt
-      folosiți pentru lista de verificare inițială.
+      Nu există nicio listă de verificare pentru perioada curentă de raportare.
     </p>
-    <p>În cazul selectării unei alte liste de verificare, sistemul va folosi
-      perioada definită în acea listă de verificare.
+    <p>
+      <a class="btn btn-default" href="{{ url_for('aggregation.create') }}">
+        Descarcă listă de verificare</a>
     </p>
+
+  {% else %}
 
   <form method="POST">
     {%- for row in config_rows %}
@@ -33,24 +42,30 @@
         </label>
 
         {% if row.id == 'REPORTING_ID' %}
-          <select class="form-control" id="form-{{ row.id }}"
-                  name="{{ row.id }}">
-            <option value=""
-                    {% if not row.value %}selected{% endif %}>
-              Lista inițială</option>
+          <select class="form-control" id="form-{{ row.id }}" name="{{ row.id }}">
+            {% if year_start == config.DEFAULT_YEAR_START %}
+              <option value="" {% if not row.value %}selected{% endif %}>
+                Lista inițială
+              </option>
+            {% endif %}
             {% for o in checklists %}
               <option value="{{ o.id }}"
-                      {%- if row.value == o.id|string %}selected{% endif %}>
-                {{ o.comment }} {{ o.year_start }} - {{ o.year_end }}</option>
+                  {%- if row.value == o.id|string %}selected{% endif %}>
+                {{ o.comment }} {{ o.year_start }} - {{ o.year_end }}
+              </option>
             {% endfor %}
           </select>
-        {% else %}
-          <input class="form-control" id="form-{{ row.id }}"
-                 name="{{ row.id }}" value="{{ row.value }}">
         {% endif %}
       </div>
-    {%- endfor %}
+    {% endfor %}
 
     <button type="submit" class="btn btn-primary">Salvează</button>
+
+    <a class="btn btn-danger" href="{{ url_for('config.new_period') }}">
+      Închide raportarea curentă și definește o nouă perioadă de raportare
+    </a>
   </form>
+
+  {% endif %}
+
 {% endblock content %}

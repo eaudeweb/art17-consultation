@@ -1,0 +1,35 @@
+{% extends base_template or "layout.html" %}
+
+
+{% block title %}Configurare &mdash; {{ super() }}{% endblock title %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('agregare', home_url),
+          ('administrare', url_for('aggregation.admin')),
+          ('configurare', url_for('config.form')),
+          ('perioadă nouă de raportare', None),
+      ]) }}
+{% endblock breadcrumbs %}
+
+
+{% block content %}
+  <h2>Perioadă nouă de raportare</h2>
+
+  <p>
+    Perioada următoare de raportare este:
+    <strong>{{ year_start }} - {{ year_end }}</strong>
+  </p>
+
+  <form method="POST">
+
+    <button type="submit" class="btn btn-primary">Salvează</button>
+
+    <a class="btn btn-danger" href="{{ url_for('config.form') }}">
+      Anulează
+    </a>
+  </form>
+
+{% endblock content %}

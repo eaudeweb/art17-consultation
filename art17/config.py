@@ -3,6 +3,7 @@ import flask
 from flask import current_app
 from art17 import models
 from art17 import auth
+from art17.common import get_year_start, get_year_end
 
 CONFIGURATION = {
     'CONSULTATION': {
@@ -13,8 +14,6 @@ CONFIGURATION = {
         'HABITAT_PRIMARY_DATA_URL': u"URL serviciu de date primare pentru habitate",
     },
     'AGGREGATION': {
-        'REPORTING_BEGIN': u"An de început pentru perioada de raportare",
-        'REPORTING_END': u"An de sfârșit pentru perioada de raportare",
         'REPORTING_ID': u"Lista de verificare curentă",
     },
 }
@@ -46,17 +45,46 @@ def form():
         flask.flash(u"Configurația a fost salvată.", 'success')
         return flask.redirect(flask.url_for('.form'))
 
-    if config_key == 'AGGREGATION':
-        base_template = 'aggregation/admin.html'
-    else:
-        base_template = ''
-
-    return flask.render_template(template_name, **{
+    context = {
         'CONFIG_LABEL': config_set,
         'config_rows': config_rows,
-        'base_template': base_template,
         'page': 'config',
-    })
+    }
+
+    if config_key == 'AGGREGATION':
+        year_start = get_year_start()
+        year_end = get_year_end(year_start)
+        context.update({
+            'year_start': year_start,
+            'year_end': year_end,
+            'base_template': 'aggregation/admin.html',
+        })
+    else:
+        context['base_template'] = ''
+
+    return flask.render_template(template_name, **context)
+
+
+@config.route('/config/period', methods=['GET', 'POST'])
+def new_period():
+    auth.admin_permission.test()
+    reporting_begin = models.Config.query.get('REPORTING_BEGIN')
+    year_start = get_year_start() + current_app.config['REPORTING_FREQUENCY']
+    year_end = get_year_end(year_start)
+
+    if flask.request.method == 'POST':
+        reporting_begin.value = str(year_start)
+        models.db.session.commit()
+        flask.flash(u"Configurația a fost salvată.", 'success')
+        return flask.redirect(flask.url_for('.form'))
+
+    context = {
+        'year_start': year_start,
+        'year_end': year_end,
+        'base_template': 'aggregation/admin.html',
+        'page': 'config',
+    }
+    return flask.render_template('aggregation/admin/new_period.html', **context)
 
 
 def get_config_value(name, default=''):

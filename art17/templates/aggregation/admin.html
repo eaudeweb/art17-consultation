@@ -6,7 +6,7 @@
   {%- from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
           ('agregare', home_url),
-          ('administrare', '.admin'),
+          ('administrare', url_for('.admin')),
           ('seturi de date', None),
       ]) }}
 {% endblock breadcrumbs %}

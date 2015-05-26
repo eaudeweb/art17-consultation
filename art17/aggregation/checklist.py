@@ -11,6 +11,7 @@ from art17.models import (
     DataHabitat, DataHabitattypeRegion, LuGrupSpecie,
 )
 from art17 import ROLE_MISSING
+from art17.common import get_year_start, get_year_end
 
 
 REGION_MAP = {
@@ -47,10 +48,11 @@ def create_checklist():
         'OID_HABITATS',
         'http://natura.anpm.ro/api/CNSERVICE.svc/ListaVerificareHabitate',
     )
+    year_start = get_year_start()
+    year_end = get_year_end(year_start)
     dataset = Dataset(
         preview=True, checklist=True, date=datetime.today(),
-        year_start=current_app.config.get('DEFAULT_YEAR_START'),
-        year_end=current_app.config.get('DEFAULT_YEAR_END'),
+        year_start=year_start, year_end=year_end,
         comment=str(datetime.now()),
     )
     db.session.add(dataset)
