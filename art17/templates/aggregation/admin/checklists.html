@@ -5,7 +5,13 @@
 
   <h2>Raportări existente</h2>
 
+  {% for start, end in periods %}
   <table class="table">
+    <thead>
+      <tr>
+        <th colspan="4">Perioada de raportare: {{ start }} - {{ end }}</th>
+      </tr>
+    </thead>
     <thead>
     <tr>
       <th>Set de date</th>
@@ -15,7 +21,7 @@
     </tr>
     </thead>
     <tbody>
-    {% for dataset in datasets %}
+    {% for dataset in datasets.filter_by(year_start=start) %}
       <tr>
         <td>{{ dataset }}</td>
         <td>{{ dataset.checklist_object or 'Listă de verificare inițială' }}</td>
@@ -29,13 +35,17 @@
 
             <a class="btn btn-default btn-xs"
                href="{{ edit_url }}">modifică</a>
-            <button type="submit" class="btn btn-danger btn-xs">șterge</button>
+            {% if can_delete_dataset(dataset) %}
+              <button class="btn btn-danger btn-xs"
+                      type="submit">șterge</button>
+            {% endif %}
           </form>
         </td>
       </tr>
     {% endfor %}
     </tbody>
   </table>
+  {% endfor %}
 
   <h2>Liste de verificare</h2>
 

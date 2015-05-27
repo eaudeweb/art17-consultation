@@ -35,6 +35,8 @@ PRESENCE_MAP = {
     'Marginal': 'MAR',
 }
 
+DATE_FORMAT_COMMENT = '%Y-%m-%d %H:%M'
+
 
 def yn(bool_value):
     return 'Y' if bool_value else 'N'
@@ -55,7 +57,7 @@ def create_checklist():
         preview=True, checklist=True, date=datetime.today(),
         year_start=year_start, year_end=year_end,
         comment=u'Listă de verificare preluată la {}'.format(
-            datetime.now().strftime('%Y-%m-%d %H:%M')),
+            datetime.now().strftime(DATE_FORMAT_COMMENT)),
     )
     db.session.add(dataset)
     db.session.commit()

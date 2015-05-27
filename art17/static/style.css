@@ -499,3 +499,11 @@ body thead {
 .habitat-suitable {
     max-width: 180px;
 }
+
+label {
+    padding-top: 15px;
+}
+
+.form-control-static {
+    padding: 0 10px;
+}

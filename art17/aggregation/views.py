@@ -54,6 +54,7 @@ from art17.aggregation.utils import (
     get_checklist,
     get_reporting_id,
 )
+from art17.aggregation.admin import can_delete_dataset
 
 
 @aggregation.route('/_ping')
@@ -174,6 +175,8 @@ def redo(dataset_id):
 @admin_permission.require()
 def delete_dataset(dataset_id):
     dataset = models.Dataset.query.get(dataset_id)
+    if not can_delete_dataset(dataset):
+        flask.abort(403)
     dataset.species_objs.delete()
     dataset.habitat_objs.delete()
     if dataset.checklist:

@@ -3,11 +3,12 @@ from collections import OrderedDict
 
 import flask
 from flask import redirect, url_for, render_template, request, flash, Response
-from wtforms import Form, IntegerField, TextField, SelectField
-from wtforms.validators import Optional
+from flask import jsonify
+from wtforms import Form, TextField, SelectField
 from flask.ext.principal import Permission
 from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook
+from sqlalchemy import or_
 
 from art17 import dal, models, ROLE_FINAL
 from art17.aggregation.checklist import create_checklist
@@ -17,12 +18,14 @@ from art17.aggregation.utils import (
     get_habitat_checklist, valid_checklist, sum_of_reports,
 )
 from art17.auth import require, need
-from art17.common import get_datasets, TemplateView
+from art17.common import get_datasets, TemplateView, get_year_end
 from art17.models import (
     Dataset,
     db,
     DATASET_STATUSES_DICT,
     DATASET_STATUSES_LIST,
+    STATUS_NEW,
+    STATUS_CONSULTATION,
     LuGrupSpecie,
 )
 from art17.aggregation import (
@@ -63,6 +66,13 @@ def parse_checklist(checklist_qs):
     return result
 
 
+@aggregation.app_template_global('can_delete_dataset')
+def can_delete_dataset(dataset):
+    if dataset.status == STATUS_NEW:
+        return True
+    return False
+
+
 @aggregation.route('/admin/')
 @require(Permission(need.admin))
 def admin():
@@ -78,11 +88,18 @@ def checklists():
         'species_checklist': get_species_checklist().all(),
         'habitat_checklist': get_habitat_checklist().all(),
     }
+    years = (db.session.query(Dataset.year_start)
+             .filter(or_(Dataset.preview == False, Dataset.preview == None))
+             .order_by(Dataset.year_start.desc())
+             .distinct())
+    periods = [(year, get_year_end(year)) for year, in years]
+
     return render_template(
         'aggregation/admin/checklists.html',
         page='checklist',
         default_list=default_checklist,
         checklists=checklists,
+        periods=periods,
     )
 
 
@@ -121,17 +138,25 @@ class ChecklistForm(Form):
 
 class DatasetForm(Form):
     comment = TextField()
-    year_start = IntegerField(validators=[Optional()])
-    year_end = IntegerField(validators=[Optional()])
     status = SelectField(choices=DATASET_STATUSES_LIST)
-    checklist_id = SelectField(validators=[Optional()], choices=[])
 
     def __init__(self, *args, **kwargs):
-        super(DatasetForm, self).__init__(*args, **kwargs)
-        self.checklist_id.choices = (
-            [('', u'Lista de verificare inițială')] +
-            [(unicode(c.id), unicode(c)) for c in get_checklists()]
-        )
+        self.obj = kwargs['obj']
+        return super(DatasetForm, self).__init__(*args, **kwargs)
+
+    def validate_status(self, field):
+        if int(field.data) != STATUS_CONSULTATION:
+            return True
+        active_exists = Dataset.query.filter_by(
+            year_start=self.obj.year_start,
+            status=STATUS_CONSULTATION,
+        ).count()
+        if active_exists:
+            field.errors.append(
+                'Există deja un set de date activ. Nu poate exista mai mult de'
+                ' un set de date activ la un moment dat.')
+            return False
+        return True
 
 
 @aggregation.route('/admin/checklist/<dataset_id>/edit/',
@@ -169,8 +194,12 @@ def edit_dataset(dataset_id):
             form.populate_obj(dataset)
             db.session.commit()
             flash("Form successfully updated", 'success')
+            return jsonify({'status': 'success',
+                            'url': url_for('.admin')})
         else:
             flash("Form has errors", 'error')
+            return jsonify({'status': 'error',
+                            'errors': form.errors})
     else:
         form = DatasetForm(obj=dataset)
 

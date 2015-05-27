@@ -4,9 +4,9 @@
   {%- from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
           ('agregare', home_url),
-          ('admin', url_for('.admin')),
-          ('liste de verificare', url_for('.checklists')),
-          ('set de date', none),
+          ('adminstrare', url_for('.admin')),
+          ('seturi de date', url_for('.checklists')),
+          ('modifică set de date', none),
       ]) }}
 {% endblock breadcrumbs %}
 
@@ -16,40 +16,55 @@
   <form method="post" action="">
 
     <div class="form-group">
-      {% if form.comment.errors %}
-      <p class="text-danger">{{ form.comment.errors }}</p>
-      {% endif %}
       <label for="comment">Titlu</label>
       {{ form.comment(class='form-control') }}
 
-      {% if form.year_start.errors %}
-      <p class="text-danger">{{ form.year_start.errors }}</p>
-      {% endif %}
-      <label for="year_start">An de început</label>
-      {{ form.year_start(class='form-control') }}
+      <label>Perioada de raportare</label>
+      <p class="form-control-static">
+        {{ dataset.year_start }} - {{ dataset.year_end }}
+      </p>
 
-      {% if form.year_end.errors %}
-      <p class="text-danger">{{ form.year_end.errors }}</p>
-      {% endif %}
-      <label for="year_end">An de sfârșit</label>
-      {{ form.year_end(class='form-control') }}
-    
-      {% if form.status.errors %}
-      <p class="text-danger">{{ form.status.errors }} {{ form.status.data }}</p>
-      {% endif %}
       <label for="status">Status</label>
       {{ form.status(class='form-control') }}
-    
-      {% if form.checklist_id.errors %}
-      <p class="text-danger">{{ form.checklist_id.errors }} {{ form.checklist_id.data }}</p>
-      {% endif %}
-      <label for="checklist_id">Listă de verificare</label>
-      {{ form.checklist_id(class='form-control') }}
+
+      <label>Lista de verificare</label>
+      <p class="form-control-static">
+        <a href="{{ url_for('.checklist', dataset_id=dataset.checklist_id) }}">
+          {{ dataset.checklist_object.comment }}
+        </a>
+      </p>
     </div>
 
-    <button type="submit" class="btn btn-default">Modifică</button>
+    <button type="submit" class="btn btn-primary">Modifică</button>
     <a class="btn btn-default" href="{{ url_for('.checklists') }}">
       Renunță
     </a>
   </form>
 {% endblock %}
+
+{% block script %}
+  {{ super() }}
+  <script>
+    $('form').on('submit', function(evt) {
+      evt.preventDefault();
+      var data = $(this).serializeArray();
+      var url = $(this).attr('action');
+      $.post(url, data, function(resp) {
+        if(resp.status == "success") {
+          window.location.replace(resp.url);
+        }
+        if(resp.status == "error") {
+          for (var field in resp.errors) {
+            errors = ''
+            console.log(resp.errors)
+            console.log(field)
+            for (var i in resp.errors[field]) {
+              errors += '<p class="text-danger">' + resp.errors[field][i] + '</p>';
+            }
+            $('#' + field).after(errors);
+          }
+        }
+      }, "json");
+    });
+  </script>
+{% endblock script %}
