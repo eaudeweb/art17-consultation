@@ -794,7 +794,7 @@ class TemplateView(MethodView):
 
 def get_year_start():
     cnf_year = models.Config.query.filter_by(id='REPORTING_BEGIN').first()
-    if cnf_year:
+    if cnf_year and cnf_year.value:
         return int(cnf_year.value)
     return current_app.config.get('DEFAULT_YEAR_START')
 
