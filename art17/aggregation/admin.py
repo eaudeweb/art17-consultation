@@ -121,10 +121,12 @@ def checklist(dataset_id=None):
 
 
 @aggregation.route('/admin/checklist/create/', methods=('GET', 'POST'))
+@aggregation.route('/admin/checklist/create/<save_current>',
+                   methods=('GET', 'POST'))
 @require(Permission(need.admin))
-def create():
+def create(save_current=False):
     if request.method == "POST":
-        create_checklist()
+        create_checklist(save_current)
         return redirect(url_for('.checklists'))
     return render_template(
         'aggregation/admin/checklist_create.html',

@@ -9,7 +9,7 @@ from art17.aggregation import aggregation_manager
 from art17.models import (
     Dataset, db, DataHabitatsCheckList, DataSpeciesCheckList,
     LuHdSpecies, LuHabitattypeCodes, DataSpecies, DataSpeciesRegion,
-    DataHabitat, DataHabitattypeRegion, LuGrupSpecie,
+    DataHabitat, DataHabitattypeRegion, LuGrupSpecie, Config,
 )
 from art17 import ROLE_MISSING
 from art17.common import get_year_start, get_year_end
@@ -42,7 +42,7 @@ def yn(bool_value):
     return 'Y' if bool_value else 'N'
 
 
-def create_checklist():
+def create_checklist(save_current=False):
     species_endpoint = current_app.config.get(
         'OID_SPECIES',
         'http://natura.anpm.ro/api/CNSERVICE.svc/ListaVerificareSpecii',
@@ -61,6 +61,14 @@ def create_checklist():
     )
     db.session.add(dataset)
     db.session.commit()
+
+    if save_current:
+        config_row = Config.query.filter_by(id='REPORTING_ID').first()
+        if not config_row:
+            config_row = Config(id='REPORTING_ID')
+            db.session.add(config_row)
+        config_row.value = str(dataset.id)
+        db.session.commit()
 
     response = requests.get(species_endpoint)
     species = species_from_oid(response.content, dataset)

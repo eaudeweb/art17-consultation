@@ -27,8 +27,10 @@
     <p>
       Nu există nicio listă de verificare pentru perioada curentă de raportare.
     </p>
+
     <p>
-      <a class="btn btn-default" href="{{ url_for('aggregation.create') }}">
+      <a class="btn btn-default"
+         href="{{ url_for('aggregation.create', save_current='save') }}">
         Descarcă listă de verificare</a>
     </p>
 
