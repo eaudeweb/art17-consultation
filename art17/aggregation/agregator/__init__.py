@@ -44,12 +44,6 @@ from art17.models import DataHabitatSpecies
 
 EXPERT_OPINION = 'Expert opinion'
 
-EXPERT_METHOD = '1'
-EXTRAPOLATION_METHOD = '2'
-COMPLETE_METHOD = '3'
-MISSING_METHOD = '0'
-UNKNOWN_METHOD = ''
-
 UNKNOWN_TREND = 'x'
 MISSING_DATA = '0'
 TERRAIN_DATA = '1'

@@ -1,6 +1,8 @@
-from art17.aggregation.agregator import (
-    UNKNOWN_METHOD, EXPERT_METHOD, EXTRAPOLATION_METHOD, COMPLETE_METHOD,
-)
+EXPERT_METHOD = '1'
+EXTRAPOLATION_METHOD = '2'
+COMPLETE_METHOD = '3'
+MISSING_METHOD = '0'
+UNKNOWN_METHOD = ''
 
 
 def get_method(count):
