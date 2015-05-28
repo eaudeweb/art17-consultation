@@ -10,6 +10,7 @@
   ({{ record.region }})
 </h1>
 
+{% if record.model.cons_generalstatus == '1' %}
 <ul class="nav nav-tabs detail-menu">
   <li class="active"><a href="#recorddetail-range" data-toggle="tab">Areal</a></li>
   <li><a href="#recorddetail-population" data-toggle="tab">Populație</a></li>
@@ -45,5 +46,12 @@
 
   {% include "species/detail/sources.html" with context %}
 
-  </div>
+</div>
+
+{% else %}
+
+  <br>
+  <p>Prezența: <strong>{{ record.model.generalstatus.name_ro }}</strong></p>
+
+{% endif %}
 {% endblock %}

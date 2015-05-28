@@ -507,6 +507,10 @@ class DataHabitattypeRegion(Base, RoleMixin):
         return {'value': self.conclusion_assessment,
                 'trend': self.conclusion_assessment_trend}
 
+    @property
+    def generalstatus(self):
+        return LuPresence.query.filter_by(code=self.cons_generalstatus).first()
+
 
 class DataSpecies(Base):
     __tablename__ = u'data_species'
@@ -794,6 +798,10 @@ class DataSpeciesRegion(Base, RoleMixin):
     def conclusion(self):
         return {'value': self.conclusion_assessment,
                 'trend': self.conclusion_assessment_trend}
+
+    @property
+    def generalstatus(self):
+        return LuPresence.query.filter_by(code=self.cons_generalstatus).first()
 
 
 class DataMeasures(Base):

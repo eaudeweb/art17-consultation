@@ -10,6 +10,7 @@
   ({{ record.region }})
 </h1>
 
+{% if record.model.cons_generalstatus == '1' %}
 <ul class="nav nav-tabs">
   <li class="active">
     <a href="#recorddetail-range" data-toggle="tab">Arealul</a></li>
@@ -45,4 +46,11 @@
   {% include "habitat/detail/sources.html" with context %}
 
 </div>
+
+{% else %}
+
+  <br>
+  <p>Prezența: <strong>{{ record.model.generalstatus.name_ro }}</strong></p>
+
+{% endif %}
 {% endblock %}
