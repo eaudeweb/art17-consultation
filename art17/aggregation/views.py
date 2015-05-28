@@ -593,4 +593,6 @@ def export(page, dataset_id):
     else:
         flask.abort(404)
 
-    return flask.Response(xml, mimetype='text/xml')
+    fn = '{}_{}.xml'.format(page, dataset.comment.replace(' ', '-'))
+    headers = {"Content-Disposition": "attachment; filename={}".format(fn)}
+    return flask.Response(xml, mimetype='text/xml', headers=headers)

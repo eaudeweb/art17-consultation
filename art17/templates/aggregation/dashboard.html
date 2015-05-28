@@ -15,8 +15,10 @@
 
 {% block content %}
   <div class="pull-right">
-    <a class="btn btn-default" href="{{ url_for('.report', dataset_id=dataset.id) }}">Rapoarte</a>
-    <a class="btn btn-default" href="{{ url_for('.export_all', dataset_id=dataset.id) }}">Exporturi</a>
+    <a href="{{ url_for('.report', dataset_id=dataset.id) }}"
+       class="btn btn-default">Rapoarte</a>
+    <a href="{{ url_for('.export_all', dataset_id=dataset.id) }}"
+       class="btn btn-default">Export</a>
   </div>
   <h2>Set de date, {{ dataset.user_id or "-" }}, {{ dataset.date }}</h2>
 
