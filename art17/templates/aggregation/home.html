@@ -1,14 +1,17 @@
 {% extends "layout.html" %}
 
 {% macro dataset_table(dataset_list, show_user=True, show_reports=True,
-  view='.dashboard') %}
+  show_export=True, show_period=True, view='.dashboard') %}
 <table class="table table-bordered">
   <thead>
     <th>Dată</th>
     {% if show_user %}
-    <th>Utilizator</th>
+      <th>Utilizator</th>
     {% endif %}
     <th>Titlu</th>
+    {% if show_period %}
+      <th nowrap>Perioadă raportare</th>
+    {% endif %}
     <th>Detalii rapoarte</th>
     <th></th>
   </thead>
@@ -18,12 +21,16 @@
     {%- set delete_url = url_for('.delete_dataset', dataset_id=dataset.id) %}
     {%- set activity_url = url_for('history_aggregation.index', dataset_id=dataset.id) %}
     {%- set report_url = url_for('.report', dataset_id=dataset.id) %}
+    {%- set export_url = url_for('.export_all', dataset_id=dataset.id) %}
     <tr>
       <td nowrap><a href="{{ url }}">{{ dataset.date }}</a></td>
       {% if show_user %}
       <td>{{ dataset.user_id }}</td>
       {% endif %}
       <td width="100%">{{ dataset.comment or ""|truncate(100) }}</td>
+      {% if show_period %}
+        <td nowrap>{{ dataset.year_start }} - {{ dataset.year_end }}</td>
+      {% endif %}
       <td class="text-right" nowrap>
         {% if dataset.preview %}
           {{ dataset.details.all }} regiuni, {{ dataset.details.missing }} lipsă
@@ -45,6 +52,10 @@
           {% if authenticated_permission.can() and show_reports %}
           <a class="btn btn-default btn-xs"
              href="{{ report_url }}">rapoarte</a>
+          {% endif %}
+          {% if show_export %}
+            <a class="btn btn-primary btn-xs"
+               href="{{ export_url }}">export</a>
           {% endif %}
         </form>
       </td>
@@ -79,6 +90,9 @@
       <a class="btn btn-default"
          href="{{ url_for('.admin') }}">Administrare</a>
 
+      <a class="btn btn-default"
+         href="{{ url_for('.docs') }}">Algoritmi agregare</a>
+
       {% if config['AUTH_DEBUG'] %}
         <a class="btn btn-danger"
            href="{{ url_for('auth.debug') }}">autentificare (debug)</a>
@@ -87,16 +101,17 @@
   </div>
 </div>
 
-{% if preview_datasets %}
-<h2>Previzualizări agregare</h2>
-
-
-{{ dataset_table(preview_datasets, show_user=False, show_reports=False, view='.post_preview') }}
-{% endif %}
 
 <h2>Seturi de date</h2>
-
 {{ dataset_table(datasets) }}
+
+{% if preview_datasets %}
+
+  <h2>Previzualizări agregare</h2>
+  {{ dataset_table(preview_datasets, show_user=False, show_reports=False,
+         show_period=False, show_export=False, view='.post_preview') }}
+
+{% endif %}
 
 {% endblock content %}
 

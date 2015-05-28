@@ -780,7 +780,7 @@ def flatten_errors(errors):
 def get_datasets():
     return Dataset.query.filter(
         or_(Dataset.preview == False, Dataset.preview == None)
-    ).order_by(Dataset.date)
+    ).order_by(Dataset.date.desc())
 
 
 class TemplateView(MethodView):

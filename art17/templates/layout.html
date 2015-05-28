@@ -47,9 +47,10 @@
 
       {% block before_content %}
         {% if app_name == 'aggregation' and not home %}
-        <div class="pull-right">
-            <a class="btn btn-default" href="{{ url_for('aggregation.docs') }}">Algoritmi agregare</a>
-        </div>
+          <div class="pull-right">
+            <a href="{{ url_for('aggregation.docs') }}"
+               class="btn btn-default">Algoritmi agregare</a>
+          </div>
         {% endif %}
       {% endblock %}
 
