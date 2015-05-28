@@ -13,7 +13,14 @@ HABITAT_SPECIES_URL = '/AgregareHabitate/MapServer/2'
 HABITAT_DISTRIBUTION_URL = "/IBB_RangeDistribution/MapServer/0"
 HABITAT_RANGE_URL = "/IBB_RangeDistribution/MapServer/1"
 SPECIES_DISTRIBUTION_URL = "/IBB_RangeDistribution/MapServer/2"
-SPECIES_RANGE_URL = "/IBB_RangeDistribution/MapServer/3"
+SPECIES_RANGE_URL = "/BB_RangeDistribution/MapServer/3"
+
+
+def _log_error(url):
+    sentry = current_app.extensions.get('sentry')
+    if sentry:
+        sentry.captureMessage(message='Webservice down: %s' % url)
+    logging.warn('Webservice down: %s' % url)
 
 
 def generic_rest_call(url, where_query, out_fields="*"):
@@ -26,15 +33,14 @@ def generic_rest_call(url, where_query, out_fields="*"):
     })
 
     res = requests.get(url)
+    data = None
     if res.status_code == 200:
         data = res.json()
-        return data.get('features')
-    else:
-        sentry = current_app.extensions.get('sentry')
-        if sentry:
-            sentry.captureMessage(message='Webservice down: %s' % url)
-        else:
-            logging.warn('No sentry, webservice down %s' % url)
+
+    if not data or 'error' in data:
+        _log_error(url)
+
+    return data.get('features', {})
 
 
 def get_species_bibliography(subgroup, specnum, region):
@@ -125,29 +131,13 @@ def get_habitat_typical_species(habcode, region):
 
 
 def generic_surface_call(url, where_query, out_fields=""):
-    url = current_app.config.get('GIS_API_URL') + url
-    url += "/query?" + urlencode({
-        'where': where_query,
-        'outFields': out_fields,
-        'f': "json",
-        'returnGeometry': "false",
-    })
-
-    #print "Requesting:" + url
-    res = requests.get(url)
-    if res.status_code == 200:
-        data = res.json()
-
-        if not data['features']:
-            return None
-
-        result = data['features'][0]['attributes']
-        if ',' in out_fields:
-            surface = {c: result[c] for c in out_fields.split(',')}
-        else:
-            surface = result[out_fields]
-        return surface
-    return None
+    features = generic_rest_call(url, where_query, out_fields=out_fields)
+    result = (features and features[0]['attributes']) or {}
+    if ',' in out_fields:
+        surface = {c: result.get(c) for c in out_fields.split(',')}
+    else:
+        surface = result.get(out_fields)
+    return surface
 
 
 def get_habitat_dist_surface(habcode, region):
