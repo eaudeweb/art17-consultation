@@ -89,6 +89,21 @@ def inject_funcs():
     )
 
 
+@aggregation_manager.command
+def test_species(speciescode):
+    """ Generate a preview aggregation then remove it.
+    """
+    from datetime import datetime
+    from art17.aggregation.agregator import create_preview_aggregation
+    from art17.models import db
+
+    report, agg = create_preview_aggregation(
+        'species', subject=speciescode, comment='test',
+        timestamp=datetime.now(), user_id='system'
+    )
+    print "Report: ", report
+
+
 # Import this after everything else
 import art17.aggregation.views
 import art17.aggregation.admin
