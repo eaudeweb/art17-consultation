@@ -13,7 +13,7 @@ HABITAT_SPECIES_URL = '/AgregareHabitate/MapServer/2'
 HABITAT_DISTRIBUTION_URL = "/IBB_RangeDistribution/MapServer/0"
 HABITAT_RANGE_URL = "/IBB_RangeDistribution/MapServer/1"
 SPECIES_DISTRIBUTION_URL = "/IBB_RangeDistribution/MapServer/2"
-SPECIES_RANGE_URL = "/BB_RangeDistribution/MapServer/3"
+SPECIES_RANGE_URL = "/IBB_RangeDistribution/MapServer/3"
 
 
 def _log_error(url):
