@@ -1,6 +1,7 @@
 """
     Define a mapping between species codes and subgroups.
 """
+import logging
 
 (
     AR,  # Amfibieni si reptile
@@ -28,4 +29,9 @@ def get_species_mapping():
 def get_species_subgroup(speciescode):
     mapping = get_species_mapping()
 
-    return mapping.get(speciescode, PL)  # default: Plante
+    subgroup = mapping.get(speciescode)
+    if not subgroup:
+        logging.warn(
+            'Unknown subgroup for speciescode: {0} returning PL'.format(
+                speciescode))
+    return subgroup or PL

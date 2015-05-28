@@ -2,18 +2,32 @@ from flask import current_app
 from urllib import urlencode
 import logging
 import requests
+from art17.aggregation.agregator.subgroups import PL
 
 # Colectare URLs
-SPECIES_BIBLIO_URL = '/Agregare/MapServer/3'
-SPECIES_PT_URL = '/Agregare/MapServer/1'
-SPECIES_POP_URL = '/Agregare/MapServer/2'
 HABITAT_BIBLIO_URL = '/AgregareHabitate/MapServer/1'
 HABITAT_SPECIES_URL = '/AgregareHabitate/MapServer/2'
 # GIS urls
 HABITAT_DISTRIBUTION_URL = "/IBB_RangeDistribution/MapServer/0"
 HABITAT_RANGE_URL = "/IBB_RangeDistribution/MapServer/1"
-SPECIES_DISTRIBUTION_URL = "/IBB_RangeDistribution/MapServer/2"
-SPECIES_RANGE_URL = "/IBB_RangeDistribution/MapServer/3"
+
+(
+    BIBLIO,
+    PRES_THRE,
+    POP,
+    DISTRIB,
+    RANGE,
+) = range(5)
+
+SPECIES_MAPPING = {
+    PL: {
+        BIBLIO: '/Agregare/MapServer/3',
+        PRES_THRE: '/Agregare/MapServer/1',
+        POP: '/Agregare/MapServer/2',
+        DISTRIB: '/IBB_RangeDistribution/MapServer/2',
+        RANGE: '/IBB_RangeDistribution/MapServer/3'
+    }
+}
 
 
 def _log_error(url):
@@ -21,6 +35,14 @@ def _log_error(url):
     if sentry:
         sentry.captureMessage(message='Webservice down: %s' % url)
     logging.warn('Webservice down: %s' % url)
+
+
+def _get_species_url(subgroup, service):
+    if subgroup not in SPECIES_MAPPING:
+        raise NotImplementedError(
+            'No mapping for species group: %s' % subgroup
+        )
+    return SPECIES_MAPPING[subgroup][service]
 
 
 def generic_rest_call(url, where_query, out_fields="*"):
@@ -45,7 +67,8 @@ def generic_rest_call(url, where_query, out_fields="*"):
 
 def get_species_bibliography(subgroup, specnum, region):
     where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
-    data = generic_rest_call(SPECIES_BIBLIO_URL, where_query) or []
+    url = _get_species_url(subgroup, BIBLIO)
+    data = generic_rest_call(url, where_query) or []
 
     format_string = (
         u"{AUTORI} {TITLU_LUCRARE} {AN} {PUBLICATIE} "
@@ -62,7 +85,8 @@ def get_species_pressures_threats(subgroup, specnum, region):
         2: 'p',  # pressure
     }
     where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
-    data = generic_rest_call(SPECIES_PT_URL, where_query)
+    url = _get_species_url(subgroup, PRES_THRE)
+    data = generic_rest_call(url, where_query)
     if not data:
         return ''
 
@@ -80,7 +104,8 @@ def get_species_pressures_threats(subgroup, specnum, region):
 
 def get_species_population_size(subgroup, specnum, region):
     where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
-    data = generic_rest_call(SPECIES_POP_URL, where_query) or []
+    url = _get_species_url(subgroup, POP)
+    data = generic_rest_call(url, where_query) or []
     return sum(r['attributes']['NR_INDIVIZI'] for r in data)
 
 
@@ -92,7 +117,8 @@ def get_species_habitat_quality(subgroup, specnum, region):
         3: 'Good',
     }
     where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
-    data = generic_rest_call(SPECIES_POP_URL, where_query) or []
+    url = _get_species_url(subgroup, POP)
+    data = generic_rest_call(url, where_query) or []
     values = [r['attributes']['CALITATE_HAB'] for r in data]
     ok_values = [v for v in values if v in OK_VALUE_LIST]
 
@@ -154,11 +180,11 @@ def get_habitat_range_surface(habcode, region):
 
 def get_species_dist_surface(subgroup, speccode, region):
     where_query = "SPECNUM='%s'" % speccode
-
-    return generic_surface_call(SPECIES_DISTRIBUTION_URL, where_query, region)
+    url = _get_species_url(subgroup, DISTRIB)
+    return generic_surface_call(url, where_query, region)
 
 
 def get_species_range_surface(subgroup, speccode, region):
     where_query = "SPECNUM='%s'" % speccode
-
-    return generic_surface_call(SPECIES_RANGE_URL, where_query, region)
+    url = _get_species_url(subgroup, RANGE)
+    return generic_surface_call(url, where_query, region)
