@@ -1,4 +1,8 @@
 # coding=utf-8
+"""
+    This file will export the reference values from an existing dataset, i.e.:
+    the initial one.
+"""
 import os.path
 from art17 import models
 from art17.scripts import exporter, DEFAULT_DATASET_ID
@@ -236,7 +240,7 @@ def species_population_units(filename=None, dataset_id=None):
 
 @exporter.command
 def all_species(folder=None, mapping=None, dataset_id=None):
-    """ Export all reference values
+    """ Export all species reference values
     """
     folder = folder or '.'
     available = mapping or {
@@ -331,7 +335,7 @@ def habitat_coverage_magnitude(filename=None, dataset_id=None):
 
 @exporter.command
 def all_habitat(folder=None, dataset_id=None):
-    """ Export all reference values
+    """ Export all habitat reference values
     """
     return all_species(folder=folder, mapping={
         'habitat_magnitude': habitat_magnitude,
