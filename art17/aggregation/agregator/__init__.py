@@ -1,6 +1,7 @@
 # coding=utf-8
 from StringIO import StringIO
 from collections import defaultdict
+
 from art17 import models, ROLE_AGGREGATED, ROLE_MISSING
 from art17.aggregation.agregator.conclusions import (
     get_species_conclusion_range, get_species_conclusion_population,
@@ -9,6 +10,7 @@ from art17.aggregation.agregator.conclusions import (
     get_habitat_conclusion_range, get_habitat_conclusion_area,
     get_habitat_conclusion_future, get_overall_habitat_conclusion,
 )
+from art17.aggregation.agregator.method import get_species_method, get_method
 from art17.aggregation.agregator.n2k import get_habitat_cover_range, \
     get_species_population_range
 from art17.aggregation.agregator.rest import get_species_bibliography, \
@@ -100,17 +102,6 @@ def set_pressures_threats(obj, pressures_threats):
     obj.pressures_method = TERRAIN_DATA
 
 
-def get_method(count):
-    if count is None:
-        return UNKNOWN_METHOD
-    if count < 99:
-        return EXPERT_METHOD
-    elif count < 299:
-        return EXTRAPOLATION_METHOD
-    else:
-        return COMPLETE_METHOD
-
-
 def aggregate_species(obj, result, refvals, prev):
     current_year = result.dataset.year_end
     current_period = get_period(result.dataset.year_end, 6)
@@ -129,7 +120,7 @@ def aggregate_species(obj, result, refvals, prev):
     result.range_surface_area = get_species_range_surface(
         subgroup, obj.code, result.region
     )
-    result.range_method = get_method(count)
+    result.range_method = get_species_method(subgroup, count)
     result.range_trend = get_species_range_trend(
         subgroup, SHORT_TERM, current_year, result.range_surface_area, prev
     )
@@ -170,7 +161,7 @@ def aggregate_species(obj, result, refvals, prev):
         subgroup, SHORT_TERM, current_year, size, prev
     )
     result.population_trend_period = short_period
-    result.population_method = get_method(count)
+    result.population_method = get_species_method(subgroup, count)
     result.population_date = current_period
     result.population_trend_magnitude_min = refvals["population_magnitude"][
         "Magn. min scurt"]
@@ -206,7 +197,7 @@ def aggregate_species(obj, result, refvals, prev):
     result.habitat_surface_area = get_species_dist_surface(
         subgroup, obj.code, result.region
     )
-    result.habitat_method = get_method(count)
+    result.habitat_method = get_species_method(subgroup, count)
 
     result.habitat_quality = get_species_habitat_quality(
         subgroup, obj.code, result.region
