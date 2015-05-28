@@ -56,12 +56,12 @@
         if(resp.status == "error") {
           for (var field in resp.errors) {
             errors = ''
-            console.log(resp.errors)
-            console.log(field)
             for (var i in resp.errors[field]) {
               errors += '<p class="text-danger">' + resp.errors[field][i] + '</p>';
             }
-            $('#' + field).after(errors);
+            field_id = '#' + field;
+            $(field_id).siblings('p.text-danger').remove();
+            $(field_id).after(errors);
           }
         }
       }, "json");

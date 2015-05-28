@@ -149,9 +149,10 @@ class DatasetForm(Form):
     def validate_status(self, field):
         if int(field.data) != STATUS_CONSULTATION:
             return True
-        active_exists = Dataset.query.filter_by(
-            year_start=self.obj.year_start,
-            status=STATUS_CONSULTATION,
+        active_exists = Dataset.query.filter(
+            Dataset.id != self.obj.id,
+            Dataset.year_start == self.obj.year_start,
+            Dataset.status == STATUS_CONSULTATION,
         ).count()
         if active_exists:
             field.errors.append(
@@ -199,7 +200,6 @@ def edit_dataset(dataset_id):
             return jsonify({'status': 'success',
                             'url': url_for('.admin')})
         else:
-            flash("Form has errors", 'error')
             return jsonify({'status': 'error',
                             'errors': form.errors})
     else:
