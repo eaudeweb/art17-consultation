@@ -49,13 +49,13 @@ def get_habitat_range_surface(habcode, region):
     return generic_surface_call(HABITAT_RANGE_URL, where_query, region)
 
 
-def get_species_dist_surface(speccode, region):
+def get_species_dist_surface(subgroup, speccode, region):
     where_query = "SPECNUM='%s'" % speccode
 
     return generic_surface_call(SPECIES_DISTRIBUTION_URL, where_query, region)
 
 
-def get_species_range_surface(speccode, region):
+def get_species_range_surface(subgroup, speccode, region):
     where_query = "SPECNUM='%s'" % speccode
 
     return generic_surface_call(SPECIES_RANGE_URL, where_query, region)

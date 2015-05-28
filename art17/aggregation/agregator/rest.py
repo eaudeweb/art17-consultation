@@ -31,7 +31,7 @@ def generic_rest_call(url, where_query, out_fields="*"):
             logging.warn('No sentry, webservice down %s' % url)
 
 
-def get_species_bibliography(specnum, region):
+def get_species_bibliography(subgroup, specnum, region):
     where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
     data = generic_rest_call(SPECIES_BIBLIO_URL, where_query) or []
 
@@ -43,7 +43,7 @@ def get_species_bibliography(specnum, region):
     return ''.join(values), len(data)
 
 
-def get_species_pressures_threats(specnum, region):
+def get_species_pressures_threats(subgroup, specnum, region):
     type_map = {
         None: None,  # ???
         1: 't',  # threat
@@ -66,13 +66,13 @@ def get_species_pressures_threats(specnum, region):
     ]
 
 
-def get_species_population_size(specnum, region):
+def get_species_population_size(subgroup, specnum, region):
     where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
     data = generic_rest_call(SPECIES_POP_URL, where_query) or []
     return sum(r['attributes']['NR_INDIVIZI'] for r in data)
 
 
-def get_species_habitat_quality(specnum, region):
+def get_species_habitat_quality(subgroup, specnum, region):
     OK_VALUE_LIST = [1, 2, 3]
     VALUE_MAP = {
         1: 'Bad',

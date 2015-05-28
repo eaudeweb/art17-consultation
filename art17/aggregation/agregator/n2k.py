@@ -33,7 +33,7 @@ def get_habitat_cover_range(habcode, region):
     return min(values), max(values)
 
 
-def get_species_population_range(speccode, region):
+def get_species_population_range(subgroup, speccode, region):
     where_query = "SPECIES_CODE='%s'" % speccode
     data = generic_n2k_call(
         SPECIES_COVER_URL, where_query,

@@ -107,21 +107,21 @@ def get_conclusion(current_value, refvals, refval_type, **kwargs):
     return ''
 
 
-def get_species_conclusion_range(surface_area, refvals):
+def get_species_conclusion_range(subgroup, surface_area, refvals):
     return get_conclusion(surface_area, refvals, 'range')
 
 
-def get_species_conclusion_population(min_size, max_size, refvals, prev, year):
+def get_species_conclusion_population(subgroup, min_size, max_size, refvals, prev, year):
     size = average([s for s in (min_size, max_size) if s is not None])
     return get_conclusion(size, refvals, 'population_range', prev=prev,
                           year=year)
 
 
-def get_species_conclusion_habitat(surface_area, quality, refvals):
+def get_species_conclusion_habitat(subgroup, surface_area, quality, refvals):
     return get_conclusion(surface_area, refvals, 'habitat', quality=quality)
 
 
-def get_species_conclusion_future(code, region):
+def get_species_conclusion_future(subgroup, code, region):
     return FV
 
 
