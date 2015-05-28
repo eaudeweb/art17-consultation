@@ -16,7 +16,8 @@ from art17.aggregation.agregator.n2k import get_habitat_cover_range, \
 from art17.aggregation.agregator.rest import get_species_bibliography, \
     get_species_pressures_threats, get_species_population_size, \
     get_species_habitat_quality, get_habitat_typical_species, \
-    get_habitat_published
+    get_habitat_published, get_habitat_dist_surface, get_habitat_range_surface, \
+    get_species_dist_surface, get_species_range_surface
 from art17.aggregation.agregator.subgroups import get_species_subgroup
 from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_species_population_trend, get_species_habitat_trend, \
@@ -33,12 +34,6 @@ from art17.aggregation.agregator.primary import (
 from art17.aggregation.utils import (
     get_reporting_id, get_habitat_checklist, get_species_checklist,
     get_checklist)
-from art17.aggregation.agregator.gis import (
-    get_habitat_dist_surface,
-    get_habitat_range_surface,
-    get_species_dist_surface,
-    get_species_range_surface,
-)
 from art17.models import DataHabitatSpecies
 
 

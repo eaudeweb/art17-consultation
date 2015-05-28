@@ -3,11 +3,17 @@ from urllib import urlencode
 import logging
 import requests
 
+# Colectare URLs
 SPECIES_BIBLIO_URL = '/Agregare/MapServer/3'
 SPECIES_PT_URL = '/Agregare/MapServer/1'
 SPECIES_POP_URL = '/Agregare/MapServer/2'
 HABITAT_BIBLIO_URL = '/AgregareHabitate/MapServer/1'
 HABITAT_SPECIES_URL = '/AgregareHabitate/MapServer/2'
+# GIS urls
+HABITAT_DISTRIBUTION_URL = "/IBB_RangeDistribution/MapServer/0"
+HABITAT_RANGE_URL = "/IBB_RangeDistribution/MapServer/1"
+SPECIES_DISTRIBUTION_URL = "/IBB_RangeDistribution/MapServer/2"
+SPECIES_RANGE_URL = "/IBB_RangeDistribution/MapServer/3"
 
 
 def generic_rest_call(url, where_query, out_fields="*"):
@@ -116,3 +122,53 @@ def get_habitat_typical_species(habcode, region):
     where_query = "HABITAT='%s' AND REG_BIOGEG='%s'" % (habcode, region)
     data = generic_rest_call(HABITAT_SPECIES_URL, where_query) or []
     return [r['attributes']['NAME'] for r in data]
+
+
+def generic_surface_call(url, where_query, out_fields=""):
+    url = current_app.config.get('GIS_API_URL') + url
+    url += "/query?" + urlencode({
+        'where': where_query,
+        'outFields': out_fields,
+        'f': "json",
+        'returnGeometry': "false",
+    })
+
+    #print "Requesting:" + url
+    res = requests.get(url)
+    if res.status_code == 200:
+        data = res.json()
+
+        if not data['features']:
+            return None
+
+        result = data['features'][0]['attributes']
+        if ',' in out_fields:
+            surface = {c: result[c] for c in out_fields.split(',')}
+        else:
+            surface = result[out_fields]
+        return surface
+    return None
+
+
+def get_habitat_dist_surface(habcode, region):
+    where_query = "HABITAT='%s'" % habcode
+
+    return generic_surface_call(HABITAT_DISTRIBUTION_URL, where_query, region)
+
+
+def get_habitat_range_surface(habcode, region):
+    where_query = "HABITAT='%s'" % habcode
+
+    return generic_surface_call(HABITAT_RANGE_URL, where_query, region)
+
+
+def get_species_dist_surface(subgroup, speccode, region):
+    where_query = "SPECNUM='%s'" % speccode
+
+    return generic_surface_call(SPECIES_DISTRIBUTION_URL, where_query, region)
+
+
+def get_species_range_surface(subgroup, speccode, region):
+    where_query = "SPECNUM='%s'" % speccode
+
+    return generic_surface_call(SPECIES_RANGE_URL, where_query, region)
