@@ -2,7 +2,7 @@ from flask import current_app
 from urllib import urlencode
 import logging
 import requests
-from art17.aggregation.agregator.subgroups import PL
+from art17.aggregation.agregator.subgroups import PL, AR
 
 # Colectare URLs
 HABITAT_BIBLIO_URL = '/AgregareHabitate/MapServer/1'
@@ -19,11 +19,19 @@ HABITAT_RANGE_URL = "/IBB_RangeDistribution/MapServer/1"
     RANGE,
 ) = range(5)
 
+# TODO: map everything from here: https://www.simshab.ro/arcgis/rest/services/EDW_AGREGARE_HAB/MapServer
 SPECIES_MAPPING = {
     PL: {
         BIBLIO: '/Agregare/MapServer/3',
         PRES_THRE: '/Agregare/MapServer/1',
         POP: '/Agregare/MapServer/2',
+        DISTRIB: '/IBB_RangeDistribution/MapServer/2',
+        RANGE: '/IBB_RangeDistribution/MapServer/3'
+    },
+    AR: {
+        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/10',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/9',
+        POP: '/EDW_AGREGARE_HAB/MapServer/8',
         DISTRIB: '/IBB_RangeDistribution/MapServer/2',
         RANGE: '/IBB_RangeDistribution/MapServer/3'
     }
@@ -66,6 +74,8 @@ def generic_rest_call(url, where_query, out_fields="*"):
 
 
 def get_species_bibliography(subgroup, specnum, region):
+    # TODO: se pare ca s-a modificat apelul, nu primeste parametru REG_BIOGEO, iar in loc de SPECIE avem CODE
+    # see: https://www.simshab.ro/arcgis/rest/services/EDW_AGREGARE_HAB/MapServer/10
     where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
     url = _get_species_url(subgroup, BIBLIO)
     data = generic_rest_call(url, where_query) or []
