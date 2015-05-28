@@ -475,6 +475,7 @@ def create_preview_aggregation(page, subject, comment, timestamp, user_id):
             get_habitat_checklist(dataset_id=curr_report_id)
             .filter_by(code=subject)
         )
+        subgroup = 'n/a'
     elif page == 'species':
         id_map = dict(
             models.db.session.query(
@@ -486,6 +487,7 @@ def create_preview_aggregation(page, subject, comment, timestamp, user_id):
             get_species_checklist(dataset_id=curr_report_id)
             .filter_by(code=subject)
         )
+        subgroup = get_species_subgroup(subject)
     else:
         raise NotImplementedError()
 
@@ -498,5 +500,5 @@ def create_preview_aggregation(page, subject, comment, timestamp, user_id):
         record.subject_id = id_map.get(row.code)
         models.db.session.add(record)
         bioregions.append(row.bio_region)
-    report = ', '.join(bioregions)
+    report = ', '.join(bioregions) + ' [{0}]'.format(subgroup)
     return report, dataset
