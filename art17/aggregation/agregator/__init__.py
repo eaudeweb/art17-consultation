@@ -491,7 +491,7 @@ def create_preview_aggregation(page, subject, comment, timestamp, user_id):
     else:
         raise NotImplementedError()
 
-    bioregions = []
+    bioregions = {}
     refvals = get_subject_refvals_mixed(page, subject)
     prev = get_subject_prev(page, dataset)
     for row in rows:
@@ -499,6 +499,9 @@ def create_preview_aggregation(page, subject, comment, timestamp, user_id):
                                   timestamp, user_id, prev)
         record.subject_id = id_map.get(row.code)
         models.db.session.add(record)
-        bioregions.append(row.bio_region)
-    report = ', '.join(bioregions) + ' [{0}]'.format(subgroup)
+        bioregions[row.bio_region] = record.cons_role
+    report = (
+        ', '.join('{0}:{1}'.format(k, v) for k, v in
+                  bioregions.items()) + ' [{0}]'.format(subgroup)
+    )
     return report, dataset
