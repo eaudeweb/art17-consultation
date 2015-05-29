@@ -17,6 +17,7 @@
 
 {% block content %}
   <h2>Rapoarte disponibile pentru setul de date {{ dataset }}</h2>
+  <h4>Perioada de raportare {{ dataset.year_start }} - {{ dataset.year_end }}</h4>
 
   <ul class="list-unstyled">
     {{ report_menu() }}
