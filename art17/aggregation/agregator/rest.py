@@ -62,7 +62,9 @@ HABITAT_MAPPING = {
 def _log_error(url):
     sentry = current_app.extensions.get('sentry')
     if sentry:
-        sentry.captureMessage(message='Webservice down: %s' % url)
+        pass
+        # TODO Uncomment this once we have a reliable web service
+        # sentry.captureMessage(message='Webservice down: %s' % url)
     logging.warn('Webservice down: %s' % url)
 
 
