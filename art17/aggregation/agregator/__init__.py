@@ -10,7 +10,6 @@ from art17.aggregation.agregator.conclusions import (
     get_habitat_conclusion_range, get_habitat_conclusion_area,
     get_habitat_conclusion_future, get_overall_habitat_conclusion,
 )
-from art17.aggregation.agregator.method import get_species_method, get_method
 from art17.aggregation.agregator.n2k import get_habitat_cover_range, \
     get_species_population_range
 from art17.aggregation.agregator.rest import get_species_bibliography, \
@@ -85,8 +84,6 @@ def set_pressures_threats(obj, pressures_threats):
             pollution_qualifier=row['pollution'],
         )
         models.db.session.add(pressure_obj)
-    obj.threats_method = TERRAIN_DATA
-    obj.pressures_method = TERRAIN_DATA
 
 
 def aggregate_species(obj, result, refvals, prev):
@@ -107,7 +104,7 @@ def aggregate_species(obj, result, refvals, prev):
     result.range_surface_area = get_species_range_surface(
         subgroup, obj.code, result.region
     )
-    result.range_method = get_species_method(subgroup, count)
+    result.range_method = refvals['range']['Metoda areal']
     result.range_trend = get_species_range_trend(
         subgroup, SHORT_TERM, current_year, result.range_surface_area, prev
     )
@@ -148,7 +145,7 @@ def aggregate_species(obj, result, refvals, prev):
         subgroup, SHORT_TERM, current_year, size, prev
     )
     result.population_trend_period = short_period
-    result.population_method = get_species_method(subgroup, count)
+    result.population_method = refvals['population_range']['Metoda populatie']
     result.population_date = current_period
     result.population_trend_magnitude_min = refvals["population_magnitude"][
         "Magn. min scurt"]
@@ -184,7 +181,7 @@ def aggregate_species(obj, result, refvals, prev):
     result.habitat_surface_area = get_species_dist_surface(
         subgroup, obj.code, result.region
     )
-    result.habitat_method = get_species_method(subgroup, count)
+    result.habitat_method = refvals['habitat']['Metoda suprafata habitat']
 
     result.habitat_quality = get_species_habitat_quality(
         subgroup, obj.code, result.region
@@ -210,6 +207,8 @@ def aggregate_species(obj, result, refvals, prev):
         subgroup, obj.code, result.region
     )
     set_pressures_threats(result, pressure_threats)
+    result.threats_method = refvals['threats']['Metoda amenintari']
+    result.pressures_method = refvals['pressures']['Metoda presiuni']
 
     # Complementare
 
@@ -248,7 +247,7 @@ def aggregate_habitat(obj, result, refvals, prev):
     # Areal
     result.range_surface_area = get_habitat_range_surface(obj.code,
                                                           result.region)
-    result.range_method = get_method(count)
+    result.range_method = refvals['range']['Metoda areal']
     result.range_trend = get_habitat_range_trend(
         SHORT_TERM, current_year, result.range_surface_area, prev)
     result.range_trend_period = short_period
@@ -274,7 +273,7 @@ def aggregate_habitat(obj, result, refvals, prev):
     result.coverage_surface_area = get_habitat_dist_surface(obj.code,
                                                             result.region)
     result.coverage_date = current_period
-    result.coverage_method = get_method(count)
+    result.coverage_method = refvals['coverage_range']['Metoda suprafata']
     result.coverage_trend = get_habitat_coverage_trend(
         SHORT_TERM, current_year, result.coverage_surface_area, prev)
     result.coverage_trend_period = short_period
@@ -317,6 +316,8 @@ def aggregate_habitat(obj, result, refvals, prev):
     # Specii tipice
     typical_species = get_habitat_typical_species(obj.code, result.region)
     set_typical_species(result, typical_species)
+    result.typical_species_method = (
+        refvals['typical_species']['Metoda specii tipice'])
 
     # Presiuni, amenintari
     pressures_threats = get_habitat_pressures_threats(obj.code, result.region)
