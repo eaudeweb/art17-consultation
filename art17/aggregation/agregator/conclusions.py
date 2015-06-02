@@ -19,11 +19,8 @@ def compare_operator(operator):
 
 
 def compare_FV_area(current_value, fv, vals):
-    u1 = extract_key(vals, "U1")
-    u2 = extract_key(vals, "U2")
-
-    u1 = u1 and int(u1)
-    u2 = u2 and int(u2)
+    u1 = fv * (1 - app.config['U1_U2_THRESHOLD'])
+    u2 = 0
 
     if current_value >= fv:
         return FV
@@ -40,7 +37,7 @@ def compare_FV_range(current_value, fv):
 
     if current_value >= fv:
         return FV
-    elif current_value > u1:
+    elif current_value >= u1:
         return U1
     elif current_value >= u2:
         return U2
