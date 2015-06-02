@@ -38,6 +38,10 @@ SPECIES_MAPPING = {
         POP: '/EDW_AGREGARE_HAB/MapServer/8',
         DISTRIB: '/IBB_RangeDistribution/MapServer/2',
         RANGE: '/IBB_RangeDistribution/MapServer/3'
+    },
+    None: {
+        DISTRIB: HABITAT_DISTRIBUTION_URL,
+        RANGE: HABITAT_RANGE_URL,
     }
 }
 
@@ -45,6 +49,10 @@ HABITAT_MAPPING = {
     PADURI: {
         BIBLIO: '/AgregareHabitate/MapServer/1',
         TYPICAL: '/AgregareHabitate/MapServer/2',
+        DISTRIB: HABITAT_DISTRIBUTION_URL,
+        RANGE: HABITAT_RANGE_URL,
+    },
+    None: {
         DISTRIB: HABITAT_DISTRIBUTION_URL,
         RANGE: HABITAT_RANGE_URL,
     }
