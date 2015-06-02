@@ -4,8 +4,23 @@ from flask import current_app
 
 
 REQUIRED_FIELDS = {
-    'habitat': ["range", "coverage_range"],
-    'species': ["habitat", "population_range", "population_units", "range"]
+    'habitat': {
+        "range": ['Areal favorabil referinta', 'Necunoscut',
+                  'Operator - areal'],
+        "coverage_range": ['Suprafata favorabila referinta', 'Necunoscut',
+                           'Operator'],
+    },
+    'species': {
+        "habitat": ['Suprafa\u021ba habitat', 'Suprafa\u021ba adecvata'],
+        "population_range": ['Populatia favorabila de referinta',
+                             'Necunoscut', 'Operator'],
+        "population_units": [u'Unit. de m\u0103sur\u0103',
+                             u'Dificult\u0103\u021bi \u00eent\u00e2mpinate',
+                             u'Defini\u021bia localit\u0103\u021bii',
+                             'Metoda conversie'],
+        "range": ['Areal favorabil referinta', 'Necunoscut',
+                  'Operator - areal'],
+    }
 }
 
 
@@ -50,16 +65,15 @@ def load_habitat_refval():
     return load_refval('habitats.json')
 
 
-def save_habitat_refval(data):
-    return save_refval('habitats.json', data)
-
-
 def refvalue_ok(refvalue, subject_type):
     if not refvalue:
         return None
     required = REQUIRED_FIELDS[subject_type]
-    for k in required:
-        if not k in refvalue or not any(refvalue[k].values()):
+    for group, fields in required.iteritems():
+        if group not in refvalue:
+            return False
+        refvals = [refvalue[group].get(f, None) for f in fields]
+        if not any(refvals):
             return False
     return True
 
