@@ -11,7 +11,7 @@ REQUIRED_FIELDS = {
                            'Operator'],
     },
     'species': {
-        "habitat": ['Suprafa\u021ba habitat', 'Suprafa\u021ba adecvata'],
+        "habitat": [u'Suprafa\u021ba habitat', u'Suprafa\u021ba adecvata'],
         "population_range": ['Populatia favorabila de referinta',
                              'Necunoscut', 'Operator'],
         "population_units": [u'Unit. de m\u0103sur\u0103',
