@@ -23,6 +23,23 @@ HABITAT_MAP = {
     'habitat_coverage_magnitude.csv': 'coverage_magnitude',
 }
 
+METHODS = {
+    'species': {
+        'population_range': 'Metoda populatie',
+        'range': 'Metoda areal',
+        'habitat': 'Metoda suprafata habitat',
+        'threats': 'Metoda amenintari',
+        'pressures': 'Metoda presiuni',
+    },
+    'habitat': {
+        'range': 'Metoda areal',
+        'coverage_range': 'Metoda suprafata',
+        'typical_species': 'Metoda specii tipice',
+    }
+}
+
+DEFAULT_METHOD = '2'
+
 
 @importer.command
 def species_refval(csv_dir='.', map=None, json_filename=None):
@@ -144,3 +161,26 @@ def habitat_from_dataset(dataset_id=1):
     data = smart_update(curdata, newdata)
     save_habitat_refval(data)
     print "Done."
+
+
+def refactor_refval(json_filename, method_type):
+    data = load_refval(json_filename)
+    for subject, refvals in data.iteritems():
+        for k, v in refvals.iteritems():
+            v.pop('U1', None)
+            v.pop('U2', None)
+        for group, field in METHODS[method_type].iteritems():
+            refvals.setdefault(group, {}).update({field: DEFAULT_METHOD})
+    return data
+
+
+@importer.command
+def refactor_species_refval():
+    data = refactor_refval('species.json', 'species')
+    save_species_refval(data)
+
+
+@importer.command
+def refactor_habitat_refval():
+    data = refactor_refval('habitats.json', 'habitat')
+    save_habitat_refval(data)

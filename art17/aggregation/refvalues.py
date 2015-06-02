@@ -42,6 +42,10 @@ def save_species_refval(data):
     return save_refval('species.json', data)
 
 
+def save_habitat_refval(data):
+    return save_refval('habitats.json', data)
+
+
 def load_habitat_refval():
     return load_refval('habitats.json')
 
