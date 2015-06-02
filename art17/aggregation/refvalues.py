@@ -46,6 +46,10 @@ def load_habitat_refval():
     return load_refval('habitats.json')
 
 
+def save_habitat_refval(data):
+    return save_refval('habitats.json', data)
+
+
 def refvalue_ok(refvalue, subject_type):
     if not refvalue:
         return None

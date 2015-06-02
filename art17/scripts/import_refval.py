@@ -2,7 +2,8 @@
 import os
 from csv import DictReader
 from art17.aggregation.refvalues import load_refval, save_refval, \
-    load_species_refval, save_species_refval
+    load_species_refval, save_species_refval, load_habitat_refval, \
+    save_habitat_refval
 from art17.scripts import importer
 
 
@@ -108,4 +109,38 @@ def species_from_dataset(dataset_id=1):
     curdata = load_species_refval()
     data = smart_update(curdata, newdata)
     save_species_refval(data)
+    print "Done."
+
+
+@importer.command
+def habitat_from_dataset(dataset_id=1):
+    """
+        Import the reference values from a previous dataset - not reference,
+        but actual values.
+
+        range:
+            'Areal favorabil referinta' - r.range_surface_area
+        coverage_range:
+             "Suprafata favorabila referinta" - r.coverage_surface_area
+    """
+    from art17.scripts.export_refval import generic_habitat_exporter
+
+    def format_row(sp, sr):
+        key = '{}-{}'.format(sp.code, sr.region)
+        data = {
+            'range': {
+                'Areal favorabil referinta': unicode(sr.range_surface_area),
+            },
+            'coverage_range': {
+                "Suprafata favorabila referinta": unicode(
+                    sr.coverage_surface_area),
+            }
+        }
+        print key, data
+        return (key, data)
+
+    newdata = dict(generic_habitat_exporter(format_row, dataset_id=dataset_id))
+    curdata = load_habitat_refval()
+    data = smart_update(curdata, newdata)
+    save_habitat_refval(data)
     print "Done."
