@@ -345,18 +345,20 @@ def aggregate_object(obj, dataset, refvals, timestamp, user_id, prev):
             dataset=dataset,
             region=region_code,
         )
+        record_type = 'habitat'
     elif isinstance(obj, models.DataSpeciesCheckList):
         region_code = obj.bio_region
         result = models.DataSpeciesRegion(
             dataset=dataset,
             region=region_code,
         )
+        record_type = 'species'
     else:
         raise NotImplementedError('Unknown check list obj')
 
     result.cons_date = timestamp
     result.cons_user_id = user_id
-    if not refvals or not refvalue_ok(refvals):
+    if not refvalue_ok(refvals, record_type):
         result.cons_role = ROLE_MISSING
         return result
 

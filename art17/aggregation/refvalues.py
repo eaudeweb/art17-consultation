@@ -3,6 +3,11 @@ import os
 from flask import current_app
 
 
+REQUIRED_FIELDS = {
+    'habitat': ["range", "coverage_range"],
+    'species': ["habitat", "population_range", "population_units", "range"]
+}
+
 def load_refval(filename):
     dir = current_app.config.get('REFVAL_DIR', '.')
     filepath = os.path.join(dir, filename)
@@ -36,12 +41,12 @@ def load_habitat_refval():
     return load_refval('habitats.json')
 
 
-def refvalue_ok(refvalue):
+def refvalue_ok(refvalue, subject_type):
     if not refvalue:
         return None
-    for k, v in refvalue.iteritems():
-        v2 = v.values()
-        if not any(v2):
+    required = REQUIRED_FIELDS[subject_type]
+    for k in required:
+        if not any(refvalue[k].values()):
             return False
     return True
 

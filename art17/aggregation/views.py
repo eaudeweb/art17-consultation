@@ -578,7 +578,7 @@ def refvals(page):
     data = get_subject_refvals_mixed(page, subject)
 
     return flask.render_template('aggregation/preview/refvals.html',
-                                 refvalues=data)
+                                 refvalues=data, page=page)
 
 
 @aggregation.route('/export/<page>/<dataset_id>')
