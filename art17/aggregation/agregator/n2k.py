@@ -22,7 +22,9 @@ def generic_n2k_call(url, where_query, out_fields=""):
         return data.get('features')
 
 
-def get_habitat_cover_range(habcode, region):
+def get_habitat_cover_range(subgroup, habcode, region):
+    if subgroup is None:
+        return None, None
     where_query = "HABITAT_CODE='%s'" % habcode
     data = generic_n2k_call(HABITAT_COVER_URL, where_query,
                             out_fields="HABITAT_COVER")
@@ -34,6 +36,8 @@ def get_habitat_cover_range(habcode, region):
 
 
 def get_species_population_range(subgroup, speccode, region):
+    if subgroup is None:
+        return None, None
     where_query = "SPECIES_CODE='%s'" % speccode
     data = generic_n2k_call(
         SPECIES_COVER_URL, where_query,

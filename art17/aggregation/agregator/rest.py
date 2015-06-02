@@ -25,9 +25,10 @@ HABITAT_RANGE_URL = "/IBB_RangeDistribution/MapServer/1"
 # TODO: map everything from here: https://www.simshab.ro/arcgis/rest/services/EDW_AGREGARE_HAB/MapServer
 SPECIES_MAPPING = {
     PL: {
-        BIBLIO: '/Agregare/MapServer/3',
-        PRES_THRE: '/Agregare/MapServer/1',
-        POP: '/Agregare/MapServer/2',
+        # Broken services:
+        # BIBLIO: '/Agregare/MapServer/3',
+        # PRES_THRE: '/Agregare/MapServer/1',
+        # POP: '/Agregare/MapServer/2',
         DISTRIB: '/IBB_RangeDistribution/MapServer/2',
         RANGE: '/IBB_RangeDistribution/MapServer/3'
     },

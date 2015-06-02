@@ -311,7 +311,7 @@ def aggregate_habitat(obj, result, refvals, prev):
     # Presiuni & Amenintari ??
 
     # Natura 2000
-    n2k_min, n2k_max = get_habitat_cover_range(obj.code, result.region)
+    n2k_min, n2k_max = get_habitat_cover_range(subgroup, obj.code, result.region)
     result.natura2000_area_min = n2k_min
     result.natura2000_area_max = n2k_max
 
