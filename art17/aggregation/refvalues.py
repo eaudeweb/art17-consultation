@@ -8,6 +8,7 @@ REQUIRED_FIELDS = {
     'species': ["habitat", "population_range", "population_units", "range"]
 }
 
+
 def load_refval(filename):
     dir = current_app.config.get('REFVAL_DIR', '.')
     filepath = os.path.join(dir, filename)
@@ -84,7 +85,9 @@ def get_subject_refvals_wip(page, subject):
             data[region] = {}
         if group not in data[region]:
             data[region][group] = {}
-        data[region][group][row.name] = unicode(row.value) if row.value else None
+        data[region][group][row.name] = (
+            unicode(row.value) if row.value else None
+        )
 
     return data
 
