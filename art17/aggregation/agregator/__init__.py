@@ -152,8 +152,8 @@ def aggregate_species(obj, result, refvals, prev):
         "Magn. min scurt"]
     result.population_trend_magnitude_max = refvals["population_magnitude"][
         "Magn. max scurt"]
-    result.population_trend_magnitude_ci = refvals["population_magnitude"][
-        "Interval incredere scurt"]
+    # result.population_trend_magnitude_ci = refvals["population_magnitude"][
+    #     "Interval incredere scurt"]
     result.population_trend_method = MISSING_DATA
     result.population_trend_long = get_species_population_trend(
         subgroup, LONG_TERM, current_year, size, prev
@@ -163,8 +163,8 @@ def aggregate_species(obj, result, refvals, prev):
         refvals["population_magnitude"]["Magn. min lung"]
     result.population_trend_long_magnitude_max = \
         refvals["population_magnitude"]["Magn. max lung"]
-    result.population_trend_long_magnitude_ci = \
-        refvals["population_magnitude"]["Interval incredere lung"]
+    # result.population_trend_long_magnitude_ci = \
+    #     refvals["population_magnitude"]["Interval incredere lung"]
     result.population_trend_long_method = MISSING_DATA
     (
         result.complementary_favourable_population,
@@ -285,8 +285,8 @@ def aggregate_habitat(obj, result, refvals, prev):
         "Magn. min scurt"]
     result.coverage_trend_magnitude_max = refvals["coverage_magnitude"][
         "Magn. max scurt"]
-    result.coverage_trend_magnitude_ci = refvals["coverage_magnitude"][
-        "Interval incredere scurt"]
+    # result.coverage_trend_magnitude_ci = refvals["coverage_magnitude"][
+    #     "Interval incredere scurt"]
     result.coverage_trend_method = MISSING_DATA
     result.coverage_trend_long = get_habitat_coverage_trend(
         LONG_TERM, current_year, result.coverage_surface_area, prev)
@@ -296,8 +296,8 @@ def aggregate_habitat(obj, result, refvals, prev):
         "Magn. min lung"]
     result.coverage_trend_long_magnitude_max = refvals["coverage_magnitude"][
         "Magn. max lung"]
-    result.coverage_trend_long_magnitude_ci = refvals["coverage_magnitude"][
-        "Interval incredere lung"]
+    # result.coverage_trend_long_magnitude_ci = refvals["coverage_magnitude"][
+    #     "Interval incredere lung"]
     result.coverage_trend_long_method = MISSING_DATA
     (
         result.complementary_favourable_area,
