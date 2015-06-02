@@ -10,6 +10,8 @@ HABITAT_SPECIES_URL = '/AgregareHabitate/MapServer/2'
 HABITAT_PRESS_URL = ''  # TODO: there is no press threats url for habitats
 
 # GIS urls
+SPECIES_DISTRIBUTION_URL = '/IBB_RangeDistribution/MapServer/2'
+SPECIES_RANGE_URL = '/IBB_RangeDistribution/MapServer/3'
 HABITAT_DISTRIBUTION_URL = "/IBB_RangeDistribution/MapServer/0"
 HABITAT_RANGE_URL = "/IBB_RangeDistribution/MapServer/1"
 
@@ -29,19 +31,19 @@ SPECIES_MAPPING = {
         # BIBLIO: '/Agregare/MapServer/3',
         # PRES_THRE: '/Agregare/MapServer/1',
         # POP: '/Agregare/MapServer/2',
-        DISTRIB: '/IBB_RangeDistribution/MapServer/2',
-        RANGE: '/IBB_RangeDistribution/MapServer/3'
+        DISTRIB: SPECIES_DISTRIBUTION_URL,
+        RANGE: SPECIES_RANGE_URL,
     },
     AR: {
-        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/10',
-        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/9',
-        POP: '/EDW_AGREGARE_HAB/MapServer/8',
-        DISTRIB: '/IBB_RangeDistribution/MapServer/2',
-        RANGE: '/IBB_RangeDistribution/MapServer/3'
+        # BIBLIO: '/EDW_AGREGARE_HAB/MapServer/10',
+        # PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/9',
+        # POP: '/EDW_AGREGARE_HAB/MapServer/8',
+        DISTRIB: SPECIES_DISTRIBUTION_URL,
+        RANGE: SPECIES_RANGE_URL,
     },
     None: {
-        DISTRIB: HABITAT_DISTRIBUTION_URL,
-        RANGE: HABITAT_RANGE_URL,
+        DISTRIB: SPECIES_DISTRIBUTION_URL,
+        RANGE: SPECIES_RANGE_URL,
     }
 }
 
