@@ -37,7 +37,7 @@ def get_habitat_cover_range(subgroup, habcode, region):
 
 def get_species_population_range(subgroup, speccode, region):
     if subgroup is None:
-        return None, None
+        return None, None, None
     where_query = "SPECIES_CODE='%s'" % speccode
     data = generic_n2k_call(
         SPECIES_COVER_URL, where_query,
