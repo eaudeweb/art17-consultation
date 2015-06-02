@@ -17,7 +17,7 @@ def generic_species_exporter(format_row_cb, dataset_id=None):
     columns = []
     groups = models.LuGrupSpecie.query.all()
     for group in groups:
-        columns.append([group.description])
+        columns.append([group.description, ''])
         data_species = (
             models.DataSpecies.query
             .join(models.DataSpecies.lu)
@@ -214,7 +214,8 @@ def species_population_magnitude(filename=None,
 @exporter.command
 def species_population_units(filename=None, dataset_id=None):
     header = COMMON_HEADER + (
-        u'Unit. de măsură', u'Metoda conversie',
+        u'Unit. de măsură',
+        u'Metoda conversie',
         u'Definiția localității',
         u'Dificultăți întâmpinate',
     )
