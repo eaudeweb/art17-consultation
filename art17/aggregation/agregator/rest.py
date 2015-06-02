@@ -25,9 +25,10 @@ HABITAT_RANGE_URL = "/IBB_RangeDistribution/MapServer/1"
 # TODO: map everything from here: https://www.simshab.ro/arcgis/rest/services/EDW_AGREGARE_HAB/MapServer
 SPECIES_MAPPING = {
     PL: {
-        BIBLIO: '/Agregare/MapServer/3',
-        PRES_THRE: '/Agregare/MapServer/1',
-        POP: '/Agregare/MapServer/2',
+        # Broken services:
+        # BIBLIO: '/Agregare/MapServer/3',
+        # PRES_THRE: '/Agregare/MapServer/1',
+        # POP: '/Agregare/MapServer/2',
         DISTRIB: '/IBB_RangeDistribution/MapServer/2',
         RANGE: '/IBB_RangeDistribution/MapServer/3'
     },
@@ -37,6 +38,10 @@ SPECIES_MAPPING = {
         POP: '/EDW_AGREGARE_HAB/MapServer/8',
         DISTRIB: '/IBB_RangeDistribution/MapServer/2',
         RANGE: '/IBB_RangeDistribution/MapServer/3'
+    },
+    None: {
+        DISTRIB: HABITAT_DISTRIBUTION_URL,
+        RANGE: HABITAT_RANGE_URL,
     }
 }
 
@@ -44,6 +49,10 @@ HABITAT_MAPPING = {
     PADURI: {
         BIBLIO: '/AgregareHabitate/MapServer/1',
         TYPICAL: '/AgregareHabitate/MapServer/2',
+        DISTRIB: HABITAT_DISTRIBUTION_URL,
+        RANGE: HABITAT_RANGE_URL,
+    },
+    None: {
         DISTRIB: HABITAT_DISTRIBUTION_URL,
         RANGE: HABITAT_RANGE_URL,
     }
@@ -66,7 +75,7 @@ def _get_species_url(subgroup, service):
             'No url found for service {0} in subgroup {1}'.format(service,
                                                                   subgroup))
         return None
-    return SPECIES_MAPPING[subgroup][service]
+    return SPECIES_MAPPING[subgroup].get(service)
 
 
 def _get_habitat_url(subgroup, service):
@@ -75,7 +84,7 @@ def _get_habitat_url(subgroup, service):
             'No url found for service {0} in subgroup {1} H'.format(service,
                                                                     subgroup))
         return None
-    return HABITAT_MAPPING[subgroup][service]
+    return HABITAT_MAPPING[subgroup].get(service)
 
 
 def generic_rest_call(url, where_query, out_fields="*"):
