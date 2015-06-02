@@ -109,14 +109,18 @@ def species_from_dataset(dataset_id=1):
         key = '{}-{}'.format(sp.code, sr.region)
         data = {
             'range': {
-                'Areal favorabil referinta': unicode(sr.range_surface_area),
+                'Areal favorabil referinta':
+                    unicode(
+                        sr.range_surface_area) if sr.range_surface_area else None,
             },
             'habitat': {
-                u'Suprafața adecvata': unicode(sr.habitat_surface_area),
+                u'Suprafața adecvata': unicode(sr.habitat_surface_area)
+                if sr.habitat_surface_area else None,
             },
             'population_range': {
                 'Populatia favorabila de referinta': unicode(
-                    sr.population_minimum_size or 0)
+                    sr.population_minimum_size)
+                if sr.population_minimum_size else None
             }
         }
         print key, data
@@ -146,11 +150,13 @@ def habitat_from_dataset(dataset_id=1):
         key = '{}-{}'.format(sp.code, sr.region)
         data = {
             'range': {
-                'Areal favorabil referinta': unicode(sr.range_surface_area),
+                'Areal favorabil referinta': unicode(sr.range_surface_area)
+                if sr.range_surface_area else None,
             },
             'coverage_range': {
                 "Suprafata favorabila referinta": unicode(
-                    sr.coverage_surface_area),
+                    sr.coverage_surface_area)
+                if sr.coverage_surface_area else None,
             }
         }
         print key, data
