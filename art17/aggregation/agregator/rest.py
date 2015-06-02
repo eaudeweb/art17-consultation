@@ -67,7 +67,7 @@ def _get_species_url(subgroup, service):
             'No url found for service {0} in subgroup {1}'.format(service,
                                                                   subgroup))
         return None
-    return SPECIES_MAPPING[subgroup][service]
+    return SPECIES_MAPPING[subgroup].get(service)
 
 
 def _get_habitat_url(subgroup, service):
@@ -76,7 +76,7 @@ def _get_habitat_url(subgroup, service):
             'No url found for service {0} in subgroup {1} H'.format(service,
                                                                     subgroup))
         return None
-    return HABITAT_MAPPING[subgroup][service]
+    return HABITAT_MAPPING[subgroup].get(service)
 
 
 def generic_rest_call(url, where_query, out_fields="*"):
