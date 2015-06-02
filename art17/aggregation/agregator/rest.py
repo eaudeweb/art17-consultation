@@ -2,7 +2,7 @@ from flask import current_app
 from urllib import urlencode
 import logging
 import requests
-from art17.aggregation.agregator.subgroups import PL, AR
+from art17.aggregation.agregator.subgroups import PL, AR, PADURI
 
 # Colectare URLs
 HABITAT_BIBLIO_URL = '/AgregareHabitate/MapServer/1'
@@ -19,7 +19,8 @@ HABITAT_RANGE_URL = "/IBB_RangeDistribution/MapServer/1"
     POP,
     DISTRIB,
     RANGE,
-) = range(5)
+    TYPICAL,
+) = range(6)
 
 # TODO: map everything from here: https://www.simshab.ro/arcgis/rest/services/EDW_AGREGARE_HAB/MapServer
 SPECIES_MAPPING = {
@@ -36,6 +37,15 @@ SPECIES_MAPPING = {
         POP: '/EDW_AGREGARE_HAB/MapServer/8',
         DISTRIB: '/IBB_RangeDistribution/MapServer/2',
         RANGE: '/IBB_RangeDistribution/MapServer/3'
+    }
+}
+
+HABITAT_MAPPING = {
+    PADURI: {
+        BIBLIO: '/AgregareHabitate/MapServer/1',
+        TYPICAL: '/AgregareHabitate/MapServer/2',
+        DISTRIB: HABITAT_DISTRIBUTION_URL,
+        RANGE: HABITAT_RANGE_URL,
     }
 }
 
@@ -57,6 +67,15 @@ def _get_species_url(subgroup, service):
                                                                   subgroup))
         return None
     return SPECIES_MAPPING[subgroup][service]
+
+
+def _get_habitat_url(subgroup, service):
+    if subgroup not in HABITAT_MAPPING:
+        logging.debug(
+            'No url found for service {0} in subgroup {1} H'.format(service,
+                                                                    subgroup))
+        return None
+    return HABITAT_MAPPING[subgroup][service]
 
 
 def generic_rest_call(url, where_query, out_fields="*"):
@@ -148,7 +167,7 @@ def get_species_habitat_quality(subgroup, specnum, region):
         return 'Unknown'
 
 
-def get_habitat_published(habcode, region):
+def get_habitat_published(subgroup, habcode, region):
     FIELDS = [
         'AUTORI',
         'TITLU_LUCRARE',
@@ -160,7 +179,8 @@ def get_habitat_published(habcode, region):
         'PAGINI',
     ]
     where_query = "COD_HABITAT='%s' AND REG_BIOGEG='%s'" % (habcode, region)
-    data = generic_rest_call(HABITAT_BIBLIO_URL, where_query) or []
+    url = _get_habitat_url(subgroup, BIBLIO)
+    data = generic_rest_call(url, where_query) or []
 
     rv = []
     for row in data:
@@ -168,13 +188,14 @@ def get_habitat_published(habcode, region):
     return ''.join(rv), len(data)
 
 
-def get_habitat_typical_species(habcode, region):
+def get_habitat_typical_species(subgroup, habcode, region):
     where_query = "HABITAT='%s' AND REG_BIOGEG='%s'" % (habcode, region)
-    data = generic_rest_call(HABITAT_SPECIES_URL, where_query) or []
+    url = _get_habitat_url(subgroup, TYPICAL)
+    data = generic_rest_call(url, where_query) or []
     return [r['attributes']['NAME'] for r in data]
 
 
-def get_habitat_pressures_threats(habcode, region):
+def get_habitat_pressures_threats(subgroup, habcode, region):
     type_map = {
         None: None,  # ???
         1: 't',  # threat
@@ -202,16 +223,16 @@ def generic_surface_call(url, where_query, out_fields=""):
     return surface
 
 
-def get_habitat_dist_surface(habcode, region):
+def get_habitat_dist_surface(subgroup, habcode, region):
     where_query = "HABITAT='%s'" % habcode
+    url = _get_habitat_url(subgroup, DISTRIB)
+    return generic_surface_call(url, where_query, region)
 
-    return generic_surface_call(HABITAT_DISTRIBUTION_URL, where_query, region)
 
-
-def get_habitat_range_surface(habcode, region):
+def get_habitat_range_surface(subgroup, habcode, region):
     where_query = "HABITAT='%s'" % habcode
-
-    return generic_surface_call(HABITAT_RANGE_URL, where_query, region)
+    url = _get_habitat_url(subgroup, RANGE)
+    return generic_surface_call(url, where_query, region)
 
 
 def get_species_dist_surface(subgroup, speccode, region):
