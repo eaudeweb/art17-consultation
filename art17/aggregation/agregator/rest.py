@@ -1,3 +1,6 @@
+import hashlib
+import json
+import os
 from flask import current_app
 from urllib import urlencode
 import logging
@@ -91,6 +94,36 @@ def _get_habitat_url(subgroup, service):
     return HABITAT_MAPPING[subgroup].get(service)
 
 
+def uglycache(f):
+    def _f(url, *args, **kwargs):
+        if url is None:
+            return {}
+        params = url + ''.join(str(a) for a in args)
+        params += ''.join(str(v) for v in kwargs.values())
+        m = hashlib.md5()
+        m.update(params)
+        filename = m.hexdigest()
+        path = os.path.join(current_app.config['UGLY_CACHE'], filename)
+        result = None
+        if os.path.exists(path):
+            try:
+                result = json.load(open(path))
+            except:
+                print "Invalid cache."
+                pass
+        if result is not None:
+            print "Returning from cache: ", filename, url, args, kwargs
+            return result
+        result = f(url, *args, **kwargs)
+        with open(path, 'w') as fout:
+            json.dump(result, fout)
+            print "Saving in cache: ", filename, url, args, kwargs
+        return result
+
+    return _f
+
+
+@uglycache
 def generic_rest_call(url, where_query, out_fields="*"):
     if not url:
         return {}

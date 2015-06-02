@@ -31,6 +31,7 @@ def create_app():
     app.config.setdefault('U1_U2_THRESHOLD', 0.1)
     app.config.setdefault('ACCEPTED_AVG_VARIATION', 0.1)
     app.config.setdefault('REPORTING_FREQUENCY', 6)
+    app.config.setdefault('UGLY_CACHE', os.path.join(REPO_ROOT, 'cache'))
     app.config.from_pyfile('settings.py', silent=True)
     app.config.from_pyfile(REPO_ROOT / 'settings.py', silent=True)
     app.register_blueprint(auth)
