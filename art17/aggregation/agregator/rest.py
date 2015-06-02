@@ -7,6 +7,8 @@ from art17.aggregation.agregator.subgroups import PL, AR
 # Colectare URLs
 HABITAT_BIBLIO_URL = '/AgregareHabitate/MapServer/1'
 HABITAT_SPECIES_URL = '/AgregareHabitate/MapServer/2'
+HABITAT_PRESS_URL = ''  # TODO: there is no press threats url for habitats
+
 # GIS urls
 HABITAT_DISTRIBUTION_URL = "/IBB_RangeDistribution/MapServer/0"
 HABITAT_RANGE_URL = "/IBB_RangeDistribution/MapServer/1"
@@ -47,13 +49,19 @@ def _log_error(url):
 
 def _get_species_url(subgroup, service):
     if subgroup not in SPECIES_MAPPING:
-        raise NotImplementedError(
-            'No mapping for species group: %s' % subgroup
-        )
+        # raise NotImplementedError(
+        #     'No mapping for species group: %s' % subgroup
+        # )
+        logging.debug(
+            'No url found for service {0} in subgroup {1}'.format(service,
+                                                                  subgroup))
+        return None
     return SPECIES_MAPPING[subgroup][service]
 
 
 def generic_rest_call(url, where_query, out_fields="*"):
+    if not url:
+        return {}
     url = current_app.config.get('GIS_API_URL') + url
     url += "/query?" + urlencode({
         'where': where_query,
@@ -164,6 +172,24 @@ def get_habitat_typical_species(habcode, region):
     where_query = "HABITAT='%s' AND REG_BIOGEG='%s'" % (habcode, region)
     data = generic_rest_call(HABITAT_SPECIES_URL, where_query) or []
     return [r['attributes']['NAME'] for r in data]
+
+
+def get_habitat_pressures_threats(habcode, region):
+    type_map = {
+        None: None,  # ???
+        1: 't',  # threat
+        2: 'p',  # pressure
+    }
+    data = []  # TODO connect to a web service
+    return [
+        {
+            'pressure': d["AMENINTARI"],
+            'ranking': d["RANG"],
+            'type': type_map[d["TIP"]],
+            'pollution': d["POLUARE"],
+        }
+        for d in data
+    ]
 
 
 def generic_surface_call(url, where_query, out_fields=""):

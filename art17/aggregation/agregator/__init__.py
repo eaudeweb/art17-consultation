@@ -17,7 +17,8 @@ from art17.aggregation.agregator.rest import get_species_bibliography, \
     get_species_pressures_threats, get_species_population_size, \
     get_species_habitat_quality, get_habitat_typical_species, \
     get_habitat_published, get_habitat_dist_surface, get_habitat_range_surface, \
-    get_species_dist_surface, get_species_range_surface
+    get_species_dist_surface, get_species_range_surface, \
+    get_habitat_pressures_threats
 from art17.aggregation.agregator.subgroups import get_species_subgroup
 from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_species_population_trend, get_species_habitat_trend, \
@@ -27,9 +28,6 @@ from art17.aggregation.prev import load_species_prev, load_habitat_prev, \
 from art17.aggregation.refvalues import (
     refvalue_ok, load_species_refval, load_habitat_refval,
     get_subject_refvals_mixed, extract_key,
-)
-from art17.aggregation.agregator.primary import (
-    get_pressures_threats,
 )
 from art17.aggregation.utils import (
     get_reporting_id, get_habitat_checklist, get_species_checklist,
@@ -321,7 +319,7 @@ def aggregate_habitat(obj, result, refvals, prev):
     set_typical_species(result, typical_species)
 
     # Presiuni, amenintari
-    pressures_threats = get_pressures_threats(obj.code, result.region)
+    pressures_threats = get_habitat_pressures_threats(obj.code, result.region)
     set_pressures_threats(result, pressures_threats)
 
     # Future

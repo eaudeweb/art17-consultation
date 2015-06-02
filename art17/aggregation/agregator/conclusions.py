@@ -83,7 +83,7 @@ def get_conclusion(current_value, refvals, refval_type, **kwargs):
     vals = refvals[refval_type]
     fv_text = "adecvat" if refval_type == 'habitat' else "favorabil"
     fv = extract_key(vals, fv_text)
-    fv = fv and int(fv)
+    fv = fv and float(fv)
     unknown = extract_key(vals, 'Necunoscut')
     operator = extract_key(vals, 'Operator')
 

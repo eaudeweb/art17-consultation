@@ -32,7 +32,6 @@ def get_species_subgroup(speciescode):
 
     subgroup = mapping.get(speciescode)
     if subgroup is None:
-        subgroup = PL
         logging.warn('Unknown subgroup for speciescode: {0} returning PL'
                      .format(speciescode))
     return subgroup

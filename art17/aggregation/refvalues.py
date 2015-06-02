@@ -55,7 +55,7 @@ def refvalue_ok(refvalue, subject_type):
         return None
     required = REQUIRED_FIELDS[subject_type]
     for k in required:
-        if not any(refvalue[k].values()):
+        if not k in refvalue or not any(refvalue[k].values()):
             return False
     return True
 
