@@ -20,6 +20,7 @@ from art17.lookup import CONCLUSIONS
 from art17.aggregation.export import get_tables
 from art17.models import STATUS_CLOSED
 from art17.species import SpeciesCommentView
+from art17.common import get_year_start
 
 PRESSURES = {
     'A': 'Agricultura',
@@ -311,7 +312,8 @@ def report(dataset_id):
     dataset = models.Dataset.query.get_or_404(dataset_id)
     return render_template('aggregation/reports/report.html',
                            dataset=dataset,
-                           dataset_id=dataset.id)
+                           dataset_id=dataset.id,
+                           year_start=get_year_start())
 
 
 def report_conservation_status(dataset_id, page):

@@ -23,4 +23,52 @@
     {{ report_menu() }}
   </ul>
 
+  {% if dataset.year_start == year_start %}
+    <h2>Rapoarte spațiale</h2>
+    <ul class="list-unstyled">
+      <li>
+        <a href="https://www.simshab.ro/Rapoarte/dist_chk_spe/" target="_blank">
+        Raportul #1.a - Distributii in plus sau in minus fata de lista de
+        verificare - Specii</a>
+      </li>
+      <li>
+        <a href="https://www.simshab.ro/Rapoarte/dist_chk_hab/" target="_blank">
+        Raportul #1.b - Distributii in plus sau in minus fata de lista de
+        verificare - Habitate</a>
+      </li>
+      <li>
+        <a href="https://www.simshab.ro/Rapoarte/sci_missing_spe/" target="_blank">
+        Raportul #2.a Situri N2K din care lipsesc distributii pentru specia
+        raportata</a>
+      </li>
+      <li>
+        <a href="https://www.simshab.ro/Rapoarte/sci_missing_hab/" target="_blank">
+        Raportul #2.b Situri N2K din care lipsesc distributii pentru habitatul
+        raportat</a>
+      </li>
+      <li>
+        <a href="https://www.simshab.ro/Rapoarte/sci_range_spe/" target="_blank">
+        Raportul #4.a distributiile care se gasesc la mai mult de 50 km de SCI
+        (Art17)</a>
+      </li>
+      <li>
+        <a href="https://www.simshab.ro/Rapoarte/sci_range_hab/" target="_blank">
+        Raportul #4.b distributiile care se gasesc la mai mult de 50 km de SCI
+        (Art17)</a>
+      </li>
+      <li>
+        <a href="https://www.simshab.ro/Lists/RapoarteNeconcordante/AllItems.aspx" target="_blank">
+        Raportul #7 Neconcordante intre distributii si areal</a>
+      </li>
+      <li>
+        <a href="https://www.simshab.ro/ANPM/RaportDXSP" target="_blank">
+        Raportul #9.a Neconcordantele intre rapoarte xml si harti - specii</a>
+      </li>
+      <li>
+        <a href="https://www.simshab.ro/ANPM/RaportDXHAB"  target="_blank">
+        Raportul #9.b Neconcordantele intre rapoarte xml si harti - habitate</a>
+      </li>
+    </ul>
+  {% endif %}
+
 {% endblock content %}
