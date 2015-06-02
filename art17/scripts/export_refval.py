@@ -1,4 +1,8 @@
 # coding=utf-8
+"""
+    This file will export the reference values from an existing dataset, i.e.:
+    the initial one.
+"""
 import os.path
 from art17 import models
 from art17.scripts import exporter, DEFAULT_DATASET_ID
@@ -13,7 +17,7 @@ def generic_species_exporter(format_row_cb, dataset_id=None):
     columns = []
     groups = models.LuGrupSpecie.query.all()
     for group in groups:
-        columns.append([group.description])
+        columns.append([group.description, ''])
         data_species = (
             models.DataSpecies.query
             .join(models.DataSpecies.lu)
@@ -210,7 +214,8 @@ def species_population_magnitude(filename=None,
 @exporter.command
 def species_population_units(filename=None, dataset_id=None):
     header = COMMON_HEADER + (
-        u'Unit. de măsură', u'Metoda conversie',
+        u'Unit. de măsură',
+        u'Metoda conversie',
         u'Definiția localității',
         u'Dificultăți întâmpinate',
     )
@@ -236,7 +241,7 @@ def species_population_units(filename=None, dataset_id=None):
 
 @exporter.command
 def all_species(folder=None, mapping=None, dataset_id=None):
-    """ Export all reference values
+    """ Export all species reference values
     """
     folder = folder or '.'
     available = mapping or {
@@ -331,7 +336,7 @@ def habitat_coverage_magnitude(filename=None, dataset_id=None):
 
 @exporter.command
 def all_habitat(folder=None, dataset_id=None):
-    """ Export all reference values
+    """ Export all habitat reference values
     """
     return all_species(folder=folder, mapping={
         'habitat_magnitude': habitat_magnitude,

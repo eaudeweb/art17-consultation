@@ -2,7 +2,7 @@
 
 {% if refvalues %}
   {% for region, rv in refvalues.iteritems() %}
-    {% set info = refvalue_ok(rv) %}
+    {% set info = refvalue_ok(rv, page) %}
 
     <h4>{{ region }} -
       {% if info is none %}date lipsă{% elif not info %}date incomplete{% else %}ok{% endif %}

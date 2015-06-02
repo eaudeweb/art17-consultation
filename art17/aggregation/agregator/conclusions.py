@@ -19,11 +19,8 @@ def compare_operator(operator):
 
 
 def compare_FV_area(current_value, fv, vals):
-    u1 = extract_key(vals, "U1")
-    u2 = extract_key(vals, "U2")
-
-    u1 = u1 and int(u1)
-    u2 = u2 and int(u2)
+    u1 = fv * (1 - app.config['U1_U2_THRESHOLD'])
+    u2 = 0
 
     if current_value >= fv:
         return FV
@@ -40,7 +37,7 @@ def compare_FV_range(current_value, fv):
 
     if current_value >= fv:
         return FV
-    elif current_value > u1:
+    elif current_value >= u1:
         return U1
     elif current_value >= u2:
         return U2
@@ -86,7 +83,7 @@ def get_conclusion(current_value, refvals, refval_type, **kwargs):
     vals = refvals[refval_type]
     fv_text = "adecvat" if refval_type == 'habitat' else "favorabil"
     fv = extract_key(vals, fv_text)
-    fv = fv and int(fv)
+    fv = fv and float(fv)
     unknown = extract_key(vals, 'Necunoscut')
     operator = extract_key(vals, 'Operator')
 
@@ -107,21 +104,21 @@ def get_conclusion(current_value, refvals, refval_type, **kwargs):
     return ''
 
 
-def get_species_conclusion_range(surface_area, refvals):
+def get_species_conclusion_range(subgroup, surface_area, refvals):
     return get_conclusion(surface_area, refvals, 'range')
 
 
-def get_species_conclusion_population(min_size, max_size, refvals, prev, year):
+def get_species_conclusion_population(subgroup, min_size, max_size, refvals, prev, year):
     size = average([s for s in (min_size, max_size) if s is not None])
     return get_conclusion(size, refvals, 'population_range', prev=prev,
                           year=year)
 
 
-def get_species_conclusion_habitat(surface_area, quality, refvals):
+def get_species_conclusion_habitat(subgroup, surface_area, quality, refvals):
     return get_conclusion(surface_area, refvals, 'habitat', quality=quality)
 
 
-def get_species_conclusion_future(code, region):
+def get_species_conclusion_future(subgroup, code, region):
     return FV
 
 

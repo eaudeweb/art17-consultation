@@ -40,16 +40,16 @@ def get_trend(term, year, current, prev, key):
         return '='
 
 
-def get_species_range_trend(term, year, current_value, prev):
+def get_species_range_trend(subgroup, term, year, current_value, prev):
     return get_trend(term, year, current_value, prev, 'range_surface_area')
 
 
-def get_species_population_trend(term, year, current_value, prev):
+def get_species_population_trend(subgroup, term, year, current_value, prev):
     return get_trend(term, year, current_value, prev,
                      ('population_minimum_size', 'population_maximum_size'))
 
 
-def get_species_habitat_trend(term, year, current_value, prev):
+def get_species_habitat_trend(subgroup, term, year, current_value, prev):
     return get_trend(term, year, current_value, prev, 'habitat_surface_area')
 
 

@@ -3,6 +3,12 @@ import os
 from flask import current_app
 
 
+REQUIRED_FIELDS = {
+    'habitat': ["range", "coverage_range"],
+    'species': ["habitat", "population_range", "population_units", "range"]
+}
+
+
 def load_refval(filename):
     dir = current_app.config.get('REFVAL_DIR', '.')
     filepath = os.path.join(dir, filename)
@@ -32,16 +38,28 @@ def load_species_refval():
     return load_refval('species.json')
 
 
+def save_species_refval(data):
+    return save_refval('species.json', data)
+
+
+def save_habitat_refval(data):
+    return save_refval('habitats.json', data)
+
+
 def load_habitat_refval():
     return load_refval('habitats.json')
 
 
-def refvalue_ok(refvalue):
+def save_habitat_refval(data):
+    return save_refval('habitats.json', data)
+
+
+def refvalue_ok(refvalue, subject_type):
     if not refvalue:
         return None
-    for k, v in refvalue.iteritems():
-        v2 = v.values()
-        if not any(v2):
+    required = REQUIRED_FIELDS[subject_type]
+    for k in required:
+        if not k in refvalue or not any(refvalue[k].values()):
             return False
     return True
 
@@ -79,7 +97,9 @@ def get_subject_refvals_wip(page, subject):
             data[region] = {}
         if group not in data[region]:
             data[region][group] = {}
-        data[region][group][row.name] = unicode(row.value) if row.value else None
+        data[region][group][row.name] = (
+            unicode(row.value) if row.value else None
+        )
 
     return data
 
