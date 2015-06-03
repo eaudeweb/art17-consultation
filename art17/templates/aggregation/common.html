@@ -24,6 +24,10 @@
       {% else %}
         în lucru
       {% endif %}
+
+      {% if record.cons_generalstatus != '1' %}
+      - prezență: {{ record.cons_generalstatus }}
+      {% endif %}
       </a>
     </td>
     {% else %}

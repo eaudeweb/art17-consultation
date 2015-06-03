@@ -358,13 +358,18 @@ def aggregate_object(obj, dataset, refvals, timestamp, user_id, prev):
 
     result.cons_date = timestamp
     result.cons_user_id = user_id
+    result.cons_generalstatus = obj.presence
+
+    if result.cons_generalstatus != '1':
+        result.cons_role = ROLE_AGGREGATED
+        return result
+
     if not refvalue_ok(refvals, record_type):
         result.cons_role = ROLE_MISSING
         return result
 
     # Agregation starts here
     result.cons_role = ROLE_AGGREGATED
-    result.cons_generalstatus = obj.presence
 
     if isinstance(obj, models.DataHabitatsCheckList):
         result = aggregate_habitat(obj, result, refvals, prev)
