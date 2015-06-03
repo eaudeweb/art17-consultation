@@ -38,6 +38,12 @@ METHODS = {
     }
 }
 
+FIELDS = {
+    "range": ['Necunoscut', 'Operator - areal'],
+    "coverage_range": ['Necunoscut', 'Operator'],
+    "population_range": ['Necunoscut', 'Operator'],
+}
+
 DEFAULT_METHOD = '2'
 
 
@@ -75,6 +81,11 @@ def habitat_refval(csv_dir='.'):
                           json_filename='habitats.json')
 
 
+def set_null(d):
+    for k in d:
+        d[k] = None
+
+
 def smart_update(data, newdata):
     for key, value in data.items():
         if key not in newdata:
@@ -84,6 +95,13 @@ def smart_update(data, newdata):
             print "Updating:", key
         for group, values in value.items():
             if group in newdata[key]:
+                vals = [data[key][group][field] for field in
+                        FIELDS.get(group, [])]
+                if any(vals):
+                    print 'Set FV to null:', key
+                    set_null(newdata[key][group])
+                    if all(vals):
+                        print 'ERR:Both Unknown and Operator have values', vals
                 data[key][group].update(newdata[key][group])
             else:
                 print "Missing group:", group
@@ -109,9 +127,8 @@ def species_from_dataset(dataset_id=1):
         key = '{}-{}'.format(sp.code, sr.region)
         data = {
             'range': {
-                'Areal favorabil referinta':
-                    unicode(
-                        sr.range_surface_area) if sr.range_surface_area else None,
+                'Areal favorabil referinta': unicode(
+                    sr.range_surface_area) if sr.range_surface_area else None,
             },
             'habitat': {
                 u'Suprafața adecvata': unicode(sr.habitat_surface_area)
@@ -175,6 +192,9 @@ def refactor_refval(json_filename, method_type):
         for k, v in refvals.iteritems():
             v.pop('U1', None)
             v.pop('U2', None)
+            for field, val in v.iteritems():
+                if val == 'None':
+                    refvals[k][field] = None
         for group, field in METHODS[method_type].iteritems():
             refvals.setdefault(group, {}).update({field: DEFAULT_METHOD})
     return data
