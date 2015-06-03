@@ -322,7 +322,7 @@ def aggregate_habitat(obj, result, refvals, prev):
         subgroup, obj.code, result.region
     )
     set_typical_species(result, typical_species)
-    result.typical_species_method = (
+    result.structure_and_functions_method = (
         refvals['typical_species']['Metoda specii tipice'])
 
     # Presiuni, amenintari
