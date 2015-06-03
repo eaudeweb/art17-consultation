@@ -35,8 +35,6 @@ from art17.aggregation.utils import (
 from art17.models import DataHabitatSpecies
 
 
-EXPERT_OPINION = 'Expert opinion'
-
 UNKNOWN_TREND = 'x'
 MISSING_DATA = '0'
 TERRAIN_DATA = '1'
@@ -125,7 +123,6 @@ def aggregate_species(obj, result, refvals, prev):
         result.complementary_favourable_range_op,
         result.complementary_favourable_range_unknown,
     ) = parse_complementary(refvals["range"])
-    result.complementary_favourable_range_method = EXPERT_OPINION
     result.conclusion_range = get_species_conclusion_range(
         subgroup, result.range_surface_area, refvals
     )
@@ -171,7 +168,6 @@ def aggregate_species(obj, result, refvals, prev):
         result.complementary_favourable_population_op,
         result.complementary_favourable_population_unknown,
     ) = parse_complementary(refvals["population_range"])
-    result.complementary_favourable_population_method = EXPERT_OPINION
     result.conclusion_population = get_species_conclusion_population(
         subgroup, result.population_minimum_size,
         result.population_maximum_size,
@@ -269,7 +265,6 @@ def aggregate_habitat(obj, result, refvals, prev):
         result.complementary_favourable_range_op,
         result.complementary_favourable_range_unknown,
     ) = parse_complementary(refvals["range"])
-    result.complementary_favourable_range_method = EXPERT_OPINION
     result.conclusion_range = get_habitat_conclusion_range(
         result.range_surface_area, refvals)
 
@@ -304,7 +299,6 @@ def aggregate_habitat(obj, result, refvals, prev):
         result.complementary_favourable_area_op,
         result.complementary_favourable_area_unknown,
     ) = parse_complementary(refvals["coverage_range"])
-    result.complementary_favourable_area_method = EXPERT_OPINION
     result.conclusion_area = get_habitat_conclusion_area(
         result.coverage_surface_area, refvals)
 
