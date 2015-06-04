@@ -55,6 +55,7 @@ from art17.aggregation.utils import (
     get_reporting_id,
 )
 from art17.aggregation.admin import can_delete_dataset
+from art17.aggregation.checklist import DATE_FORMAT_COMMENT
 
 
 @aggregation.route('/_ping')
@@ -593,6 +594,7 @@ def export(page, dataset_id):
     else:
         flask.abort(404)
 
-    fn = '{}_{}.xml'.format(page, dataset.comment.replace(' ', '-'))
+    name = dataset.comment or dataset.date.strftime(DATE_FORMAT_COMMENT)
+    fn = '{}_{}.xml'.format(page, name.replace(' ', '-'))
     headers = {"Content-Disposition": "attachment; filename={}".format(fn)}
     return flask.Response(xml, mimetype='text/xml', headers=headers)
