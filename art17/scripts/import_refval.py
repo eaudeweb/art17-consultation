@@ -86,6 +86,13 @@ def set_null(d):
         d[k] = None
 
 
+def not_null(d):
+    for k, v in d.iteritems():
+        if v is None:
+            return False
+    return True
+
+
 def smart_update(data, newdata):
     for key, value in data.items():
         if key not in newdata:
@@ -95,13 +102,12 @@ def smart_update(data, newdata):
             print "Updating:", key
         for group, values in value.items():
             if group in newdata[key]:
-                vals = [data[key][group][field] for field in
-                        FIELDS.get(group, [])]
-                if any(vals):
-                    print 'Set FV to null:', key
-                    set_null(newdata[key][group])
-                    if all(vals):
-                        print 'ERR:Both Unknown and Operator have values', vals
+                if not_null(newdata[key][group]):
+                    vals = [data[key][group][field] for field in
+                            FIELDS.get(group, [])]
+                    if any(vals):
+                        print 'Set Operator and Unknown to null:', key
+                        set_null(newdata[key][group])
                 data[key][group].update(newdata[key][group])
             else:
                 print "Missing group:", group
@@ -125,6 +131,9 @@ def species_from_dataset(dataset_id=1):
 
     def format_row(sp, sr):
         key = '{}-{}'.format(sp.code, sr.region)
+        population_size = (sr.population_minimum_size or
+                           sr.population_alt_minimum_size or
+                           sr.population_alt_maximum_size)
         data = {
             'range': {
                 'Areal favorabil referinta': unicode(
@@ -135,9 +144,8 @@ def species_from_dataset(dataset_id=1):
                 if sr.habitat_surface_area else None,
             },
             'population_range': {
-                'Populatia favorabila de referinta': unicode(
-                    sr.population_minimum_size)
-                if sr.population_minimum_size else None
+                'Populatia favorabila de referinta': unicode(population_size)
+                if population_size else None
             }
         }
         print key, data
