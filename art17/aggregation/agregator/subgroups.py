@@ -3,6 +3,8 @@
 """
 import logging
 
+from art17.aggregation.refvalues import load_refval
+
 (
     AR,  # Amfibieni si reptile
     LL,  # Lilieci
@@ -19,12 +21,13 @@ SPECIES_SUBGROUPS = [
 ]
 
 
+def get_mapping(filename):
+    mapping = load_refval(filename)
+    return {code: eval(subgroup) for code, subgroup in mapping.iteritems()}
+
+
 def get_species_mapping():
-    # TODO: maybe load it from somewhere
-    return {
-        '1758': PL,
-        '1188': AR,
-    }
+    return get_mapping('species_subgroups.json')
 
 
 def get_species_subgroup(speciescode):
@@ -38,37 +41,19 @@ def get_species_subgroup(speciescode):
 
 
 (
-    PADURI,
-) = range(1)
+    AD,  # Apa dulce
+    DN,  # Dune
+    HM,  # Habitate marine
+    PS,  # Pesteri
+    ML,  # Mlastini, Stancarii
+    PD,  # Paduri,
+    PJ,  # Pajisti
+    SR,  # Saraturi
+) = range(8)
 
 
 def get_habitat_mapping():
-    return {
-        '9110': PADURI,
-        '9130': PADURI,
-        '9150': PADURI,
-        '9170': PADURI,
-        '9180': PADURI,
-        '91AA': PADURI,
-        '91D0': PADURI,
-        '91E0': PADURI,
-        '91F0': PADURI,
-        '91H0': PADURI,
-        '91I0': PADURI,
-        '91K0': PADURI,
-        '91L0': PADURI,
-        '91M0': PADURI,
-        '91Q0': PADURI,
-        '91V0': PADURI,
-        '91X0': PADURI,
-        '91Y0': PADURI,
-        '9260': PADURI,
-        '92A0': PADURI,
-        '92D0': PADURI,
-        '9410': PADURI,
-        '9420': PADURI,
-        '9530': PADURI,
-    }
+    return get_mapping('habitats_subgroups.json')
 
 
 def get_habitat_subgroup(habcode):

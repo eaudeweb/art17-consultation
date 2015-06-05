@@ -60,7 +60,7 @@ def get_prev_population_size(prev, year):
     end = year
     keys = ('population_minimum_size', 'population_maximum_size')
     prev_values = [average([p[key] for key in keys if p[key]])
-                   for p in prev if start <= prev['year'] < end]
+                   for p in prev if start <= p['year'] < end]
     return average([val for val in prev_values if val])
 
 

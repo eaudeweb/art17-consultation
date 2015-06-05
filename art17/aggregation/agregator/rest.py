@@ -5,7 +5,9 @@ from flask import current_app
 from urllib import urlencode
 import logging
 import requests
-from art17.aggregation.agregator.subgroups import PL, AR, PADURI
+from art17.aggregation.agregator.subgroups import (
+    AR, LL, MM, NV, PE, PL, MR, PM, AD, DN, HM, PS, ML, PD, PJ, SR,
+)
 
 # Colectare URLs
 HABITAT_BIBLIO_URL = '/AgregareHabitate/MapServer/1'
@@ -22,25 +24,78 @@ HABITAT_RANGE_URL = "/IBB_RangeDistribution/MapServer/1"
     BIBLIO,
     PRES_THRE,
     POP,
+    HAB_Q,
     DISTRIB,
     RANGE,
     TYPICAL,
-) = range(6)
+) = range(7)
 
-# TODO: map everything from here: https://www.simshab.ro/arcgis/rest/services/EDW_AGREGARE_HAB/MapServer
 SPECIES_MAPPING = {
-    PL: {
-        # Broken services:
-        # BIBLIO: '/Agregare/MapServer/3',
-        # PRES_THRE: '/Agregare/MapServer/1',
-        # POP: '/Agregare/MapServer/2',
+    AR: {
+        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/38',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/37',
+        # TODO the service returns NR_INDIVIZI_ADULTI, NR_INDIVIZI_LARVE
+        # POP: '/EDW_AGREGARE_HAB/MapServer/8',
+        HAB_Q: '/EDW_AGREGARE_HAB/MapServer/7',
         DISTRIB: SPECIES_DISTRIBUTION_URL,
         RANGE: SPECIES_RANGE_URL,
     },
-    AR: {
-        # BIBLIO: '/EDW_AGREGARE_HAB/MapServer/10',
-        # PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/9',
-        # POP: '/EDW_AGREGARE_HAB/MapServer/8',
+    LL: {
+        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/16',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/15',
+        POP: '/EDW_AGREGARE_HAB/MapServer/14',
+        HAB_Q: '/EDW_AGREGARE_HAB/MapServer/14',
+        DISTRIB: SPECIES_DISTRIBUTION_URL,
+        RANGE: SPECIES_RANGE_URL,
+    },
+    MM: {
+        # TODO fix this: "Failed to execute query."
+        # BIBLIO: '/EDW_AGREGARE_HAB/MapServer/23',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/42',
+        POP: '/EDW_AGREGARE_HAB/MapServer/43',
+        HAB_Q: '/EDW_AGREGARE_HAB/MapServer/43',
+        DISTRIB: SPECIES_DISTRIBUTION_URL,
+        RANGE: SPECIES_RANGE_URL,
+    },
+    NV: {
+        # TODO fix this: "Failed to execute query."
+        # BIBLIO: '/EDW_AGREGARE_HAB/MapServer/26',
+        # PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/25',
+        # POP: '/EDW_AGREGARE_HAB/MapServer/24',
+        # HAB_Q: '/EDW_AGREGARE_HAB/MapServer/24',
+        DISTRIB: SPECIES_DISTRIBUTION_URL,
+        RANGE: SPECIES_RANGE_URL,
+    },
+    PE: {
+        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/39',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/40',
+        POP: '/EDW_AGREGARE_HAB/MapServer/41',
+        DISTRIB: SPECIES_DISTRIBUTION_URL,
+        RANGE: SPECIES_RANGE_URL,
+    },
+    PL: {
+        # TODO fix this: "Failed to execute query."
+        # BIBLIO: '/EDW_AGREGARE_HAB/MapServer/35',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/6',
+        POP: '/EDW_AGREGARE_HAB/MapServer/34',
+        HAB_Q: '/EDW_AGREGARE_HAB/MapServer/36',
+        DISTRIB: SPECIES_DISTRIBUTION_URL,
+        RANGE: SPECIES_RANGE_URL,
+    },
+    MR: {
+        # BIBLIO: '/EDW_AGREGARE_HAB/MapServer/16',
+        # PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/15',
+        # POP: '/EDW_AGREGARE_HAB/MapServer/14',
+        # HAB_Q: '/EDW_AGREGARE_HAB/MapServer/14',
+        DISTRIB: SPECIES_DISTRIBUTION_URL,
+        RANGE: SPECIES_RANGE_URL,
+    },
+    PM: {
+        # TODO fix this: "Failed to execute query."
+        # BIBLIO: '/EDW_AGREGARE_HAB/MapServer/28',
+        # PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/29',
+        # POP: '/EDW_AGREGARE_HAB/MapServer/27',
+        # HAB_Q: '/EDW_AGREGARE_HAB/MapServer/27',
         DISTRIB: SPECIES_DISTRIBUTION_URL,
         RANGE: SPECIES_RANGE_URL,
     },
@@ -51,9 +106,53 @@ SPECIES_MAPPING = {
 }
 
 HABITAT_MAPPING = {
-    PADURI: {
-        BIBLIO: '/AgregareHabitate/MapServer/1',
-        TYPICAL: '/AgregareHabitate/MapServer/2',
+    AD: {
+        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/5',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/4',
+        DISTRIB: HABITAT_DISTRIBUTION_URL,
+        RANGE: HABITAT_RANGE_URL,
+    },
+    DN: {
+        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/10',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/9',
+        DISTRIB: HABITAT_DISTRIBUTION_URL,
+        RANGE: HABITAT_RANGE_URL,
+    },
+    HM: {
+        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/12',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/11',
+        TYPICAL: '/EDW_AGREGARE_HAB/MapServer/13',
+        DISTRIB: HABITAT_DISTRIBUTION_URL,
+        RANGE: HABITAT_RANGE_URL,
+    },
+    PS: {
+        TYPICAL: '/EDW_AGREGARE_HAB/MapServer/17',
+        DISTRIB: HABITAT_DISTRIBUTION_URL,
+        RANGE: HABITAT_RANGE_URL,
+    },
+    ML: {
+        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/19',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/18',
+        TYPICAL: '/EDW_AGREGARE_HAB/MapServer/20',
+        DISTRIB: HABITAT_DISTRIBUTION_URL,
+        RANGE: HABITAT_RANGE_URL,
+    },
+    PD: {
+        # TODO REGBIOGEG
+        # BIBLIO: '/AgregareHabitate/MapServer/1',
+        # TYPICAL: '/AgregareHabitate/MapServer/2',
+        DISTRIB: HABITAT_DISTRIBUTION_URL,
+        RANGE: HABITAT_RANGE_URL,
+    },
+    PJ: {
+        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/31',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/30',
+        DISTRIB: HABITAT_DISTRIBUTION_URL,
+        RANGE: HABITAT_RANGE_URL,
+    },
+    SR: {
+        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/33',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/32',
         DISTRIB: HABITAT_DISTRIBUTION_URL,
         RANGE: HABITAT_RANGE_URL,
     },
@@ -147,8 +246,6 @@ def generic_rest_call(url, where_query, out_fields="*"):
 
 
 def get_species_bibliography(subgroup, specnum, region):
-    # TODO: se pare ca s-a modificat apelul, nu primeste parametru REG_BIOGEO, iar in loc de SPECIE avem CODE
-    # see: https://www.simshab.ro/arcgis/rest/services/EDW_AGREGARE_HAB/MapServer/10
     where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
     url = _get_species_url(subgroup, BIBLIO)
     data = generic_rest_call(url, where_query) or []
@@ -200,7 +297,7 @@ def get_species_habitat_quality(subgroup, specnum, region):
         3: 'Good',
     }
     where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
-    url = _get_species_url(subgroup, POP)
+    url = _get_species_url(subgroup, HAB_Q)
     data = generic_rest_call(url, where_query) or []
     values = [r['attributes']['CALITATE_HAB'] for r in data]
     ok_values = [v for v in values if v in OK_VALUE_LIST]
@@ -224,7 +321,7 @@ def get_habitat_published(subgroup, habcode, region):
         'VOLUM',
         'PAGINI',
     ]
-    where_query = "COD_HABITAT='%s' AND REG_BIOGEG='%s'" % (habcode, region)
+    where_query = "HABITAT='%s' AND REG_BIOGEO='%s'" % (habcode, region)
     url = _get_habitat_url(subgroup, BIBLIO)
     data = generic_rest_call(url, where_query) or []
 
@@ -235,10 +332,10 @@ def get_habitat_published(subgroup, habcode, region):
 
 
 def get_habitat_typical_species(subgroup, habcode, region):
-    where_query = "HABITAT='%s' AND REG_BIOGEG='%s'" % (habcode, region)
+    where_query = "HABITAT='%s' AND REG_BIOGEO='%s'" % (habcode, region)
     url = _get_habitat_url(subgroup, TYPICAL)
     data = generic_rest_call(url, where_query) or []
-    return [r['attributes']['NAME'] for r in data]
+    return [r['attributes']['SPECIE'] for r in data]
 
 
 def get_habitat_pressures_threats(subgroup, habcode, region):
