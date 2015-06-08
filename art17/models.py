@@ -633,6 +633,11 @@ class DataSpeciesCheckList(Base):
             return self.annex_v and self.annex_v.startswith('Y')
         return False
 
+    @property
+    def region_name(self):
+        region = LuBiogeoreg.query.filter_by(code=self.bio_region).first()
+        return region.name if region else ''
+
 
 class DataSpeciesRegion(Base, RoleMixin):
     __tablename__ = u'data_species_regions'
