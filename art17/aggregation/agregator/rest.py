@@ -49,8 +49,7 @@ SPECIES_MAPPING = {
         RANGE: SPECIES_RANGE_URL,
     },
     MM: {
-        # TODO fix this: "Failed to execute query."
-        # BIBLIO: '/EDW_AGREGARE_HAB/MapServer/23',
+        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/23',
         PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/42',
         POP: '/EDW_AGREGARE_HAB/MapServer/43',
         HAB_Q: '/EDW_AGREGARE_HAB/MapServer/43',
@@ -58,11 +57,10 @@ SPECIES_MAPPING = {
         RANGE: SPECIES_RANGE_URL,
     },
     NV: {
-        # TODO fix this: "Failed to execute query."
-        # BIBLIO: '/EDW_AGREGARE_HAB/MapServer/26',
-        # PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/25',
-        # POP: '/EDW_AGREGARE_HAB/MapServer/24',
-        # HAB_Q: '/EDW_AGREGARE_HAB/MapServer/24',
+        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/26',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/25',
+        POP: '/EDW_AGREGARE_HAB/MapServer/24',
+        HAB_Q: '/EDW_AGREGARE_HAB/MapServer/24',
         DISTRIB: SPECIES_DISTRIBUTION_URL,
         RANGE: SPECIES_RANGE_URL,
     },
@@ -74,8 +72,7 @@ SPECIES_MAPPING = {
         RANGE: SPECIES_RANGE_URL,
     },
     PL: {
-        # TODO fix this: "Failed to execute query."
-        # BIBLIO: '/EDW_AGREGARE_HAB/MapServer/35',
+        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/35',
         PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/6',
         POP: '/EDW_AGREGARE_HAB/MapServer/34',
         HAB_Q: '/EDW_AGREGARE_HAB/MapServer/36',
@@ -91,11 +88,10 @@ SPECIES_MAPPING = {
         RANGE: SPECIES_RANGE_URL,
     },
     PM: {
-        # TODO fix this: "Failed to execute query."
-        # BIBLIO: '/EDW_AGREGARE_HAB/MapServer/28',
-        # PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/29',
-        # POP: '/EDW_AGREGARE_HAB/MapServer/27',
-        # HAB_Q: '/EDW_AGREGARE_HAB/MapServer/27',
+        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/28',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/29',
+        POP: '/EDW_AGREGARE_HAB/MapServer/27',
+        HAB_Q: '/EDW_AGREGARE_HAB/MapServer/27',
         DISTRIB: SPECIES_DISTRIBUTION_URL,
         RANGE: SPECIES_RANGE_URL,
     },
@@ -286,7 +282,7 @@ def get_species_population_size(subgroup, specnum, region):
     where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
     url = _get_species_url(subgroup, POP)
     data = generic_rest_call(url, where_query) or []
-    return sum(r['attributes']['NR_INDIVIZI'] for r in data)
+    return sum(r['attributes']['NR_INDIVIZI'] or 0 for r in data)
 
 
 def get_species_habitat_quality(subgroup, specnum, region):
