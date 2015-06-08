@@ -81,9 +81,10 @@ def habitat_refval(csv_dir='.'):
                           json_filename='habitats.json')
 
 
-def set_null(d):
+def set_null(d, keys):
     for k in d:
-        d[k] = None
+        if k in keys:
+            d[k] = None
 
 
 def not_null(d):
@@ -107,7 +108,7 @@ def smart_update(data, newdata):
                             FIELDS.get(group, [])]
                     if any(vals):
                         print 'Set Operator and Unknown to null:', key
-                        set_null(newdata[key][group])
+                        set_null(data[key][group], FIELDS[group])
                 data[key][group].update(newdata[key][group])
             else:
                 print "Missing group:", group
