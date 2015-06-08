@@ -371,6 +371,11 @@ class DataHabitatsCheckList(Base):
     def name(self, value):
         self.valid_name = value
 
+    @property
+    def region_name(self):
+        region = LuBiogeoreg.query.filter_by(code=self.bio_region).first()
+        return region.name if region else ''
+
     legal_name = name  # used in importer
 
 

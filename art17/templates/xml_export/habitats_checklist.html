@@ -12,7 +12,7 @@
         <regional>
             {%- for region in habitat.regions %}
             <region>
-                <code>{{ region.bio_region }}</code>
+                <code desc="{{ region.region_name }}">{{ region.bio_region }}</code>
                 <presence>{{ region.presence }}</presence>
                 <comments>{{ region.ms_feedback_etcbd_comments }}</comments>
                 <ms_added>{{ to_bool(region.ms_added) }}</ms_added>
