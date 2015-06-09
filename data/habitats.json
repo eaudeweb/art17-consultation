@@ -900,7 +900,7 @@
  }, 
  "8310-CON": {
   "range": {
-   "Areal favorabil referinta": "24800", 
+   "Areal favorabil referinta": "3600", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -917,7 +917,7 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "22100", 
+   "Suprafata favorabila referinta": "3900", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -3287,7 +3287,7 @@
  }, 
  "8310-STE": {
   "range": {
-   "Areal favorabil referinta": "3900", 
+   "Areal favorabil referinta": "400", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -3304,7 +3304,7 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "3500", 
+   "Suprafata favorabila referinta": "400", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -3783,7 +3783,7 @@
  }, 
  "8310-ALP": {
   "range": {
-   "Areal favorabil referinta": "27000", 
+   "Areal favorabil referinta": "3400", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -3800,7 +3800,7 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "24800", 
+   "Suprafata favorabila referinta": "3700", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
