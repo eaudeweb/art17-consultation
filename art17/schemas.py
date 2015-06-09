@@ -421,7 +421,7 @@ def parse_habitat_commentform(row):
         'trend': row.natura2000_area_trend,
     }
     rv['typicalspecies'] = {
-        'species': '\n'.join([dhs.speciesname for dhs in row.species]),
+        'species': '\n'.join({dhs.speciesname or '' for dhs in row.species}),
         'method': row.typical_species_method,
         'justification': row.justification,
         'structure_and_functions_method': row.structure_and_functions_method,
