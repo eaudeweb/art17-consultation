@@ -7,8 +7,8 @@
     {%- for code, habitat in habitats_dict.items() %}
     <habitat>
         <code>{{ code }}</code>
-        <name>{{ habitat['info'].hd_name }}</name>
-        <legal_name>{{ habitat['info'].name }}</legal_name>
+        <name>{{ habitat['info'].lu.lu.hd_name }}</name>
+        <legal_name>{{ habitat['info'].lu.lu.valide_name }}</legal_name>
         <regional>
             {%- for region in habitat.regions %}
             <region>
