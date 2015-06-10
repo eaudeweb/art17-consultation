@@ -52,6 +52,7 @@ FIELDS = {
 }
 
 DEFAULT_METHOD = '2'
+REGIONS = [u'STE', u'CON', u'BLS', u'PAN', u'MBLS', u'ALP']
 
 
 @importer.command
@@ -238,4 +239,21 @@ def species_from_csv(filename, section):
             for k, v in curdata[key][section].iteritems():
                 if k in row:
                     curdata[key][section][k] = row[k]
+    save_species_refval(curdata)
+
+
+@importer.command
+def species_methods_from_csv(filename):
+    curdata = load_species_refval()
+    with open(filename, 'rb') as f:
+        reader = UnicodeDictReader(f)
+        for row in reader:
+            code = row.pop('code')
+            for region in REGIONS:
+                key = code + '-' + region
+                if not key in curdata:
+                    continue
+                for k, v in row.iteritems():
+                    section, field = k.split('-')
+                    curdata[key][section][field] = v
     save_species_refval(curdata)

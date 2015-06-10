@@ -57,7 +57,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -102,7 +102,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -552,7 +552,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -912,7 +912,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -1182,7 +1182,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -1338,51 +1338,6 @@
   }, 
   "range": {
    "Areal favorabil referinta": "17100", 
-   "Necunoscut": "", 
-   "Operator - areal": "", 
-   "Metoda areal": "2"
-  }, 
-  "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
-  }
- }, 
- "1528-ALP": {
-  "threats": {
-   "Metoda amenintari": "2"
-  }, 
-  "habitat": {
-   "Metoda suprafata habitat": "2", 
-   "Suprafa\u021ba habitat": "100", 
-   "Suprafa\u021ba adecvata": "100"
-  }, 
-  "population_range": {
-   "Operator": "", 
-   "Necunoscut": "", 
-   "Populatia favorabila de referinta": "11", 
-   "Metoda populatie": "2"
-  }, 
-  "population_units": {
-   "Unit. de m\u0103sur\u0103": "area;localities", 
-   "Metoda conversie": "", 
-   "Dificult\u0103\u021bi \u00eent\u00e2mpinate": "", 
-   "Defini\u021bia localit\u0103\u021bii": "Areas situated at agreater distance than 20 km"
-  }, 
-  "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
-   "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
-   "Interval incredere lung": ""
-  }, 
-  "pressures": {
-   "Metoda presiuni": "2"
-  }, 
-  "range": {
-   "Areal favorabil referinta": "500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -1767,7 +1722,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -2082,7 +2037,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -2933,7 +2888,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -3518,7 +3473,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "15000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -3698,7 +3653,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -3788,7 +3743,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -4373,7 +4328,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -4598,7 +4553,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -4731,7 +4686,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "2000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -5168,51 +5123,6 @@
    "Magn. min scurt": ""
   }
  }, 
- "1209-STE": {
-  "threats": {
-   "Metoda amenintari": "2"
-  }, 
-  "habitat": {
-   "Metoda suprafata habitat": "2", 
-   "Suprafa\u021ba habitat": "1000", 
-   "Suprafa\u021ba adecvata": "2000"
-  }, 
-  "population_range": {
-   "Operator": "", 
-   "Necunoscut": "", 
-   "Populatia favorabila de referinta": "2000", 
-   "Metoda populatie": "2"
-  }, 
-  "population_units": {
-   "Unit. de m\u0103sur\u0103": "i", 
-   "Metoda conversie": "", 
-   "Dificult\u0103\u021bi \u00eent\u00e2mpinate": "", 
-   "Defini\u021bia localit\u0103\u021bii": ""
-  }, 
-  "population_magnitude": {
-   "Magn. max lung": "0", 
-   "Magn. min lung": "0", 
-   "Magn. min scurt": "0", 
-   "Interval incredere scurt": "", 
-   "Magn. max scurt": "0", 
-   "Interval incredere lung": ""
-  }, 
-  "pressures": {
-   "Metoda presiuni": "2"
-  }, 
-  "range": {
-   "Areal favorabil referinta": "2000", 
-   "Necunoscut": "", 
-   "Operator - areal": "", 
-   "Metoda areal": "2"
-  }, 
-  "magnitude": {
-   "Magn. max scurt": "5", 
-   "Magn. max lung": "5", 
-   "Magn. min lung": "5", 
-   "Magn. min scurt": "5"
-  }
- }, 
  "2327-CON": {
   "threats": {
    "Metoda amenintari": "2"
@@ -5541,7 +5451,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "3000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -5901,7 +5811,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -6306,7 +6216,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -6666,7 +6576,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -6799,7 +6709,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "20000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -7024,7 +6934,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -7924,7 +7834,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "500000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -8194,7 +8104,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "50000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -8419,7 +8329,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -8464,7 +8374,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -8689,7 +8599,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -8779,7 +8689,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "4000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -8914,7 +8824,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -9094,7 +9004,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -9274,7 +9184,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "3000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -9859,7 +9769,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -9904,7 +9814,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "2500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -10084,7 +9994,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -10129,7 +10039,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -10309,7 +10219,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "50000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -10354,7 +10264,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -10489,7 +10399,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -10894,7 +10804,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -11029,7 +10939,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "300", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -11164,7 +11074,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -11209,7 +11119,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -11299,7 +11209,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -11421,6 +11331,51 @@
    "Magn. min scurt": ""
   }
  }, 
+ "1034-CON": {
+  "threats": {
+   "Metoda amenintari": "2"
+  }, 
+  "habitat": {
+   "Metoda suprafata habitat": "2", 
+   "Suprafa\u021ba habitat": "", 
+   "Suprafa\u021ba adecvata": null
+  }, 
+  "population_range": {
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Populatia favorabila de referinta": "10000000", 
+   "Metoda populatie": "2"
+  }, 
+  "population_units": {
+   "Unit. de m\u0103sur\u0103": "i", 
+   "Metoda conversie": "", 
+   "Dificult\u0103\u021bi \u00eent\u00e2mpinate": "", 
+   "Defini\u021bia localit\u0103\u021bii": ""
+  }, 
+  "population_magnitude": {
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": "", 
+   "Interval incredere scurt": "", 
+   "Magn. max scurt": "", 
+   "Interval incredere lung": ""
+  }, 
+  "pressures": {
+   "Metoda presiuni": "2"
+  }, 
+  "range": {
+   "Areal favorabil referinta": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "2"
+  }, 
+  "magnitude": {
+   "Magn. max scurt": "", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": ""
+  }
+ }, 
  "1314-ALP": {
   "threats": {
    "Metoda amenintari": "2"
@@ -11479,7 +11434,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -11614,7 +11569,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "2000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -11794,7 +11749,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -12064,7 +12019,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -12424,7 +12379,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -12604,7 +12559,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -12784,7 +12739,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -13009,7 +12964,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "2000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -13099,7 +13054,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "0", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -13144,7 +13099,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "50", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -13174,6 +13129,51 @@
    "Magn. max lung": "0", 
    "Magn. min lung": "0", 
    "Magn. min scurt": "0"
+  }
+ }, 
+ "1393-ALP": {
+  "threats": {
+   "Metoda amenintari": "2"
+  }, 
+  "habitat": {
+   "Metoda suprafata habitat": "2", 
+   "Suprafa\u021ba habitat": "5", 
+   "Suprafa\u021ba adecvata": "5"
+  }, 
+  "population_range": {
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Populatia favorabila de referinta": "20", 
+   "Metoda populatie": "2"
+  }, 
+  "population_units": {
+   "Unit. de m\u0103sur\u0103": "area", 
+   "Metoda conversie": "", 
+   "Dificult\u0103\u021bi \u00eent\u00e2mpinate": "", 
+   "Defini\u021bia localit\u0103\u021bii": ""
+  }, 
+  "population_magnitude": {
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": "", 
+   "Interval incredere scurt": "", 
+   "Magn. max scurt": "", 
+   "Interval incredere lung": ""
+  }, 
+  "pressures": {
+   "Metoda presiuni": "2"
+  }, 
+  "range": {
+   "Areal favorabil referinta": "10", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "2"
+  }, 
+  "magnitude": {
+   "Magn. max scurt": "", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": ""
   }
  }, 
  "1304-ALP": {
@@ -13324,7 +13324,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "3000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -13774,7 +13774,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -14447,7 +14447,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -14537,7 +14537,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "20000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -14717,7 +14717,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -15032,7 +15032,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -15077,7 +15077,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "50000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -15347,7 +15347,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -15527,7 +15527,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -15572,7 +15572,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -15874,20 +15874,20 @@
    "Magn. min scurt": ""
   }
  }, 
- "1034-CON": {
+ "1209-STE": {
   "threats": {
    "Metoda amenintari": "2"
   }, 
   "habitat": {
    "Metoda suprafata habitat": "2", 
-   "Suprafa\u021ba habitat": "", 
-   "Suprafa\u021ba adecvata": null
+   "Suprafa\u021ba habitat": "1000", 
+   "Suprafa\u021ba adecvata": "2000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Populatia favorabila de referinta": "10000000", 
-   "Metoda populatie": "2"
+   "Populatia favorabila de referinta": "2000", 
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -15896,27 +15896,27 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "0", 
+   "Magn. min lung": "0", 
+   "Magn. min scurt": "0", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "0", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": null, 
+   "Areal favorabil referinta": "2000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
+   "Magn. max scurt": "5", 
+   "Magn. max lung": "5", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "5"
   }
  }, 
  "1400-ALP": {
@@ -16472,7 +16472,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -16605,7 +16605,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -16920,7 +16920,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "2000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -17010,7 +17010,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "4000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -17235,7 +17235,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "50", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -17550,7 +17550,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -17730,7 +17730,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "3000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -17775,7 +17775,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "40000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -17865,7 +17865,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -18133,7 +18133,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "2000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -18493,7 +18493,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -18898,7 +18898,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -19078,7 +19078,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -19213,7 +19213,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "2000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -19303,7 +19303,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "50000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -19393,7 +19393,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "2000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -19663,7 +19663,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "20000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -20158,7 +20158,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -20383,7 +20383,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -20650,7 +20650,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -20817,26 +20817,26 @@
    "Magn. min scurt": ""
   }
  }, 
- "1393-ALP": {
+ "1528-ALP": {
   "threats": {
    "Metoda amenintari": "2"
   }, 
   "habitat": {
    "Metoda suprafata habitat": "2", 
-   "Suprafa\u021ba habitat": "5", 
-   "Suprafa\u021ba adecvata": "5"
+   "Suprafa\u021ba habitat": "100", 
+   "Suprafa\u021ba adecvata": "100"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Populatia favorabila de referinta": "20", 
+   "Populatia favorabila de referinta": "11", 
    "Metoda populatie": "2"
   }, 
   "population_units": {
-   "Unit. de m\u0103sur\u0103": "area", 
+   "Unit. de m\u0103sur\u0103": "area;localities", 
    "Metoda conversie": "", 
    "Dificult\u0103\u021bi \u00eent\u00e2mpinate": "", 
-   "Defini\u021bia localit\u0103\u021bii": ""
+   "Defini\u021bia localit\u0103\u021bii": "Areas situated at agreater distance than 20 km"
   }, 
   "population_magnitude": {
    "Magn. max lung": "", 
@@ -20850,7 +20850,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "10", 
+   "Areal favorabil referinta": "500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -21190,7 +21190,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -21312,20 +21312,20 @@
    "Magn. min scurt": ""
   }
  }, 
- "1160-PAN": {
+ "1209-PAN": {
   "threats": {
    "Metoda amenintari": "2"
   }, 
   "habitat": {
    "Metoda suprafata habitat": "2", 
-   "Suprafa\u021ba habitat": "5300", 
-   "Suprafa\u021ba adecvata": "5300"
+   "Suprafa\u021ba habitat": "2000", 
+   "Suprafa\u021ba adecvata": "7000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Populatia favorabila de referinta": "10000", 
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -21334,27 +21334,27 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "0", 
+   "Magn. min lung": "0", 
+   "Magn. min scurt": "0", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "0", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "12300", 
+   "Areal favorabil referinta": "7000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
+   "Magn. max scurt": "0", 
+   "Magn. max lung": "0", 
+   "Magn. min lung": "0", 
+   "Magn. min scurt": "0"
   }
  }, 
  "1034-PAN": {
@@ -21505,7 +21505,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "50", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -21685,7 +21685,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -21865,7 +21865,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "50000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -22222,7 +22222,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "20000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -22267,7 +22267,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -22312,7 +22312,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -22537,7 +22537,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -22582,7 +22582,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "20000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -22762,7 +22762,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "50000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -22852,7 +22852,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "4000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -23077,7 +23077,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -23302,7 +23302,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "40000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -23559,19 +23559,19 @@
    "Magn. min scurt": ""
   }
  }, 
- "1209-PAN": {
+ "1160-PAN": {
   "threats": {
    "Metoda amenintari": "2"
   }, 
   "habitat": {
    "Metoda suprafata habitat": "2", 
-   "Suprafa\u021ba habitat": "2000", 
-   "Suprafa\u021ba adecvata": "7000"
+   "Suprafa\u021ba habitat": "5300", 
+   "Suprafa\u021ba adecvata": "5300"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Populatia favorabila de referinta": "10000", 
+   "Populatia favorabila de referinta": "1000", 
    "Metoda populatie": "2"
   }, 
   "population_units": {
@@ -23581,27 +23581,27 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "0", 
-   "Magn. min lung": "0", 
-   "Magn. min scurt": "0", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": "", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "0", 
+   "Magn. max scurt": "", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "7000", 
+   "Areal favorabil referinta": "12300", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
-   "Magn. max scurt": "0", 
-   "Magn. max lung": "0", 
-   "Magn. min lung": "0", 
-   "Magn. min scurt": "0"
+   "Magn. max scurt": "", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": ""
   }
  }, 
  "1083-ALP": {
@@ -23662,7 +23662,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -23752,7 +23752,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -23797,7 +23797,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -24202,7 +24202,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -24247,7 +24247,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -24337,7 +24337,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -24382,7 +24382,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "2000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -24652,7 +24652,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "20000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -24742,7 +24742,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -25190,7 +25190,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -25595,7 +25595,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "40", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -25730,7 +25730,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "2000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -25775,7 +25775,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "20000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
