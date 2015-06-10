@@ -7,6 +7,13 @@ from art17.aggregation.refvalues import load_refval, save_refval, \
 from art17.scripts import importer
 
 
+def UnicodeDictReader(utf8_data, **kwargs):
+    csv_reader = DictReader(utf8_data, **kwargs)
+    for row in csv_reader:
+        yield {unicode(key, 'utf-8'): unicode(value, 'utf-8')
+               for key, value in row.iteritems()}
+
+
 SPECIES_MAP = {
     'species_magnitude.csv': 'magnitude',
     'species_range.csv': 'range',
@@ -219,3 +226,16 @@ def refactor_species_refval():
 def refactor_habitat_refval():
     data = refactor_refval('habitats.json', 'habitat')
     save_habitat_refval(data)
+
+
+@importer.command
+def species_from_csv(filename, section):
+    curdata = load_species_refval()
+    with open(filename, 'rb') as f:
+        reader = UnicodeDictReader(f)
+        for row in reader:
+            key = row['code'] + '-' + row['region']
+            for k, v in curdata[key][section].iteritems():
+                if k in row:
+                    curdata[key][section][k] = row[k]
+    save_species_refval(curdata)
