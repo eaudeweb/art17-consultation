@@ -1,0 +1,48 @@
+{% extends 'aggregation/admin.html' %}
+
+
+{% block breadcrumbs %}
+  {%- from 'bits.html' import breadcrumbs %}
+  {{ breadcrumbs([
+          ('agregare', home_url),
+          ('administrare', url_for('.admin')),
+          ('valori de referință', url_for('.reference_values')),
+          ('actualizare', none),
+      ]) }}
+{% endblock breadcrumbs %}
+
+{% block content %}
+  <h2>Valori de referință</h2>
+
+  <p>Pentru a actualiza valorile de referință, se vor urma pașii:
+    <ol>
+      <li>Se descarcă șablonul aferent categoriei vizate (specii/habitate) prin
+      apăsarea butonului <em>Descarcă șablon Excel</em></li>
+      <li>Se inserează în acest document noile valori</li>
+      <li>Documentul Excel cu valorile completate se încarcă în sistem</li>
+    </ol>
+  </p>
+  <p class="text-warning">Atenție! Nu se acceptă fișiere în alt format decât
+  cel al șablonului.</p>
+
+  <ul id="myTab" class="nav nav-tabs" role="tablist">
+    <li class="active">
+      <a href="#species" role="tab" data-toggle="tab">Specii</a>
+    </li>
+    <li>
+      <a href="#habitat" role="tab" data-toggle="tab">Habitate</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    {% for page in ['species', 'habitat'] %}
+      <div class="tab-pane fade {% if loop.index==1 %} active in{% endif %}"
+          id="{{ page }}">
+        <a href="{{ url_for('.download_all_refvals', page=page) }}"
+            class="btn btn-default"><i class="icon-download"></i>
+            Descarcă șablon Excel</a>
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock %}

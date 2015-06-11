@@ -507,3 +507,7 @@ label {
 .form-control-static {
     padding: 0 10px;
 }
+
+.btn-spaced {
+    margin-bottom: 10px;
+}

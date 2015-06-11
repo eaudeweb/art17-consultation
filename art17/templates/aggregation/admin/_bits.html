@@ -1,11 +1,3 @@
-{% set REFGROUPS={'range': 'Areal', 'magnitude': 'Magnitudine Areal',
-  'population_units': 'Unitati populatie',
-  'population_magnitude': 'Magnitudine Populatie',
-  'population_range': 'Areal favorabil populatie',
-  'coverage_range': 'Distributie',
-  'coverage_magnitude': 'Magnitudine suprafata'
-  } %}
-
 {% macro render_refvalues(refvals) %}
   {%- if refvals -%}
     {%- for group,values in refvals.iteritems() -%}

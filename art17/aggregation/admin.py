@@ -27,6 +27,8 @@ from art17.models import (
     STATUS_NEW,
     STATUS_CONSULTATION,
     LuGrupSpecie,
+    LuHdSpecies,
+    LuHabitattypeCodes,
 )
 from art17.aggregation import (
     aggregation,
@@ -50,9 +52,23 @@ REGIONS = {
     'MBLS': 'Marea Neagra',
 }
 
+REFGROUPS = {
+    'range': 'Areal',
+    'magnitude': 'Magnitudine Areal',
+    'population_units': 'Unitati populatie',
+    'population_magnitude': 'Magnitudine Populatie',
+    'population_range': 'Areal favorabil populatie',
+    'coverage_range': 'Suprafata',
+    'coverage_magnitude': 'Magnitudine suprafata',
+    'typical_species': 'Specii tipice',
+    'threats': 'Amenintari',
+    'pressures': 'Presiuni',
+}
+
 
 def get_checklists():
-    return Dataset.query.filter_by(checklist=True).order_by(Dataset.date.desc())
+    return Dataset.query.filter_by(checklist=True).order_by(
+        Dataset.date.desc())
 
 
 def parse_checklist(checklist_qs):
@@ -264,6 +280,19 @@ aggregation.add_url_rule('/admin/reference_values',
                          view_func=ReferenceValues.as_view('reference_values'))
 
 
+class ReferenceValuesUpdate(TemplateView):
+    template_name = 'aggregation/admin/refvals_update.html'
+    decorators = [require(Permission(need.admin))]
+
+    def get_context(self, **kwargs):
+        return dict(
+            page='refvalues',
+        )
+
+aggregation.add_url_rule('/admin/reference_values/update', view_func=
+                         ReferenceValuesUpdate.as_view('refvals_update'))
+
+
 @aggregation.app_context_processor
 def inject_globals():
     return {
@@ -272,6 +301,7 @@ def inject_globals():
         'DATASET_STATUSES': DATASET_STATUSES_DICT,
         'refvalue_ok': refvalue_ok,
         'sum_of_reports': sum_of_reports,
+        'REFGROUPS': REFGROUPS,
     }
 
 
@@ -326,7 +356,8 @@ def compare_datasets(dataset1, dataset2):
     for k, v in s_data.iteritems():
         for reg, ass in v['d1'].iteritems():
             ass2 = v['d2'].get(reg, None)
-            if not ass2 or ass2.conclusion_assessment != ass.conclusion_assessment:
+            if (not ass2 or
+                    ass2.conclusion_assessment != ass.conclusion_assessment):
                 s_stat['diff'] += 1
             s_stat['objs'] += 1
 
@@ -349,7 +380,8 @@ def compare_datasets(dataset1, dataset2):
     for k, v in h_data.iteritems():
         for reg, ass in v['d1'].iteritems():
             ass2 = v['d2'].get(reg, None)
-            if not ass2 or ass2.conclusion_assessment != ass.conclusion_assessment:
+            if (not ass2 or
+                    ass2.conclusion_assessment != ass.conclusion_assessment):
                 h_stat['diff'] += 1
             h_stat['objs'] += 1
 
@@ -428,15 +460,6 @@ def manage_refvals_form(page, subject):
 @aggregation.route('/manage/reference_values/<page>/form/<subject>/download',
                    methods=['GET'])
 def download_refvals(page, subject):
-    REFGROUPS = {
-        'range': 'Areal',
-        'magnitude': 'Magnitudine Areal',
-        'population_units': 'Unitati populatie',
-        'population_magnitude': 'Magnitudine Populatie',
-        'population_range': 'Areal favorabil populatie',
-        'coverage_range': 'Suprafata',
-        'coverage_magnitude': 'Magnitudine suprafata',
-    }
     checklist_id = get_reporting_id()
     current_checklist = get_checklist(checklist_id)
     checklist_id = current_checklist.id
@@ -472,6 +495,49 @@ def download_refvals(page, subject):
     response = Response(save_virtual_workbook(wb), mimetype=MIMETYPE)
     response.headers.add('Content-Disposition',
                          'attachment; filename={}.xlsx'.format(subject))
+    return response
+
+
+@aggregation.route('/admin/reference_values/<page>/download',
+                   methods=['GET'])
+def download_all_refvals(page):
+    if page == 'habitat':
+        refvals = load_habitat_refval()
+        hd_table = LuHabitattypeCodes
+    elif page == 'species':
+        refvals = load_species_refval()
+        hd_table = LuHdSpecies
+    else:
+        raise NotImplementedError()
+
+    records = []
+    code_to_name = {}
+    for codereg, data in refvals.iteritems():
+        code, region = codereg.split('-')
+        if code not in code_to_name:
+            hd_record = hd_table.query.filter_by(code=code).first()
+            code_to_name[code] = hd_record.display_name if hd_record else ''
+        name = code_to_name[code]
+        records.append((code, name, region))
+
+    records.sort(key=lambda x: x[0])
+    data_struct = refvals.values()[0]
+
+    wb = Workbook()
+    wb.remove_sheet(wb.get_sheet_by_name('Sheet'))
+
+    for group, fields in data_struct.iteritems():
+        ws = wb.create_sheet()
+        ws.title = REFGROUPS.get(group, group.capitalize())
+        columns = ['COD', 'NUME', 'BIOREGIUNE']
+        columns.extend([f.upper() for f in fields.keys()])
+        ws.append(columns)
+        for code, name, region in records:
+            ws.append([code, name, region] + [None] * len(fields))
+
+    response = Response(save_virtual_workbook(wb), mimetype=MIMETYPE)
+    response.headers.add('Content-Disposition',
+                         'attachment; filename={}.xlsx'.format(page))
     return response
 
 
