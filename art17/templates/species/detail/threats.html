@@ -16,6 +16,9 @@
             {{ threat.lu_ranking.code }}
           </td>
           <td>
+            {% if not threat.pollutions.count() %}
+              -
+            {% endif %}
             {% for pol in threat.pollutions %}
               <span title="{{ pol.lu.name }}">
                 {{ pol.lu.code }}

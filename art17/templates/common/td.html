@@ -31,6 +31,8 @@
 {% macro method_html(method) %}
 {%- if method %}
   {{ method }} - {{ METHODS_USED[method] -}}
+{% else %}
+    -
 {% endif %}
 {%- endmacro %}
 
@@ -38,6 +40,8 @@
 {% macro method_pressures_html(method) %}
 {%- if method %}
   {{ method }} - {{ METHODS_PRESSURES[method] -}}
+{% else %}
+    -
 {% endif %}
 {%- endmacro %}
 
@@ -45,6 +49,8 @@
 {% macro method_threats_html(method) %}
 {%- if method %}
   {{ method }} - {{ METHODS_THREATS[method] -}}
+{% else %}
+    -
 {% endif %}
 {%- endmacro %}
 
@@ -87,11 +93,15 @@
 
 
 {% macro reasons_for_change_html(range) %}
-  {%- for k,v in range.reasons_for_change.items() %}
-    {% if v|int %}
-      * {{ LU_REASONS_FOR_CHANGE[k] }} <br>
-    {% endif %}
-  {% endfor %}
+  {% if range.reasons_for_change %}
+    {%- for k,v in range.reasons_for_change.items() %}
+      {% if v|int %}
+        * {{ LU_REASONS_FOR_CHANGE[k] }} <br>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    -
+  {% endif %}
 {%- endmacro %}
 
 
@@ -106,6 +116,8 @@
 {% macro range_html(range) %}
 {%- if range.surface_area -%}
   {{ range.surface_area }} km²
+{% else %}
+    -
 {%- endif -%}
 {%- endmacro %}
 
@@ -113,6 +125,8 @@
 {% macro magnitude_html(magnitude) -%}
 {% if magnitude.min or magnitude.max %}
     {{ magnitude.min }} - {{ magnitude.max }} km²
+{% else %}
+    -
 {% endif %}
 {%- endmacro %}
 
@@ -120,6 +134,8 @@
 {% macro magnitude_ci_html(magnitude) -%}
 {% if magnitude.min or magnitude.max %}
     {{ magnitude.min }} - {{ magnitude.max }}
+{% else %}
+    -
 {% endif %}
 {% if magnitude.ci %}
   <span title="Intervalul de siguranță">({{ magnitude.ci|int }}%)</span>
@@ -131,6 +147,8 @@
 {%- if period -%}
   {#- unicode character 2011: non-breaking hyphen -#}
   ({{ period.start }}&#x2011;{{ period.end }})
+{% else %}
+    -
 {%- endif %}
 {%- endmacro %}
 
@@ -138,6 +156,8 @@
 {% macro trend_detail_html(trend) %}
 {%- if trend.trend %}
   {{ TREND_NAME[trend.trend] -}}
+{% else %}
+    -
 {% endif %}
 {%- endmacro %}
 
@@ -167,6 +187,9 @@
 
 
 {% macro natura2000_population_size_html(natura2000) %}
+  {% if not  natura2000.population_min and not natura2000.population_max %}
+    -
+  {% endif %}
   {%- if natura2000.population_min == natura2000.population_max %}
     <span title="{{ natura2000.population_min }}&nbsp;(
               {{- get_population_units_ro(natura2000.population_unit) }})">

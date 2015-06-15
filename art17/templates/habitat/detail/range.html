@@ -50,11 +50,7 @@
 
       <tr>
         <td> &nbsp; - metoda utilizată</td>
-        <td>
-          {%- if record.range.reference_value.method %}
-            {{ record.range.reference_value.method }}
-          {% endif -%}
-        </td>
+        <td>{{ record.range.reference_value.method or '-' }}</td>
       </tr>
 
       <tr>

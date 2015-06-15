@@ -65,11 +65,7 @@
 
       <tr>
         <td> &nbsp; - metoda utilizată</td>
-        <td>
-          {%- if record.coverage.reference_value.method %}
-            {{ record.coverage.reference_value.method }}
-          {% endif -%}
-        </td>
+        <td>{{ record.coverage.reference_value.method or '-' }}</td>
       </tr>
 
       <tr>

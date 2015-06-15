@@ -11,12 +11,12 @@
     <table class="table table-bordered recorddetail-table">
       <tr>
         <th>Speciile tipice <br> - metoda utilizată</th>
-        <td>{{ typical_species_method | nl2br}}</td>
+        <td>{{ typical_species_method or '-' | nl2br}}</td>
       </tr>
 
       <tr>
         <th>Justificarea modificărilor (%) <br> induse de tendințe</th>
-        <td>{{ justification | nl2br }}</td>
+        <td>{{ justification or '-' | nl2br }}</td>
       </tr>
 
       <tr>
@@ -26,7 +26,7 @@
 
       <tr>
         <th>Alte informații relevante</th>
-        <td>{{ record.pressures_method.other_relevant_information | nl2br }}</td>
+        <td>{{ record.pressures_method.other_relevant_information or '-' | nl2br }}</td>
       </tr>
 
     </table>

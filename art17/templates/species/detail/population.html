@@ -18,22 +18,22 @@
 
       <tr>
         <td> &nbsp; - definirea `localitǎții`</td>
-        <td>{{ record.population.additional.locality }}</td>
+        <td>{{ record.population.additional.locality or '-' }}</td>
       </tr>
 
       <tr>
         <td> &nbsp; - metoda de conversie</td>
-        <td>{{ record.population.additional.method }}</td>
+        <td>{{ record.population.additional.method or '-' }}</td>
       </tr>
 
       <tr>
         <td> &nbsp; - probleme</td>
-        <td>{{ record.population.additional.problems }}</td>
+        <td>{{ record.population.additional.problems or '-' }}</td>
       </tr>
 
       <tr>
         <th>Anul sau perioada</th>
-        <td>{{ record.population.population_date }}</td>
+        <td>{{ record.population.population_date or '-' }}</td>
       </tr>
 
       <tr>
@@ -59,8 +59,7 @@
 
       <tr>
         <th>Tendință pe termen lung</th>
-        <td>
-          {{ macros.trend_detail_html(record.population.trend_long) }}</td>
+        <td>{{ macros.trend_detail_html(record.population.trend_long) }}</td>
       </tr>
 
       <tr>
@@ -86,11 +85,7 @@
 
       <tr>
         <td> &nbsp; - metoda utilizată</td>
-        <td>
-          {%- if record.population.reference_value.method %}
-            {{ record.population.reference_value.method }}
-          {% endif -%}
-        </td>
+        <td>{{ record.population.reference_value.method or '-' }}</td>
       </tr>
 
       <tr>

@@ -16,6 +16,9 @@
             {{ pressure.lu_ranking.code }}
           </td>
           <td>
+            {% if not pressure.pollutions.count() %}
+              -
+            {% endif %}
             {% for pol in pressure.pollutions %}
               <span title="{{ pol.lu.name_ro }}">
                 {{ pol.lu.code }}

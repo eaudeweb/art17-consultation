@@ -22,6 +22,8 @@
         <td>
           {% if record.natura2000.population_trend %}
             {{- TREND_NAME[record.natura2000.population_trend] -}}
+          {% else %}
+            -
           {% endif%}
         </td>
       </tr>
