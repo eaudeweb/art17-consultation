@@ -13,7 +13,7 @@
     {% set history_url = record_history_url(record_obj) %}
     {% if finalized %}
       {% set url = record_finalize_toggle_url(record_obj, False) %}
-      {% if admin_permission.can() %}
+      {% if admin_permission.can() and not cons_closed %}
         <a href="{{ url }}" class="btn btn-primary aggregation-definalize">Readu în lucru</a>
       {% endif %}
       <a href="{{ history_url }}" class="btn btn-warning">Istorie</a>

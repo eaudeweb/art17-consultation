@@ -462,6 +462,7 @@ class RecordDetails(View):
             'template_base': self.template_base,
             'comment_history_view': self.comment_history_view,
             'finalized': self.record.is_agg_final(),
+            'cons_closed': self.record.dataset.is_closed(),
         })
         return flask.render_template(self.template_name, **context)
 

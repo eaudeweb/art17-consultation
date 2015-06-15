@@ -1116,6 +1116,9 @@ class Dataset(Base):
     def __unicode__(self):
         return '%s (%s)' % (self.date, self.comment)
 
+    def is_closed(self):
+        return self.status == STATUS_CLOSED
+
 
 class NotificationUser(Base):
     __tablename__ = u'notification_user'
