@@ -13,6 +13,10 @@
       <a href="{{ url }}"
          title="Concluzie: {{ conclusion_text }}">
         finalizat, {{ record.conclusion_assessment }} {{record.conclusion_assessment_trend }}
+
+        {% if record.cons_generalstatus != '1' %}
+          prezență: {{ record.cons_generalstatus }}
+        {% endif %}
       </a>
     </td>
     {% elif not record.is_missing() %}
@@ -26,7 +30,7 @@
       {% endif %}
 
       {% if record.cons_generalstatus != '1' %}
-      - prezență: {{ record.cons_generalstatus }}
+        - prezență: {{ record.cons_generalstatus }}
       {% endif %}
       </a>
     </td>
