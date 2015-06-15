@@ -23,7 +23,10 @@ from art17.habitat import (
     HabitatCommentView,
     get_dal as get_habitat_dal,
 )
-from art17.scripts.xml_reports import xml_species, xml_habitats
+from art17.scripts.xml_reports import (
+    xml_species, xml_habitats,
+    xml_species_checklist, xml_habitats_checklist,
+)
 from art17.species import (
     detail as detail_species,
     SpeciesCommentView,
@@ -596,5 +599,19 @@ def export(page, dataset_id):
 
     name = dataset.comment or dataset.date.strftime(DATE_FORMAT_COMMENT)
     fn = u'{}_{}.xml'.format(page, name.replace(' ', '-'))
+    headers = {"Content-Disposition": "attachment; filename={}".format(fn)}
+    return flask.Response(xml, mimetype='text/xml', headers=headers)
+
+
+@aggregation.route('/export/checklist/<page>')
+def export_checklist(page):
+    if page == 'species':
+        xml = xml_species_checklist()
+    elif page == 'habitat':
+        xml = xml_habitats_checklist()
+    else:
+        flask.abort(404)
+
+    fn = u'{}_checklist.xml'.format(page)
     headers = {"Content-Disposition": "attachment; filename={}".format(fn)}
     return flask.Response(xml, mimetype='text/xml', headers=headers)

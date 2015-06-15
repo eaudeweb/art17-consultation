@@ -22,13 +22,29 @@
     </a>
     Exportă habitate pentru setul de date curent în format XML<br/>
   </p>
-  <hr/>
+  <hr>
   <p>
     <a class="btn btn-default"
        href="{{ url_for('.export', dataset_id=dataset.id, page='species') }}">
       <i class="icon-download"></i> Export specii
     </a>
     Exportă specii pentru setul de date curent în format XML<br/>
+  </p>
+  <hr>
+  <p>
+    <a class="btn btn-default"
+       href="{{ url_for('.export_checklist', page='habitat') }}">
+      <i class="icon-download"></i> Export listă de verificare habitate
+    </a>
+    Exportă lista curentă de verificare pentru habitate în format XML<br/>
+  </p>
+  <hr/>
+  <p>
+    <a class="btn btn-default"
+       href="{{ url_for('.export_checklist', page='species') }}">
+      <i class="icon-download"></i> Export listă de verificare specii
+    </a>
+    Exportă lista curentă de verificare pentru specii în format XML<br/>
   </p>
 
 {% endblock content %}
