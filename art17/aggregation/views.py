@@ -133,7 +133,7 @@ def preview(page):
             models.db.session.commit()
             return redirect(url_for('.post_preview', dataset_id=dataset.id))
         else:
-            flask.flash('Invalid form', 'error')
+            flask.flash('Invalid form', 'danger')
     return flask.render_template('aggregation/preview/preview.html', **{
         'form': form, 'dataset': dataset, 'report': report, 'page': page,
         'current_checklist': current_checklist, 'endpoint': '.preview',

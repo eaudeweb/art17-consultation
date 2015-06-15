@@ -787,8 +787,8 @@ class TemplateView(MethodView):
     def get_context(self, **kwargs):
         return {}
 
-    def get(self):
-        context = self.get_context()
+    def get(self, **kwargs):
+        context = self.get_context(**kwargs)
         return render_template(self.template_name, **context)
 
 

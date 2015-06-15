@@ -1,4 +1,5 @@
-from wtforms import SelectField, Form
+# encoding: utf-8
+from wtforms import SelectField, Form, FileField, validators
 from wtforms.widgets import Select, html_params, HTMLString
 from art17 import models
 from art17.aggregation.utils import get_habitat_checklist, \
@@ -101,3 +102,12 @@ class CompareForm(Form):
 class WhatForm(Form):
     CHOICES = ((0, 'Toate'), (1, 'Valide'), (2, 'Nevalide'))
     what = SelectField(choices=CHOICES, default=0, coerce=int)
+
+
+class RefValuesForm(Form):
+    excel_doc = FileField(u'Document Excel')
+
+    def validate_excel_doc(self, field):
+        if not field.data or not field.data.filename.endswith('.xlsx'):
+            raise validators.ValidationError(
+                u'Sunt acceptate doar fișiere în format Excel')

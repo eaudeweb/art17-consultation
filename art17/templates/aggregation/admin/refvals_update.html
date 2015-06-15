@@ -26,23 +26,34 @@
   cel al șablonului.</p>
 
   <ul id="myTab" class="nav nav-tabs" role="tablist">
-    <li class="active">
-      <a href="#species" role="tab" data-toggle="tab">Specii</a>
+    <li {% if subject == 'species' %}class="active"{% endif %}>
+      <a href="{{ url_for('.refvals_update', subject='species') }}">Specii</a>
     </li>
-    <li>
-      <a href="#habitat" role="tab" data-toggle="tab">Habitate</a>
+    <li {% if subject == 'habitat' %}class="active"{% endif %}>
+      <a href="{{ url_for('.refvals_update', subject='habitat') }}">Habitate</a>
     </li>
   </ul>
 
   <div class="tab-content">
-    {% for page in ['species', 'habitat'] %}
-      <div class="tab-pane fade {% if loop.index==1 %} active in{% endif %}"
-          id="{{ page }}">
-        <a href="{{ url_for('.download_all_refvals', page=page) }}"
+    <div class="tab-pane fade active in" id="{{ subject }}">
+        <a href="{{ url_for('.download_all_refvals', page=subject) }}"
             class="btn btn-default"><i class="icon-download"></i>
             Descarcă șablon Excel</a>
-      </div>
-    {% endfor %}
+
+      <form id="refvalxls" method="post" action="" enctype="multipart/form-data">
+
+        <div class="form-group">
+          <label for="excel_doc">Document Excel</label>
+          {{ form.excel_doc }}
+          {% if form.excel_doc.errors %}
+            <p class="text-danger">{{ form.excel_doc.errors | join('\n') }}</p>
+          {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Încarcă valori de
+            referință</button>
+      </form>
+    </div>
   </div>
 
 {% endblock %}

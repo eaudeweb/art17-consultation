@@ -1,18 +1,20 @@
 # coding=utf-8
 from collections import OrderedDict
+from copy import deepcopy
+from string import upper
 
 import flask
 from flask import redirect, url_for, render_template, request, flash, Response
 from flask import jsonify
 from wtforms import Form, TextField, SelectField
 from flask.ext.principal import Permission
-from openpyxl import Workbook
+from openpyxl import Workbook, load_workbook
 from openpyxl.writer.excel import save_virtual_workbook
 from sqlalchemy import or_
 
 from art17 import dal, models, ROLE_FINAL
 from art17.aggregation.checklist import create_checklist
-from art17.aggregation.forms import CompareForm, PreviewForm
+from art17.aggregation.forms import CompareForm, PreviewForm, RefValuesForm
 from art17.aggregation.utils import (
     get_checklist, get_reporting_id, get_species_checklist,
     get_habitat_checklist, valid_checklist, sum_of_reports,
@@ -41,6 +43,7 @@ from art17.aggregation.refvalues import (
     load_habitat_refval,
     get_subject_refvals, get_subject_refvals_wip, set_subject_refvals_wip,
     get_subject_refvals_mixed,
+    save_species_refval, save_habitat_refval,
 )
 
 REGIONS = {
@@ -63,7 +66,33 @@ REFGROUPS = {
     'typical_species': 'Specii tipice',
     'threats': 'Amenintari',
     'pressures': 'Presiuni',
+    'habitat': 'Habitat',
 }
+
+EXTRA_COLUMS = ['COD', 'NUME', 'BIOREGIUNE']
+
+
+def get_struct(refvals):
+    struct = refvals.values()[0]
+    return {REFGROUPS.get(k, k.capitalize()): EXTRA_COLUMS + map(upper, d.keys())
+            for k, d in struct.iteritems()}
+
+
+def reverse(struct):
+    reverse_refgroups = {v: k for k, v in REFGROUPS.iteritems()}
+    rev = {reverse_refgroups[group]:
+           {f.capitalize(): '' for f in fields if f not in EXTRA_COLUMS}
+           for group, fields in struct.iteritems()}
+    return rev, reverse_refgroups
+
+
+def get_refvals(page):
+    if page == 'habitat':
+        return load_habitat_refval()
+    elif page == 'species':
+        return load_species_refval()
+    else:
+        raise NotImplementedError()
 
 
 def get_checklists():
@@ -280,17 +309,61 @@ aggregation.add_url_rule('/admin/reference_values',
                          view_func=ReferenceValues.as_view('reference_values'))
 
 
+def process_xls(wb, struct):
+    d = {}
+    reversed_struct, reversed_refgroups = reverse(struct)
+    for sheet in wb.get_sheet_names():
+        ws = wb[sheet]
+        col_names = [c.value.capitalize() for c in ws.rows[0] if c.value]
+        for row in ws.rows[1:]:
+            codereg = row[0].value + '-' + row[2].value
+            if codereg not in d:
+                d[codereg] = deepcopy(reversed_struct)
+            for col in range(3, len(col_names)):
+                d[codereg][reversed_refgroups[sheet]][col_names[col]] = \
+                    str(row[col].value or '')
+    return d
+
+
 class ReferenceValuesUpdate(TemplateView):
     template_name = 'aggregation/admin/refvals_update.html'
     decorators = [require(Permission(need.admin))]
 
     def get_context(self, **kwargs):
+        subject = kwargs.pop('subject')
+        form = RefValuesForm(request.files)
         return dict(
+            form=form,
+            subject=subject,
             page='refvalues',
         )
 
-aggregation.add_url_rule('/admin/reference_values/update', view_func=
-                         ReferenceValuesUpdate.as_view('refvals_update'))
+    def post(self, **kwargs):
+        context = self.get_context(**kwargs)
+        form = context['form']
+        subject = context['subject']
+        if form.validate():
+            required_struct = get_struct(get_refvals(context['subject']))
+            wb = load_workbook(form.excel_doc.data)
+            struct = {sheet: [r.value for r in wb[sheet].rows[0] if r.value]
+                      for sheet in wb.get_sheet_names()}
+            if required_struct == struct:
+                d = process_xls(wb, struct)
+                if subject == 'species':
+                    save_species_refval(d)
+                elif subject == 'habitat':
+                    save_habitat_refval(d)
+                else:
+                    raise NotImplementedError
+                flash(u'Noile valori de referință au fost salvate.', 'success')
+            else:
+                flash(u'Documentul Excel nu este în formatul acceptat.',
+                      'danger')
+        return render_template(self.template_name, **context)
+
+aggregation.add_url_rule(
+    '/admin/reference_values/<string:subject>/update',
+    view_func=ReferenceValuesUpdate.as_view('refvals_update'))
 
 
 @aggregation.app_context_processor
@@ -501,14 +574,8 @@ def download_refvals(page, subject):
 @aggregation.route('/admin/reference_values/<page>/download',
                    methods=['GET'])
 def download_all_refvals(page):
-    if page == 'habitat':
-        refvals = load_habitat_refval()
-        hd_table = LuHabitattypeCodes
-    elif page == 'species':
-        refvals = load_species_refval()
-        hd_table = LuHdSpecies
-    else:
-        raise NotImplementedError()
+    refvals = get_refvals(page)
+    hd_table = LuHabitattypeCodes if page == 'habitat' else LuHdSpecies
 
     records = []
     code_to_name = {}
@@ -521,17 +588,15 @@ def download_all_refvals(page):
         records.append((code, name, region))
 
     records.sort(key=lambda x: x[0])
-    data_struct = refvals.values()[0]
+    data_struct = get_struct(refvals)
 
     wb = Workbook()
     wb.remove_sheet(wb.get_sheet_by_name('Sheet'))
 
     for group, fields in data_struct.iteritems():
         ws = wb.create_sheet()
-        ws.title = REFGROUPS.get(group, group.capitalize())
-        columns = ['COD', 'NUME', 'BIOREGIUNE']
-        columns.extend([f.upper() for f in fields.keys()])
-        ws.append(columns)
+        ws.title = group
+        ws.append(fields)
         for code, name, region in records:
             ws.append([code, name, region] + [None] * len(fields))
 
