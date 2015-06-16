@@ -19,7 +19,7 @@ from art17.aggregation.agregator.rest import get_species_bibliography, \
     get_species_dist_surface, get_species_range_surface, \
     get_habitat_pressures_threats
 from art17.aggregation.agregator.subgroups import get_species_subgroup, \
-    get_habitat_subgroup
+    get_habitat_subgroup, TYPICAL_SPECIES_METHOD
 from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_species_population_trend, get_species_habitat_trend, \
     get_habitat_range_trend, get_habitat_coverage_trend, SHORT_TERM, LONG_TERM
@@ -318,6 +318,7 @@ def aggregate_habitat(obj, result, refvals, prev):
     set_typical_species(result, typical_species)
     result.structure_and_functions_method = (
         refvals['typical_species']['Metoda specii tipice'])
+    result.typical_species_method = TYPICAL_SPECIES_METHOD.get(subgroup)
 
     # Presiuni, amenintari
     pressures_threats = get_habitat_pressures_threats(subgroup, obj.code,

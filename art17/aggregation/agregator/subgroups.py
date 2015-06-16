@@ -52,6 +52,11 @@ def get_species_subgroup(speciescode):
 ) = range(8)
 
 
+TYPICAL_SPECIES_METHOD = {
+    PS: 'Aggregation of all species of bats found in caves',
+}
+
+
 def get_habitat_mapping():
     return get_mapping('habitats_subgroups.json')
 
