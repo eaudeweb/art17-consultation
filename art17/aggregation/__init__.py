@@ -34,7 +34,8 @@ def perm_edit_record(record):
 
     return Permission(
         need.admin,
-        *get_roles_for_subject('reviewer', record.subject)
+        *get_roles_for_subject('reporter', record.subject) +
+        get_roles_for_subject('reviewer', record.subject)
     )
 
 
@@ -59,7 +60,7 @@ def perm_definalize_record(record):
 
 
 def perm_preview_aggregation():
-    return Permission(need.admin, need.expert, need.reporter)
+    return Permission(need.admin, need.expert, need.reporter, need.reviewer)
 
 
 def perm_view_reports():
@@ -71,7 +72,7 @@ def perm_view_refvals():
 
 
 def perm_edit_refvals():
-    return Permission(need.admin, need.expert)
+    return Permission(need.admin, need.expert, need.reporter, need.reviewer)
 
 
 @aggregation.app_context_processor

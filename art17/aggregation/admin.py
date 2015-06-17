@@ -119,13 +119,13 @@ def can_delete_dataset(dataset):
 
 
 @aggregation.route('/admin/')
-@require(Permission(need.admin))
+@require(Permission(need.admin, need.reporter))
 def admin():
     return redirect(url_for('.checklists'))
 
 
 @aggregation.route('/admin/checklists/')
-@require(Permission(need.admin))
+@require(Permission(need.admin, need.reporter))
 def checklists():
     checklists = get_checklists()
 
@@ -150,7 +150,7 @@ def checklists():
 
 @aggregation.route('/admin/checklist/initial/')
 @aggregation.route('/admin/checklist/<dataset_id>/')
-@require(Permission(need.admin))
+@require(Permission(need.admin, need.reporter))
 def checklist(dataset_id=None):
     species = get_species_checklist(dataset_id=dataset_id)
     habitats = get_habitat_checklist(dataset_id=dataset_id)
@@ -168,7 +168,7 @@ def checklist(dataset_id=None):
 @aggregation.route('/admin/checklist/create/', methods=('GET', 'POST'))
 @aggregation.route('/admin/checklist/create/<save_current>',
                    methods=('GET', 'POST'))
-@require(Permission(need.admin))
+@require(Permission(need.admin, need.reporter))
 def create(save_current=False):
     if request.method == "POST":
         create_checklist(save_current)
@@ -209,7 +209,7 @@ class DatasetForm(Form):
 
 @aggregation.route('/admin/checklist/<dataset_id>/edit/',
                    methods=('GET', 'POST'))
-@require(Permission(need.admin))
+@require(Permission(need.admin, need.reporter))
 def edit_checklist(dataset_id):
     dataset = get_checklists().filter_by(id=dataset_id).first()
 
@@ -232,7 +232,7 @@ def edit_checklist(dataset_id):
 
 @aggregation.route('/admin/dataset/<dataset_id>/edit/',
                    methods=('GET', 'POST'))
-@require(Permission(need.admin))
+@require(Permission(need.admin, need.reporter))
 def edit_dataset(dataset_id):
     dataset = get_datasets().filter_by(id=dataset_id).first()
 
@@ -260,7 +260,7 @@ def edit_dataset(dataset_id):
 
 class ReferenceValues(TemplateView):
     template_name = 'aggregation/admin/reference_values.html'
-    decorators = [require(Permission(need.admin))]
+    decorators = [require(Permission(need.admin, need.reporter))]
 
     def get_context(self, **kwargs):
         checklist_id = get_reporting_id()
@@ -379,7 +379,7 @@ def inject_globals():
 
 
 @aggregation.route('/admin/compare/select', methods=('GET', 'POST'))
-@require(Permission(need.admin))
+@require(Permission(need.admin, need.reporter))
 def compare():
     if request.method == 'POST':
         form = CompareForm(request.form)
@@ -398,7 +398,7 @@ def compare():
 
 
 @aggregation.route('/admin/compare/<int:dataset1>/<int:dataset2>/')
-@require(Permission(need.admin))
+@require(Permission(need.admin, need.reporter))
 def compare_datasets(dataset1, dataset2):
     d1 = models.Dataset.query.get_or_404(dataset1)
     d2 = models.Dataset.query.get_or_404(dataset2)
