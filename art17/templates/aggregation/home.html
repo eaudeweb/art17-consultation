@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% macro dataset_table(dataset_list, show_user=True, show_reports=True,
-  show_export=True, show_period=True, view='.dashboard') %}
+  show_export=True, show_period=True, show_history=True, view='.dashboard') %}
 <table class="table table-bordered">
   <thead>
     <th>Dată</th>
@@ -47,8 +47,10 @@
           {% if dataset.id != 1 %}
           <button type="submit" class="btn btn-danger btn-xs">șterge</button>
           {% endif %}
+          {% if show_history %}
           <a class="btn btn-warning btn-xs"
              href="{{ activity_url }}">activitate</a>
+          {% endif %}
           {% if authenticated_permission.can() and show_reports %}
           <a class="btn btn-default btn-xs"
              href="{{ report_url }}">rapoarte</a>
@@ -109,7 +111,8 @@
 
   <h2>Previzualizări agregare</h2>
   {{ dataset_table(preview_datasets, show_user=False, show_reports=False,
-         show_period=False, show_export=False, view='.post_preview') }}
+         show_period=False, show_export=False, show_history=False,
+         view='.post_preview') }}
 
 {% endif %}
 

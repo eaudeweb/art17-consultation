@@ -83,7 +83,7 @@ def home():
         .filter_by(preview=True, user_id=flask.g.identity.id)
         .filter(or_(models.Dataset.checklist == None,
                     models.Dataset.checklist == False))
-        .order_by(models.Dataset.date)
+        .order_by(models.Dataset.date.desc())
         .all()
     )
     return flask.render_template('aggregation/home.html', **{

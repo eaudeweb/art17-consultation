@@ -5,9 +5,10 @@
 {% from 'bits.html' import pagination %}
 
 {% block breadcrumbs %}
+  {% set home_name = 'agregare' if app_name == 'aggregation' else 'consultare' %}
   {% from 'bits.html' import breadcrumbs %}
   {{ breadcrumbs([
-          ('consultare', home_url),
+          (home_name, home_url),
           ('activitate', None),
       ]) }}
 {% endblock breadcrumbs %}
