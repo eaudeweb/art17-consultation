@@ -1,4 +1,4 @@
-{% from 'aggregation/admin/_bits.html' import render_refvalues %}
+{% from 'aggregation/admin/_bits.html' import render_refvalues with context %}
 
 {% if refvalues %}
   {% for region, rv in refvalues.iteritems() %}
