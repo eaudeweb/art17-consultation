@@ -600,6 +600,7 @@ def export(page, dataset_id):
 
     name = dataset.comment or dataset.date.strftime(DATE_FORMAT_COMMENT)
     fn = u'{}_{}.xml'.format(page, name.replace(' ', '-'))
+    fn = fn.encode(errors='replace')
     headers = {"Content-Disposition": "attachment; filename={}".format(fn)}
     return flask.Response(xml, mimetype='text/xml', headers=headers)
 
