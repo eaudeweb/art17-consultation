@@ -119,7 +119,7 @@ class Art17Server(Server):
 def create_manager(app):
     from art17.models import db_manager
     from art17.common import cons_manager
-    from art17.scripts import exporter, importer
+    from art17.scripts import exporter, importer, modifier
     from art17.aggregation import aggregation_manager
 
     manager = Manager(app)
@@ -129,6 +129,7 @@ def create_manager(app):
     manager.add_command('runserver', Art17Server())
     manager.add_command('export', exporter)
     manager.add_command('import', importer)
+    manager.add_command('modify', modifier)
 
     return manager
 
