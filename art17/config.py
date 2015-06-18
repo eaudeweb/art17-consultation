@@ -1,6 +1,8 @@
 # encoding: utf-8
 import flask
 from flask import current_app
+from flask.ext.principal import Permission
+
 from art17 import models
 from art17 import auth
 from art17.common import get_year_start, get_year_end
@@ -27,8 +29,8 @@ config = flask.Blueprint('config', __name__)
 
 
 @config.route('/config', methods=['GET', 'POST'])
+@auth.require(Permission(auth.need.admin, auth.need.reporter))
 def form():
-    auth.admin_permission.test()
     config_key = current_app.config.get('CONFIG_SET', 'CONSULTATION')
     if config_key not in CONFIGURATION:
         raise ValueError('Invalid config key')
@@ -66,8 +68,8 @@ def form():
 
 
 @config.route('/config/period', methods=['GET', 'POST'])
+@auth.require(Permission(auth.need.admin, auth.need.reporter))
 def new_period():
-    auth.admin_permission.test()
     reporting_begin = models.Config.query.get('REPORTING_BEGIN')
     year_start = get_year_start() + current_app.config['REPORTING_FREQUENCY']
     year_end = get_year_end(year_start)
