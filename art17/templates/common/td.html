@@ -171,15 +171,9 @@
   {%- set values_with_unit = [size['population'], size['population_alt']] | selectattr('unit') %}
   {%- for item in values_with_unit %}
     {%- if item.min == item.max -%}
-      <span title="{{ item.min }}&nbsp;(
-                   {{- get_population_units_ro(item.unit) }})">
-        {{- item.min }} {{ item.unit -}}
-      </span>
+        {{- item.min }} ({{- get_population_units_ro(item.unit) }})
     {%- else -%}
-      <span title="{{ item.min }}-{{ item.max }}&nbsp;(
-                   {{- get_population_units_ro(item.unit) }})">
-        {{- item.min }}-{{ item.max }} {{ item.unit -}}
-      </span>
+        {{- item.min }}-{{ item.max }} ({{- get_population_units_ro(item.unit) }})
     {%- endif %}
     {%- if not loop.last %};<br>{% endif %}
   {%- endfor %}
