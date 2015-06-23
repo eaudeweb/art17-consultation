@@ -78,7 +78,6 @@ QUALITY_OPTIONS = [
 
 QUALITY = dict(QUALITY_OPTIONS)
 
-
 METHODS_PRESSURES_OPTIONS = [
     ('1', u"Bazat numai pe opinia expertului"),
     ('2', u"Bazat în principal pe opinia expertului sau alte date"),

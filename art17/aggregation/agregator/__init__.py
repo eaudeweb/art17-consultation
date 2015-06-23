@@ -37,7 +37,8 @@ from art17.models import DataHabitatSpecies
 
 UNKNOWN_TREND = 'x'
 MISSING_DATA = '0'
-TERRAIN_DATA = '1'
+EXPERT_OPINION = '1'
+TERRAIN_DATA = '3'
 
 
 def get_period(year, length):
@@ -265,6 +266,8 @@ def aggregate_habitat(obj, result, refvals, prev):
         result.complementary_favourable_range_op,
         result.complementary_favourable_range_unknown,
     ) = parse_complementary(refvals["range"])
+    result.complementary_favourable_range_method = \
+        "Expert opinion, correlated with the data reported in 2013"
     result.conclusion_range = get_habitat_conclusion_range(
         result.range_surface_area, refvals)
 
@@ -303,6 +306,8 @@ def aggregate_habitat(obj, result, refvals, prev):
         result.coverage_surface_area, refvals)
 
     # Presiuni & Amenintari ??
+    result.pressures_method = TERRAIN_DATA
+    result.threats_method = EXPERT_OPINION
 
     # Natura 2000
     n2k_min, n2k_max = get_habitat_cover_range(subgroup, obj.code, result.region)
@@ -318,7 +323,8 @@ def aggregate_habitat(obj, result, refvals, prev):
     set_typical_species(result, typical_species)
     result.structure_and_functions_method = (
         refvals['typical_species']['Metoda specii tipice'])
-    result.typical_species_method = TYPICAL_SPECIES_METHOD.get(subgroup)
+    result.typical_species_method = TYPICAL_SPECIES_METHOD.get(
+        subgroup, "Average on multiple plots - field evaluation")
 
     # Presiuni, amenintari
     pressures_threats = get_habitat_pressures_threats(subgroup, obj.code,
