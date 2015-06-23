@@ -4,6 +4,7 @@ from art17.aggregation.utils import average
 
 
 (SHORT_TERM, LONG_TERM) = range(2)
+(LOW, MEDIUM, HIGH) = range(3)
 
 
 def term_start(term, year):

@@ -8,6 +8,9 @@ import requests
 from art17.aggregation.agregator.subgroups import (
     AR, LL, MM, NV, PE, PL, MR, PM, AD, DN, HM, PS, ML, PD, PJ, SR,
 )
+from art17.aggregation.utils import (
+    most_common, get_values, average, get_season, root_mean_square,
+)
 
 # Colectare URLs
 HABITAT_BIBLIO_URL = '/AgregareHabitate/MapServer/1'
@@ -28,7 +31,9 @@ HABITAT_RANGE_URL = "/IBB_RangeDistribution/MapServer/1"
     DISTRIB,
     RANGE,
     TYPICAL,
-) = range(7)
+    TREND,
+    LAST_10,
+) = range(9)
 
 SPECIES_MAPPING = {
     AR: {
@@ -122,6 +127,8 @@ HABITAT_MAPPING = {
         RANGE: HABITAT_RANGE_URL,
     },
     PS: {
+        TREND: '/EDW_AGREGARE_HAB/MapServer/47',
+        LAST_10: '/EDW_AGREGARE_HAB/MapServer/46',
         TYPICAL: '/EDW_AGREGARE_HAB/MapServer/45',
         DISTRIB: HABITAT_DISTRIBUTION_URL,
         RANGE: HABITAT_RANGE_URL,
@@ -384,3 +391,53 @@ def get_species_range_surface(subgroup, speccode, region):
     where_query = "SPECNUM='%s'" % speccode
     url = _get_species_url(subgroup, RANGE)
     return generic_surface_call(url, where_query, region)
+
+
+def get_seasonal_avg(values, fields, mean_func):
+    seasonal_values = {key: {} for key in fields}
+    for field in fields:
+        for value in values:
+            if not value[field]:
+                continue
+            season = get_season(value['DATA'])
+            seasonal_values[field].setdefault(season, []).append(value[field])
+    return {key: {k: mean_func(v) for k, v in val.iteritems()}
+            for key, val in seasonal_values.iteritems()}
+
+
+def get_PS_trend(habcode, region):
+    where_query = "HABITAT='%s' AND REG_BIOGEO='%s'" % (habcode, region)
+    url = _get_habitat_url(PS, TREND)
+    data = generic_rest_call(url, where_query) or []
+    values = [r['attributes'] for r in data]
+
+    if not values:
+        return 'x'
+
+    grad = most_common(get_values(values, 'GRAD'))
+    rang = most_common(get_values(values, 'RANG'))
+
+    morf_fields = ['MORFOLOGIE_LOC_ST', 'UMPLUTURA', 'REGIM_HIDRO',
+                   'ACUMULARE_APA', 'IVIRE_APA', 'SURSA_MICRO_PICATURI']
+    morf_frequencies = []
+    for field in morf_fields:
+        morf_values = get_values(values, field)
+        if not morf_values:
+            continue
+        most_common_value = most_common(morf_values)
+        frequency = (morf_values.count(most_common_value) /
+                     float(len(morf_values) or 1))
+        morf_frequencies.append(frequency)
+    morf_frequency = average(morf_frequencies)
+
+    env_fields = ['TEMP_INT', 'UMITIDATE_REL']
+    seasonal_averages = get_seasonal_avg(values, env_fields, average)
+
+    url = _get_habitat_url(PS, LAST_10)
+    data = generic_rest_call(url, where_query) or []
+    values = [r['attributes'] for r in data]
+
+    hist_seasonal_averages = get_seasonal_avg(values, env_fields,
+                                              root_mean_square)
+
+    return grad, rang, morf_frequency

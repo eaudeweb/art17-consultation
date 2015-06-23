@@ -1,7 +1,13 @@
 # coding=utf-8
+from datetime import date
+import math
 import flask
 from flask import current_app
+
 from art17 import models, dal, ROLE_MISSING, CONS_ROLES
+
+
+SPRING, SUMMER, AUTUMN, WINTER = range(4)
 
 
 def record_index_url(subject, region, dataset_id):
@@ -295,3 +301,29 @@ def sum_of_reports(stats, regions, page, letter, number=None):
 
 def average(values):
     return float(sum(values)) / (len(values) or 1)
+
+
+def most_common(lst):
+    return max(set(lst), key=lst.count) if lst else None
+
+
+def get_values(dict_list, key):
+    return [value[key] for value in dict_list if value[key] is not None]
+
+
+def get_season(timestamp):
+    timestamp = timestamp / 1000  # TODO: Remove this
+    month = date.fromtimestamp(timestamp).month
+    if 3 <= month < 6:
+        return SPRING
+    elif 6 <= month < 9:
+        return SUMMER
+    elif 9 <= month < 12:
+        return AUTUMN
+    return WINTER
+
+
+def root_mean_square(lst):
+    avg = average(lst)
+    square_sum = sum(map(lambda x: (x - avg) ** 2, lst))
+    return math.sqrt(square_sum / (len(lst) or 1))
