@@ -10,7 +10,7 @@ LU_REASONS_FOR_CHANGE_OPTIONS = [
 LU_REASONS_FOR_CHANGE = dict(LU_REASONS_FOR_CHANGE_OPTIONS)
 
 
-LU_FV_RANGE_OP_FUNCT_OPTIONS =[
+LU_FV_RANGE_OP_FUNCT_OPTIONS = [
     (u'≈', u"Aproximativ egal cu"),
     (u'>', u"Mai mare decǎt"),
     (u'≫', u"Mult mai mare decǎt"),
@@ -20,7 +20,7 @@ LU_FV_RANGE_OP_FUNCT_OPTIONS =[
 LU_FV_RANGE_OP_FUNCT = dict(LU_FV_RANGE_OP_FUNCT_OPTIONS)
 
 
-LU_FV_RANGE_OP_OPTIONS =[
+LU_FV_RANGE_OP_OPTIONS = [
     (u'≈', u"Aproximativ egal cu"),
     (u'>', u"Mai mare decǎt"),
     (u'≫', u"Mult mai mare decǎt"),
@@ -80,9 +80,9 @@ QUALITY = dict(QUALITY_OPTIONS)
 
 
 METHODS_PRESSURES_OPTIONS = [
-    ('3', u"Bazat numai pe opinia expertului"),
+    ('1', u"Bazat numai pe opinia expertului"),
     ('2', u"Bazat în principal pe opinia expertului sau alte date"),
-    ('1', u"Bazat exclusiv sau în principal pe date reale provenite din teren")
+    ('3', u"Bazat exclusiv sau în principal pe date reale provenite din teren")
 ]
 
 METHODS_PRESSURES = dict(METHODS_PRESSURES_OPTIONS)
