@@ -250,12 +250,14 @@ def aggregate_habitat(obj, result, refvals, prev):
     )
     result.range_method = refvals['range']['Metoda areal']
     result.range_trend = get_habitat_range_trend(
-        SHORT_TERM, current_year, result.range_surface_area, prev)
+        subgroup, SHORT_TERM, current_year, result.range_surface_area, prev,
+        obj.code, result.region)
     result.range_trend_period = short_period
     result.range_trend_magnitude_min = refvals["magnitude"]["Magn. min scurt"]
     result.range_trend_magnitude_max = refvals["magnitude"]["Magn. max scurt"]
     result.range_trend_long = get_habitat_range_trend(
-        LONG_TERM, current_year, result.range_surface_area, prev)
+        subgroup, LONG_TERM, current_year, result.range_surface_area, prev,
+        obj.code, result.region)
     result.range_trend_long_period = long_period
     result.range_trend_long_magnitude_min = refvals["magnitude"][
         "Magn. min lung"]
@@ -277,7 +279,8 @@ def aggregate_habitat(obj, result, refvals, prev):
     result.coverage_date = current_period
     result.coverage_method = refvals['coverage_range']['Metoda suprafata']
     result.coverage_trend = get_habitat_coverage_trend(
-        SHORT_TERM, current_year, result.coverage_surface_area, prev)
+        subgroup, SHORT_TERM, current_year, result.coverage_surface_area, prev,
+        obj.code, result.region)
     result.coverage_trend_period = short_period
     result.coverage_trend_magnitude_min = refvals["coverage_magnitude"][
         "Magn. min scurt"]
@@ -287,7 +290,8 @@ def aggregate_habitat(obj, result, refvals, prev):
     #     "Interval incredere scurt"]
     result.coverage_trend_method = MISSING_DATA
     result.coverage_trend_long = get_habitat_coverage_trend(
-        LONG_TERM, current_year, result.coverage_surface_area, prev)
+        subgroup, LONG_TERM, current_year, result.coverage_surface_area, prev,
+        obj.code, result.region)
 
     result.coverage_trend_long_period = long_period
     result.coverage_trend_long_magnitude_min = refvals["coverage_magnitude"][

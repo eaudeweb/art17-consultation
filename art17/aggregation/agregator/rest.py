@@ -405,6 +405,14 @@ def get_seasonal_avg(values, fields, mean_func):
             for key, val in seasonal_values.iteritems()}
 
 
+def get_seasonal_intervals(values, fields):
+    deviations = get_seasonal_avg(values, fields, root_mean_square)
+    averages = get_seasonal_avg(values, fields, average)
+    return {key: {k: (averages[key][k] - 2 * v, averages[key][k] + 2 * v)
+                  for k, v in val.iteritems()}
+            for key, val in deviations.iteritems()}
+
+
 def get_PS_trend(habcode, region):
     where_query = "HABITAT='%s' AND REG_BIOGEO='%s'" % (habcode, region)
     url = _get_habitat_url(PS, TREND)
@@ -412,7 +420,7 @@ def get_PS_trend(habcode, region):
     values = [r['attributes'] for r in data]
 
     if not values:
-        return 'x'
+        return (None, ) * 4
 
     grad = most_common(get_values(values, 'GRAD'))
     rang = most_common(get_values(values, 'RANG'))
@@ -437,7 +445,15 @@ def get_PS_trend(habcode, region):
     data = generic_rest_call(url, where_query) or []
     values = [r['attributes'] for r in data]
 
-    hist_seasonal_averages = get_seasonal_avg(values, env_fields,
-                                              root_mean_square)
+    hist_seasonal_intervals = get_seasonal_intervals(values, env_fields)
 
-    return grad, rang, morf_frequency
+    env_characteristics = 0
+    for field, seasonal_values in seasonal_averages.iteritems():
+        for season, value in seasonal_values.iteritems():
+            min, max = hist_seasonal_intervals[field][season]
+            if min <= value <= max:
+                env_characteristics += 1
+            else:
+                env_characteristics -= 1
+
+    return grad, rang, (env_characteristics >= 0), morf_frequency

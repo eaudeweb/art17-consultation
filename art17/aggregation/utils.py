@@ -312,7 +312,7 @@ def get_values(dict_list, key):
 
 
 def get_season(timestamp):
-    timestamp = timestamp / 1000  # TODO: Remove this
+    timestamp = timestamp / 1000  # convert microseconds to seconds
     month = date.fromtimestamp(timestamp).month
     if 3 <= month < 6:
         return SPRING
