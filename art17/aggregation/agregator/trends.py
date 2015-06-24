@@ -72,7 +72,7 @@ def get_habitat_coverage_trend(subgroup, term, year, current_value, prev,
 
 def get_caves_trend(habcode, region):
     result = get_PS_trend(habcode, region)
-    if all([elem is None for elem in result]):
+    if result is None:
         return 'x'
 
     grad, rang, env, morf = result

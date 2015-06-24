@@ -420,7 +420,7 @@ def get_PS_trend(habcode, region):
     values = [r['attributes'] for r in data]
 
     if not values:
-        return (None, ) * 4
+        return
 
     grad = most_common(get_values(values, 'GRAD'))
     rang = most_common(get_values(values, 'RANG'))
