@@ -32,7 +32,9 @@ def get_habitat_cover_range(subgroup, habcode, region):
         return None, None
 
     values = [e['attributes']['HABITAT_COVER'] for e in data]
-    return min(values), max(values)
+    # Sum up values for all sites and convert to km2
+    max_val = sum(values) * 0.01
+    return None, max_val
 
 
 def get_species_population_range(subgroup, speccode, region):
