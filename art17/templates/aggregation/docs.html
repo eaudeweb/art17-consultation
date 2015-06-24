@@ -195,10 +195,10 @@ Structura documentului urmărește structura interfeței de vizualizare a datelo
 <p>Intervalele (anii de început și sfârșit) sunt completate automat cu 12, respectiv 24 de ani înainte de anul de raportare.</p>
 
 <h4>3.1.4 Areal favorabil de referință</h4>
-<p>Preluat din tabelele de referință. Pentru raportărille viitoare, această valoare poate fi actualizată în SIMSHAB. </p>
+<p>Preluat din tabelele de referință. Pentru raportărille viitoare, această valoare poate fi actualizată în SIMSHAB de către un Administrator.</p>
 
 <h4>3.1.5 Motivul modificării</h4>
-<p>Se stabilește de către expert.</p>
+<p>Se stabilește de către utilizator în cazul în care acesta modifică evaluarea arealului.</p>
 
 <h4>3.1.6 Evaluarea arealului</h4>
 <p>Dacă există valoare pentru arealul de referință, concluzia este o comparație între valoarea pentru suprafață și valoarea favorabilă de referință:</p>
@@ -216,7 +216,16 @@ Structura documentului urmărește structura interfeței de vizualizare a datelo
 	<li>operatorul "mult mai mare decât" generează concluzia "nefavorabil rau"</li>
 </ul>
 
-<p>Tendința se stabilește de către expert.</p>
+<p>Tendința se calculează în funcție de direcția tendinței pe termen scurt și lung după cum urmează:</p>
+<ul>
+	<li>+ și + generează +</li>
+	<li>+ și = sau = și + generează +</li>
+	<li>+ și - sau - și + generează =</li>
+	<li>= și = generează =</li>
+	<li>= și - sau - și = generează -</li>
+	<li>- și - generează -</li>
+	<li>'x' cu orice valoare generează acea valoare</li>
+</ul>
 
 <h3>3.2 Suprafața</h3>
 <h4>Suprafața</h4>
@@ -235,13 +244,40 @@ Structura documentului urmărește structura interfeței de vizualizare a datelo
 	<li>descrescătoare, dacă valoarea curentă este mai mică;</li>
 	<li>stabilă, dacă valoarea curentă este în intervalul acceptat de variație fată de medie.</li>
 </ul>
+
 <p>Magnitudinile minimă și maximă sunt valori fixe, preluate din tabelele de referință.
 </p>
 <p>Intervalele (anii de început și sfârșit) sunt complettei automat cu 12, respectiv 24 de ani înainte de anul de raportare.</p>
 
 <h4>Suprafața favorabilă de referință</h4>
+<p>Preluată din tabelele de referință. Pentru raportările viitoare, această valoare poate fi actualizată în SIMSHAB.</p>
 
 <h4>Evaluarea suprafeței</h4>
+<p>Dacă există valoare pentru suprafața favorabilă de referință, concluzia este o comparație între valoarea pentru suprafață și valoarea favorabilă de referință:</p>
+<ul>
+	<li>Favorabil dacă suprafața este mai mare sau egală cu suprafața favorabilă de referință</li>
+	<li>Nefavorabil-Rău dacă suprafața este cu mai mult de 10% mai mică decăt suprafața favorabilă de referință</li>
+	<li>Nefavorabil-Neadecvat dacă suprafața este cu 0.1% - 9.9% mai mică decât suprafața favorabilă de referință</li>
+</ul>
+
+<p>Dacă nu există valoare pentru suprafața de referință, se va calcula după cum urmează:</p>
+<ul>
+	<li>opțiunea "necunoscut" generează concluzia "necunoscut"</li>
+	<li>operatorul "apox egal cu" și "mai mic" generează concluzia "favorabil"</li>
+	<li>operatorul "mai mare decât" generează concluzia "nefavorabil inadecvat"</li>
+	<li>operatorul "mult mai mare decât" generează concluzia "nefavorabil rau"</li>
+</ul>
+
+<p>Tendința se calculează în funcție de direcția tendinței pe termen scurt și lung după cum urmează:</p>
+<ul>
+	<li>+ și + generează +</li>
+	<li>+ și = sau = și + generează +</li>
+	<li>+ și - sau - și + generează =</li>
+	<li>= și = generează =</li>
+	<li>= și - sau - și = generează -</li>
+	<li>- și - generează -</li>
+	<li>'x' cu orice valoare generează acea valoare</li>
+</ul>
 
 <h3>3.3 Presiuni și Amenințări</h3>
 <p>Se obțin din câmpurile corespunzătoare din datele colectate, prin sortare după frecvența cu care apar și grupare: maxim 5 majore, maxim 5 medii și maxim 5 minore.</p>
@@ -251,20 +287,20 @@ Structura documentului urmărește structura interfeței de vizualizare a datelo
 <p>Se obțin din datele colectate, numele speciilor fiind sortate descrescător în funcție de frecvența cu care apar.</p>
 
 <h4>3.4.2 Metoda utilizată</h4>
-<p>Se completează de către expert.</p>
+<p>Se completează cu „Average on multiple plots - field evaluation”.</p>
 
 <h4>3.4.3 Justificarea modificărilor (%) induse de tendințe</h4>
-<p>Se completează de către expert.</p>
+<p>Se completează de către expert dacă este cazul.</p>
 
 <h4>3.4.4 Structura şi funcțiile - metoda utilizată</h4>
 <p>Se completează din tabelele de referință cu una dintre valorile "Inventarieri complete sau o estimare statistică solidă", "Estimări prin extrapolări și/sau modelări bazate pe date parțiale" și "Estimǎri bazate numai pe opinia expertului, fără sau cu eșantionare minimală".</p>
 
 <h4>3.4.5 Alte informații relevante</h4>
-<p>Se completează de către expert.</p>
+<p>Se completează de către expert dacă este cazul.</p>
 
 <h3>3.5 Natura2000</h3>
 <h4>3.5.1 Suprafața acoperită de habitat (km2)</h4>
-<p>Se obține din serviciul de date N2K, care se conectează la baza de date Natura2000, împortată în SIMSHAB din SIM la intervale regulate. Se completează valorile minim și maxim.</p>
+<p>Se obține din serviciul de date N2K, care se conectează la baza de date Natura2000, împortată în SIMSHAB din SIM la intervale regulate. Se completează valoarea maximă pentru suprafață cu suma suprafețelor habitatului respectiv din siturile SCI în care habitatul apare, în procentajul în care apare habitatul în SCI. Suma se convertește din hectare în km pătrați.</p>
 
 <h4>3.5.2 Metoda utilizată</h4>
 <p>Se completează de către expert, întrucât câmpul nu se poate deduce din datele primare sau din baza de date Natura2000.</p>
