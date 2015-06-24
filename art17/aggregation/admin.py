@@ -576,18 +576,8 @@ def download_refvals(page, subject):
 def download_all_refvals(page):
     refvals = get_refvals(page)
     hd_table = LuHabitattypeCodes if page == 'habitat' else LuHdSpecies
+    code_to_name = {lu.code: lu.display_name for lu in hd_table.query.all()}
 
-    records = []
-    code_to_name = {}
-    for codereg, data in refvals.iteritems():
-        code, region = codereg.split('-')
-        if code not in code_to_name:
-            hd_record = hd_table.query.filter_by(code=code).first()
-            code_to_name[code] = hd_record.display_name if hd_record else ''
-        name = code_to_name[code]
-        records.append((code, name, region))
-
-    records.sort(key=lambda x: x[0])
     data_struct = get_struct(refvals)
 
     wb = Workbook()
@@ -597,8 +587,20 @@ def download_all_refvals(page):
         ws = wb.create_sheet()
         ws.title = group
         ws.append(fields)
-        for code, name, region in records:
-            ws.append([code, name, region] + [None] * len(fields))
+
+    sorted_keys = refvals.keys()
+    sorted_keys.sort()
+    for key in sorted_keys:
+        code, region = key.split('-')
+        for group, values in refvals[key].iteritems():
+            xls_group = REFGROUPS[group]
+            ws = wb[xls_group]
+            values = {k.upper(): v for k, v in values.iteritems()}
+            values['COD'] = code
+            values['BIOREGIUNE'] = region
+            values['NUME'] = code_to_name.get(code, None)
+            to_insert = [values.get(k, None) for k in data_struct[xls_group]]
+            ws.append(to_insert)
 
     response = Response(save_virtual_workbook(wb), mimetype=MIMETYPE)
     response.headers.add('Content-Disposition',
