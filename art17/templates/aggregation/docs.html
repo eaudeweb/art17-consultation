@@ -100,7 +100,7 @@ Minimul și maximul se calculează dintr-un serviciu web din datele primare. At�
 <p>Anii de început și de sfârșit se completează automat cu 12, respectiv 24 de ani înainte de anul de raportare. Metoda se completează de către expert. Magnitudinea se preia din din tabelele de referință.</p>
 
 <h4>2.2.6 Populația favorabilă de referință</h4>
-<p>Valoarea <em>"populație"</em> sau <em>"operator"</em> este preluată din tabelele de referință. Dacă nu există, se completează opțiunea <em>"necunoscut"</em>. Metoda pentru această valoare se completează de către expert.</p>
+<p>Valoarea <em>"populație"</em> sau <em>"operator"</em> este preluată din tabelele de referință. Dacă nu există, se completează opțiunea <em>"necunoscut"</em>. Metoda pentru această valoare este completată cu “Expert opinion, correlated with the data reported in 2013”.</p>
 
 <h4>2.2.7 Evaluarea populației</h4>
 
@@ -124,7 +124,16 @@ Minimul și maximul se calculează dintr-un serviciu web din datele primare. At�
 	<li>operatorul "mult mai mare decât" generează concluzia "nefavorabil rau"</li>
 </ul>
 
-<p>Tendința se calculează de către expert.</p>
+<p>Tendința se calculează în funcție de direcția tendinței pe termen scurt și lung după cum urmează:</p>
+<ul>
+	<li>+ și + generează +</li>
+	<li>+ și = sau = și + generează +</li>
+	<li>+ și - sau - și + generează =</li>
+	<li>= și = generează =</li>
+	<li>= și - sau - și = generează -</li>
+	<li>- și - generează -</li>
+	<li>'x' cu orice valoare generează acea valoare</li>
+</ul>
 
 <h3>2.3 Habitatul speciei</h3>
 <h4>2.3.1 Suprafață</h4>
@@ -169,10 +178,11 @@ Minimul și maximul se calculează dintr-un serviciu web din datele primare. At�
 	<li>- și - generează -</li>
 	<li>'x' cu orice valoare generează acea valoare</li>
 </ul>
+
 <h3>2.4 Presiuni și Amenințări</h3>
 <p>Se obțin din câmpurile corespunzătoare din datele colectate, prin sortare după frecvența cu care apar și grupare: maxim 5 majore, maxim 5 medii și maxim 5 minore.</p>
 
-<p>Metoda se stabilește la: opinia expertului.</p>
+<p>Metodele se stabilesc la: “Bazat exclusiv sau în principal pe date reale provenite din teren”, respectiv „Opinia expertului”.</p>
 
 <h3>2.5 Informații complementare</h3>
 <p>Se completează de către expert, întrucât nu există câmpuri relevante în datele de colectare.</p>
