@@ -253,7 +253,7 @@
 
 {% macro conclusions_html(conclusion) %}
     <strong>Concluzie:</strong>
-    {%- if conclusion.value%}<span class="conclusion {{ conclusion.value }}">{{ conclusion.value }}</span>{{ CONCLUSIONS[conclusion.value] }}
+    {%- if conclusion.value %}<span class="conclusion {{ conclusion.value }}">{{ conclusion.value }}</span>{{ CONCLUSIONS[conclusion.value] }}
     {% else %} (nestabilită)
     {%- endif %}
     &ensp;

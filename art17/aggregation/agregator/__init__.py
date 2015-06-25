@@ -22,7 +22,8 @@ from art17.aggregation.agregator.subgroups import get_species_subgroup, \
     get_habitat_subgroup, TYPICAL_SPECIES_METHOD
 from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_species_population_trend, get_species_habitat_trend, \
-    get_habitat_range_trend, get_habitat_coverage_trend, SHORT_TERM, LONG_TERM
+    get_habitat_range_trend, get_habitat_coverage_trend, get_conclusion_trend, \
+    SHORT_TERM, LONG_TERM
 from art17.aggregation.prev import load_species_prev, load_habitat_prev, \
     get_subject_prev, get_acronym
 from art17.aggregation.refvalues import (
@@ -272,6 +273,8 @@ def aggregate_habitat(obj, result, refvals, prev):
         "Expert opinion, correlated with the data reported in 2013"
     result.conclusion_range = get_habitat_conclusion_range(
         result.range_surface_area, refvals)
+    result.conclusion_range_trend = get_conclusion_trend(
+        result.conclusion_range, result.range_trend, result.range_trend_long)
 
     # Suprafata
     result.coverage_surface_area = get_habitat_dist_surface(subgroup, obj.code,
@@ -308,6 +311,9 @@ def aggregate_habitat(obj, result, refvals, prev):
     ) = parse_complementary(refvals["coverage_range"])
     result.conclusion_area = get_habitat_conclusion_area(
         result.coverage_surface_area, refvals)
+    result.conclusion_area_trend = get_conclusion_trend(
+        result.conclusion_area, result.coverage_trend,
+        result.coverage_trend_long)
 
     # Presiuni & Amenintari ??
     result.pressures_method = TERRAIN_DATA

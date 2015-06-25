@@ -3,10 +3,15 @@ from flask import current_app as app
 from art17.aggregation.utils import average
 from art17.aggregation.agregator.rest import get_PS_trend
 from art17.aggregation.agregator.subgroups import PS
+from art17.aggregation.agregator.conclusions import FV, XX
 
 
 SHORT_TERM, LONG_TERM = range(2)
 LOW, MEDIUM, HIGH = 'L', 'M', 'H'
+
+INCREASE = [('+', '+'), ('+', '0'), ('0', '+'), ('x', '+'), ('+', 'x')]
+DECREASE = [('-', '-'), ('-', '0'), ('0', '-'), ('x', '-'), ('-', 'x')]
+STABLE = [('0', '0'), ('+', '-'), ('-', '+'), ('x', '0'), ('0', 'x')]
 
 
 def term_start(term, year):
@@ -84,3 +89,17 @@ def get_caves_trend(habcode, region):
         return '-'
     else:
         return '0'
+
+
+def get_conclusion_trend(conclusion, trend_short, trend_long):
+    if conclusion in [FV, XX]:
+        return
+    trend_pair = (trend_short, trend_long)
+    if trend_pair in INCREASE:
+        return '+'
+    elif trend_pair in DECREASE:
+        return '-'
+    elif trend_pair in STABLE:
+        return '0'
+    else:
+        return 'x'
