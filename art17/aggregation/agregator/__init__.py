@@ -41,6 +41,12 @@ MISSING_DATA = '0'
 EXPERT_OPINION = '1'
 TERRAIN_DATA = '3'
 
+RANKING_SLICES = {
+    'H': 5,
+    'M': 5,
+    'L': 10,
+}
+
 
 def get_period(year, length):
     return '%d-%d' % (year - length, year)
@@ -73,18 +79,37 @@ def set_pressures_threats(obj, pressures_threats):
     else:
         raise RuntimeError('Unknown type %r' % type(obj))
 
+    d = {}
     for row in pressures_threats:
-        pressure_obj = models.DataPressuresThreats(
-            pressure=row['pressure'],
-            ranking=row['ranking'],
-            type=row['type'],
-            **foreign_key
+        typ = row['type']
+        rank = row['ranking']
+        if not typ or not rank:
+            continue
+        (
+            d.setdefault(typ, {})
+            .setdefault(rank, {})
+            .setdefault(row['pressure'], [])
+            .append(row['pollution'])
         )
-        pollution_obj = models.DataPressuresThreatsPollution(
-            pressure=pressure_obj,
-            pollution_qualifier=row['pollution'],
-        )
-        models.db.session.add(pressure_obj)
+
+    for typ, data in d.iteritems():
+        for rank, tp in data.iteritems():
+            tp = sorted(tp.items(), key=lambda x: len(x[1]), reverse=True)
+            tp = tp[:RANKING_SLICES[rank]]
+            for p, pollutions in tp:
+                pressure_obj = models.DataPressuresThreats(
+                    pressure=p,
+                    ranking=rank,
+                    type=typ,
+                    **foreign_key
+                )
+                for pol in set(pollutions):
+                    pollution_obj = models.DataPressuresThreatsPollution(
+                        pressure=pressure_obj,
+                        pollution_qualifier=pol,
+                    )
+                    models.db.session.add(pollution_obj)
+                models.db.session.add(pressure_obj)
 
 
 def aggregate_species(obj, result, refvals, prev):

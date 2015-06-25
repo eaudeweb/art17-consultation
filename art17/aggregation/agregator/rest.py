@@ -347,7 +347,13 @@ def get_habitat_pressures_threats(subgroup, habcode, region):
         1: 't',  # threat
         2: 'p',  # pressure
     }
-    data = []  # TODO connect to a web service
+    where_query = "HABITAT='%s' AND REG_BIOGEO='%s'" % (habcode, region)
+    url = _get_habitat_url(subgroup, PRES_THRE)
+    data = generic_rest_call(url, where_query)
+    if not data:
+        return ''
+
+    data = [e["attributes"] for e in data]
     return [
         {
             'pressure': d["AMENINTARI"],
