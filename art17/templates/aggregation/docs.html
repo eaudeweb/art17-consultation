@@ -22,7 +22,8 @@ Structura documentului urmărește structura interfeței de vizualizare a datelo
 <h4>2.1.1 Suprafață</h4>
 <p>Valoare numerică, se calculează din baza de date geospațială.</p>
 
-<p>Metoda: se completează din tabelele de referință cu una dintre valorile "Inventarieri complete sau o estimare statistică solidă", "Estimări prin extrapolări și/sau modelări bazate pe date parțiale" și "Estimǎri bazate numai pe opinia expertului, fără sau cu eșantionare minimală".</p>
+<h4>2.1.2 Metoda utilizată - suprafața arealului</h4>
+<p>Se completează din tabelele de referință cu una dintre valorile "Inventarieri complete sau o estimare statistică solidă", "Estimări prin extrapolări și/sau modelări bazate pe date parțiale" și "Estimǎri bazate numai pe opinia expertului, fără sau cu eșantionare minimală".</p>
 
 <h4>2.1.2 Tendințe pe termen scurt și lung</h4>
 <p>Interval termen scurt: 12 ani, interval termen lung: 24 de ani. Direcția se stabilește în funcție de valorile pentru suprafața arealului din agregările anterioare. De exemplu, pentru tendința pe termen scurt, se iau în considerare ultimele două agregări (la distanță de 6, respectiv 12 ani față de agregarea curentă). Media valorilor se compară cu valoarea curentă, direcția fiind:</p>
@@ -32,16 +33,17 @@ Structura documentului urmărește structura interfeței de vizualizare a datelo
 	<li>stabilă, dacă valoarea curentă este în intervalul acceptat de variație fată de medie.</li>
 </ul>
 
-<p>Magnitudinile minimă și maximă sunt valori preluate din tabelele de referință.
-</p>
+<p>Magnitudinile minimă și maximă sunt valori preluate din tabelele de referință.</p>
 
-<p>Intervalele (anii de început și sfârșit) sunt complettei automat cu 12, respectiv 24 de ani înainte de anul de raportare.</p>
+<p>Intervalele (anii de început și sfârșit) sunt completate automat cu 12, respectiv 24 de ani înainte de anul de raportare.</p>
 
 <h4>2.1.3 Areal favorabil de referință</h4>
 <p>Preluat din tabelele de referință. Pentru raportărille viitoare, această valoare poate fi actualizată în SIMSHAB. </p>
 
+<p>Câmpul "Arealul favorabil de referință - metoda folosită pentru stabilirea acestei valori" se completează cu textul "Expert opinion, correlated with the data reported in 2013".</p>
+
 <h4>2.1.4 Motivul modificării</h4>
-<p>Se stabilește de către expert.</p>
+<p>Se stabilește de către utilizator în cazul în care acesta modifică evaluarea arealului.</p>
 
 <h4>2.1.5 Evaluarea arealului</h4>
 <p>Dacă există valoare pentru arealul de referință, concluzia este o comparație între valoarea pentru suprafață și valoarea favorabilă de referință:</p>
@@ -59,7 +61,16 @@ Structura documentului urmărește structura interfeței de vizualizare a datelo
 	<li>operatorul "mult mai mare decât" generează concluzia "nefavorabil rau"</li>
 </ul>
 
-<p>Tendința se stabilește de către expert.</p>
+<p>Tendința se calculează în funcție de direcția tendinței pe termen scurt și lung după cum urmează:</p>
+<ul>
+	<li>+ și + generează +</li>
+	<li>+ și = sau = și + generează +</li>
+	<li>+ și - sau - și + generează =</li>
+	<li>= și = generează =</li>
+	<li>= și - sau - și = generează -</li>
+	<li>- și - generează -</li>
+	<li>'x' cu orice valoare generează acea valoare</li>
+</ul>
 
 <h3>2.2 Populație</h3>
 <h4>2.2.1 Estimarea mărimii (număr de indivizi sau valori agreate)</h4>
