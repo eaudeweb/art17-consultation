@@ -228,16 +228,16 @@ Structura documentului urmărește structura interfeței de vizualizare a datelo
 </ul>
 
 <h3>3.2 Suprafața</h3>
-<h4>Suprafața</h4>
+<h4>3.2.1 Suprafața</h4>
 <p>Valoare numerică, se calculează din baza de date geospațială.</p>
 
-<h4>Anul / Perioada</h4>
+<h4>3.2.2 Anul / Perioada</h4>
 <p>Se completează cu perioada de raportare.</p>
 
-<h4>Metoda utilizată - suprafața arealului</h4>
+<h4>3.2.3 Metoda utilizată - suprafața arealului</h4>
 <p>Se completează din tabelele de referință cu una dintre valorile "Inventarieri complete sau o estimare statistică solidă", "Estimări prin extrapolări și/sau modelări bazate pe date parțiale" și "Estimǎri bazate numai pe opinia expertului, fără sau cu eșantionare minimală".</p>
 
-<h4>2.1.2 Tendință</h4>
+<h4>3.2.4 Tendințe pe termen scurt și lung</h4>
 <p>Interval termen scurt: 12 ani, interval termen lung: 24 de ani. Direcția se stabilește în funcție de valorile pentru suprafața arealului din agregările anterioare. De exemplu, pentru tendința pe termen scurt, se iau în considerare ultimele două agregări (la distanță de 6, respectiv 12 ani față de agregarea curentă). Media valorilor se compară cu valoarea curentă, direcția fiind:</p>
 <ul>
 	<li>crescătoare, dacă valoarea curentă este mai mare;</li>
@@ -249,10 +249,10 @@ Structura documentului urmărește structura interfeței de vizualizare a datelo
 </p>
 <p>Intervalele (anii de început și sfârșit) sunt complettei automat cu 12, respectiv 24 de ani înainte de anul de raportare.</p>
 
-<h4>Suprafața favorabilă de referință</h4>
+<h4>3.2.5 Suprafața favorabilă de referință</h4>
 <p>Preluată din tabelele de referință. Pentru raportările viitoare, această valoare poate fi actualizată în SIMSHAB.</p>
 
-<h4>Evaluarea suprafeței</h4>
+<h4>3.2.6 Evaluarea suprafeței</h4>
 <p>Dacă există valoare pentru suprafața favorabilă de referință, concluzia este o comparație între valoarea pentru suprafață și valoarea favorabilă de referință:</p>
 <ul>
 	<li>Favorabil dacă suprafața este mai mare sau egală cu suprafața favorabilă de referință</li>
@@ -315,6 +315,37 @@ Structura documentului urmărește structura interfeței de vizualizare a datelo
 <p>Se obțin din câmpurile corespunzătoare din datele colectate, sortate descrescător după frecvența lucrării. Utilizatorii au apoi posibilitatea de a șterge textul care nu este suficient de relevant. </p>
 
 <h3>3.8 Concluzii</h3>
+
+<h4>3.8.1 Structura și funcțiile specifice, inclusiv speciile tipice - Evaluarea</h4>
+
+<h4>3.8.2 Perspective viitoare - Evaluarea</h4>
+<p>Această concluzie se calculează în funcție de precedentele trei concluzii pentru habitat, adică evaluarea arealului, 
+a suprafeței și a structurii și funcțiilor. Pentru fiecare evaluare, se asignează următoarelor situații următorul punctaj:</p>
+<ul>
+  <li>concluzia este FV -> 4 puncte</li>
+  <li>concluzia este U1 și tendința este + -> 3 puncte</li>
+  <li>concluzia este U1 și tendința este = -> 2 puncte</li>
+  <li>concluzia este U1 și tendința este - -> 1 punct</li>
+  <li>concluzia este U2 -> 0 puncte</li>
+  <li>concluzia este X -> 1 punct</li>
+</ul>
+<p>Dacă cel puțin 2 din concluziile de mai sus sunt X, atunci atunci concluzia perspectivelor viitoare este X.</p>
+<p>Dacă punctajul obținut din suma celor trei parametri de mai sus și cel mult una din concluzii era X:</p>
+<ul>
+  <li>>= 8, atunci concluzia perspectivelor viitoare este FV</li>
+  <li>&lt;=4, atunci concluzia perspectivelor viitoare este U2</li>
+  <li>>4 și &lt;8, atunci concluzia perspectivelor viitoare este U1</li>
+</ul>
+
+<p>Tendința pentru perspective viitoare se calculează doar pentru cazul în care concluzia corespunzătoare este U1:</p>
+<ul>
+  <li>“-” dacă vreuna din concluzii este U2 </li>
+  <li>“-” dacă punctajul de mai sus = 5</li>
+  <li>“=” dacă punctajul de mai sus = 6</li>
+  <li>“+” dacă punctajul de mai sus = 7</li>
+</ul>
+
+<h4>3.8.3 Evaluarea habitatului</h4>
 <p>Concluzia generală se obține cu algoritmul din ghidul de raportare, astfel:</p>
 <ul>
 	<li>dacă mai mult de două concluzii sunt necunoscute, concluzia generală e necunoscută</li>
