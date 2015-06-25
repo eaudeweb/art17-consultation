@@ -75,7 +75,8 @@ Structura documentului urmărește structura interfeței de vizualizare a datelo
 <h3>2.2 Populație</h3>
 <h4>2.2.1 Estimarea mărimii (număr de indivizi sau valori agreate)</h4>
 
-<p>Unitatea de măsură se completează automat din tabelele de referință. Minimul și maximul se calculează dintr-un serviciu web din datele primare. Atât minimul cât și maximul vor fi suma populațiilor coletate de pe teren.</p>
+<p>Unitatea de măsură se completează automat din tabelele de referință. 
+Minimul și maximul se calculează dintr-un serviciu web din datele primare. Atât minimul cât și maximul vor fi suma populațiilor coletate de pe teren.</p>
 
 <p>Unitățile alternative se completează de către experți.</p>
 
@@ -136,19 +137,19 @@ Structura documentului urmărește structura interfeței de vizualizare a datelo
 <p>Se completează din tabelele de referință cu una dintre valorile "Inventarieri complete sau o estimare statistică solidă", "Estimări prin extrapolări și/sau modelări bazate pe date parțiale" și "Estimǎri bazate numai pe opinia expertului, fără sau cu eșantionare minimală".</p>
 
 <h4>2.3.4 Calitatea habitatului</h4>
-<p>Se completeaz cu media aritmetică ponderată din cămpul corespunzător din datele colectate. Sunt posibile trei valori: Good, Moderate, Bad.</p>
+<p>Se completează cu media aritmetică a valorilor din cămpul corespunzător din datele colectate. Sunt posibile trei valori: Good, Moderate, Bad.</p>
 
 <h4>2.3.5 Metoda stabilirii calității</h4>
-<p>Se completează de către expert.</p>
+<p>Se completează de către utilizator dacă este nevoie.</p>
 
 <h4>2.3.6 Suprafața habitatului adecvată pentru specie</h4>
 <p>Preluată din tabelele de referință. Pentru raportărille viitoare, această valoare poate fi actualizată în SIMSHAB.</p>
 
-<h4>2.3.7 Tendință</h4>
+<h4>2.3.7 Tendințe pe termen scurt și lung</h4>
 <p>La fel ca la Areal.</p>
 
 <h4>2.3.8 Motivul modificării</h4>
-<p>Se completează de către expert, dacă este cazul.</p>
+<p>Se completează de către utilizator, dacă este cazul.</p>
 
 <h4>2.3.7 Evaluarea habitatului</h4>
 <p>Concluzia se calculează după cum urmează:</p>
@@ -158,8 +159,16 @@ Structura documentului urmărește structura interfeței de vizualizare a datelo
 	<li>Nefavorabil-inadecvat: orice altă combinație</li>
 </ul>
 
-<p>Direcția tendinței se stabilește de către expert.</p>
-
+<p>Tendința se calculează în funcție de direcția tendinței pe termen scurt și lung după cum urmează:</p>
+<ul>
+	<li>+ și + generează +</li>
+	<li>+ și = sau = și + generează +</li>
+	<li>+ și - sau - și + generează =</li>
+	<li>= și = generează =</li>
+	<li>= și - sau - și = generează -</li>
+	<li>- și - generează -</li>
+	<li>'x' cu orice valoare generează acea valoare</li>
+</ul>
 <h3>2.4 Presiuni și Amenințări</h3>
 <p>Se obțin din câmpurile corespunzătoare din datele colectate, prin sortare după frecvența cu care apar și grupare: maxim 5 majore, maxim 5 medii și maxim 5 minore.</p>
 
