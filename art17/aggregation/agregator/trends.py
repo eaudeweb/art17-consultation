@@ -105,7 +105,7 @@ def get_conclusion_trend(conclusion, trend_short, trend_long):
         return 'x'
 
 
-def get_habitat_future_trend(conclusion_future, conclusions, grade):
+def get_future_trend(conclusion_future, conclusions, grade):
     if conclusion_future not in [U1, U2]:
         return
     if len(filter(lambda x: x == U2, conclusions)) >= 1:

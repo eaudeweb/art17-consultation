@@ -5,11 +5,9 @@ from collections import defaultdict
 from art17 import models, ROLE_AGGREGATED, ROLE_MISSING
 from art17.aggregation.agregator.conclusions import (
     get_species_conclusion_range, get_species_conclusion_population,
-    get_species_conclusion_habitat, get_species_conclusion_future,
-    get_overall_species_conclusion,
+    get_species_conclusion_habitat, get_overall_species_conclusion,
     get_habitat_conclusion_range, get_habitat_conclusion_area,
-    get_habitat_conclusion_future, get_overall_habitat_conclusion,
-    get_grade,
+    get_conclusion_future, get_overall_habitat_conclusion, get_grade,
 )
 from art17.aggregation.agregator.n2k import get_habitat_cover_range, \
     get_species_population_range
@@ -24,7 +22,7 @@ from art17.aggregation.agregator.subgroups import get_species_subgroup, \
 from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_species_population_trend, get_species_habitat_trend, \
     get_habitat_range_trend, get_habitat_coverage_trend, get_conclusion_trend, \
-    SHORT_TERM, LONG_TERM, get_habitat_future_trend, get_assessment_trend
+    SHORT_TERM, LONG_TERM, get_future_trend, get_assessment_trend
 from art17.aggregation.prev import load_species_prev, load_habitat_prev, \
     get_subject_prev, get_acronym
 from art17.aggregation.refvalues import (
@@ -260,9 +258,16 @@ def aggregate_species(obj, result, refvals, prev):
     # Masuri de conservare
 
     # Future
-    result.conclusion_future = get_species_conclusion_future(
-        subgroup, obj.code, result.region
-    )
+    conclusions_trends = [
+        (result.conclusion_range, result.conclusion_range_trend),
+        (result.conclusion_population, result.conclusion_population_trend),
+        (result.conclusion_habitat, result.conclusion_habitat_trend)]
+    conclusions = [c[0] for c in conclusions_trends]
+    grade = get_grade(conclusions_trends)
+
+    result.conclusion_future = get_conclusion_future(conclusions, grade)
+    result.conclusion_future_trend = get_future_trend(
+        result.conclusion_future, conclusions, grade)
 
     # Concluzii Overall
     result.conclusion_assessment = get_overall_species_conclusion(result)
@@ -353,10 +358,6 @@ def aggregate_habitat(obj, result, refvals, prev):
         result.conclusion_area, result.coverage_trend,
         result.coverage_trend_long)
 
-    # Presiuni & Amenintari ??
-    result.pressures_method = TERRAIN_DATA
-    result.threats_method = EXPERT_OPINION
-
     # Natura 2000
     n2k_min, n2k_max = get_habitat_cover_range(subgroup, obj.code, result.region)
     result.natura2000_area_min = n2k_min
@@ -378,16 +379,19 @@ def aggregate_habitat(obj, result, refvals, prev):
     pressures_threats = get_habitat_pressures_threats(subgroup, obj.code,
                                                       result.region)
     set_pressures_threats(result, pressures_threats)
+    result.pressures_method = TERRAIN_DATA
+    result.threats_method = EXPERT_OPINION
 
+    # Future
     conclusions_trends = [
         (result.conclusion_range, result.conclusion_range_trend),
         (result.conclusion_area, result.conclusion_area_trend),
         (result.conclusion_structure, result.conclusion_structure_trend)]
     conclusions = [c[0] for c in conclusions_trends]
     grade = get_grade(conclusions_trends)
-    # Future
-    result.conclusion_future = get_habitat_conclusion_future(conclusions, grade)
-    result.conclusion_future_trend = get_habitat_future_trend(
+
+    result.conclusion_future = get_conclusion_future(conclusions, grade)
+    result.conclusion_future_trend = get_future_trend(
         result.conclusion_future, conclusions, grade)
 
     # Concluzii Overall

@@ -130,7 +130,8 @@ def get_species_conclusion_range(subgroup, surface_area, refvals):
     return get_conclusion(surface_area, refvals, 'range')
 
 
-def get_species_conclusion_population(subgroup, min_size, max_size, refvals, prev, year):
+def get_species_conclusion_population(subgroup, min_size, max_size, refvals,
+                                      prev, year):
     size = average([s for s in (min_size, max_size) if s is not None])
     return get_conclusion(size, refvals, 'population_range', prev=prev,
                           year=year)
@@ -138,10 +139,6 @@ def get_species_conclusion_population(subgroup, min_size, max_size, refvals, pre
 
 def get_species_conclusion_habitat(subgroup, surface_area, quality, refvals):
     return get_conclusion(surface_area, refvals, 'habitat', quality=quality)
-
-
-def get_species_conclusion_future(subgroup, code, region):
-    return FV
 
 
 def get_habitat_conclusion_range(surface_area, refvals):
@@ -152,7 +149,7 @@ def get_habitat_conclusion_area(surface_area, refvals):
     return get_conclusion(surface_area, refvals, 'coverage_range')
 
 
-def get_habitat_conclusion_future(conclusions, grade):
+def get_conclusion_future(conclusions, grade):
     if len(filter(lambda x: x == XX, conclusions)) >= 2:
         return XX
     if grade <= 4:
