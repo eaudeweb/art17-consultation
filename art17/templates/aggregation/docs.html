@@ -200,6 +200,32 @@ Minimul și maximul se calculează dintr-un serviciu web din datele primare. At�
 <h3>2.9 Concluzii</h3>
 
 <h4>2.9.1 Perspective viitoare - Evaluarea</h4>
+<p>Această concluzie se calculează în funcție de precedentele trei concluzii pentru habitat, adică evaluarea arealului, 
+a populației și a habitatului speciei. Pentru fiecare evaluare, se asignează următoarelor situații următorul punctaj:</p>
+<ul>
+  <li>concluzia este FV -> 4 puncte</li>
+  <li>concluzia este U1 și tendința este + -> 3 puncte</li>
+  <li>concluzia este U1 și tendința este = -> 2 puncte</li>
+  <li>concluzia este U1 și tendința este - -> 1 punct</li>
+  <li>concluzia este U1 și tendința este x -> 1 punct</li>
+  <li>concluzia este U2 -> 0 puncte</li>
+  <li>concluzia este X -> 1 punct</li>
+</ul>
+<p>Dacă cel puțin 2 din concluziile de mai sus sunt X, atunci atunci concluzia perspectivelor viitoare este X.</p>
+<p>Dacă punctajul obținut din suma celor trei parametri de mai sus și cel mult una din concluzii era X:</p>
+<ul>
+  <li>>= 8, atunci concluzia perspectivelor viitoare este FV</li>
+  <li>&lt;=4, atunci concluzia perspectivelor viitoare este U2</li>
+  <li>>4 și &lt;8, atunci concluzia perspectivelor viitoare este U1</li>
+</ul>
+
+<p>Tendința pentru perspective viitoare se calculează doar pentru cazul în care concluzia corespunzătoare este U1 sau U2:</p>
+<ul>
+  <li>“-” dacă vreuna din concluzii este U2 </li>
+  <li>“-” dacă punctajul de mai sus = 5</li>
+  <li>“=” dacă punctajul de mai sus = 6</li>
+  <li>“+” dacă punctajul de mai sus = 7</li>
+</ul>
 
 <h4>2.9.2 Evaluarea generală</h4>
 <p>Concluzia generală se obține cu algoritmul din ghidul de raportare, astfel:</p>
@@ -209,6 +235,24 @@ Minimul și maximul se calculează dintr-un serviciu web din datele primare. At�
 	<li>dacă nu există concluzii nefaborabil-rău, concluzia este nefavorabil-inadecvat</li>
 	<li>altfel, concluzia este nefavorabil-rău.</li>
 </ul>
+
+<p>Tendința evaluării speciei se calculează doar pentru cazul în care concluzia corespunzătoare este U1 sau U2. Se asignează următoarele valori pentru cele 4 tendințe agregate:</p>
+<ul>
+  <li>-1 pentru tendința "-"</li>
+  <li>0 pentru tendința "=" </li>
+  <li>1 pentru tendința "+"</li>
+  <li>1 pentru tendința goală, acolo unde concluzia este FV</li>
+</ul>
+
+<p>Se calculează tendința general astfel:</p>
+<ul>
+  <li>“x” dacă cel puțin 2 din cele 4 tendințe agregate sunt x sau sunt goale, dar concluziile corespunzătoare sunt U1 sau U2</li>
+  <li>“+” dacă suma valorilor asignate pentru tendințe este pozitivă</li>
+  <li>“=” dacă suma valorilor asignate pentru tendințe este 0</li>
+  <li>“-” dacă suma valorilor asignate pentru tendințe este negativă</li>
+  <li>“x” în orice alt caz</li>
+</ul>
+
 
 <h2>3 Agregare Habitate</h2>
 
@@ -362,6 +406,7 @@ a suprafeței și a structurii și funcțiilor. Pentru fiecare evaluare, se asig
   <li>concluzia este U1 și tendința este + -> 3 puncte</li>
   <li>concluzia este U1 și tendința este = -> 2 puncte</li>
   <li>concluzia este U1 și tendința este - -> 1 punct</li>
+  <li>concluzia este U1 și tendința este x -> 1 punct</li>
   <li>concluzia este U2 -> 0 puncte</li>
   <li>concluzia este X -> 1 punct</li>
 </ul>
@@ -373,7 +418,7 @@ a suprafeței și a structurii și funcțiilor. Pentru fiecare evaluare, se asig
   <li>>4 și &lt;8, atunci concluzia perspectivelor viitoare este U1</li>
 </ul>
 
-<p>Tendința pentru perspective viitoare se calculează doar pentru cazul în care concluzia corespunzătoare este U1:</p>
+<p>Tendința pentru perspective viitoare se calculează doar pentru cazul în care concluzia corespunzătoare este U1 sau U2:</p>
 <ul>
   <li>“-” dacă vreuna din concluzii este U2 </li>
   <li>“-” dacă punctajul de mai sus = 5</li>
@@ -388,5 +433,22 @@ a suprafeței și a structurii și funcțiilor. Pentru fiecare evaluare, se asig
 	<li>dacă nu există concluzii nefavorabile, concluzia generală este favorabilă</li>
 	<li>dacă nu există concluzii nefaborabil-rău, concluzia este nefavorabil-inadecvat</li>
 	<li>altfel, concluzia este nefavorabil-rău.</li>
+</ul>
+
+<p>Tendința evaluării habitatului se calculează doar pentru cazul în care concluzia corespunzătoare este U1 sau U2. Se asignează următoarele valori pentru cele 4 tendințe agregate:</p>
+<ul>
+  <li>-1 pentru tendința "-"</li>
+  <li>0 pentru tendința "=" </li>
+  <li>1 pentru tendința "+"</li>
+  <li>1 pentru tendința goală, acolo unde concluzia este FV</li>
+</ul>
+
+<p>Se calculează tendința generală astfel:</p>
+<ul>
+  <li>“x” dacă cel puțin 2 din cele 4 tendințe agregate sunt x sau sunt goale, dar concluziile corespunzătoare sunt U1 sau U2</li>
+  <li>“+” dacă suma valorilor asignate pentru tendințe este pozitivă</li>
+  <li>“=” dacă suma valorilor asignate pentru tendințe este 0</li>
+  <li>“-” dacă suma valorilor asignate pentru tendințe este negativă</li>
+  <li>“x” în orice alt caz</li>
 </ul>
 {% endblock %}
