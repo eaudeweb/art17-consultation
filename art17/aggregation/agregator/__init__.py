@@ -244,8 +244,8 @@ def aggregate_species(obj, result, refvals, prev):
         subgroup, obj.code, result.region
     )
     set_pressures_threats(result, pressure_threats)
-    result.threats_method = refvals['threats']['Metoda amenintari']
-    result.pressures_method = refvals['pressures']['Metoda presiuni']
+    result.pressures_method = TERRAIN_DATA
+    result.threats_method = EXPERT_OPINION
 
     # Complementare
 
