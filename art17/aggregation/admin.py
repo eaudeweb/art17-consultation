@@ -60,7 +60,7 @@ REFGROUPS = {
     'magnitude': 'Magnitudine Areal',
     'population_units': 'Unitati populatie',
     'population_magnitude': 'Magnitudine Populatie',
-    'population_range': 'Areal favorabil populatie',
+    'population_range': 'Populatie',
     'coverage_range': 'Suprafata',
     'coverage_magnitude': 'Magnitudine suprafata',
     'typical_species': 'Specii tipice',
@@ -576,7 +576,7 @@ def download_refvals(page, subject):
 def download_all_refvals(page):
     refvals = get_refvals(page)
     hd_table = LuHabitattypeCodes if page == 'habitat' else LuHdSpecies
-    code_to_name = {lu.code: lu.display_name for lu in hd_table.query.all()}
+    code_to_name = {str(lu.code): lu.display_name for lu in hd_table.query}
 
     data_struct = get_struct(refvals)
 
@@ -588,8 +588,7 @@ def download_all_refvals(page):
         ws.title = group
         ws.append(fields)
 
-    sorted_keys = refvals.keys()
-    sorted_keys.sort()
+    sorted_keys = sorted(refvals.keys())
     for key in sorted_keys:
         code, region = key.split('-')
         for group, values in refvals[key].iteritems():
