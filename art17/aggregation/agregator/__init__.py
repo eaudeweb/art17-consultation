@@ -156,6 +156,8 @@ def aggregate_species(obj, result, refvals, prev):
     result.conclusion_range = get_species_conclusion_range(
         subgroup, result.range_surface_area, refvals
     )
+    result.conclusion_range_trend = get_conclusion_trend(
+        result.conclusion_range, result.range_trend, result.range_trend_long)
 
     # Populatie
     size = get_species_population_size(subgroup, obj.code, result.region)
@@ -205,6 +207,9 @@ def aggregate_species(obj, result, refvals, prev):
         result.population_maximum_size,
         refvals, prev, result.dataset.year_end
     )
+    result.conclusion_population_trend = get_conclusion_trend(
+        result.conclusion_population, result.population_trend,
+        result.population_trend_long)
 
     # Habitat
     result.habitat_surface_area = get_species_dist_surface(
@@ -230,6 +235,9 @@ def aggregate_species(obj, result, refvals, prev):
     result.conclusion_habitat = get_species_conclusion_habitat(
         subgroup, result.habitat_surface_area, result.habitat_quality, refvals
     )
+    result.conclusion_habitat_trend = get_conclusion_trend(
+        result.conclusion_habitat, result.habitat_trend,
+        result.habitat_trend_long)
 
     # Presiuni & Amenintari
     pressure_threats = get_species_pressures_threats(
