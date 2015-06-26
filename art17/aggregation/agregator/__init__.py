@@ -9,6 +9,7 @@ from art17.aggregation.agregator.conclusions import (
     get_overall_species_conclusion,
     get_habitat_conclusion_range, get_habitat_conclusion_area,
     get_habitat_conclusion_future, get_overall_habitat_conclusion,
+    get_grade,
 )
 from art17.aggregation.agregator.n2k import get_habitat_cover_range, \
     get_species_population_range
@@ -23,7 +24,7 @@ from art17.aggregation.agregator.subgroups import get_species_subgroup, \
 from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_species_population_trend, get_species_habitat_trend, \
     get_habitat_range_trend, get_habitat_coverage_trend, get_conclusion_trend, \
-    SHORT_TERM, LONG_TERM
+    SHORT_TERM, LONG_TERM, get_habitat_future_trend
 from art17.aggregation.prev import load_species_prev, load_habitat_prev, \
     get_subject_prev, get_acronym
 from art17.aggregation.refvalues import (
@@ -366,9 +367,16 @@ def aggregate_habitat(obj, result, refvals, prev):
                                                       result.region)
     set_pressures_threats(result, pressures_threats)
 
+    conclusions_trends = [
+        (result.conclusion_range, result.conclusion_range_trend),
+        (result.conclusion_area, result.conclusion_area_trend),
+        (result.conclusion_structure, result.conclusion_structure_trend)]
+    conclusions = [c[0] for c in conclusions_trends]
+    grade = get_grade(conclusions_trends)
     # Future
-    result.conclusion_future = get_habitat_conclusion_future(obj.code,
-                                                             result.region)
+    result.conclusion_future = get_habitat_conclusion_future(conclusions, grade)
+    result.conclusion_future_trend = get_habitat_future_trend(
+        result.conclusion_future, conclusions, grade)
 
     # Concluzii Overall
     result.conclusion_assessment = get_overall_habitat_conclusion(result)

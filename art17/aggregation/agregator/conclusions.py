@@ -76,9 +76,31 @@ def compare_FV_population(current_value, fv, prev, year):
     return U1
 
 
+def grade_conclusion(conclusion, trend):
+    grade = 0
+    if not conclusion:
+        grade = 1
+    elif conclusion == FV:
+        grade = 4
+    elif conclusion == U1:
+        if trend == '+':
+            grade = 3
+        elif trend == '0':
+            grade = 2
+        elif trend in ['-', 'x']:
+            grade = 1
+    elif conclusion == XX:
+        grade = 1
+    return grade
+
+
+def get_grade(conclusions):
+    return sum([grade_conclusion(*c) for c in conclusions])
+
+
 def get_conclusion(current_value, refvals, refval_type, **kwargs):
     if not current_value:
-        return 'XX'
+        return XX
 
     vals = refvals[refval_type]
     fv_text = "adecvat" if refval_type == 'habitat' else "favorabil"
@@ -98,7 +120,7 @@ def get_conclusion(current_value, refvals, refval_type, **kwargs):
             return compare_FV_population(current_value, fv, kwargs['prev'],
                                          kwargs['year'])
     elif unknown:
-        return 'XX'
+        return XX
     elif operator:
         return compare_operator(operator)
     return ''
@@ -130,8 +152,15 @@ def get_habitat_conclusion_area(surface_area, refvals):
     return get_conclusion(surface_area, refvals, 'coverage_range')
 
 
-def get_habitat_conclusion_future(code, region):
-    return FV
+def get_habitat_conclusion_future(conclusions, grade):
+    if len(filter(lambda x: x == XX, conclusions)) >= 2:
+        return XX
+    if grade <= 4:
+        return U2
+    elif 4 < grade < 8:
+        return U1
+    elif grade >= 8:
+        return FV
 
 
 def get_overall_conclusion(concs):

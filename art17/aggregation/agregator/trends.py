@@ -3,7 +3,7 @@ from flask import current_app as app
 from art17.aggregation.utils import average
 from art17.aggregation.agregator.rest import get_PS_trend
 from art17.aggregation.agregator.subgroups import PS
-from art17.aggregation.agregator.conclusions import FV, XX
+from art17.aggregation.agregator.conclusions import U1, U2
 
 
 SHORT_TERM, LONG_TERM = range(2)
@@ -92,7 +92,7 @@ def get_caves_trend(habcode, region):
 
 
 def get_conclusion_trend(conclusion, trend_short, trend_long):
-    if conclusion in [FV, XX]:
+    if conclusion not in [U1, U2]:
         return
     trend_pair = (trend_short, trend_long)
     if trend_pair in INCREASE:
@@ -103,3 +103,16 @@ def get_conclusion_trend(conclusion, trend_short, trend_long):
         return '0'
     else:
         return 'x'
+
+
+def get_habitat_future_trend(conclusion_future, conclusions, grade):
+    if conclusion_future not in [U1, U2]:
+        return
+    if len(filter(lambda x: x == U2, conclusions)) >= 1:
+        return '-'
+    if grade == 5:
+        return '-'
+    elif grade == 6:
+        return '0'
+    elif grade == 7:
+        return '+'
