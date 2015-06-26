@@ -271,6 +271,10 @@ def aggregate_species(obj, result, refvals, prev):
 
     # Concluzii Overall
     result.conclusion_assessment = get_overall_species_conclusion(result)
+    conclusions_trends.append(
+        (result.conclusion_future, result.conclusion_future_trend))
+    result.conclusion_assessment_trend = get_assessment_trend(
+        result.conclusion_assessment, conclusions_trends)
 
     return result
 
