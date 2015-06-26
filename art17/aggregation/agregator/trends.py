@@ -3,7 +3,7 @@ from flask import current_app as app
 from art17.aggregation.utils import average
 from art17.aggregation.agregator.rest import get_PS_trend
 from art17.aggregation.agregator.subgroups import PS
-from art17.aggregation.agregator.conclusions import U1, U2
+from art17.aggregation.agregator.conclusions import U1, U2, FV
 
 
 SHORT_TERM, LONG_TERM = range(2)
@@ -116,3 +116,31 @@ def get_habitat_future_trend(conclusion_future, conclusions, grade):
         return '0'
     elif grade == 7:
         return '+'
+
+
+def grade_trend(conclusion, trend):
+    if trend == '-':
+        return -1
+    elif trend == '+':
+        return 1
+    elif not trend and conclusion == FV:
+        return 1
+    return 0
+
+
+def get_assessment_trend(conclusion_assessment, conclusions_trends):
+    if conclusion_assessment not in [U1, U2]:
+        return
+
+    X_trends = filter(lambda x: x[0] in [U1, U2] and x[1] in [None, 'x'],
+                      conclusions_trends)
+    if len(X_trends) >= 2:
+        return 'x'
+
+    grade = sum([grade_trend(*c) for c in conclusions_trends])
+    if grade > 0:
+        return '+'
+    elif grade == 0:
+        return '0'
+    elif grade < 0:
+        return '-'

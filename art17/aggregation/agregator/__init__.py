@@ -24,7 +24,7 @@ from art17.aggregation.agregator.subgroups import get_species_subgroup, \
 from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_species_population_trend, get_species_habitat_trend, \
     get_habitat_range_trend, get_habitat_coverage_trend, get_conclusion_trend, \
-    SHORT_TERM, LONG_TERM, get_habitat_future_trend
+    SHORT_TERM, LONG_TERM, get_habitat_future_trend, get_assessment_trend
 from art17.aggregation.prev import load_species_prev, load_habitat_prev, \
     get_subject_prev, get_acronym
 from art17.aggregation.refvalues import (
@@ -392,6 +392,10 @@ def aggregate_habitat(obj, result, refvals, prev):
 
     # Concluzii Overall
     result.conclusion_assessment = get_overall_habitat_conclusion(result)
+    conclusions_trends.append(
+        (result.conclusion_future, result.conclusion_future_trend))
+    result.conclusion_assessment_trend = get_assessment_trend(
+        result.conclusion_assessment, conclusions_trends)
 
     return result
 
