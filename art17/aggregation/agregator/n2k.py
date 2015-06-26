@@ -31,7 +31,7 @@ def get_habitat_cover_range(subgroup, habcode, region):
     if not data:
         return None, None
 
-    values = [e['attributes']['HABITAT_COVER'] for e in data]
+    values = [e['attributes']['HABITAT_COVER'] or 0 for e in data]
     # Sum up values for all sites and convert to km2
     max_val = sum(values) * 0.01
     return None, max_val
