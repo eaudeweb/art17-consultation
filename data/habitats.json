@@ -30,11 +30,11 @@
    "Interval incredere lung": ""
   }
  }, 
- "6510-PAN": {
+ "40C0-CON": {
   "range": {
-   "Areal favorabil referinta": "700", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Areal favorabil referinta": "25100", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -47,9 +47,9 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "600", 
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "10", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -95,37 +95,6 @@
  "3160-CON": {
   "range": {
    "Areal favorabil referinta": "1400", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
-   "Metoda areal": "2"
-  }, 
-  "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
-  }, 
-  "typical_species": {
-   "Metoda specii tipice": "2"
-  }, 
-  "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "1000", 
-   "Metoda suprafata": "2"
-  }, 
-  "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
-   "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
-   "Interval incredere lung": ""
-  }
- }, 
- "40A0-CON": {
-  "range": {
-   "Areal favorabil referinta": "57200", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -142,7 +111,38 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "120", 
+   "Suprafata favorabila referinta": "1000", 
+   "Metoda suprafata": "2"
+  }, 
+  "coverage_magnitude": {
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": "", 
+   "Interval incredere scurt": "", 
+   "Magn. max scurt": "", 
+   "Interval incredere lung": ""
+  }
+ }, 
+ "6170-ALP": {
+  "range": {
+   "Areal favorabil referinta": "4300", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "2"
+  }, 
+  "magnitude": {
+   "Magn. max scurt": "", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": ""
+  }, 
+  "typical_species": {
+   "Metoda specii tipice": "2"
+  }, 
+  "coverage_range": {
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "2100", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -219,8 +219,8 @@
  "3130-STE": {
   "range": {
    "Areal favorabil referinta": "3400", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -233,8 +233,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "1400", 
    "Metoda suprafata": "2"
   }, 
@@ -249,7 +249,7 @@
  }, 
  "8120-ALP": {
   "range": {
-   "Areal favorabil referinta": "13297", 
+   "Areal favorabil referinta": "13200", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -278,9 +278,9 @@
    "Interval incredere lung": ""
   }
  }, 
- "40C0-CON": {
+ "6510-PAN": {
   "range": {
-   "Areal favorabil referinta": "25100", 
+   "Areal favorabil referinta": "700", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -297,7 +297,7 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "10", 
+   "Suprafata favorabila referinta": "600", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -311,7 +311,7 @@
  }, 
  "7230-ALP": {
   "range": {
-   "Areal favorabil referinta": "5199", 
+   "Areal favorabil referinta": "5100", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -343,8 +343,8 @@
  "3150-ALP": {
   "range": {
    "Areal favorabil referinta": "300", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -357,8 +357,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "300", 
    "Metoda suprafata": "2"
   }, 
@@ -405,8 +405,8 @@
  "7210-CON": {
   "range": {
    "Areal favorabil referinta": "400", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -419,8 +419,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "0.04", 
    "Metoda suprafata": "2"
   }, 
@@ -436,8 +436,8 @@
  "3160-PAN": {
   "range": {
    "Areal favorabil referinta": "500", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -450,8 +450,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "500", 
    "Metoda suprafata": "2"
   }, 
@@ -529,37 +529,6 @@
  "3260-STE": {
   "range": {
    "Areal favorabil referinta": "1100", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
-   "Metoda areal": "2"
-  }, 
-  "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
-  }, 
-  "typical_species": {
-   "Metoda specii tipice": "2"
-  }, 
-  "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "1000", 
-   "Metoda suprafata": "2"
-  }, 
-  "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
-   "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
-   "Interval incredere lung": ""
-  }
- }, 
- "9130-ALP": {
-  "range": {
-   "Areal favorabil referinta": "48190", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -576,7 +545,38 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "1600", 
+   "Suprafata favorabila referinta": "1000", 
+   "Metoda suprafata": "2"
+  }, 
+  "coverage_magnitude": {
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": "", 
+   "Interval incredere scurt": "", 
+   "Magn. max scurt": "", 
+   "Interval incredere lung": ""
+  }
+ }, 
+ "3150-BLS": {
+  "range": {
+   "Areal favorabil referinta": "1000", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "2"
+  }, 
+  "magnitude": {
+   "Magn. max scurt": "", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": ""
+  }, 
+  "typical_species": {
+   "Metoda specii tipice": "2"
+  }, 
+  "coverage_range": {
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "500", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -591,8 +591,8 @@
  "6410-BLS": {
   "range": {
    "Areal favorabil referinta": "200", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -605,8 +605,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "100", 
    "Metoda suprafata": "2"
   }, 
@@ -670,6 +670,37 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Suprafata favorabila referinta": "10000", 
+   "Metoda suprafata": "2"
+  }, 
+  "coverage_magnitude": {
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": "", 
+   "Interval incredere scurt": "", 
+   "Magn. max scurt": "", 
+   "Interval incredere lung": ""
+  }
+ }, 
+ "9260-ALP": {
+  "range": {
+   "Areal favorabil referinta": "800", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "2"
+  }, 
+  "magnitude": {
+   "Magn. max scurt": "", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": ""
+  }, 
+  "typical_species": {
+   "Metoda specii tipice": "2"
+  }, 
+  "coverage_range": {
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "6.5", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -932,37 +963,6 @@
  "6430-CON": {
   "range": {
    "Areal favorabil referinta": "6000", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
-   "Metoda areal": "2"
-  }, 
-  "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
-  }, 
-  "typical_species": {
-   "Metoda specii tipice": "2"
-  }, 
-  "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "1750", 
-   "Metoda suprafata": "2"
-  }, 
-  "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
-   "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
-   "Interval incredere lung": ""
-  }
- }, 
- "4080-ALP": {
-  "range": {
-   "Areal favorabil referinta": "1100", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -979,7 +979,38 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "0.0012", 
+   "Suprafata favorabila referinta": "1750", 
+   "Metoda suprafata": "2"
+  }, 
+  "coverage_magnitude": {
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": "", 
+   "Interval incredere scurt": "", 
+   "Magn. max scurt": "", 
+   "Interval incredere lung": ""
+  }
+ }, 
+ "1530-STE": {
+  "range": {
+   "Areal favorabil referinta": "30000", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "2"
+  }, 
+  "magnitude": {
+   "Magn. max scurt": "", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": ""
+  }, 
+  "typical_species": {
+   "Metoda specii tipice": "2"
+  }, 
+  "coverage_range": {
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "25000", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -1055,7 +1086,7 @@
  }, 
  "8210-ALP": {
   "range": {
-   "Areal favorabil referinta": "21796", 
+   "Areal favorabil referinta": "21500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -1194,8 +1225,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "25000", 
    "Metoda suprafata": "2"
   }, 
@@ -1211,8 +1242,8 @@
  "62C0-STE": {
   "range": {
    "Areal favorabil referinta": "5200", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -1225,9 +1256,40 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "2300", 
+   "Metoda suprafata": "2"
+  }, 
+  "coverage_magnitude": {
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": "", 
+   "Interval incredere scurt": "", 
+   "Magn. max scurt": "", 
+   "Interval incredere lung": ""
+  }
+ }, 
+ "7110-ALP": {
+  "range": {
+   "Areal favorabil referinta": "4600", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "2"
+  }, 
+  "magnitude": {
+   "Magn. max scurt": "", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": ""
+  }, 
+  "typical_species": {
+   "Metoda specii tipice": "2"
+  }, 
+  "coverage_range": {
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "1.53", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -1270,9 +1332,9 @@
    "Interval incredere lung": "2"
   }
  }, 
- "91K0-CON": {
+ "7120-ALP": {
   "range": {
-   "Areal favorabil referinta": "11200", 
+   "Areal favorabil referinta": "300", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -1289,7 +1351,7 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "800", 
+   "Suprafata favorabila referinta": "1", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -1304,8 +1366,8 @@
  "6510-STE": {
   "range": {
    "Areal favorabil referinta": "900", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -1318,8 +1380,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "600", 
    "Metoda suprafata": "2"
   }, 
@@ -1352,6 +1414,37 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Suprafata favorabila referinta": "12", 
+   "Metoda suprafata": "2"
+  }, 
+  "coverage_magnitude": {
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": "", 
+   "Interval incredere scurt": "", 
+   "Magn. max scurt": "", 
+   "Interval incredere lung": ""
+  }
+ }, 
+ "8310-ALP": {
+  "range": {
+   "Areal favorabil referinta": "3400", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "2"
+  }, 
+  "magnitude": {
+   "Magn. max scurt": "", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": ""
+  }, 
+  "typical_species": {
+   "Metoda specii tipice": "2"
+  }, 
+  "coverage_range": {
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "3700", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -1397,8 +1490,8 @@
  "6430-STE": {
   "range": {
    "Areal favorabil referinta": "2800", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -1411,8 +1504,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "2000", 
    "Metoda suprafata": "2"
   }, 
@@ -1459,8 +1552,8 @@
  "3130-PAN": {
   "range": {
    "Areal favorabil referinta": "900", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -1473,8 +1566,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "900", 
    "Metoda suprafata": "2"
   }, 
@@ -1552,8 +1645,8 @@
  "3130-BLS": {
   "range": {
    "Areal favorabil referinta": "200", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -1566,8 +1659,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "200", 
    "Metoda suprafata": "2"
   }, 
@@ -1583,8 +1676,8 @@
  "6430-BLS": {
   "range": {
    "Areal favorabil referinta": "300", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -1597,8 +1690,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "300", 
    "Metoda suprafata": "2"
   }, 
@@ -1676,37 +1769,6 @@
  "6510-BLS": {
   "range": {
    "Areal favorabil referinta": "200", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
-   "Metoda areal": "2"
-  }, 
-  "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
-  }, 
-  "typical_species": {
-   "Metoda specii tipice": "2"
-  }, 
-  "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "100", 
-   "Metoda suprafata": "2"
-  }, 
-  "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
-   "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
-   "Interval incredere lung": ""
-  }
- }, 
- "1210-BLS": {
-  "range": {
-   "Areal favorabil referinta": "1600", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -1723,7 +1785,38 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "3", 
+   "Suprafata favorabila referinta": "100", 
+   "Metoda suprafata": "2"
+  }, 
+  "coverage_magnitude": {
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": "", 
+   "Interval incredere scurt": "", 
+   "Magn. max scurt": "", 
+   "Interval incredere lung": ""
+  }
+ }, 
+ "91M0-STE": {
+  "range": {
+   "Areal favorabil referinta": "4800", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "2"
+  }, 
+  "magnitude": {
+   "Magn. max scurt": "", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": ""
+  }, 
+  "typical_species": {
+   "Metoda specii tipice": "2"
+  }, 
+  "coverage_range": {
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "70", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -1738,8 +1831,8 @@
  "6420-BLS": {
   "range": {
    "Areal favorabil referinta": "100", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -1752,8 +1845,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "100", 
    "Metoda suprafata": "2"
   }, 
@@ -1800,8 +1893,8 @@
  "6510-ALP": {
   "range": {
    "Areal favorabil referinta": "600", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -1814,8 +1907,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "1300", 
    "Metoda suprafata": "2"
   }, 
@@ -1831,8 +1924,8 @@
  "6240-CON": {
   "range": {
    "Areal favorabil referinta": "5400", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -1845,8 +1938,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "2800", 
    "Metoda suprafata": "2"
   }, 
@@ -1921,9 +2014,9 @@
    "Interval incredere lung": ""
   }
  }, 
- "91M0-STE": {
+ "1210-BLS": {
   "range": {
-   "Areal favorabil referinta": "4800", 
+   "Areal favorabil referinta": "1600", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -1940,7 +2033,7 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "70", 
+   "Suprafata favorabila referinta": "3", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -2047,7 +2140,7 @@
  }, 
  "8210-CON": {
   "range": {
-   "Areal favorabil referinta": "13399", 
+   "Areal favorabil referinta": "13400", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -2110,8 +2203,8 @@
  "7240-ALP": {
   "range": {
    "Areal favorabil referinta": "100", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -2124,8 +2217,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "0.01", 
    "Metoda suprafata": "2"
   }, 
@@ -2169,9 +2262,9 @@
    "Interval incredere lung": ""
   }
  }, 
- "9150-ALP": {
+ "3260-PAN": {
   "range": {
-   "Areal favorabil referinta": "15100", 
+   "Areal favorabil referinta": "1400", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -2188,7 +2281,7 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "710", 
+   "Suprafata favorabila referinta": "900", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -2234,8 +2327,8 @@
  "7220-ALP": {
   "range": {
    "Areal favorabil referinta": "2900", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -2248,8 +2341,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "0.15", 
    "Metoda suprafata": "2"
   }, 
@@ -2293,9 +2386,9 @@
    "Interval incredere lung": ""
   }
  }, 
- "9260-CON": {
+ "8230-CON": {
   "range": {
-   "Areal favorabil referinta": "800", 
+   "Areal favorabil referinta": "900", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -2312,7 +2405,7 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "0.1", 
+   "Suprafata favorabila referinta": "0.03", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -2355,11 +2448,11 @@
    "Interval incredere lung": ""
   }
  }, 
- "6510-CON": {
+ "9260-CON": {
   "range": {
-   "Areal favorabil referinta": "3900", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Areal favorabil referinta": "800", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -2372,8 +2465,39 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "0.1", 
+   "Metoda suprafata": "2"
+  }, 
+  "coverage_magnitude": {
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": "", 
+   "Interval incredere scurt": "", 
+   "Magn. max scurt": "", 
+   "Interval incredere lung": ""
+  }
+ }, 
+ "6510-CON": {
+  "range": {
+   "Areal favorabil referinta": "3900", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "2"
+  }, 
+  "magnitude": {
+   "Magn. max scurt": "", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": ""
+  }, 
+  "typical_species": {
+   "Metoda specii tipice": "2"
+  }, 
+  "coverage_range": {
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "2600", 
    "Metoda suprafata": "2"
   }, 
@@ -2388,40 +2512,40 @@
  }, 
  "2130-BLS": {
   "range": {
-   "Areal favorabil referinta": "300", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
-   "Metoda areal": "2"
+   "Areal favorabil referinta": "0.2", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "3"
   }, 
   "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
+   "Magn. max scurt": "5", 
+   "Magn. max lung": "10", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "1"
   }, 
   "typical_species": {
-   "Metoda specii tipice": "2"
+   "Metoda specii tipice": "3"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "0.7", 
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "0.2", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "10", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "1", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "5", 
    "Interval incredere lung": ""
   }
  }, 
  "7220-CON": {
   "range": {
    "Areal favorabil referinta": "400", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -2434,8 +2558,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "0.0054", 
    "Metoda suprafata": "2"
   }, 
@@ -2482,8 +2606,8 @@
  "6410-STE": {
   "range": {
    "Areal favorabil referinta": "200", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -2496,8 +2620,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "400", 
    "Metoda suprafata": "2"
   }, 
@@ -2541,9 +2665,9 @@
    "Interval incredere lung": ""
   }
  }, 
- "9260-ALP": {
+ "8230-ALP": {
   "range": {
-   "Areal favorabil referinta": "800", 
+   "Areal favorabil referinta": "400", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -2560,7 +2684,7 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "6.5", 
+   "Suprafata favorabila referinta": "0.03", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -2634,9 +2758,9 @@
    "Interval incredere lung": ""
   }
  }, 
- "6170-ALP": {
+ "40A0-CON": {
   "range": {
-   "Areal favorabil referinta": "4300", 
+   "Areal favorabil referinta": "57200", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -2653,7 +2777,7 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "2100", 
+   "Suprafata favorabila referinta": "120", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -2668,8 +2792,8 @@
  "7150-CON": {
   "range": {
    "Areal favorabil referinta": "100", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -2682,8 +2806,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "0.01", 
    "Metoda suprafata": "2"
   }, 
@@ -2729,63 +2853,32 @@
  }, 
  "2340-PAN": {
   "range": {
-   "Areal favorabil referinta": "400", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
-   "Metoda areal": "2"
+   "Areal favorabil referinta": "0.1", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "3"
   }, 
   "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
+   "Magn. max scurt": "5", 
+   "Magn. max lung": "10", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "1"
   }, 
   "typical_species": {
-   "Metoda specii tipice": "2"
+   "Metoda specii tipice": "3"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "400", 
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "0.1", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "10", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "1", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
-   "Interval incredere lung": ""
-  }
- }, 
- "3150-STE": {
-  "range": {
-   "Areal favorabil referinta": "4400", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
-   "Metoda areal": "2"
-  }, 
-  "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
-  }, 
-  "typical_species": {
-   "Metoda specii tipice": "2"
-  }, 
-  "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "1700", 
-   "Metoda suprafata": "2"
-  }, 
-  "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
-   "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "5", 
    "Interval incredere lung": ""
   }
  }, 
@@ -2820,73 +2913,11 @@
    "Interval incredere lung": ""
   }
  }, 
- "8230-ALP": {
-  "range": {
-   "Areal favorabil referinta": "400", 
-   "Necunoscut": "", 
-   "Operator - areal": "", 
-   "Metoda areal": "2"
-  }, 
-  "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
-  }, 
-  "typical_species": {
-   "Metoda specii tipice": "2"
-  }, 
-  "coverage_range": {
-   "Operator": "", 
-   "Necunoscut": "", 
-   "Suprafata favorabila referinta": "0.03", 
-   "Metoda suprafata": "2"
-  }, 
-  "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
-   "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
-   "Interval incredere lung": ""
-  }
- }, 
- "8230-CON": {
-  "range": {
-   "Areal favorabil referinta": "900", 
-   "Necunoscut": "", 
-   "Operator - areal": "", 
-   "Metoda areal": "2"
-  }, 
-  "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
-  }, 
-  "typical_species": {
-   "Metoda specii tipice": "2"
-  }, 
-  "coverage_range": {
-   "Operator": "", 
-   "Necunoscut": "", 
-   "Suprafata favorabila referinta": "0.03", 
-   "Metoda suprafata": "2"
-  }, 
-  "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
-   "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
-   "Interval incredere lung": ""
-  }
- }, 
  "6410-ALP": {
   "range": {
    "Areal favorabil referinta": "3300", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -2899,8 +2930,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "1700", 
    "Metoda suprafata": "2"
   }, 
@@ -2913,11 +2944,11 @@
    "Interval incredere lung": ""
   }
  }, 
- "7120-ALP": {
+ "91K0-CON": {
   "range": {
-   "Areal favorabil referinta": "300", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Areal favorabil referinta": "11200", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -2930,9 +2961,9 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "1", 
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "800", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -2947,8 +2978,8 @@
  "3260-ALP": {
   "range": {
    "Areal favorabil referinta": "1600", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -2961,8 +2992,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "800", 
    "Metoda suprafata": "2"
   }, 
@@ -3040,8 +3071,8 @@
  "3260-CON": {
   "range": {
    "Areal favorabil referinta": "2900", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -3054,8 +3085,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "1700", 
    "Metoda suprafata": "2"
   }, 
@@ -3101,9 +3132,9 @@
  }, 
  "7140-ALP": {
   "range": {
-   "Areal favorabil referinta": "7599", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Areal favorabil referinta": "7500", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -3116,8 +3147,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "3.5", 
    "Metoda suprafata": "2"
   }, 
@@ -3319,8 +3350,8 @@
  "3140-BLS": {
   "range": {
    "Areal favorabil referinta": "100", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -3333,8 +3364,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "100", 
    "Metoda suprafata": "2"
   }, 
@@ -3381,8 +3412,8 @@
  "3140-STE": {
   "range": {
    "Areal favorabil referinta": "1000", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -3395,8 +3426,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "400", 
    "Metoda suprafata": "2"
   }, 
@@ -3443,8 +3474,8 @@
  "6430-ALP": {
   "range": {
    "Areal favorabil referinta": "5600", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -3457,40 +3488,9 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "1700", 
-   "Metoda suprafata": "2"
-  }, 
-  "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
-   "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
-   "Interval incredere lung": ""
-  }
- }, 
- "3150-PAN": {
-  "range": {
-   "Areal favorabil referinta": "900", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
-   "Metoda areal": "2"
-  }, 
-  "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
-  }, 
-  "typical_species": {
-   "Metoda specii tipice": "2"
-  }, 
-  "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "800", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -3505,8 +3505,8 @@
  "1410-BLS": {
   "range": {
    "Areal favorabil referinta": "700", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -3519,8 +3519,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "0.1", 
    "Metoda suprafata": "2"
   }, 
@@ -3536,8 +3536,8 @@
  "62C0-CON": {
   "range": {
    "Areal favorabil referinta": "2800", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -3550,8 +3550,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "1700", 
    "Metoda suprafata": "2"
   }, 
@@ -3567,8 +3567,8 @@
  "6410-PAN": {
   "range": {
    "Areal favorabil referinta": "100", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -3581,8 +3581,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "100", 
    "Metoda suprafata": "2"
   }, 
@@ -3626,9 +3626,9 @@
    "Interval incredere lung": ""
   }
  }, 
- "1530-STE": {
+ "4080-ALP": {
   "range": {
-   "Areal favorabil referinta": "30000", 
+   "Areal favorabil referinta": "1100", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -3645,7 +3645,7 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "25000", 
+   "Suprafata favorabila referinta": "0.0012", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -3660,8 +3660,8 @@
  "3260-BLS": {
   "range": {
    "Areal favorabil referinta": "300", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -3674,8 +3674,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "300", 
    "Metoda suprafata": "2"
   }, 
@@ -3721,7 +3721,7 @@
  }, 
  "7230-CON": {
   "range": {
-   "Areal favorabil referinta": "2899", 
+   "Areal favorabil referinta": "2800", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -3750,40 +3750,9 @@
    "Interval incredere lung": ""
   }
  }, 
- "3150-BLS": {
+ "9130-ALP": {
   "range": {
-   "Areal favorabil referinta": "1000", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
-   "Metoda areal": "2"
-  }, 
-  "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
-  }, 
-  "typical_species": {
-   "Metoda specii tipice": "2"
-  }, 
-  "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "500", 
-   "Metoda suprafata": "2"
-  }, 
-  "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
-   "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
-   "Interval incredere lung": ""
-  }
- }, 
- "8310-ALP": {
-  "range": {
-   "Areal favorabil referinta": "3400", 
+   "Areal favorabil referinta": "48190", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -3800,7 +3769,38 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "3700", 
+   "Suprafata favorabila referinta": "1600", 
+   "Metoda suprafata": "2"
+  }, 
+  "coverage_magnitude": {
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": "", 
+   "Interval incredere scurt": "", 
+   "Magn. max scurt": "", 
+   "Interval incredere lung": ""
+  }
+ }, 
+ "3150-STE": {
+  "range": {
+   "Areal favorabil referinta": "4400", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "2"
+  }, 
+  "magnitude": {
+   "Magn. max scurt": "", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": ""
+  }, 
+  "typical_species": {
+   "Metoda specii tipice": "2"
+  }, 
+  "coverage_range": {
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "1700", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -3846,8 +3846,8 @@
  "7140-CON": {
   "range": {
    "Areal favorabil referinta": "3300", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -3877,8 +3877,8 @@
  "6430-PAN": {
   "range": {
    "Areal favorabil referinta": "1000", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -3891,8 +3891,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "700", 
    "Metoda suprafata": "2"
   }, 
@@ -4063,8 +4063,8 @@
  "3130-CON": {
   "range": {
    "Areal favorabil referinta": "1200", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -4077,8 +4077,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "900", 
    "Metoda suprafata": "2"
   }, 
@@ -4093,7 +4093,7 @@
  }, 
  "8220-CON": {
   "range": {
-   "Areal favorabil referinta": "7499", 
+   "Areal favorabil referinta": "7500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -4122,9 +4122,9 @@
    "Interval incredere lung": ""
   }
  }, 
- "6440-CON": {
+ "3150-PAN": {
   "range": {
-   "Areal favorabil referinta": "3200", 
+   "Areal favorabil referinta": "900", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -4141,7 +4141,7 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "1600", 
+   "Suprafata favorabila referinta": "800", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -4156,8 +4156,8 @@
  "3230-ALP": {
   "range": {
    "Areal favorabil referinta": "13900", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -4170,8 +4170,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "5600", 
    "Metoda suprafata": "2"
   }, 
@@ -4187,8 +4187,8 @@
  "7150-ALP": {
   "range": {
    "Areal favorabil referinta": "200", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -4201,8 +4201,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "0.001", 
    "Metoda suprafata": "2"
   }, 
@@ -4249,8 +4249,8 @@
  "8330-MBLS": {
   "range": {
    "Areal favorabil referinta": "200", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -4263,8 +4263,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "0.01", 
    "Metoda suprafata": "2"
   }, 
@@ -4280,8 +4280,8 @@
  "3140-CON": {
   "range": {
    "Areal favorabil referinta": "500", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -4294,8 +4294,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "500", 
    "Metoda suprafata": "2"
   }, 
@@ -4310,32 +4310,32 @@
  }, 
  "2110-BLS": {
   "range": {
-   "Areal favorabil referinta": "200", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
-   "Metoda areal": "2"
+   "Areal favorabil referinta": "0.4", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "3"
   }, 
   "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
+   "Magn. max scurt": "10", 
+   "Magn. max lung": "20", 
+   "Magn. min lung": "10", 
+   "Magn. min scurt": "1"
   }, 
   "typical_species": {
-   "Metoda specii tipice": "2"
+   "Metoda specii tipice": "3"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "0.3", 
-   "Metoda suprafata": "2"
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "0.4", 
+   "Metoda suprafata": "3"
   }, 
   "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "20", 
+   "Magn. min lung": "10", 
+   "Magn. min scurt": "1", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "10", 
    "Interval incredere lung": ""
   }
  }, 
@@ -4373,8 +4373,8 @@
  "3220-CON": {
   "range": {
    "Areal favorabil referinta": "7000", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -4387,8 +4387,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "2600", 
    "Metoda suprafata": "2"
   }, 
@@ -4434,7 +4434,7 @@
  }, 
  "8220-ALP": {
   "range": {
-   "Areal favorabil referinta": "17197", 
+   "Areal favorabil referinta": "17000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -4451,7 +4451,7 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "15997", 
+   "Suprafata favorabila referinta": "1", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -4463,9 +4463,9 @@
    "Interval incredere lung": ""
   }
  }, 
- "9530-CON": {
+ "91D0-ALP": {
   "range": {
-   "Areal favorabil referinta": "1200", 
+   "Areal favorabil referinta": "10000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -4482,7 +4482,7 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "30", 
+   "Suprafata favorabila referinta": "75", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -4589,7 +4589,7 @@
  }, 
  "8120-CON": {
   "range": {
-   "Areal favorabil referinta": "4899", 
+   "Areal favorabil referinta": "4900", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -4652,8 +4652,8 @@
  "3150-CON": {
   "range": {
    "Areal favorabil referinta": "3800", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -4666,8 +4666,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "2100", 
    "Metoda suprafata": "2"
   }, 
@@ -4713,32 +4713,32 @@
  }, 
  "2190-BLS": {
   "range": {
-   "Areal favorabil referinta": "400", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
-   "Metoda areal": "2"
+   "Areal favorabil referinta": "0.2", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "3"
   }, 
   "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
+   "Magn. max scurt": "10", 
+   "Magn. max lung": "20", 
+   "Magn. min lung": "10", 
+   "Magn. min scurt": "1"
   }, 
   "typical_species": {
-   "Metoda specii tipice": "2"
+   "Metoda specii tipice": "3"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "400", 
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "0.2", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "20", 
+   "Magn. min lung": "10", 
+   "Magn. min scurt": "1", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "10", 
    "Interval incredere lung": ""
   }
  }, 
@@ -4835,6 +4835,37 @@
    "Interval incredere lung": ""
   }
  }, 
+ "9150-ALP": {
+  "range": {
+   "Areal favorabil referinta": "15100", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "2"
+  }, 
+  "magnitude": {
+   "Magn. max scurt": "", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": ""
+  }, 
+  "typical_species": {
+   "Metoda specii tipice": "2"
+  }, 
+  "coverage_range": {
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "710", 
+   "Metoda suprafata": "2"
+  }, 
+  "coverage_magnitude": {
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": "", 
+   "Interval incredere scurt": "", 
+   "Magn. max scurt": "", 
+   "Interval incredere lung": ""
+  }
+ }, 
  "91E0-ALP": {
   "range": {
    "Areal favorabil referinta": "50700", 
@@ -4869,8 +4900,8 @@
  "3160-STE": {
   "range": {
    "Areal favorabil referinta": "500", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -4883,8 +4914,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "500", 
    "Metoda suprafata": "2"
   }, 
@@ -4900,8 +4931,8 @@
  "3240-ALP": {
   "range": {
    "Areal favorabil referinta": "10300", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -4914,8 +4945,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "3600", 
    "Metoda suprafata": "2"
   }, 
@@ -4931,8 +4962,8 @@
  "3220-ALP": {
   "range": {
    "Areal favorabil referinta": "18600", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
@@ -4945,8 +4976,8 @@
    "Metoda specii tipice": "2"
   }, 
   "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
+   "Operator": "", 
+   "Necunoscut": "", 
    "Suprafata favorabila referinta": "7700", 
    "Metoda suprafata": "2"
   }, 
@@ -4993,99 +5024,6 @@
  "6410-CON": {
   "range": {
    "Areal favorabil referinta": "2600", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
-   "Metoda areal": "2"
-  }, 
-  "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
-  }, 
-  "typical_species": {
-   "Metoda specii tipice": "2"
-  }, 
-  "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "1600", 
-   "Metoda suprafata": "2"
-  }, 
-  "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
-   "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
-   "Interval incredere lung": ""
-  }
- }, 
- "7110-ALP": {
-  "range": {
-   "Areal favorabil referinta": "4699", 
-   "Necunoscut": "", 
-   "Operator - areal": "", 
-   "Metoda areal": "2"
-  }, 
-  "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
-  }, 
-  "typical_species": {
-   "Metoda specii tipice": "2"
-  }, 
-  "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "1.53", 
-   "Metoda suprafata": "2"
-  }, 
-  "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
-   "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
-   "Interval incredere lung": ""
-  }
- }, 
- "2160-BLS": {
-  "range": {
-   "Areal favorabil referinta": "600", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
-   "Metoda areal": "2"
-  }, 
-  "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
-  }, 
-  "typical_species": {
-   "Metoda specii tipice": "2"
-  }, 
-  "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "300", 
-   "Metoda suprafata": "2"
-  }, 
-  "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
-   "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
-   "Interval incredere lung": ""
-  }
- }, 
- "91D0-ALP": {
-  "range": {
-   "Areal favorabil referinta": "10000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -5102,7 +5040,100 @@
   "coverage_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Suprafata favorabila referinta": "75", 
+   "Suprafata favorabila referinta": "1600", 
+   "Metoda suprafata": "2"
+  }, 
+  "coverage_magnitude": {
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": "", 
+   "Interval incredere scurt": "", 
+   "Magn. max scurt": "", 
+   "Interval incredere lung": ""
+  }
+ }, 
+ "6440-CON": {
+  "range": {
+   "Areal favorabil referinta": "3200", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "2"
+  }, 
+  "magnitude": {
+   "Magn. max scurt": "", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": ""
+  }, 
+  "typical_species": {
+   "Metoda specii tipice": "2"
+  }, 
+  "coverage_range": {
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "1600", 
+   "Metoda suprafata": "2"
+  }, 
+  "coverage_magnitude": {
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": "", 
+   "Interval incredere scurt": "", 
+   "Magn. max scurt": "", 
+   "Interval incredere lung": ""
+  }
+ }, 
+ "2160-BLS": {
+  "range": {
+   "Areal favorabil referinta": "0.1", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "3"
+  }, 
+  "magnitude": {
+   "Magn. max scurt": "5", 
+   "Magn. max lung": "10", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "1"
+  }, 
+  "typical_species": {
+   "Metoda specii tipice": "3"
+  }, 
+  "coverage_range": {
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "0.1", 
+   "Metoda suprafata": "3"
+  }, 
+  "coverage_magnitude": {
+   "Magn. max lung": "10", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "1", 
+   "Interval incredere scurt": "", 
+   "Magn. max scurt": "5", 
+   "Interval incredere lung": ""
+  }
+ }, 
+ "9530-CON": {
+  "range": {
+   "Areal favorabil referinta": "1200", 
+   "Necunoscut": "", 
+   "Operator - areal": "", 
+   "Metoda areal": "2"
+  }, 
+  "magnitude": {
+   "Magn. max scurt": "", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": ""
+  }, 
+  "typical_species": {
+   "Metoda specii tipice": "2"
+  }, 
+  "coverage_range": {
+   "Operator": "", 
+   "Necunoscut": "", 
+   "Suprafata favorabila referinta": "30", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {
@@ -5147,7 +5178,7 @@
  }, 
  "8110-ALP": {
   "range": {
-   "Areal favorabil referinta": "5199", 
+   "Areal favorabil referinta": "5100", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -5165,37 +5196,6 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Suprafata favorabila referinta": "3", 
-   "Metoda suprafata": "2"
-  }, 
-  "coverage_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
-   "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
-   "Interval incredere lung": ""
-  }
- }, 
- "3260-PAN": {
-  "range": {
-   "Areal favorabil referinta": "1400", 
-   "Necunoscut": null, 
-   "Operator - areal": null, 
-   "Metoda areal": "2"
-  }, 
-  "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
-  }, 
-  "typical_species": {
-   "Metoda specii tipice": "2"
-  }, 
-  "coverage_range": {
-   "Operator": null, 
-   "Necunoscut": null, 
-   "Suprafata favorabila referinta": "900", 
    "Metoda suprafata": "2"
   }, 
   "coverage_magnitude": {

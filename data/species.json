@@ -996,13 +996,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "1500", 
-   "Suprafa\u021ba adecvata": "1500"
+   "Suprafa\u021ba adecvata": "3500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -1022,7 +1022,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "15000", 
+   "Areal favorabil referinta": "3500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -2166,13 +2166,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "1000", 
-   "Suprafa\u021ba adecvata": "1000"
+   "Suprafa\u021ba adecvata": "7700"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -2192,16 +2192,16 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "15000", 
+   "Areal favorabil referinta": "7700", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
+   "Magn. max scurt": "5", 
+   "Magn. max lung": "5", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "5"
   }
  }, 
  "4039-CON": {
@@ -2976,13 +2976,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "500", 
-   "Suprafa\u021ba adecvata": "500"
+   "Suprafa\u021ba adecvata": "12500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -3002,7 +3002,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "5000", 
+   "Areal favorabil referinta": "12500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -3156,12 +3156,12 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "9900", 
-   "Suprafa\u021ba adecvata": "9900"
+   "Suprafa\u021ba adecvata": "1000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Populatia favorabila de referinta": "", 
+   "Populatia favorabila de referinta": "3000000", 
    "Metoda populatie": "2"
   }, 
   "population_units": {
@@ -3171,18 +3171,18 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "50", 
+   "Magn. min lung": "30", 
+   "Magn. min scurt": "10", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "20", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "9900", 
+   "Areal favorabil referinta": "1000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -4281,12 +4281,12 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "15100", 
-   "Suprafa\u021ba adecvata": "15100"
+   "Suprafa\u021ba adecvata": "500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Populatia favorabila de referinta": "600", 
+   "Populatia favorabila de referinta": "350", 
    "Metoda populatie": "2"
   }, 
   "population_units": {
@@ -4296,27 +4296,27 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "30", 
+   "Magn. min lung": "30", 
+   "Magn. min scurt": "16", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "16", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "15200", 
+   "Areal favorabil referinta": "500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
+   "Magn. max scurt": "25", 
+   "Magn. max lung": "25", 
+   "Magn. min lung": "25", 
+   "Magn. min scurt": "25"
   }
  }, 
  "1026-BLS": {
@@ -4686,13 +4686,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "700", 
-   "Suprafa\u021ba adecvata": "700"
+   "Suprafa\u021ba adecvata": "100"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -4712,7 +4712,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "800", 
+   "Areal favorabil referinta": "100", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -5592,7 +5592,7 @@
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "3000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -5601,18 +5601,18 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "5", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "5", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "5", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "8700", 
+   "Areal favorabil referinta": "4000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -5946,13 +5946,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "75", 
-   "Suprafa\u021ba adecvata": "75"
+   "Suprafa\u021ba adecvata": "30"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -5961,18 +5961,18 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "5", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "5", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "5", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "100", 
+   "Areal favorabil referinta": "30", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -6351,13 +6351,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "200", 
-   "Suprafa\u021ba adecvata": "200"
+   "Suprafa\u021ba adecvata": "900"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -6377,7 +6377,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "300", 
+   "Areal favorabil referinta": "900", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -6846,13 +6846,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "2000", 
-   "Suprafa\u021ba adecvata": "2000"
+   "Suprafa\u021ba adecvata": "15000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "20000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -6872,7 +6872,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "14000", 
+   "Areal favorabil referinta": "15000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -7071,13 +7071,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "100", 
-   "Suprafa\u021ba adecvata": "100"
+   "Suprafa\u021ba adecvata": "500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -7097,7 +7097,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "300", 
+   "Areal favorabil referinta": "500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -7746,13 +7746,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "10000", 
-   "Suprafa\u021ba adecvata": "10000"
+   "Suprafa\u021ba adecvata": "20000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "4000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -7772,16 +7772,16 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "9125", 
+   "Areal favorabil referinta": "20000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
-   "Magn. max scurt": "5", 
-   "Magn. max lung": "5", 
-   "Magn. min lung": "5", 
-   "Magn. min scurt": "5"
+   "Magn. max scurt": "", 
+   "Magn. max lung": "", 
+   "Magn. min lung": "", 
+   "Magn. min scurt": ""
   }
  }, 
  "1034-STE": {
@@ -7926,13 +7926,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "1000", 
-   "Suprafa\u021ba adecvata": "1000"
+   "Suprafa\u021ba adecvata": "2000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -7941,27 +7941,27 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "5", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "5", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "5", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "3000", 
+   "Areal favorabil referinta": "2000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
+   "Magn. max scurt": "5", 
+   "Magn. max lung": "5", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "5"
   }
  }, 
  "1355-STE": {
@@ -8151,13 +8151,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "10000", 
-   "Suprafa\u021ba adecvata": "10000"
+   "Suprafa\u021ba adecvata": "35000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -8177,7 +8177,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "40000", 
+   "Areal favorabil referinta": "35000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -8466,13 +8466,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "500", 
-   "Suprafa\u021ba adecvata": "500"
+   "Suprafa\u021ba adecvata": "4000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -8492,7 +8492,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "1000", 
+   "Areal favorabil referinta": "4000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -8511,13 +8511,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "1000", 
-   "Suprafa\u021ba adecvata": "1000"
+   "Suprafa\u021ba adecvata": "10000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -8526,27 +8526,27 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "5", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "5", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "5", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "3000", 
+   "Areal favorabil referinta": "10000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
+   "Magn. max scurt": "5", 
+   "Magn. max lung": "5", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "5"
   }
  }, 
  "1050-CON": {
@@ -8736,13 +8736,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "500", 
-   "Suprafa\u021ba adecvata": "500"
+   "Suprafa\u021ba adecvata": "8000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -8762,7 +8762,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "2500", 
+   "Areal favorabil referinta": "8000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -8826,13 +8826,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "650", 
-   "Suprafa\u021ba adecvata": "650"
+   "Suprafa\u021ba adecvata": "4000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "4000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -8852,7 +8852,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "2745", 
+   "Areal favorabil referinta": "4000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -8961,13 +8961,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "1000", 
-   "Suprafa\u021ba adecvata": "1000"
+   "Suprafa\u021ba adecvata": "2000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -9321,13 +9321,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "3000", 
-   "Suprafa\u021ba adecvata": "3000"
+   "Suprafa\u021ba adecvata": "5000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "3000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -9347,7 +9347,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "4500", 
+   "Areal favorabil referinta": "5000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -9681,13 +9681,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "1000", 
-   "Suprafa\u021ba adecvata": "1000"
+   "Suprafa\u021ba adecvata": "6000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Populatia favorabila de referinta": "15000", 
-   "Metoda populatie": "2"
+   "Populatia favorabila de referinta": "2000", 
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -9707,7 +9707,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "5000", 
+   "Areal favorabil referinta": "6000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -9861,12 +9861,12 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "23600", 
-   "Suprafa\u021ba adecvata": "23600"
+   "Suprafa\u021ba adecvata": "500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Populatia favorabila de referinta": "500", 
+   "Populatia favorabila de referinta": "375", 
    "Metoda populatie": "2"
   }, 
   "population_units": {
@@ -9876,27 +9876,27 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "40", 
+   "Magn. min lung": "40", 
+   "Magn. min scurt": "30", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "30", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "23600", 
+   "Areal favorabil referinta": "500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
+   "Magn. max scurt": "25", 
+   "Magn. max lung": "25", 
+   "Magn. min lung": "25", 
+   "Magn. min scurt": "25"
   }
  }, 
  "1993-STE": {
@@ -10401,13 +10401,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "30", 
-   "Suprafa\u021ba adecvata": "30"
+   "Suprafa\u021ba adecvata": "300"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -10427,7 +10427,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "30", 
+   "Areal favorabil referinta": "300", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -10671,13 +10671,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "50", 
-   "Suprafa\u021ba adecvata": "50"
+   "Suprafa\u021ba adecvata": "1000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -10697,7 +10697,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "150", 
+   "Areal favorabil referinta": "1000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -10896,13 +10896,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "150", 
-   "Suprafa\u021ba adecvata": "150"
+   "Suprafa\u021ba adecvata": "1000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -10922,7 +10922,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "300", 
+   "Areal favorabil referinta": "1000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -11031,13 +11031,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "800", 
-   "Suprafa\u021ba adecvata": "800"
+   "Suprafa\u021ba adecvata": "1500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "300", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -11057,7 +11057,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "1000", 
+   "Areal favorabil referinta": "1500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -11346,13 +11346,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "3", 
-   "Suprafa\u021ba adecvata": "3"
+   "Suprafa\u021ba adecvata": "50"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -11372,7 +11372,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "4", 
+   "Areal favorabil referinta": "50", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -11661,13 +11661,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "200", 
-   "Suprafa\u021ba adecvata": "200"
+   "Suprafa\u021ba adecvata": "1500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "2000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -11687,7 +11687,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "1000", 
+   "Areal favorabil referinta": "1500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -11841,7 +11841,7 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "12900", 
-   "Suprafa\u021ba adecvata": "12900"
+   "Suprafa\u021ba adecvata": "1000"
   }, 
   "population_range": {
    "Operator": "", 
@@ -11856,18 +11856,18 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "30", 
+   "Magn. min lung": "25", 
+   "Magn. min scurt": "5", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "10", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "12900", 
+   "Areal favorabil referinta": "1000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -12156,13 +12156,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "5000", 
-   "Suprafa\u021ba adecvata": "5000"
+   "Suprafa\u021ba adecvata": "40000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -12182,7 +12182,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "45000", 
+   "Areal favorabil referinta": "40000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -12516,13 +12516,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "15", 
-   "Suprafa\u021ba adecvata": "15"
+   "Suprafa\u021ba adecvata": "200"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -12542,7 +12542,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "20", 
+   "Areal favorabil referinta": "200", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -12696,13 +12696,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "2000", 
-   "Suprafa\u021ba adecvata": "2000"
+   "Suprafa\u021ba adecvata": "6500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "10000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -12722,7 +12722,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "15000", 
+   "Areal favorabil referinta": "6500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -12876,13 +12876,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "1500", 
-   "Suprafa\u021ba adecvata": "1500"
+   "Suprafa\u021ba adecvata": "1400"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -12902,7 +12902,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "2300", 
+   "Areal favorabil referinta": "1400", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -13101,13 +13101,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "2000", 
-   "Suprafa\u021ba adecvata": "2000"
+   "Suprafa\u021ba adecvata": "4500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "2000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -13127,7 +13127,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "2500", 
+   "Areal favorabil referinta": "4500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -13191,13 +13191,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "250", 
-   "Suprafa\u021ba adecvata": "250"
+   "Suprafa\u021ba adecvata": "300"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Populatia favorabila de referinta": "0", 
-   "Metoda populatie": "2"
+   "Populatia favorabila de referinta": "", 
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -13416,13 +13416,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "15000", 
-   "Suprafa\u021ba adecvata": "15000"
+   "Suprafa\u021ba adecvata": "18000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "3000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -13442,7 +13442,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "30000", 
+   "Areal favorabil referinta": "18000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -13686,13 +13686,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "10000", 
-   "Suprafa\u021ba adecvata": "10000"
+   "Suprafa\u021ba adecvata": "6500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -13701,18 +13701,18 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "5", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "5", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "5", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "20000", 
+   "Areal favorabil referinta": "6500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -13911,13 +13911,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "1000", 
-   "Suprafa\u021ba adecvata": "1000"
+   "Suprafa\u021ba adecvata": "3000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -13937,7 +13937,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "1070", 
+   "Areal favorabil referinta": "3000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -14631,13 +14631,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "200", 
-   "Suprafa\u021ba adecvata": "200"
+   "Suprafa\u021ba adecvata": "3500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -14657,7 +14657,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "1100", 
+   "Areal favorabil referinta": "3500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -15306,13 +15306,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "1000", 
-   "Suprafa\u021ba adecvata": "1000"
+   "Suprafa\u021ba adecvata": "1500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Populatia favorabila de referinta": "500", 
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -15332,7 +15332,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "3000", 
+   "Areal favorabil referinta": "1500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -15351,12 +15351,12 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "9900", 
-   "Suprafa\u021ba adecvata": "9900"
+   "Suprafa\u021ba adecvata": "1000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Populatia favorabila de referinta": "3800000", 
+   "Populatia favorabila de referinta": "4000000", 
    "Metoda populatie": "2"
   }, 
   "population_units": {
@@ -15366,18 +15366,18 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "50", 
+   "Magn. min lung": "30", 
+   "Magn. min scurt": "10", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "20", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "9900", 
+   "Areal favorabil referinta": "1000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -17376,13 +17376,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "500", 
-   "Suprafa\u021ba adecvata": "500"
+   "Suprafa\u021ba adecvata": "1500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "50", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -17391,27 +17391,27 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "5", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "5", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "5", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "6000", 
+   "Areal favorabil referinta": "1500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
+   "Magn. max scurt": "5", 
+   "Magn. max lung": "5", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "5"
   }
  }, 
  "1061-CON": {
@@ -17691,12 +17691,12 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "15100", 
-   "Suprafa\u021ba adecvata": "15100"
+   "Suprafa\u021ba adecvata": "500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
-   "Populatia favorabila de referinta": "500", 
+   "Populatia favorabila de referinta": "300", 
    "Metoda populatie": "2"
   }, 
   "population_units": {
@@ -17706,27 +17706,27 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "30", 
+   "Magn. min lung": "30", 
+   "Magn. min scurt": "17", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "17", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "15200", 
+   "Areal favorabil referinta": "500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
+   "Magn. max scurt": "10", 
+   "Magn. max lung": "10", 
+   "Magn. min lung": "10", 
+   "Magn. min scurt": "10"
   }
  }, 
  "1356-STE": {
@@ -17826,13 +17826,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "500", 
-   "Suprafa\u021ba adecvata": "500"
+   "Suprafa\u021ba adecvata": "7500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "3000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -17852,7 +17852,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "1500", 
+   "Areal favorabil referinta": "7500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -18231,7 +18231,7 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "", 
-   "Suprafa\u021ba adecvata": "13200"
+   "Suprafa\u021ba adecvata": "1000"
   }, 
   "population_range": {
    "Operator": "", 
@@ -18246,18 +18246,18 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "30", 
+   "Magn. min lung": "25", 
+   "Magn. min scurt": "5", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "10", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "13200", 
+   "Areal favorabil referinta": "1000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -19176,7 +19176,7 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "", 
-   "Suprafa\u021ba adecvata": "12900"
+   "Suprafa\u021ba adecvata": "1000"
   }, 
   "population_range": {
    "Operator": "", 
@@ -19191,18 +19191,18 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "30", 
+   "Magn. min lung": "25", 
+   "Magn. min scurt": "5", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "10", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "12900", 
+   "Areal favorabil referinta": "1000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -19491,13 +19491,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "30000", 
-   "Suprafa\u021ba adecvata": "30000"
+   "Suprafa\u021ba adecvata": "15000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -19517,7 +19517,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "70000", 
+   "Areal favorabil referinta": "15000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -19806,13 +19806,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "2000", 
-   "Suprafa\u021ba adecvata": "2000"
+   "Suprafa\u021ba adecvata": "20000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "20000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -20391,13 +20391,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "3", 
-   "Suprafa\u021ba adecvata": "3"
+   "Suprafa\u021ba adecvata": "50"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "100", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -20417,7 +20417,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "5", 
+   "Areal favorabil referinta": "50", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -20661,13 +20661,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "1000", 
-   "Suprafa\u021ba adecvata": "1000"
+   "Suprafa\u021ba adecvata": "3500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "2000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -20687,7 +20687,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "2500", 
+   "Areal favorabil referinta": "3500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -20751,13 +20751,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "200", 
-   "Suprafa\u021ba adecvata": "200"
+   "Suprafa\u021ba adecvata": "1000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "2000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -20777,7 +20777,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "350", 
+   "Areal favorabil referinta": "1000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -20841,13 +20841,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "15000", 
-   "Suprafa\u021ba adecvata": "15000"
+   "Suprafa\u021ba adecvata": "8000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -20867,7 +20867,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "30000", 
+   "Areal favorabil referinta": "8000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -20886,13 +20886,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "10000", 
-   "Suprafa\u021ba adecvata": "10000"
+   "Suprafa\u021ba adecvata": "8000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -20912,7 +20912,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "25000", 
+   "Areal favorabil referinta": "8000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -21696,13 +21696,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "200", 
-   "Suprafa\u021ba adecvata": "200"
+   "Suprafa\u021ba adecvata": "400"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "50", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -21722,7 +21722,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "300", 
+   "Areal favorabil referinta": "400", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -21876,13 +21876,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "10000", 
-   "Suprafa\u021ba adecvata": "10000"
+   "Suprafa\u021ba adecvata": "5000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "5000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -21891,27 +21891,27 @@
    "Defini\u021bia localit\u0103\u021bii": ""
   }, 
   "population_magnitude": {
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": "", 
+   "Magn. max lung": "5", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "5", 
    "Interval incredere scurt": "", 
-   "Magn. max scurt": "", 
+   "Magn. max scurt": "5", 
    "Interval incredere lung": ""
   }, 
   "pressures": {
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "5860", 
+   "Areal favorabil referinta": "5000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
+   "Magn. max scurt": "5", 
+   "Magn. max lung": "5", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "5"
   }
  }, 
  "5040-CON": {
@@ -22056,13 +22056,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "3500", 
-   "Suprafa\u021ba adecvata": "3500"
+   "Suprafa\u021ba adecvata": "9000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "50000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -22082,7 +22082,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "5500", 
+   "Areal favorabil referinta": "9000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -22506,13 +22506,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "20", 
-   "Suprafa\u021ba adecvata": "20"
+   "Suprafa\u021ba adecvata": "400"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -22532,7 +22532,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "50", 
+   "Areal favorabil referinta": "400", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -22731,13 +22731,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "500", 
-   "Suprafa\u021ba adecvata": "500"
+   "Suprafa\u021ba adecvata": "900"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -22757,7 +22757,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "1000", 
+   "Areal favorabil referinta": "900", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -23271,13 +23271,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "5000", 
-   "Suprafa\u021ba adecvata": "5000"
+   "Suprafa\u021ba adecvata": "3500"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "1000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -23297,16 +23297,16 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "17000", 
+   "Areal favorabil referinta": "3500", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
   }, 
   "magnitude": {
-   "Magn. max scurt": "", 
-   "Magn. max lung": "", 
-   "Magn. min lung": "", 
-   "Magn. min scurt": ""
+   "Magn. max scurt": "5", 
+   "Magn. max lung": "5", 
+   "Magn. min lung": "5", 
+   "Magn. min scurt": "5"
   }
  }, 
  "1313-CON": {
@@ -24036,13 +24036,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "50", 
-   "Suprafa\u021ba adecvata": "50"
+   "Suprafa\u021ba adecvata": "300"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "500", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -24062,7 +24062,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "70", 
+   "Areal favorabil referinta": "300", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -24126,13 +24126,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "100", 
-   "Suprafa\u021ba adecvata": "100"
+   "Suprafa\u021ba adecvata": "150"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "50", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -24152,7 +24152,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "105", 
+   "Areal favorabil referinta": "150", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -25656,13 +25656,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "10", 
-   "Suprafa\u021ba adecvata": "10"
+   "Suprafa\u021ba adecvata": "200"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "40", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -25682,7 +25682,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "15", 
+   "Areal favorabil referinta": "200", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
@@ -25791,13 +25791,13 @@
   "habitat": {
    "Metoda suprafata habitat": "2", 
    "Suprafa\u021ba habitat": "200", 
-   "Suprafa\u021ba adecvata": "200"
+   "Suprafa\u021ba adecvata": "2000"
   }, 
   "population_range": {
    "Operator": "", 
    "Necunoscut": "", 
    "Populatia favorabila de referinta": "2000", 
-   "Metoda populatie": "2"
+   "Metoda populatie": "3"
   }, 
   "population_units": {
    "Unit. de m\u0103sur\u0103": "i", 
@@ -25817,7 +25817,7 @@
    "Metoda presiuni": "2"
   }, 
   "range": {
-   "Areal favorabil referinta": "1000", 
+   "Areal favorabil referinta": "2000", 
    "Necunoscut": "", 
    "Operator - areal": "", 
    "Metoda areal": "2"
