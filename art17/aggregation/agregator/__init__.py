@@ -13,16 +13,17 @@ from art17.aggregation.agregator.n2k import get_habitat_cover_range, \
     get_species_population_range
 from art17.aggregation.agregator.rest import get_species_bibliography, \
     get_species_pressures_threats, get_species_population_size, \
-    get_species_habitat_quality, get_habitat_typical_species, \
-    get_habitat_published, get_habitat_dist_surface, get_habitat_range_surface, \
     get_species_dist_surface, get_species_range_surface, \
-    get_habitat_pressures_threats
+    get_species_habitat_quality, get_habitat_typical_species, \
+    get_habitat_published, get_habitat_dist_surface, \
+    get_habitat_range_surface, get_habitat_pressures_threats
 from art17.aggregation.agregator.subgroups import get_species_subgroup, \
     get_habitat_subgroup, TYPICAL_SPECIES_METHOD
 from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_species_population_trend, get_species_habitat_trend, \
-    get_habitat_range_trend, get_habitat_coverage_trend, get_conclusion_trend, \
-    SHORT_TERM, LONG_TERM, get_future_trend, get_assessment_trend
+    get_habitat_range_trend, get_habitat_coverage_trend, get_future_trend, \
+    SHORT_TERM, LONG_TERM, get_assessment_trend, get_conclusion_trend, \
+    get_species_conclusion_trend
 from art17.aggregation.prev import load_species_prev, load_habitat_prev, \
     get_subject_prev, get_acronym
 from art17.aggregation.refvalues import (
@@ -103,6 +104,8 @@ def set_pressures_threats(obj, pressures_threats):
                     **foreign_key
                 )
                 for pol in set(pollutions):
+                    if not pol:
+                        continue
                     pollution_obj = models.DataPressuresThreatsPollution(
                         pressure=pressure_obj,
                         pollution_qualifier=pol,
@@ -236,7 +239,7 @@ def aggregate_species(obj, result, refvals, prev):
     result.conclusion_range = get_species_conclusion_range(
         subgroup, result.range_surface_area, refvals
     )
-    result.conclusion_range_trend = get_conclusion_trend(
+    result.conclusion_range_trend = get_species_conclusion_trend(
         subgroup,
         result.conclusion_range, result.range_trend, result.range_trend_long,
         result.conclusion_population, result.conclusion_population_trend,
@@ -368,7 +371,8 @@ def aggregate_habitat(obj, result, refvals, prev):
         result.coverage_trend_long)
 
     # Natura 2000
-    n2k_min, n2k_max = get_habitat_cover_range(subgroup, obj.code, result.region)
+    n2k_min, n2k_max = get_habitat_cover_range(subgroup, obj.code,
+                                               result.region)
     result.natura2000_area_min = n2k_min
     result.natura2000_area_max = n2k_max
 
