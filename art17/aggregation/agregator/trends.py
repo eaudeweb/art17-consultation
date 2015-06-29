@@ -101,7 +101,24 @@ def get_bats_trend(speccode, region):
     # TODO continue evaluation
 
 
-def get_conclusion_trend(conclusion, trend_short, trend_long):
+def get_bats_conclusion_trend(pop_conclusion, hab_conclusion, pop_trend,
+                              hab_trend):
+    if pop_conclusion == FV and hab_conclusion == FV:
+        return '+'
+    if not all(pop_conclusion, hab_conclusion, pop_trend, hab_trend):
+        return 'x'
+    stable_options = [(U1, FV, '+'), (U1, FV, '=')]
+    if (pop_conclusion, hab_conclusion, hab_trend) in stable_options or \
+            (hab_conclusion, pop_conclusion, pop_trend) in stable_options:
+        return '='
+    return '-'
+
+
+def get_conclusion_trend(subgroup, conclusion, trend_short, trend_long,
+                         pop_conclusion, pop_trend, hab_conclusion, hab_trend):
+    if subgroup == LL:
+        return get_bats_conclusion_trend(pop_conclusion, hab_conclusion,
+                                         pop_trend, hab_trend)
     if conclusion not in [U1, U2]:
         return
     trend_pair = (trend_short, trend_long)

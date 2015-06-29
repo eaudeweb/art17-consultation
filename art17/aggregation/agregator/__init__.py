@@ -125,40 +125,6 @@ def aggregate_species(obj, result, refvals, prev):
         subgroup, obj.code, result.region
     )
 
-    # Areal
-    result.range_surface_area = get_species_range_surface(
-        subgroup, obj.code, result.region
-    )
-    result.range_method = refvals['range']['Metoda areal']
-    result.range_trend = get_species_range_trend(
-        subgroup, SHORT_TERM, current_year, result.range_surface_area, prev,
-        obj.code, result.region
-    )
-    result.range_trend_period = short_period
-    result.range_trend_magnitude_min = refvals["magnitude"]["Magn. min scurt"]
-    result.range_trend_magnitude_max = refvals["magnitude"]["Magn. max scurt"]
-    result.range_trend_long = get_species_range_trend(
-        subgroup, LONG_TERM, current_year, result.range_surface_area, prev,
-        obj.code, result.region
-    )
-    result.range_trend_long_period = long_period
-    result.range_trend_long_magnitude_min = refvals["magnitude"][
-        "Magn. min lung"]
-    result.range_trend_long_magnitude_max = refvals["magnitude"][
-        "Magn. max lung"]
-    (
-        result.complementary_favourable_range,
-        result.complementary_favourable_range_op,
-        result.complementary_favourable_range_unknown,
-    ) = parse_complementary(refvals["range"])
-    result.complementary_favourable_range_method = \
-        "Expert opinion, correlated with the data reported in 2013"
-    result.conclusion_range = get_species_conclusion_range(
-        subgroup, result.range_surface_area, refvals
-    )
-    result.conclusion_range_trend = get_conclusion_trend(
-        result.conclusion_range, result.range_trend, result.range_trend_long)
-
     # Populatie
     size = get_species_population_size(subgroup, obj.code, result.region)
     result.population_size_unit = refvals['population_units'][
@@ -238,6 +204,43 @@ def aggregate_species(obj, result, refvals, prev):
     result.conclusion_habitat_trend = get_conclusion_trend(
         result.conclusion_habitat, result.habitat_trend,
         result.habitat_trend_long)
+
+    # Areal
+    result.range_surface_area = get_species_range_surface(
+        subgroup, obj.code, result.region
+    )
+    result.range_method = refvals['range']['Metoda areal']
+    result.range_trend = get_species_range_trend(
+        subgroup, SHORT_TERM, current_year, result.range_surface_area, prev,
+        obj.code, result.region
+    )
+    result.range_trend_period = short_period
+    result.range_trend_magnitude_min = refvals["magnitude"]["Magn. min scurt"]
+    result.range_trend_magnitude_max = refvals["magnitude"]["Magn. max scurt"]
+    result.range_trend_long = get_species_range_trend(
+        subgroup, LONG_TERM, current_year, result.range_surface_area, prev,
+        obj.code, result.region
+    )
+    result.range_trend_long_period = long_period
+    result.range_trend_long_magnitude_min = refvals["magnitude"][
+        "Magn. min lung"]
+    result.range_trend_long_magnitude_max = refvals["magnitude"][
+        "Magn. max lung"]
+    (
+        result.complementary_favourable_range,
+        result.complementary_favourable_range_op,
+        result.complementary_favourable_range_unknown,
+    ) = parse_complementary(refvals["range"])
+    result.complementary_favourable_range_method = \
+        "Expert opinion, correlated with the data reported in 2013"
+    result.conclusion_range = get_species_conclusion_range(
+        subgroup, result.range_surface_area, refvals
+    )
+    result.conclusion_range_trend = get_conclusion_trend(
+        subgroup,
+        result.conclusion_range, result.range_trend, result.range_trend_long,
+        result.conclusion_population, result.conclusion_population_trend,
+        result.conclusion_habitat, result.conclusion_habitat_trend)
 
     # Presiuni & Amenintari
     pressure_threats = get_species_pressures_threats(
