@@ -47,7 +47,7 @@ SPECIES_MAPPING = {
     },
     LL: {
         BIBLIO: '/EDW_AGREGARE_HAB/MapServer/16',
-        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/15',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/44',
         POP: '/EDW_AGREGARE_HAB/MapServer/14',
         HAB_Q: '/EDW_AGREGARE_HAB/MapServer/14',
         # TODO set up web service
