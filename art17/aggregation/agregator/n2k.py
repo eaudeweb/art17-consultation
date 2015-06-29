@@ -56,7 +56,7 @@ def get_species_population_range(subgroup, speccode, region):
 
     max_values = [
         v for v in
-        (e['attributes']['SPECIES_SIZE_MIN'] for e in data)
+        (e['attributes']['SPECIES_SIZE_MAX'] for e in data)
         if v is not None
     ]
     units = [
