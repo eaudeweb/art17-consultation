@@ -1,8 +1,8 @@
 from flask import current_app as app
 
 from art17.aggregation.utils import average
-from art17.aggregation.agregator.rest import get_PS_trend
-from art17.aggregation.agregator.subgroups import PS
+from art17.aggregation.agregator.rest import get_PS_trend, get_LL_trend
+from art17.aggregation.agregator.subgroups import PS, LL
 from art17.aggregation.agregator.conclusions import U1, U2, FV
 
 
@@ -48,7 +48,10 @@ def get_trend(term, year, current, prev, key):
         return '0'
 
 
-def get_species_range_trend(subgroup, term, year, current_value, prev):
+def get_species_range_trend(subgroup, term, year, current_value, prev,
+                            speccode, region):
+    if subgroup == LL:
+        return get_bats_trend(speccode, region)
     return get_trend(term, year, current_value, prev, 'range_surface_area')
 
 
@@ -89,6 +92,13 @@ def get_caves_trend(habcode, region):
         return '-'
     else:
         return '0'
+
+
+def get_bats_trend(speccode, region):
+    result = get_LL_trend(speccode, region)
+    if result is None:
+        return 'x'
+    # TODO continue evaluation
 
 
 def get_conclusion_trend(conclusion, trend_short, trend_long):

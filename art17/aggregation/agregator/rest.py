@@ -50,6 +50,8 @@ SPECIES_MAPPING = {
         PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/15',
         POP: '/EDW_AGREGARE_HAB/MapServer/14',
         HAB_Q: '/EDW_AGREGARE_HAB/MapServer/14',
+        # TODO set up web service
+        # TREND: '',
         DISTRIB: SPECIES_DISTRIBUTION_URL,
         RANGE: SPECIES_RANGE_URL,
     },
@@ -464,3 +466,19 @@ def get_PS_trend(habcode, region):
                 env_characteristics -= 1
 
     return grad, rang, (env_characteristics >= 0), morf_frequency
+
+
+def get_LL_trend(specnum, region):
+    where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
+    url = _get_species_url(LL, TREND)
+    data = generic_rest_call(url, where_query) or []
+    values = [r['attributes'] for r in data]
+
+    if not values:
+        return
+
+    trend = most_common(get_values(values, ''))  # TODO get trend column
+    cons = most_common(get_values(values, 'STARE_CONS'))
+    rang = most_common(get_values(values, 'RANG'))
+
+    return trend, cons, rang
