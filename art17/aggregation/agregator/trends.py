@@ -3,7 +3,7 @@ from flask import current_app as app
 from art17.aggregation.utils import average
 from art17.aggregation.agregator.rest import get_PS_trend, get_LL_trend
 from art17.aggregation.agregator.subgroups import PS, LL
-from art17.aggregation.agregator.conclusions import U1, U2, FV
+from art17.aggregation.agregator.conclusions import U1, U2, FV, XX
 
 
 SHORT_TERM, LONG_TERM = range(2)
@@ -98,8 +98,16 @@ def get_bats_trend(speccode, region):
     result = get_LL_trend(speccode, region)
     if result is None:
         return 'x'
-    # TODO continue evaluation
 
+    trend, cons, rang = result
+
+    if trend == '+' and cons == FV and rang in (LOW, MEDIUM):
+        return '+'
+    elif trend == '=' and cons == FV and rang in (LOW, MEDIUM):
+        return '='
+    elif trend == '-' and cons in (U1, U2, XX):
+        return '-'
+    return 'x'
 
 def get_species_conclusion_trend(subgroup, conclusion, trend_short, trend_long,
                                  pop_conclusion, pop_trend, hab_conclusion,

@@ -471,7 +471,7 @@ def get_LL_trend(specnum, region):
     if not values:
         return
 
-    trend = most_common(get_values(values, ''))  # TODO get trend column
+    trend = most_common(get_values(values, 'TREND'))
     cons = most_common(get_values(values, 'STARE_CONS'))
     rang = most_common(get_values(values, 'RANG'))
 
