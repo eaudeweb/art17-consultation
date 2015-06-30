@@ -12,11 +12,6 @@ from art17.aggregation.utils import (
     most_common, get_values, average, get_season, root_mean_square,
 )
 
-# Colectare URLs
-HABITAT_BIBLIO_URL = '/AgregareHabitate/MapServer/1'
-HABITAT_SPECIES_URL = '/AgregareHabitate/MapServer/2'
-HABITAT_PRESS_URL = ''  # TODO: there is no press threats url for habitats
-
 # GIS urls
 SPECIES_DISTRIBUTION_URL = '/IBB_RangeDistribution/MapServer/2'
 SPECIES_RANGE_URL = '/IBB_RangeDistribution/MapServer/3'
@@ -144,9 +139,9 @@ HABITAT_MAPPING = {
         RANGE: HABITAT_RANGE_URL,
     },
     PD: {
-        # TODO REGBIOGEG
-        # BIBLIO: '/AgregareHabitate/MapServer/1',
-        # TYPICAL: '/AgregareHabitate/MapServer/2',
+        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/49',
+        #PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/50', TODO Add AMENINTARI
+        #TYPICAL: '/EDW_AGREGARE_HAB/MapServer/51', TODO Alias SPECIE
         DISTRIB: HABITAT_DISTRIBUTION_URL,
         RANGE: HABITAT_RANGE_URL,
     },
