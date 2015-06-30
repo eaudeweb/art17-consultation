@@ -32,11 +32,10 @@ HABITAT_RANGE_URL = "/IBB_RangeDistribution/MapServer/1"
 
 SPECIES_MAPPING = {
     AR: {
-        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/38',
-        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/37',
-        # TODO the service returns NR_INDIVIZI_ADULTI, NR_INDIVIZI_LARVE
-        # POP: '/EDW_AGREGARE_HAB/MapServer/8',
-        HAB_Q: '/EDW_AGREGARE_HAB/MapServer/7',
+        BIBLIO: '/EDW_AGREGARE_HAB/MapServer/55',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/54',
+        POP: '/EDW_AGREGARE_HAB/MapServer/53',
+        HAB_Q: '/EDW_AGREGARE_HAB/MapServer/52',
         DISTRIB: SPECIES_DISTRIBUTION_URL,
         RANGE: SPECIES_RANGE_URL,
     },
