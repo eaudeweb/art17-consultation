@@ -2,7 +2,7 @@ from flask import current_app
 from urllib import urlencode
 import requests
 
-HABITAT_COVER_URL = '/Natura2000/MapServer/3'
+HABITAT_COVER_URL = '/Natura2000/MapServer/28'
 SPECIES_COVER_URL = '/Natura2000/MapServer/26'
 
 
@@ -27,11 +27,13 @@ def get_habitat_cover_range(subgroup, habcode, region):
         return None, None
     where_query = "HABITAT_CODE='%s'" % habcode
     data = generic_n2k_call(HABITAT_COVER_URL, where_query,
-                            out_fields="HABITAT_COVER")
+                            out_fields="HABITAT_COVER,SITE_AREA")
     if not data:
         return None, None
 
-    values = [e['attributes']['HABITAT_COVER'] or 0 for e in data]
+    # Compute percent of site_area occupied by this habitat
+    values = [(e['attributes']['HABITAT_COVER'] or 0) * 0.01 *
+              (e['attributes']['SITE_AREA'] or 0) for e in data]
     # Sum up values for all sites and convert to km2
     max_val = sum(values) * 0.01
     return None, max_val
