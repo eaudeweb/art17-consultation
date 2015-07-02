@@ -111,8 +111,10 @@ def get_bats_trend(speccode, region):
     return '-'
 
 
-def get_bats_conclusion_trend(pop_conclusion, pop_trend, hab_conclusion,
-                              hab_trend):
+def get_bats_conclusion_trend(conclusion, pop_conclusion, pop_trend,
+                              hab_conclusion, hab_trend):
+    if conclusion not in [U1, U2]:
+        return
     if pop_conclusion == FV and hab_conclusion == FV:
         return '+'
     if not all((pop_conclusion, hab_conclusion, pop_trend, hab_trend)):
@@ -128,7 +130,7 @@ def get_species_conclusion_trend(subgroup, conclusion, trend_short, trend_long,
                                  pop_conclusion, pop_trend, hab_conclusion,
                                  hab_trend):
     if subgroup == LL:
-        return get_bats_conclusion_trend(pop_conclusion, pop_trend,
+        return get_bats_conclusion_trend(conclusion, pop_conclusion, pop_trend,
                                          hab_conclusion, hab_trend)
     return get_conclusion_trend(conclusion, trend_short, trend_long)
 
