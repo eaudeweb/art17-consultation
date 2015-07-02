@@ -44,8 +44,7 @@ SPECIES_MAPPING = {
         PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/44',
         POP: '/EDW_AGREGARE_HAB/MapServer/14',
         HAB_Q: '/EDW_AGREGARE_HAB/MapServer/14',
-        # TODO set up web service
-        # TREND: '',
+        TREND: '/EDW_AGREGARE_HAB/MapServer/56',
         DISTRIB: SPECIES_DISTRIBUTION_URL,
         RANGE: SPECIES_RANGE_URL,
     },

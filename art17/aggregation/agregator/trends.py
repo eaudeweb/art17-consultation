@@ -107,7 +107,7 @@ def get_bats_trend(speccode, region):
         return '+'
     elif ((trend == '=' and cons in (FV, U1, XX)) or
           (trend == '+' and cons == U2)):
-        return '='
+        return '0'
     return '-'
 
 
@@ -117,10 +117,10 @@ def get_bats_conclusion_trend(pop_conclusion, pop_trend, hab_conclusion,
         return '+'
     if not all((pop_conclusion, hab_conclusion, pop_trend, hab_trend)):
         return 'x'
-    stable_options = [(U1, FV, '+'), (U1, FV, '=')]
+    stable_options = [(U1, FV, '+'), (U1, FV, '0')]
     if (pop_conclusion, hab_conclusion, hab_trend) in stable_options or \
             (hab_conclusion, pop_conclusion, pop_trend) in stable_options:
-        return '='
+        return '0'
     return '-'
 
 
