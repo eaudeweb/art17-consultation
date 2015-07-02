@@ -101,21 +101,18 @@ def get_bats_trend(speccode, region):
 
     trend, cons, rang = result
 
-    if trend == '+' and cons == FV and rang in (LOW, MEDIUM):
+    if trend in (None, XX) and cons in (None, XX):
+        return 'x'
+    if trend == '+' and cons in (FV, U1, XX):
         return '+'
-    elif trend == '=' and cons == FV and rang in (LOW, MEDIUM):
+    elif ((trend == '=' and cons in (FV, U1, XX)) or
+          (trend == '+' and cons == U2)):
         return '='
-    elif trend == '-' and cons in (U1, U2, XX):
-        return '-'
-    return 'x'
+    return '-'
 
-def get_species_conclusion_trend(subgroup, conclusion, trend_short, trend_long,
-                                 pop_conclusion, pop_trend, hab_conclusion,
-                                 hab_trend):
-    if subgroup != LL:
-        return get_conclusion_trend(conclusion, trend_short, trend_long)
 
-    # Bats custom algorithm
+def get_bats_conclusion_trend(pop_conclusion, pop_trend, hab_conclusion,
+                              hab_trend):
     if pop_conclusion == FV and hab_conclusion == FV:
         return '+'
     if not all((pop_conclusion, hab_conclusion, pop_trend, hab_trend)):
@@ -125,6 +122,15 @@ def get_species_conclusion_trend(subgroup, conclusion, trend_short, trend_long,
             (hab_conclusion, pop_conclusion, pop_trend) in stable_options:
         return '='
     return '-'
+
+
+def get_species_conclusion_trend(subgroup, conclusion, trend_short, trend_long,
+                                 pop_conclusion, pop_trend, hab_conclusion,
+                                 hab_trend):
+    if subgroup == LL:
+        return get_bats_conclusion_trend(pop_conclusion, pop_trend,
+                                         hab_conclusion, hab_trend)
+    return get_conclusion_trend(conclusion, trend_short, trend_long)
 
 
 def get_conclusion_trend(conclusion, trend_short, trend_long):
