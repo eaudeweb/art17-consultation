@@ -93,16 +93,18 @@ def get_years_dict(values_int, values_ext):
 
 def get_population_magnitude(values_int, values_ext):
     years_dict = get_years_dict(values_int, values_ext)
+    if not years_dict:
+        return 0, 0
     population_min = min(years_dict.values())
     population_max = max(years_dict.values())
     max_diff = population_max - population_min
-    magnitude_max = max_diff / (population_min or 1) * 100
+    magnitude_max = max_diff / float(population_min or 1) * 100
     min_diff = max_diff
     pop_min_diff = population_min
     for k1, v1 in years_dict.iteritems():
         for k2, v2 in years_dict.iteritems():
-            if 0 <= v1 - v2 < max_diff:
+            if 0 < v1 - v2 < min_diff:
                 min_diff = v1 - v2
                 pop_min_diff = v2
-    magnitude_min = min_diff / (pop_min_diff or 1) * 100
+    magnitude_min = min_diff / float(pop_min_diff or 1) * 100
     return magnitude_min, magnitude_max
