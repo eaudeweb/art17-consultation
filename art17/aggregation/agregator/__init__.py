@@ -16,9 +16,10 @@ from art17.aggregation.agregator.rest import get_species_bibliography, \
     get_species_dist_surface, get_species_range_surface, \
     get_species_habitat_quality, get_habitat_typical_species, \
     get_habitat_published, get_habitat_dist_surface, \
-    get_habitat_range_surface, get_habitat_pressures_threats
+    get_habitat_range_surface, get_habitat_pressures_threats, \
+    get_LL_population
 from art17.aggregation.agregator.subgroups import get_species_subgroup, \
-    get_habitat_subgroup, TYPICAL_SPECIES_METHOD
+    get_habitat_subgroup, TYPICAL_SPECIES_METHOD, LL
 from art17.aggregation.agregator.trends import get_species_range_trend, \
     get_species_population_trend, get_species_habitat_trend, \
     get_habitat_range_trend, get_habitat_coverage_trend, get_future_trend, \
@@ -34,6 +35,10 @@ from art17.aggregation.utils import (
     get_reporting_id, get_habitat_checklist, get_species_checklist,
     get_checklist)
 from art17.models import DataHabitatSpecies
+from art17.aggregation.agregator.population import (
+    get_min_population, get_max_population, get_ref_population,
+    get_population_magnitude, get_population_trend,
+)
 
 
 UNKNOWN_TREND = 'x'
@@ -129,33 +134,53 @@ def aggregate_species(obj, result, refvals, prev):
     )
 
     # Populatie
-    size = get_species_population_size(subgroup, obj.code, result.region)
+    # Algoritm specializat pentru lilieci
+    if subgroup == LL:
+        v_int, v_ext = get_LL_population(obj.code, result.region)
+        result.population_minimum_size = get_min_population(v_int)
+        result.population_maximum_size = get_max_population(v_int, v_ext)
+
+        magn_min, magn_max = get_population_magnitude(v_int, v_ext)
+        result.population_trend_magnitude_min = \
+            result.population_trend_long_magnitude_min = magn_min
+        result.population_trend_magnitude_max = \
+            result.population_trend_long_magnitude_max = magn_max
+
+        result.complementary_favourable_population = get_ref_population(v_int,
+                                                                        v_ext)
+        result.population_trend = get_population_trend(v_int, v_ext)
+        result.population_trend_long = result.population_trend
+    else:
+        size = get_species_population_size(subgroup, obj.code, result.region)
+        result.population_minimum_size = size
+        result.population_trend_magnitude_min = \
+            refvals["population_magnitude"]["Magn. min scurt"]
+        result.population_trend_magnitude_max = \
+            refvals["population_magnitude"]["Magn. max scurt"]
+        (
+            result.complementary_favourable_population,
+            result.complementary_favourable_population_op,
+            result.complementary_favourable_population_unknown,
+        ) = parse_complementary(refvals["population_range"])
+        result.population_trend = get_species_population_trend(
+            subgroup, SHORT_TERM, current_year, size, prev)
+        result.population_trend_long = get_species_population_trend(
+            subgroup, LONG_TERM, current_year, size, prev)
+
     result.population_size_unit = refvals['population_units'][
         u'Unit. de măsură']
-    result.population_minimum_size = size
-
     result.population_additional_locality = extract_key(
         refvals["population_units"], "localit")
     result.population_additional_method = extract_key(
         refvals["population_units"], "Metoda")
     result.population_additional_problems = extract_key(
         refvals["population_units"], "Dificult")
-    result.population_trend = get_species_population_trend(
-        subgroup, SHORT_TERM, current_year, size, prev
-    )
     result.population_trend_period = short_period
     result.population_method = refvals['population_range']['Metoda populatie']
     result.population_date = current_period
-    result.population_trend_magnitude_min = refvals["population_magnitude"][
-        "Magn. min scurt"]
-    result.population_trend_magnitude_max = refvals["population_magnitude"][
-        "Magn. max scurt"]
     # result.population_trend_magnitude_ci = refvals["population_magnitude"][
     #     "Interval incredere scurt"]
     result.population_trend_method = MISSING_DATA
-    result.population_trend_long = get_species_population_trend(
-        subgroup, LONG_TERM, current_year, size, prev
-    )
     result.population_trend_long_period = long_period
     result.population_trend_long_magnitude_min = \
         refvals["population_magnitude"]["Magn. min lung"]
@@ -164,11 +189,6 @@ def aggregate_species(obj, result, refvals, prev):
     # result.population_trend_long_magnitude_ci = \
     #     refvals["population_magnitude"]["Interval incredere lung"]
     result.population_trend_long_method = MISSING_DATA
-    (
-        result.complementary_favourable_population,
-        result.complementary_favourable_population_op,
-        result.complementary_favourable_population_unknown,
-    ) = parse_complementary(refvals["population_range"])
     result.complementary_favourable_population_method = \
         "Expert opinion, correlated with the data reported in 2013"
     result.conclusion_population = get_species_conclusion_population(
@@ -191,12 +211,12 @@ def aggregate_species(obj, result, refvals, prev):
     )
 
     result.habitat_trend = get_species_habitat_trend(
-        subgroup, SHORT_TERM, current_year, result.habitat_surface_area, prev
-    )
+        subgroup, SHORT_TERM, current_year, result.habitat_surface_area, prev,
+        obj.code, result.region)
     result.habitat_trend_period = short_period
     result.habitat_trend_long = get_species_habitat_trend(
-        subgroup, LONG_TERM, current_year, result.habitat_surface_area, prev
-    )
+        subgroup, LONG_TERM, current_year, result.habitat_surface_area, prev,
+        obj.code, result.region)
     result.habitat_trend_long_period = long_period
     result.habitat_area_suitable = extract_key(refvals["habitat"], "adecvat")
     result.habitat_date = current_period

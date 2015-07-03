@@ -1,7 +1,8 @@
 from flask import current_app as app
 
 from art17.aggregation.utils import average
-from art17.aggregation.agregator.rest import get_PS_trend, get_LL_trend
+from art17.aggregation.agregator.rest import (
+    get_PS_trend, get_LL_range_trend, get_LL_habitat_trend)
 from art17.aggregation.agregator.subgroups import PS, LL
 from art17.aggregation.agregator.conclusions import U1, U2, FV, XX
 
@@ -51,7 +52,7 @@ def get_trend(term, year, current, prev, key):
 def get_species_range_trend(subgroup, term, year, current_value, prev,
                             speccode, region):
     if subgroup == LL:
-        return get_bats_trend(speccode, region)
+        return get_bats_range_trend(speccode, region)
     return get_trend(term, year, current_value, prev, 'range_surface_area')
 
 
@@ -60,7 +61,10 @@ def get_species_population_trend(subgroup, term, year, current_value, prev):
                      ('population_minimum_size', 'population_maximum_size'))
 
 
-def get_species_habitat_trend(subgroup, term, year, current_value, prev):
+def get_species_habitat_trend(subgroup, term, year, current_value, prev,
+                              speccode, region):
+    if subgroup == LL:
+        return get_bats_habitat_trend(speccode, region)
     return get_trend(term, year, current_value, prev, 'habitat_surface_area')
 
 
@@ -94,8 +98,8 @@ def get_caves_trend(habcode, region):
         return '0'
 
 
-def get_bats_trend(speccode, region):
-    result = get_LL_trend(speccode, region)
+def get_bats_range_trend(speccode, region):
+    result = get_LL_range_trend(speccode, region)
     if result is None:
         return 'x'
 
@@ -109,6 +113,26 @@ def get_bats_trend(speccode, region):
           (trend == '+' and cons == U2)):
         return '0'
     return '-'
+
+
+def get_bats_habitat_trend(speccode, region):
+    result = get_LL_habitat_trend(speccode, region)
+    if result is None:
+        return 'x'
+
+    hab_q, cons = result
+
+    #Habitat quality values
+    BAD, MODERATE, GOOD = (1, 2, 3)
+
+    if cons == XX and not hab_q:
+        return 'x'
+    if (cons == FV and hab_q in (None, GOOD)) or (cons == XX and hab_q == GOOD):
+        return '+'
+    if cons in (FV, XX) and hab_q == MODERATE:
+        return '0'
+    if cons in (U1, U2):
+        return '-'
 
 
 def get_bats_conclusion_trend(conclusion, pop_conclusion, pop_trend,

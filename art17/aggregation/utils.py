@@ -311,6 +311,13 @@ def get_values(dict_list, key):
     return [value[key] for value in dict_list if value[key] is not None]
 
 
+def get_year(timestamp):
+    if not timestamp:
+        return
+    timestamp = timestamp / 1000  # convert microseconds to seconds
+    return date.fromtimestamp(timestamp).year
+
+
 def get_season(timestamp):
     timestamp = timestamp / 1000  # convert microseconds to seconds
     month = date.fromtimestamp(timestamp).month

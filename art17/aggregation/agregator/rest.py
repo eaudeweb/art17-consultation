@@ -28,7 +28,10 @@ HABITAT_RANGE_URL = "/IBB_RangeDistribution/MapServer/1"
     TYPICAL,
     TREND,
     LAST_10,
-) = range(9)
+    POP_INT,
+    POP_EXT,
+    TREND_HAB,
+) = range(12)
 
 SPECIES_MAPPING = {
     AR: {
@@ -41,10 +44,12 @@ SPECIES_MAPPING = {
     },
     LL: {
         BIBLIO: '/EDW_AGREGARE_HAB/MapServer/16',
-        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/44',
-        POP: '/EDW_AGREGARE_HAB/MapServer/14',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/15',
         HAB_Q: '/EDW_AGREGARE_HAB/MapServer/14',
         TREND: '/EDW_AGREGARE_HAB/MapServer/56',
+        POP_INT: '/EDW_AGREGARE_HAB/MapServer/59',
+        POP_EXT: '/EDW_AGREGARE_HAB/MapServer/58',
+        TREND_HAB: '/EDW_AGREGARE_HAB/MapServer/57',
         DISTRIB: SPECIES_DISTRIBUTION_URL,
         RANGE: SPECIES_RANGE_URL,
     },
@@ -461,7 +466,7 @@ def get_PS_trend(habcode, region):
     return grad, rang, (env_characteristics >= 0), morf_frequency
 
 
-def get_LL_trend(specnum, region):
+def get_LL_range_trend(specnum, region):
     where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
     url = _get_species_url(LL, TREND)
     data = generic_rest_call(url, where_query) or []
@@ -475,3 +480,30 @@ def get_LL_trend(specnum, region):
     rang = most_common(get_values(values, 'RANG'))
 
     return trend, cons, rang
+
+
+def get_LL_population(specnum, region):
+    where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
+    url = _get_species_url(LL, POP_INT)
+    data = generic_rest_call(url, where_query) or []
+    values_int = [r['attributes'] for r in data]
+
+    url = _get_species_url(LL, POP_EXT)
+    data = generic_rest_call(url, where_query) or []
+    values_ext = [r['attributes'] for r in data]
+
+    return values_int, values_ext
+
+
+def get_LL_habitat_trend(specnum, region):
+    where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
+    url = _get_species_url(LL, TREND_HAB)
+    data = generic_rest_call(url, where_query) or []
+    values = [r['attributes'] for r in data]
+    if not values:
+        return
+
+    hab_q = most_common(get_values(values, 'CALITATE_HAB'))
+    cons = most_common(get_values(values, 'STARE_CONS'))
+
+    return hab_q, cons
