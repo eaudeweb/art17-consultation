@@ -44,7 +44,7 @@ SPECIES_MAPPING = {
     },
     LL: {
         BIBLIO: '/EDW_AGREGARE_HAB/MapServer/16',
-        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/15',
+        PRES_THRE: '/EDW_AGREGARE_HAB/MapServer/44',
         HAB_Q: '/EDW_AGREGARE_HAB/MapServer/14',
         TREND: '/EDW_AGREGARE_HAB/MapServer/56',
         POP_INT: '/EDW_AGREGARE_HAB/MapServer/59',
