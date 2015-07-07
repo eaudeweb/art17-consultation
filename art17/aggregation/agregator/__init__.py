@@ -60,8 +60,8 @@ def get_period(year, length):
 def parse_complementary(refval):
     value, op, unknown = None, None, None
     for k, v in refval.iteritems():
-        if 'favorabil' in k:
-            value = v or None
+        if 'favorabil' in k and v and v.isdigit():
+            value = v
         elif 'Operator' in k:
             op = v or None
         elif 'Necunoscut' in k:
