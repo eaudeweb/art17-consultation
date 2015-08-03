@@ -5,6 +5,7 @@ from art17.aggregation.refvalues import load_refval, save_refval, \
     load_species_refval, save_species_refval, load_habitat_refval, \
     save_habitat_refval
 from art17.scripts import importer
+from art17.models import RefValue, db
 
 
 def UnicodeDictReader(utf8_data, **kwargs):
@@ -257,3 +258,9 @@ def species_methods_from_csv(filename):
                     section, field = k.split('-')
                     curdata[key][section][field] = v
     save_species_refval(curdata)
+
+
+@importer.command
+def clean_db_refvals():
+    RefValue.query.delete()
+    db.session.commit()
