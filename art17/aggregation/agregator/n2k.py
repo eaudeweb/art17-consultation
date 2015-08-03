@@ -2,6 +2,8 @@ from flask import current_app
 from urllib import urlencode
 import requests
 
+from art17.aggregation.utils import round_2_digits
+
 HABITAT_COVER_URL = '/Natura2000/MapServer/28'
 SPECIES_COVER_URL = '/Natura2000/MapServer/26'
 
@@ -35,7 +37,7 @@ def get_habitat_cover_range(subgroup, habcode, region):
     values = [(e['attributes']['HABITAT_COVER'] or 0) * 0.01 *
               (e['attributes']['SITE_AREA'] or 0) for e in data]
     # Sum up values for all sites and convert to km2
-    max_val = sum(values) * 0.01
+    max_val = round_2_digits(sum(values) * 0.01)
     return None, max_val
 
 
@@ -67,6 +69,7 @@ def get_species_population_range(subgroup, speccode, region):
         if v is not None
     ]
     unit = (units and units[0]) or None
-    min_value, max_value = sum(min_values) or None, sum(max_values) or None
+    min_value = round_2_digits(sum(min_values)) or None
+    max_value = round_2_digits(sum(max_values)) or None
 
     return min_value, max_value, unit

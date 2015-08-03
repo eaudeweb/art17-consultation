@@ -334,3 +334,9 @@ def root_mean_square(lst):
     avg = average(lst)
     square_sum = sum(map(lambda x: (x - avg) ** 2, lst))
     return math.sqrt(square_sum / (len(lst) or 1))
+
+
+def round_2_digits(number):
+    if number == round(number):
+        return int(number)
+    return round(number, 2)
