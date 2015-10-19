@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    {% if species %}
+    {% for (code, name), region_dict in species.iteritems() %}
+      {% set regions = region_dict.keys() %}
+      <h3>{{ code }} - {{ name }}</h3>
+      <table border="1">
+        <tr>
+          <th>Parametru/Bioregiune</th>
+          {% for reg in regions %}
+            <th>{{ reg }}</th>
+          {% endfor %}
+        </tr>
+        <tr>
+          <th>Areal</th>
+          {% for reg in regions %}
+            <td>{{ region_dict[reg].range_surface_area }}
+                {{ region_dict[reg].conclusion_range }}
+            </td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <th>Populație</th>
+          {% for reg in regions %}
+            <td>{{ region_dict[reg].conclusion_population }}</td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <th>Habitat specie</th>
+          {% for reg in regions %}
+            <td>{{ region_dict[reg].conclusion_habitat }}</td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <th>Perspective viitoare</th>
+          {% for reg in regions %}
+            <td>{{ region_dict[reg].conclusion_future }}</td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <th>Concluzie</th>
+          {% for reg in regions %}
+            <td>{{ region_dict[reg].conclusion_assessment }}</td>
+          {% endfor %}
+        </tr>
+      </table>
+    {% endfor %}
+    {% else %}
+    {% for (code, name), region_dict in habitat.iteritems() %}
+      {% set regions = region_dict.keys() %}
+      <h3>{{ code }} - {{ name }}</h3>
+      <table border="1">
+        <tr>
+          <th>Parametru/Bioregiune</th>
+          {% for reg in regions %}
+            <th>{{ reg }}</th>
+          {% endfor %}
+        </tr>
+        <tr>
+          <th>Areal</th>
+          {% for reg in regions %}
+            <td>{{ region_dict[reg].range_surface_area }}
+                {{ region_dict[reg].conclusion_range }}
+            </td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <th>Suprafață</th>
+          {% for reg in regions %}
+            <td>{{ region_dict[reg].coverage_surface_area }}
+                {{ region_dict[reg].conclusion_area }}
+            </td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <th>Structura și funcțiile</th>
+          {% for reg in regions %}
+            <td>{{ region_dict[reg].conclusion_structure }}</td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <th>Perspective viitoare</th>
+          {% for reg in regions %}
+            <td>{{ region_dict[reg].conclusion_future }}</td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <th>Concluzie</th>
+          {% for reg in regions %}
+            <td>{{ region_dict[reg].conclusion_assessment }}</td>
+          {% endfor %}
+        </tr>
+      </table>
+    {% endfor %}
+    {% endif %}
+  </body>
+</html>
