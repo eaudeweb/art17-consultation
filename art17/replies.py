@@ -61,7 +61,7 @@ def new(parent_table, parent_id):
     reply = models.CommentReply(
         text=flask.request.form['text'],
         user_id=flask.g.identity.id,
-        date=datetime.utcnow(),
+        date=datetime.now(),
         parent_table=parent_table,
         parent_id=comment.id,
     )

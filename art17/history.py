@@ -121,7 +121,7 @@ def handle_signal(table, action, ob, old_data=None, new_data=None, **extra):
                           action=action,
                           object_id=ob.id,
                           dataset_id=dataset_id,
-                          date=datetime.utcnow(),
+                          date=datetime.now(),
                           user_id=flask.g.identity.id)
     if old_data:
         item.old_data = flask.json.dumps(old_data, default=json_encode_more)

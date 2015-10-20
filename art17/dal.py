@@ -306,7 +306,7 @@ class BaseDal(object):
 
     def create_record(self, **kwargs):
         kwargs.setdefault('cons_user_id', flask.g.identity.id)
-        kwargs.setdefault('cons_date', datetime.utcnow())
+        kwargs.setdefault('cons_date', datetime.now())
         return self.record_model(**kwargs)
 
     def get_read_records(self, user_id, subject_id, region_code):

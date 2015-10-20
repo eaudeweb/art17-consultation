@@ -89,7 +89,7 @@ def ping():
     from art17 import models
     from datetime import datetime
     count = models.History.query.count()
-    now = datetime.utcnow().isoformat()
+    now = datetime.now().isoformat()
     return "art17 consultation is up; %s; %d history items" % (now, count)
 
 

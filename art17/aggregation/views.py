@@ -66,7 +66,7 @@ def ping():
     from art17 import models
 
     count = models.History.query.count()
-    now = datetime.utcnow().isoformat()
+    now = datetime.now().isoformat()
     return "art17 aggregation is up; %s; %d history items" % (now, count)
 
 
@@ -97,7 +97,7 @@ def home():
 def aggregate():
     if request.method == 'POST':
         report, dataset = create_aggregation(
-            datetime.utcnow(),
+            datetime.now(),
             flask.g.identity.id,
         )
         models.db.session.commit()
@@ -130,7 +130,7 @@ def preview(page):
                 page,
                 form.subject.data,
                 qs_dict.get(form.subject.data),
-                datetime.utcnow(),
+                datetime.now(),
                 flask.g.identity.id,
             )
             models.db.session.commit()
@@ -166,7 +166,7 @@ def redo(dataset_id):
         page,
         subject,
         dataset.comment,
-        datetime.utcnow(),
+        datetime.now(),
         flask.g.identity.id,
     )
     models.db.session.commit()
