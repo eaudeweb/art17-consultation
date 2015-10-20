@@ -1,7 +1,7 @@
 {% extends 'notifications/email.html' %}
 
 {% block content %}
-{{ user.full_name }},
+Bună ziua,
 
 {%- set display_name = '%s (%s)' % (object.subject.lu.display_name, object.region ) %}
 {% if action == 'add' %}
@@ -9,7 +9,7 @@
 {% elif action == 'edit' %}
   Comentariul la {{ display_name }} a fost modificat.
 {% elif action == 'status' %}
-  Starea comentariului la {{ display_name }} a fost modificat.
+  Starea comentariului la {{ display_name }} a fost modificată.
 {% elif action == 'submit' %}
   Un comentariu la {{ display_name }} a fost trimis spre evaluare.
 {% elif action == 'closed' %}
@@ -20,3 +20,4 @@
 
 Pentru a-l vizualiza faceți click aici: {{ resource_url(subject_name, object.id, _external=True) }} .
 {% endblock %}
+
