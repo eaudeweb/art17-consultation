@@ -277,7 +277,7 @@ def get_species_pressures_threats(subgroup, specnum, region):
     data = [e["attributes"] for e in data]
     return [
         {
-            'pressure': d["AMENINTARI"],
+            'pressure': d.get("AMENINTARI"),
             'ranking': d["RANG"],
             'type': type_map[d["TIP"]],
             'pollution': d["POLUARE"],
@@ -303,7 +303,7 @@ def get_species_habitat_quality(subgroup, specnum, region):
     where_query = "SPECIE='%s' AND REG_BIOGEO='%s'" % (specnum, region)
     url = _get_species_url(subgroup, HAB_Q)
     data = generic_rest_call(url, where_query) or []
-    values = [r['attributes']['CALITATE_HAB'] for r in data]
+    values = [r['attributes'].get('CALITATE_HAB') for r in data]
     ok_values = [v for v in values if v in OK_VALUE_LIST]
 
     if ok_values:
