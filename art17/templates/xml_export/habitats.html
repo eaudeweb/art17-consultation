@@ -13,7 +13,7 @@
         <range_map>{{ to_bool(habitat.range_map) }}</range_map>
         <regional>
             {%- for region in habitat.regions.filter_by(cons_dataset_id=dataset_id) %}
-            <region>
+            <region validated_by="{{ region.cons_user_id }}">
                 <code desc="{{ region.lu.name }}">{{ region.region }}</code>
                 <published>{{ region.published }}</published>
                 <range_surface_area>{{ region.range_surface_area }}</range_surface_area>
